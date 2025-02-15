@@ -1,0 +1,227 @@
+* {
+  font-family:
+    Courier New,
+    Courier,
+    Lucida Sans Typewriter,
+    Lucida Typewriter,
+    monospace;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  background-size: 120px 120px;
+  background-color: var(--background1);
+  --background1: #030c23;
+  --background2: #03112a;
+}
+
+#game {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
+#score,
+#menu {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  padding: 10px;
+  appearance: none;
+  background: none;
+  border: none;
+  font: inherit;
+  color: white;
+  min-width: 40px;
+  min-height: 40px;
+  line-height: 20px;
+}
+body.black_puck #score,
+body.black_puck #menu {
+  color:black;
+}
+#score:hover,
+#score:focus,
+#menu:hover,
+#menu:focus {
+  background: rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
+#score {
+  right: 0;
+}
+#menu {
+  left: 0;
+}
+@media screen and (orientation: portrait) {
+  #menu > span {
+    display: none;
+  }
+}
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10;
+  display: flex;
+  overflow: auto;
+}
+
+.popup > div {
+  margin: auto;
+  padding: 20px;
+  /*border: 1px solid white;*/
+  transform-origin: center;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 90%;
+  max-width: 450px;
+}
+
+.popup > div > * {
+  padding: 0;
+  margin: 0;
+}
+
+.popup > div > h2,
+.popup > div > p {
+  margin-bottom: 20px;
+}
+.popup > div > button {
+  font:inherit;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid white;
+  text-align: left;
+  display: flex;
+  gap: 10px;
+  margin-top: -1px;
+}
+
+.popup > div > button:not([disabled]):hover,
+.popup > div > button:not([disabled]):focus {
+  border-color: #f1d33b;
+  position: relative;
+  z-index: 1;
+}
+
+
+.popup button.close-modale {
+  color:white;
+  position: absolute;
+  top:0;
+  right:0;
+  width: 60px;
+  height: 60px;
+  background:none;
+  border: none;
+  cursor: pointer;
+  background: rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+.popup button.close-modale:before {
+  content: "+";
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(45deg)  ;
+  font-size: 80px;
+  display: inline-block;
+}
+.popup button.close-modale:hover {
+  font-weight: bold;
+}
+
+.popup > div > button[disabled] {
+  /*border: 1px solid #666;*/
+  opacity: 0.5;
+}
+
+.popup > div > button > div {
+  flex-grow: 1;
+}
+.popup > div > button > div > em {
+  display: block;
+  opacity: 0.8;
+}
+
+.popup > div > button > span.checks {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  gap:5px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.popup > div > button > span.checks>span {
+  flex-basis: 10px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  /*border: 1px solid white;*/
+  background: white;
+  opacity: 0.1;
+  border-radius: 4px;
+  align-self: stretch;
+}
+.popup > div > button > span.checks>span.checked {
+  opacity: 1;
+}
+
+.popup .textAfterButtons{
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.popup a[href]{
+  color:inherit;
+}
+.popup a[href]:hover,
+.popup a[href]:focus
+{
+  color:white;
+}
+
+/*Unlocks progress bar*/
+.progress {
+  display: block;
+  padding: 5px 10px;
+  background: #1c1c2f;
+  color:#fff;
+  box-shadow: inset 3px 3px 5px rgba(0,0,0,0.5);
+  border-radius: 5px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.progress >.progress_bar_part{
+  display: block;
+  background: #4049ca;
+  box-shadow: inset 3px 3px 5px rgba(0,0,0,0.5);
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform-origin: top left;
+  animation: grow 1s both ease-out;
+  z-index: 1;
+}
+.progress> span {
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+@keyframes grow {
+  0%{
+    transform: scale(0,1);
+  }
+}

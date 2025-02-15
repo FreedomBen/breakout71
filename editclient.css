@@ -1,0 +1,29 @@
+
+body {
+    background: black;
+    color: white;
+}
+
+#palette button.active {
+    transform: scale(1.2);
+}
+
+.level-bricks-preview {
+    position: relative;
+}
+
+#palette {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80px;
+    bottom: 0;
+    overflow: auto;
+}
+
+#levels {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-right: 80px;
+}
