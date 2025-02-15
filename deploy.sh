@@ -1,18 +1,17 @@
 #!/bin/bash
 
-# Invalidate web cache
-# Generate a random number between 1000 and 9999
-random_number=$(shuf -i 1000-9999 -n 1)
-# Use sed to replace the pattern with the random number
-sed -i "s/\?v=[0-9]*/\?v=$random_number/g" ./app/src/main/assets/index.html
-
 
 # Replace the version code and name in gradle for fdroid and play store
 versionCode=$(($(date +%s) / 60))
-versionName=$(date +"%Y-%m-%d %H:%M:%S")
 sed -i '' -e "s/^[[:space:]]*versionCode = .*/        versionCode = $versionCode/" \
-       -e "s/^[[:space:]]*versionName = .*/        versionName = \"$versionName\"/" \
+       -e "s/^[[:space:]]*versionName = .*/        versionName = \"$versionCode\"/" \
        ./app/build.gradle.kts
+
+
+
+# Invalidate web cache
+sed -i "s/\?v=[0-9]*/\?v=$versionCode/g" ./app/src/main/assets/index.html
+
 
 git add .
 git commit -m "Automatic deploy $versionCode"
