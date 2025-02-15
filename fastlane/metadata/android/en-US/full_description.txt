@@ -1,0 +1,13 @@
+Breakout 71 is a game about breaking colourful bricks, catching coins and picking upgrades. You control the puck at the bottom of the screen with your finger (or mouse) and keep the ball flying around.
+
+What decides how the ball flies away is only the position of the puck hit. The puck speed and incoming angle have no impact. You must delete all bricks to progress to the next level, and never drop the ball.
+
+After clearing a level, you'll be able to pick upgrades among a small selection presented to you. They'll apply until the end of the run. A normal run lasts 7 levels, after which your score is recorded, and you can start again.
+
+Each run is different, the levels and upgrades you see will change every time, and new ones get added to the pool when you progress in the game.
+
+The app should work offline and perform well even on low end devices. It's very lean and does not take much storage space (Roughly 0.1MB). If the app feels laggy, turn on "fast mode" in the settings to render a simplified view that should be faster.
+
+There's also an easy mode for kids (slower ball) and a color blind mode (no color related game mechanics).
+
+
