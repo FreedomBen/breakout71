@@ -1,8 +1,10 @@
 #!/bin/bash
-
+set -e
+set -x
 
 # Replace the version code and name in gradle for fdroid and play store
 versionCode=$(($(date +%s) / 60))
+
 sed -i '' -e "s/^[[:space:]]*versionCode = .*/        versionCode = $versionCode/" \
        -e "s/^[[:space:]]*versionName = .*/        versionName = \"$versionCode\"/" \
        ./app/build.gradle.kts
