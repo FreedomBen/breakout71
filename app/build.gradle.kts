@@ -15,17 +15,8 @@ android {
         applicationId = "me.lecaro.breakout"
         minSdk = 21
         targetSdk = 34
-//        versionCode = 7
-//        versionName = "7.0"
-
-          // Get the current Unix timestamp in seconds
-        versionCode = (System.currentTimeMillis() / 1000/60).toInt()
-        // Get the current date as a string
-        versionName = ZonedDateTime.now(ZoneId.of("CET"))
-                          .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-
-
-
+        versionCode = 28993740
+        versionName = "2025-02-15 14:00:57"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
