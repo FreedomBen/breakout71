@@ -11,7 +11,7 @@ sed -i '' -e "s/^[[:space:]]*versionCode = .*/        versionCode = $versionCode
 
 # Invalidate web cache
 sed -i "s/\?v=[0-9]*/\?v=$versionCode/g" ./app/src/main/assets/index.html
-
+ 
 
 git add .
 git commit -m "Automatic deploy $versionCode"
