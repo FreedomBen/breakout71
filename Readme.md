@@ -12,6 +12,7 @@ At the end of each level, you get to select an upgrade.
 
 ## TODO
  
+- Fdroid 
 - show total score on end screen (score added to total) 
 - show stats on end screen compared to other runs
 - handle back bouton in menu
