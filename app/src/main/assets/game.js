@@ -33,7 +33,7 @@ function baseCombo() {
     return 1 + perks.base_combo * 3;
 }
 
-function resetCombo(x, y) {
+function resetCombo(x, y ) {
     const prev = combo;
     combo = baseCombo();
     if (!levelTime) {
@@ -1210,7 +1210,8 @@ function gameOver(title, intro) {
         })
     }
 
-
+    // Avoid the sad sound right as we restart a new games
+    combo=1
     asyncAlert({
         allowClose: true, title, text: `
         <p>${intro}</p>
