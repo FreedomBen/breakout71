@@ -14,6 +14,11 @@ sed -i '' -e "s/^[[:space:]]*versionCode = .*/        versionCode = $versionCode
        -e "s/^[[:space:]]*versionName = .*/        versionName = \"$versionName\"/" \
        ./app/build.gradle.kts
 
+git add .
+git commit -m "Automatic deploy $versionCode"
+git tag -f $versionCode
+git push
+
 
 DOMAIN="breakout.lecaro.me"
 PUBLIC_CONTENT="./app/src/main/assets/"
