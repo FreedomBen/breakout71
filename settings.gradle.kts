@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Breakout"
+rootProject.name = "Breakout 71"
 include(":app")
  
