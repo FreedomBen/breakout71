@@ -2078,6 +2078,7 @@ function toggleSetting(key) {
 
 scoreDisplay.addEventListener("click", async (e) => {
     e.preventDefault();
+    running=false
     const cb = await asyncAlert({
         title: `You scored ${score} points so far`, text: `
             <p>You are playing level ${currentLevel + 1} out of ${max_levels()}. </p>

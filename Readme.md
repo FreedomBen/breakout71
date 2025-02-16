@@ -26,6 +26,8 @@ At the end of each level, you get to select an upgrade.
 - perk : n/10 of the broken bricks respawn when the ball comes back   
 - perk : bricks take twice as many hits but drop 50% more coins
 - perk : wind (puck positions adds force to coins and balls) 
+- perk : balls repulse each other
+- perk : balls repulse coins
 
 ## maybe
 
