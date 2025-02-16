@@ -9,6 +9,7 @@ At the end of each level, you get to select an upgrade.
 [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout) - 
 [itch.io](https://renanlecaro.itch.io/breakout71) - 
 [GitLab](https://gitlab.com/lecarore/breakout71)
+[Donate](https://github.com/sponsors/renanlecaro)
 
 ## TODO
  
