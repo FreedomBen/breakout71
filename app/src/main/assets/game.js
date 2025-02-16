@@ -9,7 +9,7 @@ const puckHeight = ballSize;
 if (allLevels.find(l => l.focus)) {
     allLevels = allLevels.filter(l => l.focus)
 }
-allLevels=allLevels.filter(l=>!l.draft)
+allLevels = allLevels.filter(l => !l.draft)
 
 
 let runLevels = []
@@ -33,7 +33,7 @@ function baseCombo() {
     return 1 + perks.base_combo * 3;
 }
 
-function resetCombo(x, y ) {
+function resetCombo(x, y) {
     const prev = combo;
     combo = baseCombo();
     if (!levelTime) {
@@ -88,18 +88,20 @@ function decreaseCombo(by, x, y) {
 let gridSize = 12;
 
 let running = false, puck = 400;
-function play(){
-    if(running) return
+
+function play() {
+    if (running) return
     running = true
-    if(audioContext){
+    if (audioContext) {
         audioContext.resume()
     }
 }
-function pause(){
-    if(!running) return
+
+function pause() {
+    if (!running) return
     running = false
-    needsRender=true
-    if(audioContext){
+    needsRender = true
+    if (audioContext) {
         audioContext.suspend()
     }
 }
@@ -191,7 +193,7 @@ function addToScore(coin) {
     coin.destroyed = true
     score += coin.points;
     addToTotalScore(coin.points)
-    if (score > highScore) {
+    if (score > highScore && !hadOverrides) {
         highScore = score;
         localStorage.setItem("breakout-3-hs", score);
     }
@@ -373,46 +375,49 @@ function reset_perks() {
         perks[u.id] = 0;
     }
 
-    const giftable = getPossibleUpgrades().filter(u => u.giftable)
-    if (!giftable.length) {
-        debugger
+    if (nextRunOverrides.perks) {
+        const first = Object.keys(nextRunOverrides.perks)[0]
+        Object.assign(perks, nextRunOverrides.perks)
+        nextRunOverrides.perks = null
+        return first
     }
 
+    const giftable = getPossibleUpgrades().filter(u => u.giftable && u.max > 0)
     const randomGift = isSettingOn('easy') ? 'slow_down' : giftable[Math.floor(Math.random() * giftable.length)].id;
     perks[randomGift] = 1;
-
     // TODO
-    // perks.puck_repulse_ball = 3
-    // perks.multiball = 1
-    // perks.ball_repulse_ball = 1
+    // perks.puck_repulse_ball=3
+    // perks.ball_repulse_ball=3
+    // perks.ball_attract_ball=3
+    // perks.multiball=3
 
     return randomGift
 }
 
-const upgrades = [{
+const upgrades = [
+    {
     minimumTotalScore: 3000,
     id: 'multiball',
-    giftableAfterTotalScore: 20000,
+    giftable: true,
     name: "+1 ball",
     max: 3,
     help: `Start each level with one more balls.`,
 }, {
     minimumTotalScore: 5000,
     id: 'pierce',
-    giftableAfterTotalScore: 15000,
+    giftable: true,
     name: "Ball pierces bricks",
     max: 3,
     help: `Pierce through 3 blocks after bouncing on the puck.`,
 }, {
     minimumTotalScore: 500,
     id: 'telekinesis',
-    giftableAfterTotalScore: 900,
+    giftable: true,
     name: "Puck controls ball",
     max: 2,
     help: `Control the ball's trajectory with the puck.`,
 }, {
     minimumTotalScore: 0,
-    extra_levels_minimum_total_score: 250,
     id: 'extra_life',
     name: "+1 life",
     max: 3,
@@ -420,7 +425,7 @@ const upgrades = [{
 }, {
     minimumTotalScore: 20000,
     id: 'sapper',
-    giftableAfterTotalScore: 32000,
+    giftable: true,
     name: "Bricks become bombs",
     max: 1,
     help: `Broken blocks are replaced by bombs.`,
@@ -460,7 +465,7 @@ const upgrades = [{
     {
         minimumTotalScore: 6000,
         id: 'picky_eater',
-        giftableAfterTotalScore: 9000,
+        giftable: true,
         name: "Single color streak",
         color_blind_exclude: true,
         max: 1,
@@ -479,7 +484,7 @@ const upgrades = [{
     {
         minimumTotalScore: 0,
         id: 'streak_shots',
-        giftableAfterTotalScore: 1500,
+        giftable: true,
         name: "Single puck hit streak",
         max: 1,
         help: `Break many bricks at once for more coins.`,
@@ -488,7 +493,7 @@ const upgrades = [{
     {
         minimumTotalScore: 10000,
         id: 'hot_start',
-        giftableAfterTotalScore: 24000,
+        giftable: true,
         name: "Hot start",
         max: 3,
         help: `Clear the level quickly for more coins.`,
@@ -497,14 +502,14 @@ const upgrades = [{
     {
         minimumTotalScore: 200,
         id: 'sides_are_lava',
-        giftableAfterTotalScore: 500,
+        giftable: true,
         name: "Shoot straight",
         max: 1,
         help: `Avoid the sides for more coins.`,
     }, {
         minimumTotalScore: 600,
         id: 'top_is_lava',
-        giftableAfterTotalScore: 1200,
+        giftable: true,
         name: "Sky is the limit",
         max: 1,
         help: `Avoid the top for more coins.`,
@@ -513,13 +518,12 @@ const upgrades = [{
     {
         minimumTotalScore: 8000,
         id: 'catch_all_coins',
-        giftableAfterTotalScore: 16000,
+        giftable: true,
         name: "Compound interest",
         max: 3,
         help: `Catch all coins with your puck for even more coins.`,
     }, {
         minimumTotalScore: 0,
-        extra_levels_minimum_total_score: 6250,
         id: 'viscosity',
         name: "Slower coins fall",
         max: 3,
@@ -528,9 +532,8 @@ const upgrades = [{
 
     {
         minimumTotalScore: 0,
-        extra_levels_minimum_total_score: 750,
         id: 'base_combo',
-        giftableAfterTotalScore: 0,
+        giftable: true,
         name: "+3 base combo",
         max: 3,
         help: `Your combo starts 3 points higher.`,
@@ -538,7 +541,6 @@ const upgrades = [{
 
     {
         minimumTotalScore: 0,
-        extra_levels_minimum_total_score: 25,
         id: 'slow_down',
         name: "Slower ball",
         max: 2,
@@ -559,7 +561,6 @@ const upgrades = [{
         minimumTotalScore: 3600, id: 'smaller_puck', name: "Smaller puck", max: 2, help: `Gives you more control.`,
     }, {
         minimumTotalScore: 0,
-        extra_levels_minimum_total_score: 0,
         id: 'bigger_puck',
         name: "Bigger puck",
         max: 2,
@@ -571,38 +572,29 @@ const upgrades = [{
         max: 3,
         help: `Only has an effect when 2+ balls.`,
     }, {
+        minimumTotalScore: 2000,
+        id: 'ball_attract_ball',
+        name: "Balls attract balls",
+        max: 3,
+        help: `Only has an effect when 2+ balls.`,
+    }, {
         minimumTotalScore: 4000,
         id: 'puck_repulse_ball',
         name: "Puck repulse balls",
         max: 3,
         help: `Prevents the puck from touching the balls.`,
     }
-    ]
+]
 
-function computeUpgradeCurrentMaxLevel(u, ts) {
-    let max = 0
-    const setMax = (v) => max = Math.max(max, v)
-    if (u.max && ts >= u.minimumTotalScore) {
-        setMax(1)
-    }
-    if (u.max > 1) {
-        if (u.minimumTotalScore) {
-            setMax(Math.min(u.max, Math.floor(ts / u.minimumTotalScore)))
-        } else if (u.extra_levels_minimum_total_score) {
-            setMax(Math.min(u.max, Math.floor(ts / u.extra_levels_minimum_total_score) + 1))
-        }
-    }
 
-    return max
-}
 
 function getPossibleUpgrades() {
     const ts = getTotalScore()
     return upgrades
         .filter(u => !(isSettingOn('color_blind') && u.color_blind_exclude))
         .map(u => ({
-            ...u, max: computeUpgradeCurrentMaxLevel(u, ts), giftable: ts >= (u.giftableAfterTotalScore ?? Infinity)
-        })).filter(u => u.max > 0)
+            ...u, max:  ts > u.minimumTotalScore ? u.max:0, originalMax: u.max
+        }))
 }
 
 function levelTotalScoreCondition(l, li) {
@@ -610,13 +602,16 @@ function levelTotalScoreCondition(l, li) {
 }
 
 function shuffleLevels(nameToAvoid = null) {
-    const ts = getTotalScore()
+    const ts = getTotalScore();
     runLevels = allLevels
+        .filter(l => nextRunOverrides.level ? l.name === nextRunOverrides.level : true)
         .filter((l, li) => ts >= levelTotalScoreCondition(l, li))
         .filter(l => l.name !== nameToAvoid || allLevels.length === 1)
         .sort(() => Math.random() - 0.5)
         .slice(0, 7 + 3)
-        .sort((a, b) => a.bricks.filter(i => i).length - b.bricks.filter(i => i).length)
+        .sort((a, b) => a.bricks.filter(i => i).length - b.bricks.filter(i => i).length);
+
+    nextRunOverrides.level = null
 }
 
 function getUpgraderUnlockPoints() {
@@ -628,32 +623,18 @@ function getUpgraderUnlockPoints() {
             if (u.minimumTotalScore) {
                 list.push({
                     threshold: u.minimumTotalScore,
-                    title: 'Unlock: ' + u.name,
-                    help: 'This new perks will be added to the choices offered to you.'
+                    title: u.name + ' (Perk)',
+                    help: u.help,
                 })
             }
-            if (u.max > 1) {
-                for (var l = 1; l < u.max; l++) list.push({
-                    threshold: l * (u.minimumTotalScore || u.extra_levels_minimum_total_score || 0),
-                    title: 'Upgrade: ' + u.name,
-                    help: 'You will be able to take this perk ' + (l + 1) + ' times for greater effect.'
-                })
-            }
-            if (u.giftableAfterTotalScore) {
-                list.push({
-                    threshold: u.giftableAfterTotalScore,
-                    title: 'Start: ' + u.name,
-                    help: u.name + ' will be added to the list of possible starting perks.'
-                })
-            }
-
         })
 
     allLevels.forEach((l, li) => {
         list.push({
             threshold: levelTotalScoreCondition(l, li),
-            title: 'Level: ' + l.name,
-            help: l.name + ' will be added to the list of possible levels.'
+            title: l.name + ' (Level)',
+            // help: 'Adds level "'+l.name + '" to the list of possible levels.',
+
         })
     })
 
@@ -662,7 +643,6 @@ function getUpgraderUnlockPoints() {
 
 
 function pickRandomUpgrades(count) {
-
 
     let list = getPossibleUpgrades()
         .sort(() => Math.random() - 0.5)
@@ -688,15 +668,21 @@ function pickRandomUpgrades(count) {
     return list;
 }
 
+let nextRunOverrides = {level: null, perks: null}
+let hadOverrides = false
 
 function restart() {
     console.log("restart")
+    hadOverrides = !!(nextRunOverrides.level || nextRunOverrides.perks)
     // When restarting, we want to avoid restarting with the same level we're on, so we exclude from the next
     // run's level list
     shuffleLevels(levelTime || score ? currentLevelInfo().name : null);
     resetRunStatistics()
     score = 0;
     scoreStory = [];
+    if (hadOverrides) {
+        scoreStory.push(`This is a test run, started from the unlocks menu. It stops after one level and is not recorded in the stats. `)
+    }
     const randomGift = reset_perks();
 
     incrementRunStatistics('starting_upgrade.' + randomGift, 1)
@@ -734,9 +720,9 @@ function setMousePos(x) {
 
 canvas.addEventListener("mouseup", (e) => {
     if (e.button !== 0) return;
-    if(running) {
+    if (running) {
         pause()
-    }else {
+    } else {
         play()
     }
 });
@@ -922,6 +908,7 @@ function tick() {
             let playedCoinBounce = false;
             const coinRadius = Math.round(coinSize / 2);
 
+
             coins.forEach((coin) => {
                 if (coin.destroyed) return;
                 if (perks.coin_magnet) {
@@ -1008,33 +995,39 @@ function ballTick(ball, delta) {
         ball.vx += ((puck - ball.x) / 1000) * delta * perks.telekinesis;
     }
 
-    const speedLimitDampener =1+ perks.telekinesis+perks.ball_repulse_ball +perks.puck_repulse_ball
+    const speedLimitDampener = 1 + perks.telekinesis + perks.ball_repulse_ball + perks.puck_repulse_ball + perks.ball_attract_ball
     if (ball.vx * ball.vx + ball.vy * ball.vy < baseSpeed * baseSpeed * 2) {
-        ball.vx *= (1 + .02/speedLimitDampener);
-        ball.vy *= (1 + .02/speedLimitDampener);
+        ball.vx *= (1 + .02 / speedLimitDampener);
+        ball.vy *= (1 + .02 / speedLimitDampener);
     } else {
-        ball.vx *= (1 - .02/speedLimitDampener);;
+        ball.vx *= (1 - .02 / speedLimitDampener);
+        ;
         if (Math.abs(ball.vy) > 0.5 * baseSpeed) {
-            ball.vy *= (1 - .02/speedLimitDampener);;
+            ball.vy *= (1 - .02 / speedLimitDampener);
+            ;
         }
     }
 
-    if(perks.ball_repulse_ball){
-        for(b2 of balls){
+    if (perks.ball_repulse_ball) {
+        for (b2 of balls) {
             // avoid computing this twice, and repulsing itself
-            if(b2.x>=ball.x) continue
-            repulse(ball,b2,15* perks.ball_repulse_ball )
+            if (b2.x >= ball.x) continue
+            repulse(ball, b2, perks.ball_repulse_ball, true)
         }
     }
-    if(perks.puck_repulse_ball){
-        repulse(ball,{
-             x:puck,
-             y:gameZoneHeight,
-             vx:0,
-             vy:0,
-            color:currentLevelInfo().black_puck ? '#000' : '#FFF' ,
-         },15* perks.puck_repulse_ball )
-
+    if (perks.ball_attract_ball) {
+        for (b2 of balls) {
+            // avoid computing this twice, and repulsing itself
+            if (b2.x >= ball.x) continue
+            attract(ball, b2, 2 * perks.ball_attract_ball)
+        }
+    }
+    if (perks.puck_repulse_ball) {
+        repulse(ball, {
+            x: puck,
+            y: gameZoneHeight,
+            color: currentLevelInfo().black_puck ? '#000' : '#FFF',
+        }, perks.puck_repulse_ball, false)
     }
 
 
@@ -1080,14 +1073,14 @@ function ballTick(ball, delta) {
                     x: ball.previousx,
                     y: ball.previousy
                 })
-                for(si=0; si< ball.bouncesList.length-1;si++){
+                for (si = 0; si < ball.bouncesList.length - 1; si++) {
                     // segement
-                    const start= ball.bouncesList[si]
-                    const end= ball.bouncesList[si+1]
-                    const distance= distanceBetween(start,end)
+                    const start = ball.bouncesList[si]
+                    const end = ball.bouncesList[si + 1]
+                    const distance = distanceBetween(start, end)
 
-                    const parts = distance/30
-                    for(var i = 0; i <parts;i++ ){
+                    const parts = distance / 30
+                    for (var i = 0; i < parts; i++) {
                         flashes.push({
                             type: "particle",
                             duration: 200,
@@ -1095,8 +1088,8 @@ function ballTick(ball, delta) {
                             time: levelTime,
                             size: coinSize / 2,
                             color: ball.color,
-                            x: start.x + (i/(parts-1))*(end.x-start.x),
-                            y: start.y + (i/(parts-1))*(end.y-start.y),
+                            x: start.x + (i / (parts - 1)) * (end.x - start.x),
+                            y: start.y + (i / (parts - 1)) * (end.y - start.y),
                             vx: (Math.random() - 0.5) * baseSpeed,
                             vy: (Math.random() - 0.5) * baseSpeed,
                         });
@@ -1109,8 +1102,8 @@ function ballTick(ball, delta) {
         ball.hitSinceBounce = 0;
         ball.piercedSinceBounce = 0;
         ball.bouncesList = [{
-              x: ball.previousx,
-                    y: ball.previousy
+            x: ball.previousx,
+            y: ball.previousy
         }]
     }
 
@@ -1173,6 +1166,7 @@ function resetRunStatistics() {
     runStatistics = {
         started: Date.now(),
         ended: null,
+        hadOverrides,
         width: window.innerWidth,
         height: window.innerHeight,
         easy: isSettingOn('easy'),
@@ -1195,6 +1189,7 @@ function getTotalScore() {
 }
 
 function addToTotalScore(points) {
+    if (hadOverrides) return
     try {
         localStorage.setItem('breakout_71_total_score', JSON.stringify(getTotalScore() + points))
     } catch (e) {
@@ -1238,7 +1233,7 @@ function gameOver(title, intro) {
     const list = getUpgraderUnlockPoints()
     list.filter(u => u.threshold > startTs && u.threshold < endTs).forEach(u => {
         unlocksInfo += `
-<p class="progress" title=${JSON.stringify(u.help)}>
+<p class="progress" title=${JSON.stringify(u.help || '')}>
    <span>${u.title}</span>
     <span class="progress_bar_part" style="${getDelay()}"></span>
 </p>
@@ -1253,10 +1248,11 @@ function gameOver(title, intro) {
         const done = endTs - previousUnlockAt
         intro += `Score ${nextUnlock.threshold - endTs} more points to reach the next unlock.`
 
+        const scaleX=(done / total).toFixed(2)
         unlocksInfo += `
             <p class="progress"  title=${JSON.stringify(unlocksInfo.help)}>
            <span>${nextUnlock.title}</span>
-        <span style="transform: scale(${(done / total).toFixed(2)},1);${getDelay()}" class="progress_bar_part"></span>
+        <span style="transform: scale(${scaleX},1);${getDelay()}" class="progress_bar_part"></span>
         </p>
 
 `
@@ -1270,7 +1266,7 @@ function gameOver(title, intro) {
     }
 
     // Avoid the sad sound right as we restart a new games
-    combo=1
+    combo = 1
     asyncAlert({
         allowClose: true, title, text: `
         <p>${intro}</p>
@@ -1375,6 +1371,7 @@ function explodeBrick(index, ball, isExplosion) {
 }
 
 function max_levels() {
+    if (hadOverrides) return 1
     return 7 + perks.extra_levels;
 }
 
@@ -1432,9 +1429,13 @@ function render() {
             const {x, y, time, color, size, type, duration} = flash;
             const elapsed = levelTime - time;
             ctx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2);
-            if (type === "ball" || type === "particle") {
+            if (type === "ball") {
                 drawFuzzyBall(ctx, color, size, x, y);
             }
+            if (type === "particle") {
+                drawFuzzyBall(ctx, color, size * 3, x, y);
+            }
+
         });
 
         ctx.globalAlpha = 0.9;
@@ -1565,10 +1566,10 @@ function render() {
     ctx.globalCompositeOperation = "source-over";
     drawPuck(ctx, puckColor, puckWidth, puckHeight)
 
-
     if (combo > 1) {
-        ctx.globalCompositeOperation = "destination-out";
-        drawText(ctx, "x " + combo, "white", puckHeight, {
+
+        ctx.globalCompositeOperation = "source-over";
+        drawText(ctx, "x " + combo, !level.black_puck ? '#000' : '#FFF', puckHeight, {
             x: puck, y: gameZoneHeight - puckHeight / 2,
         });
     }
@@ -2136,12 +2137,11 @@ function toggleSetting(key) {
 
 scoreDisplay.addEventListener("click", async (e) => {
     e.preventDefault();
-    running=false
+    running = false
     const cb = await asyncAlert({
         title: `You scored ${score} points so far`, text: `
             <p>You are playing level ${currentLevel + 1} out of ${max_levels()}. </p>
             ${scoreStory.map((t) => "<p>" + t + "</p>").join("")} 
-            <p>You high score is ${highScore}.</p>
         `, allowClose: true, actions: [{
             text: "New run", help: "Start a brand new run.", value: () => {
                 restart();
@@ -2200,6 +2200,57 @@ async function openSettingsPanel() {
     const cb = await asyncAlert({
         title: "Breakout 71", text: ` 
         `, allowClose: true, actions: [
+            {
+                text: 'Unlocks',
+                help: "See and try what you've unlocked",
+                async value() {
+                    const ts = getTotalScore()
+                    const tryOn = await asyncAlert({
+                        title: 'Your unlocks',
+                        text: `
+                       <p>Your high score is ${highScore}. In total, you've cought ${ts} coins. Click an upgrade below to start a test run with it (stops after 1 level).</p> 
+                       `,
+                        actions: [...getPossibleUpgrades()
+                            .sort((a,b)=>a.minimumTotalScore-b.minimumTotalScore)
+                            .map(({
+                                                                    originalMax,
+                                                                    name,
+                                                                    max,
+                                                                    help,id,
+                            minimumTotalScore
+                                                                }) =>
+                            ({
+                                text: name,
+                                    help:`${help} (${minimumTotalScore} coins)`,
+                                disabled: !max,
+                                value: {perks: {[id]: 1}}
+
+                            }))
+                            ,
+                            ...allLevels.map((l, li) => {
+                                const threshold=levelTotalScoreCondition(l, li)
+                                const avaliable= ts >= threshold
+                                return ({
+                                    text: l.name,
+                                    help:`A ${l.size}x${l.size} level (${threshold} coins)`,
+                                    disabled: !avaliable,
+                                    value: {level: l.name}
+
+                                })
+                            })
+                        ]
+
+
+                        ,
+                        allowClose: true,
+                    })
+                    if (tryOn) {
+                        nextRunOverrides = tryOn
+                        restart()
+                    }
+                }
+            },
+
             ...optionsList,
 
             (window.screenTop || window.screenY) && {
@@ -2237,7 +2288,6 @@ async function openSettingsPanel() {
                     }
 
                 }
-
             }
         ],
         textAfterButtons: `
@@ -2254,58 +2304,118 @@ async function openSettingsPanel() {
     }
 }
 
-function distance2(a,b){
-    return Math.pow(a.x-b.x,2)+ Math.pow(a.y-b.y,2)
-}
-function distanceBetween(a,b){
-    return Math.sqrt(distance2(a,b))
+function distance2(a, b) {
+    return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2)
 }
 
-function repulse(a,b,power){
+function distanceBetween(a, b) {
+    return Math.sqrt(distance2(a, b))
+}
 
-    const distance = distanceBetween(a,b)
+function rainbowColor() {
+    return `hsl(${(levelTime / 2) % 360},100%,70%)`
+}
+
+function repulse(a, b, power, impactsBToo) {
+
+    const distance = distanceBetween(a, b)
     // Ensure we don't get soft locked
-    if(distance>gameZoneWidth/2) return
+    const max = gameZoneWidth / 2
+    if (distance > max) return
     // Unit vector
-    const dx= (a.x-b.x)/distance
-    const dy= (a.y-b.y)/distance
+    const dx = (a.x - b.x) / distance
+    const dy = (a.y - b.y) / distance
+    // TODO
 
-    const fact= - power / (1+Math.max(1, distance))
-    b.vx+=dx*fact
-    b.vy+=dy*fact
-    a.vx-=dx*fact
-    a.vy-=dy*fact
+    const fact = -power * (max - distance) / (max * 1.2) / 3 * Math.min(500, levelTime) / 500
+    if (impactsBToo) {
+        b.vx += dx * fact
+        b.vy += dy * fact
+    }
+    a.vx -= dx * fact
+    a.vy -= dy * fact
 
-    if(!isSettingOn('basic')){
-        const speed= 10
-        const rand= 2
+    if (!isSettingOn('basic')) {
+        const speed = 10
+        const rand = 2
         flashes.push({
             type: "particle",
-            duration:150,
+            duration: 100,
             time: levelTime,
-            size:coinSize/2,
-            color:b.color,
-            ethereal:true,
-            x:a.x,
-            y:a.y,
-            vx:-dx*speed+a.vx+(Math.random()-0.5)*rand,
-            vy:-dy*speed+a.vy+(Math.random()-0.5)*rand,
+            size: coinSize / 2,
+            color: rainbowColor(),
+            ethereal: true,
+            x: a.x,
+            y: a.y,
+            vx: -dx * speed + a.vx + (Math.random() - 0.5) * rand,
+            vy: -dy * speed + a.vy + (Math.random() - 0.5) * rand,
+        })
+        if (impactsBToo) {
+
+            flashes.push({
+                type: "particle",
+                duration: 100,
+                time: levelTime,
+                size: coinSize / 2,
+                color: rainbowColor(),
+                ethereal: true,
+                x: b.x,
+                y: b.y,
+                vx: dx * speed + b.vx + (Math.random() - 0.5) * rand,
+                vy: dy * speed + b.vy + (Math.random() - 0.5) * rand,
+            })
+        }
+    }
+
+}
+
+function attract(a, b, power) {
+
+    const distance = distanceBetween(a, b)
+    // Ensure we don't get soft locked
+    const min = gameZoneWidth * .5
+    if (distance < min) return
+    // Unit vector
+    const dx = (a.x - b.x) / distance
+    const dy = (a.y - b.y) / distance
+
+    const fact = power * (distance - min) / min * Math.min(500, levelTime) / 500
+    b.vx += dx * fact
+    b.vy += dy * fact
+    a.vx -= dx * fact
+    a.vy -= dy * fact
+
+    if (!isSettingOn('basic')) {
+        const speed = 10
+        const rand = 2
+        flashes.push({
+            type: "particle",
+            duration: 100,
+            time: levelTime,
+            size: coinSize / 2,
+            color: rainbowColor(),
+            ethereal: true,
+            x: a.x,
+            y: a.y,
+            vx: dx * speed + a.vx + (Math.random() - 0.5) * rand,
+            vy: dy * speed + a.vy + (Math.random() - 0.5) * rand,
         })
         flashes.push({
             type: "particle",
-            duration:150,
+            duration: 100,
             time: levelTime,
-            size:coinSize/2,
-            color:a.color,
-            ethereal:true,
-            x:b.x,
-            y:b.y,
-            vx:dx*speed+b.vx+(Math.random()-0.5)*rand,
-            vy:dy*speed+b.vy+(Math.random()-0.5)*rand,
+            size: coinSize / 2,
+            color: rainbowColor(),
+            ethereal: true,
+            x: b.x,
+            y: b.y,
+            vx: -dx * speed + b.vx + (Math.random() - 0.5) * rand,
+            vy: -dy * speed + b.vy + (Math.random() - 0.5) * rand,
         })
     }
 
 }
+
 fitSize()
 restart()
 tick();

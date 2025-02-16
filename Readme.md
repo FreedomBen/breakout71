@@ -14,21 +14,21 @@ At the end of each level, you get to select an upgrade.
 ## TODO
  
 - Fdroid 
-- pause/resume audio context
+- perk : elastic between balls
+- easily start a test game with specific upgrades or levels (with query string or through menu) 
 - show total score on end screen (score added to total) 
 - show stats on end screen compared to other runs
 - handle back bouton in menu
 - more levels : famous simple games, letters, fruits, animals
-- perk : elastic between balls
 - perk : wrap left / right
 - perk : twice as many coins after a wall bounce, twice as little otherwise
 - perk : fusion reactor (gather coins in one spot to triple their value)
 - perk : missing makes you loose all score of level, but otherwise multiplier goes up after each breaking
 - perk : n/10 of the broken bricks respawn when the ball comes back   
 - perk : bricks take twice as many hits but drop 50% more coins
-- perk : wind (puck positions adds force to coins and balls) 
-- perk : balls repulse each other
+- perk : wind (puck positions adds force to coins and balls)
 - perk : balls repulse coins
+- missing triggers and explosive lighting strike around ball path
 
 ## maybe
 
