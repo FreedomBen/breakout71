@@ -88,6 +88,22 @@ function decreaseCombo(by, x, y) {
 let gridSize = 12;
 
 let running = false, puck = 400;
+function play(){
+    if(running) return
+    running = true
+    if(audioContext){
+        audioContext.resume()
+    }
+}
+function pause(){
+    if(!running) return
+    running = false
+    needsRender=true
+    if(audioContext){
+        audioContext.suspend()
+    }
+}
+
 
 let offsetX, gameZoneWidth, gameZoneHeight, brickWidth, needsRender = true;
 
@@ -115,8 +131,7 @@ const fitSize = () => {
     setMousePos(puck);
     coins = [];
     flashes = [];
-    running = false;
-    needsRender = true;
+    pause()
     putBallsAtPuck();
 };
 window.addEventListener("resize", fitSize);
@@ -317,8 +332,7 @@ async function openUpgradesPicker() {
 }
 
 function setLevel(l) {
-    running = false;
-    needsRender = true
+    pause()
     if (l > 0) {
         openUpgradesPicker().then();
     }
@@ -366,6 +380,12 @@ function reset_perks() {
 
     const randomGift = isSettingOn('easy') ? 'slow_down' : giftable[Math.floor(Math.random() * giftable.length)].id;
     perks[randomGift] = 1;
+
+    // TODO
+    // perks.puck_repulse_ball = 3
+    // perks.multiball = 1
+    // perks.ball_repulse_ball = 1
+
     return randomGift
 }
 
@@ -544,7 +564,20 @@ const upgrades = [{
         name: "Bigger puck",
         max: 2,
         help: `Catches more coins.`,
-    }]
+    }, {
+        minimumTotalScore: 2000,
+        id: 'ball_repulse_ball',
+        name: "Balls repulse balls",
+        max: 3,
+        help: `Only has an effect when 2+ balls.`,
+    }, {
+        minimumTotalScore: 4000,
+        id: 'puck_repulse_ball',
+        name: "Puck repulse balls",
+        max: 3,
+        help: `Prevents the puck from touching the balls.`,
+    }
+    ]
 
 function computeUpgradeCurrentMaxLevel(u, ts) {
     let max = 0
@@ -701,7 +734,11 @@ function setMousePos(x) {
 
 canvas.addEventListener("mouseup", (e) => {
     if (e.button !== 0) return;
-    running = !running;
+    if(running) {
+        pause()
+    }else {
+        play()
+    }
 });
 
 canvas.addEventListener("mousemove", (e) => {
@@ -712,15 +749,15 @@ canvas.addEventListener("touchstart", (e) => {
     e.preventDefault();
     if (!e.touches?.length) return;
     setMousePos(e.touches[0].pageX);
-    running = true;
+    play()
 });
 canvas.addEventListener("touchend", (e) => {
     e.preventDefault();
-    running = false;
+    pause()
 });
 canvas.addEventListener("touchcancel", (e) => {
     e.preventDefault();
-    running = false;
+    pause()
     needsRender = true
 });
 canvas.addEventListener("touchmove", (e) => {
@@ -969,15 +1006,37 @@ function ballTick(ball, delta) {
 
     if (isTelekinesisActive(ball)) {
         ball.vx += ((puck - ball.x) / 1000) * delta * perks.telekinesis;
-    } else if (ball.vx * ball.vx + ball.vy * ball.vy < baseSpeed * baseSpeed * 2) {
-        ball.vx *= 1.01;
-        ball.vy *= 1.01;
+    }
+
+    const speedLimitDampener =1+ perks.telekinesis+perks.ball_repulse_ball +perks.puck_repulse_ball
+    if (ball.vx * ball.vx + ball.vy * ball.vy < baseSpeed * baseSpeed * 2) {
+        ball.vx *= (1 + .02/speedLimitDampener);
+        ball.vy *= (1 + .02/speedLimitDampener);
     } else {
-        ball.vx *= 0.99;
+        ball.vx *= (1 - .02/speedLimitDampener);;
         if (Math.abs(ball.vy) > 0.5 * baseSpeed) {
-            ball.vy *= 0.99;
+            ball.vy *= (1 - .02/speedLimitDampener);;
         }
     }
+
+    if(perks.ball_repulse_ball){
+        for(b2 of balls){
+            // avoid computing this twice, and repulsing itself
+            if(b2.x>=ball.x) continue
+            repulse(ball,b2,15* perks.ball_repulse_ball )
+        }
+    }
+    if(perks.puck_repulse_ball){
+        repulse(ball,{
+             x:puck,
+             y:gameZoneHeight,
+             vx:0,
+             vy:0,
+            color:currentLevelInfo().black_puck ? '#000' : '#FFF' ,
+         },15* perks.puck_repulse_ball )
+
+    }
+
 
     const borderHitCode = bordersHitCheck(ball, ballSize / 2, delta);
     if (borderHitCode) {
@@ -1025,7 +1084,8 @@ function ballTick(ball, delta) {
                     // segement
                     const start= ball.bouncesList[si]
                     const end= ball.bouncesList[si+1]
-                    const distance=  Math.sqrt(Math.pow(start.x-end.x,2)+ Math.pow(start.y-end.y,2))
+                    const distance= distanceBetween(start,end)
+
                     const parts = distance/30
                     for(var i = 0; i <parts;i++ ){
                         flashes.push({
@@ -1061,7 +1121,7 @@ function ballTick(ball, delta) {
                 perks.extra_life--;
                 resetBalls();
                 sounds.revive();
-                running = false;
+                pause()
                 coins = [];
                 flashes.push({
                     type: "ball",
@@ -1143,8 +1203,7 @@ function addToTotalScore(points) {
 
 function gameOver(title, intro) {
     if (!running) return;
-    running = false;
-    needsRender = true
+    pause()
 
     runStatistics.ended = Date.now()
 
@@ -1958,8 +2017,7 @@ setInterval(() => {
 
 window.addEventListener("visibilitychange", () => {
     if (document.hidden) {
-        running = false;
-        needsRender = true
+        pause()
     }
 });
 
@@ -2123,8 +2181,7 @@ const options = {
 };
 
 async function openSettingsPanel() {
-    running = false;
-    needsRender = true
+    pause()
 
     const optionsList = [];
     for (const key in options) {
@@ -2197,6 +2254,58 @@ async function openSettingsPanel() {
     }
 }
 
+function distance2(a,b){
+    return Math.pow(a.x-b.x,2)+ Math.pow(a.y-b.y,2)
+}
+function distanceBetween(a,b){
+    return Math.sqrt(distance2(a,b))
+}
+
+function repulse(a,b,power){
+
+    const distance = distanceBetween(a,b)
+    // Ensure we don't get soft locked
+    if(distance>gameZoneWidth/2) return
+    // Unit vector
+    const dx= (a.x-b.x)/distance
+    const dy= (a.y-b.y)/distance
+
+    const fact= - power / (1+Math.max(1, distance))
+    b.vx+=dx*fact
+    b.vy+=dy*fact
+    a.vx-=dx*fact
+    a.vy-=dy*fact
+
+    if(!isSettingOn('basic')){
+        const speed= 10
+        const rand= 2
+        flashes.push({
+            type: "particle",
+            duration:150,
+            time: levelTime,
+            size:coinSize/2,
+            color:b.color,
+            ethereal:true,
+            x:a.x,
+            y:a.y,
+            vx:-dx*speed+a.vx+(Math.random()-0.5)*rand,
+            vy:-dy*speed+a.vy+(Math.random()-0.5)*rand,
+        })
+        flashes.push({
+            type: "particle",
+            duration:150,
+            time: levelTime,
+            size:coinSize/2,
+            color:a.color,
+            ethereal:true,
+            x:b.x,
+            y:b.y,
+            vx:dx*speed+b.vx+(Math.random()-0.5)*rand,
+            vy:dy*speed+b.vy+(Math.random()-0.5)*rand,
+        })
+    }
+
+}
 fitSize()
 restart()
 tick();
