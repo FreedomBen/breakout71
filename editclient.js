@@ -84,10 +84,7 @@ function addLevelEditorToList(level, levelIndex) {
                 <input type="checkbox" data-field="black_puck"   ${level.black_puck ? 'checked':''}  data-level="${levelIndex}" />
             black_puck
             </label>
-            <label>
-                <input type="checkbox" data-field="draft"   ${level.draft ? 'checked':''}  data-level="${levelIndex}" />
-            draft
-            </label>
+           
             </div>
             
             <div class="level-bricks-preview" id="bricks-of-${levelIndex}" > 

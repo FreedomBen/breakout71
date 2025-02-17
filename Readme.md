@@ -13,8 +13,8 @@ At the end of each level, you get to select an upgrade.
 
 ## TODO
  
+- apply a minimum speed to the ball (when 2 slower balls picked it is crawling) 
 - Fdroid 
-- perk : elastic between balls
 - easily start a test game with specific upgrades or levels (with query string or through menu) 
 - show total score on end screen (score added to total) 
 - show stats on end screen compared to other runs

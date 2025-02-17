@@ -9,8 +9,9 @@ const puckHeight = ballSize;
 if (allLevels.find(l => l.focus)) {
     allLevels = allLevels.filter(l => l.focus)
 }
-allLevels = allLevels.filter(l => !l.draft)
-
+allLevels.forEach((l,li)=>{
+ l.threshold= li < 8 ? 0 : Math.round(Math.pow(10, 1 + (li + l.size) / 30) * (li)) * 10
+})
 
 let runLevels = []
 
@@ -576,14 +577,14 @@ const upgrades = [
         "id": "ball_repulse_ball",
         "name": "Balls repulse balls",
         "max": 3,
-        "help": "Only has an effect when 2+ balls."
+        "help": "Only has an effect with 2+ balls."
     },
     {
         "threshold": 98000,
         "id": "ball_attract_ball",
         "name": "Balls attract balls",
         "max": 3,
-        "help": "Only has an effect when 2+ balls."
+        "help": "Only has an effect with 2+ balls."
     },
     {
         "threshold": 120000,
@@ -602,15 +603,12 @@ function getPossibleUpgrades() {
         .filter(u => ts>=u.threshold)
 }
 
-function levelTotalScoreCondition(l, li) {
-    return li < 8 ? 0 : Math.round(Math.pow(10, 1 + (li + l.size) / 30) * (li)) * 10
-}
 
 function shuffleLevels(nameToAvoid = null) {
     const ts = getTotalScore();
     runLevels = allLevels
         .filter(l => nextRunOverrides.level ? l.name === nextRunOverrides.level : true)
-        .filter((l, li) => ts >= levelTotalScoreCondition(l, li))
+        .filter((l, li) => ts >= l.threshold)
         .filter(l => l.name !== nameToAvoid || allLevels.length === 1)
         .sort(() => Math.random() - 0.5)
         .slice(0, 7 + 3)
@@ -636,10 +634,8 @@ function getUpgraderUnlockPoints() {
 
     allLevels.forEach((l, li) => {
         list.push({
-            threshold: levelTotalScoreCondition(l, li),
+            threshold: l.threshold,
             title: l.name + ' (Level)',
-            // help: 'Adds level "'+l.name + '" to the list of possible levels.',
-
         })
     })
 
@@ -2229,12 +2225,13 @@ async function openSettingsPanel() {
                             )
 
                             ,
-                            ...allLevels.map((l, li) => {
-                                const threshold = levelTotalScoreCondition(l, li)
-                                const avaliable = ts >= threshold
+                            ...allLevels
+                                .sort((a, b) => a.threshold - b.threshold)
+                                .map((l, li) => {
+                                const avaliable = ts >= l.threshold
                                 return ({
                                     text: l.name,
-                                    help: `A ${l.size}x${l.size} level` + (avaliable ? '' : `(${threshold} coins)`),
+                                    help: `A ${l.size}x${l.size} level` + (avaliable ? '' : `(${l.threshold} coins)`),
                                     disabled: !avaliable,
                                     value: {level: l.name}
 

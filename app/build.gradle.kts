@@ -1,7 +1,3 @@
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.time.ZoneId
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
