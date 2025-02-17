@@ -384,7 +384,7 @@ let allLevels=[
     "focus": false
   },
   {
-    "name": "Blocky Stairs",
+    "name": "Stairs",
     "size": 8,
     "bricks": [
       "#5DA3EA",
@@ -1085,7 +1085,7 @@ let allLevels=[
     "color": ""
   },
   {
-    "name": "Labirynth",
+    "name": "Labyrinthe",
     "size": 11,
     "bricks": [
       "",
@@ -2660,7 +2660,7 @@ let allLevels=[
     "squared": true
   },
   {
-    "name": "tulip",
+    "name": "Tulip",
     "size": 11,
     "bricks": [
       null,
@@ -3039,7 +3039,7 @@ let allLevels=[
     "color": ""
   },
   {
-    "name": "pairs",
+    "name": "Violet Pairs",
     "size": 8,
     "bricks": [
       "#6262EA",
@@ -3111,7 +3111,7 @@ let allLevels=[
     "color": ""
   },
   {
-    "name": "cups",
+    "name": "Red Cups",
     "size": 11,
     "bricks": [
       "",
@@ -3229,7 +3229,7 @@ let allLevels=[
     "color": ""
   },
   {
-    "name": "cactus",
+    "name": "Cactus",
     "size": 10,
     "bricks": [
       null,
@@ -3243,7 +3243,7 @@ let allLevels=[
       "",
       "",
       "",
-      "",
+      "#e32119",
       "#A1F051",
       "",
       "#A1F051",
@@ -3269,7 +3269,7 @@ let allLevels=[
       "#618227",
       "#618227",
       "",
-      "",
+      "#e32119",
       "",
       "",
       "",
@@ -3295,7 +3295,7 @@ let allLevels=[
       "",
       "",
       "",
-      "",
+      "#e32119",
       "#A1F051",
       "#618227",
       "#618227",
@@ -3339,7 +3339,7 @@ let allLevels=[
     "color": ""
   },
   {
-    "name": "sun",
+    "name": "Sunny Face",
     "size": 11,
     "bricks": [
       "",
@@ -4459,7 +4459,7 @@ let allLevels=[
     "squared": false
   },
   {
-    "name": "sunrise",
+    "name": "Sunrise",
     "size": 8,
     "bricks": [
       "",
@@ -4532,7 +4532,7 @@ let allLevels=[
     "color": ""
   },
   {
-    "name": "crosses",
+    "name": "Crosses",
     "size": 13,
     "bricks": [
       "#6262EA",
@@ -5259,7 +5259,7 @@ let allLevels=[
     "squared": true
   },
   {
-    "name": "yellow 71",
+    "name": "Yellow 71",
     "size": 9,
     "bricks": [
       null,
@@ -5408,7 +5408,7 @@ let allLevels=[
     "focus": false
   },
   {
-    "name": "blue 71",
+    "name": "Blue 71",
     "size": 8,
     "bricks": [
       "#5DA3EA",
@@ -5481,7 +5481,7 @@ let allLevels=[
     "focus": false
   },
   {
-    "name": "seventy one",
+    "name": "Seventy one",
     "size": 21,
     "bricks": [
       "#e32119",
@@ -6095,7 +6095,7 @@ let allLevels=[
     "focus": false
   },
   {
-    "name": "Big pig",
+    "name": "Big Pig",
     "size": 15,
     "bricks": [
       null,
