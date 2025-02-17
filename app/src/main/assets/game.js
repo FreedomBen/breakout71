@@ -789,7 +789,7 @@ function shouldPierceByColor(ballOrCoin, vhit, hhit, chit) {
 
 function brickHitCheck(ballOrCoin, radius, isBall) {
     // Make ball/coin bonce, and return bricks that were hit
-    const {x, y, previousx, previousy, hitSinceBounce} = ballOrCoin;
+    const {x, y, previousx, previousy} = ballOrCoin;
 
     const vhit = hitsSomething(previousx, y, radius);
     const hhit = hitsSomething(x, previousy, radius);
@@ -1348,8 +1348,10 @@ function explodeBrick(index, ball, isExplosion) {
                 color, ...coord,
                 previousx: coord.x,
                 previousy: coord.y,
-                vx: ball.vx * (0.5 + Math.random()),
-                vy: ball.vy * (0.5 + Math.random()),
+
+                // Use previous speed because the ball has already bounced
+                vx: ball.previousvx * (0.5 + Math.random()),
+                vy: ball.previousvy * (0.5 + Math.random()),
                 sx: 0,
                 sy: 0,
                 weight: 0.8 + Math.random() * 0.2
