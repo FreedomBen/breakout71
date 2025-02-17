@@ -382,7 +382,7 @@ function reset_perks() {
         return first
     }
 
-    const giftable = getPossibleUpgrades().filter(u => u.giftable && u.max > 0)
+    const giftable = getPossibleUpgrades().filter(u => u.giftable)
     const randomGift = isSettingOn('easy') ? 'slow_down' : giftable[Math.floor(Math.random() * giftable.length)].id;
     perks[randomGift] = 1;
     // TODO
@@ -396,205 +396,210 @@ function reset_perks() {
 
 const upgrades = [
     {
-    minimumTotalScore: 3000,
-    id: 'multiball',
-    giftable: true,
-    name: "+1 ball",
-    max: 3,
-    help: `Start each level with one more balls.`,
-}, {
-    minimumTotalScore: 5000,
-    id: 'pierce',
-    giftable: true,
-    name: "Ball pierces bricks",
-    max: 3,
-    help: `Pierce through 3 blocks after bouncing on the puck.`,
-}, {
-    minimumTotalScore: 500,
-    id: 'telekinesis',
-    giftable: true,
-    name: "Puck controls ball",
-    max: 2,
-    help: `Control the ball's trajectory with the puck.`,
-}, {
-    minimumTotalScore: 0,
-    id: 'extra_life',
-    name: "+1 life",
-    max: 3,
-    help: `Allows you to survive dropping the ball once.`,
-}, {
-    minimumTotalScore: 20000,
-    id: 'sapper',
-    giftable: true,
-    name: "Bricks become bombs",
-    max: 1,
-    help: `Broken blocks are replaced by bombs.`,
-}, {
-    minimumTotalScore: 100000,
-    id: 'soft_reset',
-    name: "Soft reset",
-    max: 2,
-    help: `Only loose half your combo when it resets.`,
-},
-
+        "threshold": 0,
+        "id": "extra_life",
+        "name": "+1 life",
+        "max": 3,
+        "help": "Survive dropping the ball once."
+    },
     {
-        minimumTotalScore: 30000,
-        id: 'bigger_explosions',
-        name: "Bigger explosions",
-        max: 1,
-        help: `All bombs have larger area of effect.`,
+        "threshold": 0,
+        "id": "streak_shots",
+        "giftable": true,
+        "name": "Single puck hit streak",
+        "max": 1,
+        "help": "Break many bricks at once."
     },
 
     {
-        minimumTotalScore: 2000,
-        id: 'coin_magnet',
-        name: "Puck attracts coins",
-        max: 3,
-        help: `Coins falling are drawn toward the puck.`,
+        "threshold": 0,
+        "id": "base_combo",
+        "giftable": true,
+        "name": "+3 base combo",
+        "max": 3,
+        "help": "Your combo starts 3 points higher."
     },
-
     {
-        minimumTotalScore: 7000,
-        id: 'metamorphosis',
-        name: "Coins stain bricks",
-        color_blind_exclude: true,
-        max: 1,
-        help: `Coins color the bricks they touch.`,
+        "threshold": 0,
+        "id": "slow_down",
+        "name": "Slower ball",
+        "max": 2,
+        "help": "Slows down the ball."
     },
-
     {
-        minimumTotalScore: 6000,
-        id: 'picky_eater',
-        giftable: true,
-        name: "Single color streak",
-        color_blind_exclude: true,
-        max: 1,
-        help: `Hit bricks of the same color for more coins.`,
+        "threshold": 0,
+        "id": "bigger_puck",
+        "name": "Bigger puck",
+        "max": 2,
+        "help": "Catches more coins."
     },
-
     {
-        minimumTotalScore: 80000,
-        id: 'pierce_color',
-        name: "Color pierce",
-        color_blind_exclude: true,
-        max: 1,
-        help: `Colored ball pierces bricks of the same color.`,
+        "threshold": 50,
+        "id": "viscosity",
+        "name": "Slower coins fall",
+        "max": 3,
+        "help": "Coins quickly decelerate."
     },
-
     {
-        minimumTotalScore: 0,
-        id: 'streak_shots',
-        giftable: true,
-        name: "Single puck hit streak",
-        max: 1,
-        help: `Break many bricks at once for more coins.`,
+        "threshold": 100,
+        "id": "sides_are_lava",
+        "giftable": true,
+        "name": "Shoot straight",
+        "max": 1,
+        "help": "Avoid the sides for more coins."
     },
-
     {
-        minimumTotalScore: 10000,
-        id: 'hot_start',
-        giftable: true,
-        name: "Hot start",
-        max: 3,
-        help: `Clear the level quickly for more coins.`,
+        "threshold": 200,
+        "id": "telekinesis",
+        "giftable": true,
+        "name": "Puck controls ball",
+        "max": 2,
+        "help": "Control the ball's trajectory."
     },
-
     {
-        minimumTotalScore: 200,
-        id: 'sides_are_lava',
-        giftable: true,
-        name: "Shoot straight",
-        max: 1,
-        help: `Avoid the sides for more coins.`,
-    }, {
-        minimumTotalScore: 600,
-        id: 'top_is_lava',
-        giftable: true,
-        name: "Sky is the limit",
-        max: 1,
-        help: `Avoid the top for more coins.`,
+        "threshold": 400,
+        "id": "top_is_lava",
+        "giftable": true,
+        "name": "Sky is the limit",
+        "max": 1,
+        "help": "Avoid the top for more coins."
     },
-
     {
-        minimumTotalScore: 8000,
-        id: 'catch_all_coins',
-        giftable: true,
-        name: "Compound interest",
-        max: 3,
-        help: `Catch all coins with your puck for even more coins.`,
-    }, {
-        minimumTotalScore: 0,
-        id: 'viscosity',
-        name: "Slower coins fall",
-        max: 3,
-        help: `Coins quickly decelerate and fall more slowly.`,
+        "threshold": 800,
+        "id": "coin_magnet",
+        "name": "Puck attracts coins",
+        "max": 3,
+        "help": "Coins falling are drawn toward the puck."
     },
-
     {
-        minimumTotalScore: 0,
-        id: 'base_combo',
-        giftable: true,
-        name: "+3 base combo",
-        max: 3,
-        help: `Your combo starts 3 points higher.`,
+        "threshold": 1600,
+        "id": "skip_last",
+        "name": "Last brick breaks",
+        "max": 3,
+        "help": "The last brick will self-destruct."
     },
-
     {
-        minimumTotalScore: 0,
-        id: 'slow_down',
-        name: "Slower ball",
-        max: 2,
-        help: `Slows down the ball.`,
-    }, {
-        minimumTotalScore: 65000,
-        id: 'extra_levels',
-        name: "+1 level",
-        max: 3,
-        help: `Play one more level before game over.`,
-    }, {
-        minimumTotalScore: 2500,
-        id: 'skip_last',
-        name: "Last brick breaks",
-        max: 3,
-        help: `The last brick will self-destruct.`,
-    }, {
-        minimumTotalScore: 3600, id: 'smaller_puck', name: "Smaller puck", max: 2, help: `Gives you more control.`,
-    }, {
-        minimumTotalScore: 0,
-        id: 'bigger_puck',
-        name: "Bigger puck",
-        max: 2,
-        help: `Catches more coins.`,
-    }, {
-        minimumTotalScore: 2000,
-        id: 'ball_repulse_ball',
-        name: "Balls repulse balls",
-        max: 3,
-        help: `Only has an effect when 2+ balls.`,
-    }, {
-        minimumTotalScore: 2000,
-        id: 'ball_attract_ball',
-        name: "Balls attract balls",
-        max: 3,
-        help: `Only has an effect when 2+ balls.`,
-    }, {
-        minimumTotalScore: 4000,
-        id: 'puck_repulse_ball',
-        name: "Puck repulse balls",
-        max: 3,
-        help: `Prevents the puck from touching the balls.`,
-    }
+        "threshold": 3200,
+        "id": "multiball",
+        "giftable": true,
+        "name": "+1 ball",
+        "max": 3,
+        "help": "Start each level with one more balls."
+    },
+    {
+        "threshold": 5600,
+        "id": "smaller_puck",
+        "name": "Smaller puck",
+        "max": 2,
+        "help": "Gives you more control."
+    },
+    {
+        "threshold": 7000,
+        "id": "pierce",
+        "giftable": true,
+        "name": "Ball pierces bricks",
+        "max": 3,
+        "help": "Go through 3 blocks before bouncing."
+    },
+    {
+        "threshold": 12000,
+        "id": "picky_eater",
+        "giftable": true,
+        "name": "Single color streak",
+        "color_blind_exclude": true,
+        "max": 1,
+        "help": "Hit groups of bricks of the same color."
+    },
+    {
+        "threshold": 16000,
+        "id": "metamorphosis",
+        "name": "Coins stain bricks",
+        "color_blind_exclude": true,
+        "max": 1,
+        "help": "Coins color the bricks they touch."
+    },
+    {
+        "threshold": 22000,
+        "id": "catch_all_coins",
+        "giftable": true,
+        "name": "Compound interest",
+        "max": 3,
+        "help": "Catch all coins with your puck for even more coins."
+    },
+    {
+        "threshold": 26000,
+        "id": "hot_start",
+        "giftable": true,
+        "name": "Hot start",
+        "max": 3,
+        "help": "Clear the level quickly for more coins."
+    },
+    {
+        "threshold": 33000,
+        "id": "sapper",
+        "giftable": true,
+        "name": "Bricks become bombs",
+        "max": 1,
+        "help": "Broken blocks are replaced by bombs."
+    },
+    {
+        "threshold": 42000,
+        "id": "bigger_explosions",
+        "name": "Bigger explosions",
+        "max": 1,
+        "help": "All bombs have larger area of effect."
+    },
+    {
+        "threshold": 54000,
+        "id": "extra_levels",
+        "name": "+1 level",
+        "max": 3,
+        "help": "Play one more level before game over."
+    },
+    {
+        "threshold": 65000,
+        "id": "pierce_color",
+        "name": "Color pierce",
+        "color_blind_exclude": true,
+        "max": 1,
+        "help": "Colored ball pierces bricks of the same color."
+    },
+    {
+        "threshold": 760000,
+        "id": "soft_reset",
+        "name": "Soft reset",
+        "max": 2,
+        "help": "Only loose half your combo when it resets."
+    },
+    {
+        "threshold": 87000,
+        "id": "ball_repulse_ball",
+        "name": "Balls repulse balls",
+        "max": 3,
+        "help": "Only has an effect when 2+ balls."
+    },
+    {
+        "threshold": 98000,
+        "id": "ball_attract_ball",
+        "name": "Balls attract balls",
+        "max": 3,
+        "help": "Only has an effect when 2+ balls."
+    },
+    {
+        "threshold": 120000,
+        "id": "puck_repulse_ball",
+        "name": "Puck repulse balls",
+        "max": 3,
+        "help": "Prevents the puck from touching the balls."
+    },
 ]
-
 
 
 function getPossibleUpgrades() {
     const ts = getTotalScore()
     return upgrades
         .filter(u => !(isSettingOn('color_blind') && u.color_blind_exclude))
-        .map(u => ({
-            ...u, max:  ts > u.minimumTotalScore ? u.max:0, originalMax: u.max
-        }))
+        .filter(u => ts>=u.threshold)
 }
 
 function levelTotalScoreCondition(l, li) {
@@ -620,9 +625,9 @@ function getUpgraderUnlockPoints() {
     upgrades
         .filter(u => !(isSettingOn('color_blind') && u.color_blind_exclude))
         .forEach(u => {
-            if (u.minimumTotalScore) {
+            if (u.threshold) {
                 list.push({
-                    threshold: u.minimumTotalScore,
+                    threshold: u.threshold,
                     title: u.name + ' (Perk)',
                     help: u.help,
                 })
@@ -650,7 +655,6 @@ function pickRandomUpgrades(count) {
         .slice(0, count)
         .sort((a, b) => a.id > b.id ? 1 : -1)
         .map(u => {
-
             incrementRunStatistics('offered_upgrade.' + u.id, 1)
             return {
                 key: u.id, text: u.name, value: () => {
@@ -658,9 +662,7 @@ function pickRandomUpgrades(count) {
                     incrementRunStatistics('picked_upgrade.' + u.id, 1)
                     scoreStory.push("Picked upgrade : " + u.name);
                 }, help: u.help, max: u.max,
-
                 checked: perks[u.id],
-
             }
         })
 
@@ -1248,7 +1250,7 @@ function gameOver(title, intro) {
         const done = endTs - previousUnlockAt
         intro += `Score ${nextUnlock.threshold - endTs} more points to reach the next unlock.`
 
-        const scaleX=(done / total).toFixed(2)
+        const scaleX = (done / total).toFixed(2)
         unlocksInfo += `
             <p class="progress"  title=${JSON.stringify(unlocksInfo.help)}>
            <span>${nextUnlock.title}</span>
@@ -1474,7 +1476,8 @@ function render() {
     }
 
     if (combo > baseCombo()) {
-        ctx.globalCompositeOperation = "screen";
+        // The red should still be visible on a white bg
+        ctx.globalCompositeOperation =  !level.color && level.svg ? "screen" : 'source-over';
         ctx.globalAlpha = (2 + combo - baseCombo()) / 50;
 
         if (perks.top_is_lava) {
@@ -1760,8 +1763,8 @@ function drawBrick(ctx, color, x, y, squared) {
     // It's not easy to have a 1px gap between bricks without antialiasing
 }
 
-function drawRedGradientSquare(ctx, x, y, width, height, redX, redY, blackX, blackY, color = "red",) {
-    const key = "gradient" + width + "_" + height + "_" + redX + "_" + redY + "_" + blackX + "_" + blackY + "_" + color;
+function drawRedGradientSquare(ctx, x, y, width, height, redX, redY, blackX, blackY ) {
+    const key = "gradient" + width + "_" + height + "_" + redX + "_" + redY + "_" + blackX + "_" + blackY ;
 
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
@@ -1770,8 +1773,8 @@ function drawRedGradientSquare(ctx, x, y, width, height, redX, redY, blackX, bla
         const canctx = can.getContext("2d");
 
         const gradient = canctx.createLinearGradient(redX, redY, blackX, blackY);
-        gradient.addColorStop(0, color);
-        gradient.addColorStop(1, "black");
+        gradient.addColorStop(0, "rgba(255,0,0,1)");
+        gradient.addColorStop(1, "rgba(255,0,0,0)");
         canctx.fillStyle = gradient;
         canctx.fillRect(0, 0, width, height);
         cachedGraphics[key] = can;
@@ -2210,29 +2213,28 @@ async function openSettingsPanel() {
                         text: `
                        <p>Your high score is ${highScore}. In total, you've cought ${ts} coins. Click an upgrade below to start a test run with it (stops after 1 level).</p> 
                        `,
-                        actions: [...getPossibleUpgrades()
-                            .sort((a,b)=>a.minimumTotalScore-b.minimumTotalScore)
+                        actions: [...upgrades
+                            .sort((a, b) => a.threshold - b.threshold)
                             .map(({
-                                                                    originalMax,
-                                                                    name,
-                                                                    max,
-                                                                    help,id,
-                            minimumTotalScore
-                                                                }) =>
-                            ({
-                                text: name,
-                                    help:`${help} (${minimumTotalScore} coins)`,
-                                disabled: !max,
-                                value: {perks: {[id]: 1}}
+                                      name,
+                                      max,
+                                      help, id,
+                                      threshold
+                                  }) => ({
+                                    text: name,
+                                    help: help + (ts >= threshold ? '' : `(${threshold} coins)`),
+                                    disabled: ts < threshold,
+                                    value: {perks: {[id]: 1}}
+                                })
+                            )
 
-                            }))
                             ,
                             ...allLevels.map((l, li) => {
-                                const threshold=levelTotalScoreCondition(l, li)
-                                const avaliable= ts >= threshold
+                                const threshold = levelTotalScoreCondition(l, li)
+                                const avaliable = ts >= threshold
                                 return ({
                                     text: l.name,
-                                    help:`A ${l.size}x${l.size} level (${threshold} coins)`,
+                                    help: `A ${l.size}x${l.size} level` + (avaliable ? '' : `(${threshold} coins)`),
                                     disabled: !avaliable,
                                     value: {level: l.name}
 
