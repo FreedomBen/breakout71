@@ -576,12 +576,14 @@ const upgrades = [
         "threshold": 87000,
         "id": "ball_repulse_ball",
         "name": "Balls repulse balls",
+        requires:'multiball',
         "max": 3,
         "help": "Only has an effect with 2+ balls."
     },
     {
         "threshold": 98000,
         "id": "ball_attract_ball",
+        requires:'multiball',
         "name": "Balls attract balls",
         "max": 3,
         "help": "Only has an effect with 2+ balls."
@@ -601,6 +603,7 @@ function getPossibleUpgrades() {
     return upgrades
         .filter(u => !(isSettingOn('color_blind') && u.color_blind_exclude))
         .filter(u => ts>=u.threshold)
+        .filter(u => !u.requires || perks[u.requires])
 }
 
 
@@ -643,10 +646,12 @@ function getUpgraderUnlockPoints() {
 }
 
 
+let lastOffered={}
 function pickRandomUpgrades(count) {
 
     let list = getPossibleUpgrades()
-        .sort(() => Math.random() - 0.5)
+        .map(u=>({...u, score:Math.random() + (lastOffered[u.id]||0) }))
+        .sort((a,b) => a.score-b.score)
         .filter(u => perks[u.id] < u.max)
         .slice(0, count)
         .sort((a, b) => a.id > b.id ? 1 : -1)
@@ -662,6 +667,10 @@ function pickRandomUpgrades(count) {
             }
         })
 
+
+    list.forEach(u=> {
+        lastOffered[u.key] = Math.round(Date.now()/1000)
+    })
 
     return list;
 }
@@ -2231,7 +2240,7 @@ async function openSettingsPanel() {
                                 const avaliable = ts >= l.threshold
                                 return ({
                                     text: l.name,
-                                    help: `A ${l.size}x${l.size} level` + (avaliable ? '' : `(${l.threshold} coins)`),
+                                    help: `A ${l.size}x${l.size} level with ${l.bricks.filter(i => i).length} bricks` + (avaliable ? '' : `(${l.threshold} coins)`),
                                     disabled: !avaliable,
                                     value: {level: l.name}
 

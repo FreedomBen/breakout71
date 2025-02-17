@@ -12,7 +12,7 @@ At the end of each level, you get to select an upgrade.
 [Donate](https://github.com/sponsors/renanlecaro)
 
 ## TODO
- 
+- automate itch update https://itch.io/docs/butler/pushing.html 
 - apply a minimum speed to the ball (when 2 slower balls picked it is crawling) 
 - Fdroid 
 - easily start a test game with specific upgrades or levels (with query string or through menu) 
