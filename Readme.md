@@ -10,6 +10,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 [itch.io](https://renanlecaro.itch.io/breakout71) - 
 [GitLab](https://gitlab.com/lecarore/breakout71) - 
 [Donate](https://github.com/sponsors/renanlecaro)
+
 ## Gameplay
 
 The goal is to catch as many coins as possible during 7 levels. Coins appear when you break bricks. They fly around, bounce and roll, and you need to catch them with your puck. Your "combo" is the number of coins spawned when a brick breaks, it is displayed on your puck. Your score is displayed in the top right corner of the screen, it is the number of coins you have managed to catch since the begining of your run. 
@@ -29,6 +30,7 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 ## Doing
 
 - publish on Fdroid
+- Delay the sound context stop by a few ms
 
 ## Todo
 
@@ -37,6 +39,8 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 - show stats on end screen compared to other runs
 - handle back bouton in menu
 - more levels : famous simple games, letters, fruits, animals
+- icons for upgrades and level
+- remind users of what they have already picked. Maybe show all upgrades, disabled except the offered ones ?
 
 ## Other ideas
 

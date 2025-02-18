@@ -103,7 +103,10 @@ function pause() {
     running = false
     needsRender = true
     if (audioContext) {
-        audioContext.suspend()
+        setTimeout(() => {
+            if (!running)
+                audioContext.suspend()
+        }, 1000)
     }
 }
 
@@ -1406,7 +1409,6 @@ function render() {
         ctx.fillRect(0, 0, width, height);
 
 
-
         ctx.globalCompositeOperation = "screen";
         ctx.globalAlpha = 0.6;
         coins.forEach((coin) => {
@@ -1434,11 +1436,11 @@ function render() {
             }
 
         });
-                // Decides how brights the bg black parts can get
+        // Decides how brights the bg black parts can get
         ctx.globalAlpha = .2;
         ctx.globalCompositeOperation = "multiply";
-                ctx.fillStyle =  "black";
-                ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, width, height);
         // Decides how dark the background black parts are when lit (1=black)
         ctx.globalAlpha = .8;
         ctx.globalCompositeOperation = "multiply";
@@ -1454,11 +1456,11 @@ function render() {
                 bgctx.fillRect(0, 0, width, height);
                 console.log("redrew context")
             }
-            if(background.complete) {
+            if (background.complete) {
                 ctx.drawImage(backgroundCanvas, 0, 0)
-            }else{
+            } else {
                 // Background not loaded yes
-                ctx.fillStyle =  "#000";
+                ctx.fillStyle = "#000";
                 ctx.fillRect(0, 0, width, height);
             }
         }
@@ -1514,8 +1516,8 @@ function render() {
     const lastExplosionDelay = Date.now() - lastexplosion + 5;
     const shaked = lastExplosionDelay < 200;
     if (shaked) {
-        const amplitude =( perks.bigger_explosions + 1) *  50 / lastExplosionDelay
-        ctx.translate(Math.sin(Date.now()) * amplitude ,  Math.sin(Date.now() + 36) * amplitude);
+        const amplitude = (perks.bigger_explosions + 1) * 50 / lastExplosionDelay
+        ctx.translate(Math.sin(Date.now()) * amplitude, Math.sin(Date.now() + 36) * amplitude);
     }
 
     ctx.globalCompositeOperation = "source-over";
