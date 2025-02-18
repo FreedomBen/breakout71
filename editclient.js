@@ -138,7 +138,12 @@ document.getElementById('levels').addEventListener('change', e => {
             level.svg = ''
             updateLevelBackground(levelIndex)
         }else if( e.target.getAttribute('type') === 'checkbox' && e.target.hasAttribute('data-field')){
-            level[e.target.getAttribute('data-field')] = !!e.target.checked
+            const field=e.target.getAttribute('data-field')
+            if(field==='focus'){
+                allLevels.forEach(l=>l.focus=false)
+            }
+            level[field] = !!e.target.checked
+
         }
 
         save()

@@ -9,8 +9,8 @@ const puckHeight = ballSize;
 if (allLevels.find(l => l.focus)) {
     allLevels = allLevels.filter(l => l.focus)
 }
-allLevels.forEach((l,li)=>{
- l.threshold= li < 8 ? 0 : Math.round(Math.pow(10, 1 + (li + l.size) / 30) * (li)) * 10
+allLevels.forEach((l, li) => {
+    l.threshold = li < 8 ? 0 : Math.round(Math.pow(10, 1 + (li + l.size) / 30) * (li)) * 10
 })
 
 let runLevels = []
@@ -107,8 +107,7 @@ function pause() {
     }
 }
 
-
-let offsetX, gameZoneWidth, gameZoneHeight, brickWidth, needsRender = true;
+let offsetX, offsetXRoundedDown, gameZoneWidth, gameZoneWidthRoundedUp, gameZoneHeight, brickWidth, needsRender = true;
 
 const background = document.createElement("img");
 const backgroundCanvas = document.createElement("canvas");
@@ -129,6 +128,9 @@ const fitSize = () => {
     brickWidth = Math.floor(baseWidth / gridSize / 2) * 2;
     gameZoneWidth = brickWidth * gridSize;
     offsetX = Math.floor((canvas.width - gameZoneWidth) / 2);
+    offsetXRoundedDown = offsetX
+    if (offsetX < ballSize) offsetXRoundedDown = 0
+    gameZoneWidthRoundedUp = width - 2 * offsetXRoundedDown
     backgroundCanvas.title = 'resized'
     // Ensure puck stays within bounds
     setMousePos(puck);
@@ -576,14 +578,14 @@ const upgrades = [
         "threshold": 87000,
         "id": "ball_repulse_ball",
         "name": "Balls repulse balls",
-        requires:'multiball',
+        requires: 'multiball',
         "max": 3,
         "help": "Only has an effect with 2+ balls."
     },
     {
         "threshold": 98000,
         "id": "ball_attract_ball",
-        requires:'multiball',
+        requires: 'multiball',
         "name": "Balls attract balls",
         "max": 3,
         "help": "Only has an effect with 2+ balls."
@@ -602,7 +604,7 @@ function getPossibleUpgrades() {
     const ts = getTotalScore()
     return upgrades
         .filter(u => !(isSettingOn('color_blind') && u.color_blind_exclude))
-        .filter(u => ts>=u.threshold)
+        .filter(u => ts >= u.threshold)
         .filter(u => !u.requires || perks[u.requires])
 }
 
@@ -646,12 +648,13 @@ function getUpgraderUnlockPoints() {
 }
 
 
-let lastOffered={}
+let lastOffered = {}
+
 function pickRandomUpgrades(count) {
 
     let list = getPossibleUpgrades()
-        .map(u=>({...u, score:Math.random() + (lastOffered[u.id]||0) }))
-        .sort((a,b) => a.score-b.score)
+        .map(u => ({...u, score: Math.random() + (lastOffered[u.id] || 0)}))
+        .sort((a, b) => a.score - b.score)
         .filter(u => perks[u.id] < u.max)
         .slice(0, count)
         .sort((a, b) => a.id > b.id ? 1 : -1)
@@ -668,8 +671,8 @@ function pickRandomUpgrades(count) {
         })
 
 
-    list.forEach(u=> {
-        lastOffered[u.key] = Math.round(Date.now()/1000)
+    list.forEach(u => {
+        lastOffered[u.key] = Math.round(Date.now() / 1000)
     })
 
     return list;
@@ -703,22 +706,12 @@ function setMousePos(x) {
     needsRender = true;
     puck = x;
 
-    if (offsetX > ballSize) {
-        // We have borders visible, enforce them
-        if (puck < offsetX + puckWidth / 2) {
-            puck = offsetX + puckWidth / 2;
-        }
-        if (puck > offsetX + gameZoneWidth - puckWidth / 2) {
-            puck = offsetX + gameZoneWidth - puckWidth / 2;
-        }
-    } else {
-        // Let puck touch the border of the screen
-        if (puck < puckWidth / 2) {
-            puck = puckWidth / 2;
-        }
-        if (puck > offsetX * 2 + gameZoneWidth - puckWidth / 2) {
-            puck = offsetX * 2 + gameZoneWidth - puckWidth / 2;
-        }
+    // We have borders visible, enforce them
+    if (puck < offsetXRoundedDown + puckWidth / 2) {
+        puck = offsetXRoundedDown + puckWidth / 2;
+    }
+    if (puck > offsetXRoundedDown + gameZoneWidthRoundedUp - puckWidth / 2) {
+        puck = offsetXRoundedDown + gameZoneWidthRoundedUp - puckWidth / 2;
     }
     if (!running && !levelTime) {
         putBallsAtPuck();
@@ -850,8 +843,8 @@ function bordersHitCheck(coin, radius, delta) {
     let vhit = 0, hhit = 0;
 
 
-    if (coin.x < (offsetX > ballSize ? offsetX : 0) + radius) {
-        coin.x = offsetX + radius;
+    if (coin.x < offsetXRoundedDown + radius) {
+        coin.x = offsetXRoundedDown + radius;
         coin.vx *= -1;
         hhit = 1;
     }
@@ -860,8 +853,8 @@ function bordersHitCheck(coin, radius, delta) {
         coin.vy *= -1;
         vhit = 1;
     }
-    if (coin.x > canvas.width - (offsetX > ballSize ? offsetX : 0) - radius) {
-        coin.x = canvas.width - offsetX - radius;
+    if (coin.x > canvas.width - offsetXRoundedDown - radius) {
+        coin.x = canvas.width - offsetXRoundedDown - radius;
         coin.vx *= -1;
         hhit = 1;
     }
@@ -1406,18 +1399,13 @@ function render() {
 
     if (!isSettingOn("basic") && !level.color && level.svg && !level.black_puck) {
 
+        // Without this the light trails everything
         ctx.globalCompositeOperation = "source-over";
-        ctx.globalAlpha = 0.7
+        ctx.globalAlpha = .4
         ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, width, height);
 
-        ctx.globalCompositeOperation = "multiply";
-        ctx.globalAlpha = 0.3;
-        const gradient = ctx.createLinearGradient(offsetX, gameZoneHeight - puckHeight, offsetX, height - puckHeight * 3,);
-        gradient.addColorStop(0, "black");
-        gradient.addColorStop(1, "transparent");
-        ctx.fillStyle = gradient;
-        ctx.fillRect(offsetX, gameZoneHeight - puckHeight * 3, gameZoneWidth, puckHeight * 4,);
+
 
         ctx.globalCompositeOperation = "screen";
         ctx.globalAlpha = 0.6;
@@ -1446,11 +1434,16 @@ function render() {
             }
 
         });
-
-        ctx.globalAlpha = 0.9;
+                // Decides how brights the bg black parts can get
+        ctx.globalAlpha = .2;
         ctx.globalCompositeOperation = "multiply";
-        if (level.svg && background.complete) {
-            if (backgroundCanvas.title !== level.name) {
+                ctx.fillStyle =  "black";
+                ctx.fillRect(0, 0, width, height);
+        // Decides how dark the background black parts are when lit (1=black)
+        ctx.globalAlpha = .8;
+        ctx.globalCompositeOperation = "multiply";
+        if (level.svg) {
+            if (backgroundCanvas.title !== level.name && background.complete) {
                 backgroundCanvas.title = level.name
                 backgroundCanvas.width = canvas.width
                 backgroundCanvas.height = canvas.height
@@ -1461,14 +1454,18 @@ function render() {
                 bgctx.fillRect(0, 0, width, height);
                 console.log("redrew context")
             }
-            ctx.drawImage(backgroundCanvas, 0, 0)
-
-
+            if(background.complete) {
+                ctx.drawImage(backgroundCanvas, 0, 0)
+            }else{
+                // Background not loaded yes
+                ctx.fillStyle =  "#000";
+                ctx.fillRect(0, 0, width, height);
+            }
         }
     } else {
 
-        ctx.globalCompositeOperation = "source-over";
         ctx.globalAlpha = 1
+        ctx.globalCompositeOperation = "source-over";
         ctx.fillStyle = level.color || "#000";
         ctx.fillRect(0, 0, width, height);
 
@@ -1484,18 +1481,18 @@ function render() {
 
     if (combo > baseCombo()) {
         // The red should still be visible on a white bg
-        ctx.globalCompositeOperation =  !level.color && level.svg ? "screen" : 'source-over';
+        ctx.globalCompositeOperation = !level.color && level.svg ? "screen" : 'source-over';
         ctx.globalAlpha = (2 + combo - baseCombo()) / 50;
 
         if (perks.top_is_lava) {
-            drawRedGradientSquare(ctx, offsetX, 0, gameZoneWidth, ballSize, 0, 0, 0, ballSize,);
+            drawRedGradientSquare(ctx, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, ballSize, 0, 0, 0, ballSize,);
         }
         if (perks.sides_are_lava) {
-            drawRedGradientSquare(ctx, offsetX, 0, ballSize, gameZoneHeight, 0, 0, ballSize, 0,);
-            drawRedGradientSquare(ctx, offsetX + gameZoneWidth - ballSize, 0, ballSize, gameZoneHeight, ballSize, 0, 0, 0,);
+            drawRedGradientSquare(ctx, offsetXRoundedDown, 0, ballSize, gameZoneHeight, 0, 0, ballSize, 0,);
+            drawRedGradientSquare(ctx, offsetXRoundedDown + gameZoneWidthRoundedUp - ballSize, 0, ballSize, gameZoneHeight, ballSize, 0, 0, 0,);
         }
         if (perks.catch_all_coins) {
-            drawRedGradientSquare(ctx, offsetX, gameZoneHeight - ballSize, gameZoneWidth, ballSize, 0, ballSize, 0, 0,);
+            drawRedGradientSquare(ctx, offsetXRoundedDown, gameZoneHeight - ballSize, gameZoneWidthRoundedUp, ballSize, 0, ballSize, 0, 0,);
         }
         if (perks.streak_shots) {
             drawRedGradientSquare(ctx, puck - puckWidth / 2, gameZoneHeight - puckHeight - ballSize, puckWidth, ballSize, 0, ballSize, 0, 0,);
@@ -1517,7 +1514,8 @@ function render() {
     const lastExplosionDelay = Date.now() - lastexplosion + 5;
     const shaked = lastExplosionDelay < 200;
     if (shaked) {
-        ctx.translate((Math.sin(Date.now()) * 50) / lastExplosionDelay, (Math.sin(Date.now() + 36) * 50) / lastExplosionDelay,);
+        const amplitude =( perks.bigger_explosions + 1) *  50 / lastExplosionDelay
+        ctx.translate(Math.sin(Date.now()) * amplitude ,  Math.sin(Date.now() + 36) * amplitude);
     }
 
     ctx.globalCompositeOperation = "source-over";
@@ -1586,12 +1584,12 @@ function render() {
     //  Borders
     ctx.fillStyle = puckColor;
     ctx.globalCompositeOperation = "source-over";
-    if (offsetX > ballSize) {
+    if (offsetXRoundedDown) {
         ctx.fillRect(offsetX, 0, 1, height);
         ctx.fillRect(width - offsetX - 1, 0, 1, height);
     }
     if (isSettingOn("mobile-mode")) {
-        ctx.fillRect(offsetX, gameZoneHeight, gameZoneWidth, 1);
+        ctx.fillRect(offsetXRoundedDown, gameZoneHeight, gameZoneWidthRoundedUp, 1);
         if (!running) {
             drawText(ctx, "Keep pressing here to play", puckColor, puckHeight, {
                 x: canvas.width / 2, y: gameZoneHeight + (canvas.height - gameZoneHeight) / 2,
@@ -1770,8 +1768,8 @@ function drawBrick(ctx, color, x, y, squared) {
     // It's not easy to have a 1px gap between bricks without antialiasing
 }
 
-function drawRedGradientSquare(ctx, x, y, width, height, redX, redY, blackX, blackY ) {
-    const key = "gradient" + width + "_" + height + "_" + redX + "_" + redY + "_" + blackX + "_" + blackY ;
+function drawRedGradientSquare(ctx, x, y, width, height, redX, redY, blackX, blackY) {
+    const key = "gradient" + width + "_" + height + "_" + redX + "_" + redY + "_" + blackX + "_" + blackY;
 
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
@@ -2239,15 +2237,15 @@ async function openSettingsPanel() {
                             ...allLevels
                                 .sort((a, b) => a.threshold - b.threshold)
                                 .map((l, li) => {
-                                const avaliable = ts >= l.threshold
-                                return ({
-                                    text: l.name,
-                                    help: `A ${l.size}x${l.size} level with ${l.bricks.filter(i => i).length} bricks` + (avaliable ? '' : `(${l.threshold} coins)`),
-                                    disabled: !avaliable,
-                                    value: {level: l.name}
+                                    const avaliable = ts >= l.threshold
+                                    return ({
+                                        text: l.name,
+                                        help: `A ${l.size}x${l.size} level with ${l.bricks.filter(i => i).length} bricks` + (avaliable ? '' : `(${l.threshold} coins)`),
+                                        disabled: !avaliable,
+                                        value: {level: l.name}
 
+                                    })
                                 })
-                            })
                         ]
 
 
