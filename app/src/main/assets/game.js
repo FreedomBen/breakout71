@@ -603,20 +603,19 @@ const upgrades = [
 ]
 
 
+let totalScoreAtRunStart= getTotalScore()
 function getPossibleUpgrades() {
-    const ts = getTotalScore()
     return upgrades
         .filter(u => !(isSettingOn('color_blind') && u.color_blind_exclude))
-        .filter(u => ts >= u.threshold)
+        .filter(u => totalScoreAtRunStart >= u.threshold)
         .filter(u => !u.requires || perks[u.requires])
 }
 
 
-function shuffleLevels(nameToAvoid = null) {
-    const ts = getTotalScore();
+function shuffleLevels(nameToAvoid = null) { 
     runLevels = allLevels
         .filter(l => nextRunOverrides.level ? l.name === nextRunOverrides.level : true)
-        .filter((l, li) => ts >= l.threshold)
+        .filter((l, li) => totalScoreAtRunStart >= l.threshold)
         .filter(l => l.name !== nameToAvoid || allLevels.length === 1)
         .sort(() => Math.random() - 0.5)
         .slice(0, 7 + 3)
@@ -689,6 +688,7 @@ function restart() {
     hadOverrides = !!(nextRunOverrides.level || nextRunOverrides.perks)
     // When restarting, we want to avoid restarting with the same level we're on, so we exclude from the next
     // run's level list
+    totalScoreAtRunStart= getTotalScore()
     shuffleLevels(levelTime || score ? currentLevelInfo().name : null);
     resetRunStatistics()
     score = 0;
@@ -1485,19 +1485,62 @@ function render() {
         // The red should still be visible on a white bg
         ctx.globalCompositeOperation = !level.color && level.svg ? "screen" : 'source-over';
         ctx.globalAlpha = (2 + combo - baseCombo()) / 50;
+        const baseParticle= !isSettingOn('basic') && ( combo - baseCombo() )*Math.random() >5&& running &&{
+              type: "particle",
+                duration: 100*(Math.random()+1),
+                time: levelTime,
+                size: coinSize / 2,
+                color: 'red',
+                ethereal: true,
+        }
 
         if (perks.top_is_lava) {
-            drawRedGradientSquare(ctx, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, ballSize, 0, 0, 0, ballSize,);
+            drawRedGradientSquare( ctx, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, ballSize, 0, 0, 0, ballSize);
+            baseParticle && flashes.push({
+              ...baseParticle,
+                x: offsetXRoundedDown+Math.random()*gameZoneWidthRoundedUp,
+                y: 0,
+                vx: (Math.random() - 0.5) * 10,
+                vy: 5,
+            })
         }
         if (perks.sides_are_lava) {
-            drawRedGradientSquare(ctx, offsetXRoundedDown, 0, ballSize, gameZoneHeight, 0, 0, ballSize, 0,);
-            drawRedGradientSquare(ctx, offsetXRoundedDown + gameZoneWidthRoundedUp - ballSize, 0, ballSize, gameZoneHeight, ballSize, 0, 0, 0,);
+            drawRedGradientSquare( ctx, offsetXRoundedDown, 0, ballSize, gameZoneHeight, 0, 0, ballSize, 0,);
+            drawRedGradientSquare( ctx, offsetXRoundedDown + gameZoneWidthRoundedUp - ballSize, 0, ballSize, gameZoneHeight, ballSize, 0, 0, 0,);
+            const fromLeft =Math.random()>0.5
+            baseParticle && flashes.push({
+              ...baseParticle,
+                x: offsetXRoundedDown+(fromLeft?0:gameZoneWidthRoundedUp),
+                y: Math.random()*gameZoneHeight,
+                vx: fromLeft?5:-5,
+                vy:  (Math.random() - 0.5) * 10,
+            })
         }
         if (perks.catch_all_coins) {
-            drawRedGradientSquare(ctx, offsetXRoundedDown, gameZoneHeight - ballSize, gameZoneWidthRoundedUp, ballSize, 0, ballSize, 0, 0,);
+            drawRedGradientSquare( ctx, offsetXRoundedDown, gameZoneHeight - ballSize, gameZoneWidthRoundedUp, ballSize, 0, ballSize, 0, 0,);
+            let x = puck
+            do{
+            x= offsetXRoundedDown + gameZoneWidthRoundedUp*Math.random()
+            }while(Math.abs(x-puck)<puckWidth/2)
+            baseParticle && flashes.push({
+              ...baseParticle,
+                x ,
+                y:gameZoneHeight,
+                vx:  (Math.random() - 0.5) * 10,
+                vy: -5,
+            })
         }
         if (perks.streak_shots) {
-            drawRedGradientSquare(ctx, puck - puckWidth / 2, gameZoneHeight - puckHeight - ballSize, puckWidth, ballSize, 0, ballSize, 0, 0,);
+            drawRedGradientSquare( ctx, puck - puckWidth / 2, gameZoneHeight - puckHeight - ballSize, puckWidth, ballSize, 0, ballSize, 0, 0,);
+            const pos=(0.5 -Math.random())
+            baseParticle && flashes.push({
+              ...baseParticle,
+            duration : 100,
+                x : puck +   puckWidth*pos,
+                y:gameZoneHeight-puckHeight,
+                vx:  (pos) * 10,
+                vy: -5,
+            })
         }
         if (perks.picky_eater) {
             let okColors = new Set(balls.map((b) => b.color));
@@ -1506,6 +1549,15 @@ function render() {
                 if (!type || type === "black" || okColors.has(type)) return;
                 const x = brickCenterX(index), y = brickCenterY(index);
                 drawFuzzyBall(ctx, "red", brickWidth, x, y);
+
+                 baseParticle && flashes.push({
+                  ...baseParticle,
+                    duration : 100,
+                    x,
+                    y,
+                    vx:  (0.5 -Math.random())*10,
+                    vy:  (0.5 -Math.random())*10,
+            })
             });
         }
         ctx.globalAlpha = 1;
@@ -1770,7 +1822,7 @@ function drawBrick(ctx, color, x, y, squared) {
     // It's not easy to have a 1px gap between bricks without antialiasing
 }
 
-function drawRedGradientSquare(ctx, x, y, width, height, redX, redY, blackX, blackY) {
+function drawRedGradientSquare(  ctx, x, y, width, height, redX, redY, blackX, blackY) {
     const key = "gradient" + width + "_" + height + "_" + redX + "_" + redY + "_" + blackX + "_" + blackY;
 
     if (!cachedGraphics[key]) {
@@ -1786,6 +1838,7 @@ function drawRedGradientSquare(ctx, x, y, width, height, redX, redY, blackX, bla
         canctx.fillRect(0, 0, width, height);
         cachedGraphics[key] = can;
     }
+
     ctx.drawImage(cachedGraphics[key], x, y, width, height);
 }
 
