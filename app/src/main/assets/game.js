@@ -2431,10 +2431,11 @@ Click an item above to start a test run with it.
             }
         ],
         textAfterButtons: `
-        <p>Breakout 71 build ${window.appVersion}, made in France by <a href="https://lecaro.me">Renan LE CARO</a><br/>   
+        <p>Made in France by <a href="https://lecaro.me">Renan LE CARO</a><br/>   
         <a href="./privacy.html" target="_blank">privacy policy</a> - 
         <a href="https://play.google.com/store/apps/details?id=me.lecaro.breakout" target="_blank">Google Play</a> - 
-        <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a>
+        <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a><br/> 
+        v.${window.appVersion}
         
          </p>
         `
