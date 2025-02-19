@@ -60,6 +60,7 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 
 ## Engine ideas
 
+- particles when bouncing on sides / top
 - show total score on end screen (score added to total) 
 - show stats on end screen compared to other runs
 - handle back bouton in menu 
