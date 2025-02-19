@@ -61,8 +61,8 @@ function addLevelEditorToList(level, levelIndex) {
 
 
     div.innerHTML = ` 
-            <div>
             <button data-level="${levelIndex}" data-rename="yep">${name}</button>
+            <div>
             <button data-level="${levelIndex}" data-delete="yep">Delete</button>
             <button data-offset-level-size="-1" data-level="${levelIndex}">-</button>
             <button data-offset-level-size="1" data-level="${levelIndex}">+</button>
@@ -83,7 +83,7 @@ function addLevelEditorToList(level, levelIndex) {
             <label>
                 <input type="checkbox" data-field="black_puck"   ${level.black_puck ? 'checked':''}  data-level="${levelIndex}" />
             black_puck
-            </label>
+            </label> 
            
             </div>
             

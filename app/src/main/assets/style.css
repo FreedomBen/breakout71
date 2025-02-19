@@ -145,6 +145,8 @@ body.black_puck #menu {
 .popup > div > button[disabled] {
   /*border: 1px solid #666;*/
   opacity: 0.5;
+  filter: saturate(0);
+  pointer-events: none;
 }
 
 .popup > div > button > div {

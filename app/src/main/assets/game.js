@@ -9,8 +9,18 @@ const puckHeight = ballSize;
 if (allLevels.find(l => l.focus)) {
     allLevels = allLevels.filter(l => l.focus)
 }
+// Used to render perk icons
+const perkIconsLevels = {}
+allLevels = allLevels.filter(l => {
+    if (l.name.startsWith('perk:')) {
+        perkIconsLevels[l.name.split(':')[1]] = l
+        return false
+    }
+    return true
+})
 allLevels.forEach((l, li) => {
-    l.threshold = li < 8 ? 0 : Math.round(Math.pow(10, 1 + (li + l.size) / 30) * (li)) * 10
+    l.threshold = li < 8 ? 0 : Math.round(Math.min(Math.pow(10, 1 + (li + l.size) / 30)* 10, 10000) * (li))
+    l.sortKey = (Math.random()+3)/3.5 * l.bricks.filter(i=>i).length
 })
 
 let runLevels = []
@@ -145,7 +155,8 @@ const fitSize = () => {
 window.addEventListener("resize", fitSize);
 
 function recomputeTargetBaseSpeed() {
-    baseSpeed = gameZoneWidth / 12 / 10 + currentLevel / 3 + levelTime / (30 * 1000) - perks.slow_down * 2;
+    // We never want the ball to completely stop, it will move at least 3px per frame
+    baseSpeed = Math.max(3,gameZoneWidth / 12 / 10 + currentLevel / 3 + levelTime / (30 * 1000) - perks.slow_down * 2);
 }
 
 
@@ -172,19 +183,21 @@ function getRowColIndex(row, col) {
 function spawnExplosion(count, x, y, color, duration = 150, size = coinSize) {
     if (!!isSettingOn("basic")) return;
     for (let i = 0; i < count; i++) {
+
         flashes.push({
             type: "particle",
-            duration,
             time: levelTime,
             size,
-            color,
             x: x + ((Math.random() - 0.5) * brickWidth) / 2,
             y: y + ((Math.random() - 0.5) * brickWidth) / 2,
             vx: (Math.random() - 0.5) * 30,
             vy: (Math.random() - 0.5) * 30,
+            color,
+            duration:150
         });
     }
 }
+
 
 
 let score = 0;
@@ -280,42 +293,51 @@ let levelSpawnedCoins = 0;
 
 function getLevelStats() {
     const catchRate = (score - levelStartScore) / (levelSpawnedCoins || 1);
-    let stats = `
-        you caught ${score - levelStartScore} coins out of ${levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds.
-        `;
-    stats += levelMisses ? `You missed ${levelMisses} times. ` : "";
-    let text = [stats];
+
     let repeats = 1;
     let choices = 3;
 
+    let timeGain = '', catchGain = '', missesGain = ''
     if (levelTime < 30 * 1000) {
         repeats++;
         choices++;
-        text.push("speed bonus: +1 upgrade and choice");
+        timeGain = " (+1 upgrade)"
     } else if (levelTime < 60 * 1000) {
         choices++;
-        text.push("speed bonus: +1 choice");
+        timeGain = " (+1 choice)"
     }
     if (catchRate === 1) {
         repeats++;
         choices++;
-        text.push("coins bonus: +1 upgrade and choice");
+        catchGain = " (+1 upgrade)"
     } else if (catchRate > 0.9) {
         choices++;
-        text.push("coins bonus: +1 choice.");
+        catchGain = " (+1 choice)"
     }
     if (levelMisses === 0) {
         repeats++;
         choices++;
-        text.push("accuracy bonus: +1 upgrade and choice");
+        missesGain = " (+1 upgrade)"
     } else if (levelMisses <= 3) {
         choices++;
-        text.push("accuracy bonus:+1 choice");
+        missesGain = " (+1 choice)"
     }
+
+    let stats = `
+        You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds${timeGain}.
+        You missed ${levelMisses} times ${missesGain}. 
+        `;
+
+
+    let text = [stats];
 
     return {
         stats, text: text.map(t => '<p>' + t + '</p>').join('\n'), repeats, choices,
     };
+}
+
+function pickedUpgradesHTMl() {
+    return upgrades.filter(u => perks[u.id]).map(u => u.icon).join(' ')
 }
 
 async function openUpgradesPicker() {
@@ -325,10 +347,8 @@ async function openUpgradesPicker() {
     while (repeats--) {
         const actions = pickRandomUpgrades(choices);
         if (!actions.length) break
-        let textAfterButtons;
-        if (actions.length < choices) {
-            textAfterButtons = `<p>You are running out of upgrades, more will be unlocked when you catch lots of coins.</p>`
-        }
+        let textAfterButtons=`<p>Upgrades picked so far : </p><p>${pickedUpgradesHTMl()}</p>`;
+
         const cb = await asyncAlert({
             title: "Pick an upgrade " + (repeats ? "(" + (repeats + 1) + ")" : ""), actions, text, allowClose: false,
             textAfterButtons
@@ -391,11 +411,6 @@ function reset_perks() {
     const giftable = getPossibleUpgrades().filter(u => u.giftable)
     const randomGift = isSettingOn('easy') ? 'slow_down' : giftable[Math.floor(Math.random() * giftable.length)].id;
     perks[randomGift] = 1;
-    // TODO
-    // perks.puck_repulse_ball=3
-    // perks.ball_repulse_ball=3
-    // perks.ball_attract_ball=3
-    // perks.multiball=3
 
     return randomGift
 }
@@ -405,7 +420,7 @@ const upgrades = [
         "threshold": 0,
         "id": "extra_life",
         "name": "+1 life",
-        "max": 3,
+        "max": 7,
         "help": "Survive dropping the ball once."
     },
     {
@@ -422,7 +437,7 @@ const upgrades = [
         "id": "base_combo",
         "giftable": true,
         "name": "+3 base combo",
-        "max": 3,
+        "max": 7,
         "help": "Your combo starts 3 points higher."
     },
     {
@@ -440,14 +455,14 @@ const upgrades = [
         "help": "Catches more coins."
     },
     {
-        "threshold": 50,
+        "threshold": 0,
         "id": "viscosity",
         "name": "Slower coins fall",
         "max": 3,
         "help": "Coins quickly decelerate."
     },
     {
-        "threshold": 100,
+        "threshold": 0,
         "id": "sides_are_lava",
         "giftable": true,
         "name": "Shoot straight",
@@ -455,15 +470,7 @@ const upgrades = [
         "help": "Avoid the sides for more coins."
     },
     {
-        "threshold": 200,
-        "id": "telekinesis",
-        "giftable": true,
-        "name": "Puck controls ball",
-        "max": 2,
-        "help": "Control the ball's trajectory."
-    },
-    {
-        "threshold": 400,
+        "threshold": 0,
         "id": "top_is_lava",
         "giftable": true,
         "name": "Sky is the limit",
@@ -471,53 +478,61 @@ const upgrades = [
         "help": "Avoid the top for more coins."
     },
     {
-        "threshold": 800,
-        "id": "coin_magnet",
-        "name": "Puck attracts coins",
-        "max": 3,
-        "help": "Coins falling are drawn toward the puck."
-    },
-    {
-        "threshold": 1600,
+        "threshold": 0,
         "id": "skip_last",
         "name": "Last brick breaks",
-        "max": 3,
+        "max": 7,
         "help": "The last brick will self-destruct."
     },
     {
-        "threshold": 3200,
+        "threshold": 500,
+        "id": "telekinesis",
+        "giftable": true,
+        "name": "Puck controls ball",
+        "max": 2,
+        "help": "Control the ball's trajectory."
+    },
+    {
+        "threshold": 1000,
+        "id": "coin_magnet",
+        "name": "Puck attracts coins",
+        "max": 3,
+        "help": "Coins are drawn toward the puck."
+    },
+    {
+        "threshold": 1500,
         "id": "multiball",
         "giftable": true,
         "name": "+1 ball",
         "max": 3,
-        "help": "Start each level with one more balls."
+        "help": "Start with one more balls."
     },
     {
-        "threshold": 5600,
+        "threshold": 2000,
         "id": "smaller_puck",
         "name": "Smaller puck",
         "max": 2,
         "help": "Gives you more control."
     },
     {
-        "threshold": 7000,
+        "threshold": 3000,
         "id": "pierce",
         "giftable": true,
         "name": "Ball pierces bricks",
         "max": 3,
-        "help": "Go through 3 blocks before bouncing."
+        "help": "Destroy 3 blocks before bouncing."
     },
     {
-        "threshold": 12000,
+        "threshold": 4000,
         "id": "picky_eater",
         "giftable": true,
         "name": "Single color streak",
         "color_blind_exclude": true,
         "max": 1,
-        "help": "Hit groups of bricks of the same color."
+        "help": "Break bricks color by color."
     },
     {
-        "threshold": 16000,
+        "threshold": 5000,
         "id": "metamorphosis",
         "name": "Coins stain bricks",
         "color_blind_exclude": true,
@@ -525,60 +540,60 @@ const upgrades = [
         "help": "Coins color the bricks they touch."
     },
     {
-        "threshold": 22000,
+        "threshold": 6000,
         "id": "catch_all_coins",
         "giftable": true,
         "name": "Compound interest",
         "max": 3,
-        "help": "Catch all coins with your puck for even more coins."
+        "help": "Avoid missing coins with your puck."
     },
     {
-        "threshold": 26000,
+        "threshold": 7000,
         "id": "hot_start",
         "giftable": true,
         "name": "Hot start",
         "max": 3,
-        "help": "Clear the level quickly for more coins."
+        "help": "Clear the level quickly."
     },
     {
-        "threshold": 33000,
+        "threshold": 9000,
         "id": "sapper",
         "giftable": true,
         "name": "Bricks become bombs",
         "max": 1,
-        "help": "Broken blocks are replaced by bombs."
+        "help": "Broken blocks become bombs."
     },
     {
-        "threshold": 42000,
+        "threshold": 11000,
         "id": "bigger_explosions",
         "name": "Bigger explosions",
         "max": 1,
-        "help": "All bombs have larger area of effect."
+        "help": "Larger bomb area of effect."
     },
     {
-        "threshold": 54000,
+        "threshold": 13000,
         "id": "extra_levels",
         "name": "+1 level",
         "max": 3,
-        "help": "Play one more level before game over."
+        "help": "Play one more level before winning."
     },
     {
-        "threshold": 65000,
+        "threshold": 15000,
         "id": "pierce_color",
         "name": "Color pierce",
         "color_blind_exclude": true,
         "max": 1,
-        "help": "Colored ball pierces bricks of the same color."
+        "help": "Ball breaks same color bricks."
     },
     {
-        "threshold": 760000,
+        "threshold": 18000,
         "id": "soft_reset",
         "name": "Soft reset",
         "max": 2,
-        "help": "Only loose half your combo when it resets."
+        "help": "Combo grows slower but resets less"
     },
     {
-        "threshold": 87000,
+        "threshold": 21000,
         "id": "ball_repulse_ball",
         "name": "Balls repulse balls",
         requires: 'multiball',
@@ -586,7 +601,7 @@ const upgrades = [
         "help": "Only has an effect with 2+ balls."
     },
     {
-        "threshold": 98000,
+        "threshold": 25000,
         "id": "ball_attract_ball",
         requires: 'multiball',
         "name": "Balls attract balls",
@@ -594,16 +609,17 @@ const upgrades = [
         "help": "Only has an effect with 2+ balls."
     },
     {
-        "threshold": 120000,
+        "threshold": 30000,
         "id": "puck_repulse_ball",
         "name": "Puck repulse balls",
         "max": 3,
-        "help": "Prevents the puck from touching the balls."
+        "help": "Prevents the puck from touching the balls.",
     },
 ]
 
 
-let totalScoreAtRunStart= getTotalScore()
+let totalScoreAtRunStart = getTotalScore()
+
 function getPossibleUpgrades() {
     return upgrades
         .filter(u => !(isSettingOn('color_blind') && u.color_blind_exclude))
@@ -612,14 +628,15 @@ function getPossibleUpgrades() {
 }
 
 
-function shuffleLevels(nameToAvoid = null) { 
+function shuffleLevels(nameToAvoid = null) {
+
     runLevels = allLevels
         .filter(l => nextRunOverrides.level ? l.name === nextRunOverrides.level : true)
         .filter((l, li) => totalScoreAtRunStart >= l.threshold)
         .filter(l => l.name !== nameToAvoid || allLevels.length === 1)
         .sort(() => Math.random() - 0.5)
         .slice(0, 7 + 3)
-        .sort((a, b) => a.bricks.filter(i => i).length - b.bricks.filter(i => i).length);
+        .sort((a, b) => a.sortKey - b.sortKey);
 
     nextRunOverrides.level = null
 }
@@ -633,8 +650,7 @@ function getUpgraderUnlockPoints() {
             if (u.threshold) {
                 list.push({
                     threshold: u.threshold,
-                    title: u.name + ' (Perk)',
-                    help: u.help,
+                    title: u.name + ' (Perk)'
                 })
             }
         })
@@ -660,24 +676,26 @@ function pickRandomUpgrades(count) {
         .filter(u => perks[u.id] < u.max)
         .slice(0, count)
         .sort((a, b) => a.id > b.id ? 1 : -1)
-        .map(u => {
-            incrementRunStatistics('offered_upgrade.' + u.id, 1)
-            return {
-                key: u.id, text: u.name, value: () => {
-                    perks[u.id]++;
-                    incrementRunStatistics('picked_upgrade.' + u.id, 1)
-                    scoreStory.push("Picked upgrade : " + u.name);
-                }, help: u.help, max: u.max,
-                checked: perks[u.id],
-            }
-        })
-
 
     list.forEach(u => {
-        lastOffered[u.key] = Math.round(Date.now() / 1000)
+        incrementRunStatistics('offered_upgrade.' + u.id, 1)
+        lastOffered[u.id] = Math.round(Date.now() / 1000)
     })
 
-    return list;
+    return list.map(u => ({
+        text: u.name + (perks[u.id]?' lvl '+(perks[u.id]+1):''),
+        icon: u.icon,
+        value: () => {
+            perks[u.id]++;
+            incrementRunStatistics('picked_upgrade.' + u.id, 1)
+            scoreStory.push("Picked upgrade : " + u.name);
+        },
+        help: u.help,
+        // max: u.max,
+        // checked: perks[u.id]
+    }))
+
+
 }
 
 let nextRunOverrides = {level: null, perks: null}
@@ -688,7 +706,7 @@ function restart() {
     hadOverrides = !!(nextRunOverrides.level || nextRunOverrides.perks)
     // When restarting, we want to avoid restarting with the same level we're on, so we exclude from the next
     // run's level list
-    totalScoreAtRunStart= getTotalScore()
+    totalScoreAtRunStart = getTotalScore()
     shuffleLevels(levelTime || score ? currentLevelInfo().name : null);
     resetRunStatistics()
     score = 0;
@@ -1022,7 +1040,7 @@ function ballTick(ball, delta) {
         for (b2 of balls) {
             // avoid computing this twice, and repulsing itself
             if (b2.x >= ball.x) continue
-            attract(ball, b2, 2 * perks.ball_attract_ball)
+            attract(ball, b2,  perks.ball_attract_ball)
         }
     }
     if (perks.puck_repulse_ball) {
@@ -1236,7 +1254,7 @@ function gameOver(title, intro) {
     const list = getUpgraderUnlockPoints()
     list.filter(u => u.threshold > startTs && u.threshold < endTs).forEach(u => {
         unlocksInfo += `
-<p class="progress" title=${JSON.stringify(u.help || '')}>
+<p class="progress"  >
    <span>${u.title}</span>
     <span class="progress_bar_part" style="${getDelay()}"></span>
 </p>
@@ -1253,7 +1271,7 @@ function gameOver(title, intro) {
 
         const scaleX = (done / total).toFixed(2)
         unlocksInfo += `
-            <p class="progress"  title=${JSON.stringify(unlocksInfo.help)}>
+            <p class="progress"   >
            <span>${nextUnlock.title}</span>
         <span style="transform: scale(${scaleX},1);${getDelay()}" class="progress_bar_part"></span>
         </p>
@@ -1261,7 +1279,7 @@ function gameOver(title, intro) {
 `
         list.slice(list.indexOf(nextUnlock) + 1).slice(0, 3).forEach(u => {
             unlocksInfo += `
-        <p class="progress"  title=${JSON.stringify(u.help)}>
+        <p class="progress"  >
            <span>${u.title}</span> 
         </p> 
 `
@@ -1313,7 +1331,7 @@ function explodeBrick(index, ball, isExplosion) {
         flashes.push({
             type: "ball", duration: 150, time: levelTime, size: brickWidth * 2, color: "white", x, y,
         });
-        spawnExplosion(7 * (1 + perks.bigger_explosions), x, y, "white", 150, coinSize,);
+        spawnExplosion(7 * (1 + perks.bigger_explosions), x, y, 'white', 150, coinSize,);
         ball.hitSinceBounce++;
     } else if (color) {
         // Flashing is take care of by the tick loop
@@ -1354,7 +1372,9 @@ function explodeBrick(index, ball, isExplosion) {
             });
         }
 
-        combo += perks.streak_shots + perks.catch_all_coins + perks.sides_are_lava + perks.top_is_lava + perks.picky_eater;
+
+        combo += Math.max(0,perks.streak_shots + perks.catch_all_coins + perks.sides_are_lava + perks.top_is_lava + perks.picky_eater
+            - Math.round(Math.random()*perks.soft_reset));
 
         if (!isExplosion) {
             // color change
@@ -1371,7 +1391,7 @@ function explodeBrick(index, ball, isExplosion) {
         flashes.push({
             type: "ball", duration: 40, time: levelTime, size: brickWidth, color: color, x, y,
         });
-        spawnExplosion(5 + combo, x, y, color, 100, coinSize / 2);
+        spawnExplosion(5 + combo, x, y,color, 100, coinSize / 2);
     }
 }
 
@@ -1485,60 +1505,60 @@ function render() {
         // The red should still be visible on a white bg
         ctx.globalCompositeOperation = !level.color && level.svg ? "screen" : 'source-over';
         ctx.globalAlpha = (2 + combo - baseCombo()) / 50;
-        const baseParticle= !isSettingOn('basic') && ( combo - baseCombo() )*Math.random() >5&& running &&{
-              type: "particle",
-                duration: 100*(Math.random()+1),
-                time: levelTime,
-                size: coinSize / 2,
-                color: 'red',
-                ethereal: true,
+        const baseParticle = !isSettingOn('basic') && (combo - baseCombo()) * Math.random() > 5 && running && {
+            type: "particle",
+            duration: 100 * (Math.random() + 1),
+            time: levelTime,
+            size: coinSize / 2,
+            color: 'red',
+            ethereal: true,
         }
 
         if (perks.top_is_lava) {
-            drawRedGradientSquare( ctx, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, ballSize, 0, 0, 0, ballSize);
+            drawRedGradientSquare(ctx, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, ballSize, 0, 0, 0, ballSize);
             baseParticle && flashes.push({
-              ...baseParticle,
-                x: offsetXRoundedDown+Math.random()*gameZoneWidthRoundedUp,
+                ...baseParticle,
+                x: offsetXRoundedDown + Math.random() * gameZoneWidthRoundedUp,
                 y: 0,
                 vx: (Math.random() - 0.5) * 10,
                 vy: 5,
             })
         }
         if (perks.sides_are_lava) {
-            drawRedGradientSquare( ctx, offsetXRoundedDown, 0, ballSize, gameZoneHeight, 0, 0, ballSize, 0,);
-            drawRedGradientSquare( ctx, offsetXRoundedDown + gameZoneWidthRoundedUp - ballSize, 0, ballSize, gameZoneHeight, ballSize, 0, 0, 0,);
-            const fromLeft =Math.random()>0.5
+            drawRedGradientSquare(ctx, offsetXRoundedDown, 0, ballSize, gameZoneHeight, 0, 0, ballSize, 0,);
+            drawRedGradientSquare(ctx, offsetXRoundedDown + gameZoneWidthRoundedUp - ballSize, 0, ballSize, gameZoneHeight, ballSize, 0, 0, 0,);
+            const fromLeft = Math.random() > 0.5
             baseParticle && flashes.push({
-              ...baseParticle,
-                x: offsetXRoundedDown+(fromLeft?0:gameZoneWidthRoundedUp),
-                y: Math.random()*gameZoneHeight,
-                vx: fromLeft?5:-5,
-                vy:  (Math.random() - 0.5) * 10,
+                ...baseParticle,
+                x: offsetXRoundedDown + (fromLeft ? 0 : gameZoneWidthRoundedUp),
+                y: Math.random() * gameZoneHeight,
+                vx: fromLeft ? 5 : -5,
+                vy: (Math.random() - 0.5) * 10,
             })
         }
         if (perks.catch_all_coins) {
-            drawRedGradientSquare( ctx, offsetXRoundedDown, gameZoneHeight - ballSize, gameZoneWidthRoundedUp, ballSize, 0, ballSize, 0, 0,);
+            drawRedGradientSquare(ctx, offsetXRoundedDown, gameZoneHeight - ballSize, gameZoneWidthRoundedUp, ballSize, 0, ballSize, 0, 0,);
             let x = puck
-            do{
-            x= offsetXRoundedDown + gameZoneWidthRoundedUp*Math.random()
-            }while(Math.abs(x-puck)<puckWidth/2)
+            do {
+                x = offsetXRoundedDown + gameZoneWidthRoundedUp * Math.random()
+            } while (Math.abs(x - puck) < puckWidth / 2)
             baseParticle && flashes.push({
-              ...baseParticle,
-                x ,
-                y:gameZoneHeight,
-                vx:  (Math.random() - 0.5) * 10,
+                ...baseParticle,
+                x,
+                y: gameZoneHeight,
+                vx: (Math.random() - 0.5) * 10,
                 vy: -5,
             })
         }
         if (perks.streak_shots) {
-            drawRedGradientSquare( ctx, puck - puckWidth / 2, gameZoneHeight - puckHeight - ballSize, puckWidth, ballSize, 0, ballSize, 0, 0,);
-            const pos=(0.5 -Math.random())
+            drawRedGradientSquare(ctx, puck - puckWidth / 2, gameZoneHeight - puckHeight - ballSize, puckWidth, ballSize, 0, ballSize, 0, 0,);
+            const pos = (0.5 - Math.random())
             baseParticle && flashes.push({
-              ...baseParticle,
-            duration : 100,
-                x : puck +   puckWidth*pos,
-                y:gameZoneHeight-puckHeight,
-                vx:  (pos) * 10,
+                ...baseParticle,
+                duration: 100,
+                x: puck + puckWidth * pos,
+                y: gameZoneHeight - puckHeight,
+                vx: (pos) * 10,
                 vy: -5,
             })
         }
@@ -1549,15 +1569,15 @@ function render() {
                 if (!type || type === "black" || okColors.has(type)) return;
                 const x = brickCenterX(index), y = brickCenterY(index);
                 drawFuzzyBall(ctx, "red", brickWidth, x, y);
-
-                 baseParticle && flashes.push({
-                  ...baseParticle,
-                    duration : 100,
-                    x,
-                    y,
-                    vx:  (0.5 -Math.random())*10,
-                    vy:  (0.5 -Math.random())*10,
-            })
+                //
+                // baseParticle && flashes.push({
+                //     ...baseParticle,
+                //     duration: 100,
+                //     x,
+                //     y,
+                //     vx: (0.5 - Math.random()) * 10,
+                //     vy: (0.5 - Math.random()) * 10,
+                // })
             });
         }
         ctx.globalAlpha = 1;
@@ -1822,7 +1842,7 @@ function drawBrick(ctx, color, x, y, squared) {
     // It's not easy to have a 1px gap between bricks without antialiasing
 }
 
-function drawRedGradientSquare(  ctx, x, y, width, height, redX, redY, blackX, blackY) {
+function drawRedGradientSquare(ctx, x, y, width, height, redX, redY, blackX, blackY) {
     const key = "gradient" + width + "_" + height + "_" + redX + "_" + redY + "_" + blackX + "_" + blackY;
 
     if (!cachedGraphics[key]) {
@@ -2133,7 +2153,7 @@ function asyncAlert({
             popup.appendChild(p);
         }
 
-        actions.filter(i => i).forEach(({text, value, help, checked = 0, max = 0, disabled}) => {
+        actions.filter(i => i).forEach(({text, value, help, checked = 0, max = 0, disabled, icon = ''}) => {
             const button = document.createElement("button");
             let checkMark = ''
             if (max) {
@@ -2143,7 +2163,9 @@ function asyncAlert({
                 }
                 checkMark += '</span>'
             }
-            button.innerHTML = `${checkMark}
+            button.innerHTML = `
+${icon}
+${checkMark}
 <div>
                     <strong>${text}</strong>
                     <em>${help || ''}</em>
@@ -2202,9 +2224,11 @@ scoreDisplay.addEventListener("click", async (e) => {
     e.preventDefault();
     running = false
     const cb = await asyncAlert({
-        title: `You scored ${score} points so far`, text: `
-            <p>You are playing level ${currentLevel + 1} out of ${max_levels()}. </p>
-            ${scoreStory.map((t) => "<p>" + t + "</p>").join("")} 
+        title: ` ${score} points at level ${currentLevel + 1} / ${max_levels()}`,
+        text: `
+                <p>${pickedUpgradesHTMl()}</p>  
+    ${scoreStory.map((t) => "<p>" + t + "</p>").join("")} 
+            
         `, allowClose: true, actions: [{
             text: "New run", help: "Start a brand new run.", value: () => {
                 restart();
@@ -2268,23 +2292,19 @@ async function openSettingsPanel() {
                 help: "See and try what you've unlocked",
                 async value() {
                     const ts = getTotalScore()
-                    const tryOn = await asyncAlert({
-                        title: 'Your unlocks',
-                        text: `
-                       <p>Your high score is ${highScore}. In total, you've cought ${ts} coins. Click an upgrade below to start a test run with it (stops after 1 level).</p> 
-                       `,
-                        actions: [...upgrades
+                    const actions=[...upgrades
                             .sort((a, b) => a.threshold - b.threshold)
                             .map(({
                                       name,
                                       max,
                                       help, id,
-                                      threshold
+                                      threshold, icon
                                   }) => ({
                                     text: name,
-                                    help: help + (ts >= threshold ? '' : `(${threshold} coins)`),
+                                    help: ts >= threshold ? help :`Unlocks at total score ${threshold}.`,
                                     disabled: ts < threshold,
-                                    value: {perks: {[id]: 1}}
+                                    value: {perks: {[id]: 1}},
+                                    icon
                                 })
                             )
 
@@ -2295,13 +2315,25 @@ async function openSettingsPanel() {
                                     const avaliable = ts >= l.threshold
                                     return ({
                                         text: l.name,
-                                        help: `A ${l.size}x${l.size} level with ${l.bricks.filter(i => i).length} bricks` + (avaliable ? '' : `(${l.threshold} coins)`),
+                                        help: avaliable ? `A ${l.size}x${l.size} level with ${l.bricks.filter(i => i).length} bricks`  : `Unlocks at total score ${l.threshold}.`,
                                         disabled: !avaliable,
-                                        value: {level: l.name}
-
+                                        value: {level: l.name},
+                                        icon: levelIconHTML(l)
                                     })
                                 })
                         ]
+
+                    const tryOn = await asyncAlert({
+                        title: `You unlocked ${Math.round(actions.filter(a=>!a.disabled).length / actions.length * 100)}% of the game.`,
+                        text: `
+                       <p> Your total score is ${ts}. Below are all the upgrades and levels the games has to offer. They greyed out ones can be unlocked by increasing your total score. </p> 
+                       `,
+                        textAfterButtons:`<p>
+The total score increases every time you score in game.
+Your high score is ${highScore}. 
+Click an item above to start a test run with it.
+                </p>`,
+                        actions
 
 
                         ,
@@ -2476,8 +2508,38 @@ function attract(a, b, power) {
             vy: -dy * speed + b.vy + (Math.random() - 0.5) * rand,
         })
     }
-
 }
+
+let levelIconHTMLCanvas = document.createElement('canvas')
+const levelIconHTMLCanvasCtx = levelIconHTMLCanvas.getContext("2d", {antialias: false, alpha: true})
+
+function levelIconHTML(level,   title) {
+    const size=40
+    const c = levelIconHTMLCanvas
+    const ctx = levelIconHTMLCanvasCtx
+    c.width = size
+    c.height = size
+    if (level.color) {
+        ctx.fillStyle = level.color
+        ctx.fillRect(0, 0, size, size)
+    } else {
+        ctx.clearRect(0, 0, size, size)
+    }
+    const pxSize = size / level.size
+    for (let x = 0; x < level.size; x++) {
+        for (let y = 0; y < level.size; y++) {
+            const c = level.bricks[y * level.size + x]
+            if (c) {
+                ctx.fillStyle = c
+                ctx.fillRect(Math.floor(pxSize * x), Math.floor(pxSize * y), Math.ceil(pxSize), Math.ceil(pxSize))
+            }
+        }
+    }
+    // I don't think many blind people will benefit for this but it's nice to have something to put in "alt"
+    return `<img title="${title || level.name}" alt="Icon for ${level.name}" width="${size}" height="${size}" src="${c.toDataURL()}"/>`
+}
+
+upgrades.forEach(u => u.icon = levelIconHTML(perkIconsLevels[u.id],  u.name))
 
 fitSize()
 restart()

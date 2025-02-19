@@ -25,72 +25,61 @@ The app should work offline and perform well even on low-end devices. It's very 
 
 There's also an easy mode for kids (slower ball) and a color-blind mode (no color related game mechanics).
 
-
- 
 ## Doing
+- publish on Fdroid 
 
-- publish on Fdroid
-- Delay the sound context stop by a few ms
+## Perk ideas
+- wrap left / right
+- n% of the broken bricks respawn when the ball touches the puck
+- bricks take twice as many hits but drop 50% more coins
+- wind (puck positions adds force to coins and balls)
+- balls repulse coins
+- n% of coins missed respawn at the top
+- lightning : missing triggers and explosive lighting strike around ball path
+- coins repulse coins (could get really laggy)
+- balls repulse coins
+- balls attract coins
+- twice as many coins after a wall bounce, twice as little otherwise ? 
+- fusion reactor (gather coins in one spot to triple their value)
+- missing makes you loose all score of level, but otherwise multiplier goes up after each breaking
+- soft reset, cut combo in half instead of zero
+- missile goes when you catch coin
+- missile goes when you break a brick
+- puck bounce +1 combo, hit nothing resets
+- multiple hits on the same brick (show remaining resistance as number) 
+- bricks attract ball
+- replay last level (remove score, restores lives if any, and rebuild )
+- accelerometer controls coins and balls
+- bricks attract coins
+- breaking bricks stains neighbours
+- extra kick after bouncing on puck
+- transparent coins
+- coins of different colors repulse
+- bricks follow game of life pattern with one update every second 
+- 2x coins when ball goes downward / upward, half that amount otherwise ?
 
-## Todo
+## Engine ideas
 
-- 2 x "slower balls" is too slow on the first levels 
 - show total score on end screen (score added to total) 
 - show stats on end screen compared to other runs
-- handle back bouton in menu
-- more levels : famous simple games, letters, fruits, animals
-- icons for upgrades and level
-- remind users of what they have already picked. Maybe show all upgrades, disabled except the offered ones ?
-
-## Other ideas
-
-- perk : wrap left / right
-- perk : n% of the broken bricks respawn when the ball touches the puck
-- perk : bricks take twice as many hits but drop 50% more coins
-- perk : wind (puck positions adds force to coins and balls)
-- perk : balls repulse coins
-- perk : n% of coins missed respawn at the top
-- perk : lightning : missing triggers and explosive lighting strike around ball path
-- perk : coins repulse coins (could get really laggy)
-- perk : balls repulse coins
-- perk : balls attract coins
-- perk : twice as many coins after a wall bounce, twice as little otherwise ? 
-- perk : fusion reactor (gather coins in one spot to triple their value)
-- perk : missing makes you loose all score of level, but otherwise multiplier goes up after each breaking
-- Make a small mp4 of game which can be shown on gameover and shared. https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder
-- perk : soft reset, cut combo in half instead of zero
-- perk : missile goes when you catch coin
-- perk : missile goes when you break a brick
-- when game resumes near bottom, be unvulnerable for .5s ? , once per level
-- accelerometer controls coins and balls
+- handle back bouton in menu 
+- Make a small mp4/gif of game which can be shown on gameover and shared. https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder
 - mouvement relatif du puck
 - balls should collide with each other
-- randomize coins gravity a bit, to make fall more appealing
+- when game resumes near bottom, be unvulnerable for .5s ? , once per level
 - apply global curve / brightness to canvas when things blow, or just always to make neon effect better
-- perk: bricks attract coins
-- perk : puck bounce +1 combo, hit nothing resets
-- manifest for PWA (android and apple)
-- publish on fdroid 
-- nerf the hot start a bit
-- brick parts fly around with trailing effect ? 
-- trailing white lines behind ball 
-- some 3d ish effect ? 
-- shrink brick at beaking time ? 
-- perk : multiple hits on the same brick (show remaining resistance as number)
-- particle effect around ball when loosing some combo (looks bad)
-- Make bricks shadow the light ? using a "fill path" in screen mode, with a gradient background...would get very laggy, maybe just for the ball
-- keyboard support 
-- perk : bricks attract ball
-- perk : replay last level (remove score, restores lives if any, and rebuild )
-- perk: breaking bricks stains neighbours
-- perk: extra kick after bouncing on puck
-- perk: transparent coins
-- perk: coins of different colors repulse
-- perk: bricks follow game of life pattern with one opdate every second ? 
-- 2x coins when ball goes downward / upward, half that amount otherwise ?
-- engine: Offline mode web for iphone 
-- engine: webgl rendering (not with sdf though, that's super slow)
+- manifest for PWA (android and apple)  
+- lights shadows  
+- keyboard support
+- Offline mode web for iphone 
+- webgl rendering
 
+## Level ides
+
+- famous games
+- letters
+- fruits
+- animals
 
 
 ## Credits
