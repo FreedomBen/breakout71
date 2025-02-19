@@ -57,6 +57,9 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 - coins of different colors repulse
 - bricks follow game of life pattern with one update every second 
 - 2x coins when ball goes downward / upward, half that amount otherwise ?
+- new ball spawns when reaching combo X
+- missing with combo triggers explosive lightning strike
+- correction : pick one past upgrade to remove and replace by something else 
 
 ## Engine ideas
 

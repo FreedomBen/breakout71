@@ -19,8 +19,8 @@ allLevels = allLevels.filter(l => {
     return true
 })
 allLevels.forEach((l, li) => {
-    l.threshold = li < 8 ? 0 : Math.round(Math.min(Math.pow(10, 1 + (li + l.size) / 30)* 10, 10000) * (li))
-    l.sortKey = (Math.random()+3)/3.5 * l.bricks.filter(i=>i).length
+    l.threshold = li < 8 ? 0 : Math.round(Math.min(Math.pow(10, 1 + (li + l.size) / 30) * 10, 10000) * (li))
+    l.sortKey = (Math.random() + 3) / 3.5 * l.bricks.filter(i => i).length
 })
 
 let runLevels = []
@@ -72,6 +72,7 @@ function resetCombo(x, y) {
             });
         }
     }
+    return lost
 }
 
 function decreaseCombo(by, x, y) {
@@ -156,7 +157,7 @@ window.addEventListener("resize", fitSize);
 
 function recomputeTargetBaseSpeed() {
     // We never want the ball to completely stop, it will move at least 3px per frame
-    baseSpeed = Math.max(3,gameZoneWidth / 12 / 10 + currentLevel / 3 + levelTime / (30 * 1000) - perks.slow_down * 2);
+    baseSpeed = Math.max(3, gameZoneWidth / 12 / 10 + currentLevel / 3 + levelTime / (30 * 1000) - perks.slow_down * 2);
 }
 
 
@@ -193,11 +194,10 @@ function spawnExplosion(count, x, y, color, duration = 150, size = coinSize) {
             vx: (Math.random() - 0.5) * 30,
             vy: (Math.random() - 0.5) * 30,
             color,
-            duration:150
+            duration: 150
         });
     }
 }
-
 
 
 let score = 0;
@@ -337,7 +337,13 @@ function getLevelStats() {
 }
 
 function pickedUpgradesHTMl() {
-    return upgrades.filter(u => perks[u.id]).map(u => u.icon).join(' ')
+    let list=''
+    for(let u of upgrades){
+        for(let i=0;i< perks[u.id];i++)
+            list+=u.icon+' '
+    }
+
+    return list
 }
 
 async function openUpgradesPicker() {
@@ -347,7 +353,7 @@ async function openUpgradesPicker() {
     while (repeats--) {
         const actions = pickRandomUpgrades(choices);
         if (!actions.length) break
-        let textAfterButtons=`<p>Upgrades picked so far : </p><p>${pickedUpgradesHTMl()}</p>`;
+        let textAfterButtons = `<p>Upgrades picked so far : </p><p>${pickedUpgradesHTMl()}</p>`;
 
         const cb = await asyncAlert({
             title: "Pick an upgrade " + (repeats ? "(" + (repeats + 1) + ")" : ""), actions, text, allowClose: false,
@@ -457,9 +463,13 @@ const upgrades = [
     {
         "threshold": 0,
         "id": "viscosity",
-        "name": "Slower coins fall",
+        "name": "Viscosity",
         "max": 3,
-        "help": "Coins quickly decelerate."
+        "help": "Slower coins fall.",
+        tryout: {
+            perks: {viscosity: 3, base_combo: 3},
+            level: 'Waves'
+        }
     },
     {
         "threshold": 0,
@@ -480,7 +490,7 @@ const upgrades = [
     {
         "threshold": 0,
         "id": "skip_last",
-        "name": "Last brick breaks",
+        "name": "Easy Cleanup",
         "max": 7,
         "help": "The last brick will self-destruct."
     },
@@ -495,9 +505,12 @@ const upgrades = [
     {
         "threshold": 1000,
         "id": "coin_magnet",
-        "name": "Puck attracts coins",
+        "name": "Coins magnet",
         "max": 3,
-        "help": "Coins are drawn toward the puck."
+        "help": "Puck attracts coins.",
+        tryout: {
+            perks: {coin_magnet: 3, base_combo: 3}
+        }
     },
     {
         "threshold": 1500,
@@ -505,7 +518,7 @@ const upgrades = [
         "giftable": true,
         "name": "+1 ball",
         "max": 3,
-        "help": "Start with one more balls."
+        "help": "Start with one more balls.",
     },
     {
         "threshold": 2000,
@@ -518,26 +531,35 @@ const upgrades = [
         "threshold": 3000,
         "id": "pierce",
         "giftable": true,
-        "name": "Ball pierces bricks",
+        "name": "Heavy ball",
         "max": 3,
-        "help": "Destroy 3 blocks before bouncing."
+        "help": "Ball pierces bricks."
     },
     {
         "threshold": 4000,
         "id": "picky_eater",
         "giftable": true,
-        "name": "Single color streak",
+        "name": "Picky eater",
         "color_blind_exclude": true,
         "max": 1,
-        "help": "Break bricks color by color."
+        "help": "Break bricks color by color.",
+
+        tryout: {
+            perks: {picky_eater: 1},
+            level: 'Mountain'
+        }
     },
     {
         "threshold": 5000,
         "id": "metamorphosis",
-        "name": "Coins stain bricks",
+        "name": "Stain",
         "color_blind_exclude": true,
         "max": 1,
-        "help": "Coins color the bricks they touch."
+        "help": "Coins color the bricks they touch.",
+        tryout: {
+            perks: {metamorphosis: 3},
+            level: 'Lines'
+        }
     },
     {
         "threshold": 6000,
@@ -559,16 +581,21 @@ const upgrades = [
         "threshold": 9000,
         "id": "sapper",
         "giftable": true,
-        "name": "Bricks become bombs",
+        "name": "Sapper",
         "max": 1,
-        "help": "Broken blocks become bombs."
+        "help": "Bricks become bombs."
     },
     {
         "threshold": 11000,
         "id": "bigger_explosions",
-        "name": "Bigger explosions",
+        "name": "Kaboom",
         "max": 1,
-        "help": "Larger bomb area of effect."
+        "help": "Bigger explosions.",
+
+        tryout: {
+            perks: {bigger_explosions: 1},
+            level: 'Ship'
+        }
     },
     {
         "threshold": 13000,
@@ -595,25 +622,31 @@ const upgrades = [
     {
         "threshold": 21000,
         "id": "ball_repulse_ball",
-        "name": "Balls repulse balls",
+        "name": "Personal space",
         requires: 'multiball',
         "max": 3,
-        "help": "Only has an effect with 2+ balls."
+        "help": "Balls repulse balls.",
+        tryout: {
+            perks: {ball_repulse_ball: 1, multiball: 2},
+        }
     },
     {
         "threshold": 25000,
         "id": "ball_attract_ball",
         requires: 'multiball',
-        "name": "Balls attract balls",
+        "name": "Gravity",
         "max": 3,
-        "help": "Only has an effect with 2+ balls."
+        "help": "Balls attract balls.",
+        tryout: {
+            perks: {ball_attract_ball: 1, multiball: 2},
+        }
     },
     {
         "threshold": 30000,
         "id": "puck_repulse_ball",
-        "name": "Puck repulse balls",
+        "name": "Soft landing",
         "max": 3,
-        "help": "Prevents the puck from touching the balls.",
+        "help": "Puck repulses balls.",
     },
 ]
 
@@ -629,16 +662,21 @@ function getPossibleUpgrades() {
 
 
 function shuffleLevels(nameToAvoid = null) {
+    const target = nextRunOverrides?.level;
+    if (target) {
+        runLevels = allLevels.filter(l => l.name === target)
+        nextRunOverrides.level = null
+        if (runLevels.length) return
+        console.log('target level not found, will take random  one : ' + target)
+    }
 
     runLevels = allLevels
-        .filter(l => nextRunOverrides.level ? l.name === nextRunOverrides.level : true)
         .filter((l, li) => totalScoreAtRunStart >= l.threshold)
         .filter(l => l.name !== nameToAvoid || allLevels.length === 1)
         .sort(() => Math.random() - 0.5)
         .slice(0, 7 + 3)
         .sort((a, b) => a.sortKey - b.sortKey);
 
-    nextRunOverrides.level = null
 }
 
 function getUpgraderUnlockPoints() {
@@ -668,6 +706,10 @@ function getUpgraderUnlockPoints() {
 
 let lastOffered = {}
 
+function dontOfferTooSoon(id){
+    lastOffered[id] = Math.round(Date.now() / 1000)
+}
+
 function pickRandomUpgrades(count) {
 
     let list = getPossibleUpgrades()
@@ -679,11 +721,11 @@ function pickRandomUpgrades(count) {
 
     list.forEach(u => {
         incrementRunStatistics('offered_upgrade.' + u.id, 1)
-        lastOffered[u.id] = Math.round(Date.now() / 1000)
+        dontOfferTooSoon(u.id)
     })
 
     return list.map(u => ({
-        text: u.name + (perks[u.id]?' lvl '+(perks[u.id]+1):''),
+        text: u.name + (perks[u.id] ? ' lvl ' + (perks[u.id] + 1) : ''),
         icon: u.icon,
         value: () => {
             perks[u.id]++;
@@ -717,6 +759,7 @@ function restart() {
     const randomGift = reset_perks();
 
     incrementRunStatistics('starting_upgrade.' + randomGift, 1)
+        dontOfferTooSoon(randomGift)
 
     setLevel(0);
     scoreStory.push(`You started playing with the upgrade "${upgrades.find(u => u.id === randomGift)?.name}" on the level "${runLevels[0].name}". `,);
@@ -1040,14 +1083,14 @@ function ballTick(ball, delta) {
         for (b2 of balls) {
             // avoid computing this twice, and repulsing itself
             if (b2.x >= ball.x) continue
-            attract(ball, b2,  perks.ball_attract_ball)
+            attract(ball, b2, perks.ball_attract_ball)
         }
     }
-    if (perks.puck_repulse_ball) {
+    if (perks.puck_repulse_ball && Math.abs(ball.x-puck)<puckWidth/2+ballSize*(9+perks.puck_repulse_ball)/10) {
         repulse(ball, {
             x: puck,
             y: gameZoneHeight,
-            color: currentLevelInfo().black_puck ? '#000' : '#FFF',
+            color: currentLevelInfo()?.black_puck ? '#000' : '#FFF',
         }, perks.puck_repulse_ball, false)
     }
 
@@ -1079,17 +1122,19 @@ function ballTick(ball, delta) {
         if (!ball.hitSinceBounce) {
             incrementRunStatistics('miss')
             levelMisses++;
-            flashes.push({
-                type: "text",
-                text: 'miss',
-                time: levelTime,
-                color: ball.color,
-                x: ball.x,
-                y: ball.y - ballSize,
-                duration: 450,
-                size: puckHeight,
-            })
-            if (ball.bouncesList?.length) {
+            const loss=resetCombo(ball.x,ball.y)
+            //
+            // flashes.push({
+            //     type: "text",
+            //     text: 'miss',
+            //     time: levelTime,
+            //     color: ball.color,
+            //     x: ball.x,
+            //     y: ball.y - ballSize,
+            //     duration: 450,
+            //     size: puckHeight,
+            // })
+            if (ball.bouncesList?.length ) {
                 ball.bouncesList.push({
                     x: ball.previousx,
                     y: ball.previousy
@@ -1108,7 +1153,7 @@ function ballTick(ball, delta) {
                             ethereal: true,
                             time: levelTime,
                             size: coinSize / 2,
-                            color: ball.color,
+                            color: loss?'red':ball.color,
                             x: start.x + (i / (parts - 1)) * (end.x - start.x),
                             y: start.y + (i / (parts - 1)) * (end.y - start.y),
                             vx: (Math.random() - 0.5) * baseSpeed,
@@ -1373,8 +1418,8 @@ function explodeBrick(index, ball, isExplosion) {
         }
 
 
-        combo += Math.max(0,perks.streak_shots + perks.catch_all_coins + perks.sides_are_lava + perks.top_is_lava + perks.picky_eater
-            - Math.round(Math.random()*perks.soft_reset));
+        combo += Math.max(0, perks.streak_shots + perks.catch_all_coins + perks.sides_are_lava + perks.top_is_lava + perks.picky_eater
+            - Math.round(Math.random() * perks.soft_reset));
 
         if (!isExplosion) {
             // color change
@@ -1391,7 +1436,7 @@ function explodeBrick(index, ball, isExplosion) {
         flashes.push({
             type: "ball", duration: 40, time: levelTime, size: brickWidth, color: color, x, y,
         });
-        spawnExplosion(5 + combo, x, y,color, 100, coinSize / 2);
+        spawnExplosion(5 + combo, x, y, color, 100, coinSize / 2);
     }
 }
 
@@ -2096,7 +2141,7 @@ function createExplosionSound(pan = 0.5) {
 let levelTime = 0;
 
 setInterval(() => {
-    document.body.className = (running ? " running " : " paused ") + (currentLevelInfo().black_puck ? ' black_puck ' : ' ');
+    document.body.className = (running ? " running " : " paused ") + (currentLevelInfo()?.black_puck ? ' black_puck ' : ' ');
 }, 100);
 
 window.addEventListener("visibilitychange", () => {
@@ -2292,43 +2337,43 @@ async function openSettingsPanel() {
                 help: "See and try what you've unlocked",
                 async value() {
                     const ts = getTotalScore()
-                    const actions=[...upgrades
-                            .sort((a, b) => a.threshold - b.threshold)
-                            .map(({
-                                      name,
-                                      max,
-                                      help, id,
-                                      threshold, icon
-                                  }) => ({
-                                    text: name,
-                                    help: ts >= threshold ? help :`Unlocks at total score ${threshold}.`,
-                                    disabled: ts < threshold,
-                                    value: {perks: {[id]: 1}},
-                                    icon
-                                })
-                            )
+                    const actions = [...upgrades
+                        .sort((a, b) => a.threshold - b.threshold)
+                        .map(({
+                                  name,
+                                  max,
+                                  help, id,
+                                  threshold, icon, tryout
+                              }) => ({
+                                text: name,
+                                help: ts >= threshold ? help : `Unlocks at total score ${threshold}.`,
+                                disabled: ts < threshold,
+                                value: tryout || {perks: {[id]: max}},
+                                icon
+                            })
+                        )
 
-                            ,
-                            ...allLevels
-                                .sort((a, b) => a.threshold - b.threshold)
-                                .map((l, li) => {
-                                    const avaliable = ts >= l.threshold
-                                    return ({
-                                        text: l.name,
-                                        help: avaliable ? `A ${l.size}x${l.size} level with ${l.bricks.filter(i => i).length} bricks`  : `Unlocks at total score ${l.threshold}.`,
-                                        disabled: !avaliable,
-                                        value: {level: l.name},
-                                        icon: levelIconHTML(l)
-                                    })
+                        ,
+                        ...allLevels
+                            .sort((a, b) => a.threshold - b.threshold)
+                            .map((l, li) => {
+                                const avaliable = ts >= l.threshold
+                                return ({
+                                    text: l.name,
+                                    help: avaliable ? `A ${l.size}x${l.size} level with ${l.bricks.filter(i => i).length} bricks` : `Unlocks at total score ${l.threshold}.`,
+                                    disabled: !avaliable,
+                                    value: {level: l.name},
+                                    icon: levelIconHTML(l)
                                 })
-                        ]
+                            })
+                    ]
 
                     const tryOn = await asyncAlert({
-                        title: `You unlocked ${Math.round(actions.filter(a=>!a.disabled).length / actions.length * 100)}% of the game.`,
+                        title: `You unlocked ${Math.round(actions.filter(a => !a.disabled).length / actions.length * 100)}% of the game.`,
                         text: `
                        <p> Your total score is ${ts}. Below are all the upgrades and levels the games has to offer. They greyed out ones can be unlocked by increasing your total score. </p> 
                        `,
-                        textAfterButtons:`<p>
+                        textAfterButtons: `<p>
 The total score increases every time you score in game.
 Your high score is ${highScore}. 
 Click an item above to start a test run with it.
@@ -2386,11 +2431,11 @@ Click an item above to start a test run with it.
             }
         ],
         textAfterButtons: `
-        <p>Made in France by <a href="https://lecaro.me">Renan LE CARO</a><br/>   
+        <p>Breakout 71 build ${window.appVersion}, made in France by <a href="https://lecaro.me">Renan LE CARO</a><br/>   
         <a href="./privacy.html" target="_blank">privacy policy</a> - 
         <a href="https://play.google.com/store/apps/details?id=me.lecaro.breakout" target="_blank">Google Play</a> - 
         <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a>
-      
+        
          </p>
         `
     })
@@ -2408,7 +2453,7 @@ function distanceBetween(a, b) {
 }
 
 function rainbowColor() {
-    return `hsl(${(levelTime / 2) % 360},100%,70%)`
+    return `hsl(${Math.round((levelTime / 4)) * 2 % 360},100%,70%)`
 }
 
 function repulse(a, b, power, impactsBToo) {
@@ -2420,8 +2465,6 @@ function repulse(a, b, power, impactsBToo) {
     // Unit vector
     const dx = (a.x - b.x) / distance
     const dy = (a.y - b.y) / distance
-    // TODO
-
     const fact = -power * (max - distance) / (max * 1.2) / 3 * Math.min(500, levelTime) / 500
     if (impactsBToo) {
         b.vx += dx * fact
@@ -2513,8 +2556,8 @@ function attract(a, b, power) {
 let levelIconHTMLCanvas = document.createElement('canvas')
 const levelIconHTMLCanvasCtx = levelIconHTMLCanvas.getContext("2d", {antialias: false, alpha: true})
 
-function levelIconHTML(level,   title) {
-    const size=40
+function levelIconHTML(level, title) {
+    const size = 40
     const c = levelIconHTMLCanvas
     const ctx = levelIconHTMLCanvasCtx
     c.width = size
@@ -2539,7 +2582,7 @@ function levelIconHTML(level,   title) {
     return `<img title="${title || level.name}" alt="Icon for ${level.name}" width="${size}" height="${size}" src="${c.toDataURL()}"/>`
 }
 
-upgrades.forEach(u => u.icon = levelIconHTML(perkIconsLevels[u.id],  u.name))
+upgrades.forEach(u => u.icon = levelIconHTML(perkIconsLevels[u.id], u.name))
 
 fitSize()
 restart()

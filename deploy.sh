@@ -12,7 +12,7 @@ sed -i -e "s/^[[:space:]]*versionCode = .*/        versionCode = $versionCode/" 
 
 
 
-# Invalidate web cache
+# Invalidate web cache and update version
 sed -i "s/\?v=[0-9]*/\?v=$versionCode/g" ./app/src/main/assets/index.html
 
 # remove all exif metadata from pictures, because i think fdroid doesn't like that. odd
