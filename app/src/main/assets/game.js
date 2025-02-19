@@ -337,10 +337,10 @@ function getLevelStats() {
 }
 
 function pickedUpgradesHTMl() {
-    let list=''
-    for(let u of upgrades){
-        for(let i=0;i< perks[u.id];i++)
-            list+=u.icon+' '
+    let list = ''
+    for (let u of upgrades) {
+        for (let i = 0; i < perks[u.id]; i++)
+            list += u.icon + ' '
     }
 
     return list
@@ -648,6 +648,13 @@ const upgrades = [
         "max": 3,
         "help": "Puck repulses balls.",
     },
+    {
+        "threshold": 35000,
+        "id": "wind",
+        "name": "Wind",
+        "max": 3,
+        "help": "Puck position creates wind.",
+    },
 ]
 
 
@@ -706,7 +713,7 @@ function getUpgraderUnlockPoints() {
 
 let lastOffered = {}
 
-function dontOfferTooSoon(id){
+function dontOfferTooSoon(id) {
     lastOffered[id] = Math.round(Date.now() / 1000)
 }
 
@@ -759,7 +766,7 @@ function restart() {
     const randomGift = reset_perks();
 
     incrementRunStatistics('starting_upgrade.' + randomGift, 1)
-        dontOfferTooSoon(randomGift)
+    dontOfferTooSoon(randomGift)
 
     setLevel(0);
     scoreStory.push(`You started playing with the upgrade "${upgrades.find(u => u.id === randomGift)?.name}" on the level "${runLevels[0].name}". `,);
@@ -904,6 +911,10 @@ function bordersHitCheck(coin, radius, delta) {
     coin.sx *= 0.9;
     coin.sy *= 0.9;
 
+    if (perks.wind) {
+        coin.vx += (puck - (offsetX + gameZoneWidth / 2)) / gameZoneWidth * perks.wind * 0.5;
+    }
+
     let vhit = 0, hhit = 0;
 
 
@@ -1026,6 +1037,28 @@ function tick() {
 
             balls.forEach((ball) => ballTick(ball, delta));
 
+            if (perks.wind) {
+
+                const windD = (puck - (offsetX + gameZoneWidth / 2)) / gameZoneWidth * 2 * perks.wind
+                for (var i = 0; i < perks.wind; i++) {
+                    if(Math.random()*Math.abs(windD)>0.5) {
+                        flashes.push({
+                            type: "particle",
+                            duration: 150,
+                            ethereal: true,
+                            time: levelTime,
+                            size: coinSize / 2,
+                            color: rainbowColor(),
+                            x: offsetXRoundedDown+ Math.random() * gameZoneWidthRoundedUp ,
+                            y: Math.random() * gameZoneHeight,
+                            vx: windD*8,
+                            vy: 0,
+                        });
+                    }
+                }
+            }
+
+
             flashes.forEach((flash) => {
                 if (flash.type === "particle") {
                     flash.x += flash.vx * delta;
@@ -1086,7 +1119,7 @@ function ballTick(ball, delta) {
             attract(ball, b2, perks.ball_attract_ball)
         }
     }
-    if (perks.puck_repulse_ball && Math.abs(ball.x-puck)<puckWidth/2+ballSize*(9+perks.puck_repulse_ball)/10) {
+    if (perks.puck_repulse_ball && Math.abs(ball.x - puck) < puckWidth / 2 + ballSize * (9 + perks.puck_repulse_ball) / 10) {
         repulse(ball, {
             x: puck,
             y: gameZoneHeight,
@@ -1122,7 +1155,7 @@ function ballTick(ball, delta) {
         if (!ball.hitSinceBounce) {
             incrementRunStatistics('miss')
             levelMisses++;
-            const loss=resetCombo(ball.x,ball.y)
+            const loss = resetCombo(ball.x, ball.y)
             //
             // flashes.push({
             //     type: "text",
@@ -1134,7 +1167,7 @@ function ballTick(ball, delta) {
             //     duration: 450,
             //     size: puckHeight,
             // })
-            if (ball.bouncesList?.length ) {
+            if (ball.bouncesList?.length) {
                 ball.bouncesList.push({
                     x: ball.previousx,
                     y: ball.previousy
@@ -1153,7 +1186,7 @@ function ballTick(ball, delta) {
                             ethereal: true,
                             time: levelTime,
                             size: coinSize / 2,
-                            color: loss?'red':ball.color,
+                            color: loss ? 'red' : ball.color,
                             x: start.x + (i / (parts - 1)) * (end.x - start.x),
                             y: start.y + (i / (parts - 1)) * (end.y - start.y),
                             vx: (Math.random() - 0.5) * baseSpeed,
