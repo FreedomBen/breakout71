@@ -2334,9 +2334,11 @@ document.getElementById("menu").addEventListener("click", (e) => {
     openSettingsPanel();
 });
 
+
 const options = {
     sound: {
         default: true, name: `Game sounds`, help: `Can slow down some phones.`,
+        disabled:()=>false
     }, "mobile-mode": {
         default: window.innerHeight > window.innerWidth,
         name: `Mobile mode`,
@@ -2344,29 +2346,43 @@ const options = {
         afterChange() {
             fitSize();
         },
+        disabled:()=>false
     },
     basic: {
         default: false, name: `Fast mode`, help: `Simpler graphics for older devices.`,
+        disabled:()=>false
     },
     "easy": {
         default: false, name: `Easy mode`, help: `Slower ball as starting perk.`, restart: true,
+        disabled:()=>false
     }, "color_blind": {
         default: false, name: `Color blind mode`, help: `Removes mechanics about colors.`, restart: true,
+        disabled:()=>false
     },
     // Could not get the sharing to work without loading androidx and all the modern android things so for now i'll just disable sharing in the android app
-    "record": !window.location.search.includes('isInWebView=true') && {
-        default: false, name: `Record games`, help: `Get a video at the end of the run.`, restart: true,
-
+    "record":  {
+        default: false, name: `Record gameplay videos`, help: `Get a video of each level.`,
+        disabled(){
+             return window.location.search.includes('isInWebView=true')
+        }
     },
+    gif:    {
+        default: false, name: `Make a gif too`, help: `3x heavier, 2x smaller, 7s max`,
+        disabled(){
+             return window.location.protocol === "file:" ||! isSettingOn('record')
+        }
+    }
 };
 
 async function openSettingsPanel() {
+
     pause()
 
     const optionsList = [];
     for (const key in options) {
-        if (options[key])
+        if (options[key] )
             optionsList.push({
+                disabled:options[key].disabled(),
                 checked: isSettingOn(key) ? 1 : 0,
                 max: 1, text: options[key].name, help: options[key].help, value: () => {
                     toggleSetting(key)
@@ -2653,8 +2669,6 @@ function recordOneFrame() {
     } else {
         captureStream.getVideoTracks()[0].requestFrame()
     }
-
-
 }
 
 
@@ -2669,19 +2683,20 @@ function drawMainCanvasOnSmallCanvas() {
     recordCanvasCtx.fillText((currentLevel + 1) + '/' + max_levels(), 12, 12)
 }
 
-let nthFrame = 0, gifFrameReduction = 2
+let nthGifFrame = 0, gifFrameReduction = 2
 
 function recordGifFrame() {
+    if(nthGifFrame/60>7) return
     gifCtx.globalCompositeOperation = 'screen'
     gifCtx.globalAlpha = 1 / gifFrameReduction
     gifCtx?.drawImage(canvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, gifCanvas.width, gifCanvas.height)
-    nthFrame++
-    if (nthFrame === gifFrameReduction) {
+    nthGifFrame++
+    if (!(nthGifFrame % gifFrameReduction)) {
         levelGif.addFrame(gifCtx, {delay: Math.round(gifFrameReduction * 1000 / 60), copy: true});
         gifCtx.globalCompositeOperation = 'source-over'
         gifCtx.fillStyle = 'black'
         gifCtx.fillRect(0, 0, gifCanvas.width, gifCanvas.height)
-        nthFrame = 0
+
     }
 }
 
@@ -2709,7 +2724,8 @@ function startRecordingGame() {
     gifCanvas.height = Math.floor(gameZoneHeight * scale / 2)
 
     // Gif worker won't work there
-    if (window.location.protocol !== "file:") {
+    if (window.location.protocol !== "file:" && isSettingOn('gif')) {
+        nthGifFrame = 0
         levelGif = new GIF({
             workers: 2,
             quality: 10,
@@ -2719,6 +2735,8 @@ function startRecordingGame() {
             height: gifCanvas.height,
             dither: false,
         });
+    }else{
+        levelGif=null
     }
 
     // drawMainCanvasOnSmallCanvas()
