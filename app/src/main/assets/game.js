@@ -2540,7 +2540,6 @@ function repulse(a, b, power, impactsBToo) {
     a.vx -= dx * fact
     a.vy -= dy * fact
 
-    if (!isSettingOn('basic')) {
         const speed = 10
         const rand = 2
         flashes.push({
@@ -2570,7 +2569,6 @@ function repulse(a, b, power, impactsBToo) {
                 vy: dy * speed + b.vy + (Math.random() - 0.5) * rand,
             })
         }
-    }
 
 }
 
@@ -2590,7 +2588,6 @@ function attract(a, b, power) {
     a.vx -= dx * fact
     a.vy -= dy * fact
 
-    if (!isSettingOn('basic')) {
         const speed = 10
         const rand = 2
         flashes.push({
@@ -2617,7 +2614,6 @@ function attract(a, b, power) {
             vx: -dx * speed + b.vx + (Math.random() - 0.5) * rand,
             vy: -dy * speed + b.vy + (Math.random() - 0.5) * rand,
         })
-    }
 }
 
 let levelIconHTMLCanvas = document.createElement('canvas')
@@ -2722,6 +2718,7 @@ function startRecordingGame() {
     recordCanvas.height = gameZoneHeight * scale
     gifCanvas.width = Math.floor(gameZoneWidthRoundedUp * scale / 2)
     gifCanvas.height = Math.floor(gameZoneHeight * scale / 2)
+
 
     // Gif worker won't work there
     if (window.location.protocol !== "file:" && isSettingOn('gif')) {

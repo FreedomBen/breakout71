@@ -27,10 +27,10 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 
 ## Doing
 - publish on Fdroid
-- enable gif export of gameplay capture
-- enable export of gameplay capture in webview
+
 ## Perk ideas
 - wrap left / right
+- puck bounce predictions (using particles)
 - n% of the broken bricks respawn when the ball touches the puck
 - bricks take twice as many hits but drop 50% more coins
 - wind (puck positions adds force to coins and balls)
@@ -77,6 +77,7 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 - keyboard support
 - Offline mode web for iphone 
 - webgl rendering
+- enable export of gameplay capture in webview
 
 ## Level ides
 
