@@ -26,8 +26,9 @@ The app should work offline and perform well even on low-end devices. It's very 
 There's also an easy mode for kids (slower ball) and a color-blind mode (no color related game mechanics).
 
 ## Doing
-- publish on Fdroid 
-
+- publish on Fdroid
+- enable gif export of gameplay capture
+- enable export of gameplay capture in webview
 ## Perk ideas
 - wrap left / right
 - n% of the broken bricks respawn when the ball touches the puck
@@ -67,7 +68,6 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 - show total score on end screen (score added to total) 
 - show stats on end screen compared to other runs
 - handle back bouton in menu 
-- Make a small mp4/gif of game which can be shown on gameover and shared. https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder
 - mouvement relatif du puck
 - balls should collide with each other
 - when game resumes near bottom, be unvulnerable for .5s ? , once per level

@@ -107,6 +107,7 @@ function play() {
     if (audioContext) {
         audioContext.resume()
     }
+    resumeRecording()
 }
 
 function pause() {
@@ -119,6 +120,7 @@ function pause() {
                 audioContext.suspend()
         }, 1000)
     }
+    pauseRecording()
 }
 
 let offsetX, offsetXRoundedDown, gameZoneWidth, gameZoneWidthRoundedUp, gameZoneHeight, brickWidth, needsRender = true;
@@ -353,7 +355,8 @@ async function openUpgradesPicker() {
     while (repeats--) {
         const actions = pickRandomUpgrades(choices);
         if (!actions.length) break
-        let textAfterButtons = `<p>Upgrades picked so far : </p><p>${pickedUpgradesHTMl()}</p>`;
+        let textAfterButtons = `<p>Upgrades picked so far : </p><p>${pickedUpgradesHTMl()}</p>
+<div id="level-recording-container"></div>`;
 
         const cb = await asyncAlert({
             title: "Pick an upgrade " + (repeats ? "(" + (repeats + 1) + ")" : ""), actions, text, allowClose: false,
@@ -394,7 +397,8 @@ function setLevel(l) {
     flashes = [];
 
     background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
-
+    stopRecording()
+    startRecordingGame()
 }
 
 function currentLevelInfo() {
@@ -770,6 +774,8 @@ function restart() {
 
     setLevel(0);
     scoreStory.push(`You started playing with the upgrade "${upgrades.find(u => u.id === randomGift)?.name}" on the level "${runLevels[0].name}". `,);
+
+    pauseRecording()
 }
 
 function setMousePos(x) {
@@ -1041,7 +1047,7 @@ function tick() {
 
                 const windD = (puck - (offsetX + gameZoneWidth / 2)) / gameZoneWidth * 2 * perks.wind
                 for (var i = 0; i < perks.wind; i++) {
-                    if(Math.random()*Math.abs(windD)>0.5) {
+                    if (Math.random() * Math.abs(windD) > 0.5) {
                         flashes.push({
                             type: "particle",
                             duration: 150,
@@ -1049,9 +1055,9 @@ function tick() {
                             time: levelTime,
                             size: coinSize / 2,
                             color: rainbowColor(),
-                            x: offsetXRoundedDown+ Math.random() * gameZoneWidthRoundedUp ,
+                            x: offsetXRoundedDown + Math.random() * gameZoneWidthRoundedUp,
                             y: Math.random() * gameZoneHeight,
-                            vx: windD*8,
+                            vx: windD * 8,
                             vy: 0,
                         });
                     }
@@ -1298,6 +1304,7 @@ function addToTotalScore(points) {
 function gameOver(title, intro) {
     if (!running) return;
     pause()
+    stopRecording()
 
     runStatistics.ended = Date.now()
 
@@ -1371,7 +1378,7 @@ function gameOver(title, intro) {
         <p>${intro}</p>
         ${unlocksInfo}  
         `, textAfterButtons: ` 
-        
+        <div id="level-recording-container"></div>
         ${scoreStory.map((t) => "<p>" + t + "</p>").join("")} 
         `
     }).then(() => restart());
@@ -1737,8 +1744,9 @@ function render() {
     ctx.fillStyle = puckColor;
     ctx.globalCompositeOperation = "source-over";
     if (offsetXRoundedDown) {
-        ctx.fillRect(offsetX, 0, 1, height);
-        ctx.fillRect(width - offsetX - 1, 0, 1, height);
+        // draw outside of gaming area to avoid capturing borders in recordings
+        ctx.fillRect(offsetX - 1, 0, 1, height);
+        ctx.fillRect(width - offsetX + 1, 0, 1, height);
     }
     if (isSettingOn("mobile-mode")) {
         ctx.fillRect(offsetXRoundedDown, gameZoneHeight, gameZoneWidthRoundedUp, 1);
@@ -1752,6 +1760,8 @@ function render() {
     if (shaked) {
         ctx.resetTransform();
     }
+
+    recordOneFrame()
 }
 
 let cachedBricksRender = document.createElement("canvas");
@@ -2343,6 +2353,11 @@ const options = {
     }, "color_blind": {
         default: false, name: `Color blind mode`, help: `Removes mechanics about colors.`, restart: true,
     },
+    // Could not get the sharing to work without loading androidx and all the modern android things so for now i'll just disable sharing in the android app
+    "record": !window.location.search.includes('isInWebView=true') && {
+        default: false, name: `Record games`, help: `Get a video at the end of the run.`, restart: true,
+
+    },
 };
 
 async function openSettingsPanel() {
@@ -2350,16 +2365,18 @@ async function openSettingsPanel() {
 
     const optionsList = [];
     for (const key in options) {
-        optionsList.push({
-            checked: isSettingOn(key) ? 1 : 0, max: 1, text: options[key].name, help: options[key].help, value: () => {
-                toggleSetting(key)
-                if (options[key].restart) {
-                    restart()
-                } else {
-                    openSettingsPanel();
-                }
-            },
-        });
+        if (options[key])
+            optionsList.push({
+                checked: isSettingOn(key) ? 1 : 0,
+                max: 1, text: options[key].name, help: options[key].help, value: () => {
+                    toggleSetting(key)
+                    if (options[key].restart) {
+                        restart()
+                    } else {
+                        openSettingsPanel();
+                    }
+                },
+            });
     }
 
     const cb = await asyncAlert({
@@ -2617,6 +2634,185 @@ function levelIconHTML(level, title) {
 }
 
 upgrades.forEach(u => u.icon = levelIconHTML(perkIconsLevels[u.id], u.name))
+
+let mediaRecorder, captureStream, recordCanvas, recordCanvasCtx, levelGif, gifCanvas, gifCtx
+
+
+function recordOneFrame() {
+    if (!isSettingOn('record')) {
+        return
+    }
+    if (!running) return;
+    drawMainCanvasOnSmallCanvas()
+    // Start recording after you hit something
+    if(levelSpawnedCoins && levelGif) {
+        recordGifFrame()
+    }
+    if (captureStream.requestFrame) {
+        captureStream.requestFrame()
+    } else {
+        captureStream.getVideoTracks()[0].requestFrame()
+    }
+
+
+}
+
+
+function drawMainCanvasOnSmallCanvas() {
+    recordCanvasCtx?.drawImage(canvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, recordCanvas.width, recordCanvas.height)
+    recordCanvasCtx.fillStyle = currentLevelInfo()?.black_puck ? '#000' : '#FFF'
+    recordCanvasCtx.textBaseline = "top";
+    recordCanvasCtx.font = "12px monospace";
+    recordCanvasCtx.textAlign = "right";
+    recordCanvasCtx.fillText(score.toString(), recordCanvas.width - 12, 12)
+    recordCanvasCtx.textAlign = "left";
+    recordCanvasCtx.fillText((currentLevel + 1) + '/' + max_levels(), 12, 12)
+}
+
+let nthFrame = 0, gifFrameReduction = 2
+function recordGifFrame(){
+    gifCtx.globalCompositeOperation = 'screen'
+    gifCtx.globalAlpha = 1 / gifFrameReduction
+    gifCtx?.drawImage(canvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, gifCanvas.width, gifCanvas.height)
+    nthFrame++
+    if (nthFrame  === gifFrameReduction) {
+        levelGif.addFrame(gifCtx, {delay: Math.round(gifFrameReduction * 1000 / 60), copy: true});
+        gifCtx.globalCompositeOperation = 'source-over'
+        gifCtx.fillStyle = 'black'
+        gifCtx.fillRect(0, 0, gifCanvas.width, gifCanvas.height)
+        nthFrame=0
+    }
+}
+
+function startRecordingGame() {
+    if (!isSettingOn('record')) {
+        return
+    }
+    if (!recordCanvas) {
+        // Smaller canvas with less details
+        recordCanvas = document.createElement("canvas")
+        recordCanvasCtx = recordCanvas.getContext("2d", {antialias: false, alpha: false})
+
+        gifCanvas = document.createElement("canvas")
+        gifCtx = gifCanvas.getContext("2d", {antialias: false, alpha: false})
+    }
+
+    let scale = 1
+    while (Math.max(gameZoneWidthRoundedUp, gameZoneHeight) * scale > 400 * 2) {
+        scale = scale / 2
+    }
+    console.log('Recording at scale ' + scale)
+    recordCanvas.width = gameZoneWidthRoundedUp * scale
+    recordCanvas.height = gameZoneHeight * scale
+    gifCanvas.width = Math.floor(gameZoneWidthRoundedUp * scale / 2)
+    gifCanvas.height = Math.floor(gameZoneHeight * scale / 2)
+
+    // if(isSettingOn('basic')){
+        levelGif = new GIF({
+            workers: 2,
+            quality: 10,
+            repeat: 0,
+            background: currentLevelInfo()?.color || '#000',
+            width: gifCanvas.width,
+            height: gifCanvas.height,
+            dither: false,
+    });
+    // }else{
+    //     levelGif=null
+    // }
+
+    // drawMainCanvasOnSmallCanvas()
+    const recordedChunks = [];
+    captureStream = captureStream || recordCanvas.captureStream(0);
+    const instance = new MediaRecorder(captureStream);
+    mediaRecorder = instance
+    instance.start();
+    mediaRecorder.pause()
+    instance.ondataavailable = function (event) {
+        recordedChunks.push(event.data);
+    }
+
+    instance.onstop = async function () {
+        let targetDiv = document.getElementById("level-recording-container")
+        if (!targetDiv) return
+        const video = document.createElement("video")
+        video.autoplay = true
+        video.controls = false
+        video.disablepictureinpicture = true
+        video.disableremoteplayback = true
+        video.width = recordCanvas.width
+        video.height = recordCanvas.height
+        targetDiv.style.width = recordCanvas.width + 'px'
+        targetDiv.style.height = recordCanvas.height + 'px'
+        video.loop = true
+        video.muted = true
+        video.playsinline = true
+        let blob = new Blob(recordedChunks, {type: "video/webm"});
+        video.src = URL.createObjectURL(blob);
+
+        const a = document.createElement("a")
+        a.download = captureFileName('webm')
+        a.target = "_blank"
+        a.href = video.src
+        a.textContent = `Download video (${(blob.size / 1000000).toFixed(2)}MB)`
+        targetDiv.appendChild(video)
+        targetDiv.appendChild(a)
+
+    }
+
+    levelGif?.on('finished', function (blob) {
+        let targetDiv = document.getElementById("level-recording-container")
+        const url = URL.createObjectURL(blob)
+        const img = document.createElement("img")
+        img.src = url
+        targetDiv?.appendChild(img)
+
+        const giflink = document.createElement("a")
+        giflink.textContent = `Download GIF (${(blob.size / 1000000).toFixed(2)}MB)`
+        giflink.href = url
+        giflink.download = captureFileName('gif')
+        targetDiv?.appendChild(giflink)
+    })
+
+
+}
+
+function pauseRecording() {
+    if (!isSettingOn('record')) {
+        return
+    }
+    if (mediaRecorder?.state === 'recording') {
+        mediaRecorder?.pause()
+    }
+}
+
+function resumeRecording() {
+    if (!isSettingOn('record')) {
+        return
+    }
+    if (mediaRecorder?.state === 'paused') {
+        mediaRecorder.resume()
+    }
+
+}
+
+function stopRecording() {
+
+    if (!isSettingOn('record')) {
+        return
+    }
+    if (!mediaRecorder) return;
+
+    mediaRecorder?.stop()
+    levelGif?.render()
+    mediaRecorder = null
+    levelGif = null
+}
+
+function captureFileName(ext) {
+    return "breakout-71-capture-" + new Date().toISOString().replace(/[^0-9\-]+/gi, '-') + '.' + ext
+}
+
 
 fitSize()
 restart()

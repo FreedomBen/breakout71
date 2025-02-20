@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon editserver.js  --watch editserver.js   "
+    "start": "nodemon editserver.js  --watch editserver.js ",
+    "serve": "http-server app/src/main/assets -o"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.3",
     "express": "^4.21.2",
+    "http-server": "^14.1.1",
     "nodemon": "^3.1.9"
   }
 }
