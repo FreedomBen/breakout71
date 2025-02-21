@@ -2493,7 +2493,17 @@ Click an item above to start a test run with it.
 
             ...optionsList,
 
-            // (window.screenTop || window.screenY) &&
+            (document.fullscreenEnabled || document.webkitFullscreenEnabled) &&(document.fullscreenElement!==null ?{
+                  text: "Exit Fullscreen",
+                help: "Might not work on some machines",
+                value() { 
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitCancelFullScreen) {
+                        document.webkitCancelFullScreen();
+                    }
+                }
+                }:
             {
                 text: "Fullscreen",
                 help: "Might not work on some machines",
@@ -2505,7 +2515,7 @@ Click an item above to start a test run with it.
                         docel.webkitRequestFullscreen();
                     }
                 }
-            },
+            }),
             {
                 text: 'Reset Game',
                 help: "Erase high score and statistics",
