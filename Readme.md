@@ -76,6 +76,7 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 - lights shadows  
 - keyboard support
 - Offline mode web for iphone 
+- controller support on web/mobile
 - webgl rendering
 - enable export of gameplay capture in webview
 

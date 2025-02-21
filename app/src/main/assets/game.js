@@ -131,6 +131,8 @@ background.addEventListener("load", () => {
     needsRender = true
 })
 
+
+
 const fitSize = () => {
     const {width, height} = canvas.getBoundingClientRect();
     canvas.width = width;
@@ -154,6 +156,8 @@ const fitSize = () => {
     flashes = [];
     pause()
     putBallsAtPuck();
+    // For safari mobile https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
 };
 window.addEventListener("resize", fitSize);
 
