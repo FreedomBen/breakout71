@@ -259,14 +259,16 @@ function resetBalls() {
             sx: 0,
             sy: 0,
             color: currentLevelInfo()?.black_puck ? '#000' : "#FFF",
-            hitSinceBounce: 0,
-            piercedSinceBounce: 0,
             sparks: 0,
+            piercedSinceBounce: 0,
+            hitSinceBounce: 0,
+             hitItem:[],
         });
     }
 }
 
 function putBallsAtPuck() {
+    // This reset could be abused to cheat quite easily
     const count = balls.length;
     const perBall = puckWidth / (count + 1);
     balls.forEach((ball, i) => {
@@ -280,6 +282,10 @@ function putBallsAtPuck() {
             vy: -baseSpeed,
             sx: 0,
             sy: 0,
+            hitItem:[],
+            hitSinceBounce: 0,
+            piercedSinceBounce: 0,
+            // piercedSinceBounce: 0,
         });
     });
 }
@@ -351,6 +357,7 @@ function pickedUpgradesHTMl() {
 async function openUpgradesPicker() {
     let {text, repeats, choices} = getLevelStats();
     scoreStory.push(`Finished level ${currentLevel + 1} (${currentLevelInfo().name}): ${text}`,);
+
 
     while (repeats--) {
         const actions = pickRandomUpgrades(choices);
@@ -658,6 +665,20 @@ const upgrades = [
         "name": "Wind",
         "max": 3,
         "help": "Puck position creates wind.",
+    },
+    {
+        "threshold": 40000,
+        "id": "sturdy_bricks",
+        "name": "Sturdy bricks",
+        "max": 4,
+        "help": "Bricks sometimes resist hits but drop more coins.",
+    },
+    {
+        "threshold": 45000,
+        "id": "respawn",
+        "name": "Respawn",
+        "max": 4,
+        "help": "The first brick hit will respawn.",
     },
 ]
 
@@ -1104,10 +1125,8 @@ function ballTick(ball, delta) {
         ball.vy *= (1 + .02 / speedLimitDampener);
     } else {
         ball.vx *= (1 - .02 / speedLimitDampener);
-        ;
         if (Math.abs(ball.vy) > 0.5 * baseSpeed) {
             ball.vy *= (1 - .02 / speedLimitDampener);
-            ;
         }
     }
 
@@ -1158,21 +1177,16 @@ function ballTick(ball, delta) {
         if (perks.streak_shots) {
             resetCombo(ball.x, ball.y);
         }
+
+        if(perks.respawn){
+            ball.hitItem.slice(0,-1).slice(0,perks.respawn)
+                .forEach(({index,color})=>bricks[index]=bricks[index]||color)
+        }
+        ball.hitItem=[]
         if (!ball.hitSinceBounce) {
             incrementRunStatistics('miss')
             levelMisses++;
             const loss = resetCombo(ball.x, ball.y)
-            //
-            // flashes.push({
-            //     type: "text",
-            //     text: 'miss',
-            //     time: levelTime,
-            //     color: ball.color,
-            //     x: ball.x,
-            //     y: ball.y - ballSize,
-            //     duration: 450,
-            //     size: puckHeight,
-            // })
             if (ball.bouncesList?.length) {
                 ball.bouncesList.push({
                     x: ball.previousx,
@@ -1237,12 +1251,16 @@ function ballTick(ball, delta) {
     }
     const hitBrick = brickHitCheck(ball, ballSize / 2, true);
     if (typeof hitBrick !== "undefined") {
-        const wasABomb = bricks[hitBrick] === "black";
+        const initialBrickColor = bricks[hitBrick]
+
         explodeBrick(hitBrick, ball, false);
 
-        if (perks.sapper && !wasABomb) {
+        if (perks.sapper && initialBrickColor !== "black" &&
+            // don't replace a brick that bounced with sturdy_bricks
+            !bricks[hitBrick]) {
             bricks[hitBrick] = "black";
         }
+
     }
 
     if (!isSettingOn("basic")) {
@@ -1419,6 +1437,15 @@ function explodeBrick(index, ball, isExplosion) {
         spawnExplosion(7 * (1 + perks.bigger_explosions), x, y, 'white', 150, coinSize,);
         ball.hitSinceBounce++;
     } else if (color) {
+        // Even if it bounces we don't want to count that as a miss
+        ball.hitSinceBounce++;
+
+        if(perks.sturdy_bricks && perks.sturdy_bricks*2>Math.random()*10){
+            // Resist
+            sounds.coinBounce(ball.x, 1)
+            return
+        }
+
         // Flashing is take care of by the tick loop
         const x = brickCenterX(index), y = brickCenterY(index);
 
@@ -1429,7 +1456,13 @@ function explodeBrick(index, ball, isExplosion) {
         incrementRunStatistics('spawned_coins', combo)
 
         coins = coins.filter((c) => !c.destroyed);
-        for (let i = 0; i < combo; i++) {
+        let coinsToSpawn=combo
+        if(perks.sturdy_bricks){
+            // +10% per level
+            coinsToSpawn+=Math.ceil((10+perks.sturdy_bricks) / 10 * coinsToSpawn)
+        }
+
+        while (coinsToSpawn-- ) {
             // Avoids saturating the canvas with coins
             if (coins.length > MAX_COINS * (isSettingOn("basic") ? 0.5 : 1)) {
                 // Just pick a random one
@@ -1471,12 +1504,18 @@ function explodeBrick(index, ball, isExplosion) {
                 sounds.comboIncreaseMaybe(ball.x, 1);
             }
         }
-        ball.hitSinceBounce++;
 
         flashes.push({
             type: "ball", duration: 40, time: levelTime, size: brickWidth, color: color, x, y,
         });
         spawnExplosion(5 + combo, x, y, color, 100, coinSize / 2);
+    }
+
+    if(!bricks[index] ){
+        ball.hitItem?.push({
+            index,
+            color
+        })
     }
 }
 
@@ -1654,15 +1693,6 @@ function render() {
                 if (!type || type === "black" || okColors.has(type)) return;
                 const x = brickCenterX(index), y = brickCenterY(index);
                 drawFuzzyBall(ctx, "red", brickWidth, x, y);
-                //
-                // baseParticle && flashes.push({
-                //     ...baseParticle,
-                //     duration: 100,
-                //     x,
-                //     y,
-                //     vx: (0.5 - Math.random()) * 10,
-                //     vy: (0.5 - Math.random()) * 10,
-                // })
             });
         }
         ctx.globalAlpha = 1;
@@ -1728,7 +1758,6 @@ function render() {
         }
     });
     // The puck
-
     ctx.globalAlpha = 1
     ctx.globalCompositeOperation = "source-over";
     drawPuck(ctx, puckColor, puckWidth, puckHeight)
@@ -2037,7 +2066,8 @@ const sounds = {
     comboDecrease() {
         if (!isSettingOn("sound")) return;
         playShepard(-1, 0.5, 0.5);
-    }, coinBounce: (pan, volume) => {
+    },
+    coinBounce: (pan, volume) => {
         if (!isSettingOn("sound")) return;
         createSingleBounceSound(1200, pixelsToPan(pan), volume);
     }, explode: (pan) => {
@@ -2497,12 +2527,14 @@ Click an item above to start a test run with it.
             }
         ],
         textAfterButtons: `
-        <p>Made in France by <a href="https://lecaro.me">Renan LE CARO</a><br/>   
-        <a href="./privacy.html" target="_blank">privacy policy</a> - 
-        <a href="https://play.google.com/store/apps/details?id=me.lecaro.breakout" target="_blank">Google Play</a> - 
-        <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a><br/> 
-        v.${window.appVersion}
-        
+        <p>
+            <span>Made in France by <a href="https://lecaro.me">Renan LE CARO</a>.</span> 
+            <a href="./privacy.html" target="_blank">Privacy Policy</a>
+            <a href="https://play.google.com/store/apps/details?id=me.lecaro.breakout" target="_blank">Google Play</a>
+            <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a>
+            <a href="https://gitlab.com/lecarore/breakout71" target="_blank">Gitlab</a>
+            <a href="https://breakout.lecaro.me/" target="_blank">Web version</a>
+            <span>v.${window.appVersion}</span>
          </p>
         `
     })

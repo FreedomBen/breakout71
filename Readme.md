@@ -30,9 +30,8 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 
 ## Perk ideas
 - wrap left / right
-- puck bounce predictions (using particles)
 - n% of the broken bricks respawn when the ball touches the puck
-- bricks take twice as many hits but drop 50% more coins
+- bricks break 50% of the time but drop 50% more coins
 - wind (puck positions adds force to coins and balls)
 - balls repulse coins
 - n% of coins missed respawn at the top
@@ -61,6 +60,7 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 - new ball spawns when reaching combo X
 - missing with combo triggers explosive lightning strike
 - correction : pick one past upgrade to remove and replace by something else 
+- puck bounce predictions rendered with particles or lines (requires big refactor)
 
 ## Engine ideas
 
