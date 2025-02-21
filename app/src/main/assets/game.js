@@ -2493,7 +2493,8 @@ Click an item above to start a test run with it.
 
             ...optionsList,
 
-            (window.screenTop || window.screenY) && {
+            // (window.screenTop || window.screenY) &&
+            {
                 text: "Fullscreen",
                 help: "Might not work on some machines",
                 value() {
