@@ -137,6 +137,9 @@ const fitSize = () => {
     const {width, height} = canvas.getBoundingClientRect();
     canvas.width = width;
     canvas.height = height;
+    ctx.fillStyle=currentLevelInfo()?.color||'black'
+    ctx.globalAlpha=1
+    ctx.fillRect(0,0,width,height)
     backgroundCanvas.width = width;
     backgroundCanvas.height = height;
 
@@ -2496,7 +2499,7 @@ Click an item above to start a test run with it.
             (document.fullscreenEnabled || document.webkitFullscreenEnabled) &&(document.fullscreenElement!==null ?{
                   text: "Exit Fullscreen",
                 help: "Might not work on some machines",
-                value() { 
+                value() {
                     if (document.exitFullscreen) {
                         document.exitFullscreen();
                     } else if (document.webkitCancelFullScreen) {
