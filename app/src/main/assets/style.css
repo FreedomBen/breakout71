@@ -13,6 +13,7 @@ body {
     overflow: hidden;
     width: 100vw;
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     color: white;
     background-size: 120px 120px;
     background-color: var(--background1);
