@@ -84,13 +84,13 @@ body.black_puck #menu {
 
 .popup > div {
     margin: auto;
-    padding: 20px;
+    padding: 20px 10px;
     /*border: 1px solid white;*/
     transform-origin: center;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    width: 90%;
+    width: 100%;
     max-width: 450px;
 }
 
@@ -249,10 +249,11 @@ body.black_puck #menu {
     margin: 40px;
 }
 
-#level-recording-container img,#level-recording-container video{
+#level-recording-container img, #level-recording-container video {
     max-width: 100%;
     height: auto;
 }
+
 #level-recording-container a {
     display: block;
 }
@@ -274,4 +275,61 @@ body.black_puck #menu {
 
 
     }
+}
+
+.histogram {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+    margin: 10px 0 40px 0;
+}
+
+
+.histogram > span {
+/*    Hover zone */
+    flex-grow: 1;
+    width: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.histogram > span.active  > span{
+    background: #4049ca;
+}
+.histogram > span > span{
+    /*Visible bar*/
+    background: #1c1c2f;
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    min-height: 1px;
+}
+
+.histogram > span > span> span {
+    /*label */
+    position: absolute;
+    bottom: -20px;
+    pointer-events: none;
+    white-space: nowrap;
+    transform-origin: bottom left;
+    font-size: 13px;
+    text-align: center;
+    display: block;
+    left: 50%;
+    transform: translate(-50%,0);
+
+}
+
+.histogram > span:not(:hover):not(.active) > span> span {
+    opacity: 0;
+}
+
+h2.histogram-title {
+    color: #3b3f75;
+    font-size: 18px;
+}
+
+h2.histogram-title strong {
+    color: #4049ca;
 }

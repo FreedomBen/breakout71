@@ -55,7 +55,7 @@ function resetCombo(x, y) {
     }
     const lost = Math.max(0, prev - combo);
     if (lost) {
-        incrementRunStatistics('combo_resets', 1)
+
         for (let i = 0; i < lost && i < 8; i++) {
             setTimeout(() => sounds.comboDecrease(), i * 100);
         }
@@ -132,14 +132,13 @@ background.addEventListener("load", () => {
 })
 
 
-
 const fitSize = () => {
     const {width, height} = canvas.getBoundingClientRect();
     canvas.width = width;
     canvas.height = height;
-    ctx.fillStyle=currentLevelInfo()?.color||'black'
-    ctx.globalAlpha=1
-    ctx.fillRect(0,0,width,height)
+    ctx.fillStyle = currentLevelInfo()?.color || 'black'
+    ctx.globalAlpha = 1
+    ctx.fillRect(0, 0, width, height)
     backgroundCanvas.width = width;
     backgroundCanvas.height = height;
 
@@ -244,7 +243,8 @@ function addToScore(coin) {
         lastPlayedCoinGrab = Date.now()
         sounds.coinCatch(coin.x)
     }
-    incrementRunStatistics('caught_coins', coin.points)
+        runStatistics.score+=coin.points
+
 
 }
 
@@ -269,7 +269,8 @@ function resetBalls() {
             sparks: 0,
             piercedSinceBounce: 0,
             hitSinceBounce: 0,
-             hitItem:[],
+            hitItem: [],
+            sapperUses: 0,
         });
     }
 }
@@ -289,7 +290,7 @@ function putBallsAtPuck() {
             vy: -baseSpeed,
             sx: 0,
             sy: 0,
-            hitItem:[],
+            hitItem: [],
             hitSinceBounce: 0,
             piercedSinceBounce: 0,
             // piercedSinceBounce: 0,
@@ -377,6 +378,7 @@ async function openUpgradesPicker() {
             textAfterButtons
         });
         cb();
+        runStatistics.upgrades_picked++
     }
     resetCombo();
     resetBalls();
@@ -394,6 +396,7 @@ function setLevel(l) {
     levelStartScore = score;
     levelSpawnedCoins = 0;
     levelMisses = 0;
+    runStatistics.levelsPlayed++
 
     resetCombo();
     recomputeTargetBaseSpeed();
@@ -404,8 +407,6 @@ function setLevel(l) {
         gridSize = lvl.size;
         fitSize();
     }
-    incrementRunStatistics('lvl_size_' + lvl.size, 1)
-    incrementRunStatistics('lvl_name_' + lvl.name, 1)
     coins = [];
     bricks = [...lvl.bricks];
     flashes = [];
@@ -445,7 +446,8 @@ const upgrades = [
         "id": "extra_life",
         "name": "+1 life",
         "max": 7,
-        "help": "Survive dropping the ball once."
+        "help": "Survive dropping the ball",
+        extraLevelsHelp: `One more life just in case`
     },
     {
         "threshold": 0,
@@ -462,28 +464,32 @@ const upgrades = [
         "giftable": true,
         "name": "+3 base combo",
         "max": 7,
-        "help": "Your combo starts 3 points higher."
+        "help": "Your combo starts at 4",
+        extraLevelsHelp: `Combo starts 3 points higher`
     },
     {
         "threshold": 0,
         "id": "slow_down",
         "name": "Slower ball",
         "max": 2,
-        "help": "Slows down the ball."
+        "help": "Slows down the ball",
+        extraLevelsHelp: `Make it even slower`
     },
     {
         "threshold": 0,
         "id": "bigger_puck",
         "name": "Bigger puck",
         "max": 2,
-        "help": "Catches more coins."
+        "help": "Catches more coins",
+        extraLevelsHelp: `Even bigger puck`
     },
     {
         "threshold": 0,
         "id": "viscosity",
         "name": "Viscosity",
         "max": 3,
-        "help": "Slower coins fall.",
+        "help": "Slower coins fall",
+        extraLevelsHelp: `Even slower fall`,
         tryout: {
             perks: {viscosity: 3, base_combo: 3},
             level: 'Waves'
@@ -510,7 +516,8 @@ const upgrades = [
         "id": "skip_last",
         "name": "Easy Cleanup",
         "max": 7,
-        "help": "The last brick will self-destruct."
+        "help": "The last brick will self-destruct",
+        extraLevelsHelp: `Level clears one brick earlier`,
     },
     {
         "threshold": 500,
@@ -518,40 +525,44 @@ const upgrades = [
         "giftable": true,
         "name": "Puck controls ball",
         "max": 2,
-        "help": "Control the ball's trajectory."
+        "help": "Control the ball's trajectory",
+        extraLevelsHelp: `Stronger effect on the ball`,
     },
     {
         "threshold": 1000,
         "id": "coin_magnet",
         "name": "Coins magnet",
         "max": 3,
-        "help": "Puck attracts coins.",
+        "help": "Puck attracts coins",
         tryout: {
             perks: {coin_magnet: 3, base_combo: 3}
-        }
+        }, extraLevelsHelp: `Stronger effect on the coins`,
     },
     {
         "threshold": 1500,
         "id": "multiball",
         "giftable": true,
         "name": "+1 ball",
-        "max": 3,
-        "help": "Start with one more balls.",
+        "max": 6,
+        "help": "Start with two balls",
+        extraLevelsHelp: `One more ball`,
     },
     {
         "threshold": 2000,
         "id": "smaller_puck",
         "name": "Smaller puck",
         "max": 2,
-        "help": "Gives you more control."
+        "help": "Gives you more control",
+        extraLevelsHelp: `Even smaller puck`,
     },
     {
         "threshold": 3000,
         "id": "pierce",
         "giftable": true,
-        "name": "Heavy ball",
+        "name": "Piercing",
         "max": 3,
-        "help": "Ball pierces bricks."
+        "help": "Ball pierces 3 bricks",
+        extraLevelsHelp: `Pierce 3 more bricks`,
     },
     {
         "threshold": 4000,
@@ -560,7 +571,7 @@ const upgrades = [
         "name": "Picky eater",
         "color_blind_exclude": true,
         "max": 1,
-        "help": "Break bricks color by color.",
+        "help": "Break bricks color by color",
 
         tryout: {
             perks: {picky_eater: 1},
@@ -573,7 +584,7 @@ const upgrades = [
         "name": "Stain",
         "color_blind_exclude": true,
         "max": 1,
-        "help": "Coins color the bricks they touch.",
+        "help": "Coins color the bricks they touch",
         tryout: {
             perks: {metamorphosis: 3},
             level: 'Lines'
@@ -585,7 +596,8 @@ const upgrades = [
         "giftable": true,
         "name": "Compound interest",
         "max": 3,
-        "help": "Avoid missing coins with your puck."
+        "help": "Avoid missing coins with your puck",
+        extraLevelsHelp: `Combo grows faster but missed coins hurt it more`,
     },
     {
         "threshold": 7000,
@@ -593,23 +605,24 @@ const upgrades = [
         "giftable": true,
         "name": "Hot start",
         "max": 3,
-        "help": "Clear the level quickly."
+        "help": "Clear the level quickly",
+        extraLevelsHelp: `Combo starts higher but shrinks faster`,
     },
     {
         "threshold": 9000,
         "id": "sapper",
         "giftable": true,
         "name": "Sapper",
-        "max": 1,
-        "help": "Bricks become bombs."
+        "max": 7,
+        "help": "1st brick hit becomes bomb",
+        extraLevelsHelp: `1 more brick replaced by a bomb`,
     },
     {
         "threshold": 11000,
         "id": "bigger_explosions",
         "name": "Kaboom",
         "max": 1,
-        "help": "Bigger explosions.",
-
+        "help": "Bigger explosions",
         tryout: {
             perks: {bigger_explosions: 1},
             level: 'Ship'
@@ -620,7 +633,8 @@ const upgrades = [
         "id": "extra_levels",
         "name": "+1 level",
         "max": 3,
-        "help": "Play one more level before winning."
+        "help": "Play 8 levels instead of 7",
+        extraLevelsHelp: `1 more brick replaced by a bomb`,
     },
     {
         "threshold": 15000,
@@ -628,14 +642,15 @@ const upgrades = [
         "name": "Color pierce",
         "color_blind_exclude": true,
         "max": 1,
-        "help": "Ball breaks same color bricks."
+        "help": "Ball breaks same color bricks"
     },
     {
         "threshold": 18000,
         "id": "soft_reset",
         "name": "Soft reset",
         "max": 2,
-        "help": "Combo grows slower but resets less"
+        "help": "Combo grows slower but resets less",
+        extraLevelsHelp: `Even slower combo growth but softer reset`,
     },
     {
         "threshold": 21000,
@@ -644,6 +659,7 @@ const upgrades = [
         requires: 'multiball',
         "max": 3,
         "help": "Balls repulse balls.",
+        extraLevelsHelp: 'Stronger repulsion force ',
         tryout: {
             perks: {ball_repulse_ball: 1, multiball: 2},
         }
@@ -654,7 +670,7 @@ const upgrades = [
         requires: 'multiball',
         "name": "Gravity",
         "max": 3,
-        "help": "Balls attract balls.",
+        "help": "Balls attract balls.", extraLevelsHelp: 'Stronger attraction force ',
         tryout: {
             perks: {ball_attract_ball: 1, multiball: 2},
         }
@@ -663,6 +679,7 @@ const upgrades = [
         "threshold": 30000,
         "id": "puck_repulse_ball",
         "name": "Soft landing",
+        extraLevelsHelp: 'Stronger repulsion force ',
         "max": 3,
         "help": "Puck repulses balls.",
     },
@@ -671,7 +688,7 @@ const upgrades = [
         "id": "wind",
         "name": "Wind",
         "max": 3,
-        "help": "Puck position creates wind.",
+        "help": "Puck position creates wind.", extraLevelsHelp: 'Stronger wind force ',
     },
     {
         "threshold": 40000,
@@ -679,13 +696,14 @@ const upgrades = [
         "name": "Sturdy bricks",
         "max": 4,
         "help": "Bricks sometimes resist hits but drop more coins.",
+        extraLevelsHelp: 'Bricks resist more and drop more coins ',
     },
     {
         "threshold": 45000,
         "id": "respawn",
         "name": "Respawn",
         "max": 4,
-        "help": "The first brick hit will respawn.",
+        "help": "The first brick hit will respawn.", extraLevelsHelp: 'More bricks can respawn ',
     },
 ]
 
@@ -759,7 +777,6 @@ function pickRandomUpgrades(count) {
         .sort((a, b) => a.id > b.id ? 1 : -1)
 
     list.forEach(u => {
-        incrementRunStatistics('offered_upgrade.' + u.id, 1)
         dontOfferTooSoon(u.id)
     })
 
@@ -768,10 +785,9 @@ function pickRandomUpgrades(count) {
         icon: u.icon,
         value: () => {
             perks[u.id]++;
-            incrementRunStatistics('picked_upgrade.' + u.id, 1)
             scoreStory.push("Picked upgrade : " + u.name);
         },
-        help: u.help,
+        help: (perks[u.id] && u.extraLevelsHelp) || u.help,
         // max: u.max,
         // checked: perks[u.id]
     }))
@@ -797,7 +813,6 @@ function restart() {
     }
     const randomGift = reset_perks();
 
-    incrementRunStatistics('starting_upgrade.' + randomGift, 1)
     dontOfferTooSoon(randomGift)
 
     setLevel(0);
@@ -983,6 +998,9 @@ function tick() {
     if (running) {
 
         levelTime += currentTick - lastTick;
+        runStatistics.runTime += currentTick - lastTick
+        runStatistics.max_combo = Math.max(runStatistics.max_combo, combo)
+
         // How many time to compute
         let delta = Math.min(4, (currentTick - lastTick) / (1000 / 60));
         delta *= running ? 1 : 0
@@ -1006,7 +1024,6 @@ function tick() {
             });
         }
         if (!remainingBricks && !coins.length) {
-            incrementRunStatistics('level_time', levelTime)
 
             if (currentLevel + 1 < max_levels()) {
                 setLevel(currentLevel + 1);
@@ -1185,13 +1202,13 @@ function ballTick(ball, delta) {
             resetCombo(ball.x, ball.y);
         }
 
-        if(perks.respawn){
-            ball.hitItem.slice(0,-1).slice(0,perks.respawn)
-                .forEach(({index,color})=>bricks[index]=bricks[index]||color)
+        if (perks.respawn) {
+            ball.hitItem.slice(0, -1).slice(0, perks.respawn)
+                .forEach(({index, color}) => bricks[index] = bricks[index] || color)
         }
-        ball.hitItem=[]
+        ball.hitItem = []
         if (!ball.hitSinceBounce) {
-            incrementRunStatistics('miss')
+            runStatistics.misses++
             levelMisses++;
             const loss = resetCombo(ball.x, ball.y)
             if (ball.bouncesList?.length) {
@@ -1224,8 +1241,9 @@ function ballTick(ball, delta) {
             }
 
         }
-        incrementRunStatistics('puck_bounces')
+        runStatistics.puck_bounces++
         ball.hitSinceBounce = 0;
+        ball.sapperUses = 0;
         ball.piercedSinceBounce = 0;
         ball.bouncesList = [{
             x: ball.previousx,
@@ -1235,6 +1253,7 @@ function ballTick(ball, delta) {
 
     if (ball.y > gameZoneHeight + ballSize / 2 && running) {
         ball.destroyed = true;
+        runStatistics.balls_lost++
         if (!balls.find((b) => !b.destroyed)) {
             if (perks.extra_life) {
                 perks.extra_life--;
@@ -1262,10 +1281,11 @@ function ballTick(ball, delta) {
 
         explodeBrick(hitBrick, ball, false);
 
-        if (perks.sapper && initialBrickColor !== "black" &&
+        if (ball.sapperUses < perks.sapper && initialBrickColor !== "black" &&
             // don't replace a brick that bounced with sturdy_bricks
             !bricks[hitBrick]) {
             bricks[hitBrick] = "black";
+            ball.sapperUses++
         }
 
     }
@@ -1289,26 +1309,8 @@ function ballTick(ball, delta) {
     }
 }
 
-
 let runStatistics = {};
 
-function resetRunStatistics() {
-    runStatistics = {
-        started: Date.now(),
-        ended: null,
-        hadOverrides,
-        width: window.innerWidth,
-        height: window.innerHeight,
-        easy: isSettingOn('easy'),
-        color_blind: isSettingOn('color_blind'),
-    }
-}
-
-
-function incrementRunStatistics(key, amount = 1) {
-    runStatistics[key + '_total'] = (runStatistics[key + '_total'] || 0) + amount
-    runStatistics[key + '_lvl_' + currentLevel] = (runStatistics[key + '_lvl_' + currentLevel] || 0) + amount
-}
 
 function getTotalScore() {
     try {
@@ -1326,12 +1328,13 @@ function addToTotalScore(points) {
     }
 }
 
+
 function gameOver(title, intro) {
     if (!running) return;
     pause()
     stopRecording()
 
-    runStatistics.ended = Date.now()
+    runStatistics.max_level = currentLevel+1
 
     const {stats} = getLevelStats();
 
@@ -1341,17 +1344,6 @@ function gameOver(title, intro) {
     } else {
         scoreStory.push(`You dropped the ball and finished your run early. `);
     }
-
-    try {
-        // Stores only last 100 runs
-        const runsHistory = JSON.parse(localStorage.getItem('breakout_71_history') || '[]').slice(0, 99).concat([runStatistics])
-
-        // Generate some histogram
-
-        localStorage.setItem('breakout_71_history', '<pre>' + JSON.stringify(runsHistory, null, 2) + '</pre>')
-    } catch {
-    }
-
     let animationDelay = -300
     const getDelay = () => {
         animationDelay += 800
@@ -1396,6 +1388,80 @@ function gameOver(title, intro) {
         })
     }
 
+    let runStats = ''
+    if (!hadOverrides) {
+
+        try {
+            // Stores only top 100 runs
+            let runsHistory = JSON.parse(localStorage.getItem('breakout_71_runs_history') || '[]');
+            runsHistory.sort((a,b)=>a.score-b.score).reverse()
+            runsHistory=runsHistory.slice(0, 100)
+            console.log(runsHistory.map(r=>r.score))
+             runsHistory.push(runStatistics)
+
+            // Generate some histogram
+            localStorage.setItem('breakout_71_runs_history', JSON.stringify(runsHistory, null, 2))
+
+            const makeHistogram = (title, getter, unit) => {
+                let values = runsHistory.map(h => getter(h) || 0)
+                const min = Math.min(...values)
+                const max = Math.max(...values)
+                // No point
+                if(min===max) return ''
+                // One bin per unique value, max 10
+                const binsCount = Math.min(values.length,10)
+                if(binsCount<3) return ''
+                const bins = []
+                const binsTotal = []
+                for(let i=0;i<binsCount;i++){
+                    bins.push(0)
+                    binsTotal.push(0)
+                }
+                const binSize = (max - min) / bins.length
+                const binIndexOf = v => Math.min(bins.length - 1, Math.floor((v - min) / binSize))
+                values.forEach(v => {
+                    if(isNaN(v)) return
+                    const index=binIndexOf(v)
+                    bins[index]++
+                    binsTotal[index]+=v
+                })
+                if(bins.filter(b=>b).length<3) return ''
+                const maxBin = Math.max(...bins)
+                const lastValue = values[values.length - 1]
+                const activeBin = binIndexOf(lastValue)
+                return `<h2 class="histogram-title">${title} : <strong>${lastValue}${unit}</strong></h2><div class="histogram">
+                    ${bins.map((v, vi) => `<span   class="${vi === activeBin ? 'active' : ''}"><span style="height:${v / maxBin * 80}px" title="${v} run${v>1 ? 's':''} between ${
+                    Math.floor(min + vi * binSize)} and ${Math.floor(min + (vi + 1) * binSize)}${unit}"
+                  ><span>${
+                        (!v && ' ') || (vi==activeBin && lastValue+unit) || (Math.round(binsTotal[vi]/v)+unit)
+                }</span></span></span>`).join('')}
+                </div>
+                `
+            }
+
+
+            runStats += makeHistogram('Total score', r => r.score, '')
+            runStats += makeHistogram('Catch rate', r => Math.round(r.score / r.coins_spawned * 100), '%')
+            runStats += makeHistogram('Bricks broken', r => r.bricks_broken, '')
+            runStats += makeHistogram('Bricks broken per minute', r =>Math.round(r.bricks_broken/r.runTime*1000*60), ' bpm')
+            runStats += makeHistogram('Hit rate', r => Math.round((1-r.misses / r.puck_bounces) * 100), '%')
+            runStats += makeHistogram('Duration per level', r =>  Math.round(r.runTime/1000/r.levelsPlayed), 's')
+            runStats += makeHistogram('Level reached', r => r.levelsPlayed, '')
+            runStats += makeHistogram('Upgrades applied', r => r.upgrades_picked, '')
+            runStats += makeHistogram('Balls lost', r => r.balls_lost, '')
+            runStats += makeHistogram('Average combo', r => Math.round(r.coins_spawned /r.bricks_broken) , '')
+            runStats += makeHistogram('Max combo', r => r.max_combo , '')
+
+            if(runStats){
+                runStats= `<p>Find below your run statistics compared to past runs.</p>`+ runStats
+            }
+        } catch (e) {
+            console.warn(e)
+        }
+
+    }
+
+
     // Avoid the sad sound right as we restart a new games
     combo = 1
     asyncAlert({
@@ -1403,19 +1469,35 @@ function gameOver(title, intro) {
         <p>${intro}</p>
         ${unlocksInfo}  
         `, textAfterButtons: ` 
+        ${runStats}
         <div id="level-recording-container"></div>
         ${scoreStory.map((t) => "<p>" + t + "</p>").join("")} 
         `
     }).then(() => restart());
 }
 
+function resetRunStatistics() {
+    runStatistics = {
+        started: Date.now(),
+        levelsPlayed: 0,
+        runTime: 0,
+        coins_spawned: 0,
+        score: 0,
+        bricks_broken:0,
+        misses:0,
+        balls_lost:0,
+        puck_bounces:0,
+        upgrades_picked:1,
+        max_combo:1
+    }
+}
 function explodeBrick(index, ball, isExplosion) {
     const color = bricks[index];
+
     if (color === 'black') {
         delete bricks[index];
         const x = brickCenterX(index), y = brickCenterY(index);
 
-        incrementRunStatistics('explosion', 1)
         sounds.explode(ball.x);
         const {col, row} = getRowCol(index);
         const size = 1 + perks.bigger_explosions;
@@ -1443,16 +1525,16 @@ function explodeBrick(index, ball, isExplosion) {
         });
         spawnExplosion(7 * (1 + perks.bigger_explosions), x, y, 'white', 150, coinSize,);
         ball.hitSinceBounce++;
+        runStatistics.bricks_broken++
     } else if (color) {
         // Even if it bounces we don't want to count that as a miss
         ball.hitSinceBounce++;
 
-        if(perks.sturdy_bricks && perks.sturdy_bricks*2>Math.random()*10){
+        if (perks.sturdy_bricks && perks.sturdy_bricks * 2 > Math.random() * 10) {
             // Resist
             sounds.coinBounce(ball.x, 1)
             return
         }
-
         // Flashing is take care of by the tick loop
         const x = brickCenterX(index), y = brickCenterY(index);
 
@@ -1460,16 +1542,18 @@ function explodeBrick(index, ball, isExplosion) {
 
         levelSpawnedCoins += combo;
 
-        incrementRunStatistics('spawned_coins', combo)
+        runStatistics.coins_spawned+=combo
+        runStatistics.bricks_broken++
+
 
         coins = coins.filter((c) => !c.destroyed);
-        let coinsToSpawn=combo
-        if(perks.sturdy_bricks){
+        let coinsToSpawn = combo
+        if (perks.sturdy_bricks) {
             // +10% per level
-            coinsToSpawn+=Math.ceil((10+perks.sturdy_bricks) / 10 * coinsToSpawn)
+            coinsToSpawn += Math.ceil((10 + perks.sturdy_bricks) / 10 * coinsToSpawn)
         }
 
-        while (coinsToSpawn-- ) {
+        while (coinsToSpawn--) {
             // Avoids saturating the canvas with coins
             if (coins.length > MAX_COINS * (isSettingOn("basic") ? 0.5 : 1)) {
                 // Just pick a random one
@@ -1518,7 +1602,7 @@ function explodeBrick(index, ball, isExplosion) {
         spawnExplosion(5 + combo, x, y, color, 100, coinSize / 2);
     }
 
-    if(!bricks[index] ){
+    if (!bricks[index]) {
         ball.hitItem?.push({
             index,
             color
@@ -2375,7 +2459,7 @@ document.getElementById("menu").addEventListener("click", (e) => {
 const options = {
     sound: {
         default: true, name: `Game sounds`, help: `Can slow down some phones.`,
-        disabled:()=>false
+        disabled: () => false
     }, "mobile-mode": {
         default: window.innerHeight > window.innerWidth,
         name: `Mobile mode`,
@@ -2383,30 +2467,30 @@ const options = {
         afterChange() {
             fitSize();
         },
-        disabled:()=>false
+        disabled: () => false
     },
     basic: {
         default: false, name: `Fast mode`, help: `Simpler graphics for older devices.`,
-        disabled:()=>false
+        disabled: () => false
     },
     "easy": {
         default: false, name: `Easy mode`, help: `Slower ball as starting perk.`, restart: true,
-        disabled:()=>false
+        disabled: () => false
     }, "color_blind": {
         default: false, name: `Color blind mode`, help: `Removes mechanics about colors.`, restart: true,
-        disabled:()=>false
+        disabled: () => false
     },
     // Could not get the sharing to work without loading androidx and all the modern android things so for now i'll just disable sharing in the android app
-    "record":  {
+    "record": {
         default: false, name: `Record gameplay videos`, help: `Get a video of each level.`,
-        disabled(){
-             return window.location.search.includes('isInWebView=true')
+        disabled() {
+            return window.location.search.includes('isInWebView=true')
         }
     },
-    gif:    {
+    gif: {
         default: false, name: `Make a gif too`, help: `3x heavier, 2x smaller, 7s max`,
-        disabled(){
-             return window.location.protocol === "file:" ||! isSettingOn('record')
+        disabled() {
+            return window.location.protocol === "file:" || !isSettingOn('record')
         }
     }
 };
@@ -2417,9 +2501,9 @@ async function openSettingsPanel() {
 
     const optionsList = [];
     for (const key in options) {
-        if (options[key] )
+        if (options[key])
             optionsList.push({
-                disabled:options[key].disabled(),
+                disabled: options[key].disabled(),
                 checked: isSettingOn(key) ? 1 : 0,
                 max: 1, text: options[key].name, help: options[key].help, value: () => {
                     toggleSetting(key)
@@ -2496,29 +2580,29 @@ Click an item above to start a test run with it.
 
             ...optionsList,
 
-            (document.fullscreenEnabled || document.webkitFullscreenEnabled) &&(document.fullscreenElement!==null ?{
-                  text: "Exit Fullscreen",
-                help: "Might not work on some machines",
-                value() {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.webkitCancelFullScreen) {
-                        document.webkitCancelFullScreen();
+            (document.fullscreenEnabled || document.webkitFullscreenEnabled) && (document.fullscreenElement !== null ? {
+                    text: "Exit Fullscreen",
+                    help: "Might not work on some machines",
+                    value() {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.webkitCancelFullScreen) {
+                            document.webkitCancelFullScreen();
+                        }
                     }
-                }
-                }:
-            {
-                text: "Fullscreen",
-                help: "Might not work on some machines",
-                value() {
-                    const docel = document.documentElement
-                    if (docel.requestFullscreen) {
-                        docel.requestFullscreen();
-                    } else if (docel.webkitRequestFullscreen) {
-                        docel.webkitRequestFullscreen();
+                } :
+                {
+                    text: "Fullscreen",
+                    help: "Might not work on some machines",
+                    value() {
+                        const docel = document.documentElement
+                        if (docel.requestFullscreen) {
+                            docel.requestFullscreen();
+                        } else if (docel.webkitRequestFullscreen) {
+                            docel.webkitRequestFullscreen();
+                        }
                     }
-                }
-            }),
+                }),
             {
                 text: 'Reset Game',
                 help: "Erase high score and statistics",
@@ -2590,8 +2674,22 @@ function repulse(a, b, power, impactsBToo) {
     a.vx -= dx * fact
     a.vy -= dy * fact
 
-        const speed = 10
-        const rand = 2
+    const speed = 10
+    const rand = 2
+    flashes.push({
+        type: "particle",
+        duration: 100,
+        time: levelTime,
+        size: coinSize / 2,
+        color: rainbowColor(),
+        ethereal: true,
+        x: a.x,
+        y: a.y,
+        vx: -dx * speed + a.vx + (Math.random() - 0.5) * rand,
+        vy: -dy * speed + a.vy + (Math.random() - 0.5) * rand,
+    })
+    if (impactsBToo) {
+
         flashes.push({
             type: "particle",
             duration: 100,
@@ -2599,26 +2697,12 @@ function repulse(a, b, power, impactsBToo) {
             size: coinSize / 2,
             color: rainbowColor(),
             ethereal: true,
-            x: a.x,
-            y: a.y,
-            vx: -dx * speed + a.vx + (Math.random() - 0.5) * rand,
-            vy: -dy * speed + a.vy + (Math.random() - 0.5) * rand,
+            x: b.x,
+            y: b.y,
+            vx: dx * speed + b.vx + (Math.random() - 0.5) * rand,
+            vy: dy * speed + b.vy + (Math.random() - 0.5) * rand,
         })
-        if (impactsBToo) {
-
-            flashes.push({
-                type: "particle",
-                duration: 100,
-                time: levelTime,
-                size: coinSize / 2,
-                color: rainbowColor(),
-                ethereal: true,
-                x: b.x,
-                y: b.y,
-                vx: dx * speed + b.vx + (Math.random() - 0.5) * rand,
-                vy: dy * speed + b.vy + (Math.random() - 0.5) * rand,
-            })
-        }
+    }
 
 }
 
@@ -2638,32 +2722,32 @@ function attract(a, b, power) {
     a.vx -= dx * fact
     a.vy -= dy * fact
 
-        const speed = 10
-        const rand = 2
-        flashes.push({
-            type: "particle",
-            duration: 100,
-            time: levelTime,
-            size: coinSize / 2,
-            color: rainbowColor(),
-            ethereal: true,
-            x: a.x,
-            y: a.y,
-            vx: dx * speed + a.vx + (Math.random() - 0.5) * rand,
-            vy: dy * speed + a.vy + (Math.random() - 0.5) * rand,
-        })
-        flashes.push({
-            type: "particle",
-            duration: 100,
-            time: levelTime,
-            size: coinSize / 2,
-            color: rainbowColor(),
-            ethereal: true,
-            x: b.x,
-            y: b.y,
-            vx: -dx * speed + b.vx + (Math.random() - 0.5) * rand,
-            vy: -dy * speed + b.vy + (Math.random() - 0.5) * rand,
-        })
+    const speed = 10
+    const rand = 2
+    flashes.push({
+        type: "particle",
+        duration: 100,
+        time: levelTime,
+        size: coinSize / 2,
+        color: rainbowColor(),
+        ethereal: true,
+        x: a.x,
+        y: a.y,
+        vx: dx * speed + a.vx + (Math.random() - 0.5) * rand,
+        vy: dy * speed + a.vy + (Math.random() - 0.5) * rand,
+    })
+    flashes.push({
+        type: "particle",
+        duration: 100,
+        time: levelTime,
+        size: coinSize / 2,
+        color: rainbowColor(),
+        ethereal: true,
+        x: b.x,
+        y: b.y,
+        vx: -dx * speed + b.vx + (Math.random() - 0.5) * rand,
+        vy: -dy * speed + b.vy + (Math.random() - 0.5) * rand,
+    })
 }
 
 let levelIconHTMLCanvas = document.createElement('canvas')
@@ -2732,7 +2816,7 @@ function drawMainCanvasOnSmallCanvas() {
 let nthGifFrame = 0, gifFrameReduction = 2
 
 function recordGifFrame() {
-    if(nthGifFrame/60>7) return
+    if (nthGifFrame / 60 > 7) return
     gifCtx.globalCompositeOperation = 'screen'
     gifCtx.globalAlpha = 1 / gifFrameReduction
     gifCtx?.drawImage(canvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, gifCanvas.width, gifCanvas.height)
@@ -2782,8 +2866,8 @@ function startRecordingGame() {
             height: gifCanvas.height,
             dither: false,
         });
-    }else{
-        levelGif=null
+    } else {
+        levelGif = null
     }
 
     // drawMainCanvasOnSmallCanvas()
@@ -2862,12 +2946,10 @@ function resumeRecording() {
 }
 
 function stopRecording() {
-
     if (!isSettingOn('record')) {
         return
     }
     if (!mediaRecorder) return;
-
     mediaRecorder?.stop()
     levelGif?.render()
     mediaRecorder = null
@@ -2877,6 +2959,11 @@ function stopRecording() {
 function captureFileName(ext) {
     return "breakout-71-capture-" + new Date().toISOString().replace(/[^0-9\-]+/gi, '-') + '.' + ext
 }
+
+
+
+
+
 
 
 fitSize()
