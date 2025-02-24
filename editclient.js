@@ -23,7 +23,8 @@ const colorsList = [
     '#e32119',
     '#ffd300',
     '#e1c8b4',
-    '#618227'
+    '#618227',
+    '#9b9fa4'
 ]
 const palette = document.getElementById('palette');
 

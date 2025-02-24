@@ -19,7 +19,7 @@ allLevels = allLevels.filter(l => {
     return true
 })
 allLevels.forEach((l, li) => {
-    l.threshold = li < 8 ? 0 : Math.round(Math.min(Math.pow(10, 1 + (li + l.size) / 30) * 10, 10000) * (li))
+    l.threshold = li < 8 ? 0 : Math.round(Math.min(Math.pow(10, 1 + (li + l.size) / 30) * 10, 5000) * (li))
     l.sortKey = (Math.random() + 3) / 3.5 * l.bricks.filter(i => i).length
 })
 
