@@ -5,6 +5,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 [Play now](https://breakout.lecaro.me/) - 
 [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout) - 
 [itch.io](https://renanlecaro.itch.io/breakout71) - 
+[SubReddit](https://www.reddit.com/r/Breakout71/)
 [GitLab](https://gitlab.com/lecarore/breakout71) - 
 [Donate](https://github.com/sponsors/renanlecaro)
  
@@ -127,6 +128,7 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 There are many possible perks left to implement : 
 
 - wrap left / right
+- +1 upgrade per level but -2 choices
 - n% of the broken bricks respawn when the ball touches the puck
 - bricks break 50% of the time but drop 50% more coins
 - wind (puck positions adds force to coins and balls)
@@ -161,6 +163,7 @@ There are many possible perks left to implement :
 
 The "engine" could be better
 
+- convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
 - few puck bounces = more choices / upgrades
 - disable zooming (for ios double tap)
 - particles when bouncing on sides / top
@@ -178,6 +181,8 @@ The "engine" could be better
 - controller support on web/mobile
 - webgl rendering
 - enable export of gameplay capture in webview
+- endgame histograms could work as filters, when you hover a bar, all other histograms would show the stats of those runs only, without changing reference of categories
+
 
 Some extra levels wouldn't hurt
 

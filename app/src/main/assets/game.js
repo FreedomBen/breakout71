@@ -209,7 +209,6 @@ function spawnExplosion(count, x, y, color, duration = 150, size = coinSize) {
 
 
 let score = 0;
-let scoreStory = [];
 
 let lastexplosion = 0;
 let highScore = parseFloat(localStorage.getItem("breakout-3-hs") || "0");
@@ -307,8 +306,20 @@ let levelStartScore = 0;
 let levelMisses = 0;
 let levelSpawnedCoins = 0;
 
-function getLevelStats() {
-    const catchRate = (score - levelStartScore) / (levelSpawnedCoins || 1);
+
+function pickedUpgradesHTMl() {
+    let list = ''
+    for (let u of upgrades) {
+        for (let i = 0; i < perks[u.id]; i++)
+            list += u.icon + ' '
+    }
+
+    return list
+}
+
+async function openUpgradesPicker() {
+
+     const catchRate = (score - levelStartScore) / (levelSpawnedCoins || 1);
 
     let repeats = 1;
     let choices = 3;
@@ -339,42 +350,23 @@ function getLevelStats() {
         missesGain = " (+1 choice)"
     }
 
-    let stats = `
-        You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds${timeGain}.
-        You missed ${levelMisses} times ${missesGain}. 
-        `;
 
-
-    let text = [stats];
-
-    return {
-        stats, text: text.map(t => '<p>' + t + '</p>').join('\n'), repeats, choices,
-    };
-}
-
-function pickedUpgradesHTMl() {
-    let list = ''
-    for (let u of upgrades) {
-        for (let i = 0; i < perks[u.id]; i++)
-            list += u.icon + ' '
-    }
-
-    return list
-}
-
-async function openUpgradesPicker() {
-    let {text, repeats, choices} = getLevelStats();
-    scoreStory.push(`Finished level ${currentLevel + 1} (${currentLevelInfo().name}): ${text}`,);
 
 
     while (repeats--) {
         const actions = pickRandomUpgrades(choices);
         if (!actions.length) break
-        let textAfterButtons = `<p>Upgrades picked so far : </p><p>${pickedUpgradesHTMl()}</p>
-<div id="level-recording-container"></div>`;
+        let textAfterButtons = `
+<p>Upgrades picked so far : </p><p>${pickedUpgradesHTMl()}</p>
+<div id="level-recording-container"></div> 
+`;
 
         const cb = await asyncAlert({
-            title: "Pick an upgrade " + (repeats ? "(" + (repeats + 1) + ")" : ""), actions, text, allowClose: false,
+            title: "Pick an upgrade " + (repeats ? "(" + (repeats + 1) + ")" : ""), actions,
+            text: `<p>
+You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds${timeGain}.
+        You missed ${levelMisses} times ${missesGain}.</p>`,
+            allowClose: false,
             textAfterButtons
         });
         cb();
@@ -785,7 +777,6 @@ function pickRandomUpgrades(count) {
         icon: u.icon,
         value: () => {
             perks[u.id]++;
-            scoreStory.push("Picked upgrade : " + u.name);
         },
         help: (perks[u.id] && u.extraLevelsHelp) || u.help,
         // max: u.max,
@@ -807,17 +798,12 @@ function restart() {
     shuffleLevels(levelTime || score ? currentLevelInfo().name : null);
     resetRunStatistics()
     score = 0;
-    scoreStory = [];
-    if (hadOverrides) {
-        scoreStory.push(`This is a test run, started from the unlocks menu. It stops after one level and is not recorded in the stats. `)
-    }
+
     const randomGift = reset_perks();
 
     dontOfferTooSoon(randomGift)
 
     setLevel(0);
-    scoreStory.push(`You started playing with the upgrade "${upgrades.find(u => u.id === randomGift)?.name}" on the level "${runLevels[0].name}". `,);
-
     pauseRecording()
 }
 
@@ -1336,14 +1322,6 @@ function gameOver(title, intro) {
 
     runStatistics.max_level = currentLevel+1
 
-    const {stats} = getLevelStats();
-
-    scoreStory.push(`During level ${currentLevel + 1} ${stats}`);
-    if (balls.find((b) => !b.destroyed)) {
-        scoreStory.push(`You cleared the last level and won. `);
-    } else {
-        scoreStory.push(`You dropped the ball and finished your run early. `);
-    }
     let animationDelay = -300
     const getDelay = () => {
         animationDelay += 800
@@ -1388,78 +1366,6 @@ function gameOver(title, intro) {
         })
     }
 
-    let runStats = ''
-    if (!hadOverrides) {
-
-        try {
-            // Stores only top 100 runs
-            let runsHistory = JSON.parse(localStorage.getItem('breakout_71_runs_history') || '[]');
-            runsHistory.sort((a,b)=>a.score-b.score).reverse()
-            runsHistory=runsHistory.slice(0, 100)
-            console.log(runsHistory.map(r=>r.score))
-             runsHistory.push(runStatistics)
-
-            // Generate some histogram
-            localStorage.setItem('breakout_71_runs_history', JSON.stringify(runsHistory, null, 2))
-
-            const makeHistogram = (title, getter, unit) => {
-                let values = runsHistory.map(h => getter(h) || 0)
-                const min = Math.min(...values)
-                const max = Math.max(...values)
-                // No point
-                if(min===max) return ''
-                // One bin per unique value, max 10
-                const binsCount = Math.min(values.length,10)
-                if(binsCount<3) return ''
-                const bins = []
-                const binsTotal = []
-                for(let i=0;i<binsCount;i++){
-                    bins.push(0)
-                    binsTotal.push(0)
-                }
-                const binSize = (max - min) / bins.length
-                const binIndexOf = v => Math.min(bins.length - 1, Math.floor((v - min) / binSize))
-                values.forEach(v => {
-                    if(isNaN(v)) return
-                    const index=binIndexOf(v)
-                    bins[index]++
-                    binsTotal[index]+=v
-                })
-                if(bins.filter(b=>b).length<3) return ''
-                const maxBin = Math.max(...bins)
-                const lastValue = values[values.length - 1]
-                const activeBin = binIndexOf(lastValue)
-                return `<h2 class="histogram-title">${title} : <strong>${lastValue}${unit}</strong></h2><div class="histogram">
-                    ${bins.map((v, vi) => `<span   class="${vi === activeBin ? 'active' : ''}"><span style="height:${v / maxBin * 80}px" title="${v} run${v>1 ? 's':''} between ${
-                    Math.floor(min + vi * binSize)} and ${Math.floor(min + (vi + 1) * binSize)}${unit}"
-                  ><span>${
-                        (!v && ' ') || (vi==activeBin && lastValue+unit) || (Math.round(binsTotal[vi]/v)+unit)
-                }</span></span></span>`).join('')}
-                </div>
-                `
-            }
-
-
-            runStats += makeHistogram('Total score', r => r.score, '')
-            runStats += makeHistogram('Catch rate', r => Math.round(r.score / r.coins_spawned * 100), '%')
-            runStats += makeHistogram('Bricks broken', r => r.bricks_broken, '')
-            runStats += makeHistogram('Bricks broken per minute', r =>Math.round(r.bricks_broken/r.runTime*1000*60), ' bpm')
-            runStats += makeHistogram('Hit rate', r => Math.round((1-r.misses / r.puck_bounces) * 100), '%')
-            runStats += makeHistogram('Duration per level', r =>  Math.round(r.runTime/1000/r.levelsPlayed), 's')
-            runStats += makeHistogram('Level reached', r => r.levelsPlayed, '')
-            runStats += makeHistogram('Upgrades applied', r => r.upgrades_picked, '')
-            runStats += makeHistogram('Balls lost', r => r.balls_lost, '')
-            runStats += makeHistogram('Average combo', r => Math.round(r.coins_spawned /r.bricks_broken) , '')
-            runStats += makeHistogram('Max combo', r => r.max_combo , '')
-
-            if(runStats){
-                runStats= `<p>Find below your run statistics compared to past runs.</p>`+ runStats
-            }
-        } catch (e) {
-            console.warn(e)
-        }
-
-    }
 
 
     // Avoid the sad sound right as we restart a new games
@@ -1469,12 +1375,87 @@ function gameOver(title, intro) {
         <p>${intro}</p>
         ${unlocksInfo}  
         `, textAfterButtons: ` 
-        ${runStats}
         <div id="level-recording-container"></div>
-        ${scoreStory.map((t) => "<p>" + t + "</p>").join("")} 
+        ${getHistograms(true)} 
         `
     }).then(() => restart());
 }
+
+function getHistograms(saveStats){
+
+    if (hadOverrides) {return''}
+
+    let runStats=''
+    try {
+        // Stores only top 100 runs
+        let runsHistory = JSON.parse(localStorage.getItem('breakout_71_runs_history') || '[]');
+        runsHistory.sort((a,b)=>a.score-b.score).reverse()
+        runsHistory=runsHistory.slice(0, 100)
+         runsHistory.push(runStatistics)
+
+        // Generate some histogram
+        if(saveStats) {
+            localStorage.setItem('breakout_71_runs_history', JSON.stringify(runsHistory, null, 2))
+        }
+        const makeHistogram = (title, getter, unit) => {
+            let values = runsHistory.map(h => getter(h) || 0)
+            const min = Math.min(...values)
+            const max = Math.max(...values)
+            // No point
+            if(min===max) return ''
+            // One bin per unique value, max 10
+            const binsCount = Math.min(values.length,10)
+            if(binsCount<3) return ''
+            const bins = []
+            const binsTotal = []
+            for(let i=0;i<binsCount;i++){
+                bins.push(0)
+                binsTotal.push(0)
+            }
+            const binSize = (max - min) / bins.length
+            const binIndexOf = v => Math.min(bins.length - 1, Math.floor((v - min) / binSize))
+            values.forEach(v => {
+                if(isNaN(v)) return
+                const index=binIndexOf(v)
+                bins[index]++
+                binsTotal[index]+=v
+            })
+            if(bins.filter(b=>b).length<3) return ''
+            const maxBin = Math.max(...bins)
+            const lastValue = values[values.length - 1]
+            const activeBin = binIndexOf(lastValue)
+            return `<h2 class="histogram-title">${title} : <strong>${lastValue}${unit}</strong></h2><div class="histogram">
+                ${bins.map((v, vi) => `<span   class="${vi === activeBin ? 'active' : ''}"><span style="height:${v / maxBin * 80}px" title="${v} run${v>1 ? 's':''} between ${
+                Math.floor(min + vi * binSize)} and ${Math.floor(min + (vi + 1) * binSize)}${unit}"
+              ><span>${
+                    (!v && ' ') || (vi==activeBin && lastValue+unit) || (Math.round(binsTotal[vi]/v)+unit)
+            }</span></span></span>`).join('')}
+            </div>
+            `
+        }
+
+
+        runStats += makeHistogram('Total score', r => r.score, '')
+        runStats += makeHistogram('Catch rate', r => Math.round(r.score / r.coins_spawned * 100), '%')
+        runStats += makeHistogram('Bricks broken', r => r.bricks_broken, '')
+        runStats += makeHistogram('Bricks broken per minute', r =>Math.round(r.bricks_broken/r.runTime*1000*60), ' bpm')
+        runStats += makeHistogram('Hit rate', r => Math.round((1-r.misses / r.puck_bounces) * 100), '%')
+        runStats += makeHistogram('Duration per level', r =>  Math.round(r.runTime/1000/r.levelsPlayed), 's')
+        runStats += makeHistogram('Level reached', r => r.levelsPlayed, '')
+        runStats += makeHistogram('Upgrades applied', r => r.upgrades_picked, '')
+        runStats += makeHistogram('Balls lost', r => r.balls_lost, '')
+        runStats += makeHistogram('Average combo', r => Math.round(r.coins_spawned /r.bricks_broken) , '')
+        runStats += makeHistogram('Max combo', r => r.max_combo , '')
+
+        if(runStats){
+            runStats= `<p>Find below your run statistics compared to past runs.</p>`+ runStats
+        }
+    } catch (e) {
+        console.warn(e)
+    }
+    return runStats
+}
+
 
 function resetRunStatistics() {
     runStatistics = {
@@ -2435,9 +2416,10 @@ scoreDisplay.addEventListener("click", async (e) => {
     const cb = await asyncAlert({
         title: ` ${score} points at level ${currentLevel + 1} / ${max_levels()}`,
         text: `
-                <p>${pickedUpgradesHTMl()}</p>  
-    ${scoreStory.map((t) => "<p>" + t + "</p>").join("")} 
-            
+
+<p>Upgrades picked so far : </p>
+<p>${pickedUpgradesHTMl()}</p>
+         
         `, allowClose: true, actions: [{
             text: "New run", help: "Start a brand new run.", value: () => {
                 restart();
@@ -2470,11 +2452,11 @@ const options = {
         disabled: () => false
     },
     basic: {
-        default: false, name: `Fast mode`, help: `Simpler graphics for older devices.`,
+        default: false, name: `Basic graphics`, help: `Better performance on older devices.`,
         disabled: () => false
     },
     "easy": {
-        default: false, name: `Easy mode`, help: `Slower ball as starting perk.`, restart: true,
+        default: false, name: `Kids mode`, help: `Starting perk always "slower ball".`, restart: true,
         disabled: () => false
     }, "color_blind": {
         default: false, name: `Color blind mode`, help: `Removes mechanics about colors.`, restart: true,
@@ -2634,6 +2616,7 @@ Click an item above to start a test run with it.
             <a href="./privacy.html" target="_blank">Privacy Policy</a>
             <a href="https://play.google.com/store/apps/details?id=me.lecaro.breakout" target="_blank">Google Play</a>
             <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a>
+            <a href="https://www.reddit.com/r/Breakout71/" target="_blank">Subreddit</a>
             <a href="https://gitlab.com/lecarore/breakout71" target="_blank">Gitlab</a>
             <a href="https://breakout.lecaro.me/" target="_blank">Web version</a>
             <span>v.${window.appVersion}</span>
@@ -2803,7 +2786,8 @@ function recordOneFrame() {
 
 
 function drawMainCanvasOnSmallCanvas() {
-    recordCanvasCtx?.drawImage(canvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, recordCanvas.width, recordCanvas.height)
+    if(!recordCanvasCtx) return
+    recordCanvasCtx.drawImage(canvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, recordCanvas.width, recordCanvas.height)
     recordCanvasCtx.fillStyle = currentLevelInfo()?.black_puck ? '#000' : '#FFF'
     recordCanvasCtx.textBaseline = "top";
     recordCanvasCtx.font = "12px monospace";
@@ -2843,15 +2827,10 @@ function startRecordingGame() {
         gifCtx = gifCanvas.getContext("2d", {antialias: false, alpha: false})
     }
 
-    let scale = 1
-    while (Math.max(gameZoneWidthRoundedUp, gameZoneHeight) * scale > 400 * 2) {
-        scale = scale / 2
-    }
-    console.log('Recording at scale ' + scale)
-    recordCanvas.width = gameZoneWidthRoundedUp * scale
-    recordCanvas.height = gameZoneHeight * scale
-    gifCanvas.width = Math.floor(gameZoneWidthRoundedUp * scale / 2)
-    gifCanvas.height = Math.floor(gameZoneHeight * scale / 2)
+    recordCanvas.width = gameZoneWidthRoundedUp
+    recordCanvas.height = gameZoneHeight
+    gifCanvas.width = 400
+    gifCanvas.height = Math.floor( gameZoneHeight *(400/gameZoneWidthRoundedUp) )
 
 
     // Gif worker won't work there
@@ -2882,8 +2861,13 @@ function startRecordingGame() {
     }
 
     instance.onstop = async function () {
-        let targetDiv = document.getElementById("level-recording-container")
-        if (!targetDiv) return
+        let targetDiv ;
+        let blob = new Blob(recordedChunks, {type: "video/webm"});
+        if(blob.size< 200000) return // under 0.2MB, probably bugged out or pointlessly short
+
+        while(!(targetDiv = document.getElementById("level-recording-container"))){
+            await new Promise(r=>setTimeout(r, 200))
+        }
         const video = document.createElement("video")
         video.autoplay = true
         video.controls = false
@@ -2896,7 +2880,6 @@ function startRecordingGame() {
         video.loop = true
         video.muted = true
         video.playsinline = true
-        let blob = new Blob(recordedChunks, {type: "video/webm"});
         video.src = URL.createObjectURL(blob);
 
         const a = document.createElement("a")
