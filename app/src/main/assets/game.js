@@ -2614,9 +2614,9 @@ Click an item above to start a test run with it.
         <p>
             <span>Made in France by <a href="https://lecaro.me">Renan LE CARO</a>.</span> 
             <a href="./privacy.html" target="_blank">Privacy Policy</a>
+            <a href="https://f-droid.org/en/packages/me.lecaro.breakout/" target="_blank">F-Droid</a>
             <a href="https://play.google.com/store/apps/details?id=me.lecaro.breakout" target="_blank">Google Play</a>
-            <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a>
-            <a href="https://www.reddit.com/r/Breakout71/" target="_blank">Subreddit</a>
+            <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a> 
             <a href="https://gitlab.com/lecarore/breakout71" target="_blank">Gitlab</a>
             <a href="https://breakout.lecaro.me/" target="_blank">Web version</a>
             <span>v.${window.appVersion}</span>

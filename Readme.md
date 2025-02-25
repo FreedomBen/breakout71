@@ -3,9 +3,9 @@
 Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 [Play now](https://breakout.lecaro.me/) - 
+[F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/) - 
 [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout) - 
-[itch.io](https://renanlecaro.itch.io/breakout71) - 
-[SubReddit](https://www.reddit.com/r/Breakout71/)
+[itch.io](https://renanlecaro.itch.io/breakout71) -  
 [GitLab](https://gitlab.com/lecarore/breakout71) - 
 [Donate](https://github.com/sponsors/renanlecaro)
  
@@ -190,7 +190,7 @@ Some extra levels wouldn't hurt
 - letters
 - fruits
 - animals
-
+- countries flags and shapes, with name as background
 
 # Credits
 
