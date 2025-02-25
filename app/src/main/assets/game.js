@@ -6,9 +6,15 @@ let ballSize = 20;
 const coinSize = Math.round(ballSize * 0.8);
 const puckHeight = ballSize;
 
+allLevels.forEach(l=>{
+    if(!l.color && !l.svg){
+        l.svg=`<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><text x="0" y="50" textLength="60" fill="white">${l.name}</text></svg>`
+    }
+})
 if (allLevels.find(l => l.focus)) {
     allLevels = allLevels.filter(l => l.focus)
 }
+
 // Used to render perk icons
 const perkIconsLevels = {}
 allLevels = allLevels.filter(l => {
@@ -1661,16 +1667,21 @@ function render() {
         ctx.globalAlpha = .8;
         ctx.globalCompositeOperation = "multiply";
         if (level.svg) {
-            if (backgroundCanvas.title !== level.name && background.complete) {
+
+            if (backgroundCanvas.title !== level.name && background.complete ) {
                 backgroundCanvas.title = level.name
                 backgroundCanvas.width = canvas.width
                 backgroundCanvas.height = canvas.height
                 const bgctx = backgroundCanvas.getContext("2d")
                 bgctx.fillStyle = level.color
                 bgctx.fillRect(0, 0, canvas.width, canvas.height)
-                bgctx.fillStyle = ctx.createPattern(background, "repeat");
-                bgctx.fillRect(0, 0, width, height);
-                console.log("redrew context")
+
+                if(background.state!=='broken'){
+                    bgctx.fillStyle = ctx.createPattern(background, "repeat");
+                    bgctx.fillRect(0, 0, width, height);
+                } else{
+                    console.warn('Broken svg',level.svg)
+                }
             }
             if (background.complete) {
                 ctx.drawImage(backgroundCanvas, 0, 0)
@@ -2155,11 +2166,12 @@ const sounds = {
 };
 
 // How to play the code on the leftconst context = new window.AudioContext();
-let audioContext, delayNode;
+let audioContext, audioRecordingTrack;
 
 function getAudioContext() {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        audioRecordingTrack = audioContext.createMediaStreamDestination()
     }
     return audioContext;
 }
@@ -2183,6 +2195,7 @@ function createSingleBounceSound(baseFreq = 800, pan = 0.5, volume = 1, duration
     panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime);
     gainNode.connect(panner);
     panner.connect(context.destination);
+    panner.connect(audioRecordingTrack);
 
     // Set up the gain envelope to simulate the impact and quick decay
     gainNode.gain.setValueAtTime(0.8 * volume, context.currentTime); // Initial impact
@@ -2218,6 +2231,7 @@ function createRevivalSound(baseFreq = 440) {
     panner.pan.setValueAtTime(0, context.currentTime); // Center panning
     gainNode.connect(panner);
     panner.connect(context.destination);
+    panner.connect(audioRecordingTrack);
 
     // Set up the gain envelope to simulate a smooth attack and decay
     gainNode.gain.setValueAtTime(0, context.currentTime); // Start at zero
@@ -2268,6 +2282,7 @@ function createExplosionSound(pan = 0.5) {
     // Connect filter to panner and then to the destination (speakers)
     filter.connect(panner);
     panner.connect(context.destination);
+    panner.connect(audioRecordingTrack);
 
     // Ramp down the gain to simulate the explosion's fade-out
     gainNode.gain.setValueAtTime(1, context.currentTime);
@@ -2793,8 +2808,10 @@ function drawMainCanvasOnSmallCanvas() {
     recordCanvasCtx.font = "12px monospace";
     recordCanvasCtx.textAlign = "right";
     recordCanvasCtx.fillText(score.toString(), recordCanvas.width - 12, 12)
+
+
     recordCanvasCtx.textAlign = "left";
-    recordCanvasCtx.fillText((currentLevel + 1) + '/' + max_levels(), 12, 12)
+    recordCanvasCtx.fillText('Level '+(currentLevel + 1) + '/' + max_levels(), 12, 12) 
 }
 
 let nthGifFrame = 0, gifFrameReduction = 2
@@ -2825,6 +2842,15 @@ function startRecordingGame() {
 
         gifCanvas = document.createElement("canvas")
         gifCtx = gifCanvas.getContext("2d", {antialias: false, alpha: false})
+
+
+        captureStream =  recordCanvas.captureStream(0);
+
+        if(isSettingOn('sound') && getAudioContext() && audioRecordingTrack) {
+
+            captureStream.addTrack(audioRecordingTrack.stream.getAudioTracks()[0])
+            // captureStream.addTrack(audioRecordingTrack.stream.getAudioTracks()[1])
+        }
     }
 
     recordCanvas.width = gameZoneWidthRoundedUp
@@ -2851,7 +2877,8 @@ function startRecordingGame() {
 
     // drawMainCanvasOnSmallCanvas()
     const recordedChunks = [];
-    captureStream = captureStream || recordCanvas.captureStream(0);
+
+
     const instance = new MediaRecorder(captureStream);
     mediaRecorder = instance
     instance.start();
@@ -2875,8 +2902,8 @@ function startRecordingGame() {
         video.disableremoteplayback = true
         video.width = recordCanvas.width
         video.height = recordCanvas.height
-        targetDiv.style.width = recordCanvas.width + 'px'
-        targetDiv.style.height = recordCanvas.height + 'px'
+        // targetDiv.style.width = recordCanvas.width + 'px'
+        // targetDiv.style.height = recordCanvas.height + 'px'
         video.loop = true
         video.muted = true
         video.playsinline = true
