@@ -1,4 +1,5 @@
 const MAX_COINS = 400;
+const MAX_PARTICLES = 600;
 const canvas = document.getElementById("game");
 let ctx = canvas.getContext("2d", {alpha: false});
 
@@ -6,9 +7,11 @@ let ballSize = 20;
 const coinSize = Math.round(ballSize * 0.8);
 const puckHeight = ballSize;
 
+
 allLevels.forEach(l=>{
     if(!l.color && !l.svg){
-        l.svg=`<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><text x="0" y="50" textLength="60" fill="white">${l.name}</text></svg>`
+        l.svg=`<svg version="1.1" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" width='200' height='100'><text x="0" y="50" fill="white"><tspan>${l.name}</tspan></text></svg>`
+
     }
 })
 if (allLevels.find(l => l.focus)) {
@@ -194,11 +197,14 @@ function getRowColIndex(row, col) {
     return row * gridSize + col;
 }
 
-
+setInterval(()=>console.log(flashes.length),1000)
 function spawnExplosion(count, x, y, color, duration = 150, size = coinSize) {
     if (!!isSettingOn("basic")) return;
+    if(flashes.length>MAX_PARTICLES) {
+        // Avoid freezing when lots of explosion happen at once
+        count = 1
+    }
     for (let i = 0; i < count; i++) {
-
         flashes.push({
             type: "particle",
             time: levelTime,
@@ -334,7 +340,7 @@ async function openUpgradesPicker() {
     if (levelTime < 30 * 1000) {
         repeats++;
         choices++;
-        timeGain = " (+1 upgrade)"
+        timeGain = " (+1 upgrade and choice)"
     } else if (levelTime < 60 * 1000) {
         choices++;
         timeGain = " (+1 choice)"
@@ -342,7 +348,7 @@ async function openUpgradesPicker() {
     if (catchRate === 1) {
         repeats++;
         choices++;
-        catchGain = " (+1 upgrade)"
+        catchGain = " (+1 upgrade and choice)"
     } else if (catchRate > 0.9) {
         choices++;
         catchGain = " (+1 choice)"
@@ -350,24 +356,22 @@ async function openUpgradesPicker() {
     if (levelMisses === 0) {
         repeats++;
         choices++;
-        missesGain = " (+1 upgrade)"
+        missesGain = " (+1 upgrade and choice)"
     } else if (levelMisses <= 3) {
         choices++;
         missesGain = " (+1 choice)"
     }
 
 
-
-
     while (repeats--) {
-        const actions = pickRandomUpgrades(choices);
+        const actions = pickRandomUpgrades(choices+perks.one_more_choice-perks.instant_upgrade);
         if (!actions.length) break
         let textAfterButtons = `
 <p>Upgrades picked so far : </p><p>${pickedUpgradesHTMl()}</p>
 <div id="level-recording-container"></div> 
 `;
 
-        const cb = await asyncAlert({
+        const upgradeId = await asyncAlert({
             title: "Pick an upgrade " + (repeats ? "(" + (repeats + 1) + ")" : ""), actions,
             text: `<p>
 You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds${timeGain}.
@@ -375,7 +379,11 @@ You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCo
             allowClose: false,
             textAfterButtons
         });
-        cb();
+        perks[upgradeId]++;
+        if(upgradeId==='instant_upgrade'){
+            repeats+=2
+        }
+
         runStatistics.upgrades_picked++
     }
     resetCombo();
@@ -409,7 +417,9 @@ function setLevel(l) {
     bricks = [...lvl.bricks];
     flashes = [];
 
-    background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
+    // This caused problems with accented characters like the ô of côte d'ivoire for odd reasons
+    // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
+    background.src =  'data:image/svg+xml;UTF8,' + lvl.svg
     stopRecording()
     startRecordingGame()
 }
@@ -703,6 +713,22 @@ const upgrades = [
         "max": 4,
         "help": "The first brick hit will respawn.", extraLevelsHelp: 'More bricks can respawn ',
     },
+    {
+        "threshold": 50000,
+        "id": "one_more_choice",
+        "name": "+1 choice permanently",
+        "max": 3,
+        "help": "Further level ups will offer one more option in the list",
+        extraLevelsHelp: 'Even more options ',
+    },
+    {
+        "threshold": 55000,
+        "id": "instant_upgrade",
+        "name": "+2 upgrades now",
+        "max": 2,
+        "help": "-1 choice permanently",
+        extraLevelsHelp: 'Even fewer options ',
+    },
 ]
 
 
@@ -781,9 +807,7 @@ function pickRandomUpgrades(count) {
     return list.map(u => ({
         text: u.name + (perks[u.id] ? ' lvl ' + (perks[u.id] + 1) : ''),
         icon: u.icon,
-        value: () => {
-            perks[u.id]++;
-        },
+        value: u.id ,
         help: (perks[u.id] && u.extraLevelsHelp) || u.help,
         // max: u.max,
         // checked: perks[u.id]
@@ -1195,6 +1219,7 @@ function ballTick(ball, delta) {
         }
 
         if (perks.respawn) {
+            console.log(ball.hitItem,perks.respawn)
             ball.hitItem.slice(0, -1).slice(0, perks.respawn)
                 .forEach(({index, color}) => bricks[index] = bricks[index] || color)
         }
@@ -1396,7 +1421,7 @@ function getHistograms(saveStats){
         // Stores only top 100 runs
         let runsHistory = JSON.parse(localStorage.getItem('breakout_71_runs_history') || '[]');
         runsHistory.sort((a,b)=>a.score-b.score).reverse()
-        runsHistory=runsHistory.slice(0, 100)
+        runsHistory=runsHistory.slice(0, 10)
          runsHistory.push(runStatistics)
 
         // Generate some histogram
@@ -1405,10 +1430,15 @@ function getHistograms(saveStats){
         }
         const makeHistogram = (title, getter, unit) => {
             let values = runsHistory.map(h => getter(h) || 0)
-            const min = Math.min(...values)
-            const max = Math.max(...values)
+            let min = Math.min(...values)
+            let max = Math.max(...values)
             // No point
-            if(min===max) return ''
+            if(min===max) return '';
+            if(max-min<10) {
+            // This is mostly useful for levels
+                min=Math.max(0,max-10)
+                max=Math.max(max,min+10)
+            }
             // One bin per unique value, max 10
             const binsCount = Math.min(values.length,10)
             if(binsCount<3) return ''
@@ -1454,7 +1484,7 @@ function getHistograms(saveStats){
         runStats += makeHistogram('Max combo', r => r.max_combo , '')
 
         if(runStats){
-            runStats= `<p>Find below your run statistics compared to past runs.</p>`+ runStats
+            runStats= `<p>Find below your run statistics compared to  your ${runsHistory.length-1} best runs.</p>`+ runStats
         }
     } catch (e) {
         console.warn(e)
@@ -1480,6 +1510,7 @@ function resetRunStatistics() {
 }
 function explodeBrick(index, ball, isExplosion) {
     const color = bricks[index];
+    if(!color) return;
 
     if (color === 'black') {
         delete bricks[index];
@@ -1589,7 +1620,7 @@ function explodeBrick(index, ball, isExplosion) {
         spawnExplosion(5 + combo, x, y, color, 100, coinSize / 2);
     }
 
-    if (!bricks[index]) {
+    if (!bricks[index] ) {
         ball.hitItem?.push({
             index,
             color
@@ -1666,30 +1697,24 @@ function render() {
         // Decides how dark the background black parts are when lit (1=black)
         ctx.globalAlpha = .8;
         ctx.globalCompositeOperation = "multiply";
-        if (level.svg) {
+        if (level.svg && background.width && background.complete) {
 
-            if (backgroundCanvas.title !== level.name && background.complete ) {
+            if (backgroundCanvas.title !== level.name ) {
                 backgroundCanvas.title = level.name
                 backgroundCanvas.width = canvas.width
                 backgroundCanvas.height = canvas.height
                 const bgctx = backgroundCanvas.getContext("2d")
-                bgctx.fillStyle = level.color
+                bgctx.fillStyle = level.color || '#000'
                 bgctx.fillRect(0, 0, canvas.width, canvas.height)
+                bgctx.fillStyle = ctx.createPattern(background, "repeat");
+                bgctx.fillRect(0, 0, width, height);
+            }
 
-                if(background.state!=='broken'){
-                    bgctx.fillStyle = ctx.createPattern(background, "repeat");
-                    bgctx.fillRect(0, 0, width, height);
-                } else{
-                    console.warn('Broken svg',level.svg)
-                }
-            }
-            if (background.complete) {
-                ctx.drawImage(backgroundCanvas, 0, 0)
-            } else {
-                // Background not loaded yes
-                ctx.fillStyle = "#000";
-                ctx.fillRect(0, 0, width, height);
-            }
+            ctx.drawImage(backgroundCanvas, 0, 0)
+        }else {
+            // Background not loaded yes
+            ctx.fillStyle = "#000";
+            ctx.fillRect(0, 0, width, height);
         }
     } else {
 
@@ -2811,7 +2836,7 @@ function drawMainCanvasOnSmallCanvas() {
 
 
     recordCanvasCtx.textAlign = "left";
-    recordCanvasCtx.fillText('Level '+(currentLevel + 1) + '/' + max_levels(), 12, 12) 
+    recordCanvasCtx.fillText('Level '+(currentLevel + 1) + '/' + max_levels(), 12, 12)
 }
 
 let nthGifFrame = 0, gifFrameReduction = 2
