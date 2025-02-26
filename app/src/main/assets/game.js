@@ -480,7 +480,7 @@ const upgrades = [
         "id": "slow_down",
         "name": "Slower ball",
         "max": 2,
-        "help": "Slows down the ball",
+        "help": "slow down the ball",
         extraLevelsHelp: `Make it even slower`
     },
     {
@@ -1887,7 +1887,7 @@ function render() {
     if (isSettingOn("mobile-mode")) {
         ctx.fillRect(offsetXRoundedDown, gameZoneHeight, gameZoneWidthRoundedUp, 1);
         if (!running) {
-            drawText(ctx, "Keep pressing here to play", puckColor, puckHeight, {
+            drawText(ctx, "Press and hold here to play", puckColor, puckHeight, {
                 x: canvas.width / 2, y: gameZoneHeight + (canvas.height - gameZoneHeight) / 2,
             });
         }
@@ -2612,7 +2612,8 @@ Click an item above to start a test run with it.
 
             ...optionsList,
 
-            (document.fullscreenEnabled || document.webkitFullscreenEnabled) && (document.fullscreenElement !== null ? {
+            (document.fullscreenEnabled || document.webkitFullscreenEnabled) &&
+            (document.fullscreenElement !== null ? {
                     text: "Exit Fullscreen",
                     help: "Might not work on some machines",
                     value() {

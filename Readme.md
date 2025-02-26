@@ -163,9 +163,17 @@ There are many possible perks left to implement :
 
 The "engine" could be better
 
-- add mouse lock / hide curso options
+- add pointer lock when game is running (lock to play area )https://mdn.github.io/dom-examples/pointer-lock/ 
+- hide cursor options
 - offline mode with service worker
 - add pwe manifest 
+- keyboard support
+  - start/stop with space
+  - left and right arrow for moving the puck
+  - up down for choosing menu entry
+  - space to click entry
+  - escape to close menu
+- see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
 - make coins look,sound and roll like coins
 - limit GC by reusing coins and particles
