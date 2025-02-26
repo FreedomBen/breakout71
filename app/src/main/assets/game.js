@@ -1032,7 +1032,7 @@ function tick() {
             decreaseCombo(perks.hot_start, puck, gameZoneHeight - 2 * puckHeight);
         }
 
-        if (remainingBricks < perks.skip_last) {
+        if (remainingBricks <= perks.skip_last) {
             bricks.forEach((type, index) => {
                 if (type) {
                     explodeBrick(index, balls[0], true);
@@ -2594,6 +2594,17 @@ Click an item above to start a test run with it.
                         allowClose: true,
                     })
                     if (tryOn) {
+                        if(!currentLevel || await asyncAlert({
+                            title:'Restart run to try this item?',
+                            text:'You\'re about to start a new test run with just the selected unlocked item, is that really what you wanted ? ',
+                            actions:[{
+                                value: true,
+                                text:'Restart game to test item'
+                            },{
+                                value:false,
+                                text:'Cancel'
+                            }]
+                        }))
                         nextRunOverrides = tryOn
                         restart()
                     }
