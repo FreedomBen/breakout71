@@ -7,6 +7,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout) - 
 [itch.io](https://renanlecaro.itch.io/breakout71) -  
 [GitLab](https://gitlab.com/lecarore/breakout71) - 
+[HackerNews](https://news.ycombinator.com/item?id=43183131) - 
 [Donate](https://github.com/sponsors/renanlecaro)
  
 
@@ -163,6 +164,7 @@ There are many possible perks left to implement :
 
 The "engine" could be better
 
+- on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
 - add pointer lock when game is running (lock to play area )https://mdn.github.io/dom-examples/pointer-lock/ 
 - hide cursor options
 - offline mode with service worker
@@ -175,7 +177,7 @@ The "engine" could be better
   - escape to close menu
 - see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
-- make coins look,sound and roll like coins. Back to colored when coins stain bricks is active
+
 - limit GC by reusing coins and particles
 - convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
 - few puck bounces = more choices / upgrades

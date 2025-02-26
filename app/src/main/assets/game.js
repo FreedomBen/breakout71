@@ -197,7 +197,7 @@ function getRowColIndex(row, col) {
     return row * gridSize + col;
 }
 
-setInterval(()=>console.log(flashes.length),1000)
+
 function spawnExplosion(count, x, y, color, duration = 150, size = coinSize) {
     if (!!isSettingOn("basic")) return;
     if(flashes.length>MAX_PARTICLES) {
@@ -820,7 +820,6 @@ let nextRunOverrides = {level: null, perks: null}
 let hadOverrides = false
 
 function restart() {
-    console.log("restart")
     hadOverrides = !!(nextRunOverrides.level || nextRunOverrides.perks)
     // When restarting, we want to avoid restarting with the same level we're on, so we exclude from the next
     // run's level list
@@ -1230,7 +1229,7 @@ function ballTick(ball, delta) {
         }
 
         if (perks.respawn) {
-            console.log(ball.hitItem,perks.respawn)
+
             ball.hitItem.slice(0, -1).slice(0, perks.respawn)
                 .forEach(({index, color}) => bricks[index] = bricks[index] || color)
         }
@@ -1997,7 +1996,7 @@ function drawBall(ctx, color, width, x, y) {
 
 function drawCoin(ctx, color, size, x,y, bg,rawAngle) {
 if(isNaN(rawAngle)) debugger
-    const angle= Math.round(((rawAngle%(Math.PI*2))+Math.PI*2 )% Math.PI*2 * 16) / 16
+    const angle= (Math.round(rawAngle/Math.PI*2 * 16 ) % 16 + 16 ) % 16
     const key = "coin with halo" + "_" + color + "_" + size + '_' + bg + '_'+angle;
 
     if (!cachedGraphics[key]) {
@@ -2023,12 +2022,12 @@ if(isNaN(rawAngle)) debugger
 
 
         canctx.translate(size / 2, size / 2);
-        canctx.rotate(angle);
+        canctx.rotate(angle/ 16);
         canctx.translate(-size / 2, -size / 2);
 
         canctx.globalCompositeOperation='multiply'
-        drawText(canctx, '$', color, size-2,size / 2, size / 2)
-        drawText(canctx, '$', color, size-2,size / 2, size / 2)
+        drawText(canctx, '$', color, size-2,size / 2, size / 2+1)
+        drawText(canctx, '$', color, size-2,size / 2, size / 2+1)
         cachedGraphics[key] = can;
     }
     ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2));
@@ -2696,6 +2695,7 @@ Click an item above to start a test run with it.
             <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a> 
             <a href="https://gitlab.com/lecarore/breakout71" target="_blank">Gitlab</a>
             <a href="https://breakout.lecaro.me/" target="_blank">Web version</a>
+            <a href="https://news.ycombinator.com/item?id=43183131" target="_blank">HackerNews</a>
             <span>v.${window.appVersion}</span>
          </p>
         `
