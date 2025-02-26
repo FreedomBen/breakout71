@@ -1371,8 +1371,7 @@ function gameOver(title, intro) {
 </p>
 `
     })
-
-    const previousUnlockAt = list.findLast(u => u.threshold <= endTs)?.threshold || 0
+    const previousUnlockAt = findLast(list, u => u.threshold <= endTs)?.threshold || 0
     const nextUnlock = list.find(u => u.threshold > endTs)
 
     if (nextUnlock) {
@@ -3009,6 +3008,14 @@ function captureFileName(ext) {
 
 
 
+    function findLast(arr, predicate){
+        let i = arr.length
+        while(--i)
+            if(predicate(arr[i],i,arr)){
+                return arr[i]
+            }
+
+    }
 
 
 

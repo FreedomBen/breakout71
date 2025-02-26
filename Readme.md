@@ -163,6 +163,12 @@ There are many possible perks left to implement :
 
 The "engine" could be better
 
+- add mouse lock / hide curso options
+- offline mode with service worker
+- add pwe manifest 
+- experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
+- make coins look,sound and roll like coins
+- limit GC by reusing coins and particles
 - convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
 - few puck bounces = more choices / upgrades
 - disable zooming (for ios double tap)
