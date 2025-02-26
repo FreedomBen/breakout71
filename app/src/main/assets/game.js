@@ -890,7 +890,17 @@ canvas.addEventListener("touchmove", (e) => {
 let lastTick = performance.now();
 
 function brickIndex(x, y) {
-    return getRowColIndex(Math.floor(y / brickWidth), Math.floor((x - offsetX) / brickWidth),);
+    //this worked great but coins got stuck in corner between bricks, will need to rework it
+    // if(!currentLevelInfo().squared){
+    //
+    // const offsetToLeftSide = (x - offsetX) % brickWidth
+    // const offsetToTopSide = y % brickWidth
+    //     const bricksMargin=12/(12+120)*brickWidth/2
+    //     if(offsetToLeftSide<  bricksMargin || offsetToLeftSide>brickWidth-bricksMargin || offsetToTopSide<  bricksMargin || offsetToTopSide>brickWidth-bricksMargin ){return -1}
+    //
+    // }
+    //
+    return getRowColIndex(Math.floor(y / brickWidth), Math.floor((x - offsetX) / brickWidth))
 }
 
 function hasBrick(index) {
@@ -1061,6 +1071,7 @@ function tick() {
 
                 coin.vy *= ratio;
                 coin.vx *= ratio;
+                coin.a+=coin.sa
 
                 // Gravity
                 coin.vy += delta * coin.weight * 0.8;
@@ -1090,7 +1101,7 @@ function tick() {
                 if (typeof hitBrick !== "undefined" || hitBorder) {
                     coin.vx *= 0.8;
                     coin.vy *= 0.8;
-
+                    coin.sa*=0.9
                     if (speed > 20 && !playedCoinBounce) {
                         playedCoinBounce = true;
                         sounds.coinBounce(coin.x, 0.2);
@@ -1585,7 +1596,8 @@ function explodeBrick(index, ball, isExplosion) {
 
             coins.push({
                 points: 1,
-                color, ...coord,
+                color:perks.metamorphosis ? color: 'gold',
+                ...coord,
                 previousx: coord.x,
                 previousy: coord.y,
 
@@ -1594,6 +1606,8 @@ function explodeBrick(index, ball, isExplosion) {
                 vy: ball.previousvy * (0.5 + Math.random()),
                 sx: 0,
                 sy: 0,
+                a:Math.random()*Math.PI*2,
+                sa:Math.random()-0.5,
                 weight: 0.8 + Math.random() * 0.2
             });
         }
@@ -1826,7 +1840,7 @@ function render() {
         ctx.globalAlpha = Math.max(0, Math.min(1, 2 - (elapsed / duration) * 2));
         if (type === "text") {
             ctx.globalCompositeOperation = "source-over";
-            drawText(ctx, text, color, size, {x, y: y - elapsed / 10});
+            drawText(ctx, text, color, size, x,  y - elapsed / 10);
         } else if (type === "particle") {
             ctx.globalCompositeOperation = "screen";
             drawBall(ctx, color, size, x, y);
@@ -1838,7 +1852,7 @@ function render() {
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     coins.forEach((coin) => {
-        if (!coin.destroyed) drawCoin(ctx, coin.color, coinSize, coin, level.color || 'black');
+        if (!coin.destroyed) drawCoin(ctx, coin.color, coinSize, coin.x,coin.y, level.color || 'black', coin.a);
     });
 
 
@@ -1872,9 +1886,9 @@ function render() {
     if (combo > 1) {
 
         ctx.globalCompositeOperation = "source-over";
-        drawText(ctx, "x " + combo, !level.black_puck ? '#000' : '#FFF', puckHeight, {
-            x: puck, y: gameZoneHeight - puckHeight / 2,
-        });
+        drawCoin(ctx, 'gold', coinSize, puck-coinSize, gameZoneHeight - puckHeight / 2, !level.black_puck ? '#FFF' : '#000', 0 )
+        drawText(ctx, "x " + combo, !level.black_puck ? '#000' : '#FFF', puckHeight,
+            puck, gameZoneHeight - puckHeight / 2,true);
     }
     //  Borders
     ctx.fillStyle = puckColor;
@@ -1887,9 +1901,9 @@ function render() {
     if (isSettingOn("mobile-mode")) {
         ctx.fillRect(offsetXRoundedDown, gameZoneHeight, gameZoneWidthRoundedUp, 1);
         if (!running) {
-            drawText(ctx, "Press and hold here to play", puckColor, puckHeight, {
-                x: canvas.width / 2, y: gameZoneHeight + (canvas.height - gameZoneHeight) / 2,
-            });
+            drawText(ctx, "Press and hold here to play", puckColor, puckHeight,
+             canvas.width / 2, gameZoneHeight + (canvas.height - gameZoneHeight) / 2,
+            );
         }
     }
 
@@ -1981,10 +1995,11 @@ function drawBall(ctx, color, width, x, y) {
     ctx.drawImage(cachedGraphics[key], Math.round(x - width / 2), Math.round(y - width / 2),);
 }
 
-function drawCoin(ctx, color, width, ball, bg) {
-    const key = "coin with halo" + "_" + color + "_" + width + '_' + bg;
+function drawCoin(ctx, color, size, x,y, bg,rawAngle) {
+if(isNaN(rawAngle)) debugger
+    const angle= Math.round(((rawAngle%(Math.PI*2))+Math.PI*2 )% Math.PI*2 * 16) / 16
+    const key = "coin with halo" + "_" + color + "_" + size + '_' + bg + '_'+angle;
 
-    const size = width * 3;
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
         can.width = size;
@@ -1994,16 +2009,29 @@ function drawCoin(ctx, color, width, ball, bg) {
 
         // coin
         canctx.beginPath();
-        canctx.arc(size / 2, size / 2, width / 2, 0, 2 * Math.PI);
+        canctx.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
         canctx.fillStyle = color;
         canctx.fill();
 
         canctx.strokeStyle = bg;
         canctx.stroke();
 
+        canctx.beginPath();
+        canctx.arc(size / 2, size / 2, size / 2 * 0.6, 0, 2 * Math.PI);
+        canctx.fillStyle = 'rgba(255,255,255,0.5)';
+        canctx.fill();
+
+
+        canctx.translate(size / 2, size / 2);
+        canctx.rotate(angle);
+        canctx.translate(-size / 2, -size / 2);
+
+        canctx.globalCompositeOperation='multiply'
+        drawText(canctx, '$', color, size-2,size / 2, size / 2)
+        drawText(canctx, '$', color, size-2,size / 2, size / 2)
         cachedGraphics[key] = can;
     }
-    ctx.drawImage(cachedGraphics[key], Math.round(ball.x - size / 2), Math.round(ball.y - size / 2),);
+    ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2));
 }
 
 function drawFuzzyBall(ctx, color, width, x, y) {
@@ -2034,8 +2062,6 @@ function drawBrick(ctx, color, x, y, squared) {
 
     const width = brx - tlx, height = bry - tly;
     const key = "brick" + color + "_" + width + "_" + height + '_' + squared
-    // "_" +
-    // isSettingOn("rounded-bricks");
 
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
@@ -2107,8 +2133,8 @@ function drawIMG(ctx, img, size, x, y) {
     ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2),);
 }
 
-function drawText(ctx, text, color, fontSize, {x, y}) {
-    const key = "text" + text + "_" + color + "_" + fontSize;
+function drawText(ctx, text, color, fontSize, x, y,left=false) {
+    const key = "text" + text + "_" + color + "_" + fontSize+'_'+left;
 
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
@@ -2116,15 +2142,15 @@ function drawText(ctx, text, color, fontSize, {x, y}) {
         can.height = fontSize;
         const canctx = can.getContext("2d");
         canctx.fillStyle = color;
-        canctx.textAlign = "center";
+        canctx.textAlign = left ? 'left':"center"
         canctx.textBaseline = "middle";
         canctx.font = fontSize + "px monospace";
 
-        canctx.fillText(text, can.width / 2, can.height / 2, can.width);
+        canctx.fillText(text, left ? 0 : can.width / 2, can.height / 2, can.width);
 
         cachedGraphics[key] = can;
     }
-    ctx.drawImage(cachedGraphics[key], Math.round(x - cachedGraphics[key].width / 2), Math.round(y - cachedGraphics[key].height / 2),);
+    ctx.drawImage(cachedGraphics[key], left ? x:Math.round(x - cachedGraphics[key].width / 2), Math.round(y - cachedGraphics[key].height / 2),);
 }
 
 function pixelsToPan(pan) {
@@ -2176,7 +2202,7 @@ const sounds = {
     },
     coinBounce: (pan, volume) => {
         if (!isSettingOn("sound")) return;
-        createSingleBounceSound(1200, pixelsToPan(pan), volume);
+        createSingleBounceSound(1200, pixelsToPan(pan), volume,0.1,'triangle');
     }, explode: (pan) => {
         if (!isSettingOn("sound")) return;
         createExplosionSound(pixelsToPan(pan));
@@ -2185,7 +2211,7 @@ const sounds = {
         createRevivalSound(500);
     }, coinCatch(pan) {
         if (!isSettingOn("sound")) return;
-        createSingleBounceSound(440, pixelsToPan(pan), .8)
+        createSingleBounceSound(900, pixelsToPan(pan), .8,0.1,'triangle')
     }
 };
 
@@ -2200,14 +2226,14 @@ function getAudioContext() {
     return audioContext;
 }
 
-function createSingleBounceSound(baseFreq = 800, pan = 0.5, volume = 1, duration = 0.1,) {
+function createSingleBounceSound(baseFreq = 800, pan = 0.5, volume = 1, duration = 0.1, type = "sine") {
     const context = getAudioContext();
     // Frequency for the metal "ping"
     const baseFrequency = baseFreq; // Hz
 
     // Create an oscillator for the impact sound
     const oscillator = context.createOscillator();
-    oscillator.type = "sine";
+    oscillator.type=type;
     oscillator.frequency.setValueAtTime(baseFrequency, context.currentTime);
 
     // Create a gain node to control the volume

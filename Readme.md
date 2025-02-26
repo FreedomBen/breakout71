@@ -175,7 +175,7 @@ The "engine" could be better
   - escape to close menu
 - see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
-- make coins look,sound and roll like coins
+- make coins look,sound and roll like coins. Back to colored when coins stain bricks is active
 - limit GC by reusing coins and particles
 - convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
 - few puck bounces = more choices / upgrades

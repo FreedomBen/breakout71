@@ -272,7 +272,7 @@ body.black_puck #menu {
         position: absolute;
         top: 40px;
         left: 40px;
-
+    max-width: calc((100vw - 450px )/2 - 80px);
 
     }
 }
