@@ -1698,8 +1698,7 @@ function render() {
 
     scoreInfo +=   score.toString();
     scoreDisplay.innerText = scoreInfo;
-
-
+    // Clear
     if (!isSettingOn("basic") && !level.color && level.svg && !level.black_puck) {
 
         // Without this the light trails everything
@@ -1889,7 +1888,6 @@ function render() {
         if (!coin.destroyed) drawCoin(ctx, coin.color, coinSize, coin.x,coin.y, level.color || 'black', coin.a);
     });
 
-
     // Black shadow around balls
     if (coins.length > 10 && !isSettingOn('basic')) {
         ctx.globalAlpha = Math.min(0.8, (coins.length - 10) / 50);
@@ -1903,7 +1901,7 @@ function render() {
     ctx.globalCompositeOperation = "source-over";
     const puckColor = level.black_puck ? '#000' : '#FFF'
     balls.forEach((ball) => {
-        drawBall(ctx, ball.color, ballSize, ball.x, ball.y);
+        drawBall(ctx, ball.color, ballSize, ball.x, ball.y, puckColor);
         // effect
         if (isTelekinesisActive(ball)) {
             ctx.strokeStyle = puckColor;
@@ -1920,9 +1918,11 @@ function render() {
     if (combo > 1) {
 
         ctx.globalCompositeOperation = "source-over";
-        drawCoin(ctx, 'gold', coinSize, puck-coinSize, gameZoneHeight - puckHeight / 2, !level.black_puck ? '#FFF' : '#000', 0 )
-        drawText(ctx, "x " + combo, !level.black_puck ? '#000' : '#FFF', puckHeight,
-            puck, gameZoneHeight - puckHeight / 2,true);
+        const comboText="x " + combo
+        const comboTextWidth=comboText.length*puckHeight/2.6
+        drawCoin(ctx, 'gold', coinSize, puck-coinSize*1.5-comboTextWidth/2, gameZoneHeight - puckHeight / 2, !level.black_puck ? '#FFF' : '#000', 0 )
+        drawText(ctx, comboText, !level.black_puck ? '#000' : '#FFF', puckHeight,
+            puck-comboTextWidth/2, gameZoneHeight - puckHeight / 2,true);
     }
     //  Borders
     ctx.fillStyle = puckColor;
@@ -2010,27 +2010,33 @@ function drawPuck(ctx, color, puckWidth, puckHeight) {
 
 }
 
-function drawBall(ctx, color, width, x, y) {
-    const key = "ball" + color + "_" + width;
+function drawBall(ctx, color, width, x, y, borderColor='') {
+    const key = "ball" + color + "_" + width+'_'+borderColor;
 
+        const size = Math.round(width);
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
-        const size = Math.round(width);
         can.width = size;
         can.height = size;
 
         const canctx = can.getContext("2d");
         canctx.beginPath();
-        canctx.arc(size / 2, size / 2, Math.round(size / 2), 0, 2 * Math.PI);
+        canctx.arc(size / 2, size / 2, Math.round(size / 2)-1, 0, 2 * Math.PI);
         canctx.fillStyle = color;
         canctx.fill();
+        if(borderColor){
+            canctx.lineWidth=2
+            canctx.strokeStyle=borderColor
+            canctx.stroke()
+        }
+
         cachedGraphics[key] = can;
     }
-    ctx.drawImage(cachedGraphics[key], Math.round(x - width / 2), Math.round(y - width / 2),);
+    ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2),);
 }
 
 function drawCoin(ctx, color, size, x,y, bg,rawAngle) {
-if(isNaN(rawAngle)) debugger
+
     const angle= (Math.round(rawAngle/Math.PI*2 * 16 ) % 16 + 16 ) % 16
     const key = "coin with halo" + "_" + color + "_" + size + '_' + bg + '_'+angle;
 
@@ -2047,23 +2053,25 @@ if(isNaN(rawAngle)) debugger
         canctx.fillStyle = color;
         canctx.fill();
 
-        canctx.strokeStyle = bg;
-        canctx.stroke();
+        if(color=== 'gold'){
 
-        canctx.beginPath();
-        canctx.arc(size / 2, size / 2, size / 2 * 0.6, 0, 2 * Math.PI);
-        canctx.fillStyle = 'rgba(255,255,255,0.5)';
-        canctx.fill();
+            canctx.strokeStyle = bg;
+            canctx.stroke();
 
+            canctx.beginPath();
+            canctx.arc(size / 2, size / 2, size / 2 * 0.6, 0, 2 * Math.PI);
+            canctx.fillStyle = 'rgba(255,255,255,0.5)';
+            canctx.fill();
 
-        canctx.translate(size / 2, size / 2);
-        canctx.rotate(angle/ 16);
-        canctx.translate(-size / 2, -size / 2);
+            canctx.translate(size / 2, size / 2);
+            canctx.rotate(angle/ 16);
+            canctx.translate(-size / 2, -size / 2);
 
-        canctx.globalCompositeOperation='multiply'
-        drawText(canctx, '$', color, size-2,size / 2, size / 2+1)
-        drawText(canctx, '$', color, size-2,size / 2, size / 2+1)
-        cachedGraphics[key] = can;
+            canctx.globalCompositeOperation='multiply'
+            drawText(canctx, '$', color, size-2,size / 2, size / 2+1)
+            drawText(canctx, '$', color, size-2,size / 2, size / 2+1)
+        }
+            cachedGraphics[key] = can;
     }
     ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2));
 }

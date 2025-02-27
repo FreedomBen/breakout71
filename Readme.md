@@ -127,18 +127,13 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 # Roadmap
 
 The "engine" could be better
+- shift text on puck when too large
+- shinier coins by applying glow to them ? 
 - It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
-
 - add a clickable button to allow sound to play in chrome android
 - offline mode with service worker
 - add pwe manifest 
-- keyboard support
-  - start/stop with space
-  - left and right arrow for moving the puck
-  - up down for choosing menu entry
-  - space to click entry
-  - escape to close menu
 - see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
 - more help somewhere accessible
@@ -163,9 +158,10 @@ The "engine" could be better
 - endgame histograms could work as filters, when you hover a bar, all other histograms would show the stats of those runs only, without changing reference of categories
 
 
-There are many possible perks left to implement : 
 
+There are many possible perks left to implement : 
 - wrap left / right
+- faster coins, double value
 - +1 upgrade per level but -2 choices
 - n% of the broken bricks respawn when the ball touches the puck
 - bricks break 50% of the time but drop 50% more coins
@@ -211,13 +207,6 @@ Some extra levels wouldn't hurt
 Potential big features
 - final bosses (large vertical level that scrolls down faster and faster)
 - split screen multiplayer
-
-# done
-- add pointer lock when game is running (lock to play area )https://mdn.github.io/dom-examples/pointer-lock/ 
-- hide cursor options
-- the more the user pauses in a run, the more time it should take for the pause to happen. 
-- F for fullscreen
-- keyboard support (Left/Right arrow, Spacebar, and Shift+arrow to move puck 3 times faster, M for menu, S for score, up/down navigation in menus)
 
 # Credits
 
