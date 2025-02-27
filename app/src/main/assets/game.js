@@ -1390,12 +1390,19 @@ function addToTotalScore(points) {
     }
 }
 
+function addToTotalPlayTime(ms) {
+    try {
+        localStorage.setItem('breakout_71_total_play_time', JSON.stringify(JSON.parse(localStorage.getItem('breakout_71_total_play_time') || '0') + ms))
+    } catch (e) {
+    }
+}
+
 
 function gameOver(title, intro) {
     if (!running) return;
     pause(true)
     stopRecording()
-
+addToTotalPlayTime(runStatistics.runTime)
     runStatistics.max_level = currentLevel+1
 
     let animationDelay = -300
@@ -2639,7 +2646,7 @@ async function openSettingsPanel() {
             },
             {
                 text: 'Unlocks',
-                help: "See and try what you've unlocked",
+                help: "See perks and levels you unlocked",
                 async value() {
                     const ts = getTotalScore()
                     const actions = [...upgrades
