@@ -141,6 +141,11 @@ function pause(playerAskedForPause) {
         pauseUsesDuringRun++
     }
 
+    if(document.exitPointerLock) {
+        document.exitPointerLock()
+    }
+
+
 }
 
 let offsetX, offsetXRoundedDown, gameZoneWidth, gameZoneWidthRoundedUp, gameZoneHeight, brickWidth, needsRender = true;
@@ -874,11 +879,20 @@ canvas.addEventListener("mouseup", (e) => {
         pause(true)
     } else {
         play()
+        if(isSettingOn('pointerLock')){
+            canvas.requestPointerLock()
+        }
     }
 });
 
 canvas.addEventListener("mousemove", (e) => {
+    if(document.pointerLockElement === canvas){
+    setMousePos(puck+e.movementX);
+    }else{
+
+
     setMousePos(e.x);
+    }
 });
 
 canvas.addEventListener("touchstart", (e) => {
@@ -1682,7 +1696,7 @@ function render() {
         scoreInfo += "🖤 ";
     }
 
-    scoreInfo += score.toString();
+    scoreInfo +=   score.toString();
     scoreDisplay.innerText = scoreInfo;
 
 
@@ -2557,6 +2571,11 @@ const options = {
         default: false, name: `Basic graphics`, help: `Better performance on older devices.`,
         disabled: () => false
     },
+    pointerLock: {
+        default: false, name: `Pointer lock`,
+        help: `Locks and hides the mouse cursor.`,
+        disabled: () => !canvas.requestPointerLock
+    },
     "easy": {
         default: false, name: `Kids mode`, help: `Starting perk always "slower ball".`, restart: true,
         disabled: () => false
@@ -3139,6 +3158,8 @@ document.addEventListener('keyup',e=>{
          document.querySelector('button:focus')?.previousElementSibling?.focus()
     }else if(e.key==='Escape' && closeModal){
          closeModal()
+    }else if(e.key==='Escape' && running){
+         pause()
     }else if(e.key.toLowerCase()==='m' && !alertsOpen){
          openSettingsPanel()
     }else if(e.key.toLowerCase()==='s'&& !alertsOpen){
