@@ -126,6 +126,44 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 
 # Roadmap
 
+The "engine" could be better
+- It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game
+- on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
+- add pointer lock when game is running (lock to play area )https://mdn.github.io/dom-examples/pointer-lock/ 
+- hide cursor options
+- add a clickable button to allow sound to play in chrome android
+- offline mode with service worker
+- add pwe manifest 
+- keyboard support
+  - start/stop with space
+  - left and right arrow for moving the puck
+  - up down for choosing menu entry
+  - space to click entry
+  - escape to close menu
+- see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
+- experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
+- more help somewhere accessible
+- limit GC by reusing coins and particles
+- convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
+- few puck bounces = more choices / upgrades
+- disable zooming (for ios double tap)
+- particles when bouncing on sides / top
+- show total score on end screen (score added to total) 
+- show stats on end screen compared to other runs
+- handle back bouton in menu 
+- mouvement relatif du puck
+- balls should collide with each other
+- when game resumes near bottom, be unvulnerable for .5s ? , once per level
+- apply global curve / brightness to canvas when things blow, or just always to make neon effect better
+- manifest for PWA (android and apple)  
+- lights shadows  
+- Offline mode web for iphone 
+- controller support on web/mobile
+- webgl rendering
+- enable export of gameplay capture in webview
+- endgame histograms could work as filters, when you hover a bar, all other histograms would show the stats of those runs only, without changing reference of categories
+
+
 There are many possible perks left to implement : 
 
 - wrap left / right
@@ -162,43 +200,6 @@ There are many possible perks left to implement :
 - correction : pick one past upgrade to remove and replace by something else 
 - puck bounce predictions rendered with particles or lines (requires big refactor)
 
-The "engine" could be better
-
-- on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
-- add pointer lock when game is running (lock to play area )https://mdn.github.io/dom-examples/pointer-lock/ 
-- hide cursor options
-- offline mode with service worker
-- add pwe manifest 
-- keyboard support
-  - start/stop with space
-  - left and right arrow for moving the puck
-  - up down for choosing menu entry
-  - space to click entry
-  - escape to close menu
-- see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
-- experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
-
-- limit GC by reusing coins and particles
-- convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
-- few puck bounces = more choices / upgrades
-- disable zooming (for ios double tap)
-- particles when bouncing on sides / top
-- show total score on end screen (score added to total) 
-- show stats on end screen compared to other runs
-- handle back bouton in menu 
-- mouvement relatif du puck
-- balls should collide with each other
-- when game resumes near bottom, be unvulnerable for .5s ? , once per level
-- apply global curve / brightness to canvas when things blow, or just always to make neon effect better
-- manifest for PWA (android and apple)  
-- lights shadows  
-- keyboard support
-- Offline mode web for iphone 
-- controller support on web/mobile
-- webgl rendering
-- enable export of gameplay capture in webview
-- endgame histograms could work as filters, when you hover a bar, all other histograms would show the stats of those runs only, without changing reference of categories
-
 
 Some extra levels wouldn't hurt
 
@@ -207,6 +208,15 @@ Some extra levels wouldn't hurt
 - fruits
 - animals
 - countries flags and shapes, with name as background
+
+Potential big features
+- final bosses (large vertical level that scrolls down faster and faster)
+- split screen multiplayer
+
+# done
+- the more the user pauses in a run, the more time it should take for the pause to happen. 
+- F for fullscreen
+- keyboard support (Left/Right arrow, Spacebar, and Shift+arrow to move puck 3 times faster, M for menu, S for score, up/down navigation in menus)
 
 # Credits
 

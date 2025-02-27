@@ -108,7 +108,7 @@ function decreaseCombo(by, x, y) {
 
 let gridSize = 12;
 
-let running = false, puck = 400;
+let running = false, puck = 400, pauseTimeout;
 
 function play() {
     if (running) return
@@ -119,17 +119,28 @@ function play() {
     resumeRecording()
 }
 
-function pause() {
+function pause(playerAskedForPause) {
     if (!running) return
-    running = false
-    needsRender = true
-    if (audioContext) {
-        setTimeout(() => {
-            if (!running)
-                audioContext.suspend()
-        }, 1000)
+    if (pauseTimeout) return
+
+      pauseTimeout=setTimeout(()=>{
+        running = false
+        needsRender = true
+        if (audioContext) {
+            setTimeout(() => {
+                if (!running)
+                    audioContext.suspend()
+            }, 1000)
+        }
+        pauseRecording()
+        pauseTimeout=null
+    },Math.min(Math.max(0,pauseUsesDuringRun-5)*50,500))
+
+    if(playerAskedForPause) {
+        // Pausing many times in a run will make pause slower
+        pauseUsesDuringRun++
     }
-    pauseRecording()
+
 }
 
 let offsetX, offsetXRoundedDown, gameZoneWidth, gameZoneWidthRoundedUp, gameZoneHeight, brickWidth, needsRender = true;
@@ -165,7 +176,7 @@ const fitSize = () => {
     setMousePos(puck);
     coins = [];
     flashes = [];
-    pause()
+    pause(true)
     putBallsAtPuck();
     // For safari mobile https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
@@ -391,7 +402,9 @@ You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCo
 }
 
 function setLevel(l) {
-    pause()
+
+
+    pause(false)
     if (l > 0) {
         openUpgradesPicker().then();
     }
@@ -817,7 +830,7 @@ function pickRandomUpgrades(count) {
 }
 
 let nextRunOverrides = {level: null, perks: null}
-let hadOverrides = false
+let hadOverrides = false, pauseUsesDuringRun=0
 
 function restart() {
     hadOverrides = !!(nextRunOverrides.level || nextRunOverrides.perks)
@@ -827,6 +840,7 @@ function restart() {
     shuffleLevels(levelTime || score ? currentLevelInfo().name : null);
     resetRunStatistics()
     score = 0;
+    pauseUsesDuringRun=0
 
     const randomGift = reset_perks();
 
@@ -836,6 +850,7 @@ function restart() {
     pauseRecording()
 }
 
+let keyboardPuckSpeed=0
 function setMousePos(x) {
 
     needsRender = true;
@@ -856,7 +871,7 @@ function setMousePos(x) {
 canvas.addEventListener("mouseup", (e) => {
     if (e.button !== 0) return;
     if (running) {
-        pause()
+        pause(true)
     } else {
         play()
     }
@@ -874,11 +889,11 @@ canvas.addEventListener("touchstart", (e) => {
 });
 canvas.addEventListener("touchend", (e) => {
     e.preventDefault();
-    pause()
+    pause(true)
 });
 canvas.addEventListener("touchcancel", (e) => {
     e.preventDefault();
-    pause()
+    pause(true)
     needsRender = true
 });
 canvas.addEventListener("touchmove", (e) => {
@@ -1013,6 +1028,7 @@ function bordersHitCheck(coin, radius, delta) {
 
 let lastTickDown = 0;
 
+
 function tick() {
 
     recomputeTargetBaseSpeed();
@@ -1020,13 +1036,18 @@ function tick() {
 
     puckWidth = (gameZoneWidth / 12) * (3 - perks.smaller_puck + perks.bigger_puck);
 
-    if (running) {
+    if(keyboardPuckSpeed){
+        setMousePos(puck+keyboardPuckSpeed)
+
+    }
+
+    if (running ) {
 
         levelTime += currentTick - lastTick;
         runStatistics.runTime += currentTick - lastTick
         runStatistics.max_combo = Math.max(runStatistics.max_combo, combo)
 
-        // How many time to compute
+        // How many times to compute
         let delta = Math.min(4, (currentTick - lastTick) / (1000 / 60));
         delta *= running ? 1 : 0
 
@@ -1286,7 +1307,7 @@ function ballTick(ball, delta) {
                 perks.extra_life--;
                 resetBalls();
                 sounds.revive();
-                pause()
+                pause(false)
                 coins = [];
                 flashes.push({
                     type: "ball",
@@ -1358,7 +1379,7 @@ function addToTotalScore(points) {
 
 function gameOver(title, intro) {
     if (!running) return;
-    pause()
+    pause(true)
     stopRecording()
 
     runStatistics.max_level = currentLevel+1
@@ -2355,12 +2376,12 @@ setInterval(() => {
 
 window.addEventListener("visibilitychange", () => {
     if (document.hidden) {
-        pause()
+        pause(true)
     }
 });
 
 const scoreDisplay = document.getElementById("score");
-
+let alertsOpen=0,closeModal=null
 
 function asyncAlert({
                         title,
@@ -2369,6 +2390,7 @@ function asyncAlert({
                         allowClose = true,
                         textAfterButtons = ''
                     }) {
+    alertsOpen++
     return new Promise((resolve) => {
         const popupWrap = document.createElement("div");
         document.body.appendChild(popupWrap);
@@ -2390,6 +2412,9 @@ function asyncAlert({
                 e.preventDefault()
                 closeWithResult(null)
             })
+            closeModal = ()=>{
+                closeWithResult(null)
+            }
             popupWrap.appendChild(closeButton)
         }
 
@@ -2446,7 +2471,11 @@ ${checkMark}
 
 
         popupWrap.appendChild(popup);
-    });
+         popup.querySelector('button:not([disabled])')?.focus()
+    }).finally(()=> {
+        closeModal = null
+        alertsOpen--
+    })
 }
 
 // Settings
@@ -2474,18 +2503,27 @@ function toggleSetting(key) {
     if (options[key].afterChange) options[key].afterChange();
 }
 
+
 scoreDisplay.addEventListener("click", async (e) => {
     e.preventDefault();
-    running = false
+ openScorePanel()
+});
+
+async function openScorePanel(){
+    pause(true)
     const cb = await asyncAlert({
         title: ` ${score} points at level ${currentLevel + 1} / ${max_levels()}`,
         text: `
-
 <p>Upgrades picked so far : </p>
 <p>${pickedUpgradesHTMl()}</p>
-         
-        `, allowClose: true, actions: [{
-            text: "New run", help: "Start a brand new run.", value: () => {
+        `, allowClose: true, actions: [
+            {
+                text:'Resume',
+                 help: "Return to your run",
+            },
+            {
+            text: "Restart", help: "Start a brand new run.",
+                value: () => {
                 restart();
                 return true;
             },
@@ -2494,7 +2532,7 @@ scoreDisplay.addEventListener("click", async (e) => {
     if (cb) {
         await cb()
     }
-});
+}
 
 document.getElementById("menu").addEventListener("click", (e) => {
     e.preventDefault();
@@ -2543,7 +2581,7 @@ const options = {
 
 async function openSettingsPanel() {
 
-    pause()
+    pause(true)
 
     const optionsList = [];
     for (const key in options) {
@@ -2565,6 +2603,13 @@ async function openSettingsPanel() {
     const cb = await asyncAlert({
         title: "Breakout 71", text: ` 
         `, allowClose: true, actions: [
+            {
+                text:'Resume',
+                 help: "Return to your run",
+                async value() {
+
+                }
+            },
             {
                 text: 'Unlocks',
                 help: "See and try what you've unlocked",
@@ -2642,23 +2687,14 @@ Click an item above to start a test run with it.
                     text: "Exit Fullscreen",
                     help: "Might not work on some machines",
                     value() {
-                        if (document.exitFullscreen) {
-                            document.exitFullscreen();
-                        } else if (document.webkitCancelFullScreen) {
-                            document.webkitCancelFullScreen();
-                        }
+                       toggleFullScreen()
                     }
                 } :
                 {
                     text: "Fullscreen",
                     help: "Might not work on some machines",
                     value() {
-                        const docel = document.documentElement
-                        if (docel.requestFullscreen) {
-                            docel.requestFullscreen();
-                        } else if (docel.webkitRequestFullscreen) {
-                            docel.webkitRequestFullscreen();
-                        }
+                       toggleFullScreen()
                     }
                 }),
             {
@@ -3043,6 +3079,75 @@ function captureFileName(ext) {
             }
 
     }
+
+function toggleFullScreen(){
+        try{
+            if(document.fullscreenElement !== null){
+                 if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitCancelFullScreen) {
+                        document.webkitCancelFullScreen();
+                    }
+            }else{
+                 const docel = document.documentElement
+                    if (docel.requestFullscreen) {
+                        docel.requestFullscreen();
+                    } else if (docel.webkitRequestFullscreen) {
+                        docel.webkitRequestFullscreen();
+                    }
+            }
+
+        }catch (e){
+            console.warn(e)
+        }
+}
+
+const pressed={
+    ArrowLeft:0,
+ArrowRight:0,
+    Shift:0
+}
+function setKeyPressed(key,on){
+    pressed[key]=on
+    keyboardPuckSpeed=(pressed.ArrowRight -  pressed.ArrowLeft) * (1+pressed.Shift*2)*gameZoneWidth/50
+
+}
+document.addEventListener('keydown',e=>{
+    console.log(e.key)
+    if(e.key.toLowerCase()==='f'){
+        toggleFullScreen()
+    }else if(e.key in pressed){
+        setKeyPressed(e.key,1)
+     } if(e.key===' ' && !alertsOpen){
+        if(running) {
+            pause()
+        } else {
+            play()
+        }
+    }else{
+        return
+    }
+    e.preventDefault()
+})
+
+document.addEventListener('keyup',e=>{
+    if(e.key in pressed){
+        setKeyPressed(e.key,0)
+     }else if(e.key==='ArrowDown' && document.querySelector('button:focus')?.nextElementSibling.tagName==='BUTTON'){
+         document.querySelector('button:focus')?.nextElementSibling?.focus()
+    }else if(e.key==='ArrowUp' && document.querySelector('button:focus')?.previousElementSibling.tagName==='BUTTON'){
+         document.querySelector('button:focus')?.previousElementSibling?.focus()
+    }else if(e.key==='Escape' && closeModal){
+         closeModal()
+    }else if(e.key.toLowerCase()==='m' && !alertsOpen){
+         openSettingsPanel()
+    }else if(e.key.toLowerCase()==='s'&& !alertsOpen){
+         openScorePanel()
+    }else{
+        return
+    }
+    e.preventDefault()
+})
 
 
 
