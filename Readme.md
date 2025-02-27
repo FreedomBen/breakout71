@@ -129,8 +129,7 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 The "engine" could be better
 - It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
-- add pointer lock when game is running (lock to play area )https://mdn.github.io/dom-examples/pointer-lock/ 
-- hide cursor options
+
 - add a clickable button to allow sound to play in chrome android
 - offline mode with service worker
 - add pwe manifest 
@@ -214,6 +213,8 @@ Potential big features
 - split screen multiplayer
 
 # done
+- add pointer lock when game is running (lock to play area )https://mdn.github.io/dom-examples/pointer-lock/ 
+- hide cursor options
 - the more the user pauses in a run, the more time it should take for the pause to happen. 
 - F for fullscreen
 - keyboard support (Left/Right arrow, Spacebar, and Shift+arrow to move puck 3 times faster, M for menu, S for score, up/down navigation in menus)

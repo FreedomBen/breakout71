@@ -660,7 +660,7 @@ const upgrades = [
         "name": "+1 level",
         "max": 3,
         "help": "Play 8 levels instead of 7",
-        extraLevelsHelp: `1 more brick replaced by a bomb`,
+        extraLevelsHelp: `1 more level to play`,
     },
     {
         "threshold": 15000,
