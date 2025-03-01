@@ -126,14 +126,8 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 
 # Roadmap
 
-The "engine" could be better
-- handle high combo better
-- avoid coin clip through puck
-- upgrade that boost coins +x% should change number of spawned coins
-- explain the miss thing better
-- apk version soft locks at start. 
-- add particles for respawn bricks
-- remove color blind mode and just highlight bricks of the wrong color in the render with a pattern or something. 
+The "engine" could be better  
+- apk version soft locks at start.   
 - replace "menu" by "L2/7" once you pass level 1
 - shinier coins by applying glow to them ? 
 - It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game

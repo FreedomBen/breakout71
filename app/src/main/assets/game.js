@@ -1180,10 +1180,10 @@ function tick() {
 
                 coin.vy *= ratio;
                 coin.vx *= ratio;
-                if(coin.vx>7*baseSpeed) coin.vx=7*baseSpeed
-                if(coin.vx<-7*baseSpeed) coin.vx=-7*baseSpeed
-                if(coin.vy>7*baseSpeed) coin.vy=7*baseSpeed
-                if(coin.vy<-7*baseSpeed) coin.vy=-7*baseSpeed
+                if (coin.vx > 7 * baseSpeed) coin.vx = 7 * baseSpeed
+                if (coin.vx < -7 * baseSpeed) coin.vx = -7 * baseSpeed
+                if (coin.vy > 7 * baseSpeed) coin.vy = 7 * baseSpeed
+                if (coin.vy < -7 * baseSpeed) coin.vy = -7 * baseSpeed
                 coin.a += coin.sa
 
                 // Gravity
@@ -1432,35 +1432,19 @@ function ballTick(ball, delta) {
         if (!ball.hitSinceBounce) {
             runStatistics.misses++
             levelMisses++;
-            const loss = resetCombo(ball.x, ball.y)
-            if (ball.bouncesList?.length) {
-                ball.bouncesList.push({
-                    x: ball.previousx,
-                    y: ball.previousy
-                })
-                for (si = 0; si < ball.bouncesList.length - 1; si++) {
-                    // segement
-                    const start = ball.bouncesList[si]
-                    const end = ball.bouncesList[si + 1]
-                    const distance = distanceBetween(start, end)
+            resetCombo(ball.x, ball.y)
+            flashes.push({
+                type: "text",
+                text: 'miss',
+                duration: 500,
+                time: levelTime,
+                size: puckHeight * 1.5,
+                color: 'red',
+                x: puck,
+                y: gameZoneHeight - puckHeight * 2,
 
-                    const parts = distance / 30
-                    for (var i = 0; i < parts; i++) {
-                        flashes.push({
-                            type: "particle",
-                            duration: 200,
-                            ethereal: true,
-                            time: levelTime,
-                            size: coinSize / 2,
-                            color: loss ? 'red' : ball.color,
-                            x: start.x + (i / (parts - 1)) * (end.x - start.x),
-                            y: start.y + (i / (parts - 1)) * (end.y - start.y),
-                            vx: (Math.random() - 0.5) * baseSpeed,
-                            vy: (Math.random() - 0.5) * baseSpeed,
-                        });
-                    }
-                }
-            }
+            });
+
 
         }
         runStatistics.puck_bounces++
@@ -1867,7 +1851,9 @@ function render() {
         scoreInfo += "🖤 ";
     }
 
-    scoreInfo += score.toString();
+    scoreInfo += 'L'+(currentLevel+1)+'/'+max_levels()+' ';
+    scoreInfo += '$'+score.toString();
+
     scoreDisplay.innerText = scoreInfo;
     // Clear
     if (!isSettingOn("basic") && !level.color && level.svg && !level.black_puck) {
@@ -2742,7 +2728,7 @@ async function openSettingsPanel() {
                                   name,
                                   max,
                                   help, id,
-                                  threshold, icon, tryout,fullHelp
+                                  threshold, icon, tryout, fullHelp
                               }) => ({
                                 text: name,
                                 help: ts >= threshold ? fullHelp || help : `Unlocks at total score ${threshold}.`,
@@ -3003,6 +2989,7 @@ function recordOneFrame() {
         return
     }
     if (!running) return;
+    if (!captureStream) return;
     drawMainCanvasOnSmallCanvas()
     // Start recording after you hit something
     if (levelSpawnedCoins && levelGif) {
