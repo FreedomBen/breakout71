@@ -202,11 +202,6 @@ function brickCenterY(index) {
     return (Math.floor(index / gridSize) + 0.5) * brickWidth;
 }
 
-function getRowCol(index) {
-    return {
-        col: index % gridSize, row: Math.floor(index / gridSize),
-    };
-}
 
 function getRowColIndex(row, col) {
     if (row < 0 || col < 0 || row >= gridSize || col >= gridSize) return -1;
@@ -276,11 +271,13 @@ function addToScore(coin) {
 }
 
 let balls = [];
+let ballsColor = 'white'
 
 function resetBalls() {
     const count = 1 + (perks?.multiball || 0);
     const perBall = puckWidth / (count + 1);
     balls = [];
+    ballsColor=currentLevelInfo()?.black_puck ? '#000' : "#FFF"
     for (let i = 0; i < count; i++) {
         const x = puck - puckWidth / 2 + perBall * (i + 1);
         balls.push({
@@ -292,7 +289,6 @@ function resetBalls() {
             vy: -baseSpeed,
             sx: 0,
             sy: 0,
-            color: currentLevelInfo()?.black_puck ? '#000' : "#FFF",
             sparks: 0,
             piercedSinceBounce: 0,
             hitSinceBounce: 0,
@@ -308,20 +304,17 @@ function putBallsAtPuck() {
     const perBall = puckWidth / (count + 1);
     balls.forEach((ball, i) => {
         const x = puck - puckWidth / 2 + perBall * (i + 1);
-        Object.assign(ball, {
-            x,
-            previousx: x,
-            y: gameZoneHeight - 1.5 * ballSize,
-            previousy: gameZoneHeight - 1.5 * ballSize,
-            vx: Math.random() > 0.5 ? baseSpeed : -baseSpeed,
-            vy: -baseSpeed,
-            sx: 0,
-            sy: 0,
-            hitItem: [],
-            hitSinceBounce: 0,
-            piercedSinceBounce: 0,
-            // piercedSinceBounce: 0,
-        });
+        ball.x = x
+        ball.previousx = x
+        ball.y = gameZoneHeight - 1.5 * ballSize
+        ball.previousy = ball.y
+        ball.vx = Math.random() > 0.5 ? baseSpeed : -baseSpeed
+        ball.vy = -baseSpeed
+        ball.sx = 0
+        ball.sy = 0
+        ball.hitItem = []
+        ball.hitSinceBounce = 0
+        ball.piercedSinceBounce = 0
     });
 }
 
@@ -643,10 +636,12 @@ const upgrades = [
             perks: {picky_eater: 1},
             level: 'Mountain'
         },
-        fullHelp: `Whenever you break a brick the same color as your ball, your combo increases by one. If it's a different color, the ball takes that new color, but the combo resets.
-        The bricks with the right color will get a white border. Once you get a combo higher than your minimum, the bricks of the wrong color will get a red halo. If you have more than
-        one ball, for example a blue and red ball, then you can hit both red and blue bricks and your combo won't reset. This is to make it manageable based on brick border effects alone
-        for color-blind players.
+        fullHelp: `Whenever you break a brick the same color as your ball, your combo increases by one. 
+        If it's a different color, the ball takes that new color, but the combo resets.
+        The bricks with the right color will get a white border. 
+        Once you get a combo higher than your minimum, the bricks of the wrong color will get a red halo. 
+        If you have more than one ball, they all change color whenever one of them hits a brick.
+        
         `
     },
     {
@@ -666,7 +661,7 @@ const upgrades = [
     },
     {
         "threshold": 6000,
-        "id": "catch_all_coins",
+        "id": "compound_interest",
         "giftable": true,
         "name": "Compound interest",
         "max": 3,
@@ -732,7 +727,7 @@ const upgrades = [
         "id": "pierce_color",
         "name": "Color pierce",
         "max": 1,
-        "help": "Ball breaks same color bricks",
+        "help": "Balls pierce bricks of their color",
         fullHelp: `Whenever a ball hits a brick of the same color, it will just go through unimpeded. 
         Once it reaches a brick of a different color, it will break it, take its color and bounce.`
     },
@@ -853,7 +848,6 @@ function shuffleLevels(nameToAvoid = null) {
         runLevels = allLevels.filter(l => l.name === target)
         nextRunOverrides.level = null
         if (runLevels.length) return
-        console.log('target level not found, will take random  one : ' + target)
     }
 
     runLevels = allLevels
@@ -1014,16 +1008,15 @@ function hitsSomething(x, y, radius) {
     return (hasBrick(brickIndex(x - radius, y - radius)) ?? hasBrick(brickIndex(x + radius, y - radius)) ?? hasBrick(brickIndex(x + radius, y + radius)) ?? hasBrick(brickIndex(x - radius, y + radius)));
 }
 
-function shouldPierceByColor(ballOrCoin, vhit, hhit, chit) {
+function shouldPierceByColor(  vhit, hhit, chit) {
     if (!perks.pierce_color) return false
-    // if (ballOrCoin.color === 'white') return true
-    if (typeof vhit !== 'undefined' && bricks[vhit] !== ballOrCoin.color) {
+    if (typeof vhit !== 'undefined' && bricks[vhit] !== ballsColor) {
         return false
     }
-    if (typeof hhit !== 'undefined' && bricks[hhit] !== ballOrCoin.color) {
+    if (typeof hhit !== 'undefined' && bricks[hhit] !== ballsColor) {
         return false
     }
-    if (typeof chit !== 'undefined' && bricks[chit] !== ballOrCoin.color) {
+    if (typeof chit !== 'undefined' && bricks[chit] !== ballsColor) {
         return false
     }
     return true
@@ -1042,7 +1035,7 @@ function brickHitCheck(ballOrCoin, radius, isBall) {
     if (pierce && (typeof vhit !== "undefined" || typeof hhit !== "undefined" || typeof chit !== "undefined")) {
         ballOrCoin.piercedSinceBounce++
     }
-    if (isBall && shouldPierceByColor(ballOrCoin, vhit, hhit, chit)) {
+    if (isBall && shouldPierceByColor( vhit, hhit, chit)) {
         pierce = true
     }
 
@@ -1198,8 +1191,8 @@ function tick() {
 
                 } else if (coin.y > canvas.height + coinRadius) {
                     coin.destroyed = true;
-                    if (perks.catch_all_coins) {
-                        decreaseCombo(coin.points * perks.catch_all_coins, coin.x, canvas.height - coinRadius);
+                    if (perks.compound_interest) {
+                        decreaseCombo(coin.points * perks.compound_interest, coin.x, canvas.height - coinRadius);
                     }
                 }
 
@@ -1295,7 +1288,7 @@ function tick() {
                     vy: (Math.random() - 0.5) * 10,
                 })
             }
-            if (perks.catch_all_coins) {
+            if (perks.compound_interest) {
                 let x = puck
                 do {
                     x = offsetXRoundedDown + gameZoneWidthRoundedUp * Math.random()
@@ -1368,8 +1361,7 @@ function ballTick(ball, delta) {
     if (perks.puck_repulse_ball && Math.abs(ball.x - puck) < puckWidth / 2 + ballSize * (9 + perks.puck_repulse_ball) / 10) {
         repulse(ball, {
             x: puck,
-            y: gameZoneHeight,
-            color: currentLevelInfo()?.black_puck ? '#000' : '#FFF',
+            y: gameZoneHeight
         }, perks.puck_repulse_ball, false)
     }
 
@@ -1504,7 +1496,7 @@ function ballTick(ball, delta) {
                 duration: 100 * ball.sparks,
                 time: levelTime,
                 size: coinSize / 2,
-                color: ball.color,
+                color: ballsColor,
                 x: ball.x,
                 y: ball.y,
                 vx: (Math.random() - 0.5) * baseSpeed,
@@ -1714,7 +1706,9 @@ function explodeBrick(index, ball, isExplosion) {
         const x = brickCenterX(index), y = brickCenterY(index);
 
         sounds.explode(ball.x);
-        const {col, row} = getRowCol(index);
+
+        const col= index % gridSize
+        const row= Math.floor(index / gridSize)
         const size = 1 + perks.bigger_explosions;
         // Break bricks around
         for (let dx = -size; dx <= size; dx++) {
@@ -1732,7 +1726,6 @@ function explodeBrick(index, ball, isExplosion) {
             const d2 = Math.max(brickWidth, Math.abs(dx) + Math.abs(dy));
             c.vx += (dx / d2) * 10 * size / c.weight;
             c.vy += (dy / d2) * 10 * size / c.weight;
-
         });
         lastexplosion = Date.now();
 
@@ -1768,13 +1761,12 @@ function explodeBrick(index, ball, isExplosion) {
         runStatistics.coins_spawned += coinsToSpawn
         runStatistics.bricks_broken++
         const maxCoins = MAX_COINS * (isSettingOn("basic") ? 0.5 : 1)
-        const spawnableCoins = 1 + Math.floor(maxCoins - coins.length) / 3
-        const pointsPerCoin = Math.ceil(coinsToSpawn / spawnableCoins)
+        const spawnableCoins = Math.floor(maxCoins - coins.length) / 3
+        const pointsPerCoin = Math.max(1, Math.ceil(coinsToSpawn / spawnableCoins))
         while (coinsToSpawn > 0) {
 
             const points = Math.min(pointsPerCoin, coinsToSpawn)
             coinsToSpawn -= points
-            console.log('Spawned a coin with ' + points + ' pts')
             const coord = {
                 x: x + (Math.random() - 0.5) * (brickWidth - coinSize),
                 y: y + (Math.random() - 0.5) * (brickWidth - coinSize),
@@ -1798,18 +1790,17 @@ function explodeBrick(index, ball, isExplosion) {
         }
 
 
-        combo += Math.max(0, perks.streak_shots + perks.catch_all_coins + perks.sides_are_lava + perks.top_is_lava + perks.picky_eater
+        combo += Math.max(0, perks.streak_shots + perks.compound_interest + perks.sides_are_lava + perks.top_is_lava + perks.picky_eater
             - Math.round(Math.random() * perks.soft_reset));
 
         if (!isExplosion) {
             // color change
-            if ((perks.picky_eater || perks.pierce_color) && color !== ball.color) {
-                // reset streak
-                if (perks.picky_eater && !balls.find(b => b.color === color)) {
-                    // Let's be nice, if you have two balls of two colors, none of those colors reset the combo.
+            if ((perks.picky_eater || perks.pierce_color) && color !== ballsColor && color) {
+                if (perks.picky_eater) {
                     resetCombo(ball.x, ball.y);
                 }
-                ball.color = color;
+
+                ballsColor = color;
             } else {
                 sounds.comboIncreaseMaybe(ball.x, 1);
             }
@@ -1851,8 +1842,8 @@ function render() {
         scoreInfo += "🖤 ";
     }
 
-    scoreInfo += 'L'+(currentLevel+1)+'/'+max_levels()+' ';
-    scoreInfo += '$'+score.toString();
+    scoreInfo += 'L' + (currentLevel + 1) + '/' + max_levels() + ' ';
+    scoreInfo += '$' + score.toString();
 
     scoreDisplay.innerText = scoreInfo;
     // Clear
@@ -1871,7 +1862,7 @@ function render() {
             if (!coin.destroyed) drawFuzzyBall(ctx, coin.color, coinSize * 2, coin.x, coin.y);
         });
         balls.forEach((ball) => {
-            drawFuzzyBall(ctx, ball.color, ballSize * 2, ball.x, ball.y);
+            drawFuzzyBall(ctx, ballsColor, ballSize * 2, ball.x, ball.y);
         });
         ctx.globalAlpha = 0.5;
         bricks.forEach((color, index) => {
@@ -1985,7 +1976,7 @@ function render() {
     ctx.globalCompositeOperation = "source-over";
     const puckColor = level.black_puck ? '#000' : '#FFF'
     balls.forEach((ball) => {
-        drawBall(ctx, ball.color, ballSize, ball.x, ball.y, puckColor);
+        drawBall(ctx, ballsColor, ballSize, ball.x, ball.y, puckColor);
         // effect
         if (isTelekinesisActive(ball)) {
             ctx.strokeStyle = puckColor;
@@ -2027,7 +2018,7 @@ function render() {
 
     if (perks.top_is_lava && combo > baseCombo())
         drawRedSquare(ctx, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, 1);
-    const redBottom = perks.catch_all_coins && combo > baseCombo()
+    const redBottom = perks.compound_interest && combo > baseCombo()
     ctx.fillStyle = redBottom ? 'red' : puckColor;
     if (isSettingOn("mobile-mode")) {
         ctx.fillRect(offsetXRoundedDown, gameZoneHeight, gameZoneWidthRoundedUp, 1);
@@ -2054,13 +2045,10 @@ function renderAllBricks(destinationCtx) {
     ctx.globalAlpha = 1;
 
     const level = currentLevelInfo();
-    const ballColors = new Set(balls.map(b => b.color))
 
-    let ballsColorsKey = ''
-    ballColors.forEach(value => ballsColorsKey += value);
     const redBorderOnBricksWithWrongColor = combo > baseCombo() && perks.picky_eater
 
-    const newKey = gameZoneWidth + "_" + bricks.join("_") + bombSVG.complete + '_' + redBorderOnBricksWithWrongColor + '_' + ballsColorsKey;
+    const newKey = gameZoneWidth + "_" + bricks.join("_") + bombSVG.complete + '_' + redBorderOnBricksWithWrongColor + '_' + ballsColor;
     if (newKey !== cachedBricksRenderKey) {
         cachedBricksRenderKey = newKey;
 
@@ -2076,7 +2064,7 @@ function renderAllBricks(destinationCtx) {
             const x = brickCenterX(index), y = brickCenterY(index);
 
             if (!color) return;
-            const borderColor = (ballColors.has(color) && puckColor) || (redBorderOnBricksWithWrongColor && 'red') || color
+            const borderColor = (ballsColor===color && puckColor) || (color!=='black' && redBorderOnBricksWithWrongColor && 'red') || color
             drawBrick(ctx, color, borderColor, x, y);
             if (color === 'black') {
                 ctx.globalCompositeOperation = "source-over";
@@ -2184,7 +2172,8 @@ function drawCoin(ctx, color, size, x, y, bg, rawAngle) {
 
 function drawFuzzyBall(ctx, color, width, x, y) {
     const key = "fuzzy-circle" + color + "_" + width;
-
+    if(!color)
+    debugger
     const size = Math.round(width * 3);
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
@@ -3218,7 +3207,6 @@ function setKeyPressed(key, on) {
 }
 
 document.addEventListener('keydown', e => {
-    console.log(e.key)
     if (e.key.toLowerCase() === 'f') {
         toggleFullScreen()
     } else if (e.key in pressed) {

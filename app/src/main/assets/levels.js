@@ -8005,7 +8005,7 @@ let allLevels=[
     "svg": ""
   },
   {
-    "name": "perk:catch_all_coins",
+    "name": "perk:compound_interest",
     "size": 8,
     "bricks": [
       "",
