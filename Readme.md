@@ -210,7 +210,8 @@ Some extra levels wouldn't hurt
 - animals
 - countries flags and shapes, with name as background
 
-Potential big features
+Potential big features or changes
+- use ts and a bundler to get fewer bugs and compatibility with old browsers / webviews
 - final bosses (large vertical level that scrolls down faster and faster)
 - split screen multiplayer
 - translation
