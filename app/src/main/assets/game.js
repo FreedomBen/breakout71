@@ -2666,12 +2666,6 @@ const options = {
         disabled() {
             return window.location.search.includes('isInWebView=true')
         }
-    },
-    gif: {
-        default: false, name: `Make a gif too`, help: `3x heavier, 2x smaller, 7s max`,
-        disabled() {
-            return window.location.protocol === "file:" || !isSettingOn('record')
-        }
     }
 };
 
@@ -2970,7 +2964,7 @@ function levelIconHTML(level, title) {
 
 upgrades.forEach(u => u.icon = levelIconHTML(perkIconsLevels[u.id], u.name))
 
-let mediaRecorder, captureStream, recordCanvas, recordCanvasCtx, levelGif, gifCanvas, gifCtx
+let mediaRecorder, captureStream, recordCanvas, recordCanvasCtx
 
 
 function recordOneFrame() {
@@ -2980,10 +2974,6 @@ function recordOneFrame() {
     if (!running) return;
     if (!captureStream) return;
     drawMainCanvasOnSmallCanvas()
-    // Start recording after you hit something
-    if (levelSpawnedCoins && levelGif) {
-        recordGifFrame()
-    }
     if (captureStream.requestFrame) {
         captureStream.requestFrame()
     } else {
@@ -3004,23 +2994,6 @@ function drawMainCanvasOnSmallCanvas() {
 
     recordCanvasCtx.textAlign = "left";
     recordCanvasCtx.fillText('Level ' + (currentLevel + 1) + '/' + max_levels(), 12, 12)
-}
-
-let nthGifFrame = 0, gifFrameReduction = 2
-
-function recordGifFrame() {
-    if (nthGifFrame / 60 > 7) return
-    gifCtx.globalCompositeOperation = 'screen'
-    gifCtx.globalAlpha = 1 / gifFrameReduction
-    gifCtx?.drawImage(canvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, gifCanvas.width, gifCanvas.height)
-    nthGifFrame++
-    if (!(nthGifFrame % gifFrameReduction)) {
-        levelGif.addFrame(gifCtx, {delay: Math.round(gifFrameReduction * 1000 / 60), copy: true});
-        gifCtx.globalCompositeOperation = 'source-over'
-        gifCtx.fillStyle = 'black'
-        gifCtx.fillRect(0, 0, gifCanvas.width, gifCanvas.height)
-
-    }
 }
 
 function startRecordingGame() {
@@ -3051,27 +3024,11 @@ function startRecordingGame() {
     gifCanvas.height = Math.floor(gameZoneHeight * (400 / gameZoneWidthRoundedUp))
 
 
-    // Gif worker won't work there
-    if (window.location.protocol !== "file:" && isSettingOn('gif')) {
-        nthGifFrame = 0
-        levelGif = new GIF({
-            workers: 2,
-            quality: 10,
-            repeat: 0,
-            background: currentLevelInfo()?.color || '#000',
-            width: gifCanvas.width,
-            height: gifCanvas.height,
-            dither: false,
-        });
-    } else {
-        levelGif = null
-    }
-
     // drawMainCanvasOnSmallCanvas()
     const recordedChunks = [];
 
 
-    const instance = new MediaRecorder(captureStream);
+    const instance = new MediaRecorder(captureStream,{videoBitsPerSecond: 3500000});
     mediaRecorder = instance
     instance.start();
     mediaRecorder.pause()
@@ -3111,20 +3068,6 @@ function startRecordingGame() {
 
     }
 
-    levelGif?.on('finished', function (blob) {
-        let targetDiv = document.getElementById("level-recording-container")
-        const url = URL.createObjectURL(blob)
-        const img = document.createElement("img")
-        img.src = url
-        targetDiv?.appendChild(img)
-
-        const giflink = document.createElement("a")
-        giflink.textContent = `Download GIF (${(blob.size / 1000000).toFixed(2)}MB)`
-        giflink.href = url
-        giflink.download = captureFileName('gif')
-        targetDiv?.appendChild(giflink)
-    })
-
 
 }
 
@@ -3153,9 +3096,7 @@ function stopRecording() {
     }
     if (!mediaRecorder) return;
     mediaRecorder?.stop()
-    levelGif?.render()
     mediaRecorder = null
-    levelGif = null
 }
 
 function captureFileName(ext) {
