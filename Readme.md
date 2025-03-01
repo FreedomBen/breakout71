@@ -214,6 +214,9 @@ Potential big features
 - final bosses (large vertical level that scrolls down faster and faster)
 - split screen multiplayer
 - translation
+- Add color schemes into the game (ex : Catppuccin, Dracula, Terminal, etc)
+- add a toggle to switch between the “coin” design and the sort of bubble colors
+- sandbox mode
 
 # Credits
 
