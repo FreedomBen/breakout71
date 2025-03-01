@@ -483,9 +483,9 @@ const upgrades = [
         "giftable": true,
         "name": "Single puck hit streak",
         "max": 1,
-        "help": "More coins in you break many bricks at once.",
+        "help": "More coins if you break many bricks at once.",
         fullHelp: `Every time you break a brick, your combo (number of coins per bricks) increases by one. However, as soon as the ball touches your puck, 
-        the combo is reset to it's default value, and you'll just get one coin per brick. So you should to hit many bricks in one go for more score. 
+        the combo is reset to its default value, and you'll just get one coin per brick. So you should try to hit many bricks in one go for more score. 
         Once your combo rises above the base value, your puck will become red to remind you that it will destroy your combo to touch it with the ball.
          This can stack with other combo related perks, the combo will rise faster but reset more easily as any of the conditions is enough to reset it. `
     },
@@ -544,7 +544,7 @@ const upgrades = [
         "giftable": true,
         "name": "Shoot straight",
         "max": 1,
-        "help": "More coins in you don't touch the sides.",
+        "help": "More coins if you don't touch the sides.",
 
         fullHelp: `Whenever you break a brick, your combo will increase by one, so you'll get one more coin all the next bricks you break.
          However, your combo will reset as soon as your ball hits the left or right side. 
@@ -557,7 +557,7 @@ const upgrades = [
         "giftable": true,
         "name": "Sky is the limit",
         "max": 1,
-        "help": "More coins in you don't touch the top.",
+        "help": "More coins if you don't touch the top.",
 
         fullHelp: `Whenever you break a brick, your combo will increase by one. However, your combo will reset as soon as your ball hit the top of the screen. 
         When your combo is above the minimum,  a red bar will appear at the top to remind you that you should avoid hitting it. 
@@ -572,7 +572,7 @@ const upgrades = [
         extraLevelsHelp: `Level clears one brick earlier`,
         fullHelp: `You need to break all bricks to go to the next level. However, it can be hard to get the last ones. 
         Clearing a level early brings extra choices when upgrading. Never missing the bricks is also very beneficial. 
-        So if you find it difficult to the the last bricks, getting this perk a few time can help.`
+        So if you find it difficult to break the last bricks, getting this perk a few time can help.`
     },
     {
         "threshold": 500,
@@ -596,7 +596,7 @@ const upgrades = [
         },
         extraLevelsHelp: `Stronger effect on the coins`,
         fullHelp: `Directs the coins to the puck. The effect is stronger if the coin is close to it already. Catching 90% or 100% of coins bring special bonuses in the game. 
-         Another way to catch more coins is to hit bricks from the bottom. The ball's speed and direction impacts the spawned coins's velocity. `
+         Another way to catch more coins is to hit bricks from the bottom. The ball's speed and direction impacts the spawned coin's velocity. `
     },
     {
         "threshold": 1500,
@@ -606,9 +606,9 @@ const upgrades = [
         "max": 6,
         "help": "Start with two balls",
         extraLevelsHelp: `One more ball`,
-        fullHelp: `As soon as you drop the ball in Breakout 71, you loose. With this perk, you get two balls, and so you can afford to loose one. 
-         The lost balls come back on the next level or whenever you use one of your exta lives, if you picked that perk. Having more than one balls makes 
-         some further perks avaliable, and of course clears the level faster.`
+        fullHelp: `As soon as you drop the ball in Breakout 71, you loose. With this perk, you get two balls, and so you can afford to lose one. 
+         The lost balls come back on the next level or whenever you use one of your extra lives, if you picked that perk. Having more than one balls makes 
+         some further perks available, and of course clears the level faster.`
     },
     {
         "threshold": 2000,
@@ -628,8 +628,8 @@ const upgrades = [
         "max": 3,
         "help": "Ball pierces 3 bricks",
         extraLevelsHelp: `Pierce 3 more bricks`,
-        fullHelp: `The ball normally bouces as soon as it touches something. With this perk, it will continue its trajectory for up to 3 bricks broken. A
-           fter that, it will bounce on the 4th brick, and you'll need to touch the puck to reset the counter. This combines particularily well with Sapper. `
+        fullHelp: `The ball normally bounces as soon as it touches something. With this perk, it will continue its trajectory for up to 3 bricks broken. 
+        After that, it will bounce on the 4th brick, and you'll need to touch the puck to reset the counter. This combines particularly well with Sapper. `
     },
     {
         "threshold": 4000,
@@ -637,16 +637,16 @@ const upgrades = [
         "giftable": true,
         "name": "Picky eater",
         "max": 1,
-        "help": "More coins in you break bricks color by color.",
+        "help": "More coins if you break bricks color by color.",
 
         tryout: {
             perks: {picky_eater: 1},
             level: 'Mountain'
         },
-        fullHelp: `Whenever you break a brick the same color as your ball, your combo increses by one. If it's a different color, the ball takes that new color, but the combo resets.
+        fullHelp: `Whenever you break a brick the same color as your ball, your combo increases by one. If it's a different color, the ball takes that new color, but the combo resets.
         The bricks with the right color will get a white border. Once you get a combo higher than your minimum, the bricks of the wrong color will get a red halo. If you have more than
         one ball, for example a blue and red ball, then you can hit both red and blue bricks and your combo won't reset. This is to make it manageable based on brick border effects alone
-        for color blind players.
+        for color-blind players.
         `
     },
     {
@@ -670,12 +670,12 @@ const upgrades = [
         "giftable": true,
         "name": "Compound interest",
         "max": 3,
-        "help": "More coins in you catch them all.",
-        extraLevelsHelp: `Combo grows faster but missed coins hurt it more`,
+        "help": "More coins if you catch them all.",
+        extraLevelsHelp: `Combo grows faster, but missed coins hurt it more`,
 
         fullHelp: `Your combo will grow by one every time you break a brick, spawning more and more coin with every brick you break. Be sure however to catch every one of those coins
-        with your puck, as any lost coin will decrease your combo by one point, quickly reseting it to the baseline. One your combo is above the minimum, the bottom of the play area will
-        have a red line to remind you that coins should not go there. This perk combines with other combo perks, the combo will rise faster but reset mor easily.
+        with your puck, as any lost coin will decrease your combo by one point. One your combo is above the minimum, the bottom of the play area will
+        have a red line to remind you that coins should not go there. This perk combines with other combo perks, the combo will rise faster but reset more easily.
         `
     },
     {
@@ -688,7 +688,7 @@ const upgrades = [
         extraLevelsHelp: `Combo starts higher but shrinks faster`,
 
         fullHelp: `At the start of every level, your combo will start at +15 points, but then every second it will be decreased by one. This means the first 15 seconds in a level will spawn
-        many more coins that the following ones, and you should make sure that you clear the level quickly. The effect stacks with other combo related perks, so you might be able to raise 
+        many more coins than the following ones, and you should make sure that you clear the level quickly. The effect stacks with other combo related perks, so you might be able to raise 
         the combo after the 15s timeout, but it will keep ticking down. Every time you take the perk again, the effect will be more dramatic.
         `
     },
@@ -700,8 +700,8 @@ const upgrades = [
         "max": 7,
         "help": "1st brick hit becomes bomb",
         extraLevelsHelp: `1 more brick replaced by a bomb`,
-        fullHelp: `Instead of just dissappearing, the first brick you break will be replaced by a bomb brick. Bouncing the ball on the puck re-arms the effect. "Piercing" will instantly
-        detonate the bomb that was just placed. Leveling up this perk will allow you to place more bombs. Rember that bombs impact the velocity of nearby coins, so too many explosions
+        fullHelp: `Instead of just disappearing, the first brick you break will be replaced by a bomb brick. Bouncing the ball on the puck re-arms the effect. "Piercing" will instantly
+        detonate the bomb that was just placed. Leveling-up this perk will allow you to place more bombs. Remember that bombs impact the velocity of nearby coins, so too many explosions
         could make it hard to catch the fruits of your hard work. 
         `
     },
@@ -725,7 +725,7 @@ const upgrades = [
         "help": "Play 8 levels instead of 7",
         extraLevelsHelp: `1 more level to play`,
         fullHelp: `The default run can last a max of 7 levels, after which the game is over and whatever score you reached is your run score. 
-        Each level of this perk lets you go one level higher. The last levels are often the ones where you make the most score so the difference can be dramatic.`
+        Each level of this perk lets you go one level higher. The last levels are often the ones where you make the most score, so the difference can be dramatic.`
     },
     {
         "threshold": 15000,
@@ -757,7 +757,7 @@ const upgrades = [
             perks: {ball_repulse_ball: 1, multiball: 2},
         },
         fullHelp: `Balls that are less than half a screen width away will start repulsing each other. The repulsion force is stronger if they are close to each other.
-         Particles will jet out to symbolise this force being applied. This perk is only offered if you have more than one ball already.`
+         Particles will jet out to symbolize this force being applied. This perk is only offered if you have more than one ball already.`
     },
     {
         "threshold": 25000,
@@ -770,7 +770,7 @@ const upgrades = [
             perks: {ball_attract_ball: 1, multiball: 2},
         },
         fullHelp: `Balls that are more than half a screen width away will start attracting each other. The attraction force is stronger when they are furthest away from each other.
-         Rainbow particles will fly to symbolise the attraction force force. This perk is only offered if you have more than one ball already.`
+         Rainbow particles will fly to symbolize the attraction force. This perk is only offered if you have more than one ball already.`
     },
     {
         "threshold": 30000,
@@ -788,7 +788,7 @@ const upgrades = [
         "max": 3,
         "help": "Puck position creates wind.",
         extraLevelsHelp: 'Stronger wind force ',
-        fullHelp: `The wind depends on where your puck is, if it's in the center of the screen nothing happens, if it's on the left it will blow leftwise, if its on the right of the screen
+        fullHelp: `The wind depends on where your puck is, if it's in the center of the screen nothing happens, if it's on the left it will blow leftwise, if it's on the right of the screen
         then it will blow rightwise. The wind affects both the balls and coins.`
     },
     {
@@ -810,7 +810,7 @@ const upgrades = [
         "help": "The first brick hit of two+ will respawn.",
         extraLevelsHelp: 'More bricks can respawn ',
         fullHelp: `After breaking two or more bricks, when the ball hits the puck, the first brick will be put back in place, provided that space is free and the brick wasn't a bomb.
-        Some particle effect will let you know where bricks will appear. Levelling this up lets you respawn up to 4 bricks at a time, but there should always be at least on destroyed.
+        Some particle effect will let you know where bricks will appear. Levelling this up lets you respawn up to 4 bricks at a time, but there should always be at least one destroyed.
         `
     },
     {
@@ -820,7 +820,7 @@ const upgrades = [
         "max": 3,
         "help": "Further level ups will offer one more option in the list",
         extraLevelsHelp: 'Even more options ',
-        fullHelp: `Every upgrades menu will have one more option. 
+        fullHelp: `Every upgrade menu will have one more option. 
          Doesn't increase the number of upgrades you can pick.  
         `
     },

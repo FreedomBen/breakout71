@@ -130,6 +130,7 @@ The "engine" could be better
 - apk version soft locks at start.   
 - replace "menu" by "L2/7" once you pass level 1
 - shinier coins by applying glow to them ? 
+- ask for permanent storage
 - It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
 - add a clickable button to allow sound to play in chrome android
@@ -164,6 +165,7 @@ There are many possible perks left to implement :
 - offer next level choice after upgrade pick
 - 3 random perks immediately, or maybe "all level get twice as many upgrades, but they are applied randomly, and you aren't told which ones you have."
 - wrap left / right
+- pause and cheat again 
 - wrap top / bottom : coins fall back from top of screen, ball flies to the top and comes back from the screen bottom ? 
 - faster coins, double value
 - +1 upgrade per level but -2 choices
