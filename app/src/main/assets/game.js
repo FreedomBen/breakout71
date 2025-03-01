@@ -187,6 +187,7 @@ const fitSize = () => {
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
 };
 window.addEventListener("resize", fitSize);
+window.addEventListener("fullscreenchange", fitSize);
 
 function recomputeTargetBaseSpeed() {
     // We never want the ball to completely stop, it will move at least 3px per frame
