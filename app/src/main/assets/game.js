@@ -8,9 +8,9 @@ const coinSize = Math.round(ballSize * 0.8);
 const puckHeight = ballSize;
 
 
-allLevels.forEach(l=>{
-    if(!l.color && !l.svg){
-        l.svg=`<svg version="1.1" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" width='200' height='100'><text x="0" y="50" fill="white"><tspan>${l.name}</tspan></text></svg>`
+allLevels.forEach(l => {
+    if (!l.color && !l.svg) {
+        l.svg = `<svg version="1.1" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" width='200' height='100'><text x="0" y="50" fill="white"><tspan>${l.name}</tspan></text></svg>`
 
     }
 })
@@ -50,7 +50,7 @@ let baseSpeed = 12; // applied to x and y
 let combo = 1;
 
 function baseCombo() {
-    return 1 + perks.base_combo * 3;
+    return 1 + perks.base_combo * 3 + perks.smaller_puck * 5;
 }
 
 function resetCombo(x, y) {
@@ -123,7 +123,7 @@ function pause(playerAskedForPause) {
     if (!running) return
     if (pauseTimeout) return
 
-      pauseTimeout=setTimeout(()=>{
+    pauseTimeout = setTimeout(() => {
         running = false
         needsRender = true
         if (audioContext) {
@@ -133,15 +133,15 @@ function pause(playerAskedForPause) {
             }, 1000)
         }
         pauseRecording()
-        pauseTimeout=null
-    },Math.min(Math.max(0,pauseUsesDuringRun-5)*50,500))
+        pauseTimeout = null
+    }, Math.min(Math.max(0, pauseUsesDuringRun - 5) * 50, 500))
 
-    if(playerAskedForPause) {
+    if (playerAskedForPause) {
         // Pausing many times in a run will make pause slower
         pauseUsesDuringRun++
     }
 
-    if(document.exitPointerLock) {
+    if (document.exitPointerLock) {
         document.exitPointerLock()
     }
 
@@ -216,7 +216,7 @@ function getRowColIndex(row, col) {
 
 function spawnExplosion(count, x, y, color, duration = 150, size = coinSize) {
     if (!!isSettingOn("basic")) return;
-    if(flashes.length>MAX_PARTICLES) {
+    if (flashes.length > MAX_PARTICLES) {
         // Avoid freezing when lots of explosion happen at once
         count = 1
     }
@@ -270,7 +270,7 @@ function addToScore(coin) {
         lastPlayedCoinGrab = Date.now()
         sounds.coinCatch(coin.x)
     }
-        runStatistics.score+=coin.points
+    runStatistics.score += coin.points
 
 
 }
@@ -347,7 +347,7 @@ function pickedUpgradesHTMl() {
 
 async function openUpgradesPicker() {
 
-     const catchRate = (score - levelStartScore) / (levelSpawnedCoins || 1);
+    const catchRate = (score - levelStartScore) / (levelSpawnedCoins || 1);
 
     let repeats = 1;
     let choices = 3;
@@ -380,7 +380,7 @@ async function openUpgradesPicker() {
 
 
     while (repeats--) {
-        const actions = pickRandomUpgrades(choices+perks.one_more_choice-perks.instant_upgrade);
+        const actions = pickRandomUpgrades(choices + perks.one_more_choice - perks.instant_upgrade);
         if (!actions.length) break
         let textAfterButtons = `
 <p>Upgrades picked so far : </p><p>${pickedUpgradesHTMl()}</p>
@@ -396,8 +396,8 @@ You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCo
             textAfterButtons
         });
         perks[upgradeId]++;
-        if(upgradeId==='instant_upgrade'){
-            repeats+=2
+        if (upgradeId === 'instant_upgrade') {
+            repeats += 2
         }
 
         runStatistics.upgrades_picked++
@@ -437,7 +437,7 @@ function setLevel(l) {
 
     // This caused problems with accented characters like the ô of côte d'ivoire for odd reasons
     // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
-    background.src =  'data:image/svg+xml;UTF8,' + lvl.svg
+    background.src = 'data:image/svg+xml;UTF8,' + lvl.svg
     stopRecording()
     startRecordingGame()
 }
@@ -473,7 +473,9 @@ const upgrades = [
         "name": "+1 life",
         "max": 7,
         "help": "Survive dropping the ball",
-        extraLevelsHelp: `One more life just in case`
+        extraLevelsHelp: `One more life just in case`,
+        fullHelp: `Normally, you just have one life, and the run is over as soon as you drop it.
+         With this perk, you can survive dropping the ball once. A heart in the top right corner will remind you of how many extra lives you have. `
     },
     {
         "threshold": 0,
@@ -481,7 +483,11 @@ const upgrades = [
         "giftable": true,
         "name": "Single puck hit streak",
         "max": 1,
-        "help": "Break many bricks at once."
+        "help": "More coins in you break many bricks at once.",
+        fullHelp: `Every time you break a brick, your combo (number of coins per bricks) increases by one. However, as soon as the ball touches your puck, 
+        the combo is reset to it's default value, and you'll just get one coin per brick. So you should to hit many bricks in one go for more score. 
+        Once your combo rises above the base value, your puck will become red to remind you that it will destroy your combo to touch it with the ball.
+         This can stack with other combo related perks, the combo will rise faster but reset more easily as any of the conditions is enough to reset it. `
     },
 
     {
@@ -490,8 +496,12 @@ const upgrades = [
         "giftable": true,
         "name": "+3 base combo",
         "max": 7,
-        "help": "Your combo starts at 4",
-        extraLevelsHelp: `Combo starts 3 points higher`
+        "help": "3 more coins from every brick.",
+        extraLevelsHelp: `Combo starts 3 points higher`,
+
+        fullHelp: `Your combo (number of coins per bricks) normally starts at 1 at the beginning of the level, and resets to one when you bounce around without hitting anything. 
+        With this perk, the combo starts 3 points higher, so you'll always get at least 4 coins per brick. Whenever your combo reset, it will go back to 4 and not 1. 
+        Your ball will glitter a bit to indicate that its combo is higher than one.`
     },
     {
         "threshold": 0,
@@ -499,7 +509,10 @@ const upgrades = [
         "name": "Slower ball",
         "max": 2,
         "help": "slow down the ball",
-        extraLevelsHelp: `Make it even slower`
+        extraLevelsHelp: `Make it even slower`,
+
+        fullHelp: `The ball starts relatively slow, but every level of your run it will start a bit faster, and it will also accelerate if you spend a lot of time in one level. This perk makes it
+         more manageable. You can get it at the start every time by enabling kid mode in the menu.`
     },
     {
         "threshold": 0,
@@ -507,7 +520,9 @@ const upgrades = [
         "name": "Bigger puck",
         "max": 2,
         "help": "Catches more coins",
-        extraLevelsHelp: `Even bigger puck`
+        extraLevelsHelp: `Even bigger puck`,
+        fullHelp: `A bigger puck makes it easier to never miss the ball and to catch more coins, and also to precisely angle the bounces (the ball's angle only depends on where it hits the puck). 
+        However, a large puck is harder to use around the sides of the level, and will make it sometimes unavoidable to miss (not hit anything) which comes with downsides. `
     },
     {
         "threshold": 0,
@@ -519,7 +534,9 @@ const upgrades = [
         tryout: {
             perks: {viscosity: 3, base_combo: 3},
             level: 'Waves'
-        }
+        },
+        fullHelp: `Coins normally accelerate with gravity and explosions to pretty high speeds. This perk constantly makes them slow down, as if they were in some sort of viscous liquid. 
+        This makes catching them easier, and combines nicely with perks that influence the coin's movement. `
     },
     {
         "threshold": 0,
@@ -527,7 +544,12 @@ const upgrades = [
         "giftable": true,
         "name": "Shoot straight",
         "max": 1,
-        "help": "Avoid the sides for more coins."
+        "help": "More coins in you don't touch the sides.",
+
+        fullHelp: `Whenever you break a brick, your combo will increase by one, so you'll get one more coin all the next bricks you break.
+         However, your combo will reset as soon as your ball hits the left or right side. 
+        As soon as your combo rises, the sides become red to remind you that you should avoid hitting them. The effect stacks with other combo perks, combo rises faster with more upgrades but will also reset if any
+         of the reset conditions are met.`
     },
     {
         "threshold": 0,
@@ -535,7 +557,11 @@ const upgrades = [
         "giftable": true,
         "name": "Sky is the limit",
         "max": 1,
-        "help": "Avoid the top for more coins."
+        "help": "More coins in you don't touch the top.",
+
+        fullHelp: `Whenever you break a brick, your combo will increase by one. However, your combo will reset as soon as your ball hit the top of the screen. 
+        When your combo is above the minimum,  a red bar will appear at the top to remind you that you should avoid hitting it. 
+        The effect stacks with other combo perks.`
     },
     {
         "threshold": 0,
@@ -544,6 +570,9 @@ const upgrades = [
         "max": 7,
         "help": "The last brick will self-destruct",
         extraLevelsHelp: `Level clears one brick earlier`,
+        fullHelp: `You need to break all bricks to go to the next level. However, it can be hard to get the last ones. 
+        Clearing a level early brings extra choices when upgrading. Never missing the bricks is also very beneficial. 
+        So if you find it difficult to the the last bricks, getting this perk a few time can help.`
     },
     {
         "threshold": 500,
@@ -553,6 +582,8 @@ const upgrades = [
         "max": 2,
         "help": "Control the ball's trajectory",
         extraLevelsHelp: `Stronger effect on the ball`,
+        fullHelp: `Right after the ball hits your puck, you'll be able to direct it left and right by moving your puck. 
+        The effect stops when the ball hits a brick and resets the next time it touches the puck. It also does nothing when the ball is going downward after bouncing at the top. `
     },
     {
         "threshold": 1000,
@@ -562,7 +593,10 @@ const upgrades = [
         "help": "Puck attracts coins",
         tryout: {
             perks: {coin_magnet: 3, base_combo: 3}
-        }, extraLevelsHelp: `Stronger effect on the coins`,
+        },
+        extraLevelsHelp: `Stronger effect on the coins`,
+        fullHelp: `Directs the coins to the puck. The effect is stronger if the coin is close to it already. Catching 90% or 100% of coins bring special bonuses in the game. 
+         Another way to catch more coins is to hit bricks from the bottom. The ball's speed and direction impacts the spawned coins's velocity. `
     },
     {
         "threshold": 1500,
@@ -572,14 +606,19 @@ const upgrades = [
         "max": 6,
         "help": "Start with two balls",
         extraLevelsHelp: `One more ball`,
+        fullHelp: `As soon as you drop the ball in Breakout 71, you loose. With this perk, you get two balls, and so you can afford to loose one. 
+         The lost balls come back on the next level or whenever you use one of your exta lives, if you picked that perk. Having more than one balls makes 
+         some further perks avaliable, and of course clears the level faster.`
     },
     {
         "threshold": 2000,
         "id": "smaller_puck",
         "name": "Smaller puck",
         "max": 2,
-        "help": "Gives you more control",
-        extraLevelsHelp: `Even smaller puck`,
+        "help": "Also gives +5 base combo",
+        extraLevelsHelp: `Even smaller puck and higher base combo`,
+        fullHelp: `This makes the puck smaller, which in theory makes some corner shots easier, but really just raises the difficulty. 
+         That's why you also get a nice bonus of +5 coins per brick for all bricks you'll break after picking this.  `
     },
     {
         "threshold": 3000,
@@ -589,32 +628,41 @@ const upgrades = [
         "max": 3,
         "help": "Ball pierces 3 bricks",
         extraLevelsHelp: `Pierce 3 more bricks`,
+        fullHelp: `The ball normally bouces as soon as it touches something. With this perk, it will continue its trajectory for up to 3 bricks broken. A
+           fter that, it will bounce on the 4th brick, and you'll need to touch the puck to reset the counter. This combines particularily well with Sapper. `
     },
     {
         "threshold": 4000,
         "id": "picky_eater",
         "giftable": true,
         "name": "Picky eater",
-        "color_blind_exclude": true,
         "max": 1,
-        "help": "Break bricks color by color",
+        "help": "More coins in you break bricks color by color.",
 
         tryout: {
             perks: {picky_eater: 1},
             level: 'Mountain'
-        }
+        },
+        fullHelp: `Whenever you break a brick the same color as your ball, your combo increses by one. If it's a different color, the ball takes that new color, but the combo resets.
+        The bricks with the right color will get a white border. Once you get a combo higher than your minimum, the bricks of the wrong color will get a red halo. If you have more than
+        one ball, for example a blue and red ball, then you can hit both red and blue bricks and your combo won't reset. This is to make it manageable based on brick border effects alone
+        for color blind players.
+        `
     },
     {
         "threshold": 5000,
         "id": "metamorphosis",
         "name": "Stain",
-        "color_blind_exclude": true,
         "max": 1,
         "help": "Coins color the bricks they touch",
         tryout: {
             perks: {metamorphosis: 3},
             level: 'Lines'
-        }
+        },
+
+        fullHelp: `With this perk, coins will be of the color of the brick they come from, and will color the first brick they touch in the same color. Coins spawn with the speed
+        of the ball that broke them, which means you can aim a bit in the direction of the bricks you want to "paint".
+        `
     },
     {
         "threshold": 6000,
@@ -622,8 +670,13 @@ const upgrades = [
         "giftable": true,
         "name": "Compound interest",
         "max": 3,
-        "help": "Avoid missing coins with your puck",
+        "help": "More coins in you catch them all.",
         extraLevelsHelp: `Combo grows faster but missed coins hurt it more`,
+
+        fullHelp: `Your combo will grow by one every time you break a brick, spawning more and more coin with every brick you break. Be sure however to catch every one of those coins
+        with your puck, as any lost coin will decrease your combo by one point, quickly reseting it to the baseline. One your combo is above the minimum, the bottom of the play area will
+        have a red line to remind you that coins should not go there. This perk combines with other combo perks, the combo will rise faster but reset mor easily.
+        `
     },
     {
         "threshold": 7000,
@@ -631,8 +684,13 @@ const upgrades = [
         "giftable": true,
         "name": "Hot start",
         "max": 3,
-        "help": "Clear the level quickly",
+        "help": "More coins for 15s.",
         extraLevelsHelp: `Combo starts higher but shrinks faster`,
+
+        fullHelp: `At the start of every level, your combo will start at +15 points, but then every second it will be decreased by one. This means the first 15 seconds in a level will spawn
+        many more coins that the following ones, and you should make sure that you clear the level quickly. The effect stacks with other combo related perks, so you might be able to raise 
+        the combo after the 15s timeout, but it will keep ticking down. Every time you take the perk again, the effect will be more dramatic.
+        `
     },
     {
         "threshold": 9000,
@@ -642,6 +700,10 @@ const upgrades = [
         "max": 7,
         "help": "1st brick hit becomes bomb",
         extraLevelsHelp: `1 more brick replaced by a bomb`,
+        fullHelp: `Instead of just dissappearing, the first brick you break will be replaced by a bomb brick. Bouncing the ball on the puck re-arms the effect. "Piercing" will instantly
+        detonate the bomb that was just placed. Leveling up this perk will allow you to place more bombs. Rember that bombs impact the velocity of nearby coins, so too many explosions
+        could make it hard to catch the fruits of your hard work. 
+        `
     },
     {
         "threshold": 11000,
@@ -652,7 +714,8 @@ const upgrades = [
         tryout: {
             perks: {bigger_explosions: 1},
             level: 'Ship'
-        }
+        },
+        fullHelp: `The default explosion clears a 3x3 square, with this it becomes a 5x5 square, and the blowback on the coins is also significantly stronger. `
     },
     {
         "threshold": 13000,
@@ -661,14 +724,17 @@ const upgrades = [
         "max": 3,
         "help": "Play 8 levels instead of 7",
         extraLevelsHelp: `1 more level to play`,
+        fullHelp: `The default run can last a max of 7 levels, after which the game is over and whatever score you reached is your run score. 
+        Each level of this perk lets you go one level higher. The last levels are often the ones where you make the most score so the difference can be dramatic.`
     },
     {
         "threshold": 15000,
         "id": "pierce_color",
         "name": "Color pierce",
-        "color_blind_exclude": true,
         "max": 1,
-        "help": "Ball breaks same color bricks"
+        "help": "Ball breaks same color bricks",
+        fullHelp: `Whenever a ball hits a brick of the same color, it will just go through unimpeded. 
+        Once it reaches a brick of a different color, it will break it, take its color and bounce.`
     },
     {
         "threshold": 18000,
@@ -677,6 +743,7 @@ const upgrades = [
         "max": 2,
         "help": "Combo grows slower but resets less",
         extraLevelsHelp: `Even slower combo growth but softer reset`,
+        fullHelp: `The combo normally climbs every time you break a brick. This will sometimes cancel that climb, but also limit the impact of a combo reset.`
     },
     {
         "threshold": 21000,
@@ -688,7 +755,9 @@ const upgrades = [
         extraLevelsHelp: 'Stronger repulsion force ',
         tryout: {
             perks: {ball_repulse_ball: 1, multiball: 2},
-        }
+        },
+        fullHelp: `Balls that are less than half a screen width away will start repulsing each other. The repulsion force is stronger if they are close to each other.
+         Particles will jet out to symbolise this force being applied. This perk is only offered if you have more than one ball already.`
     },
     {
         "threshold": 25000,
@@ -699,7 +768,9 @@ const upgrades = [
         "help": "Balls attract balls.", extraLevelsHelp: 'Stronger attraction force ',
         tryout: {
             perks: {ball_attract_ball: 1, multiball: 2},
-        }
+        },
+        fullHelp: `Balls that are more than half a screen width away will start attracting each other. The attraction force is stronger when they are furthest away from each other.
+         Rainbow particles will fly to symbolise the attraction force force. This perk is only offered if you have more than one ball already.`
     },
     {
         "threshold": 30000,
@@ -708,13 +779,17 @@ const upgrades = [
         extraLevelsHelp: 'Stronger repulsion force ',
         "max": 3,
         "help": "Puck repulses balls.",
+        fullHelp: `When a ball gets close to the perk, it will start slowing down, and even potentially bouncing without touching the puck.`
     },
     {
         "threshold": 35000,
         "id": "wind",
         "name": "Wind",
         "max": 3,
-        "help": "Puck position creates wind.", extraLevelsHelp: 'Stronger wind force ',
+        "help": "Puck position creates wind.",
+        extraLevelsHelp: 'Stronger wind force ',
+        fullHelp: `The wind depends on where your puck is, if it's in the center of the screen nothing happens, if it's on the left it will blow leftwise, if its on the right of the screen
+        then it will blow rightwise. The wind affects both the balls and coins.`
     },
     {
         "threshold": 40000,
@@ -723,13 +798,20 @@ const upgrades = [
         "max": 4,
         "help": "Bricks sometimes resist hits but drop more coins.",
         extraLevelsHelp: 'Bricks resist more and drop more coins ',
+        fullHelp: `With level one of this perk, the ball has a 20% chance to bounce harmlessly on bricks, 
+        but generates 10% more coins when it does break one. 
+        This +10% is not shown in the combo number. At level 4 the ball has 80% chance of bouncing and brings 40% more coins.`
     },
     {
         "threshold": 45000,
         "id": "respawn",
         "name": "Respawn",
         "max": 4,
-        "help": "The first brick hit will respawn.", extraLevelsHelp: 'More bricks can respawn ',
+        "help": "The first brick hit of two+ will respawn.",
+        extraLevelsHelp: 'More bricks can respawn ',
+        fullHelp: `After breaking two or more bricks, when the ball hits the puck, the first brick will be put back in place, provided that space is free and the brick wasn't a bomb.
+        Some particle effect will let you know where bricks will appear. Levelling this up lets you respawn up to 4 bricks at a time, but there should always be at least on destroyed.
+        `
     },
     {
         "threshold": 50000,
@@ -738,6 +820,9 @@ const upgrades = [
         "max": 3,
         "help": "Further level ups will offer one more option in the list",
         extraLevelsHelp: 'Even more options ',
+        fullHelp: `Every upgrades menu will have one more option. 
+         Doesn't increase the number of upgrades you can pick.  
+        `
     },
     {
         "threshold": 55000,
@@ -746,6 +831,9 @@ const upgrades = [
         "max": 2,
         "help": "-1 choice permanently",
         extraLevelsHelp: 'Even fewer options ',
+        fullHelp: `Immediately pick two upgrades, so that you get one free one and one to repay the one used to get this perk.
+           Every further menu to pick upgrades will have fewer options to choose from.
+        `
     },
 ]
 
@@ -754,7 +842,6 @@ let totalScoreAtRunStart = getTotalScore()
 
 function getPossibleUpgrades() {
     return upgrades
-        .filter(u => !(isSettingOn('color_blind') && u.color_blind_exclude))
         .filter(u => totalScoreAtRunStart >= u.threshold)
         .filter(u => !u.requires || perks[u.requires])
 }
@@ -782,7 +869,6 @@ function getUpgraderUnlockPoints() {
     let list = []
 
     upgrades
-        .filter(u => !(isSettingOn('color_blind') && u.color_blind_exclude))
         .forEach(u => {
             if (u.threshold) {
                 list.push({
@@ -825,7 +911,7 @@ function pickRandomUpgrades(count) {
     return list.map(u => ({
         text: u.name + (perks[u.id] ? ' lvl ' + (perks[u.id] + 1) : ''),
         icon: u.icon,
-        value: u.id ,
+        value: u.id,
         help: (perks[u.id] && u.extraLevelsHelp) || u.help,
         // max: u.max,
         // checked: perks[u.id]
@@ -835,7 +921,7 @@ function pickRandomUpgrades(count) {
 }
 
 let nextRunOverrides = {level: null, perks: null}
-let hadOverrides = false, pauseUsesDuringRun=0
+let hadOverrides = false, pauseUsesDuringRun = 0
 
 function restart() {
     hadOverrides = !!(nextRunOverrides.level || nextRunOverrides.perks)
@@ -845,7 +931,7 @@ function restart() {
     shuffleLevels(levelTime || score ? currentLevelInfo().name : null);
     resetRunStatistics()
     score = 0;
-    pauseUsesDuringRun=0
+    pauseUsesDuringRun = 0
 
     const randomGift = reset_perks();
 
@@ -855,7 +941,8 @@ function restart() {
     pauseRecording()
 }
 
-let keyboardPuckSpeed=0
+let keyboardPuckSpeed = 0
+
 function setMousePos(x) {
 
     needsRender = true;
@@ -879,19 +966,17 @@ canvas.addEventListener("mouseup", (e) => {
         pause(true)
     } else {
         play()
-        if(isSettingOn('pointerLock')){
+        if (isSettingOn('pointerLock')) {
             canvas.requestPointerLock()
         }
     }
 });
 
 canvas.addEventListener("mousemove", (e) => {
-    if(document.pointerLockElement === canvas){
-    setMousePos(puck+e.movementX);
-    }else{
-
-
-    setMousePos(e.x);
+    if (document.pointerLockElement === canvas) {
+        setMousePos(puck + e.movementX);
+    } else {
+        setMousePos(e.x);
     }
 });
 
@@ -918,16 +1003,6 @@ canvas.addEventListener("touchmove", (e) => {
 let lastTick = performance.now();
 
 function brickIndex(x, y) {
-    //this worked great but coins got stuck in corner between bricks, will need to rework it
-    // if(!currentLevelInfo().squared){
-    //
-    // const offsetToLeftSide = (x - offsetX) % brickWidth
-    // const offsetToTopSide = y % brickWidth
-    //     const bricksMargin=12/(12+120)*brickWidth/2
-    //     if(offsetToLeftSide<  bricksMargin || offsetToLeftSide>brickWidth-bricksMargin || offsetToTopSide<  bricksMargin || offsetToTopSide>brickWidth-bricksMargin ){return -1}
-    //
-    // }
-    //
     return getRowColIndex(Math.floor(y / brickWidth), Math.floor((x - offsetX) / brickWidth))
 }
 
@@ -1050,12 +1125,12 @@ function tick() {
 
     puckWidth = (gameZoneWidth / 12) * (3 - perks.smaller_puck + perks.bigger_puck);
 
-    if(keyboardPuckSpeed){
-        setMousePos(puck+keyboardPuckSpeed)
+    if (keyboardPuckSpeed) {
+        setMousePos(puck + keyboardPuckSpeed)
 
     }
 
-    if (running ) {
+    if (running) {
 
         levelTime += currentTick - lastTick;
         runStatistics.runTime += currentTick - lastTick
@@ -1105,7 +1180,11 @@ function tick() {
 
                 coin.vy *= ratio;
                 coin.vx *= ratio;
-                coin.a+=coin.sa
+                if(coin.vx>7*baseSpeed) coin.vx=7*baseSpeed
+                if(coin.vx<-7*baseSpeed) coin.vx=-7*baseSpeed
+                if(coin.vy>7*baseSpeed) coin.vy=7*baseSpeed
+                if(coin.vy<-7*baseSpeed) coin.vy=-7*baseSpeed
+                coin.a += coin.sa
 
                 // Gravity
                 coin.vy += delta * coin.weight * 0.8;
@@ -1135,7 +1214,7 @@ function tick() {
                 if (typeof hitBrick !== "undefined" || hitBorder) {
                     coin.vx *= 0.8;
                     coin.vy *= 0.8;
-                    coin.sa*=0.9
+                    coin.sa *= 0.9
                     if (speed > 20 && !playedCoinBounce) {
                         playedCoinBounce = true;
                         sounds.coinBounce(coin.x, 0.2);
@@ -1183,6 +1262,63 @@ function tick() {
                     }
                 }
             });
+        }
+
+
+        if (combo > baseCombo()) {
+            // The red should still be visible on a white bg
+            const baseParticle = !isSettingOn('basic') && (combo - baseCombo()) * Math.random() > 5 && running && {
+                type: "particle",
+                duration: 100 * (Math.random() + 1),
+                time: levelTime,
+                size: coinSize / 2,
+                color: 'red',
+                ethereal: true,
+            }
+
+            if (perks.top_is_lava) {
+                baseParticle && flashes.push({
+                    ...baseParticle,
+                    x: offsetXRoundedDown + Math.random() * gameZoneWidthRoundedUp,
+                    y: 0,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: 5,
+                })
+            }
+            if (perks.sides_are_lava) {
+                const fromLeft = Math.random() > 0.5
+                baseParticle && flashes.push({
+                    ...baseParticle,
+                    x: offsetXRoundedDown + (fromLeft ? 0 : gameZoneWidthRoundedUp),
+                    y: Math.random() * gameZoneHeight,
+                    vx: fromLeft ? 5 : -5,
+                    vy: (Math.random() - 0.5) * 10,
+                })
+            }
+            if (perks.catch_all_coins) {
+                let x = puck
+                do {
+                    x = offsetXRoundedDown + gameZoneWidthRoundedUp * Math.random()
+                } while (Math.abs(x - puck) < puckWidth / 2)
+                baseParticle && flashes.push({
+                    ...baseParticle,
+                    x,
+                    y: gameZoneHeight,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: -5,
+                })
+            }
+            if (perks.streak_shots) {
+                const pos = (0.5 - Math.random())
+                baseParticle && flashes.push({
+                    ...baseParticle,
+                    duration: 100,
+                    x: puck + puckWidth * pos,
+                    y: gameZoneHeight - puckHeight,
+                    vx: (pos) * 10,
+                    vy: -5,
+                })
+            }
         }
     }
 
@@ -1237,6 +1373,28 @@ function ballTick(ball, delta) {
         }, perks.puck_repulse_ball, false)
     }
 
+    if (perks.respawn && ball.hitItem?.length > 1 && !isSettingOn('basic')) {
+        for (let i = 0; i < ball.hitItem?.length - 1 && i < perks.respawn; i++) {
+            const {index, color} = ball.hitItem[i]
+            if (bricks[index] || color === 'black') continue
+            const vertical = Math.random() > 0.5
+            const dx = Math.random() > 0.5 ? 1 : -1
+            const dy = Math.random() > 0.5 ? 1 : -1
+
+            flashes.push({
+                type: "particle",
+                duration: 250,
+                ethereal: true,
+                time: levelTime,
+                size: coinSize / 2,
+                color,
+                x: brickCenterX(index) + dx * brickWidth / 2,
+                y: brickCenterY(index) + dy * brickWidth / 2,
+                vx: vertical ? 0 : -dx * baseSpeed,
+                vy: vertical ? -dy * baseSpeed : 0,
+            });
+        }
+    }
 
     const borderHitCode = bordersHitCheck(ball, ballSize / 2, delta);
     if (borderHitCode) {
@@ -1264,9 +1422,11 @@ function ballTick(ball, delta) {
         }
 
         if (perks.respawn) {
-
             ball.hitItem.slice(0, -1).slice(0, perks.respawn)
-                .forEach(({index, color}) => bricks[index] = bricks[index] || color)
+                .forEach(({index, color}) => {
+                    if (!bricks[index] && color !== 'black')
+                        bricks[index] = color
+                })
         }
         ball.hitItem = []
         if (!ball.hitSinceBounce) {
@@ -1402,8 +1562,8 @@ function gameOver(title, intro) {
     if (!running) return;
     pause(true)
     stopRecording()
-addToTotalPlayTime(runStatistics.runTime)
-    runStatistics.max_level = currentLevel+1
+    addToTotalPlayTime(runStatistics.runTime)
+    runStatistics.max_level = currentLevel + 1
 
     let animationDelay = -300
     const getDelay = () => {
@@ -1449,7 +1609,6 @@ addToTotalPlayTime(runStatistics.runTime)
     }
 
 
-
     // Avoid the sad sound right as we restart a new games
     combo = 1
     asyncAlert({
@@ -1463,20 +1622,22 @@ addToTotalPlayTime(runStatistics.runTime)
     }).then(() => restart());
 }
 
-function getHistograms(saveStats){
+function getHistograms(saveStats) {
 
-    if (hadOverrides) {return''}
+    if (hadOverrides) {
+        return ''
+    }
 
-    let runStats=''
+    let runStats = ''
     try {
         // Stores only top 100 runs
         let runsHistory = JSON.parse(localStorage.getItem('breakout_71_runs_history') || '[]');
-        runsHistory.sort((a,b)=>a.score-b.score).reverse()
-        runsHistory=runsHistory.slice(0, 10)
-         runsHistory.push(runStatistics)
+        runsHistory.sort((a, b) => a.score - b.score).reverse()
+        runsHistory = runsHistory.slice(0, 10)
+        runsHistory.push(runStatistics)
 
         // Generate some histogram
-        if(saveStats) {
+        if (saveStats) {
             localStorage.setItem('breakout_71_runs_history', JSON.stringify(runsHistory, null, 2))
         }
         const makeHistogram = (title, getter, unit) => {
@@ -1484,38 +1645,38 @@ function getHistograms(saveStats){
             let min = Math.min(...values)
             let max = Math.max(...values)
             // No point
-            if(min===max) return '';
-            if(max-min<10) {
-            // This is mostly useful for levels
-                min=Math.max(0,max-10)
-                max=Math.max(max,min+10)
+            if (min === max) return '';
+            if (max - min < 10) {
+                // This is mostly useful for levels
+                min = Math.max(0, max - 10)
+                max = Math.max(max, min + 10)
             }
             // One bin per unique value, max 10
-            const binsCount = Math.min(values.length,10)
-            if(binsCount<3) return ''
+            const binsCount = Math.min(values.length, 10)
+            if (binsCount < 3) return ''
             const bins = []
             const binsTotal = []
-            for(let i=0;i<binsCount;i++){
+            for (let i = 0; i < binsCount; i++) {
                 bins.push(0)
                 binsTotal.push(0)
             }
             const binSize = (max - min) / bins.length
             const binIndexOf = v => Math.min(bins.length - 1, Math.floor((v - min) / binSize))
             values.forEach(v => {
-                if(isNaN(v)) return
-                const index=binIndexOf(v)
+                if (isNaN(v)) return
+                const index = binIndexOf(v)
                 bins[index]++
-                binsTotal[index]+=v
+                binsTotal[index] += v
             })
-            if(bins.filter(b=>b).length<3) return ''
+            if (bins.filter(b => b).length < 3) return ''
             const maxBin = Math.max(...bins)
             const lastValue = values[values.length - 1]
             const activeBin = binIndexOf(lastValue)
             return `<h2 class="histogram-title">${title} : <strong>${lastValue}${unit}</strong></h2><div class="histogram">
-                ${bins.map((v, vi) => `<span   class="${vi === activeBin ? 'active' : ''}"><span style="height:${v / maxBin * 80}px" title="${v} run${v>1 ? 's':''} between ${
+                ${bins.map((v, vi) => `<span   class="${vi === activeBin ? 'active' : ''}"><span style="height:${v / maxBin * 80}px" title="${v} run${v > 1 ? 's' : ''} between ${
                 Math.floor(min + vi * binSize)} and ${Math.floor(min + (vi + 1) * binSize)}${unit}"
               ><span>${
-                    (!v && ' ') || (vi==activeBin && lastValue+unit) || (Math.round(binsTotal[vi]/v)+unit)
+                (!v && ' ') || (vi == activeBin && lastValue + unit) || (Math.round(binsTotal[vi] / v) + unit)
             }</span></span></span>`).join('')}
             </div>
             `
@@ -1525,17 +1686,17 @@ function getHistograms(saveStats){
         runStats += makeHistogram('Total score', r => r.score, '')
         runStats += makeHistogram('Catch rate', r => Math.round(r.score / r.coins_spawned * 100), '%')
         runStats += makeHistogram('Bricks broken', r => r.bricks_broken, '')
-        runStats += makeHistogram('Bricks broken per minute', r =>Math.round(r.bricks_broken/r.runTime*1000*60), ' bpm')
-        runStats += makeHistogram('Hit rate', r => Math.round((1-r.misses / r.puck_bounces) * 100), '%')
-        runStats += makeHistogram('Duration per level', r =>  Math.round(r.runTime/1000/r.levelsPlayed), 's')
+        runStats += makeHistogram('Bricks broken per minute', r => Math.round(r.bricks_broken / r.runTime * 1000 * 60), ' bpm')
+        runStats += makeHistogram('Hit rate', r => Math.round((1 - r.misses / r.puck_bounces) * 100), '%')
+        runStats += makeHistogram('Duration per level', r => Math.round(r.runTime / 1000 / r.levelsPlayed), 's')
         runStats += makeHistogram('Level reached', r => r.levelsPlayed, '')
         runStats += makeHistogram('Upgrades applied', r => r.upgrades_picked, '')
         runStats += makeHistogram('Balls lost', r => r.balls_lost, '')
-        runStats += makeHistogram('Average combo', r => Math.round(r.coins_spawned /r.bricks_broken) , '')
-        runStats += makeHistogram('Max combo', r => r.max_combo , '')
+        runStats += makeHistogram('Average combo', r => Math.round(r.coins_spawned / r.bricks_broken), '')
+        runStats += makeHistogram('Max combo', r => r.max_combo, '')
 
-        if(runStats){
-            runStats= `<p>Find below your run statistics compared to  your ${runsHistory.length-1} best runs.</p>`+ runStats
+        if (runStats) {
+            runStats = `<p>Find below your run statistics compared to  your ${runsHistory.length - 1} best runs.</p>` + runStats
         }
     } catch (e) {
         console.warn(e)
@@ -1551,17 +1712,18 @@ function resetRunStatistics() {
         runTime: 0,
         coins_spawned: 0,
         score: 0,
-        bricks_broken:0,
-        misses:0,
-        balls_lost:0,
-        puck_bounces:0,
-        upgrades_picked:1,
-        max_combo:1
+        bricks_broken: 0,
+        misses: 0,
+        balls_lost: 0,
+        puck_bounces: 0,
+        upgrades_picked: 1,
+        max_combo: 1
     }
 }
+
 function explodeBrick(index, ball, isExplosion) {
     const color = bricks[index];
-    if(!color) return;
+    if (!color) return;
 
     if (color === 'black') {
         delete bricks[index];
@@ -1586,6 +1748,7 @@ function explodeBrick(index, ball, isExplosion) {
             const d2 = Math.max(brickWidth, Math.abs(dx) + Math.abs(dy));
             c.vx += (dx / d2) * 10 * size / c.weight;
             c.vy += (dy / d2) * 10 * size / c.weight;
+
         });
         lastexplosion = Date.now();
 
@@ -1599,7 +1762,7 @@ function explodeBrick(index, ball, isExplosion) {
         // Even if it bounces we don't want to count that as a miss
         ball.hitSinceBounce++;
 
-        if (perks.sturdy_bricks && perks.sturdy_bricks * 2 > Math.random() * 10) {
+        if (perks.sturdy_bricks && perks.sturdy_bricks > Math.random() * 5) {
             // Resist
             sounds.coinBounce(ball.x, 1)
             return
@@ -1609,11 +1772,6 @@ function explodeBrick(index, ball, isExplosion) {
 
         bricks[index] = "";
 
-        levelSpawnedCoins += combo;
-
-        runStatistics.coins_spawned+=combo
-        runStatistics.bricks_broken++
-
 
         coins = coins.filter((c) => !c.destroyed);
         let coinsToSpawn = combo
@@ -1622,33 +1780,35 @@ function explodeBrick(index, ball, isExplosion) {
             coinsToSpawn += Math.ceil((10 + perks.sturdy_bricks) / 10 * coinsToSpawn)
         }
 
-        while (coinsToSpawn--) {
-            // Avoids saturating the canvas with coins
-            if (coins.length > MAX_COINS * (isSettingOn("basic") ? 0.5 : 1)) {
-                // Just pick a random one
-                coins[Math.floor(Math.random() * coins.length)].points++;
-                continue;
-            }
+        levelSpawnedCoins += coinsToSpawn;
+        runStatistics.coins_spawned += coinsToSpawn
+        runStatistics.bricks_broken++
+        const maxCoins = MAX_COINS * (isSettingOn("basic") ? 0.5 : 1)
+        const spawnableCoins = 1 + Math.floor(maxCoins - coins.length) / 3
+        const pointsPerCoin = Math.ceil(coinsToSpawn / spawnableCoins)
+        while (coinsToSpawn > 0) {
 
+            const points = Math.min(pointsPerCoin, coinsToSpawn)
+            coinsToSpawn -= points
+            console.log('Spawned a coin with ' + points + ' pts')
             const coord = {
                 x: x + (Math.random() - 0.5) * (brickWidth - coinSize),
                 y: y + (Math.random() - 0.5) * (brickWidth - coinSize),
             };
 
             coins.push({
-                points: 1,
-                color:perks.metamorphosis ? color: 'gold',
+                points,
+                color: perks.metamorphosis ? color : 'gold',
                 ...coord,
                 previousx: coord.x,
                 previousy: coord.y,
-
                 // Use previous speed because the ball has already bounced
                 vx: ball.previousvx * (0.5 + Math.random()),
                 vy: ball.previousvy * (0.5 + Math.random()),
                 sx: 0,
                 sy: 0,
-                a:Math.random()*Math.PI*2,
-                sa:Math.random()-0.5,
+                a: Math.random() * Math.PI * 2,
+                sa: Math.random() - 0.5,
                 weight: 0.8 + Math.random() * 0.2
             });
         }
@@ -1661,7 +1821,10 @@ function explodeBrick(index, ball, isExplosion) {
             // color change
             if ((perks.picky_eater || perks.pierce_color) && color !== ball.color) {
                 // reset streak
-                if (perks.picky_eater) resetCombo(ball.x, ball.y);
+                if (perks.picky_eater && !balls.find(b => b.color === color)) {
+                    // Let's be nice, if you have two balls of two colors, none of those colors reset the combo.
+                    resetCombo(ball.x, ball.y);
+                }
                 ball.color = color;
             } else {
                 sounds.comboIncreaseMaybe(ball.x, 1);
@@ -1674,13 +1837,14 @@ function explodeBrick(index, ball, isExplosion) {
         spawnExplosion(5 + combo, x, y, color, 100, coinSize / 2);
     }
 
-    if (!bricks[index] ) {
+    if (!bricks[index]) {
         ball.hitItem?.push({
             index,
             color
         })
     }
 }
+
 
 function max_levels() {
     if (hadOverrides) return 1
@@ -1703,7 +1867,7 @@ function render() {
         scoreInfo += "🖤 ";
     }
 
-    scoreInfo +=   score.toString();
+    scoreInfo += score.toString();
     scoreDisplay.innerText = scoreInfo;
     // Clear
     if (!isSettingOn("basic") && !level.color && level.svg && !level.black_puck) {
@@ -1752,7 +1916,7 @@ function render() {
         ctx.globalCompositeOperation = "multiply";
         if (level.svg && background.width && background.complete) {
 
-            if (backgroundCanvas.title !== level.name ) {
+            if (backgroundCanvas.title !== level.name) {
                 backgroundCanvas.title = level.name
                 backgroundCanvas.width = canvas.width
                 backgroundCanvas.height = canvas.height
@@ -1764,7 +1928,7 @@ function render() {
             }
 
             ctx.drawImage(backgroundCanvas, 0, 0)
-        }else {
+        } else {
             // Background not loaded yes
             ctx.fillStyle = "#000";
             ctx.fillRect(0, 0, width, height);
@@ -1784,79 +1948,6 @@ function render() {
                 drawBall(ctx, color, size, x, y);
             }
         });
-    }
-
-    if (combo > baseCombo()) {
-        // The red should still be visible on a white bg
-        ctx.globalCompositeOperation = !level.color && level.svg ? "screen" : 'source-over';
-        ctx.globalAlpha = (2 + combo - baseCombo()) / 50;
-        const baseParticle = !isSettingOn('basic') && (combo - baseCombo()) * Math.random() > 5 && running && {
-            type: "particle",
-            duration: 100 * (Math.random() + 1),
-            time: levelTime,
-            size: coinSize / 2,
-            color: 'red',
-            ethereal: true,
-        }
-
-        if (perks.top_is_lava) {
-            drawRedGradientSquare(ctx, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, ballSize, 0, 0, 0, ballSize);
-            baseParticle && flashes.push({
-                ...baseParticle,
-                x: offsetXRoundedDown + Math.random() * gameZoneWidthRoundedUp,
-                y: 0,
-                vx: (Math.random() - 0.5) * 10,
-                vy: 5,
-            })
-        }
-        if (perks.sides_are_lava) {
-            drawRedGradientSquare(ctx, offsetXRoundedDown, 0, ballSize, gameZoneHeight, 0, 0, ballSize, 0,);
-            drawRedGradientSquare(ctx, offsetXRoundedDown + gameZoneWidthRoundedUp - ballSize, 0, ballSize, gameZoneHeight, ballSize, 0, 0, 0,);
-            const fromLeft = Math.random() > 0.5
-            baseParticle && flashes.push({
-                ...baseParticle,
-                x: offsetXRoundedDown + (fromLeft ? 0 : gameZoneWidthRoundedUp),
-                y: Math.random() * gameZoneHeight,
-                vx: fromLeft ? 5 : -5,
-                vy: (Math.random() - 0.5) * 10,
-            })
-        }
-        if (perks.catch_all_coins) {
-            drawRedGradientSquare(ctx, offsetXRoundedDown, gameZoneHeight - ballSize, gameZoneWidthRoundedUp, ballSize, 0, ballSize, 0, 0,);
-            let x = puck
-            do {
-                x = offsetXRoundedDown + gameZoneWidthRoundedUp * Math.random()
-            } while (Math.abs(x - puck) < puckWidth / 2)
-            baseParticle && flashes.push({
-                ...baseParticle,
-                x,
-                y: gameZoneHeight,
-                vx: (Math.random() - 0.5) * 10,
-                vy: -5,
-            })
-        }
-        if (perks.streak_shots) {
-            drawRedGradientSquare(ctx, puck - puckWidth / 2, gameZoneHeight - puckHeight - ballSize, puckWidth, ballSize, 0, ballSize, 0, 0,);
-            const pos = (0.5 - Math.random())
-            baseParticle && flashes.push({
-                ...baseParticle,
-                duration: 100,
-                x: puck + puckWidth * pos,
-                y: gameZoneHeight - puckHeight,
-                vx: (pos) * 10,
-                vy: -5,
-            })
-        }
-        if (perks.picky_eater) {
-            let okColors = new Set(balls.map((b) => b.color));
-
-            bricks.forEach((type, index) => {
-                if (!type || type === "black" || okColors.has(type)) return;
-                const x = brickCenterX(index), y = brickCenterY(index);
-                drawFuzzyBall(ctx, "red", brickWidth, x, y);
-            });
-        }
-        ctx.globalAlpha = 1;
     }
 
     ctx.globalAlpha = 1;
@@ -1880,7 +1971,7 @@ function render() {
         ctx.globalAlpha = Math.max(0, Math.min(1, 2 - (elapsed / duration) * 2));
         if (type === "text") {
             ctx.globalCompositeOperation = "source-over";
-            drawText(ctx, text, color, size, x,  y - elapsed / 10);
+            drawText(ctx, text, color, size, x, y - elapsed / 10);
         } else if (type === "particle") {
             ctx.globalCompositeOperation = "screen";
             drawBall(ctx, color, size, x, y);
@@ -1892,7 +1983,7 @@ function render() {
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     coins.forEach((coin) => {
-        if (!coin.destroyed) drawCoin(ctx, coin.color, coinSize, coin.x,coin.y, level.color || 'black', coin.a);
+        if (!coin.destroyed) drawCoin(ctx, coin.color, coinSize, coin.x, coin.y, level.color || 'black', coin.a);
     });
 
     // Black shadow around balls
@@ -1920,32 +2011,47 @@ function render() {
     // The puck
     ctx.globalAlpha = 1
     ctx.globalCompositeOperation = "source-over";
+    if (perks.streak_shots && combo > baseCombo()) {
+
+        drawPuck(ctx, 'red', puckWidth, puckHeight, -2)
+    }
     drawPuck(ctx, puckColor, puckWidth, puckHeight)
 
     if (combo > 1) {
 
         ctx.globalCompositeOperation = "source-over";
-        const comboText="x " + combo
-        const comboTextWidth=comboText.length*puckHeight/2.6
-        drawCoin(ctx, 'gold', coinSize, puck-coinSize*1.5-comboTextWidth/2, gameZoneHeight - puckHeight / 2, !level.black_puck ? '#FFF' : '#000', 0 )
+        const comboText = "x " + combo
+        const comboTextWidth = comboText.length * puckHeight / 2.6
+        drawCoin(ctx, 'gold', coinSize, puck - coinSize * 1.5 - comboTextWidth / 2, gameZoneHeight - puckHeight / 2, !level.black_puck ? '#FFF' : '#000', 0)
         drawText(ctx, comboText, !level.black_puck ? '#000' : '#FFF', puckHeight,
-            puck-comboTextWidth/2, gameZoneHeight - puckHeight / 2,true);
+            puck - comboTextWidth / 2, gameZoneHeight - puckHeight / 2, true);
     }
     //  Borders
-    ctx.fillStyle = puckColor;
+    const redSides = perks.sides_are_lava && combo > baseCombo()
+    ctx.fillStyle = redSides ? 'red' : puckColor;
     ctx.globalCompositeOperation = "source-over";
     if (offsetXRoundedDown) {
         // draw outside of gaming area to avoid capturing borders in recordings
         ctx.fillRect(offsetX - 1, 0, 1, height);
         ctx.fillRect(width - offsetX + 1, 0, 1, height);
+    } else if (redSides) {
+        ctx.fillRect(0, 0, 1, height);
+        ctx.fillRect(width - 1, 0, 1, height);
     }
+
+    if (perks.top_is_lava && combo > baseCombo())
+        drawRedSquare(ctx, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, 1);
+    const redBottom = perks.catch_all_coins && combo > baseCombo()
+    ctx.fillStyle = redBottom ? 'red' : puckColor;
     if (isSettingOn("mobile-mode")) {
         ctx.fillRect(offsetXRoundedDown, gameZoneHeight, gameZoneWidthRoundedUp, 1);
         if (!running) {
             drawText(ctx, "Press and hold here to play", puckColor, puckHeight,
-             canvas.width / 2, gameZoneHeight + (canvas.height - gameZoneHeight) / 2,
+                canvas.width / 2, gameZoneHeight + (canvas.height - gameZoneHeight) / 2,
             );
         }
+    } else if (redBottom) {
+        ctx.fillRect(offsetXRoundedDown, gameZoneHeight - 1, gameZoneWidthRoundedUp, 1);
     }
 
     if (shaked) {
@@ -1962,8 +2068,13 @@ function renderAllBricks(destinationCtx) {
     ctx.globalAlpha = 1;
 
     const level = currentLevelInfo();
+    const ballColors = new Set(balls.map(b => b.color))
 
-    const newKey = gameZoneWidth + "_" + bricks.join("_") + bombSVG.complete;
+    let ballsColorsKey = ''
+    ballColors.forEach(value => ballsColorsKey += value);
+    const redBorderOnBricksWithWrongColor = combo > baseCombo() && perks.picky_eater
+
+    const newKey = gameZoneWidth + "_" + bricks.join("_") + bombSVG.complete + '_' + redBorderOnBricksWithWrongColor + '_' + ballsColorsKey;
     if (newKey !== cachedBricksRenderKey) {
         cachedBricksRenderKey = newKey;
 
@@ -1974,11 +2085,13 @@ function renderAllBricks(destinationCtx) {
         ctx.resetTransform();
         ctx.translate(-offsetX, 0);
         // Bricks
+        const puckColor = level.black_puck ? '#000' : '#FFF'
         bricks.forEach((color, index) => {
             const x = brickCenterX(index), y = brickCenterY(index);
 
             if (!color) return;
-            drawBrick(ctx, color, x, y, level.squared || false);
+            const borderColor = (ballColors.has(color) && puckColor) || (redBorderOnBricksWithWrongColor && 'red') || color
+            drawBrick(ctx, color, borderColor, x, y);
             if (color === 'black') {
                 ctx.globalCompositeOperation = "source-over";
                 drawIMG(ctx, bombSVG, brickWidth, x, y);
@@ -1991,7 +2104,7 @@ function renderAllBricks(destinationCtx) {
 
 let cachedGraphics = {};
 
-function drawPuck(ctx, color, puckWidth, puckHeight) {
+function drawPuck(ctx, color, puckWidth, puckHeight, yoffset = 0) {
 
     const key = "puck" + color + "_" + puckWidth + '_' + puckHeight;
 
@@ -2012,15 +2125,15 @@ function drawPuck(ctx, color, puckWidth, puckHeight) {
         cachedGraphics[key] = can;
     }
 
-    ctx.drawImage(cachedGraphics[key], Math.round(puck - puckWidth / 2), gameZoneHeight - puckHeight * 2,);
+    ctx.drawImage(cachedGraphics[key], Math.round(puck - puckWidth / 2), gameZoneHeight - puckHeight * 2 + yoffset);
 
 
 }
 
-function drawBall(ctx, color, width, x, y, borderColor='') {
-    const key = "ball" + color + "_" + width+'_'+borderColor;
+function drawBall(ctx, color, width, x, y, borderColor = '') {
+    const key = "ball" + color + "_" + width + '_' + borderColor;
 
-        const size = Math.round(width);
+    const size = Math.round(width);
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
         can.width = size;
@@ -2028,12 +2141,12 @@ function drawBall(ctx, color, width, x, y, borderColor='') {
 
         const canctx = can.getContext("2d");
         canctx.beginPath();
-        canctx.arc(size / 2, size / 2, Math.round(size / 2)-1, 0, 2 * Math.PI);
+        canctx.arc(size / 2, size / 2, Math.round(size / 2) - 1, 0, 2 * Math.PI);
         canctx.fillStyle = color;
         canctx.fill();
-        if(borderColor){
-            canctx.lineWidth=2
-            canctx.strokeStyle=borderColor
+        if (borderColor) {
+            canctx.lineWidth = 2
+            canctx.strokeStyle = borderColor
             canctx.stroke()
         }
 
@@ -2042,10 +2155,10 @@ function drawBall(ctx, color, width, x, y, borderColor='') {
     ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2),);
 }
 
-function drawCoin(ctx, color, size, x,y, bg,rawAngle) {
+function drawCoin(ctx, color, size, x, y, bg, rawAngle) {
 
-    const angle= (Math.round(rawAngle/Math.PI*2 * 16 ) % 16 + 16 ) % 16
-    const key = "coin with halo" + "_" + color + "_" + size + '_' + bg + '_'+angle;
+    const angle = (Math.round(rawAngle / Math.PI * 2 * 16) % 16 + 16) % 16
+    const key = "coin with halo" + "_" + color + "_" + size + '_' + bg + '_' + angle;
 
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
@@ -2060,7 +2173,7 @@ function drawCoin(ctx, color, size, x,y, bg,rawAngle) {
         canctx.fillStyle = color;
         canctx.fill();
 
-        if(color=== 'gold'){
+        if (color === 'gold') {
 
             canctx.strokeStyle = bg;
             canctx.stroke();
@@ -2071,14 +2184,14 @@ function drawCoin(ctx, color, size, x,y, bg,rawAngle) {
             canctx.fill();
 
             canctx.translate(size / 2, size / 2);
-            canctx.rotate(angle/ 16);
+            canctx.rotate(angle / 16);
             canctx.translate(-size / 2, -size / 2);
 
-            canctx.globalCompositeOperation='multiply'
-            drawText(canctx, '$', color, size-2,size / 2, size / 2+1)
-            drawText(canctx, '$', color, size-2,size / 2, size / 2+1)
+            canctx.globalCompositeOperation = 'multiply'
+            drawText(canctx, '$', color, size - 2, size / 2, size / 2 + 1)
+            drawText(canctx, '$', color, size - 2, size / 2, size / 2 + 1)
         }
-            cachedGraphics[key] = can;
+        cachedGraphics[key] = can;
     }
     ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2));
 }
@@ -2103,37 +2216,29 @@ function drawFuzzyBall(ctx, color, width, x, y) {
     ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2),);
 }
 
-function drawBrick(ctx, color, x, y, squared) {
+function drawBrick(ctx, color, borderColor, x, y) {
     const tlx = Math.ceil(x - brickWidth / 2);
     const tly = Math.ceil(y - brickWidth / 2);
     const brx = Math.ceil(x + brickWidth / 2) - 1;
     const bry = Math.ceil(y + brickWidth / 2) - 1;
 
     const width = brx - tlx, height = bry - tly;
-    const key = "brick" + color + "_" + width + "_" + height + '_' + squared
+    const key = "brick" + color + '_' + borderColor + "_" + width + "_" + height
 
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
         can.width = width;
         can.height = height;
+        const bord = 4;
         const canctx = can.getContext("2d");
 
+        canctx.fillStyle = color;
+        canctx.fillRect(bord, bord, width - bord * 2, height - bord * 2);
+        canctx.strokeStyle = borderColor;
+        canctx.lineJoin = "round";
+        canctx.lineWidth = bord
+        canctx.strokeRect(bord / 2, bord / 2, width - bord, height - bord);
 
-        if (squared) {
-
-            canctx.fillStyle = color;
-            canctx.fillRect(0, 0, width, height);
-        } else {
-
-            const bord = Math.floor(brickWidth / 6);
-            canctx.strokeStyle = color;
-            canctx.lineJoin = "round";
-            canctx.lineWidth = bord * 1.5;
-            canctx.strokeRect(bord, bord, width - bord * 2, height - bord * 2);
-
-            canctx.fillStyle = color;
-            canctx.fillRect(bord, bord, width - bord * 2, height - bord * 2);
-        }
 
         cachedGraphics[key] = can;
     }
@@ -2141,24 +2246,9 @@ function drawBrick(ctx, color, x, y, squared) {
     // It's not easy to have a 1px gap between bricks without antialiasing
 }
 
-function drawRedGradientSquare(ctx, x, y, width, height, redX, redY, blackX, blackY) {
-    const key = "gradient" + width + "_" + height + "_" + redX + "_" + redY + "_" + blackX + "_" + blackY;
-
-    if (!cachedGraphics[key]) {
-        const can = document.createElement("canvas");
-        can.width = width;
-        can.height = height;
-        const canctx = can.getContext("2d");
-
-        const gradient = canctx.createLinearGradient(redX, redY, blackX, blackY);
-        gradient.addColorStop(0, "rgba(255,0,0,1)");
-        gradient.addColorStop(1, "rgba(255,0,0,0)");
-        canctx.fillStyle = gradient;
-        canctx.fillRect(0, 0, width, height);
-        cachedGraphics[key] = can;
-    }
-
-    ctx.drawImage(cachedGraphics[key], x, y, width, height);
+function drawRedSquare(ctx, x, y, width, height) {
+    ctx.fillStyle = 'red'
+    ctx.fillRect(x, y, width, height);
 }
 
 
@@ -2182,8 +2272,8 @@ function drawIMG(ctx, img, size, x, y) {
     ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2),);
 }
 
-function drawText(ctx, text, color, fontSize, x, y,left=false) {
-    const key = "text" + text + "_" + color + "_" + fontSize+'_'+left;
+function drawText(ctx, text, color, fontSize, x, y, left = false) {
+    const key = "text" + text + "_" + color + "_" + fontSize + '_' + left;
 
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
@@ -2191,7 +2281,7 @@ function drawText(ctx, text, color, fontSize, x, y,left=false) {
         can.height = fontSize;
         const canctx = can.getContext("2d");
         canctx.fillStyle = color;
-        canctx.textAlign = left ? 'left':"center"
+        canctx.textAlign = left ? 'left' : "center"
         canctx.textBaseline = "middle";
         canctx.font = fontSize + "px monospace";
 
@@ -2199,7 +2289,7 @@ function drawText(ctx, text, color, fontSize, x, y,left=false) {
 
         cachedGraphics[key] = can;
     }
-    ctx.drawImage(cachedGraphics[key], left ? x:Math.round(x - cachedGraphics[key].width / 2), Math.round(y - cachedGraphics[key].height / 2),);
+    ctx.drawImage(cachedGraphics[key], left ? x : Math.round(x - cachedGraphics[key].width / 2), Math.round(y - cachedGraphics[key].height / 2),);
 }
 
 function pixelsToPan(pan) {
@@ -2251,7 +2341,7 @@ const sounds = {
     },
     coinBounce: (pan, volume) => {
         if (!isSettingOn("sound")) return;
-        createSingleBounceSound(1200, pixelsToPan(pan), volume,0.1,'triangle');
+        createSingleBounceSound(1200, pixelsToPan(pan), volume, 0.1, 'triangle');
     }, explode: (pan) => {
         if (!isSettingOn("sound")) return;
         createExplosionSound(pixelsToPan(pan));
@@ -2260,7 +2350,7 @@ const sounds = {
         createRevivalSound(500);
     }, coinCatch(pan) {
         if (!isSettingOn("sound")) return;
-        createSingleBounceSound(900, pixelsToPan(pan), .8,0.1,'triangle')
+        createSingleBounceSound(900, pixelsToPan(pan), .8, 0.1, 'triangle')
     }
 };
 
@@ -2282,7 +2372,7 @@ function createSingleBounceSound(baseFreq = 800, pan = 0.5, volume = 1, duration
 
     // Create an oscillator for the impact sound
     const oscillator = context.createOscillator();
-    oscillator.type=type;
+    oscillator.type = type;
     oscillator.frequency.setValueAtTime(baseFrequency, context.currentTime);
 
     // Create a gain node to control the volume
@@ -2410,7 +2500,7 @@ window.addEventListener("visibilitychange", () => {
 });
 
 const scoreDisplay = document.getElementById("score");
-let alertsOpen=0,closeModal=null
+let alertsOpen = 0, closeModal = null
 
 function asyncAlert({
                         title,
@@ -2441,7 +2531,7 @@ function asyncAlert({
                 e.preventDefault()
                 closeWithResult(null)
             })
-            closeModal = ()=>{
+            closeModal = () => {
                 closeWithResult(null)
             }
             popupWrap.appendChild(closeButton)
@@ -2500,8 +2590,8 @@ ${checkMark}
 
 
         popupWrap.appendChild(popup);
-         popup.querySelector('button:not([disabled])')?.focus()
-    }).finally(()=> {
+        popup.querySelector('button:not([disabled])')?.focus()
+    }).finally(() => {
         closeModal = null
         alertsOpen--
     })
@@ -2535,10 +2625,10 @@ function toggleSetting(key) {
 
 scoreDisplay.addEventListener("click", async (e) => {
     e.preventDefault();
- openScorePanel()
+    openScorePanel()
 });
 
-async function openScorePanel(){
+async function openScorePanel() {
     pause(true)
     const cb = await asyncAlert({
         title: ` ${score} points at level ${currentLevel + 1} / ${max_levels()}`,
@@ -2547,16 +2637,16 @@ async function openScorePanel(){
 <p>${pickedUpgradesHTMl()}</p>
         `, allowClose: true, actions: [
             {
-                text:'Resume',
-                 help: "Return to your run",
+                text: 'Resume',
+                help: "Return to your run",
             },
             {
-            text: "Restart", help: "Start a brand new run.",
+                text: "Restart", help: "Start a brand new run.",
                 value: () => {
-                restart();
-                return true;
-            },
-        }],
+                    restart();
+                    return true;
+                },
+            }],
     });
     if (cb) {
         await cb()
@@ -2593,9 +2683,6 @@ const options = {
     },
     "easy": {
         default: false, name: `Kids mode`, help: `Starting perk always "slower ball".`, restart: true,
-        disabled: () => false
-    }, "color_blind": {
-        default: false, name: `Color blind mode`, help: `Removes mechanics about colors.`, restart: true,
         disabled: () => false
     },
     // Could not get the sharing to work without loading androidx and all the modern android things so for now i'll just disable sharing in the android app
@@ -2638,14 +2725,14 @@ async function openSettingsPanel() {
         title: "Breakout 71", text: ` 
         `, allowClose: true, actions: [
             {
-                text:'Resume',
-                 help: "Return to your run",
+                text: 'Resume',
+                help: "Return to your run",
                 async value() {
 
                 }
             },
             {
-                text: 'Unlocks',
+                text: 'Unlocks and help',
                 help: "See perks and levels you unlocked",
                 async value() {
                     const ts = getTotalScore()
@@ -2655,10 +2742,10 @@ async function openSettingsPanel() {
                                   name,
                                   max,
                                   help, id,
-                                  threshold, icon, tryout
+                                  threshold, icon, tryout,fullHelp
                               }) => ({
                                 text: name,
-                                help: ts >= threshold ? help : `Unlocks at total score ${threshold}.`,
+                                help: ts >= threshold ? fullHelp || help : `Unlocks at total score ${threshold}.`,
                                 disabled: ts < threshold,
                                 value: tryout || {perks: {[id]: max}},
                                 icon
@@ -2690,25 +2777,22 @@ The total score increases every time you score in game.
 Your high score is ${highScore}. 
 Click an item above to start a test run with it.
                 </p>`,
-                        actions
-
-
-                        ,
+                        actions,
                         allowClose: true,
                     })
                     if (tryOn) {
-                        if(!currentLevel || await asyncAlert({
-                            title:'Restart run to try this item?',
-                            text:'You\'re about to start a new test run with just the selected unlocked item, is that really what you wanted ? ',
-                            actions:[{
+                        if (!currentLevel || await asyncAlert({
+                            title: 'Restart run to try this item?',
+                            text: 'You\'re about to start a new test run with just the selected unlocked item, is that really what you wanted ? ',
+                            actions: [{
                                 value: true,
-                                text:'Restart game to test item'
-                            },{
-                                value:false,
-                                text:'Cancel'
+                                text: 'Restart game to test item'
+                            }, {
+                                value: false,
+                                text: 'Cancel'
                             }]
                         }))
-                        nextRunOverrides = tryOn
+                            nextRunOverrides = tryOn
                         restart()
                     }
                 }
@@ -2721,14 +2805,14 @@ Click an item above to start a test run with it.
                     text: "Exit Fullscreen",
                     help: "Might not work on some machines",
                     value() {
-                       toggleFullScreen()
+                        toggleFullScreen()
                     }
                 } :
                 {
                     text: "Fullscreen",
                     help: "Might not work on some machines",
                     value() {
-                       toggleFullScreen()
+                        toggleFullScreen()
                     }
                 }),
             {
@@ -2933,7 +3017,7 @@ function recordOneFrame() {
 
 
 function drawMainCanvasOnSmallCanvas() {
-    if(!recordCanvasCtx) return
+    if (!recordCanvasCtx) return
     recordCanvasCtx.drawImage(canvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, recordCanvas.width, recordCanvas.height)
     recordCanvasCtx.fillStyle = currentLevelInfo()?.black_puck ? '#000' : '#FFF'
     recordCanvasCtx.textBaseline = "top";
@@ -2943,7 +3027,7 @@ function drawMainCanvasOnSmallCanvas() {
 
 
     recordCanvasCtx.textAlign = "left";
-    recordCanvasCtx.fillText('Level '+(currentLevel + 1) + '/' + max_levels(), 12, 12)
+    recordCanvasCtx.fillText('Level ' + (currentLevel + 1) + '/' + max_levels(), 12, 12)
 }
 
 let nthGifFrame = 0, gifFrameReduction = 2
@@ -2976,9 +3060,9 @@ function startRecordingGame() {
         gifCtx = gifCanvas.getContext("2d", {antialias: false, alpha: false})
 
 
-        captureStream =  recordCanvas.captureStream(0);
+        captureStream = recordCanvas.captureStream(0);
 
-        if(isSettingOn('sound') && getAudioContext() && audioRecordingTrack) {
+        if (isSettingOn('sound') && getAudioContext() && audioRecordingTrack) {
 
             captureStream.addTrack(audioRecordingTrack.stream.getAudioTracks()[0])
             // captureStream.addTrack(audioRecordingTrack.stream.getAudioTracks()[1])
@@ -2988,7 +3072,7 @@ function startRecordingGame() {
     recordCanvas.width = gameZoneWidthRoundedUp
     recordCanvas.height = gameZoneHeight
     gifCanvas.width = 400
-    gifCanvas.height = Math.floor( gameZoneHeight *(400/gameZoneWidthRoundedUp) )
+    gifCanvas.height = Math.floor(gameZoneHeight * (400 / gameZoneWidthRoundedUp))
 
 
     // Gif worker won't work there
@@ -3020,12 +3104,12 @@ function startRecordingGame() {
     }
 
     instance.onstop = async function () {
-        let targetDiv ;
+        let targetDiv;
         let blob = new Blob(recordedChunks, {type: "video/webm"});
-        if(blob.size< 200000) return // under 0.2MB, probably bugged out or pointlessly short
+        if (blob.size < 200000) return // under 0.2MB, probably bugged out or pointlessly short
 
-        while(!(targetDiv = document.getElementById("level-recording-container"))){
-            await new Promise(r=>setTimeout(r, 200))
+        while (!(targetDiv = document.getElementById("level-recording-container"))) {
+            await new Promise(r => setTimeout(r, 200))
         }
         const video = document.createElement("video")
         video.autoplay = true
@@ -3103,88 +3187,88 @@ function captureFileName(ext) {
 }
 
 
-
-
-    function findLast(arr, predicate){
-        let i = arr.length
-        while(--i)
-            if(predicate(arr[i],i,arr)){
-                return arr[i]
-            }
-
-    }
-
-function toggleFullScreen(){
-        try{
-            if(document.fullscreenElement !== null){
-                 if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.webkitCancelFullScreen) {
-                        document.webkitCancelFullScreen();
-                    }
-            }else{
-                 const docel = document.documentElement
-                    if (docel.requestFullscreen) {
-                        docel.requestFullscreen();
-                    } else if (docel.webkitRequestFullscreen) {
-                        docel.webkitRequestFullscreen();
-                    }
-            }
-
-        }catch (e){
-            console.warn(e)
+function findLast(arr, predicate) {
+    let i = arr.length
+    while (--i)
+        if (predicate(arr[i], i, arr)) {
+            return arr[i]
         }
-}
-
-const pressed={
-    ArrowLeft:0,
-ArrowRight:0,
-    Shift:0
-}
-function setKeyPressed(key,on){
-    pressed[key]=on
-    keyboardPuckSpeed=(pressed.ArrowRight -  pressed.ArrowLeft) * (1+pressed.Shift*2)*gameZoneWidth/50
 
 }
-document.addEventListener('keydown',e=>{
+
+function toggleFullScreen() {
+    try {
+        if (document.fullscreenElement !== null) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
+        } else {
+            const docel = document.documentElement
+            if (docel.requestFullscreen) {
+                docel.requestFullscreen();
+            } else if (docel.webkitRequestFullscreen) {
+                docel.webkitRequestFullscreen();
+            }
+        }
+
+    } catch (e) {
+        console.warn(e)
+    }
+}
+
+const pressed = {
+    ArrowLeft: 0,
+    ArrowRight: 0,
+    Shift: 0
+}
+
+function setKeyPressed(key, on) {
+    pressed[key] = on
+    keyboardPuckSpeed = (pressed.ArrowRight - pressed.ArrowLeft) * (1 + pressed.Shift * 2) * gameZoneWidth / 50
+
+}
+
+document.addEventListener('keydown', e => {
     console.log(e.key)
-    if(e.key.toLowerCase()==='f'){
+    if (e.key.toLowerCase() === 'f') {
         toggleFullScreen()
-    }else if(e.key in pressed){
-        setKeyPressed(e.key,1)
-     } if(e.key===' ' && !alertsOpen){
-        if(running) {
+    } else if (e.key in pressed) {
+        setKeyPressed(e.key, 1)
+    }
+    if (e.key === ' ' && !alertsOpen) {
+        if (running) {
             pause()
         } else {
             play()
         }
-    }else{
+    } else {
         return
     }
     e.preventDefault()
 })
 
-document.addEventListener('keyup',e=>{
-    if(e.key in pressed){
-        setKeyPressed(e.key,0)
-     }else if(e.key==='ArrowDown' && document.querySelector('button:focus')?.nextElementSibling.tagName==='BUTTON'){
-         document.querySelector('button:focus')?.nextElementSibling?.focus()
-    }else if(e.key==='ArrowUp' && document.querySelector('button:focus')?.previousElementSibling.tagName==='BUTTON'){
-         document.querySelector('button:focus')?.previousElementSibling?.focus()
-    }else if(e.key==='Escape' && closeModal){
-         closeModal()
-    }else if(e.key==='Escape' && running){
-         pause()
-    }else if(e.key.toLowerCase()==='m' && !alertsOpen){
-         openSettingsPanel()
-    }else if(e.key.toLowerCase()==='s'&& !alertsOpen){
-         openScorePanel()
-    }else{
+document.addEventListener('keyup', e => {
+    if (e.key in pressed) {
+        setKeyPressed(e.key, 0)
+    } else if (e.key === 'ArrowDown' && document.querySelector('button:focus')?.nextElementSibling.tagName === 'BUTTON') {
+        document.querySelector('button:focus')?.nextElementSibling?.focus()
+    } else if (e.key === 'ArrowUp' && document.querySelector('button:focus')?.previousElementSibling.tagName === 'BUTTON') {
+        document.querySelector('button:focus')?.previousElementSibling?.focus()
+    } else if (e.key === 'Escape' && closeModal) {
+        closeModal()
+    } else if (e.key === 'Escape' && running) {
+        pause()
+    } else if (e.key.toLowerCase() === 'm' && !alertsOpen) {
+        openSettingsPanel()
+    } else if (e.key.toLowerCase() === 's' && !alertsOpen) {
+        openScorePanel()
+    } else {
         return
     }
     e.preventDefault()
 })
-
 
 
 fitSize()

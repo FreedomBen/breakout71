@@ -127,7 +127,14 @@ There's also an easy mode for kids (slower ball) and a color-blind mode (no colo
 # Roadmap
 
 The "engine" could be better
-- shift text on puck when too large
+- handle high combo better
+- avoid coin clip through puck
+- upgrade that boost coins +x% should change number of spawned coins
+- explain the miss thing better
+- apk version soft locks at start. 
+- add particles for respawn bricks
+- remove color blind mode and just highlight bricks of the wrong color in the render with a pattern or something. 
+- replace "menu" by "L2/7" once you pass level 1
 - shinier coins by applying glow to them ? 
 - It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
@@ -156,11 +163,14 @@ The "engine" could be better
 - webgl rendering
 - enable export of gameplay capture in webview
 - endgame histograms could work as filters, when you hover a bar, all other histograms would show the stats of those runs only, without changing reference of categories
-
+- sound when ball changes color
 
 
 There are many possible perks left to implement : 
+- offer next level choice after upgrade pick
+- 3 random perks immediately, or maybe "all level get twice as many upgrades, but they are applied randomly, and you aren't told which ones you have."
 - wrap left / right
+- wrap top / bottom : coins fall back from top of screen, ball flies to the top and comes back from the screen bottom ? 
 - faster coins, double value
 - +1 upgrade per level but -2 choices
 - n% of the broken bricks respawn when the ball touches the puck
@@ -207,6 +217,7 @@ Some extra levels wouldn't hurt
 Potential big features
 - final bosses (large vertical level that scrolls down faster and faster)
 - split screen multiplayer
+- translation
 
 # Credits
 

@@ -74,10 +74,6 @@ function addLevelEditorToList(level, levelIndex) {
             <input type="color" value="${level.color || ''}" data-level="${levelIndex}" />
             <button data-level="${levelIndex}" data-set-bg-svg="true" >${svg?'replace':'set'}</button>
             <label>
-                <input type="checkbox" data-field="squared" ${level.squared ? 'checked':''}  data-level="${levelIndex}" />
-            sqare
-            </label>
-            <label>
                 <input type="checkbox" data-field="focus"   ${level.focus ? 'checked':''}  data-level="${levelIndex}" />
             focus
             </label>
