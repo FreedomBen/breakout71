@@ -278,7 +278,7 @@ function resetBalls() {
     const count = 1 + (perks?.multiball || 0);
     const perBall = puckWidth / (count + 1);
     balls = [];
-    ballsColor=currentLevelInfo()?.black_puck ? '#000' : "#FFF"
+    ballsColor = currentLevelInfo()?.black_puck ? '#000' : "#FFF"
     for (let i = 0; i < count; i++) {
         const x = puck - puckWidth / 2 + perBall * (i + 1);
         balls.push({
@@ -1009,7 +1009,7 @@ function hitsSomething(x, y, radius) {
     return (hasBrick(brickIndex(x - radius, y - radius)) ?? hasBrick(brickIndex(x + radius, y - radius)) ?? hasBrick(brickIndex(x + radius, y + radius)) ?? hasBrick(brickIndex(x - radius, y + radius)));
 }
 
-function shouldPierceByColor(  vhit, hhit, chit) {
+function shouldPierceByColor(vhit, hhit, chit) {
     if (!perks.pierce_color) return false
     if (typeof vhit !== 'undefined' && bricks[vhit] !== ballsColor) {
         return false
@@ -1036,7 +1036,7 @@ function brickHitCheck(ballOrCoin, radius, isBall) {
     if (pierce && (typeof vhit !== "undefined" || typeof hhit !== "undefined" || typeof chit !== "undefined")) {
         ballOrCoin.piercedSinceBounce++
     }
-    if (isBall && shouldPierceByColor( vhit, hhit, chit)) {
+    if (isBall && shouldPierceByColor(vhit, hhit, chit)) {
         pierce = true
     }
 
@@ -1708,8 +1708,8 @@ function explodeBrick(index, ball, isExplosion) {
 
         sounds.explode(ball.x);
 
-        const col= index % gridSize
-        const row= Math.floor(index / gridSize)
+        const col = index % gridSize
+        const row = Math.floor(index / gridSize)
         const size = 1 + perks.bigger_explosions;
         // Break bricks around
         for (let dx = -size; dx <= size; dx++) {
@@ -1999,10 +1999,19 @@ function render() {
 
         ctx.globalCompositeOperation = "source-over";
         const comboText = "x " + combo
-        const comboTextWidth = comboText.length * puckHeight / 2.6
-        drawCoin(ctx, 'gold', coinSize, puck - coinSize * 1.5 - comboTextWidth / 2, gameZoneHeight - puckHeight / 2, !level.black_puck ? '#FFF' : '#000', 0)
-        drawText(ctx, comboText, !level.black_puck ? '#000' : '#FFF', puckHeight,
-            puck - comboTextWidth / 2, gameZoneHeight - puckHeight / 2, true);
+        const comboTextWidth = comboText.length * puckHeight / 1.80
+        const totalWidth = comboTextWidth + coinSize * 2
+        const left = puck - totalWidth / 2
+        if (totalWidth < puckWidth) {
+
+            drawCoin(ctx, 'gold', coinSize, left + coinSize / 2, gameZoneHeight - puckHeight / 2, !level.black_puck ? '#FFF' : '#000', 0)
+            drawText(ctx, comboText, !level.black_puck ? '#000' : '#FFF', puckHeight,
+                left + coinSize * 1.5, gameZoneHeight - puckHeight / 2, true);
+        } else {
+            drawText(ctx, comboText, !level.black_puck ? '#000' : '#FFF', puckHeight,
+                puck, gameZoneHeight - puckHeight / 2, false);
+
+        }
     }
     //  Borders
     const redSides = perks.sides_are_lava && combo > baseCombo()
@@ -2065,7 +2074,7 @@ function renderAllBricks(destinationCtx) {
             const x = brickCenterX(index), y = brickCenterY(index);
 
             if (!color) return;
-            const borderColor = (ballsColor===color && puckColor) || (color!=='black' && redBorderOnBricksWithWrongColor && 'red') || color
+            const borderColor = (ballsColor === color && puckColor) || (color !== 'black' && redBorderOnBricksWithWrongColor && 'red') || color
             drawBrick(ctx, color, borderColor, x, y);
             if (color === 'black') {
                 ctx.globalCompositeOperation = "source-over";
@@ -2173,8 +2182,8 @@ function drawCoin(ctx, color, size, x, y, bg, rawAngle) {
 
 function drawFuzzyBall(ctx, color, width, x, y) {
     const key = "fuzzy-circle" + color + "_" + width;
-    if(!color)
-    debugger
+    if (!color)
+        debugger
     const size = Math.round(width * 3);
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
@@ -2400,7 +2409,7 @@ function createRevivalSound(baseFreq = 440) {
 
     // Set up the gain envelope to simulate a smooth attack and decay
     gainNode.gain.setValueAtTime(0, context.currentTime); // Start at zero
-    gainNode.gain.linearRampToValueAtTime(0.8, context.currentTime + 0.5); // Ramp up to full volume
+    gainNode.gain.linearRampToValueAtTime(0.5, context.currentTime + 0.5); // Ramp up to full volume
     gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 2); // Slow decay
 
     // Start all oscillators
@@ -3029,7 +3038,7 @@ function startRecordingGame() {
     const recordedChunks = [];
 
 
-    const instance = new MediaRecorder(captureStream,{videoBitsPerSecond: 3500000});
+    const instance = new MediaRecorder(captureStream, {videoBitsPerSecond: 3500000});
     mediaRecorder = instance
     instance.start();
     mediaRecorder.pause()

@@ -3530,7 +3530,7 @@ let allLevels=[
     "color": ""
   },
   {
-    "name": "Dollar",
+    "name": "Greed",
     "size": 17,
     "bricks": [
       null,
@@ -3841,7 +3841,7 @@ let allLevels=[
       ""
     ],
     "svg": "",
-    "color": "#f6d32d"
+    "color": ""
   },
   {
     "name": "Waves",

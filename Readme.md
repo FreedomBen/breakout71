@@ -125,10 +125,8 @@ If the app stutters, turn on "fast mode" in the settings to render a simplified 
 There's also an easy mode for kids (slower ball) and a color-blind mode (no color related game mechanics).
 
 # Roadmap
-
 The "engine" could be better  
-- apk version soft locks at start.   
-- replace "menu" by "L2/7" once you pass level 1
+- apk version soft locks at start.    
 - shinier coins by applying glow to them ? 
 - ask for permanent storage
 - It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game
