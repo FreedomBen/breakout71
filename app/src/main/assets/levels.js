@@ -11568,7 +11568,7 @@ let allLevels=[
       "white"
     ],
     "svg": "",
-    "color": "#f6d32d"
+    "color": "#986a44"
   },
   {
     "name": "Finland",
