@@ -157,6 +157,8 @@ The "engine" could be better
 - enable export of gameplay capture in webview
 - endgame histograms could work as filters, when you hover a bar, all other histograms would show the stats of those runs only, without changing reference of categories
 - sound when ball changes color
+- option : don't pause on mobile when lifting finger
+- option : accelerated relative movements on mobile
 
 
 There are many possible perks left to implement : 

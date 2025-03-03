@@ -22,7 +22,7 @@ const randomPatterns=[
 ]
 let attributed=0
 allLevels.forEach(l => {
-    if (!l.color && !l.svg) { 
+    if (!l.color && !l.svg) {
         l.svg = randomPatterns[attributed%randomPatterns.length]
         attributed++
     }
@@ -2227,16 +2227,18 @@ function drawBrick(ctx, color, borderColor, x, y) {
         const can = document.createElement("canvas");
         can.width = width;
         can.height = height;
-        const bord = 4;
+        const bord = 2;
+        const cornerRadius= 2
         const canctx = can.getContext("2d");
 
+
         canctx.fillStyle = color;
-        canctx.fillRect(bord, bord, width - bord * 2, height - bord * 2);
         canctx.strokeStyle = borderColor;
         canctx.lineJoin = "round";
         canctx.lineWidth = bord
-        canctx.strokeRect(bord / 2, bord / 2, width - bord, height - bord);
-
+        roundRect(canctx,bord/2,bord/2, width-bord ,height-bord, cornerRadius)
+        canctx.fill();
+        canctx.stroke();
 
         cachedGraphics[key] = can;
     }
@@ -2244,6 +2246,26 @@ function drawBrick(ctx, color, borderColor, x, y) {
     // It's not easy to have a 1px gap between bricks without antialiasing
 }
 
+function roundRect(
+  ctx,
+  x,
+  y,
+  width,
+  height,
+  radius ){
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+
+}
 function drawRedSquare(ctx, x, y, width, height) {
     ctx.fillStyle = 'red'
     ctx.fillRect(x, y, width, height);
@@ -2675,7 +2697,7 @@ const options = {
         disabled: () => false
     },
     pointerLock: {
-        default: false, name: `Pointer lock`,
+        default: false, name: `Mouse pointer lock`,
         help: `Locks and hides the mouse cursor.`,
         disabled: () => !canvas.requestPointerLock
     },

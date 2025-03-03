@@ -76,7 +76,7 @@ body.black_puck #menu {
 .popup {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.9);
     z-index: 10;
     display: flex;
     overflow: auto;
@@ -132,10 +132,9 @@ body.black_puck #menu {
     right: 0;
     width: 60px;
     height: 60px;
-    background: none;
+    background: transparent;
     border: none;
     cursor: pointer;
-    background: rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 
@@ -145,10 +144,13 @@ body.black_puck #menu {
     transform: translate(-50%, -50%) rotate(45deg);
     font-size: 80px;
     display: inline-block;
+    top: 34px;
+    left: 26px;
 }
 
 .popup button.close-modale:hover {
     font-weight: bold;
+    background: black;
 }
 
 .popup > div > button[disabled] {
