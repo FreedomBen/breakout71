@@ -3194,8 +3194,8 @@ function setKeyPressed(key, on) {
 
 }
 
-document.addEventListener('keydown', e => {
-    if (e.key.toLowerCase() === 'f') {
+document.addEventListener('keydown', e => { 
+    if (e.key.toLowerCase() === 'f' && !e.ctrlKey && !e.metaKey) {
         toggleFullScreen()
     } else if (e.key in pressed) {
         setKeyPressed(e.key, 1)
