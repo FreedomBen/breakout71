@@ -260,9 +260,9 @@ let allLevels=[
     "focus": false
   },
   {
-    "name": "Greed",
+    "name": "Dollar",
     "size": 17,
-    "bricks": "________________________k_k______________k_k____________kkkkkkk_________kkkkkkkkk_______kk__k_k__kk______kk__k_k__kk______kk__k_k___________kkkkkkkk__________kkkkkkkk___________k_k__kk______kk__k_k__kk______kk__k_k__kk_______kkkkkkkkk_________kkkkkkk____________k_k______________k_k________________________",
+    "bricks": "________________________G_G______________G_G____________GGGGGGG_________GGGGGGGGG_______GG__G_G__GG______GG__G_G__GG______GG__G_G___________GGGGGGGG__________GGGGGGGG___________G_G__GG______GG__G_G__GG______GG__G_G__GG_______GGGGGGGGG_________GGGGGGG____________G_G______________G_G________________________",
     "svg": "",
     "color": "",
     "focus": false
@@ -414,7 +414,7 @@ let allLevels=[
   {
     "name": "B71",
     "size": 10,
-    "bricks": "__________rrryyyy_r_r__r__yrr_r__r__y_r_rrr__y__r_r__r_y__r_r__ry___r_rrr_y__rrr__________",
+    "bricks": "__________bbbtttt_b_b__b__tbb_b__b__t_b_bbb__t__b_b__b_t__b_b__bt___b_bbb_t__bbb__________",
     "svg": "",
     "focus": false
   },

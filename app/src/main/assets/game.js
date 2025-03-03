@@ -23,6 +23,7 @@ const randomPatterns=[
 ]
 let attributed=0
 allLevels.forEach(l => {
+    l.bricks=l.bricks.split('').map(c=>palette[c])
     if (!l.color && !l.svg) {
         l.svg = randomPatterns[attributed%randomPatterns.length]
         attributed++
@@ -87,7 +88,7 @@ function resetCombo(x, y) {
                 type: "text",
                 text: "-" + lost,
                 time: levelTime,
-                color: "red",
+                color: "r",
                 x: x,
                 y: y,
                 duration: 150,
@@ -110,7 +111,7 @@ function decreaseCombo(by, x, y) {
                 type: "text",
                 text: "-" + lost,
                 time: levelTime,
-                color: "red",
+                color: "r",
                 x: x,
                 y: y,
                 duration: 300,

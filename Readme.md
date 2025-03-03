@@ -160,9 +160,11 @@ The "engine" could be better
 - option : don't pause on mobile when lifting finger
 - option : accelerated relative movements on mobile
 - maybe just have 10 background, and always use the same one for the nth level of each run  ?  
+- would be nice to have a leaderboard for not using each perk too. Like "best runs without hot start"
 
 There are many possible perks left to implement : 
 - offer next level choice after upgrade pick
+- ban 3 random perks from pool, doesn't tell you which ones, gain 2 upgrades 
 - 3 random perks immediately, or maybe "all level get twice as many upgrades, but they are applied randomly, and you aren't told which ones you have."
 - wrap left / right
 - pause and cheat again 

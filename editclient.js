@@ -129,32 +129,29 @@ document.getElementById('levels').addEventListener('click', e => {
     if (!levelIndexStr) return
     if (e.target.tagName!=='BUTTON') return
 
-
     const levelIndex = parseInt(levelIndexStr)
     const level = allLevels[levelIndex]
     const {bricks, size} = level;
 
     if (resize) {
         const newSize = size + parseInt(resize)
-        const newBricks = []
+        const newBricks = new Array(newSize*newSize).fill('_')
         for (let x = 0; x < Math.min(size, newSize); x++) {
             for (let y = 0; y < Math.min(size, newSize); y++) {
-                newBricks[y * newSize + x] = bricks[y * size + x] || ''
+                newBricks[y * newSize + x] = bricks.split('')[y * size + x] || '_'
             }
         }
-
         level.size = newSize;
-        level.bricks = newBricks;
+        level.bricks = newBricks.map(b=>b||'_').join('');
     } else if (moveX && moveY) {
         const dx = parseInt(moveX), dy = parseInt(moveY)
-        const moved = []
+        const newBricks = new Array(size*size).fill('_')
         for (let x = 0; x < size; x++) {
             for (let y = 0; y < size; y++) {
-                moved[(y + dy) * size + (x + dx)] = bricks[y * size + x] || ''
+                newBricks[(y + dy) * size + (x + dx)] = bricks.split('')[y * size + x]|| '_'
             }
         }
-
-        level.bricks = moved;
+        level.bricks = newBricks.map(b=>b||'_').join('');
     } else if (e.target.getAttribute('data-rename')) {
         const newName = prompt('Name ? ', level.name)
         if (newName) {
@@ -182,38 +179,41 @@ document.getElementById('levels').addEventListener('click', e => {
 
 }, true)
 
-let applying = undefined
+let applying = ''
 
 function colorPixel(e) {
-    if (typeof applying === 'undefined') return
+    if ( applying == '') return
     const index = e.target.getAttribute('data-set-color-of')
     const level = e.target.getAttribute('data-level')
     if (index && level) {
         const levelIndex = parseInt(level)
-        e.target.style.background = applying || 'transparent'
-        allLevels[levelIndex].bricks[index] = applying
+        e.target.style.background = palette[applying]
+        setBrick(levelIndex,parseInt(index),applying)
+
     }
 }
-
+function setBrick(levelIndex,index,chr) {
+    const bricks=allLevels[levelIndex].bricks
+    allLevels[levelIndex].bricks = bricks.substring(0,index) + chr + bricks.substring(index+1);
+}
 document.getElementById('levels').addEventListener('mousedown', e => {
-    const index = e.target.getAttribute('data-set-color-of')
+    const index = parseInt(e.target.getAttribute('data-set-color-of'))
     const level = e.target.getAttribute('data-level')
     if (index && level) {
-        const before = allLevels[parseInt(level)].bricks[parseInt(index)] || ''
+        const before = allLevels[parseInt(level)].bricks[parseInt(index)] || '_'
         applying = before === currentCode ? '_' : currentCode
         colorPixel(e)
     }
 })
 
 document.getElementById('levels').addEventListener('mouseenter', e => {
-    if (typeof applying !== undefined) {
-
+    if (applying !== '') {
         colorPixel(e)
     }
 }, true)
 
 document.addEventListener('mouseup', e => {
-    applying = undefined
+    applying = ''
     save()
 })
 
