@@ -1,48 +1,22 @@
-let currentColor = ''
+let currentCode = '_'
 
-const colorsList = [
-    'white',
-    'black',
-    '',
-    '#F44848',
-    '#ab0c0c',
-    '#F29E4A',
-    '#F0F04C',
-    '#A1F051',
-    '#53EE53',
-    '#59EEA3',
-    '#5BECEC',
-    '#5DA3EA',
-    '#6262EA',
-    '#A664E8',
-    '#E869E8',
-    '#E66BA8',
-    '#E67070',
-    "#333",
-    '#231f20',
-    '#e32119',
-    '#ffd300',
-    '#e1c8b4',
-    '#618227',
-    '#9b9fa4'
-]
-const palette = document.getElementById('palette');
+const paletteEl = document.getElementById('palette');
 
-colorsList.forEach(color => {
+Object.entries(palette).forEach(([code, color]) => {
     const btn = document.createElement('button')
     Object.assign(btn.style, {
-        background: color,
+        background: color ||'linear-gradient(45deg,black,white)',
         display: 'inline-block',
         width: '40px',
         height: '40px',
         border: '1px solid black'
     })
-    if (color === currentColor) {
+    if (code === currentCode) {
         btn.className = 'active'
     }
-    palette.appendChild(btn)
+    paletteEl.appendChild(btn)
     btn.addEventListener('click', (e) => {
-        currentColor = color
+        currentCode = code
         e.preventDefault()
         document.querySelector('#palette button.active')?.classList.remove('active');
         btn.classList.add('active')
@@ -110,7 +84,7 @@ function renderLevelBricks(levelIndex) {
     for (let x = 0; x < size; x++) {
         for (let y = 0; y < size; y++) {
             const index = y * size + x
-            buttons.push(`<button style="background: ${bricks[index] || 'transparent'}; left:${x * 40}px;top:${y * 40
+            buttons.push(`<button style="background: ${palette[bricks[index]] || 'transparent'}; left:${x * 40}px;top:${y * 40
             }px;width:40px;height: 40px; position: absolute" data-set-color-of="${index}" data-level="${levelIndex}"></button>`)
         }
     }
@@ -226,7 +200,7 @@ document.getElementById('levels').addEventListener('mousedown', e => {
     const level = e.target.getAttribute('data-level')
     if (index && level) {
         const before = allLevels[parseInt(level)].bricks[parseInt(index)] || ''
-        applying = before === currentColor ? '' : currentColor
+        applying = before === currentCode ? '_' : currentCode
         colorPixel(e)
     }
 })

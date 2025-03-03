@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 ${fs.readFileSync('./editclient.css').toString()}
 </style>
 <script>${fs.readFileSync(srcPath).toString()}</script>
+<script>${fs.readFileSync('app/src/main/assets/palette.js').toString()}</script>
 <script>${fs.readFileSync('./editclient.js').toString()}</script>
 </body>  
   `)

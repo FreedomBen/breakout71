@@ -3,6 +3,7 @@ const MAX_PARTICLES = 600;
 const canvas = document.getElementById("game");
 let ctx = canvas.getContext("2d", {alpha: false});
 
+
 let ballSize = 20;
 const coinSize = Math.round(ballSize * 0.8);
 const puckHeight = ballSize;
