@@ -535,7 +535,7 @@ let allLevels=[
       null,
       "#5BECEC"
     ],
-    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" xml:space=\"preserve\" width=\"45.491\" height=\"44.293\" viewBox=\"0 0 12.036 11.719\"><path d=\"M-.036-.081h12.157V11.82H-.036z\" style=\"fill:#000;stroke:none;stroke-width:.112189;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\"/><path d=\"M6.677 5.459a.86.86 0 0 1-.858.86.86.86 0 0 1-.863-.856.86.86 0 0 1 .855-.865.86.86 0 0 1 .866.852\" style=\"fill:none;stroke:#fff;stroke-width:.307996;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\"/></svg>"
+    "svg": ""
   },
   {
     "name": "Lines",

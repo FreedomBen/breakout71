@@ -159,7 +159,7 @@ The "engine" could be better
 - sound when ball changes color
 - option : don't pause on mobile when lifting finger
 - option : accelerated relative movements on mobile
-
+- maybe just have 10 background, and always use the same one for the nth level of each run  ?  
 
 There are many possible perks left to implement : 
 - offer next level choice after upgrade pick
