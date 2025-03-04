@@ -3191,10 +3191,9 @@ const pressed = {
 function setKeyPressed(key, on) {
     pressed[key] = on
     keyboardPuckSpeed = (pressed.ArrowRight - pressed.ArrowLeft) * (1 + pressed.Shift * 2) * gameZoneWidth / 50
-
 }
 
-document.addEventListener('keydown', e => { 
+document.addEventListener('keydown', e => {
     if (e.key.toLowerCase() === 'f' && !e.ctrlKey && !e.metaKey) {
         toggleFullScreen()
     } else if (e.key in pressed) {

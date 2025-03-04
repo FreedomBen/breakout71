@@ -32,6 +32,7 @@ rsync -avz --delete --delete-excluded --exclude="*.sh" --exclude="node_modules" 
 
 
 # generate zip for itch
-#rm -f breakout.zip
-#zip -j breakout.zip app/src/main/assets/*
+rm -f breakout.zip
+zip -j breakout.zip app/src/main/assets/*
 butler push app/src/main/assets/ renanlecaro/breakout71:latest --userversion $versionCode
+butler push app/src/main/assets/ renanlecaro/breakout71:offline --userversion $versionCode
