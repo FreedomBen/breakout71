@@ -1326,20 +1326,25 @@ function ballTick(ball, delta) {
     ball.previousvx = ball.vx;
     ball.previousvy = ball.vy;
 
-    if (isTelekinesisActive(ball)) {
-        ball.vx += ((puck - ball.x) / 1000) * delta * perks.telekinesis;
-    }
 
     const speedLimitDampener = 1 + perks.telekinesis + perks.ball_repulse_ball + perks.puck_repulse_ball + perks.ball_attract_ball
-    if (ball.vx * ball.vx + ball.vy * ball.vy < baseSpeed * baseSpeed * 2) {
-        ball.vx *= (1 + .02 / speedLimitDampener);
-        ball.vy *= (1 + .02 / speedLimitDampener);
-    } else {
-        ball.vx *= (1 - .02 / speedLimitDampener);
-        if (Math.abs(ball.vy) > 0.5 * baseSpeed) {
+    if (isTelekinesisActive(ball)) {
+        ball.vx += ((puck - ball.x) / 1000) * delta * perks.telekinesis;
+    }else{
+        if (ball.vx * ball.vx + ball.vy * ball.vy < baseSpeed * baseSpeed * 2) {
+            ball.vx *= (1 + .02 / speedLimitDampener);
+            ball.vy *= (1 + .02 / speedLimitDampener);
+        } else {
+            ball.vx *= (1 - .02 / speedLimitDampener);
             ball.vy *= (1 - .02 / speedLimitDampener);
         }
     }
+
+    if(Math.abs(ball.vy) < 0.2*baseSpeed){
+        ball.vy+= .02 / speedLimitDampener
+
+    }
+
 
     if (perks.ball_repulse_ball) {
         for (b2 of balls) {
