@@ -2154,10 +2154,10 @@ function drawBall(ctx, color, width, x, y, borderColor = '') {
     ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2),);
 }
 
+const angles=32
 function drawCoin(ctx, color, size, x, y, bg, rawAngle) {
-
-    const angle = (Math.round(rawAngle / Math.PI * 2 * 16) % 16 + 16) % 16
-    const key = "coin with halo" + "_" + color + "_" + size + '_' + bg + '_' + angle;
+    const angle = (Math.round(rawAngle / Math.PI * 2 * angles) % angles + angles) % angles
+    const key = "coin with halo" + "_" + color + "_" + size + '_' + bg + '_' + (color === 'gold' ? angle:'whatever');
 
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
