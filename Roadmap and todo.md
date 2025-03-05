@@ -1,9 +1,3 @@
-
-# Bugs
-
-- the Respawn perk may cause the ball(s) to keep floating in the void, with no bricks left to hit (it has happened twice, I suppose it's related to Respawn but can't be 100% sure).
-
-
 # Game engine features  
 
 - the onboarding feels weird, missing a tutorial
