@@ -3033,12 +3033,13 @@ function recordOneFrame() {
 function drawMainCanvasOnSmallCanvas() {
     if (!recordCanvasCtx) return
     recordCanvasCtx.drawImage(canvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, recordCanvas.width, recordCanvas.height)
+
+    // Here we don't use drawText as we don't want to cache a picture for each distinct value of score 
     recordCanvasCtx.fillStyle = currentLevelInfo()?.black_puck ? '#000' : '#FFF'
     recordCanvasCtx.textBaseline = "top";
     recordCanvasCtx.font = "12px monospace";
     recordCanvasCtx.textAlign = "right";
     recordCanvasCtx.fillText(score.toString(), recordCanvas.width - 12, 12)
-
 
     recordCanvasCtx.textAlign = "left";
     recordCanvasCtx.fillText('Level ' + (currentLevel + 1) + '/' + max_levels(), 12, 12)
