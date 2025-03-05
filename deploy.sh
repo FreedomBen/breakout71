@@ -5,7 +5,7 @@ if [[ $(node --version) != v21* ]]; then
 fi
 
 
-if grep src -rE "T[O]DO|F[I]XME|console\.log"
+if grep -rE "T[O]DO|F[I]XME|console\.log" src
 then
   echo "You have left some T0D0 or logs"
   exit 1
