@@ -1655,6 +1655,7 @@ function explodeBrick(index, ball, isExplosion) {
                 }
             }
         }
+        // TODO
         // Blow nearby coins
         coins.forEach((c) => {
             const dx = c.x - x;
