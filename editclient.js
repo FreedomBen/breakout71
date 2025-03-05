@@ -236,12 +236,11 @@ document.getElementById('new-level').addEventListener('click', e => {
 
 renderAllLevels()
 
-
 function save() {
     return fetch('/', {
         method: 'POST', headers: {
             'Content-Type': 'text/plain'
         },
-        body: 'let allLevels=' + JSON.stringify(allLevels, null, 2)
+        body:   JSON.stringify(allLevels, null, 2)
     })
 }

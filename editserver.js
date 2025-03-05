@@ -4,7 +4,7 @@ const fs = require('fs')
 const app = express()
 const port = 4400
 
-const srcPath = 'app/src/main/assets/levels.js'
+const srcPath = 'src/levels.json'
 app.use(bodyParser.text({
     type: 'text/plain',
     limit:'1MB'
@@ -25,16 +25,17 @@ app.get('/', (req, res) => {
  
 <div id="levels"></div> 
 <div id="palette">
-
 <button id="new-level">new</button>
 </div>  
 
 <style>
 ${fs.readFileSync('./editclient.css').toString()}
-</style>
-<script>${fs.readFileSync(srcPath).toString()}</script>
-<script>${fs.readFileSync('app/src/main/assets/palette.js').toString()}</script>
-<script>${fs.readFileSync('./editclient.js').toString()}</script>
+</style> 
+<script>
+const allLevels = ${fs.readFileSync(srcPath).toString()};
+const palette = ${fs.readFileSync('src/palette.json').toString()};
+${fs.readFileSync('./editclient.js').toString()}
+</script>  
 </body>  
   `)
 })

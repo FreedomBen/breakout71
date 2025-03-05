@@ -2,10 +2,10 @@
   "name": "breakout.lecaro.me",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "nodemon editserver.js  --watch editserver.js ",
-    "serve": "http-server app/src/main/assets -o"
+    "start": "parcel src/index.html",
+    "build": "rm -f dist/* && parcel build src/index.html",
+    "editor": "nodemon editserver.js  --watch editserver.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +14,9 @@
     "express": "^4.21.2",
     "http-server": "^14.1.1",
     "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "parcel": "^2.13.3",
+    "svgo": "^3.3.2"
   }
 }

@@ -10,22 +10,30 @@ sed -i -e "s/^[[:space:]]*versionCode = .*/        versionCode = $versionCode/" 
        -e "s/^[[:space:]]*versionName = .*/        versionName = \"$versionCode\"/" \
        ./app/build.gradle.kts
 
-
-# Invalidate web cache and update version
-sed -i "s/\?v=[0-9]*/\?v=$versionCode/g" ./app/src/main/assets/index.html
+echo "\"$versionCode\"" > src/version.json
 
 # remove all exif metadata from pictures, because i think fdroid doesn't like that. odd
 find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all=
 
+npm run build
+
+rm -rf ./app/src/main/assets/*
+cp public/* dist
+cp dist/* ./app/src/main/assets/
+
+
 # Create a release commit and tag
 git add .
-git commit -m "Automatic deploy $versionCode"
+git commit -m "Build and deploy of version $versionCode"
 git tag -a $versionCode -m $versionCode
 git push
 
 # upload to breakout.lecaro.me
 DOMAIN="breakout.lecaro.me"
-PUBLIC_CONTENT="./app/src/main/assets/"
+PUBLIC_CONTENT="./dist"
+
+exit 1
+
 ssh staging "mkdir -p /opt/mup-nginx-proxy/config/html/static_sites/$DOMAIN"
 rsync -avz --delete --delete-excluded --exclude="*.sh" --exclude="node_modules" --exclude="android" --exclude=".*"  $PUBLIC_CONTENT staging:/opt/mup-nginx-proxy/config/html/static_sites/$DOMAIN
 
