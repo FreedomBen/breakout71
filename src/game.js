@@ -1415,7 +1415,7 @@ function ballTick(ball, delta) {
             !bricks[hitBrick]) {
             bricks[hitBrick] = "black";
             ball.sapperUses++
-            console.log('Sapper used')
+
         }
 
     }
@@ -1707,7 +1707,7 @@ function explodeBrick(index, ball, isExplosion) {
                 console.error({points})
                 debugger
             }
-            console.log('Spawned a coin with ' + points + ' points')
+
             coinsToSpawn -= points
 
             const cx= x + (Math.random() - 0.5) * (brickWidth - coinSize),
