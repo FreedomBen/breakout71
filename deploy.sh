@@ -1,4 +1,9 @@
 #!/bin/bash
+if [[ $(node --version) != v21* ]]; then
+  echo "run first: nvm use v21"
+  exit 1
+fi
+
 set -e
 set -x
 
