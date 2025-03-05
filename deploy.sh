@@ -7,7 +7,7 @@ fi
 
 if grep -rE "T[O]DO|F[I]XME|console\.log" src
 then
-  echo "You have left some T0D0 or logs"
+  echo "You have left some TO""DO or logs"
   exit 1
 fi
 
@@ -44,11 +44,9 @@ git push
 DOMAIN="breakout.lecaro.me"
 PUBLIC_CONTENT="./dist"
 
-exit 1
-
 ssh staging "mkdir -p /opt/mup-nginx-proxy/config/html/static_sites/$DOMAIN"
 rsync -avz --delete --delete-excluded --exclude="*.sh" --exclude="node_modules" --exclude="android" --exclude=".*"  $PUBLIC_CONTENT staging:/opt/mup-nginx-proxy/config/html/static_sites/$DOMAIN
 
-# upload to itch.io
-butler push app/src/main/assets/ renanlecaro/breakout71:latest --userversion $versionCode
-butler push app/src/main/assets/ renanlecaro/breakout71:offline --userversion $versionCode
+# upload to itch.io , upload the index file directly
+butler push "./dist/index.html" renanlecaro/breakout71:latest --userversion $versionCode
+butler push  "./dist/index.html" renanlecaro/breakout71:offline --userversion $versionCode

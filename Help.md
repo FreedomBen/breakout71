@@ -104,10 +104,3 @@ You might find that a smaller puck makes it a bit easier to aim near corners, bu
 "Wind" and "puck controls ball" can help you aim even after the ball bounced to the wrong direction.
 "Slower ball" gives you a bit more time to aim, particularly useful in later levels where the ball goes faster. The ball also
 accelerates as you spend time in each level. 
-
-# Requirements 
-
-The app should work offline and perform well even on low-end devices. 
-It's very lean and does not take much storage space (Roughly 0.1MB).
-If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
-There's also an easy mode for kids (slower ball) and a color-blind mode (no color related game mechanics).
