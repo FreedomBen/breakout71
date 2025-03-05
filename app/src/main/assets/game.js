@@ -245,7 +245,7 @@ function addToScore(coin) {
     coin.destroyed = true
     score += coin.points;
     addToTotalScore(coin.points)
-    if (score > highScore && !hadOverrides) {
+    if (score > highScore ) {
         highScore = score;
         localStorage.setItem("breakout-3-hs", score);
     }
@@ -516,9 +516,7 @@ const upgrades = [{
         "name": "Viscosity",
         "max": 3,
         help: lvl => `${lvl > 1 ? 'Even slower' : 'Slower'} coins fall.`,
-        tryout: {
-            perks: {viscosity: 3, base_combo: 3}, level: 'Waves'
-        },
+
         fullHelp: `Coins normally accelerate with gravity and explosions to pretty high speeds. This perk constantly makes them slow down, as if they were in some sort of viscous liquid. 
         This makes catching them easier, and combines nicely with perks that influence the coin's movement. `
     }, {
@@ -569,9 +567,7 @@ const upgrades = [{
         "name": "Coins magnet",
         "max": 3,
         help: lvl => lvl == 1 ? `Puck attracts coins.` : `Stronger effect on the coins`,
-        tryout: {
-            perks: {coin_magnet: 3, base_combo: 3}
-        },
+
         fullHelp: `Directs the coins to the puck. The effect is stronger if the coin is close to it already. Catching 90% or 100% of coins bring special bonuses in the game. 
          Another way to catch more coins is to hit bricks from the bottom. The ball's speed and direction impacts the spawned coin's velocity. `
     }, {
@@ -608,9 +604,7 @@ const upgrades = [{
         "name": "Picky eater",
         "max": 1,
         help: lvl => `More coins if you break bricks color by color.`,
-        tryout: {
-            perks: {picky_eater: 1}, level: 'Mountain'
-        },
+
         fullHelp: `Whenever you break a brick the same color as your ball, your combo increases by one. 
         If it's a different color, the ball takes that new color, but the combo resets.
         The bricks with the right color will get a white border. 
@@ -624,9 +618,6 @@ const upgrades = [{
         "name": "Stain",
         "max": 1,
         help: lvl => `Coins color the bricks they touch.`,
-        tryout: {
-            perks: {metamorphosis: 3}, level: 'Lines'
-        },
 
         fullHelp: `With this perk, coins will be of the color of the brick they come from, and will color the first brick they touch in the same color. Coins spawn with the speed
         of the ball that broke them, which means you can aim a bit in the direction of the bricks you want to "paint".
@@ -672,9 +663,7 @@ const upgrades = [{
         "max": 1,
 
         help: lvl => 'Bigger explosions',
-        tryout: {
-            perks: {bigger_explosions: 1}, level: 'Ship'
-        },
+
         fullHelp: `The default explosion clears a 3x3 square, with this it becomes a 5x5 square, and the blowback on the coins is also significantly stronger. `
     }, {
         "threshold": 13000,
@@ -707,9 +696,6 @@ const upgrades = [{
         "max": 3,
         help: lvl => lvl === 1 ? `Balls repulse balls.` : 'Stronger repulsion force',
 
-        tryout: {
-            perks: {ball_repulse_ball: 1, multiball: 2},
-        },
         fullHelp: `Balls that are less than half a screen width away will start repulsing each other. The repulsion force is stronger if they are close to each other.
          Particles will jet out to symbolize this force being applied. This perk is only offered if you have more than one ball already.`
     }, {
@@ -719,9 +705,7 @@ const upgrades = [{
         "name": "Gravity",
         "max": 3,
         help: lvl => lvl === 1 ? `Balls attract balls.` : 'Stronger attraction force',
-        tryout: {
-            perks: {ball_attract_ball: 1, multiball: 2},
-        },
+
         fullHelp: `Balls that are more than half a screen width away will start attracting each other. The attraction force is stronger when they are furthest away from each other.
          Rainbow particles will fly to symbolize the attraction force. This perk is only offered if you have more than one ball already.`
     }, {
@@ -789,18 +773,19 @@ function getPossibleUpgrades() {
 
 function shuffleLevels(nameToAvoid = null) {
     const target = nextRunOverrides?.level;
-    if (target) {
-        runLevels = allLevels.filter(l => l.name === target)
-        nextRunOverrides.level = null
-        if (runLevels.length) return
-    }
+    const firstLevel = nextRunOverrides?.level ?
+        allLevels.filter(l => l.name === target) : []
 
-    runLevels = allLevels
+    const restInRandomOrder= allLevels
         .filter((l, li) => totalScoreAtRunStart >= l.threshold)
+        .filter(l=>l.name!==nextRunOverrides?.level)
         .filter(l => l.name !== nameToAvoid || allLevels.length === 1)
         .sort(() => Math.random() - 0.5)
-        .slice(0, 7 + 3)
-        .sort((a, b) => a.sortKey - b.sortKey);
+
+    runLevels = firstLevel.concat(
+        restInRandomOrder.slice(0, 7 + 3)
+        .sort((a, b) => a.sortKey - b.sortKey)
+    )
 
 }
 
@@ -857,10 +842,9 @@ function pickRandomUpgrades(count) {
 }
 
 let nextRunOverrides = {level: null, perks: null}
-let hadOverrides = false, pauseUsesDuringRun = 0
+let pauseUsesDuringRun = 0
 
 function restart() {
-    hadOverrides = !!(nextRunOverrides.level || nextRunOverrides.perks)
     // When restarting, we want to avoid restarting with the same level we're on, so we exclude from the next
     // run's level list
     totalScoreAtRunStart = getTotalScore()
@@ -1462,7 +1446,6 @@ function getTotalScore() {
 }
 
 function addToTotalScore(points) {
-    if (hadOverrides) return
     try {
         localStorage.setItem('breakout_71_total_score', JSON.stringify(getTotalScore() + points))
     } catch (e) {
@@ -1543,10 +1526,6 @@ function gameOver(title, intro) {
 }
 
 function getHistograms(saveStats) {
-
-    if (hadOverrides) {
-        return ''
-    }
 
     let runStats = ''
     try {
@@ -1723,15 +1702,18 @@ function explodeBrick(index, ball, isExplosion) {
             }
             console.log('Spawned a coin with ' + points + ' points')
             coinsToSpawn -= points
-            const coord = {
-                x: x + (Math.random() - 0.5) * (brickWidth - coinSize),
-                y: y + (Math.random() - 0.5) * (brickWidth - coinSize),
-            };
+
+            const cx= x + (Math.random() - 0.5) * (brickWidth - coinSize),
+                cy=y + (Math.random() - 0.5) * (brickWidth - coinSize);
+
             coins.push({
                 points,
-                color: perks.metamorphosis ? color : 'gold', ...coord,
-                previousx: coord.x,
-                previousy: coord.y, // Use previous speed because the ball has already bounced
+                color: perks.metamorphosis ? color : 'gold',
+                x:cx,
+                y:cy,
+                previousx: cx,
+                previousy: cy,
+                // Use previous speed because the ball has already bounced
                 vx: ball.previousvx * (0.5 + Math.random()),
                 vy: ball.previousvy * (0.5 + Math.random()),
                 sx: 0,
@@ -1773,7 +1755,7 @@ function explodeBrick(index, ball, isExplosion) {
 
 
 function max_levels() {
-    if (hadOverrides) return 1
+
     return 7 + perks.extra_levels;
 }
 
@@ -1954,7 +1936,7 @@ function render() {
         const left = puck - totalWidth / 2
         if (totalWidth < puckWidth) {
 
-            drawCoin(ctx, 'gold', coinSize, left + coinSize / 2, gameZoneHeight - puckHeight / 2, !level.black_puck ? '#FFF' : '#000', 0)
+            drawCoin(ctx, 'gold'  , coinSize, left + coinSize / 2, gameZoneHeight - puckHeight / 2, !level.black_puck ? '#FFF' : '#000', 0)
             drawText(ctx, comboText, !level.black_puck ? '#000' : '#FFF', puckHeight, left + coinSize * 1.5, gameZoneHeight - puckHeight / 2, true);
         } else {
             drawText(ctx, comboText, !level.black_puck ? '#000' : '#FFF', puckHeight, puck, gameZoneHeight - puckHeight / 2, false);
@@ -2662,17 +2644,17 @@ async function openSettingsPanel() {
 
             }
         }, {
-            text: 'Unlocks and help', help: "See perks and levels you unlocked", async value() {
+            text: 'Starting perk', help: "Try perks and levels you unlocked", async value() {
                 const ts = getTotalScore()
                 const actions = [...upgrades
                     .sort((a, b) => a.threshold - b.threshold)
                     .map(({
-                              name, max, help, id, threshold, icon, tryout, fullHelp
+                              name,  help, id, threshold, icon,  fullHelp
                           }) => ({
                         text: name,
                         help: ts >= threshold ? fullHelp || help : `Unlocks at total score ${threshold}.`,
                         disabled: ts < threshold,
-                        value: tryout || {perks: {[id]: max}},
+                        value:  {perks: {[id]: 1}},
                         icon
                     }))
 
@@ -2697,7 +2679,7 @@ async function openSettingsPanel() {
                     textAfterButtons: `<p>
 The total score increases every time you score in game.
 Your high score is ${highScore}. 
-Click an item above to start a test run with it.
+Click an item above to start a run with it.
                 </p>`,
                     actions,
                     allowClose: true,
@@ -2705,7 +2687,7 @@ Click an item above to start a test run with it.
                 if (tryOn) {
                     if (!currentLevel || await asyncAlert({
                         title: 'Restart run to try this item?',
-                        text: 'You\'re about to start a new test run with just the selected unlocked item, is that really what you wanted ? ',
+                        text: 'You\'re about to start a new run with the selected unlocked item, is that really what you wanted ? ',
                         actions: [{
                             value: true, text: 'Restart game to test item'
                         }, {

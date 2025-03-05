@@ -1,3 +1,6 @@
+# bugs
+- having Hot Start and Single puck hit streak perks in a run resets combo from start [29014379] 
+
 # Game engine features  
 
 - the onboarding feels weird, missing a tutorial
@@ -42,6 +45,7 @@
 
 # Perks ideas 
 
+- second puck (symmeric to the first one)
 - keep combo between level, loose half your run score when missing any bricks
 - offer next level choice after upgrade pick
 - ban 3 random perks from pool, doesn't tell you which ones, gain 2 upgrades 
