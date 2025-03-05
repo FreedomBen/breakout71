@@ -1,15 +1,10 @@
-# Roadmap
 
-Bugs
+# Bugs
+
 - the Respawn perk may cause the ball(s) to keep floating in the void, with no bricks left to hit (it has happened twice, I suppose it's related to Respawn but can't be 100% sure).
-- The '+1 choice permanently' is maybe '+1 choice until run end',
-- It would be nice to see which level I am on between levels since that influences choice
-- The +1 level shows level count only sometimes. 
-- sturdy bricks catch rate of 119%
-- 
 
 
-The "engine" could be better  
+# Game engine features  
 
 - the onboarding feels weird, missing a tutorial
 - Players can't choose the initial perk
@@ -51,8 +46,9 @@ The "engine" could be better
 - restart run on r
 - when missing, redo particle trail, but give speed to particle that matches ball direction
 
-There are many possible perks left to implement : 
+# Perks ideas 
 
+- keep combo between level, loose half your run score when missing any bricks
 - offer next level choice after upgrade pick
 - ban 3 random perks from pool, doesn't tell you which ones, gain 2 upgrades 
 - 3 random perks immediately, or maybe "all level get twice as many upgrades, but they are applied randomly, and you aren't told which ones you have."
@@ -94,7 +90,7 @@ There are many possible perks left to implement :
 - puck bounce predictions rendered with particles or lines (requires big refactor)
 
 
-Some extra levels wouldn't hurt
+# extra levels
 
 - famous games
 - letters
@@ -102,13 +98,20 @@ Some extra levels wouldn't hurt
 - animals
 - countries flags and shapes, with name as background
 
-Potential big features or changes
+# big features
+
 - use ts and a bundler to get fewer bugs and compatibility with old browsers / webviews
 - final bosses (large vertical level that scrolls down faster and faster)
 - split screen multiplayer
 - translation
 - Add color schemes into the game (ex : Catppuccin, Dracula, Terminal, etc)
-- add a toggle to switch between the “coin” design and the sort of bubble colors
+- add a toggle to switch between the “coin” design and colored bubbles
 - sandbox mode
 - hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..
 - stats by lack of perk, like "best score without using hot start". 
+
+Instead of automatically unlocking things at the end of each run, add the coins to the user's account, 
+and let them spend those coins on upgrades. The upgrades would then be explained. They could have a condition like
+"reach high score of 1000" or 'reach high score of 99999 without using "hot start"'. 
+This requires recording a bit more info about each run. 
+I could unlock the "pro stand" at $999 that just holds the play area higher. 

@@ -8,7 +8,7 @@ let ballSize = 20;
 const coinSize = Math.round(ballSize * 0.8);
 const puckHeight = ballSize;
 
-const randomPatterns=[
+const randomPatterns = [
     `<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><path d='M3.25 10h13.5M10 3.25v13.5' stroke-width='1' stroke='white' fill='none'/></svg>`,
     `<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M11 6a5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5 5 5 0 015 5' stroke='none' fill='white'/></svg>`,
     `<svg xmlns='http://www.w3.org/2000/svg' width='29' height='50.115'><path d='M14.498 16.858L0 8.488.002-8.257l14.5-8.374L29-8.26l-.002 16.745zm0 50.06L0 58.548l.002-16.745 14.5-8.373L29 41.8l-.002 16.744zM28.996 41.8l-14.498-8.37.002-16.744L29 8.312l14.498 8.37-.002 16.745zm-29 0l-14.498-8.37.002-16.744L0 8.312l14.498 8.37-.002 16.745z' stroke-width='1' stroke='white' fill='none'/></svg>`,
@@ -21,11 +21,11 @@ const randomPatterns=[
     `<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><path d='M6.13-.002.005 6.125v1.059L6.59 13.77l.013-.014 16.243 16.24L6.617 46.23.535 40.15l10.147-10.153L.004 19.318v1.037l9.644 9.641-9.646 9.65v1.03L12.73 53.402l-6.082 6.082-6.127-6.127.014-.015-.533-.531v1.06l6.127 6.127h1.055l6.586-6.584-.012-.012 16.246-16.246L46.236 53.39l-6.082 6.082-10.15-10.15-10.68 10.677h1.033l9.647-9.644 9.646 9.644h1.034l12.722-12.723 6.082 6.082-6.125 6.125-.013-.011-.528.527h1.057l6.123-6.123V52.81l-6.58-6.58-.016.015L37.16 29.996 53.393 13.77l6.082 6.082-10.15 10.144 10.677 10.678v-1.031l-9.647-9.647 9.647-9.64v-1.038L47.279 6.596 53.361.514l6.13 6.127-.016.013.527.53V6.123L53.879-.002h-1.057l-6.586 6.586.014.012-16.244 16.246L13.77 6.607l6.082-6.08 10.153 10.15L40.684-.001H39.65l-9.646 9.647-9.647-9.647h-1.03L6.601 12.723.52 6.64 6.646.514l.012.013.528-.529H6.13zm7.114 7.113 16.76 16.76 16.762-16.76 6.127 6.127-16.764 16.758 16.764 16.762-6.127 6.127-16.76-16.76-16.762 16.76-6.127-6.127 16.758-16.762L7.117 13.238l6.127-6.127z' stroke='none' fill='white'/></svg>`,
     `<svg xmlns='http://www.w3.org/2000/svg' width='75' height='75'><path d='M32.763-11.976c-1.05-.075-1.95.676-2.024 1.726L29.764.849c-.075 1.05.675 1.95 1.725 2.026 1.05.075 1.95-.675 2.025-1.725l.975-11.1c.075-1.05-.675-1.95-1.725-2.025zM54.299 1.32a1.912 1.912 0 0 0-.386.015c-.975.15-1.725 1.05-1.575 2.1l1.5 11.025c.15.975 1.05 1.725 2.1 1.575a1.732 1.732 0 0 0 1.575-2.1l-1.5-11.025c-.131-.853-.836-1.533-1.714-1.59zm-46.93 1.22a1.809 1.809 0 0 0-1.662 1.663c-.075 1.05.675 1.952 1.65 2.027l11.1 1.05c.975.15 1.95-.601 2.025-1.651.15-.975-.6-1.95-1.65-2.025l-11.1-1.05a1.643 1.643 0 0 0-.363-.015zM1.76 13.017a1.825 1.825 0 0 0-1.285.6l-7.65 8.101c-.75.75-.675 1.95.075 2.625s1.95.674 2.625-.076l7.651-8.099c.75-.75.674-1.95-.076-2.625a1.785 1.785 0 0 0-1.34-.526zm75 0a1.825 1.825 0 0 0-1.285.6l-7.65 8.101c-.75.75-.675 1.95.075 2.625s1.95.674 2.625-.076l7.651-8.099c.75-.75.674-1.95-.076-2.625a1.785 1.785 0 0 0-1.34-.526zm-39.731 2.906a1.785 1.785 0 0 0-1.34.527l-7.95 7.723c-.75.675-.826 1.875-.076 2.625.675.75 1.875.752 2.625.077l7.95-7.725c.75-.675.826-1.875.076-2.625a1.825 1.825 0 0 0-1.285-.602zm24.639 18.928c-.24.02-.48.085-.705.197a1.903 1.903 0 0 0-.825 2.55l5.1 9.902a1.902 1.902 0 0 0 2.55.824c.975-.45 1.276-1.574.826-2.55l-5.1-9.9c-.395-.73-1.125-1.083-1.846-1.023zm-50.37-4.862a1.756 1.756 0 0 0-1.035.336c-.825.6-1.05 1.725-.524 2.625l6.15 9.223c.6.9 1.8 1.127 2.625.526.9-.6 1.124-1.8.524-2.624l-6.15-9.226a1.912 1.912 0 0 0-1.59-.86zm32.705 9.766c-.12-.006-.243 0-.365.019l-10.95 2.175c-1.05.15-1.725 1.126-1.5 2.176.15 1.05 1.126 1.725 2.176 1.5l10.95-2.175c1.05-.15 1.725-1.125 1.5-2.175a1.99 1.99 0 0 0-1.811-1.52zm4.556 12.195a1.932 1.932 0 0 0-1.845.949c-.45.9-.15 2.025.75 2.55l9.75 5.4c.9.45 2.025.15 2.55-.75.525-.9.15-2.025-.75-2.55l-9.75-5.4a1.958 1.958 0 0 0-.705-.199zM71.913 58c-1.05-.075-1.875.748-1.95 1.798l-.45 11.1c-.075 1.05.75 1.876 1.8 1.95.975 0 1.875-.75 1.95-1.8l.45-11.1c.075-1.05-.75-1.873-1.8-1.948zm-55.44 1.08a1.865 1.865 0 0 0-1.035.42l-8.775 6.825c-.75.6-.9 1.8-.3 2.625.6.75 1.8.9 2.626.3l8.775-6.827c.75-.6.9-1.8.3-2.625a1.783 1.783 0 0 0-1.591-.72zm16.29 3.945c-1.05-.075-1.95.675-2.024 1.725l-.975 11.099c-.075 1.05.675 1.95 1.725 2.026 1.05.075 1.95-.675 2.025-1.725l.975-11.102c.075-1.05-.675-1.95-1.725-2.024z' stroke='none' fill='white'/></svg>`,
 ]
-let attributed=0
+let attributed = 0
 allLevels.forEach(l => {
-    l.bricks=l.bricks.split('').map(c=>palette[c])
+    l.bricks = l.bricks.split('').map(c => palette[c])
     if (!l.color && !l.svg) {
-        l.svg = randomPatterns[attributed%randomPatterns.length]
+        l.svg = randomPatterns[attributed % randomPatterns.length]
         attributed++
     }
 })
@@ -392,15 +392,19 @@ async function openUpgradesPicker() {
         const actions = pickRandomUpgrades(choices + perks.one_more_choice - perks.instant_upgrade);
         if (!actions.length) break
         let textAfterButtons = `
-<p>Upgrades picked so far : </p><p>${pickedUpgradesHTMl()}</p>
-<div id="level-recording-container"></div> 
-`;
+        <p>You just finished level ${currentLevel + 1}/${max_levels()} and picked those upgrades so far : </p><p>${pickedUpgradesHTMl()}</p>
+        <div id="level-recording-container"></div> 
+        
+        `;
+
 
         const upgradeId = await asyncAlert({
             title: "Pick an upgrade " + (repeats ? "(" + (repeats + 1) + ")" : ""), actions,
             text: `<p>
-You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds${timeGain}.
-        You missed ${levelMisses} times ${missesGain}.</p>`,
+                You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds${timeGain}.
+        You missed ${levelMisses} times ${missesGain}. 
+        ${((timeGain && catchGain && missesGain) && 'Impressive, keep it up !') || ((timeGain || catchGain || missesGain) && 'Well done !') || 'Try to catch all coins, never miss the bricks or clear the level under 30s to gain additional choices and upgrades.'}
+        </p>`,
             allowClose: false,
             textAfterButtons
         });
@@ -481,8 +485,7 @@ const upgrades = [
         "id": "extra_life",
         "name": "+1 life",
         "max": 7,
-        "help": "Survive dropping the ball",
-        extraLevelsHelp: `One more life just in case`,
+        help: lvl => `Survive dropping the ball ${lvl} time${lvl>1?'s':''}.`,
         fullHelp: `Normally, you just have one life, and the run is over as soon as you drop it.
          With this perk, you can survive dropping the ball once. A heart in the top right corner will remind you of how many extra lives you have. `
     },
@@ -492,7 +495,7 @@ const upgrades = [
         "giftable": true,
         "name": "Single puck hit streak",
         "max": 1,
-        "help": "More coins if you break many bricks at once.",
+        help: lvl => `More coins if you break many bricks at once`,
         fullHelp: `Every time you break a brick, your combo (number of coins per bricks) increases by one. However, as soon as the ball touches your puck, 
         the combo is reset to its default value, and you'll just get one coin per brick. So you should try to hit many bricks in one go for more score. 
         Once your combo rises above the base value, your puck will become red to remind you that it will destroy your combo to touch it with the ball.
@@ -505,9 +508,7 @@ const upgrades = [
         "giftable": true,
         "name": "+3 base combo",
         "max": 7,
-        "help": "3 more coins from every brick.",
-        extraLevelsHelp: `Combo starts 3 points higher`,
-
+        help: lvl => `Every brick drops at least ${1 + lvl * 3} coins.`,
         fullHelp: `Your combo (number of coins per bricks) normally starts at 1 at the beginning of the level, and resets to one when you bounce around without hitting anything. 
         With this perk, the combo starts 3 points higher, so you'll always get at least 4 coins per brick. Whenever your combo reset, it will go back to 4 and not 1. 
         Your ball will glitter a bit to indicate that its combo is higher than one.`
@@ -517,8 +518,7 @@ const upgrades = [
         "id": "slow_down",
         "name": "Slower ball",
         "max": 2,
-        "help": "slow down the ball",
-        extraLevelsHelp: `Make it even slower`,
+        help: lvl => `Ball moves ${lvl > 1 ? 'even' : ''} more slowly.`,
 
         fullHelp: `The ball starts relatively slow, but every level of your run it will start a bit faster, and it will also accelerate if you spend a lot of time in one level. This perk makes it
          more manageable. You can get it at the start every time by enabling kid mode in the menu.`
@@ -528,8 +528,7 @@ const upgrades = [
         "id": "bigger_puck",
         "name": "Bigger puck",
         "max": 2,
-        "help": "Catches more coins",
-        extraLevelsHelp: `Even bigger puck`,
+        help: lvl => `Easily catch ${lvl > 1 ? 'even' : ''} more coins.`,
         fullHelp: `A bigger puck makes it easier to never miss the ball and to catch more coins, and also to precisely angle the bounces (the ball's angle only depends on where it hits the puck). 
         However, a large puck is harder to use around the sides of the level, and will make it sometimes unavoidable to miss (not hit anything) which comes with downsides. `
     },
@@ -538,8 +537,7 @@ const upgrades = [
         "id": "viscosity",
         "name": "Viscosity",
         "max": 3,
-        "help": "Slower coins fall",
-        extraLevelsHelp: `Even slower fall`,
+        help: lvl => `${lvl > 1 ? 'Even slower' : 'Slower'} coins fall.`,
         tryout: {
             perks: {viscosity: 3, base_combo: 3},
             level: 'Waves'
@@ -553,7 +551,7 @@ const upgrades = [
         "giftable": true,
         "name": "Shoot straight",
         "max": 1,
-        "help": "More coins if you don't touch the sides.",
+        help: lvl => `More coins if you don't touch the sides.`,
 
         fullHelp: `Whenever you break a brick, your combo will increase by one, so you'll get one more coin all the next bricks you break.
          However, your combo will reset as soon as your ball hits the left or right side. 
@@ -566,7 +564,7 @@ const upgrades = [
         "giftable": true,
         "name": "Sky is the limit",
         "max": 1,
-        "help": "More coins if you don't touch the top.",
+        help: lvl => `More coins if you don't touch the top.`,
 
         fullHelp: `Whenever you break a brick, your combo will increase by one. However, your combo will reset as soon as your ball hit the top of the screen. 
         When your combo is above the minimum,  a red bar will appear at the top to remind you that you should avoid hitting it. 
@@ -577,8 +575,7 @@ const upgrades = [
         "id": "skip_last",
         "name": "Easy Cleanup",
         "max": 7,
-        "help": "The last brick will self-destruct",
-        extraLevelsHelp: `Level clears one brick earlier`,
+        help: lvl => `The last ${lvl > 1 ? lvl + ' bricks' : 'brick'} left will self-destruct.`,
         fullHelp: `You need to break all bricks to go to the next level. However, it can be hard to get the last ones. 
         Clearing a level early brings extra choices when upgrading. Never missing the bricks is also very beneficial. 
         So if you find it difficult to break the last bricks, getting this perk a few time can help.`
@@ -589,8 +586,8 @@ const upgrades = [
         "giftable": true,
         "name": "Puck controls ball",
         "max": 2,
-        "help": "Control the ball's trajectory",
-        extraLevelsHelp: `Stronger effect on the ball`,
+        "help": "",
+        help: lvl => lvl == 1 ? `Control the ball's trajectory.` : `Stronger effect on the ball`,
         fullHelp: `Right after the ball hits your puck, you'll be able to direct it left and right by moving your puck. 
         The effect stops when the ball hits a brick and resets the next time it touches the puck. It also does nothing when the ball is going downward after bouncing at the top. `
     },
@@ -599,11 +596,10 @@ const upgrades = [
         "id": "coin_magnet",
         "name": "Coins magnet",
         "max": 3,
-        "help": "Puck attracts coins",
+        help: lvl => lvl == 1 ? `Puck attracts coins.` : `Stronger effect on the coins`,
         tryout: {
             perks: {coin_magnet: 3, base_combo: 3}
         },
-        extraLevelsHelp: `Stronger effect on the coins`,
         fullHelp: `Directs the coins to the puck. The effect is stronger if the coin is close to it already. Catching 90% or 100% of coins bring special bonuses in the game. 
          Another way to catch more coins is to hit bricks from the bottom. The ball's speed and direction impacts the spawned coin's velocity. `
     },
@@ -613,8 +609,7 @@ const upgrades = [
         "giftable": true,
         "name": "+1 ball",
         "max": 6,
-        "help": "Start with two balls",
-        extraLevelsHelp: `One more ball`,
+        help: lvl => `Start every levels with ${lvl + 1} balls.`,
         fullHelp: `As soon as you drop the ball in Breakout 71, you loose. With this perk, you get two balls, and so you can afford to lose one. 
          The lost balls come back on the next level or whenever you use one of your extra lives, if you picked that perk. Having more than one balls makes 
          some further perks available, and of course clears the level faster.`
@@ -624,8 +619,7 @@ const upgrades = [
         "id": "smaller_puck",
         "name": "Smaller puck",
         "max": 2,
-        "help": "Also gives +5 base combo",
-        extraLevelsHelp: `Even smaller puck and higher base combo`,
+        help: lvl => lvl == 1 ? `Also gives +5 base combo.` : `Even smaller puck and higher base combo`,
         fullHelp: `This makes the puck smaller, which in theory makes some corner shots easier, but really just raises the difficulty. 
          That's why you also get a nice bonus of +5 coins per brick for all bricks you'll break after picking this.  `
     },
@@ -635,8 +629,7 @@ const upgrades = [
         "giftable": true,
         "name": "Piercing",
         "max": 3,
-        "help": "Ball pierces 3 bricks",
-        extraLevelsHelp: `Pierce 3 more bricks`,
+        help: lvl =>  `Ball pierces ${3*lvl} bricks after a puck bounce.`,
         fullHelp: `The ball normally bounces as soon as it touches something. With this perk, it will continue its trajectory for up to 3 bricks broken. 
         After that, it will bounce on the 4th brick, and you'll need to touch the puck to reset the counter. This combines particularly well with Sapper. `
     },
@@ -646,8 +639,7 @@ const upgrades = [
         "giftable": true,
         "name": "Picky eater",
         "max": 1,
-        "help": "More coins if you break bricks color by color.",
-
+        help: lvl =>  `More coins if you break bricks color by color.`,
         tryout: {
             perks: {picky_eater: 1},
             level: 'Mountain'
@@ -665,7 +657,7 @@ const upgrades = [
         "id": "metamorphosis",
         "name": "Stain",
         "max": 1,
-        "help": "Coins color the bricks they touch",
+        help: lvl =>  `Coins color the bricks they touch.`,
         tryout: {
             perks: {metamorphosis: 3},
             level: 'Lines'
@@ -681,8 +673,7 @@ const upgrades = [
         "giftable": true,
         "name": "Compound interest",
         "max": 3,
-        "help": "More coins if you catch them all.",
-        extraLevelsHelp: `Combo grows faster, but missed coins hurt it more`,
+        help: lvl =>  `+${lvl} combo / brick broken, -${lvl} combo per coin lost`,
 
         fullHelp: `Your combo will grow by one every time you break a brick, spawning more and more coin with every brick you break. Be sure however to catch every one of those coins
         with your puck, as any lost coin will decrease your combo by one point. One your combo is above the minimum, the bottom of the play area will
@@ -695,9 +686,7 @@ const upgrades = [
         "giftable": true,
         "name": "Hot start",
         "max": 3,
-        "help": "More coins for 15s.",
-        extraLevelsHelp: `Combo starts higher but shrinks faster`,
-
+        help: lvl =>  `Start at combo ${lvl*15+1}, -${lvl} combo per second`,
         fullHelp: `At the start of every level, your combo will start at +15 points, but then every second it will be decreased by one. This means the first 15 seconds in a level will spawn
         many more coins than the following ones, and you should make sure that you clear the level quickly. The effect stacks with other combo related perks, so you might be able to raise 
         the combo after the 15s timeout, but it will keep ticking down. Every time you take the perk again, the effect will be more dramatic.
@@ -709,8 +698,7 @@ const upgrades = [
         "giftable": true,
         "name": "Sapper",
         "max": 7,
-        "help": "1st brick hit becomes bomb",
-        extraLevelsHelp: `1 more brick replaced by a bomb`,
+        help: lvl =>  lvl===1?'The first brick broken becomes a bomb.' : `The first ${lvl} bricks broken become bombs.`,
         fullHelp: `Instead of just disappearing, the first brick you break will be replaced by a bomb brick. Bouncing the ball on the puck re-arms the effect. "Piercing" will instantly
         detonate the bomb that was just placed. Leveling-up this perk will allow you to place more bombs. Remember that bombs impact the velocity of nearby coins, so too many explosions
         could make it hard to catch the fruits of your hard work. 
@@ -721,7 +709,8 @@ const upgrades = [
         "id": "bigger_explosions",
         "name": "Kaboom",
         "max": 1,
-        "help": "Bigger explosions",
+
+        help: lvl =>  'Bigger explosions',
         tryout: {
             perks: {bigger_explosions: 1},
             level: 'Ship'
@@ -733,8 +722,7 @@ const upgrades = [
         "id": "extra_levels",
         "name": "+1 level",
         "max": 3,
-        "help": "Play 8 levels instead of 7",
-        extraLevelsHelp: `1 more level to play`,
+        help: lvl =>  `Play ${lvl+7} levels instead of 7`,
         fullHelp: `The default run can last a max of 7 levels, after which the game is over and whatever score you reached is your run score. 
         Each level of this perk lets you go one level higher. The last levels are often the ones where you make the most score, so the difference can be dramatic.`
     },
@@ -743,7 +731,7 @@ const upgrades = [
         "id": "pierce_color",
         "name": "Color pierce",
         "max": 1,
-        "help": "Balls pierce bricks of their color",
+        help: lvl =>  `Balls pierce bricks of their color.`,
         fullHelp: `Whenever a ball hits a brick of the same color, it will just go through unimpeded. 
         Once it reaches a brick of a different color, it will break it, take its color and bounce.`
     },
@@ -752,8 +740,7 @@ const upgrades = [
         "id": "soft_reset",
         "name": "Soft reset",
         "max": 2,
-        "help": "Combo grows slower but resets less",
-        extraLevelsHelp: `Even slower combo growth but softer reset`,
+        help: lvl =>  `Combo grows ${lvl>1?'even':''} slower but resets less.`,
         fullHelp: `The combo normally climbs every time you break a brick. This will sometimes cancel that climb, but also limit the impact of a combo reset.`
     },
     {
@@ -762,8 +749,8 @@ const upgrades = [
         "name": "Personal space",
         requires: 'multiball',
         "max": 3,
-        "help": "Balls repulse balls.",
-        extraLevelsHelp: 'Stronger repulsion force ',
+        help: lvl =>  lvl===1?`Balls repulse balls.`:'Stronger repulsion force',
+
         tryout: {
             perks: {ball_repulse_ball: 1, multiball: 2},
         },
@@ -776,7 +763,7 @@ const upgrades = [
         requires: 'multiball',
         "name": "Gravity",
         "max": 3,
-        "help": "Balls attract balls.", extraLevelsHelp: 'Stronger attraction force ',
+        help: lvl =>  lvl===1?`Balls attract balls.`:'Stronger attraction force',
         tryout: {
             perks: {ball_attract_ball: 1, multiball: 2},
         },
@@ -787,9 +774,8 @@ const upgrades = [
         "threshold": 30000,
         "id": "puck_repulse_ball",
         "name": "Soft landing",
-        extraLevelsHelp: 'Stronger repulsion force ',
         "max": 3,
-        "help": "Puck repulses balls.",
+        help: lvl =>  lvl===1?`Puck repulses balls.`:'Stronger repulsion force',
         fullHelp: `When a ball gets close to the perk, it will start slowing down, and even potentially bouncing without touching the puck.`
     },
     {
@@ -797,8 +783,7 @@ const upgrades = [
         "id": "wind",
         "name": "Wind",
         "max": 3,
-        "help": "Puck position creates wind.",
-        extraLevelsHelp: 'Stronger wind force ',
+        help: lvl =>  lvl===1?`Puck position creates wind.`:'Stronger wind force',
         fullHelp: `The wind depends on where your puck is, if it's in the center of the screen nothing happens, if it's on the left it will blow leftwise, if it's on the right of the screen
         then it will blow rightwise. The wind affects both the balls and coins.`
     },
@@ -807,8 +792,7 @@ const upgrades = [
         "id": "sturdy_bricks",
         "name": "Sturdy bricks",
         "max": 4,
-        "help": "Bricks sometimes resist hits but drop more coins.",
-        extraLevelsHelp: 'Bricks resist more and drop more coins ',
+        help: lvl =>  lvl===1?`Bricks sometimes resist hits but drop more coins.`:'Bricks resist more and drop more coins',
         fullHelp: `With level one of this perk, the ball has a 20% chance to bounce harmlessly on bricks, 
         but generates 10% more coins when it does break one. 
         This +10% is not shown in the combo number. At level 4 the ball has 80% chance of bouncing and brings 40% more coins.`
@@ -818,8 +802,7 @@ const upgrades = [
         "id": "respawn",
         "name": "Respawn",
         "max": 4,
-        "help": "The first brick hit of two+ will respawn.",
-        extraLevelsHelp: 'More bricks can respawn ',
+        help: lvl =>  lvl===1?`The first brick hit of two+ will respawn.`:'More bricks can respawn',
         fullHelp: `After breaking two or more bricks, when the ball hits the puck, the first brick will be put back in place, provided that space is free and the brick wasn't a bomb.
         Some particle effect will let you know where bricks will appear. Levelling this up lets you respawn up to 4 bricks at a time, but there should always be at least one destroyed.
         `
@@ -827,10 +810,9 @@ const upgrades = [
     {
         "threshold": 50000,
         "id": "one_more_choice",
-        "name": "+1 choice permanently",
+        "name": "+1 choice until run end",
         "max": 3,
-        "help": "Further level ups will offer one more option in the list",
-        extraLevelsHelp: 'Even more options ',
+        help: lvl =>  lvl===1?`Further level ups will offer one more option in the list.`:'Even more options',
         fullHelp: `Every upgrade menu will have one more option. 
          Doesn't increase the number of upgrades you can pick.  
         `
@@ -840,8 +822,7 @@ const upgrades = [
         "id": "instant_upgrade",
         "name": "+2 upgrades now",
         "max": 2,
-        "help": "-1 choice permanently",
-        extraLevelsHelp: 'Even fewer options ',
+        help: lvl =>  lvl===1?`-1 choice until run end.`:'Even fewer options',
         fullHelp: `Immediately pick two upgrades, so that you get one free one and one to repay the one used to get this perk.
            Every further menu to pick upgrades will have fewer options to choose from.
         `
@@ -922,7 +903,7 @@ function pickRandomUpgrades(count) {
         text: u.name + (perks[u.id] ? ' lvl ' + (perks[u.id] + 1) : ''),
         icon: u.icon,
         value: u.id,
-        help: (perks[u.id] && u.extraLevelsHelp) || u.help,
+        help:  u.help(perks[u.id]+1),
         // max: u.max,
         // checked: perks[u.id]
     }))
@@ -1500,6 +1481,7 @@ function ballTick(ball, delta) {
             !bricks[hitBrick]) {
             bricks[hitBrick] = "black";
             ball.sapperUses++
+            console.log('Sapper used')
         }
 
     }
@@ -1521,6 +1503,9 @@ function ballTick(ball, delta) {
             ball.sparks = 0;
         }
     }
+
+
+
 }
 
 let runStatistics = {};
@@ -1608,6 +1593,7 @@ function gameOver(title, intro) {
         <p>${intro}</p>
         ${unlocksInfo}  
         `, textAfterButtons: ` 
+        
         <div id="level-recording-container"></div>
         ${getHistograms(true)} 
         `
@@ -1625,7 +1611,15 @@ function getHistograms(saveStats) {
         // Stores only top 100 runs
         let runsHistory = JSON.parse(localStorage.getItem('breakout_71_runs_history') || '[]');
         runsHistory.sort((a, b) => a.score - b.score).reverse()
-        runsHistory = runsHistory.slice(0, 10)
+        runsHistory = runsHistory.slice(0, 100)
+
+        runStatistics.perks={}
+        for(let k in perks){
+            if(perks[k]) {
+                runStatistics.perks[k] = perks[k]
+            }
+        }
+
         runsHistory.push(runStatistics)
 
         // Generate some histogram
@@ -1714,6 +1708,7 @@ function resetRunStatistics() {
 }
 
 function explodeBrick(index, ball, isExplosion) {
+
     const color = bricks[index];
     if (!color) return;
 
@@ -1766,7 +1761,7 @@ function explodeBrick(index, ball, isExplosion) {
         bricks[index] = "";
 
 
-        coins = coins.filter((c) => !c.destroyed);
+        // coins = coins.filter((c) => !c.destroyed);
         let coinsToSpawn = combo
         if (perks.sturdy_bricks) {
             // +10% per level
@@ -1777,17 +1772,22 @@ function explodeBrick(index, ball, isExplosion) {
         runStatistics.coins_spawned += coinsToSpawn
         runStatistics.bricks_broken++
         const maxCoins = MAX_COINS * (isSettingOn("basic") ? 0.5 : 1)
-        const spawnableCoins = Math.floor(maxCoins - coins.length) / 3
-        const pointsPerCoin = Math.max(1, Math.ceil(coinsToSpawn / spawnableCoins))
-        while (coinsToSpawn > 0) {
+        const spawnableCoins =coins.length>MAX_COINS ? 1: Math.floor(maxCoins - coins.length) / 3
 
+        const pointsPerCoin = Math.max(1, Math.ceil(coinsToSpawn / spawnableCoins))
+
+        while (coinsToSpawn > 0) {
             const points = Math.min(pointsPerCoin, coinsToSpawn)
+            if(points<0||isNaN(points)){
+                console.error({points})
+                debugger
+            }
+            console.log('Spawned a coin with '+points+' points')
             coinsToSpawn -= points
             const coord = {
                 x: x + (Math.random() - 0.5) * (brickWidth - coinSize),
                 y: y + (Math.random() - 0.5) * (brickWidth - coinSize),
             };
-
             coins.push({
                 points,
                 color: perks.metamorphosis ? color : 'gold',
@@ -1825,7 +1825,7 @@ function explodeBrick(index, ball, isExplosion) {
         flashes.push({
             type: "ball", duration: 40, time: levelTime, size: brickWidth, color: color, x, y,
         });
-        spawnExplosion(5 + combo, x, y, color, 100, coinSize / 2);
+        spawnExplosion(5 + Math.min(combo,30), x, y, color, 100, coinSize / 2);
     }
 
     if (!bricks[index]) {
@@ -2230,7 +2230,7 @@ function drawBrick(ctx, color, borderColor, x, y) {
         can.width = width;
         can.height = height;
         const bord = 2;
-        const cornerRadius= 2
+        const cornerRadius = 2
         const canctx = can.getContext("2d");
 
 
@@ -2238,7 +2238,7 @@ function drawBrick(ctx, color, borderColor, x, y) {
         canctx.strokeStyle = borderColor;
         canctx.lineJoin = "round";
         canctx.lineWidth = bord
-        roundRect(canctx,bord/2,bord/2, width-bord ,height-bord, cornerRadius)
+        roundRect(canctx, bord / 2, bord / 2, width - bord, height - bord, cornerRadius)
         canctx.fill();
         canctx.stroke();
 
@@ -2249,25 +2249,26 @@ function drawBrick(ctx, color, borderColor, x, y) {
 }
 
 function roundRect(
-  ctx,
-  x,
-  y,
-  width,
-  height,
-  radius ){
-  ctx.beginPath();
-  ctx.moveTo(x + radius, y);
-  ctx.lineTo(x + width - radius, y);
-  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-  ctx.lineTo(x + width, y + height - radius);
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-  ctx.lineTo(x + radius, y + height);
-  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-  ctx.lineTo(x, y + radius);
-  ctx.quadraticCurveTo(x, y, x + radius, y);
-  ctx.closePath();
+    ctx,
+    x,
+    y,
+    width,
+    height,
+    radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
 
 }
+
 function drawRedSquare(ctx, x, y, width, height) {
     ctx.fillStyle = 'red'
     ctx.fillRect(x, y, width, height);
