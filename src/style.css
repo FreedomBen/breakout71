@@ -1,333 +1,329 @@
 * {
-    font-family: Courier New,
+  font-family:
+    Courier New,
     Courier,
     Lucida Sans Typewriter,
     Lucida Typewriter,
     monospace;
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-    height: calc(var(--vh, 1vh) * 100);
-    color: white;
-    background-size: 120px 120px;
-    background-color: var(--background1);
-    --background1: #030c23;
-    --background2: #03112a;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  color: white;
+  background-size: 120px 120px;
+  background-color: var(--background1);
+  --background1: #030c23;
+  --background2: #03112a;
 }
 
 #game {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    height: calc(var(--vh, 1vh) * 100);
-    width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  width: 100vw;
 }
 
 #score,
 #menu {
-    position: absolute;
-    top: 0;
-    z-index: 1;
-    padding: 10px;
-    appearance: none;
-    background: none;
-    border: none;
-    font: inherit;
-    color: white;
-    min-width: 40px;
-    min-height: 40px;
-    line-height: 20px;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  padding: 10px;
+  appearance: none;
+  background: none;
+  border: none;
+  font: inherit;
+  color: white;
+  min-width: 40px;
+  min-height: 40px;
+  line-height: 20px;
 }
-
 
 #score:hover,
 #score:focus,
 #menu:hover,
 #menu:focus {
-    background: rgba(0, 0, 0, 0.3);
-    cursor: pointer;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 #score {
-    right: 0;
+  right: 0;
 }
 
 #menu {
-    left: 0;
+  left: 0;
 }
 
 @media screen and (orientation: portrait) {
-    #menu > span {
-        display: none;
-    }
+  #menu > span {
+    display: none;
+  }
 }
 
 .popup {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 10;
-    display: flex;
-    overflow: auto;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+  display: flex;
+  overflow: auto;
 }
 
 .popup > div {
-    margin: auto;
-    padding: 20px 10px;
-    /*border: 1px solid white;*/
-    transform-origin: center;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    max-width: 450px;
+  margin: auto;
+  padding: 20px 10px;
+  /*border: 1px solid white;*/
+  transform-origin: center;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 450px;
 }
 
 .popup > div > * {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .popup > div > h2,
 .popup > div > p {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .popup > div > button {
-    font: inherit;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 10px;
-    cursor: pointer;
-    border: 1px solid white;
-    text-align: left;
-    display: flex;
-    gap: 10px;
-    margin-top: -1px;
+  font: inherit;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid white;
+  text-align: left;
+  display: flex;
+  gap: 10px;
+  margin-top: -1px;
 }
 
 .popup > div > button:not([disabled]):hover,
 .popup > div > button:not([disabled]):focus {
-    border-color: #f1d33b;
-    position: relative;
-    z-index: 1;
+  border-color: #f1d33b;
+  position: relative;
+  z-index: 1;
 }
 
-
 .popup button.close-modale {
-    color: white;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 60px;
-    height: 60px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
+  color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .popup button.close-modale:before {
-    content: "+";
-    position: absolute;
-    transform: translate(-50%, -50%) rotate(45deg);
-    font-size: 80px;
-    display: inline-block;
-    top: 34px;
-    left: 26px;
+  content: "+";
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(45deg);
+  font-size: 80px;
+  display: inline-block;
+  top: 34px;
+  left: 26px;
 }
 
 .popup button.close-modale:hover {
-    font-weight: bold;
-    background: black;
+  font-weight: bold;
+  background: black;
 }
 
 .popup > div > button[disabled] {
-    /*border: 1px solid #666;*/
-    opacity: 0.5;
-    filter: saturate(0);
-    pointer-events: none;
+  /*border: 1px solid #666;*/
+  opacity: 0.5;
+  filter: saturate(0);
+  pointer-events: none;
 }
 
 .popup > div > button > div {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .popup > div > button > div > em {
-    display: block;
-    opacity: 0.8;
+  display: block;
+  opacity: 0.8;
 }
 
 .popup > div > button > span.checks {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    gap: 5px;
-    flex-grow: 0;
-    flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  gap: 5px;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .popup > div > button > span.checks > span {
-    flex-basis: 10px;
-    flex-grow: 1;
-    flex-shrink: 1;
-    /*border: 1px solid white;*/
-    background: white;
-    opacity: 0.1;
-    border-radius: 4px;
-    align-self: stretch;
+  flex-basis: 10px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  /*border: 1px solid white;*/
+  background: white;
+  opacity: 0.1;
+  border-radius: 4px;
+  align-self: stretch;
 }
 
 .popup > div > button > span.checks > span.checked {
-    opacity: 1;
+  opacity: 1;
 }
 
 .popup .textAfterButtons {
-    color: rgba(255, 255, 255, 0.58);
+  color: rgba(255, 255, 255, 0.58);
 }
 
 .popup a[href] {
-    color: inherit;
+  color: inherit;
 }
 
 .popup a[href]:hover,
 .popup a[href]:focus {
-    color: white;
+  color: white;
 }
 
 /*Unlocks progress bar*/
 .progress {
-    display: block;
-    padding: 5px 10px;
-    background: #1c1c2f;
-    color: #fff;
-    box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+  display: block;
+  padding: 5px 10px;
+  background: #1c1c2f;
+  color: #fff;
+  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .progress > .progress_bar_part {
-    display: block;
-    background: #4049ca;
-    box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.5);
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    transform-origin: top left;
-    animation: grow 1s both ease-out;
-    z-index: 1;
+  display: block;
+  background: #4049ca;
+  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.5);
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform-origin: top left;
+  animation: grow 1s both ease-out;
+  z-index: 1;
 }
 
 .progress > span {
-    display: block;
-    position: relative;
-    z-index: 2;
+  display: block;
+  position: relative;
+  z-index: 2;
 }
 
 @keyframes grow {
-    0% {
-        transform: scale(0, 1);
-    }
+  0% {
+    transform: scale(0, 1);
+  }
 }
 
 #level-recording-container {
-    max-width: 400px;
-    text-align: center;
-    margin: 40px;
+  max-width: 400px;
+  text-align: center;
+  margin: 40px;
 }
 
-#level-recording-container img, #level-recording-container video {
-    max-width: 100%;
-    height: auto;
+#level-recording-container img,
+#level-recording-container video {
+  max-width: 100%;
+  height: auto;
 }
 
 #level-recording-container a {
-    display: block;
+  display: block;
 }
 
 #level-recording-container a video {
-    border-radius: 10px;
-    display: block;
-    outline: 1px solid white;
-    box-shadow: 2px 2px 5px black;
-    margin: 20px auto;
+  border-radius: 10px;
+  display: block;
+  outline: 1px solid white;
+  box-shadow: 2px 2px 5px black;
+  margin: 20px auto;
 }
 
 @media (min-width: 1200px) {
-
-    #level-recording-container {
-        position: absolute;
-        top: 40px;
-        left: 40px;
-    max-width: calc((100vw - 450px )/2 - 80px);
-
-    }
+  #level-recording-container {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    max-width: calc((100vw - 450px) / 2 - 80px);
+  }
 }
 
 .histogram {
-    display: flex;
-    gap: 10px;
-    align-items: stretch;
-    margin: 10px 0 40px 0;
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  margin: 10px 0 40px 0;
 }
-
 
 .histogram > span {
-/*    Hover zone */
-    flex-grow: 1;
-    width: 10px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+  /*    Hover zone */
+  flex-grow: 1;
+  width: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
-.histogram > span.active  > span{
-    background: #4049ca;
+.histogram > span.active > span {
+  background: #4049ca;
 }
-.histogram > span > span{
-    /*Visible bar*/
-    background: #1c1c2f;
-    width: 100%;
-    display: block;
-    border-radius: 5px;
-    min-height: 1px;
-}
-
-.histogram > span > span> span {
-    /*label */
-    position: absolute;
-    bottom: -20px;
-    pointer-events: none;
-    white-space: nowrap;
-    transform-origin: bottom left;
-    font-size: 13px;
-    text-align: center;
-    display: block;
-    left: 50%;
-    transform: translate(-50%,0);
-
+.histogram > span > span {
+  /*Visible bar*/
+  background: #1c1c2f;
+  width: 100%;
+  display: block;
+  border-radius: 5px;
+  min-height: 1px;
 }
 
-.histogram > span:not(:hover):not(.active) > span> span {
-    opacity: 0;
+.histogram > span > span > span {
+  /*label */
+  position: absolute;
+  bottom: -20px;
+  pointer-events: none;
+  white-space: nowrap;
+  transform-origin: bottom left;
+  font-size: 13px;
+  text-align: center;
+  display: block;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.histogram > span:not(:hover):not(.active) > span > span {
+  opacity: 0;
 }
 
 h2.histogram-title {
-    color: #3b3f75;
-    font-size: 18px;
+  color: #3b3f75;
+  font-size: 18px;
 }
 
 h2.histogram-title strong {
-    color: #4049ca;
+  color: #4049ca;
 }

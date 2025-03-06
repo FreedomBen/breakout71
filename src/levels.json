@@ -807,14 +807,14 @@
   },
   {
     "name": "icon:checkmark_checked",
-    "size": 4,
-    "bricks": "WWWWWttWWttWWWWW",
+    "size": 6,
+    "bricks": "_WWWWGWBBBGGGGBGGWWGGGBWWBGBBW_WWWW_",
     "svg": ""
   },
   {
     "name": "icon:checkmark_unchecked",
-    "size": 4,
-    "bricks": "WWWWW__WW__WWWWW",
+    "size": 6,
+    "bricks": "_WWWW_WBBBBWWBBBBWWBBBBWWBBBBW_WWWW_",
     "svg": ""
   },
   {

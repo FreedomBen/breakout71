@@ -41,16 +41,7 @@ perks. No video though, this happened on the app while I was playing
 casually (it's quite easy to reproduce, though). I wouldn't do that 
 because it's mind-numbingly dull, but still I'm not sure this kind of 
 play is intended or if it should even be allowed.
-- Combo balancing – one thing that makes the best strategy overly 
-dominant is the way combo resets abruptly with everything other than 
-Compound Interest, which pairs exceptionally well to Coin Magnet (which 
-is in itself instrumental to scoring high). If the other combos would 
-scale down accordingly (i.e. 1 coin less when you hit the 
-walls/ceiling/puck – or at least drop some percentage, but not all of 
-the combo at once). This would instantly make many more strategies and 
-combinations viable, because right now it doesn't make much sense to 
-pair Compound Interest to any other combo perks (except in very specific 
-circumstances).
+
 
 
 # Game engine features  
@@ -96,7 +87,7 @@ circumstances).
 - when missing, redo particle trail, but give speed to particle that matches ball direction
 
 # Perks ideas 
-
+- Combo balancing : make Compound Interest less OP by defaulting to soft reset for others, or by making it loose more for each missed coin
 - second puck (symmeric to the first one)
 - keep combo between level, loose half your run score when missing any bricks
 - offer next level choice after upgrade pick

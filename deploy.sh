@@ -27,6 +27,8 @@ echo "\"$versionCode\"" > src/version.json
 # remove all exif metadata from pictures, because i think fdroid doesn't like that. odd
 find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all=
 
+npx prettier --write src/
+
 npm run build
 
 rm -rf ./app/src/main/assets/*
