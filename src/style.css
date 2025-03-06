@@ -46,10 +46,6 @@ body {
     line-height: 20px;
 }
 
-body.black_puck #score,
-body.black_puck #menu {
-    color: black;
-}
 
 #score:hover,
 #score:focus,

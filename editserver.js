@@ -32,15 +32,14 @@ app.get('/', (req, res) => {
 ${fs.readFileSync('./editclient.css').toString()}
 </style> 
 <script>
-const allLevels = ${fs.readFileSync(srcPath).toString()};
-const palette = ${fs.readFileSync('src/palette.json').toString()};
+let allLevels = ${fs.readFileSync(srcPath).toString()};
+let palette = ${fs.readFileSync('src/palette.json').toString()};
 ${fs.readFileSync('./editclient.js').toString()}
 </script>  
 </body>  
   `)
 })
 app.post('/', (req, res) => {
-    console.log(req.body)
     if(req.body?.trim()) {
         fs.writeFileSync(srcPath, req.body)
     }

@@ -46,15 +46,8 @@ function addLevelEditorToList(level, levelIndex) {
             <button data-offset-x="0"  data-offset-y="-1" data-level="${levelIndex}">U</button>
             <button data-offset-x="0"  data-offset-y="1" data-level="${levelIndex}">D</button>
             <input type="color" value="${level.color || ''}" data-level="${levelIndex}" />
-            <button data-level="${levelIndex}" data-set-bg-svg="true" >${svg?'replace':'set'}</button>
-            <label>
-                <input type="checkbox" data-field="focus"   ${level.focus ? 'checked':''}  data-level="${levelIndex}" />
-            focus
-            </label>
-            <label>
-                <input type="checkbox" data-field="black_puck"   ${level.black_puck ? 'checked':''}  data-level="${levelIndex}" />
-            black_puck
-            </label> 
+            <button data-level="${levelIndex}" data-set-bg-svg="true" >${svg?'replace':'set'}</button> 
+ 
            
             </div>
             
@@ -182,14 +175,14 @@ document.getElementById('levels').addEventListener('click', e => {
 let applying = ''
 
 function colorPixel(e) {
-    if ( applying == '') return
+    if ( applying === '') return
+    console.log('colorPixel',applying)
     const index = e.target.getAttribute('data-set-color-of')
     const level = e.target.getAttribute('data-level')
     if (index && level) {
         const levelIndex = parseInt(level)
-        e.target.style.background = palette[applying]
+        e.target.style.background = palette[applying]||'transparent'
         setBrick(levelIndex,parseInt(index),applying)
-
     }
 }
 function setBrick(levelIndex,index,chr) {
@@ -199,9 +192,10 @@ function setBrick(levelIndex,index,chr) {
 document.getElementById('levels').addEventListener('mousedown', e => {
     const index = parseInt(e.target.getAttribute('data-set-color-of'))
     const level = e.target.getAttribute('data-level')
-    if (index && level) {
-        const before = allLevels[parseInt(level)].bricks[parseInt(index)] || '_'
+    if (typeof index !=="undefined"  && level) {
+        const before = allLevels[parseInt(level)].bricks[index] || ''
         applying = before === currentCode ? '_' : currentCode
+        console.log({before, applying, currentCode})
         colorPixel(e)
     }
 })
@@ -226,7 +220,7 @@ document.getElementById('new-level').addEventListener('click', e => {
     allLevels.push({
         name,
         size: 8,
-        bricks: ['white'],
+        bricks: '',
         svg: '',
     })
     const levelIndex = allLevels.length - 1
