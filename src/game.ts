@@ -269,7 +269,7 @@ function addToScore(coin: Coin) {
   score += coin.points;
 
   addToTotalScore(coin.points);
-  if (score > highScore && !ignoreThisRunInStats) {
+  if (score > highScore && !isCreativeModeRun) {
     highScore = score;
     localStorage.setItem("breakout-3-hs", score.toString());
   }
@@ -481,7 +481,9 @@ function reset_perks(): PerkId {
     (isSettingOn("easy") && "slow_down") ||
     giftable[Math.floor(Math.random() * giftable.length)].id;
 
-  perks[randomGift] = 1;
+  if(!isCreativeModeRun){
+        perks[randomGift] = 1;
+   }
 
   delete nextRunOverrides.perk;
   return randomGift as PerkId;
@@ -565,7 +567,7 @@ function pickRandomUpgrades(count: number) {
 type RunOverrides = { level?: PerkId; perk?: string };
 
 let nextRunOverrides = {} as RunOverrides;
-let ignoreThisRunInStats = false;
+let isCreativeModeRun = false;
 
 let pauseUsesDuringRun = 0;
 
@@ -573,7 +575,7 @@ function restart() {
   // When restarting, we want to avoid restarting with the same level we're on, so we exclude from the next
   // run's level list
   totalScoreAtRunStart = getTotalScore();
-  ignoreThisRunInStats = false;
+  isCreativeModeRun = false;
   shuffleLevels(levelTime || score ? currentLevelInfo().name : null);
   resetRunStatistics();
   score = 0;
@@ -1304,7 +1306,7 @@ function getTotalScore() {
 }
 
 function addToTotalScore(points: number) {
-  if (ignoreThisRunInStats) return;
+  if (isCreativeModeRun) return;
   try {
     localStorage.setItem(
       "breakout_71_total_score",
@@ -1388,7 +1390,7 @@ function gameOver(title: string, intro: string) {
     allowClose: true,
     title,
     text: `
-        ${ignoreThisRunInStats ? "<p>This test run and its score are not being recorded</p>" : ""}
+        ${isCreativeModeRun ? "<p>This test run and its score are not being recorded</p>" : ""}
         <p>${intro}</p>
         ${unlocksInfo}  
         `,
@@ -1418,7 +1420,7 @@ function getHistograms() {
     runsHistory.push({ ...runStatistics, perks, appVersion });
 
     // Generate some histogram
-    if (!ignoreThisRunInStats)
+    if (!isCreativeModeRun)
       localStorage.setItem(
         "breakout_71_runs_history",
         JSON.stringify(runsHistory, null, 2),
@@ -1985,8 +1987,6 @@ function renderAllBricks() {
 
       if (!color) return;
       
-      canctx.globalAlpha = (perks.pierce_color && ballsColor === color && 0.6) || 1;
-
       const borderColor = (ballsColor !== color && color !== "black" && redBorderOnBricksWithWrongColor && "red") ||
         color;
 
@@ -2699,7 +2699,7 @@ async function openScorePanel() {
   const cb = await asyncAlert({
     title: ` ${score} points at level ${currentLevel + 1} / ${max_levels()}`,
     text: `
-            ${ignoreThisRunInStats ? "<p>This is a test run, score is not recorded permanently</p>" : ""}
+            ${isCreativeModeRun ? "<p>This is a test run, score is not recorded permanently</p>" : ""}
             <p>Upgrades picked so far : </p>
             <p>${pickedUpgradesHTMl()}</p>
         `,
@@ -2821,8 +2821,10 @@ async function openSettingsPanel() {
           ) {
             if (choice === "start") {
               restart();
-              ignoreThisRunInStats = true;
-              Object.assign(perks, creativeModePerks);
+              isCreativeModeRun = true;
+              Object.assign(perks,  creativeModePerks);
+              resetCombo(undefined, undefined);
+              resetBalls();
               break;
             } else if (choice) {
               creativeModePerks[choice.id] =
