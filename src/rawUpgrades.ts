@@ -212,8 +212,8 @@ export const rawUpgrades = [
     id: "compound_interest",
     giftable: true,
     name: "Compound interest",
-    max: 3,
-    help: (lvl) => `+${lvl} combo / brick broken, -${lvl} combo per coin lost`,
+    max: 1,
+    help: () => `+1 combo per brick broken, resets on coin lost`,
 
     fullHelp: `Your combo will grow by one every time you break a brick, spawning more and more coin with every brick you break. Be sure however to catch every one of those coins
         with your puck, as any lost coin will decrease your combo by one point. One your combo is above the minimum, the bottom of the play area will

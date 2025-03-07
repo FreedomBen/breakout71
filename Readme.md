@@ -86,8 +86,7 @@ play is intended or if it should even be allowed.
 - restart run on r
 - when missing, redo particle trail, but give speed to particle that matches ball direction
 
-# Perks ideas 
-- Combo balancing : make Compound Interest less OP by defaulting to soft reset for others, or by making it loose more for each missed coin
+# New perks ideas 
 - second puck (symmeric to the first one)
 - keep combo between level, loose half your run score when missing any bricks
 - offer next level choice after upgrade pick
@@ -130,6 +129,21 @@ play is intended or if it should even be allowed.
 - correction : pick one past upgrade to remove and replace by something else 
 - puck bounce predictions rendered with particles or lines (requires big refactor)
 - the more balls are close to a brick, the more coins she spawns when breaking
+- combo resets when puck moves
+- gravity is flipped on the opposite side to the puck (for coins)
+- balls have gravity
+- coins don't have gravity
+
+# Balancing ideas
+
+The dominant strategy now is Compound Interest lvl 3 + coin magnet/viscosity/
+and hot start + explosives and multiball
+
+- make Compound Interest less OP making it full reset when coins lost
+- cap hot start to lvl 2, or make it decrease faster
+- make puck smaller as combo increases ? 
+- coin magnet has no effect when too close, or coins might overshoot, or coins bounce and spread more ? 
+- add red anti-coins, they destroy your combo and your score, and they behave like heavier coins.  
 
 # extra levels
 
@@ -156,3 +170,53 @@ and let them spend those coins on upgrades. The upgrades would then be explained
 "reach high score of 1000" or 'reach high score of 99999 without using "hot start"'. 
 This requires recording a bit more info about each run. 
 I could unlock the "pro stand" at $999 that just holds the play area higher. 
+
+
+# Colin's feedback (cwpute/obigre)
+
+Perks:
+
+* yoyo - when the ball falls back down, it curbs towards your puck (after hitting a brick or top)
+* single block combo - get +1 combo if the ball only breaks a single block before reaching the puck
+* mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
+* side pucks - same as above but with two side pucks.
+* ball coins - coins share the same physics as coins and bounce on walls and bricks
+* phantom coins - coins pass through bricks
+* drifting coins - coins slowly drift away from the brick they were generated from, and they need to be collected by the ball
+* bigger ball - self-explanatory
+* smaller ball - yes.
+* sturdy ball - does more damage to bricks, to conter sturdy bricks
+* accumulation - coins aglutinate into bigger coins that hold more value
+* forgiving - you can miss several times without losing your combo. or alternatively, include this ability into the soft reset perk.
+* plot - plot the ball's trajectory as you position your puck
+* golden corners - catch coins at the sides of the puck to double their value
+* varied diet - your combo grows if you keep hitting different coloured bricks each time
+* earthquake - when the puck hits any side of the screen with velocity, the screen shakes and a brick explodes/falls from the level. alternatively, any brick you catch with the puck gives you the coins at the current combo rate. each level lowers the amount of hits before a brick falls
+* statue - stand still to make the combo grow. move for too long and thi combo will quickly drop
+* piggy bank - bricks absorb coins that fall onto it, and release them back as they are broken, with added value
+* trickle up - if you first hit is the lowest brick of a column, all bricks above get +1 coin inside
+* wormhole - the puck sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect
+* hitman - hit the marked brick for +5 combo. each level increases the combo you get for it.
+* sweet spot - place your puck directly below a moving spot at the top of the level to increase your combo
+
+IMPROVEMENTS ON EXISTING PERKS  :
+
+* separate the "shoot straight" perk into two : one for left-side, the other for right-side. it will help alleviate the high difficulty of this challenge and provide more interesting ways to play around it. the wind perk could even find a use.
+* wind perk is fun but very much unusable. i do not see any situation it can help with. i favor "puck control ball" anytime over it. maybe it blew less hard it could be played with. maybe reuse its mechanic as a level hazard.
+* soft-landing is only interesting starting level 2, and only in synergy with "single-puck hit streak"
+* instead of "lives", have the perk be like a fourth wall that prevents the ball from falling down but disapears after one strike. it is functionally the same but provides visual feedback to the player so they know they have that perk.
+* limit levels to only a handful of coulours, like 5 max, so that the colour-related perks are more viable.
+
+GENERAL REMARKS ON DIFFERENT ASPECTS :
+
+* when the player reaches the last level, alow them to loop the run, unlocking a permanent bonus for this run. For example: +5 combo, +1 life per loop… the counterpart would be hazards that slowly populate the levels.
+* different visual effects on ball to represent which perks it's imbued with (pierce, sapper…). remove visual while it's not affected (can't pierce/sap anymore until touching the puck).
+* always visually put the ball on top of coins so as to clearly see it. sometimes a black outline appears to distinguesh it from coins, this should be used more often imo.
+* not brick-shaped bricks, or tilted bricks, that can bounce the ball into fun angles to spice up the game. or even moving blocks !
+* reward the player with more choices/perks for breaking a brick while having reached an increasing combo thresholds. 5 combo, then 10, then 20, then 40 etc… once a threshold is reached you aren't rewarded for that threshold again until you start a rew run
+* inspired by Balatro's score system : have some perks add to the multiplicator, and some others to the amount of coins in a brick (or the raw value of coins inside), so that you users want to improve both for maximized profit ! maybe tie one of the to perks that help you, and the other to perks that are bad to you, so that gambling players are forced to make their life harder
+* the white outline on bricks asociated with picky eater kinda works but i feel it's more distracting than anything. maybe try something different ? put a cross on matching coloured bricks, or the contrary, grey out other bricks.
+* also regarding colour : make it so the ball always start with a colour that matches one currently present in the level. sometimes you don't have white present and it's a waste of a combo :/
+* negative coins, they would spawn from bricks as a hazard and do any of the following: -deactivate a perk for this level -reduce your number of coins -reduce your choice for your next perk -despawn all current coins on screen -lowers your combo. they could either be a negative perk with a bonus, like the small puck, or a hazard that spawns in later levels.
+* the way combos look on the puck was better when you didn't see the coin visual on it ! now it easily overflows out of the puck with reduced visibility
+

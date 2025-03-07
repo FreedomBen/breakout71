@@ -1,11 +1,13 @@
 import {allLevels, appVersion, icons, upgrades} from "./loadGameData";
-import {Ball, Coin, colorString, Flash, FlashTypes, Level, PerkId} from "./types";
+import {Ball, BallLike, Coin, colorString, Flash, FlashTypes, Level, PerkId, RunHistoryItem, RunStats} from "./types";
+import {OptionId, options} from "./options";
 
 const MAX_COINS = 400;
 const MAX_PARTICLES = 600;
-const canvas = document.getElementById("game") as HTMLCanvasElement;
-let ctx = canvas.getContext("2d", {alpha: false});
+export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
+let ctx = gameCanvas.getContext("2d", {alpha: false});
 
+        const puckColor = "#FFF";
 let ballSize = 20;
 const coinSize = Math.round(ballSize * 0.8);
 const puckHeight = ballSize;
@@ -105,9 +107,10 @@ function play() {
     if (running) return;
     running = true;
     if (audioContext) {
-        audioContext.resume();
+        audioContext.resume().then();
     }
     resumeRecording();
+    document.body.className = running ? " running " : " paused ";
 }
 
 function pause(playerAskedForPause: boolean) {
@@ -120,11 +123,12 @@ function pause(playerAskedForPause: boolean) {
             needsRender = true;
             if (audioContext) {
                 setTimeout(() => {
-                    if (!running) audioContext.suspend();
+                    if (!running) audioContext.suspend().then();
                 }, 1000);
             }
             pauseRecording();
             pauseTimeout = null;
+            document.body.className = running ? " running " : " paused ";
         },
         Math.min(Math.max(0, pauseUsesDuringRun - 5) * 50, 500),
     );
@@ -153,10 +157,10 @@ background.addEventListener("load", () => {
     needsRender = true;
 });
 
-const fitSize = () => {
-    const {width, height} = canvas.getBoundingClientRect();
-    canvas.width = width;
-    canvas.height = height;
+export const fitSize = () => {
+    const {width, height} = gameCanvas.getBoundingClientRect();
+    gameCanvas.width = width;
+    gameCanvas.height = height;
     ctx.fillStyle = currentLevelInfo()?.color || "black";
     ctx.globalAlpha = 1;
     ctx.fillRect(0, 0, width, height);
@@ -164,10 +168,10 @@ const fitSize = () => {
     backgroundCanvas.height = height;
 
     gameZoneHeight = isSettingOn("mobile-mode") ? (height * 80) / 100 : height;
-    const baseWidth = Math.round(Math.min(canvas.width, gameZoneHeight * 0.73));
+    const baseWidth = Math.round(Math.min(gameCanvas.width, gameZoneHeight * 0.73));
     brickWidth = Math.floor(baseWidth / gridSize / 2) * 2;
     gameZoneWidth = brickWidth * gridSize;
-    offsetX = Math.floor((canvas.width - gameZoneWidth) / 2);
+    offsetX = Math.floor((gameCanvas.width - gameZoneWidth) / 2);
     offsetXRoundedDown = offsetX;
     if (offsetX < ballSize) offsetXRoundedDown = 0;
     gameZoneWidthRoundedUp = width - 2 * offsetXRoundedDown;
@@ -256,7 +260,7 @@ function addToScore(coin: Coin) {
             color: coin.color,
             x: coin.previousx,
             y: coin.previousy,
-            vx: (canvas.width - coin.x) / 100,
+            vx: (gameCanvas.width - coin.x) / 100,
             vy: -coin.y / 100,
             ethereal: true,
         });
@@ -402,7 +406,7 @@ async function openUpgradesPicker() {
     resetBalls();
 }
 
-function setLevel(l) {
+function setLevel(l:number) {
     pause(false);
     if (l > 0) {
         openUpgradesPicker().then();
@@ -440,20 +444,20 @@ function currentLevelInfo() {
     return runLevels[currentLevel % runLevels.length];
 }
 
-function reset_perks() {
+function reset_perks():PerkId {
     for (let u of upgrades) {
         perks[u.id] = 0;
     }
 
     const giftable = getPossibleUpgrades().filter((u) => u.giftable);
     const randomGift =
-        nextRunOverrides?.perk || isSettingOn("easy")
-            ? "slow_down"
-            : giftable[Math.floor(Math.random() * giftable.length)].id;
+        nextRunOverrides?.perk   ||
+        (isSettingOn("easy") && "slow_down" ) ||  giftable[Math.floor(Math.random() * giftable.length)].id;
+
     perks[randomGift] = 1;
 
     delete nextRunOverrides.perk;
-    return randomGift;
+    return randomGift as PerkId;
 }
 
 let totalScoreAtRunStart = getTotalScore();
@@ -505,9 +509,9 @@ function getUpgraderUnlockPoints() {
         .sort((a, b) => a.threshold - b.threshold);
 }
 
-let lastOffered = {};
+let lastOffered = {} as {[k in PerkId]:number};
 
-function dontOfferTooSoon(id) {
+function dontOfferTooSoon(id:PerkId) {
     lastOffered[id] = Math.round(Date.now() / 1000);
 }
 
@@ -555,7 +559,7 @@ function restart() {
 
 let keyboardPuckSpeed = 0;
 
-function setMousePos(x) {
+function setMousePos(x:number) {
     needsRender = true;
     puck = x;
 
@@ -571,60 +575,60 @@ function setMousePos(x) {
     }
 }
 
-canvas.addEventListener("mouseup", (e) => {
+gameCanvas.addEventListener("mouseup", (e) => {
     if (e.button !== 0) return;
     if (running) {
         pause(true);
     } else {
         play();
         if (isSettingOn("pointerLock")) {
-            canvas.requestPointerLock();
+            gameCanvas.requestPointerLock();
         }
     }
 });
 
-canvas.addEventListener("mousemove", (e) => {
-    if (document.pointerLockElement === canvas) {
+gameCanvas.addEventListener("mousemove", (e) => {
+    if (document.pointerLockElement === gameCanvas) {
         setMousePos(puck + e.movementX);
     } else {
         setMousePos(e.x);
     }
 });
 
-canvas.addEventListener("touchstart", (e) => {
+gameCanvas.addEventListener("touchstart", (e) => {
     e.preventDefault();
     if (!e.touches?.length) return;
     setMousePos(e.touches[0].pageX);
     play();
 });
-canvas.addEventListener("touchend", (e) => {
+gameCanvas.addEventListener("touchend", (e) => {
     e.preventDefault();
     pause(true);
 });
-canvas.addEventListener("touchcancel", (e) => {
+gameCanvas.addEventListener("touchcancel", (e) => {
     e.preventDefault();
     pause(true);
     needsRender = true;
 });
-canvas.addEventListener("touchmove", (e) => {
+gameCanvas.addEventListener("touchmove", (e) => {
     if (!e.touches?.length) return;
     setMousePos(e.touches[0].pageX);
 });
 
 let lastTick = performance.now();
 
-function brickIndex(x, y) {
+function brickIndex(x:number, y:number) {
     return getRowColIndex(
         Math.floor(y / brickWidth),
         Math.floor((x - offsetX) / brickWidth),
     );
 }
 
-function hasBrick(index) {
+function hasBrick(index:number):number|undefined {
     if (bricks[index]) return index;
 }
 
-function hitsSomething(x, y, radius) {
+function hitsSomething(x:number, y:number, radius:number) {
     return (
         hasBrick(brickIndex(x - radius, y - radius)) ??
         hasBrick(brickIndex(x + radius, y - radius)) ??
@@ -633,7 +637,7 @@ function hitsSomething(x, y, radius) {
     );
 }
 
-function shouldPierceByColor(vhit, hhit, chit) {
+function shouldPierceByColor(vhit:number|undefined, hhit:number|undefined, chit:number|undefined) {
     if (!perks.pierce_color) return false;
     if (typeof vhit !== "undefined" && bricks[vhit] !== ballsColor) {
         return false;
@@ -647,9 +651,10 @@ function shouldPierceByColor(vhit, hhit, chit) {
     return true;
 }
 
-function brickHitCheck(ballOrCoin, radius, isBall) {
+function ballBrickHitCheck(ball:Ball) {
+    const radius=ballSize / 2
     // Make ball/coin bonce, and return bricks that were hit
-    const {x, y, previousx, previousy} = ballOrCoin;
+    const {x, y, previousx, previousy} = ball;
 
     const vhit = hitsSomething(previousx, y, radius);
     const hhit = hitsSomething(x, previousy, radius);
@@ -659,49 +664,75 @@ function brickHitCheck(ballOrCoin, radius, isBall) {
             hitsSomething(x, y, radius)) ||
         undefined;
 
-    let pierce = isBall && ballOrCoin.piercedSinceBounce < perks.pierce * 3;
+    let pierce =   ball.piercedSinceBounce < perks.pierce * 3;
     if (
         pierce &&
         (typeof vhit !== "undefined" ||
             typeof hhit !== "undefined" ||
             typeof chit !== "undefined")
     ) {
-        ballOrCoin.piercedSinceBounce++;
+        ball.piercedSinceBounce++;
     }
-    if (isBall && shouldPierceByColor(vhit, hhit, chit)) {
+    if (  shouldPierceByColor(vhit, hhit, chit)) {
         pierce = true;
     }
 
     if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
         if (!pierce) {
-            ballOrCoin.y = ballOrCoin.previousy;
-            ballOrCoin.vy *= -1;
+            ball.y = ball.previousy;
+            ball.vy *= -1;
         }
 
-        if (!isBall) {
-            //   Roll on corners
-            const leftHit = bricks[brickIndex(x - radius, y + radius)];
-            const rightHit = bricks[brickIndex(x + radius, y + radius)];
-
-            if (leftHit && !rightHit) {
-                ballOrCoin.vx += 1;
-            }
-            if (!leftHit && rightHit) {
-                ballOrCoin.vx -= 1;
-            }
-        }
     }
     if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
         if (!pierce) {
-            ballOrCoin.x = ballOrCoin.previousx;
-            ballOrCoin.vx *= -1;
+            ball.x = ball.previousx;
+            ball.vx *= -1;
         }
     }
 
     return vhit ?? hhit ?? chit;
 }
+function coinBrickHitCheck(coin:Coin) {
 
-function bordersHitCheck(coin, radius, delta) {
+    // Make ball/coin bonce, and return bricks that were hit
+    const radius=coinSize/2
+    const {x, y, previousx, previousy} = coin;
+
+    const vhit = hitsSomething(previousx, y, radius);
+    const hhit = hitsSomething(x, previousy, radius);
+    const chit =
+        (typeof vhit == "undefined" &&
+            typeof hhit == "undefined" &&
+            hitsSomething(x, y, radius)) ||
+        undefined;
+
+    if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
+            coin.y = coin.previousy;
+            coin.vy *= -1;
+
+            //   Roll on corners
+            const leftHit = bricks[brickIndex(x - radius, y + radius)];
+            const rightHit = bricks[brickIndex(x + radius, y + radius)];
+
+            if (leftHit && !rightHit) {
+                coin.vx += 1;
+                coin.sa -= 1;
+
+            }
+            if (!leftHit && rightHit) {
+                coin.vx -= 1;
+                coin.sa += 1;
+            }
+    }
+    if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
+        coin.x = coin.previousx;
+        coin.vx *= -1;
+    }
+    return vhit ?? hhit ?? chit;
+}
+
+function bordersHitCheck(coin:Coin|Ball, radius:number, delta:number) {
     if (coin.destroyed) return;
     coin.previousx = coin.x;
     coin.previousy = coin.y;
@@ -734,8 +765,8 @@ function bordersHitCheck(coin, radius, delta) {
         coin.vy *= -1;
         vhit = 1;
     }
-    if (coin.x > canvas.width - offsetXRoundedDown - radius) {
-        coin.x = canvas.width - offsetXRoundedDown - radius;
+    if (coin.x > gameCanvas.width - offsetXRoundedDown - radius) {
+        coin.x = gameCanvas.width - offsetXRoundedDown - radius;
         coin.vx *= -1;
         hhit = 1;
     }
@@ -832,18 +863,16 @@ function tick() {
                     puckHeight
                 ) {
                     addToScore(coin);
-                } else if (coin.y > canvas.height + coinRadius) {
+                } else if (coin.y > gameCanvas.height + coinRadius) {
                     coin.destroyed = true;
                     if (perks.compound_interest) {
-                        decreaseCombo(
-                            coin.points * perks.compound_interest,
-                            coin.x,
-                            canvas.height - coinRadius,
+                        resetCombo(
+                            coin.x,coin.y
                         );
                     }
                 }
 
-                const hitBrick = brickHitCheck(coin, coinRadius, false);
+                const hitBrick = coinBrickHitCheck(coin);
 
                 if (perks.metamorphosis && typeof hitBrick !== "undefined") {
                     if (
@@ -878,7 +907,7 @@ function tick() {
                     ((puck - (offsetX + gameZoneWidth / 2)) / gameZoneWidth) *
                     2 *
                     perks.wind;
-                for (var i = 0; i < perks.wind; i++) {
+                for (let i = 0; i < perks.wind; i++) {
                     if (Math.random() * Math.abs(windD) > 0.5) {
                         flashes.push({
                             type: "particle",
@@ -980,11 +1009,11 @@ function tick() {
     lastTick = currentTick;
 }
 
-function isTelekinesisActive(ball) {
+function isTelekinesisActive(ball:Ball) {
     return perks.telekinesis && !ball.hitSinceBounce && ball.vy < 0;
 }
 
-function ballTick(ball, delta) {
+function ballTick(ball:Ball, delta:number) {
     ball.previousvx = ball.vx;
     ball.previousvy = ball.vy;
 
@@ -1156,7 +1185,7 @@ function ballTick(ball, delta) {
             }
         }
     }
-    const hitBrick = brickHitCheck(ball, ballSize / 2, true);
+    const hitBrick = ballBrickHitCheck(ball);
     if (typeof hitBrick !== "undefined") {
         const initialBrickColor = bricks[hitBrick];
 
@@ -1204,7 +1233,7 @@ const defaultRunStats = () => ({
     upgrades_picked: 1,
     max_combo: 1,
     max_level: 0,
-});
+}) as RunStats;
 let runStatistics = defaultRunStats();
 
 function resetRunStatistics() {
@@ -1219,7 +1248,7 @@ function getTotalScore() {
     }
 }
 
-function addToTotalScore(points) {
+function addToTotalScore(points:number) {
     try {
         localStorage.setItem(
             "breakout_71_total_score",
@@ -1229,7 +1258,7 @@ function addToTotalScore(points) {
     }
 }
 
-function addToTotalPlayTime(ms) {
+function addToTotalPlayTime(ms:number) {
     try {
         localStorage.setItem(
             "breakout_71_total_play_time",
@@ -1242,7 +1271,7 @@ function addToTotalPlayTime(ms) {
     }
 }
 
-function gameOver(title, intro) {
+function gameOver(title:string, intro:string) {
     if (!running) return;
     pause(true);
     stopRecording();
@@ -1300,6 +1329,7 @@ function gameOver(title, intro) {
 
     // Avoid the sad sound right as we restart a new games
     combo = 1;
+
     asyncAlert({
         allowClose: true,
         title,
@@ -1307,41 +1337,38 @@ function gameOver(title, intro) {
         <p>${intro}</p>
         ${unlocksInfo}  
         `,
-        textAfterButtons: ` 
-        
-        <div id="level-recording-container"></div>
-        ${getHistograms(true)} 
+        actions:[{
+            value:null,
+            text:'Start a new run',
+            help:'',
+        }],
+        textAfterButtons: `<div id="level-recording-container"></div>
+        ${getHistograms()} 
         `,
     }).then(() => restart());
+
 }
 
-function getHistograms(saveStats) {
+function getHistograms() {
     let runStats = "";
     try {
         // Stores only top 100 runs
         let runsHistory = JSON.parse(
             localStorage.getItem("breakout_71_runs_history") || "[]",
-        );
+        ) as RunHistoryItem[];
         runsHistory.sort((a, b) => a.score - b.score).reverse();
         runsHistory = runsHistory.slice(0, 100);
 
-        const nonZeroPerks = {};
-        for (let k in perks) {
-            if (perks[k]) {
-                nonZeroPerks[k] = perks[k];
-            }
-        }
-
-        runsHistory.push({...runStatistics, perks: nonZeroPerks});
+        runsHistory.push({...runStatistics, perks,appVersion});
 
         // Generate some histogram
-        if (saveStats) {
-            localStorage.setItem(
-                "breakout_71_runs_history",
-                JSON.stringify(runsHistory, null, 2),
-            );
-        }
-        const makeHistogram = (title, getter, unit) => {
+
+        localStorage.setItem(
+            "breakout_71_runs_history",
+            JSON.stringify(runsHistory, null, 2),
+        );
+
+        const makeHistogram = (title:string, getter: (hi:RunHistoryItem)=>number, unit:string) => {
             let values = runsHistory.map((h) => getter(h) || 0);
             let min = Math.min(...values);
             let max = Math.max(...values);
@@ -1362,7 +1389,7 @@ function getHistograms(saveStats) {
                 binsTotal.push(0);
             }
             const binSize = (max - min) / bins.length;
-            const binIndexOf = (v) =>
+            const binIndexOf = (v:number) =>
                 Math.min(bins.length - 1, Math.floor((v - min) / binSize));
             values.forEach((v) => {
                 if (isNaN(v)) return;
@@ -1431,7 +1458,7 @@ function getHistograms(saveStats) {
     return runStats;
 }
 
-function explodeBrick(index, ball, isExplosion) {
+function explodeBrick(index:number, ball:Ball, isExplosion:boolean) {
     const color = bricks[index];
     if (!color) return;
 
@@ -1586,7 +1613,7 @@ function explodeBrick(index, ball, isExplosion) {
         spawnExplosion(5 + Math.min(combo, 30), x, y, color, 150, coinSize / 2);
     }
 
-    if (!bricks[index]) {
+    if (!bricks[index] && color!=='black') {
         ball.hitItem?.push({
             index,
             color,
@@ -1606,7 +1633,7 @@ function render() {
     needsRender = false;
 
     const level = currentLevelInfo();
-    const {width, height} = canvas;
+    const {width, height} = gameCanvas;
     if (!width || !height) return;
 
     let scoreInfo = "";
@@ -1665,13 +1692,13 @@ function render() {
         if (level.svg && background.width && background.complete) {
             if (backgroundCanvas.title !== level.name) {
                 backgroundCanvas.title = level.name;
-                backgroundCanvas.width = canvas.width;
-                backgroundCanvas.height = canvas.height;
+                backgroundCanvas.width = gameCanvas.width;
+                backgroundCanvas.height = gameCanvas.height;
                 const bgctx = backgroundCanvas.getContext(
                     "2d",
                 ) as CanvasRenderingContext2D;
                 bgctx.fillStyle = level.color || "#000";
-                bgctx.fillRect(0, 0, canvas.width, canvas.height);
+                bgctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
                 bgctx.fillStyle = ctx.createPattern(background, "repeat");
                 bgctx.fillRect(0, 0, width, height);
             }
@@ -1711,7 +1738,7 @@ function render() {
     }
 
     ctx.globalCompositeOperation = "source-over";
-    renderAllBricks(ctx);
+    renderAllBricks();
 
     ctx.globalCompositeOperation = "screen";
     flashes = flashes.filter(
@@ -1758,10 +1785,10 @@ function render() {
 
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
-    const puckColor = "#FFF";
     balls.forEach((ball) => {
+        // The white border around is to distinguish colored balls from coins/bg
         drawBall(ctx, ballsColor, ballSize, ball.x, ball.y, puckColor);
-        // effect
+
         if (isTelekinesisActive(ball)) {
             ctx.strokeStyle = puckColor;
             ctx.beginPath();
@@ -1790,7 +1817,7 @@ function render() {
                 coinSize,
                 left + coinSize / 2,
                 gameZoneHeight - puckHeight / 2,
-                "#FFF",
+                puckColor,
                 0,
             );
             drawText(
@@ -1839,8 +1866,8 @@ function render() {
                 "Press and hold here to play",
                 puckColor,
                 puckHeight,
-                canvas.width / 2,
-                gameZoneHeight + (canvas.height - gameZoneHeight) / 2,
+                gameCanvas.width / 2,
+                gameZoneHeight + (gameCanvas.height - gameZoneHeight) / 2,
             );
         }
     } else if (redBottom) {
@@ -1862,7 +1889,7 @@ function render() {
 let cachedBricksRender = document.createElement("canvas");
 let cachedBricksRenderKey = null;
 
-function renderAllBricks(destinationCtx) {
+function renderAllBricks() {
     ctx.globalAlpha = 1;
 
     const redBorderOnBricksWithWrongColor =
@@ -1882,12 +1909,11 @@ function renderAllBricks(destinationCtx) {
 
         cachedBricksRender.width = gameZoneWidth;
         cachedBricksRender.height = gameZoneWidth + 1;
-        const ctx = cachedBricksRender.getContext("2d") as CanvasRenderingContext2D;
-        ctx.clearRect(0, 0, gameZoneWidth, gameZoneWidth);
-        ctx.resetTransform();
-        ctx.translate(-offsetX, 0);
+        const canctx = cachedBricksRender.getContext("2d") as CanvasRenderingContext2D;
+        canctx.clearRect(0, 0, gameZoneWidth, gameZoneWidth);
+        canctx.resetTransform();
+        canctx.translate(-offsetX, 0);
         // Bricks
-        const puckColor = "#FFF";
         bricks.forEach((color, index) => {
             const x = brickCenterX(index),
                 y = brickCenterY(index);
@@ -1897,20 +1923,21 @@ function renderAllBricks(destinationCtx) {
                 (ballsColor === color && puckColor) ||
                 (color !== "black" && redBorderOnBricksWithWrongColor && "red") ||
                 color;
-            drawBrick(ctx, color, borderColor, x, y);
+            drawBrick(canctx, color, borderColor, x, y);
             if (color === "black") {
-                ctx.globalCompositeOperation = "source-over";
-                drawIMG(ctx, bombSVG, brickWidth, x, y);
+                canctx.globalCompositeOperation = "source-over";
+                drawIMG(canctx, bombSVG, brickWidth, x, y);
             }
         });
     }
 
-    destinationCtx.drawImage(cachedBricksRender, offsetX, 0);
+    ctx.drawImage(cachedBricksRender, offsetX, 0);
 }
 
 let cachedGraphics = {};
 
-function drawPuck(ctx, color, puckWidth, puckHeight, yoffset = 0) {
+function drawPuck(ctx:CanvasRenderingContext2D, color:colorString,
+                  puckWidth:number, puckHeight:number, yoffset = 0) {
     const key = "puck" + color + "_" + puckWidth + "_" + puckHeight;
 
     if (!cachedGraphics[key]) {
@@ -1943,7 +1970,8 @@ function drawPuck(ctx, color, puckWidth, puckHeight, yoffset = 0) {
     );
 }
 
-function drawBall(ctx, color, width, x, y, borderColor = "") {
+function drawBall(ctx:CanvasRenderingContext2D,
+                  color:colorString, width:number, x:number, y:number, borderColor = "") {
     const key = "ball" + color + "_" + width + "_" + borderColor;
 
     const size = Math.round(width);
@@ -1974,7 +2002,8 @@ function drawBall(ctx, color, width, x, y, borderColor = "") {
 
 const angles = 32;
 
-function drawCoin(ctx, color, size, x, y, bg, rawAngle) {
+function drawCoin(ctx:CanvasRenderingContext2D, color:colorString, size:number,
+                  x:number, y:number, borderColor:colorString, rawAngle:number) {
     const angle =
         ((Math.round((rawAngle / Math.PI) * 2 * angles) % angles) + angles) %
         angles;
@@ -1985,7 +2014,7 @@ function drawCoin(ctx, color, size, x, y, bg, rawAngle) {
         "_" +
         size +
         "_" +
-        bg +
+        borderColor +
         "_" +
         (color === "gold" ? angle : "whatever");
 
@@ -2003,7 +2032,7 @@ function drawCoin(ctx, color, size, x, y, bg, rawAngle) {
         canctx.fill();
 
         if (color === "gold") {
-            canctx.strokeStyle = bg;
+            canctx.strokeStyle = borderColor;
             canctx.stroke();
 
             canctx.beginPath();
@@ -2028,7 +2057,8 @@ function drawCoin(ctx, color, size, x, y, bg, rawAngle) {
     );
 }
 
-function drawFuzzyBall(ctx, color, width, x, y) {
+function drawFuzzyBall(ctx:CanvasRenderingContext2D, color:colorString, width:number,
+                       x:number, y:number) {
     const key = "fuzzy-circle" + color + "_" + width;
     if (!color) debugger;
     const size = Math.round(width * 3);
@@ -2059,7 +2089,8 @@ function drawFuzzyBall(ctx, color, width, x, y) {
     );
 }
 
-function drawBrick(ctx, color, borderColor, x, y) {
+function drawBrick(ctx:CanvasRenderingContext2D, color:colorString, borderColor:colorString,
+                   x:number, y:number) {
     const tlx = Math.ceil(x - brickWidth / 2);
     const tly = Math.ceil(y - brickWidth / 2);
     const brx = Math.ceil(x + brickWidth / 2) - 1;
@@ -2098,7 +2129,7 @@ function drawBrick(ctx, color, borderColor, x, y) {
     // It's not easy to have a 1px gap between bricks without antialiasing
 }
 
-function roundRect(ctx, x, y, width, height, radius) {
+function roundRect(ctx:CanvasRenderingContext2D, x:number, y:number, width:number, height:number, radius:number) {
     ctx.beginPath();
     ctx.moveTo(x + radius, y);
     ctx.lineTo(x + width - radius, y);
@@ -2112,12 +2143,12 @@ function roundRect(ctx, x, y, width, height, radius) {
     ctx.closePath();
 }
 
-function drawRedSquare(ctx, x, y, width, height) {
+function drawRedSquare(ctx:CanvasRenderingContext2D, x:number, y:number, width:number, height:number) {
     ctx.fillStyle = "red";
     ctx.fillRect(x, y, width, height);
 }
 
-function drawIMG(ctx, img, size, x, y) {
+function drawIMG(ctx:CanvasRenderingContext2D, img:HTMLImageElement, size:number, x:number, y:number) {
     const key = "svg" + img + "_" + size + "_" + img.complete;
 
     if (!cachedGraphics[key]) {
@@ -2141,7 +2172,8 @@ function drawIMG(ctx, img, size, x, y) {
     );
 }
 
-function drawText(ctx, text, color, fontSize, x, y, left = false) {
+function drawText(ctx:CanvasRenderingContext2D,
+                  text:string, color:colorString, fontSize:number, x:number, y:number, left = false) {
     const key = "text" + text + "_" + color + "_" + fontSize + "_" + left;
 
     if (!cachedGraphics[key]) {
@@ -2165,14 +2197,14 @@ function drawText(ctx, text, color, fontSize, x, y, left = false) {
     );
 }
 
-function pixelsToPan(pan) {
+function pixelsToPan(pan:number) {
     return (pan - offsetX) / gameZoneWidth;
 }
 
 let lastComboPlayed = NaN,
     shepard = 6;
 
-function playShepard(delta, pan, volume) {
+function playShepard(delta:number, pan:number, volume:number) {
     const shepardMax = 11,
         factor = 1.05945594920268,
         baseNote = 392;
@@ -2180,7 +2212,7 @@ function playShepard(delta, pan, volume) {
     if (shepard > shepardMax) shepard = 0;
     if (shepard < 0) shepard = shepardMax;
 
-    const play = (note) => {
+    const play = (note:number) => {
         const freq = baseNote * Math.pow(factor, note);
         const diff = Math.abs(note - shepardMax * 0.5);
         const maxDistanceToIdeal = 1.5 * shepardMax;
@@ -2195,12 +2227,12 @@ function playShepard(delta, pan, volume) {
 }
 
 const sounds = {
-    wallBeep: (pan) => {
+    wallBeep: (pan:number) => {
         if (!isSettingOn("sound")) return;
         createSingleBounceSound(800, pixelsToPan(pan));
     },
 
-    comboIncreaseMaybe: (x, volume) => {
+    comboIncreaseMaybe: (x:number, volume:number) => {
         if (!isSettingOn("sound")) return;
         let delta = 0;
         if (!isNaN(lastComboPlayed)) {
@@ -2215,11 +2247,11 @@ const sounds = {
         if (!isSettingOn("sound")) return;
         playShepard(-1, 0.5, 0.5);
     },
-    coinBounce: (pan, volume) => {
+    coinBounce: (pan:number, volume:number) => {
         if (!isSettingOn("sound")) return;
         createSingleBounceSound(1200, pixelsToPan(pan), volume, 0.1, "triangle");
     },
-    explode: (pan) => {
+    explode: (pan:number) => {
         if (!isSettingOn("sound")) return;
         createExplosionSound(pixelsToPan(pan));
     },
@@ -2227,14 +2259,14 @@ const sounds = {
         if (!isSettingOn("sound")) return;
         createRevivalSound(500);
     },
-    coinCatch(pan) {
+    coinCatch(pan:number) {
         if (!isSettingOn("sound")) return;
         createSingleBounceSound(900, pixelsToPan(pan), 0.8, 0.1, "triangle");
     },
 };
 
 // How to play the code on the leftconst context = new window.AudioContext();
-let audioContext, audioRecordingTrack;
+let audioContext:AudioContext, audioRecordingTrack:MediaStreamAudioDestinationNode;
 
 function getAudioContext() {
     if (!audioContext) {
@@ -2249,7 +2281,7 @@ function createSingleBounceSound(
     pan = 0.5,
     volume = 1,
     duration = 0.1,
-    type = "sine",
+    type:OscillatorType = "sine",
 ) {
     const context = getAudioContext();
     // Frequency for the metal "ping"
@@ -2326,7 +2358,7 @@ function createRevivalSound(baseFreq = 440) {
     oscillators.forEach((osc) => osc.stop(context.currentTime + 2));
 }
 
-let noiseBuffer;
+let noiseBuffer:AudioBuffer;
 
 function createExplosionSound(pan = 0.5) {
     const context = getAudioContext();
@@ -2381,9 +2413,6 @@ function createExplosionSound(pan = 0.5) {
 
 let levelTime = 0;
 
-setInterval(() => {
-    document.body.className = running ? " running " : " paused ";
-}, 100);
 
 window.addEventListener("visibilitychange", () => {
     if (document.hidden) {
@@ -2506,7 +2535,7 @@ ${icon}
 // Settings
 let cachedSettings = {};
 
-function isSettingOn(key) {
+export function isSettingOn(key: OptionId) {
     if (typeof cachedSettings[key] == "undefined") {
         try {
             cachedSettings[key] = JSON.parse(
@@ -2519,7 +2548,7 @@ function isSettingOn(key) {
     return cachedSettings[key] ?? options[key]?.default ?? false;
 }
 
-function toggleSetting(key) {
+export function toggleSetting(key:OptionId) {
     cachedSettings[key] = !isSettingOn(key);
     try {
         const lskey = "breakout-settings-enable-" + key;
@@ -2530,9 +2559,10 @@ function toggleSetting(key) {
     if (options[key].afterChange) options[key].afterChange();
 }
 
-scoreDisplay.addEventListener("click", async (e) => {
+
+scoreDisplay.addEventListener("click", (e) => {
     e.preventDefault();
-    openScorePanel();
+    openScorePanel().then();
 });
 
 async function openScorePanel() {
@@ -2540,78 +2570,35 @@ async function openScorePanel() {
     const cb = await asyncAlert({
         title: ` ${score} points at level ${currentLevel + 1} / ${max_levels()}`,
         text: `
-<p>Upgrades picked so far : </p>
-<p>${pickedUpgradesHTMl()}</p>
+            <p>Upgrades picked so far : </p>
+            <p>${pickedUpgradesHTMl()}</p>
         `,
         allowClose: true,
         actions: [
             {
                 text: "Resume",
                 help: "Return to your run",
+                value:()=>{}
             },
             {
                 text: "Restart",
                 help: "Start a brand new run.",
                 value: () => {
                     restart();
-                    return true;
                 },
             },
         ],
     });
     if (cb) {
-        await cb();
+           cb();
     }
 }
 
 document.getElementById("menu").addEventListener("click", (e) => {
     e.preventDefault();
-    openSettingsPanel();
+    openSettingsPanel().then();
 });
 
-const options = {
-    sound: {
-        default: true,
-        name: `Game sounds`,
-        help: `Can slow down some phones.`,
-        disabled: () => false,
-    },
-    "mobile-mode": {
-        default: window.innerHeight > window.innerWidth,
-        name: `Mobile mode`,
-        help: `Leaves space for your thumb.`,
-        afterChange() {
-            fitSize();
-        },
-        disabled: () => false,
-    },
-    basic: {
-        default: false,
-        name: `Basic graphics`,
-        help: `Better performance on older devices.`,
-        disabled: () => false,
-    },
-    pointerLock: {
-        default: false,
-        name: `Mouse pointer lock`,
-        help: `Locks and hides the mouse cursor.`,
-        disabled: () => !canvas.requestPointerLock,
-    },
-    easy: {
-        default: false,
-        name: `Kids mode`,
-        help: `Start future runs with "slower ball".`,
-        disabled: () => false,
-    }, // Could not get the sharing to work without loading androidx and all the modern android things so for now i'll just disable sharing in the android app
-    record: {
-        default: false,
-        name: `Record gameplay videos`,
-        help: `Get a video of each level.`,
-        disabled() {
-            return window.location.search.includes("isInWebView=true");
-        },
-    },
-};
 
 async function openSettingsPanel() {
     pause(true);
@@ -2642,13 +2629,13 @@ async function openSettingsPanel() {
             {
                 text: "Resume",
                 help: "Return to your run",
-                async value() {
+                value() {
                 },
             },
             {
                 text: "Starting perk",
                 help: "Try perks and levels you unlocked",
-                async value() {
+                 value() {
                     openUnlocksList()
                 },
             },
@@ -2736,7 +2723,7 @@ async function openUnlocksList() {
             })),
         ...allLevels
             .sort((a, b) => a.threshold - b.threshold)
-            .map((l, li) => {
+            .map((l) => {
                 const available = ts >= l.threshold;
                 return {
                     text: l.name,
@@ -2787,19 +2774,19 @@ Click an item above to start a run with it.
     }
 }
 
-function distance2(a, b) {
+function distance2(a:{x:number,y:number}, b:{x:number,y:number}) {
     return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2);
 }
 
-function distanceBetween(a, b) {
+function distanceBetween(a:{x:number,y:number}, b:{x:number,y:number}) {
     return Math.sqrt(distance2(a, b));
 }
 
-function rainbowColor() {
+function rainbowColor():colorString {
     return `hsl(${(Math.round(levelTime / 4) * 2) % 360},100%,70%)`;
 }
 
-function repulse(a, b, power, impactsBToo) {
+function repulse(a:Ball, b:BallLike, power:number, impactsBToo:boolean) {
     const distance = distanceBetween(a, b);
     // Ensure we don't get soft locked
     const max = gameZoneWidth / 2;
@@ -2848,7 +2835,7 @@ function repulse(a, b, power, impactsBToo) {
     }
 }
 
-function attract(a, b, power) {
+function attract(a:Ball, b:BallLike, power:number) {
     const distance = distanceBetween(a, b);
     // Ensure we don't get soft locked
     const min = gameZoneWidth * 0.5;
@@ -2892,7 +2879,11 @@ function attract(a, b, power) {
     });
 }
 
-let mediaRecorder, captureStream, recordCanvas, recordCanvasCtx;
+let mediaRecorder:MediaRecorder,
+    captureStream:MediaStream,
+     captureTrack:CanvasCaptureMediaStreamTrack,
+    recordCanvas:HTMLCanvasElement,
+    recordCanvasCtx:CanvasRenderingContext2D;
 
 function recordOneFrame() {
     if (!isSettingOn("record")) {
@@ -2901,17 +2892,18 @@ function recordOneFrame() {
     if (!running) return;
     if (!captureStream) return;
     drawMainCanvasOnSmallCanvas();
-    if (captureStream.requestFrame) {
+    if (captureTrack?.requestFrame) {
+        captureTrack?.requestFrame();
+    }else if(captureStream?.requestFrame){
         captureStream.requestFrame();
-    } else {
-        captureStream.getVideoTracks()[0].requestFrame();
+
     }
 }
 
 function drawMainCanvasOnSmallCanvas() {
     if (!recordCanvasCtx) return;
     recordCanvasCtx.drawImage(
-        canvas,
+        gameCanvas,
         offsetXRoundedDown,
         0,
         gameZoneWidthRoundedUp,
@@ -2942,18 +2934,18 @@ function startRecordingGame() {
         return;
     }
     if (!recordCanvas) {
-        // Smaller canvas with less details
+        // Smaller canvas with fewer details
         recordCanvas = document.createElement("canvas");
         recordCanvasCtx = recordCanvas.getContext("2d", {
             antialias: false,
             alpha: false,
-        });
+        }) as CanvasRenderingContext2D;
 
-        captureStream = recordCanvas.captureStream(0);
+        captureStream = recordCanvas.captureStream(0) ;
+        captureTrack = captureStream.getVideoTracks()[0] as CanvasCaptureMediaStreamTrack
 
         if (isSettingOn("sound") && getAudioContext() && audioRecordingTrack) {
             captureStream.addTrack(audioRecordingTrack.stream.getAudioTracks()[0]);
-            // captureStream.addTrack(audioRecordingTrack.stream.getAudioTracks()[1])
         }
     }
 
@@ -2974,7 +2966,7 @@ function startRecordingGame() {
     };
 
     instance.onstop = async function () {
-        let targetDiv;
+        let targetDiv:HTMLElement;
         let blob = new Blob(recordedChunks, {type: "video/webm"});
         if (blob.size < 200000) return; // under 0.2MB, probably bugged out or pointlessly short
 
@@ -3034,7 +3026,7 @@ function stopRecording() {
     mediaRecorder = null;
 }
 
-function captureFileName(ext) {
+function captureFileName(ext='webm') {
     return (
         "breakout-71-capture-" +
         new Date().toISOString().replace(/[^0-9\-]+/gi, "-") +
@@ -3043,7 +3035,7 @@ function captureFileName(ext) {
     );
 }
 
-function findLast(arr, predicate) {
+function findLast<T>(arr:T[], predicate:(item:T,index:number,array:T[])=>boolean) {
     let i = arr.length;
     while (--i)
         if (predicate(arr[i], i, arr)) {
@@ -3055,14 +3047,14 @@ function toggleFullScreen() {
     try {
         if (document.fullscreenElement !== null) {
             if (document.exitFullscreen) {
-                document.exitFullscreen();
+                document.exitFullscreen().then();
             } else if (document.webkitCancelFullScreen) {
                 document.webkitCancelFullScreen();
             }
         } else {
             const docel = document.documentElement;
             if (docel.requestFullscreen) {
-                docel.requestFullscreen();
+                docel.requestFullscreen().then();
             } else if (docel.webkitRequestFullscreen) {
                 docel.webkitRequestFullscreen();
             }
@@ -3078,7 +3070,7 @@ const pressed = {
     Shift: 0,
 };
 
-function setKeyPressed(key, on) {
+function setKeyPressed(key:string, on:0|1) {
     pressed[key] = on;
     keyboardPuckSpeed =
         ((pressed.ArrowRight - pressed.ArrowLeft) *
