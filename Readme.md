@@ -33,15 +33,6 @@ the coins have been caught or fallen off screen. As you can see, I had
 Lv 1 on both the perks: the ball hit the second to last brick, the last 
 one is automatically destroyed, but then another one gets respawned and 
 quickly destroyed again.
-- Boring cheat – I found out a way to farm points: if you have Respawn 
-Lv 3 or 4 you can endlessly hit the same cluster of bricks, and if you 
-manage to put the pluck in a comfortable position (i.e. straight line) 
-it's very easy to farm plenty of coins with the aid of appropriate combo 
-perks. No video though, this happened on the app while I was playing 
-casually (it's quite easy to reproduce, though). I wouldn't do that 
-because it's mind-numbingly dull, but still I'm not sure this kind of 
-play is intended or if it should even be allowed.
-
 
 
 # Game engine features  
