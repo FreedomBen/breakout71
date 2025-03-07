@@ -188,9 +188,6 @@ I could unlock the "pro stand" at $999 that just holds the play area higher.
  
 IMPROVEMENTS ON EXISTING PERKS  :
 
-
-* wind perk is fun but very much unusable. i do not see any situation it can help with. i favor "puck control ball" anytime over it. maybe it blew less hard it could be played with. maybe reuse its mechanic as a level hazard.
-* soft-landing is only interesting starting level 2, and only in synergy with "single-puck hit streak"
 * instead of "lives", have the perk be like a fourth wall that prevents the ball from falling down but disapears after one strike. it is functionally the same but provides visual feedback to the player so they know they have that perk.
 * limit levels to only a handful of coulours, like 5 max, so that the colour-related perks are more viable.
 
