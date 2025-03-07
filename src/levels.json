@@ -450,9 +450,15 @@
     "svg": ""
   },
   {
-    "name": "icon:sides_are_lava",
+    "name": "icon:left_is_lava",
     "size": 8,
-    "bricks": "r______rrttttttrrttttttrr______rr______rr____W_rr______rr_WWW__r",
+    "bricks": "r_______rtttttt_rtttttt_r_______r_______r____W__r_______r_WWW___",
+    "svg": ""
+  },
+  {
+    "name": "icon:right_is_lava",
+    "size": 8,
+    "bricks": "_______r_ttttttr_ttttttr_______r_______r_____W_r_______r__WWW__r",
     "svg": ""
   },
   {

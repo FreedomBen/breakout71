@@ -90,6 +90,15 @@ body {
   max-width: 450px;
 }
 
+.popup.actionsAsGrid > div {
+  max-width: 800px;
+
+  section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
 .popup > div > * {
   padding: 0;
   margin: 0;
@@ -100,25 +109,58 @@ body {
   margin-bottom: 20px;
 }
 
-.popup > div > button {
-  font: inherit;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 10px;
-  cursor: pointer;
-  border: 1px solid white;
-  text-align: left;
+.popup > div > section {
   display: flex;
-  gap: 10px;
-  margin-top: -1px;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 20px;
+
+  button {
+    font: inherit;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid white;
+    text-align: left;
+    display: flex;
+    gap: 10px;
+    margin-top: -1px;
+
+    &:not([disabled]):hover,
+    &:not([disabled]):focus {
+      border-color: #f1d33b;
+      position: relative;
+      z-index: 1;
+    }
+
+    &[disabled] {
+      /*border: 1px solid #666;*/
+      opacity: 0.5;
+      filter: saturate(0);
+      pointer-events: none;
+    }
+
+    & > div {
+      flex-grow: 1;
+    }
+
+    & > div > em {
+      display: block;
+      opacity: 0.8;
+    }
+
+    &.grey-out-unless-hovered {
+      &:not(:hover) {
+        opacity: 0.6;
+        img {
+          filter: saturate(0);
+        }
+      }
+    }
+  }
 }
 
-.popup > div > button:not([disabled]):hover,
-.popup > div > button:not([disabled]):focus {
-  border-color: #f1d33b;
-  position: relative;
-  z-index: 1;
-}
 
 .popup button.close-modale {
   color: white;
@@ -131,61 +173,21 @@ body {
   border: none;
   cursor: pointer;
   overflow: hidden;
-}
 
-.popup button.close-modale:before {
-  content: "+";
-  position: absolute;
-  transform: translate(-50%, -50%) rotate(45deg);
-  font-size: 80px;
-  display: inline-block;
-  top: 34px;
-  left: 26px;
-}
+  &:before {
+    content: "+";
+    position: absolute;
+    transform: translate(-50%, -50%) rotate(45deg);
+    font-size: 80px;
+    display: inline-block;
+    top: 34px;
+    left: 26px;
+  }
 
-.popup button.close-modale:hover {
-  font-weight: bold;
-  background: black;
-}
-
-.popup > div > button[disabled] {
-  /*border: 1px solid #666;*/
-  opacity: 0.5;
-  filter: saturate(0);
-  pointer-events: none;
-}
-
-.popup > div > button > div {
-  flex-grow: 1;
-}
-
-.popup > div > button > div > em {
-  display: block;
-  opacity: 0.8;
-}
-
-.popup > div > button > span.checks {
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  gap: 5px;
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-.popup > div > button > span.checks > span {
-  flex-basis: 10px;
-  flex-grow: 1;
-  flex-shrink: 1;
-  /*border: 1px solid white;*/
-  background: white;
-  opacity: 0.1;
-  border-radius: 4px;
-  align-self: stretch;
-}
-
-.popup > div > button > span.checks > span.checked {
-  opacity: 1;
+  &:hover {
+    font-weight: bold;
+    background: black;
+  }
 }
 
 .popup .textAfterButtons {
@@ -289,9 +291,11 @@ body {
   flex-direction: column;
   justify-content: flex-end;
 }
+
 .histogram > span.active > span {
   background: #4049ca;
 }
+
 .histogram > span > span {
   /*Visible bar*/
   background: #1c1c2f;

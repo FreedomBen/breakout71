@@ -38,7 +38,6 @@ quickly destroyed again.
 # Game engine features  
 
 - the onboarding feels weird, missing a tutorial
-- Players can't choose the initial perk
 - apk version soft locks at start.    
 - shinier coins by applying glow to them ? 
 - ask for permanent storage
@@ -124,6 +123,28 @@ quickly destroyed again.
 - gravity is flipped on the opposite side to the puck (for coins)
 - balls have gravity
 - coins don't have gravity
+- [colin] yoyo - when the ball falls back down, it curbs towards your puck (after hitting a brick or top)
+- [colin] single block combo - get +1 combo if the ball only breaks a single block before reaching the puck
+- [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
+- [colin] side pucks - same as above but with two side pucks.
+- [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks
+- [colin] phantom coins - coins pass through bricks
+- [colin] drifting coins - coins slowly drift away from the brick they were generated from, and they need to be collected by the ball
+- [colin] bigger ball - self-explanatory
+- [colin] smaller ball - yes.
+- [colin] sturdy ball - does more damage to bricks, to conter sturdy bricks
+- [colin] accumulation - coins aglutinate into bigger coins that hold more value
+- [colin] forgiving - you can miss several times without losing your combo. or alternatively, include this ability into the soft reset perk.
+- [colin] plot - plot the ball's trajectory as you position your puck
+- [colin] golden corners - catch coins at the sides of the puck to double their value
+- [colin] varied diet - your combo grows if you keep hitting different coloured bricks each time
+- [colin] earthquake - when the puck hits any side of the screen with velocity, the screen shakes and a brick explodes/falls from the level. alternatively, any brick you catch with the puck gives you the coins at the current combo rate. each level lowers the amount of hits before a brick falls
+- [colin] statue - stand still to make the combo grow. move for too long and thi combo will quickly drop
+- [colin] piggy bank - bricks absorb coins that fall onto it, and release them back as they are broken, with added value
+- [colin] trickle up - if you first hit is the lowest brick of a column, all bricks above get +1 coin inside
+- [colin] wormhole - the puck sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect
+- [colin] hitman - hit the marked brick for +5 combo. each level increases the combo you get for it.
+- [colin] sweet spot - place your puck directly below a moving spot at the top of the level to increase your combo
 
 # Balancing ideas
 
@@ -164,32 +185,7 @@ I could unlock the "pro stand" at $999 that just holds the play area higher.
 
 
 # Colin's feedback (cwpute/obigre)
-
-Perks:
-
-* yoyo - when the ball falls back down, it curbs towards your puck (after hitting a brick or top)
-* single block combo - get +1 combo if the ball only breaks a single block before reaching the puck
-* mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
-* side pucks - same as above but with two side pucks.
-* ball coins - coins share the same physics as coins and bounce on walls and bricks
-* phantom coins - coins pass through bricks
-* drifting coins - coins slowly drift away from the brick they were generated from, and they need to be collected by the ball
-* bigger ball - self-explanatory
-* smaller ball - yes.
-* sturdy ball - does more damage to bricks, to conter sturdy bricks
-* accumulation - coins aglutinate into bigger coins that hold more value
-* forgiving - you can miss several times without losing your combo. or alternatively, include this ability into the soft reset perk.
-* plot - plot the ball's trajectory as you position your puck
-* golden corners - catch coins at the sides of the puck to double their value
-* varied diet - your combo grows if you keep hitting different coloured bricks each time
-* earthquake - when the puck hits any side of the screen with velocity, the screen shakes and a brick explodes/falls from the level. alternatively, any brick you catch with the puck gives you the coins at the current combo rate. each level lowers the amount of hits before a brick falls
-* statue - stand still to make the combo grow. move for too long and thi combo will quickly drop
-* piggy bank - bricks absorb coins that fall onto it, and release them back as they are broken, with added value
-* trickle up - if you first hit is the lowest brick of a column, all bricks above get +1 coin inside
-* wormhole - the puck sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect
-* hitman - hit the marked brick for +5 combo. each level increases the combo you get for it.
-* sweet spot - place your puck directly below a moving spot at the top of the level to increase your combo
-
+ 
 IMPROVEMENTS ON EXISTING PERKS  :
 
 * separate the "shoot straight" perk into two : one for left-side, the other for right-side. it will help alleviate the high difficulty of this challenge and provide more interesting ways to play around it. the wind perk could even find a use.

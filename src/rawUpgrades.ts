@@ -75,15 +75,31 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 0,
-    id: "sides_are_lava",
+    id: "left_is_lava",
     giftable: true,
-    name: "Shoot straight",
+    name: "Avoid left side",
     max: 1,
-    help: (lvl) => `More coins if you don't touch the sides.`,
+    help: (lvl) => `More coins if you don't touch the left side.`,
 
-    fullHelp: `Whenever you break a brick, your combo will increase by one, so you'll get one more coin all the next bricks you break.
-         However, your combo will reset as soon as your ball hits the left or right side. 
-        As soon as your combo rises, the sides become red to remind you that you should avoid hitting them. The effect stacks with other combo perks, combo rises faster with more upgrades but will also reset if any
+    fullHelp: `Whenever you break a brick, your combo will increase by one, so you'll get one more coin from all the next bricks you break.
+         However, your combo will reset as soon as your ball hits the left side . 
+        As soon as your combo rises, the left side becomes red to remind you that you should avoid hitting them. 
+        The effect stacks with other combo perks, combo rises faster with more upgrades but will also reset if any
+         of the reset conditions are met.`,
+  },
+  {
+    requires: "",
+    threshold: 0,
+    id: "right_is_lava",
+    giftable: true,
+    name: "Avoid right side",
+    max: 1,
+    help: (lvl) => `More coins if you don't touch the right side.`,
+
+    fullHelp: `Whenever you break a brick, your combo will increase by one, so you'll get one more coin from all the next bricks you break.
+         However, your combo will reset as soon as your ball hits the right side . 
+        As soon as your combo rises, the right side becomes red to remind you that you should avoid hitting them. 
+        The effect stacks with other combo perks, combo rises faster with more upgrades but will also reset if any
          of the reset conditions are met.`,
   },
   {
@@ -94,7 +110,6 @@ export const rawUpgrades = [
     name: "Sky is the limit",
     max: 1,
     help: (lvl) => `More coins if you don't touch the top.`,
-
     fullHelp: `Whenever you break a brick, your combo will increase by one. However, your combo will reset as soon as your ball hit the top of the screen. 
         When your combo is above the minimum,  a red bar will appear at the top to remind you that you should avoid hitting it. 
         The effect stacks with other combo perks.`,
