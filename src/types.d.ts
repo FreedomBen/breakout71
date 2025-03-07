@@ -133,7 +133,11 @@ export type RunStats = {
   max_level: number;
 };
 
+export type PerksMap = Partial<{
+  [k in PerkId]: number;
+}>;
+
 export type RunHistoryItem = RunStats & {
-  perks?: { [k in PerkId]: number };
+  perks?: PerksMap;
   appVersion?: string;
 };

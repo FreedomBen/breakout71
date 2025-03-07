@@ -6,7 +6,7 @@ export const rawUpgrades = [
     id: "extra_life",
     name: "+1 life",
     max: 7,
-    help: (lvl) =>
+    help: (lvl: number) =>
       `Survive dropping the ball ${lvl} time${lvl > 1 ? "s" : ""}.`,
     fullHelp: `Normally, you just have one life, and the run is over as soon as you drop it.
          With this perk, you can survive dropping the ball once. A heart in the top right corner will remind you of how many extra lives you have. `,
@@ -18,7 +18,7 @@ export const rawUpgrades = [
     giftable: true,
     name: "Single puck hit streak",
     max: 1,
-    help: (lvl) => `More coins if you break many bricks at once`,
+    help: (lvl: number) => `More coins if you break many bricks at once`,
     fullHelp: `Every time you break a brick, your combo (number of coins per bricks) increases by one. However, as soon as the ball touches your puck, 
         the combo is reset to its default value, and you'll just get one coin per brick. So you should try to hit many bricks in one go for more score. 
         Once your combo rises above the base value, your puck will become red to remind you that it will destroy your combo to touch it with the ball.
@@ -32,7 +32,7 @@ export const rawUpgrades = [
     giftable: true,
     name: "+3 base combo",
     max: 7,
-    help: (lvl) => `Every brick drops at least ${1 + lvl * 3} coins.`,
+    help: (lvl: number) => `Every brick drops at least ${1 + lvl * 3} coins.`,
     fullHelp: `Your combo (number of coins per bricks) normally starts at 1 at the beginning of the level, and resets to one when you bounce around without hitting anything. 
         With this perk, the combo starts 3 points higher, so you'll always get at least 4 coins per brick. Whenever your combo reset, it will go back to 4 and not 1. 
         Your ball will glitter a bit to indicate that its combo is higher than one.`,
@@ -44,7 +44,7 @@ export const rawUpgrades = [
     id: "slow_down",
     name: "Slower ball",
     max: 2,
-    help: (lvl) => `Ball moves ${lvl > 1 ? "even" : ""} more slowly.`,
+    help: (lvl: number) => `Ball moves ${lvl > 1 ? "even" : ""} more slowly.`,
 
     fullHelp: `The ball starts relatively slow, but every level of your run it will start a bit faster, and it will also accelerate if you spend a lot of time in one level. This perk makes it
          more manageable. You can get it at the start every time by enabling kid mode in the menu.`,
@@ -56,7 +56,7 @@ export const rawUpgrades = [
     id: "bigger_puck",
     name: "Bigger puck",
     max: 2,
-    help: (lvl) => `Easily catch ${lvl > 1 ? "even" : ""} more coins.`,
+    help: (lvl: number) => `Easily catch ${lvl > 1 ? "even" : ""} more coins.`,
     fullHelp: `A bigger puck makes it easier to never miss the ball and to catch more coins, and also to precisely angle the bounces (the ball's angle only depends on where it hits the puck). 
         However, a large puck is harder to use around the sides of the level, and will make it sometimes unavoidable to miss (not hit anything) which comes with downsides. `,
   },
@@ -67,7 +67,7 @@ export const rawUpgrades = [
     id: "viscosity",
     name: "Viscosity",
     max: 3,
-    help: (lvl) => `${lvl > 1 ? "Even slower" : "Slower"} coins fall.`,
+    help: (lvl: number) => `${lvl > 1 ? "Even slower" : "Slower"} coins fall.`,
 
     fullHelp: `Coins normally accelerate with gravity and explosions to pretty high speeds. This perk constantly makes them slow down, as if they were in some sort of viscous liquid. 
         This makes catching them easier, and combines nicely with perks that influence the coin's movement. `,
@@ -79,7 +79,7 @@ export const rawUpgrades = [
     giftable: true,
     name: "Avoid left side",
     max: 1,
-    help: (lvl) => `More coins if you don't touch the left side.`,
+    help: (lvl: number) => `More coins if you don't touch the left side.`,
 
     fullHelp: `Whenever you break a brick, your combo will increase by one, so you'll get one more coin from all the next bricks you break.
          However, your combo will reset as soon as your ball hits the left side . 
@@ -94,7 +94,7 @@ export const rawUpgrades = [
     giftable: true,
     name: "Avoid right side",
     max: 1,
-    help: (lvl) => `More coins if you don't touch the right side.`,
+    help: (lvl: number) => `More coins if you don't touch the right side.`,
 
     fullHelp: `Whenever you break a brick, your combo will increase by one, so you'll get one more coin from all the next bricks you break.
          However, your combo will reset as soon as your ball hits the right side . 
@@ -109,7 +109,7 @@ export const rawUpgrades = [
     giftable: true,
     name: "Sky is the limit",
     max: 1,
-    help: (lvl) => `More coins if you don't touch the top.`,
+    help: (lvl: number) => `More coins if you don't touch the top.`,
     fullHelp: `Whenever you break a brick, your combo will increase by one. However, your combo will reset as soon as your ball hit the top of the screen. 
         When your combo is above the minimum,  a red bar will appear at the top to remind you that you should avoid hitting it. 
         The effect stacks with other combo perks.`,
@@ -121,7 +121,7 @@ export const rawUpgrades = [
     id: "skip_last",
     name: "Easy Cleanup",
     max: 7,
-    help: (lvl) =>
+    help: (lvl: number) =>
       `The last ${lvl > 1 ? lvl + " bricks" : "brick"} left will self-destruct.`,
     fullHelp: `You need to break all bricks to go to the next level. However, it can be hard to get the last ones. 
         Clearing a level early brings extra choices when upgrading. Never missing the bricks is also very beneficial. 
@@ -134,7 +134,7 @@ export const rawUpgrades = [
     giftable: true,
     name: "Puck controls ball",
     max: 2,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl == 1
         ? `Control the ball's trajectory.`
         : `Stronger effect on the ball`,
@@ -148,7 +148,7 @@ export const rawUpgrades = [
     id: "coin_magnet",
     name: "Coins magnet",
     max: 3,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl == 1 ? `Puck attracts coins.` : `Stronger effect on the coins`,
 
     fullHelp: `Directs the coins to the puck. The effect is stronger if the coin is close to it already. Catching 90% or 100% of coins bring special bonuses in the game. 
@@ -161,7 +161,7 @@ export const rawUpgrades = [
     giftable: true,
     name: "+1 ball",
     max: 6,
-    help: (lvl) => `Start every levels with ${lvl + 1} balls.`,
+    help: (lvl: number) => `Start every levels with ${lvl + 1} balls.`,
     fullHelp: `As soon as you drop the ball in Breakout 71, you loose. With this perk, you get two balls, and so you can afford to lose one. 
          The lost balls come back on the next level or whenever you use one of your extra lives, if you picked that perk. Having more than one balls makes 
          some further perks available, and of course clears the level faster.`,
@@ -173,7 +173,7 @@ export const rawUpgrades = [
     id: "smaller_puck",
     name: "Smaller puck",
     max: 2,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl == 1
         ? `Also gives +5 base combo.`
         : `Even smaller puck and higher base combo`,
@@ -187,7 +187,8 @@ export const rawUpgrades = [
     giftable: true,
     name: "Piercing",
     max: 3,
-    help: (lvl) => `Ball pierces ${3 * lvl} bricks after a puck bounce.`,
+    help: (lvl: number) =>
+      `Ball pierces ${3 * lvl} bricks after a puck bounce.`,
     fullHelp: `The ball normally bounces as soon as it touches something. With this perk, it will continue its trajectory for up to 3 bricks broken. 
         After that, it will bounce on the 4th brick, and you'll need to touch the puck to reset the counter. This combines particularly well with Sapper. `,
   },
@@ -198,7 +199,7 @@ export const rawUpgrades = [
     giftable: true,
     name: "Picky eater",
     max: 1,
-    help: (lvl) => `More coins if you break bricks color by color.`,
+    help: (lvl: number) => `More coins if you break bricks color by color.`,
 
     fullHelp: `Whenever you break a brick the same color as your ball, your combo increases by one. 
         If it's a different color, the ball takes that new color, but the combo resets.
@@ -215,7 +216,7 @@ export const rawUpgrades = [
     id: "metamorphosis",
     name: "Stain",
     max: 1,
-    help: (lvl) => `Coins color the bricks they touch.`,
+    help: (lvl: number) => `Coins color the bricks they touch.`,
 
     fullHelp: `With this perk, coins will be of the color of the brick they come from, and will color the first brick they touch in the same color. Coins spawn with the speed
         of the ball that broke them, which means you can aim a bit in the direction of the bricks you want to "paint".
@@ -242,7 +243,8 @@ export const rawUpgrades = [
     giftable: true,
     name: "Hot start",
     max: 3,
-    help: (lvl) => `Start at combo ${lvl * 15 + 1}, -${lvl} combo per second`,
+    help: (lvl: number) =>
+      `Start at combo ${lvl * 15 + 1}, -${lvl} combo per second`,
     fullHelp: `At the start of every level, your combo will start at +15 points, but then every second it will be decreased by one. This means the first 15 seconds in a level will spawn
         many more coins than the following ones, and you should make sure that you clear the level quickly. The effect stacks with other combo related perks, so you might be able to raise 
         the combo after the 15s timeout, but it will keep ticking down. Every time you take the perk again, the effect will be more dramatic.
@@ -255,7 +257,7 @@ export const rawUpgrades = [
     giftable: true,
     name: "Sapper",
     max: 7,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl === 1
         ? "The first brick broken becomes a bomb."
         : `The first ${lvl} bricks broken become bombs.`,
@@ -272,7 +274,7 @@ export const rawUpgrades = [
     max: 1,
     giftable: false,
 
-    help: (lvl) => "Bigger explosions",
+    help: (lvl: number) => "Bigger explosions",
 
     fullHelp: `The default explosion clears a 3x3 square, with this it becomes a 5x5 square, and the blowback on the coins is also significantly stronger. `,
   },
@@ -283,7 +285,7 @@ export const rawUpgrades = [
     id: "extra_levels",
     name: "+1 level",
     max: 3,
-    help: (lvl) => `Play ${lvl + 7} levels instead of 7`,
+    help: (lvl: number) => `Play ${lvl + 7} levels instead of 7`,
     fullHelp: `The default run can last a max of 7 levels, after which the game is over and whatever score you reached is your run score. 
         Each level of this perk lets you go one level higher. The last levels are often the ones where you make the most score, so the difference can be dramatic.`,
   },
@@ -294,7 +296,7 @@ export const rawUpgrades = [
     id: "pierce_color",
     name: "Color pierce",
     max: 1,
-    help: (lvl) => `Balls pierce bricks of their color.`,
+    help: (lvl: number) => `Balls pierce bricks of their color.`,
     fullHelp: `Whenever a ball hits a brick of the same color, it will just go through unimpeded. 
         Once it reaches a brick of a different color, it will break it, take its color and bounce.`,
   },
@@ -305,7 +307,7 @@ export const rawUpgrades = [
     id: "soft_reset",
     name: "Soft reset",
     max: 2,
-    help: (lvl) =>
+    help: (lvl: number) =>
       `Combo grows ${lvl > 1 ? "even" : ""} slower but resets less.`,
     fullHelp: `The combo normally climbs every time you break a brick. This will sometimes cancel that climb, but also limit the impact of a combo reset.`,
   },
@@ -316,7 +318,7 @@ export const rawUpgrades = [
     id: "ball_repulse_ball",
     name: "Personal space",
     max: 3,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl === 1 ? `Balls repulse balls.` : "Stronger repulsion force",
 
     fullHelp: `Balls that are less than half a screen width away will start repulsing each other. The repulsion force is stronger if they are close to each other.
@@ -329,7 +331,7 @@ export const rawUpgrades = [
     id: "ball_attract_ball",
     name: "Gravity",
     max: 3,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl === 1 ? `Balls attract balls.` : "Stronger attraction force",
 
     fullHelp: `Balls that are more than half a screen width away will start attracting each other. The attraction force is stronger when they are furthest away from each other.
@@ -341,8 +343,8 @@ export const rawUpgrades = [
     giftable: false,
     id: "puck_repulse_ball",
     name: "Soft landing",
-    max: 3,
-    help: (lvl) =>
+    max: 2,
+    help: (lvl: number) =>
       lvl === 1 ? `Puck repulses balls.` : "Stronger repulsion force",
     fullHelp: `When a ball gets close to the puck, it will start slowing down, and even potentially bouncing without touching the puck.`,
   },
@@ -353,7 +355,7 @@ export const rawUpgrades = [
     id: "wind",
     name: "Wind",
     max: 3,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl === 1 ? `Puck position creates wind.` : "Stronger wind force",
     fullHelp: `The wind depends on where your puck is, if it's in the center of the screen nothing happens, if it's on the left it will blow leftwise, if it's on the right of the screen
         then it will blow rightwise. The wind affects both the balls and coins.`,
@@ -365,7 +367,7 @@ export const rawUpgrades = [
     id: "sturdy_bricks",
     name: "Sturdy bricks",
     max: 4,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl === 1
         ? `Bricks sometimes resist hits but drop more coins.`
         : "Bricks resist more and drop more coins",
@@ -380,7 +382,7 @@ export const rawUpgrades = [
     id: "respawn",
     name: "Respawn",
     max: 4,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl === 1
         ? `The first brick hit of two+ will respawn.`
         : "More bricks can respawn",
@@ -395,7 +397,7 @@ export const rawUpgrades = [
     id: "one_more_choice",
     name: "+1 choice until run end",
     max: 3,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl === 1
         ? `Further level ups will offer one more option in the list.`
         : "Even more options",
@@ -410,7 +412,7 @@ export const rawUpgrades = [
     id: "instant_upgrade",
     name: "+2 upgrades now",
     max: 2,
-    help: (lvl) =>
+    help: (lvl: number) =>
       lvl === 1 ? `-1 choice until run end.` : "Even fewer options",
     fullHelp: `Immediately pick two upgrades, so that you get one free one and one to repay the one used to get this perk. Every further menu to pick upgrades will have fewer options to choose from.`,
   },

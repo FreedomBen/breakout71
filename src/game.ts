@@ -8,6 +8,7 @@ import {
   FlashTypes,
   Level,
   PerkId,
+  PerksMap,
   RunHistoryItem,
   RunStats,
   Upgrade,
@@ -48,7 +49,7 @@ bombSVG.src =
 // Whatever
 let puckWidth = 200;
 
-const perks = {} as { [id in PerkId]: number };
+const perks: PerksMap = {};
 
 let baseSpeed = 12; // applied to x and y
 let combo = 1;
@@ -303,8 +304,8 @@ function resetBalls() {
   const perBall = puckWidth / (count + 1);
   balls = [];
   ballsColor = "#FFF";
-  if(perks.picky_eater || perks.pierce_color){
-    ballsColor=getMajorityValue(bricks.filter(i=>i)) || '#FFF'
+  if (perks.picky_eater || perks.pierce_color) {
+    ballsColor = getMajorityValue(bricks.filter((i) => i)) || "#FFF";
   }
   for (let i = 0; i < count; i++) {
     const x = puck - puckWidth / 2 + perBall * (i + 1);
@@ -470,25 +471,6 @@ function currentLevelInfo() {
   return runLevels[currentLevel % runLevels.length];
 }
 
-function reset_perks(): PerkId {
-  for (let u of upgrades) {
-    perks[u.id] = 0;
-  }
-
-  const giftable = getPossibleUpgrades().filter((u) => u.giftable);
-  const randomGift =
-    nextRunOverrides?.perk ||
-    (isSettingOn("easy") && "slow_down") ||
-    giftable[Math.floor(Math.random() * giftable.length)].id;
-
-  if(!isCreativeModeRun){
-        perks[randomGift] = 1;
-   }
-
-  delete nextRunOverrides.perk;
-  return randomGift as PerkId;
-}
-
 let totalScoreAtRunStart = getTotalScore();
 
 function getPossibleUpgrades() {
@@ -571,19 +553,36 @@ let isCreativeModeRun = false;
 
 let pauseUsesDuringRun = 0;
 
-function restart() {
+function restart(creativeModePerks: PerksMap | undefined = undefined) {
   // When restarting, we want to avoid restarting with the same level we're on, so we exclude from the next
   // run's level list
   totalScoreAtRunStart = getTotalScore();
-  isCreativeModeRun = false;
+
   shuffleLevels(levelTime || score ? currentLevelInfo().name : null);
   resetRunStatistics();
   score = 0;
   pauseUsesDuringRun = 0;
 
-  const randomGift = reset_perks();
+  for (let u of upgrades) {
+    perks[u.id] = 0;
+  }
+  if (creativeModePerks) {
+    Object.assign(perks, creativeModePerks);
+    isCreativeModeRun = true;
+  } else {
+    isCreativeModeRun = false;
 
-  dontOfferTooSoon(randomGift);
+    const giftable = getPossibleUpgrades().filter((u) => u.giftable);
+    const randomGift =
+      (nextRunOverrides?.perk as PerkId) ||
+      (isSettingOn("easy") && "slow_down") ||
+      giftable[Math.floor(Math.random() * giftable.length)].id;
+
+    perks[randomGift] = 1;
+    delete nextRunOverrides.perk;
+
+    dontOfferTooSoon(randomGift);
+  }
 
   setLevel(0);
   pauseRecording();
@@ -728,6 +727,7 @@ function ballBrickHitCheck(ball: Ball) {
 
   return vhit ?? hhit ?? chit;
 }
+
 function coinBrickHitCheck(coin: Coin) {
   // Make ball/coin bonce, and return bricks that were hit
   const radius = coinSize / 2;
@@ -845,7 +845,7 @@ function tick() {
           explodeBrick(index, balls[0], true);
         }
       });
-      level_skip_last_uses++
+      level_skip_last_uses++;
     }
     if (!remainingBricks && !coins.length) {
       if (currentLevel + 1 < max_levels()) {
@@ -1108,7 +1108,7 @@ function ballTick(ball: Ball, delta: number) {
         x: puck,
         y: gameZoneHeight,
       },
-      perks.puck_repulse_ball,
+      perks.puck_repulse_ball + 1,
       false,
     );
   }
@@ -1968,7 +1968,9 @@ function renderAllBricks() {
     "_" +
     redBorderOnBricksWithWrongColor +
     "_" +
-    ballsColor+'_'+perks.pierce_color;
+    ballsColor +
+    "_" +
+    perks.pierce_color;
   if (newKey !== cachedBricksRenderKey) {
     cachedBricksRenderKey = newKey;
 
@@ -1986,8 +1988,12 @@ function renderAllBricks() {
         y = brickCenterY(index);
 
       if (!color) return;
-      
-      const borderColor = (ballsColor !== color && color !== "black" && redBorderOnBricksWithWrongColor && "red") ||
+
+      const borderColor =
+        (ballsColor !== color &&
+          color !== "black" &&
+          redBorderOnBricksWithWrongColor &&
+          "red") ||
         color;
 
       drawBrick(canctx, color, borderColor, x, y);
@@ -2681,8 +2687,10 @@ export function isSettingOn(key: OptionId) {
 export function toggleSetting(key: OptionId) {
   cachedSettings[key] = !isSettingOn(key);
   try {
-    const lskey = "breakout-settings-enable-" + key;
-    localStorage.setItem(lskey, JSON.stringify(cachedSettings[key]));
+    localStorage.setItem(
+      "breakout-settings-enable-" + key,
+      JSON.stringify(cachedSettings[key]),
+    );
   } catch (e) {
     console.warn(e);
   }
@@ -2748,7 +2756,7 @@ async function openSettingsPanel() {
         },
       });
   }
-  const creativeModeTreshold=Math.max(...upgrades.map((u) => u.threshold))
+  const creativeModeThreshold = Math.max(...upgrades.map((u) => u.threshold));
 
   const cb = await asyncAlert<() => void>({
     title: "Breakout 71",
@@ -2789,16 +2797,18 @@ async function openSettingsPanel() {
               },
             }),
 
-
       {
         text: "Creative mode",
-        help:getTotalScore() < creativeModeTreshold ? "Unlocks at total score $"+creativeModeTreshold: "Test runs with custom perks" ,
-       disabled: getTotalScore() < creativeModeTreshold,
+        help:
+          getTotalScore() < creativeModeThreshold
+            ? "Unlocks at total score $" + creativeModeThreshold
+            : "Test runs with custom perks",
+        disabled: getTotalScore() < creativeModeThreshold,
         async value() {
           let creativeModePerks = {},
-            choice;
+            choice: "start" | Upgrade | void;
           while (
-            (choice = await asyncAlert<string | Upgrade>({
+            (choice = await asyncAlert<"start" | Upgrade>({
               title: "Select perks",
               text: 'Select perks below and press "start run" to try them out in a test run. Scores and stats are not recorded.',
               actionsAsGrid: true,
@@ -2820,11 +2830,8 @@ async function openSettingsPanel() {
             }))
           ) {
             if (choice === "start") {
-              restart();
-              isCreativeModeRun = true;
-              Object.assign(perks,  creativeModePerks);
-              resetCombo(undefined, undefined);
-              resetBalls();
+              restart(creativeModePerks);
+
               break;
             } else if (choice) {
               creativeModePerks[choice.id] =
@@ -2908,13 +2915,16 @@ async function openUnlocksList() {
       }),
   ];
 
+  const percentUnlock = Math.round(
+    (actions.filter((a) => !a.disabled).length / actions.length) * 100,
+  );
   const tryOn = await asyncAlert({
-    title: `You unlocked ${Math.round((actions.filter((a) => !a.disabled).length / actions.length) * 100)}% of the game.`,
+    title: `You unlocked ${percentUnlock}% of the game.`,
     text: `
-                       <p> Your total score is ${ts}. Below are all the upgrades and levels the games has to offer. They greyed out ones can be unlocked by increasing your total score. </p> 
+                       <p> Your total score is ${ts}. Below are all the upgrades and levels the games has to offer.
+                        ${percentUnlock < 100 ? "The greyed out ones can be unlocked by increasing your total score. The total score increases every time you score in game." : ""}</p> 
                        `,
-    textAfterButtons: `<p>
-The total score increases every time you score in game.
+    textAfterButtons: `<p> 
 Your high score is ${highScore}. 
 Click an item above to start a run with it.
                 </p>`,
@@ -3302,18 +3312,17 @@ document.addEventListener("keyup", (e) => {
   e.preventDefault();
 });
 
-
-function sample<T>(arr:T[]):T{
-    return arr[Math.floor(arr.length*Math.random())]
+function sample<T>(arr: T[]): T {
+  return arr[Math.floor(arr.length * Math.random())];
 }
 
-function getMajorityValue(arr:string[]):string{
-    const count = {}
-    arr.forEach(v=>count[v]=(count[v]||0)+1)
-    const max = Math.max(...Object.values(count))
-    return sample(Object.keys(count).filter(k=>count[k]==max))
+function getMajorityValue(arr: string[]): string {
+  const count = {};
+  arr.forEach((v) => (count[v] = (count[v] || 0) + 1));
+  // Object.values inline polyfill
+  const max = Math.max(...Object.keys(count).map((k) => count[k]));
+  return sample(Object.keys(count).filter((k) => count[k] == max));
 }
- 
 
 fitSize();
 restart();
