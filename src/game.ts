@@ -5,7 +5,6 @@ import {
   Coin,
   colorString,
   Flash,
-  FlashTypes,
   Level,
   PerkId,
   PerksMap,
@@ -13,27 +12,18 @@ import {
   RunStats,
   Upgrade,
 } from "./types";
-import { OptionId, options } from "./options";
+import { OptionId, options} from "./options";
 
 const MAX_COINS = 400;
 const MAX_PARTICLES = 600;
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
-let ctx = gameCanvas.getContext("2d", { alpha: false });
+const ctx = gameCanvas.getContext("2d", { alpha: false }) as CanvasRenderingContext2D;
 
 const puckColor = "#FFF";
 let ballSize = 20;
 const coinSize = Math.round(ballSize * 0.8);
 const puckHeight = ballSize;
 
-allLevels.forEach((l, li) => {
-  l.threshold =
-    li < 8
-      ? 0
-      : Math.round(
-          Math.min(Math.pow(10, 1 + (li + l.size) / 30) * 10, 5000) * li,
-        );
-  l.sortKey = ((Math.random() + 3) / 3.5) * l.bricks.filter((i) => i).length;
-});
 
 let runLevels: Level[] = [];
 
@@ -49,7 +39,13 @@ bombSVG.src =
 // Whatever
 let puckWidth = 200;
 
-const perks: PerksMap = {};
+const makeEmptyPerksMap = ()=>{
+  const p = {} as any
+  upgrades.forEach(u=>p[u.id]=0)
+  return p as PerksMap
+}
+
+const perks: PerksMap = makeEmptyPerksMap();
 
 let baseSpeed = 12; // applied to x and y
 let combo = 1;
@@ -254,6 +250,7 @@ function spawnExplosion(
       vy: (Math.random() - 0.5) * 30,
       color,
       duration,
+      ethereal:false,
     });
   }
 }
@@ -281,8 +278,8 @@ function addToScore(coin: Coin) {
       time: levelTime,
       size: coinSize / 2,
       color: coin.color,
-      x: coin.previousx,
-      y: coin.previousy,
+      x: coin.previousX,
+      y: coin.previousY,
       vx: (gameCanvas.width - coin.x) / 100,
       vy: -coin.y / 100,
       ethereal: true,
@@ -309,19 +306,25 @@ function resetBalls() {
   }
   for (let i = 0; i < count; i++) {
     const x = puck - puckWidth / 2 + perBall * (i + 1);
+    const vx=Math.random() > 0.5 ? baseSpeed : -baseSpeed
+
     balls.push({
       x,
-      previousx: x,
+      previousX: x,
       y: gameZoneHeight - 1.5 * ballSize,
-      previousy: gameZoneHeight - 1.5 * ballSize,
-      vx: Math.random() > 0.5 ? baseSpeed : -baseSpeed,
+      previousY: gameZoneHeight - 1.5 * ballSize,
+      vx ,
+      previousVX:vx,
       vy: -baseSpeed,
+      previousVY: -baseSpeed,
+
       sx: 0,
       sy: 0,
       sparks: 0,
       piercedSinceBounce: 0,
       hitSinceBounce: 0,
       hitItem: [],
+      bouncesList: [],
       sapperUses: 0,
     });
   }
@@ -334,11 +337,13 @@ function putBallsAtPuck() {
   balls.forEach((ball, i) => {
     const x = puck - puckWidth / 2 + perBall * (i + 1);
     ball.x = x;
-    ball.previousx = x;
+    ball.previousX = x;
     ball.y = gameZoneHeight - 1.5 * ballSize;
-    ball.previousy = ball.y;
+    ball.previousY = ball.y;
     ball.vx = Math.random() > 0.5 ? baseSpeed : -baseSpeed;
+    ball.previousVX=ball.vx
     ball.vy = -baseSpeed;
+    ball.previousVY=ball.vy
     ball.sx = 0;
     ball.sy = 0;
     ball.hitItem = [];
@@ -479,7 +484,7 @@ function getPossibleUpgrades() {
     .filter((u) => !u?.requires || perks[u?.requires]);
 }
 
-function shuffleLevels(nameToAvoid = null) {
+function shuffleLevels(nameToAvoid :string|null= null) {
   const target = nextRunOverrides?.level;
   const firstLevel = nextRunOverrides?.level
     ? allLevels.filter((l) => l.name === target)
@@ -497,7 +502,7 @@ function shuffleLevels(nameToAvoid = null) {
 }
 
 function getUpgraderUnlockPoints() {
-  let list = [];
+  let list = [] as {threshold:number,title:string}[];
 
   upgrades.forEach((u) => {
     if (u.threshold) {
@@ -553,7 +558,7 @@ let isCreativeModeRun = false;
 
 let pauseUsesDuringRun = 0;
 
-function restart(creativeModePerks: PerksMap | undefined = undefined) {
+function restart(creativeModePerks: Partial<PerksMap> | undefined = undefined) {
   // When restarting, we want to avoid restarting with the same level we're on, so we exclude from the next
   // run's level list
   totalScoreAtRunStart = getTotalScore();
@@ -613,7 +618,7 @@ gameCanvas.addEventListener("mouseup", (e) => {
   } else {
     play();
     if (isSettingOn("pointerLock")) {
-      gameCanvas.requestPointerLock();
+      gameCanvas.requestPointerLock().then();
     }
   }
 });
@@ -689,10 +694,10 @@ function shouldPierceByColor(
 function ballBrickHitCheck(ball: Ball) {
   const radius = ballSize / 2;
   // Make ball/coin bonce, and return bricks that were hit
-  const { x, y, previousx, previousy } = ball;
+  const { x, y, previousX, previousY } = ball;
 
-  const vhit = hitsSomething(previousx, y, radius);
-  const hhit = hitsSomething(x, previousy, radius);
+  const vhit = hitsSomething(previousX, y, radius);
+  const hhit = hitsSomething(x, previousY, radius);
   const chit =
     (typeof vhit == "undefined" &&
       typeof hhit == "undefined" &&
@@ -714,13 +719,13 @@ function ballBrickHitCheck(ball: Ball) {
 
   if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
     if (!pierce) {
-      ball.y = ball.previousy;
+      ball.y = ball.previousY;
       ball.vy *= -1;
     }
   }
   if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
     if (!pierce) {
-      ball.x = ball.previousx;
+      ball.x = ball.previousX;
       ball.vx *= -1;
     }
   }
@@ -731,10 +736,10 @@ function ballBrickHitCheck(ball: Ball) {
 function coinBrickHitCheck(coin: Coin) {
   // Make ball/coin bonce, and return bricks that were hit
   const radius = coinSize / 2;
-  const { x, y, previousx, previousy } = coin;
+  const { x, y, previousX, previousY } = coin;
 
-  const vhit = hitsSomething(previousx, y, radius);
-  const hhit = hitsSomething(x, previousy, radius);
+  const vhit = hitsSomething(previousX, y, radius);
+  const hhit = hitsSomething(x, previousY, radius);
   const chit =
     (typeof vhit == "undefined" &&
       typeof hhit == "undefined" &&
@@ -742,7 +747,7 @@ function coinBrickHitCheck(coin: Coin) {
     undefined;
 
   if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
-    coin.y = coin.previousy;
+    coin.y = coin.previousY;
     coin.vy *= -1;
 
     //   Roll on corners
@@ -759,7 +764,7 @@ function coinBrickHitCheck(coin: Coin) {
     }
   }
   if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
-    coin.x = coin.previousx;
+    coin.x = coin.previousX;
     coin.vx *= -1;
   }
   return vhit ?? hhit ?? chit;
@@ -767,14 +772,14 @@ function coinBrickHitCheck(coin: Coin) {
 
 function bordersHitCheck(coin: Coin | Ball, radius: number, delta: number) {
   if (coin.destroyed) return;
-  coin.previousx = coin.x;
-  coin.previousy = coin.y;
+  coin.previousX = coin.x;
+  coin.previousY = coin.y;
   coin.x += coin.vx * delta;
   coin.y += coin.vy * delta;
   coin.sx ||= 0;
   coin.sy ||= 0;
-  coin.sx += coin.previousx - coin.x;
-  coin.sy += coin.previousy - coin.y;
+  coin.sx += coin.previousX - coin.x;
+  coin.sy += coin.previousY - coin.y;
   coin.sx *= 0.9;
   coin.sy *= 0.9;
 
@@ -976,7 +981,7 @@ function tick() {
       const baseParticle = !isSettingOn("basic") &&
         (combo - baseCombo()) * Math.random() > 5 &&
         running && {
-          type: "particle" as FlashTypes,
+          type: "particle" as const,
           duration: 100 * (Math.random() + 1),
           time: levelTime,
           size: coinSize / 2,
@@ -1057,8 +1062,8 @@ function isTelekinesisActive(ball: Ball) {
 }
 
 function ballTick(ball: Ball, delta: number) {
-  ball.previousvx = ball.vx;
-  ball.previousvy = ball.vy;
+  ball.previousVX = ball.vx;
+  ball.previousVY = ball.vy;
 
   let speedLimitDampener =
     1 +
@@ -1158,7 +1163,7 @@ function ballTick(ball: Ball, delta: number) {
       resetCombo(ball.x, ball.y + ballSize);
     }
     sounds.wallBeep(ball.x);
-    ball.bouncesList?.push({ x: ball.previousx, y: ball.previousy });
+    ball.bouncesList?.push({ x: ball.previousX, y: ball.previousY });
   }
 
   // Puck collision
@@ -1208,8 +1213,8 @@ function ballTick(ball: Ball, delta: number) {
     ball.piercedSinceBounce = 0;
     ball.bouncesList = [
       {
-        x: ball.previousx,
-        y: ball.previousy,
+        x: ball.previousX,
+        y: ball.previousY,
       },
     ];
   }
@@ -1270,6 +1275,7 @@ function ballTick(ball: Ball, delta: number) {
         y: ball.y,
         vx: (Math.random() - 0.5) * baseSpeed,
         vy: (Math.random() - 0.5) * baseSpeed,
+      ethereal:false,
       });
       ball.sparks = 0;
     }
@@ -1444,8 +1450,8 @@ function getHistograms() {
       // One bin per unique value, max 10
       const binsCount = Math.min(values.length, 10);
       if (binsCount < 3) return "";
-      const bins = [];
-      const binsTotal = [];
+      const bins = [] as number[];
+      const binsTotal = [] as number[];
       for (let i = 0; i < binsCount; i++) {
         bins.push(0);
         binsTotal.push(0);
@@ -1623,11 +1629,11 @@ function explodeBrick(index: number, ball: Ball, isExplosion: boolean) {
         color: perks.metamorphosis ? color : "gold",
         x: cx,
         y: cy,
-        previousx: cx,
-        previousy: cy,
+        previousX: cx,
+        previousY: cy,
         // Use previous speed because the ball has already bounced
-        vx: ball.previousvx * (0.5 + Math.random()),
-        vy: ball.previousvy * (0.5 + Math.random()),
+        vx: ball.previousVX * (0.5 + Math.random()),
+        vy: ball.previousVY * (0.5 + Math.random()),
         sx: 0,
         sy: 0,
         a: Math.random() * Math.PI * 2,
@@ -1762,8 +1768,11 @@ function render() {
         ) as CanvasRenderingContext2D;
         bgctx.fillStyle = level.color || "#000";
         bgctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-        bgctx.fillStyle = ctx.createPattern(background, "repeat");
-        bgctx.fillRect(0, 0, width, height);
+        const pattern=ctx.createPattern(background, "repeat")
+        if(pattern){
+          bgctx.fillStyle = pattern;
+          bgctx.fillRect(0, 0, width, height);
+        }
       }
 
       ctx.drawImage(backgroundCanvas, 0, 0);
@@ -1809,12 +1818,12 @@ function render() {
   );
 
   flashes.forEach((flash) => {
-    const { x, y, time, color, size, type, text, duration } = flash;
+    const { x, y, time, color, size, type,  duration } = flash;
     const elapsed = levelTime - time;
     ctx.globalAlpha = Math.max(0, Math.min(1, 2 - (elapsed / duration) * 2));
     if (type === "text") {
       ctx.globalCompositeOperation = "source-over";
-      drawText(ctx, text, color, size, x, y - elapsed / 10);
+      drawText(ctx, flash.text, color, size, x, y - elapsed / 10);
     } else if (type === "particle") {
       ctx.globalCompositeOperation = "screen";
       drawBall(ctx, color, size, x, y);
@@ -1952,7 +1961,7 @@ function render() {
 }
 
 let cachedBricksRender = document.createElement("canvas");
-let cachedBricksRenderKey = null;
+let cachedBricksRenderKey = '';
 
 function renderAllBricks() {
   ctx.globalAlpha = 1;
@@ -2007,14 +2016,14 @@ function renderAllBricks() {
   ctx.drawImage(cachedBricksRender, offsetX, 0);
 }
 
-let cachedGraphics = {};
+let cachedGraphics :  {[k:string]:HTMLCanvasElement}= {};
 
 function drawPuck(
   ctx: CanvasRenderingContext2D,
   color: colorString,
   puckWidth: number,
   puckHeight: number,
-  yoffset = 0,
+  yOffset = 0,
 ) {
   const key = "puck" + color + "_" + puckWidth + "_" + puckHeight;
 
@@ -2044,7 +2053,7 @@ function drawPuck(
   ctx.drawImage(
     cachedGraphics[key],
     Math.round(puck - puckWidth / 2),
-    gameZoneHeight - puckHeight * 2 + yoffset,
+    gameZoneHeight - puckHeight * 2 + yOffset,
   );
 }
 
@@ -2549,10 +2558,18 @@ window.addEventListener("visibilitychange", () => {
   }
 });
 
-const scoreDisplay = document.getElementById("score");
+const scoreDisplay = document.getElementById("score") as HTMLButtonElement;
 let alertsOpen = 0,
-  closeModal = null;
+  closeModal :null |( ()=>void) = null;
 
+type AsyncAlertAction<t> = {
+    text?: string;
+    value?: t;
+    help?: string;
+    disabled?: boolean;
+    icon?: string;
+    className?: string;
+  }
 function asyncAlert<t>({
   title,
   text,
@@ -2563,14 +2580,7 @@ function asyncAlert<t>({
 }: {
   title?: string;
   text?: string;
-  actions?: {
-    text?: string;
-    value?: t;
-    help?: string;
-    disabled?: boolean;
-    icon?: string;
-    className?: string;
-  }[];
+  actions?: AsyncAlertAction<t>[];
   textAfterButtons?: string;
   allowClose?: boolean;
   actionsAsGrid?: boolean;
@@ -2581,7 +2591,7 @@ function asyncAlert<t>({
     document.body.appendChild(popupWrap);
     popupWrap.className = "popup " + (actionsAsGrid ? "actionsAsGrid " : "");
 
-    function closeWithResult(value: t | void) {
+    function closeWithResult(value: t | undefined) {
       resolve(value);
       // Doing this async lets the menu scroll persist if it's shown a second time
       setTimeout(() => {
@@ -2595,10 +2605,10 @@ function asyncAlert<t>({
       closeButton.className = "close-modale";
       closeButton.addEventListener("click", (e) => {
         e.preventDefault();
-        closeWithResult(null);
+        closeWithResult(undefined);
       });
       closeModal = () => {
-        closeWithResult(null);
+        closeWithResult(undefined);
       };
       popupWrap.appendChild(closeButton);
     }
@@ -2621,7 +2631,7 @@ function asyncAlert<t>({
     popup.appendChild(buttons);
 
     actions
-      .filter((i) => i)
+      ?.filter((i) => i)
       .forEach(({ text, value, help, disabled, className = "", icon = "" }) => {
         const button = document.createElement("button");
 
@@ -2656,10 +2666,10 @@ ${icon}
       popup.querySelector("button:not([disabled])") as HTMLButtonElement
     )?.focus();
   }).then(
-    (v: t | null) => {
+    (v: unknown) => {
       alertsOpen--;
       closeModal = null;
-      return v;
+      return v as  t | undefined;
     },
     () => {
       closeModal = null;
@@ -2669,14 +2679,13 @@ ${icon}
 }
 
 // Settings
-let cachedSettings = {};
+let cachedSettings : Partial<{[key in OptionId]:boolean}>= {};
 
 export function isSettingOn(key: OptionId) {
   if (typeof cachedSettings[key] == "undefined") {
     try {
-      cachedSettings[key] = JSON.parse(
-        localStorage.getItem("breakout-settings-enable-" + key),
-      );
+        const ls=localStorage.getItem("breakout-settings-enable-" + key)
+        if(ls) cachedSettings[key] = JSON.parse(ls) as boolean;
     } catch (e) {
       console.warn(e);
     }
@@ -2694,7 +2703,7 @@ export function toggleSetting(key: OptionId) {
   } catch (e) {
     console.warn(e);
   }
-  if (options[key].afterChange) options[key].afterChange();
+  options[key].afterChange();
 }
 
 scoreDisplay.addEventListener("click", (e) => {
@@ -2732,7 +2741,7 @@ async function openScorePanel() {
   }
 }
 
-document.getElementById("menu").addEventListener("click", (e) => {
+document.getElementById("menu")?.addEventListener("click", (e) => {
   e.preventDefault();
   openSettingsPanel().then();
 });
@@ -2740,10 +2749,22 @@ document.getElementById("menu").addEventListener("click", (e) => {
 async function openSettingsPanel() {
   pause(true);
 
-  const optionsList = [];
-  for (const key in options) {
+  const actions :AsyncAlertAction<()=>void>[]= [{
+        text: "Resume",
+        help: "Return to your run",
+        value() {},
+      },
+      {
+        text: "Starting perk",
+        help: "Try perks and levels you unlocked",
+        value() {
+          openUnlocksList();
+        },
+      }];
+
+  for (const key  of Object.keys(options) as OptionId[] ) {
     if (options[key])
-      optionsList.push({
+      actions.push({
         disabled: options[key].disabled(),
         icon: isSettingOn(key)
           ? icons["icon:checkmark_checked"]
@@ -2758,46 +2779,28 @@ async function openSettingsPanel() {
   }
   const creativeModeThreshold = Math.max(...upgrades.map((u) => u.threshold));
 
-  const cb = await asyncAlert<() => void>({
-    title: "Breakout 71",
-    text: ` 
-        `,
-    allowClose: true,
-    actions: [
-      {
-        text: "Resume",
-        help: "Return to your run",
-        value() {},
-      },
-      {
-        text: "Starting perk",
-        help: "Try perks and levels you unlocked",
-        value() {
-          openUnlocksList();
-        },
-      },
-      ...optionsList,
-
-      (document.fullscreenEnabled || document.webkitFullscreenEnabled) &&
-        (document.fullscreenElement !== null
-          ? {
+  if(document.fullscreenEnabled || document.webkitFullscreenEnabled){
+      if(document.fullscreenElement !== null){
+         actions.push( {
               text: "Exit Fullscreen",
               icon: icons["icon:exit_fullscreen"],
               help: "Might not work on some machines",
               value() {
                 toggleFullScreen();
               },
-            }
-          : {
+            } )
+      }else{
+          actions.push({
               icon: icons["icon:fullscreen"],
               text: "Fullscreen",
               help: "Might not work on some machines",
               value() {
                 toggleFullScreen();
-              },
-            }),
-
-      {
+              }
+            })
+      }
+  }
+  actions.push({
         text: "Creative mode",
         help:
           getTotalScore() < creativeModeThreshold
@@ -2805,7 +2808,7 @@ async function openSettingsPanel() {
             : "Test runs with custom perks",
         disabled: getTotalScore() < creativeModeThreshold,
         async value() {
-          let creativeModePerks = {},
+          let creativeModePerks :Partial<{ [id in PerkId]:number }>= {},
             choice: "start" | Upgrade | void;
           while (
             (choice = await asyncAlert<"start" | Upgrade>({
@@ -2839,9 +2842,8 @@ async function openSettingsPanel() {
             }
           }
         },
-      },
-
-      {
+      })
+    actions.push({
         text: "Reset Game",
         help: "Erase high score and statistics",
         async value() {
@@ -2865,8 +2867,14 @@ async function openSettingsPanel() {
             window.location.reload();
           }
         },
-      },
-    ],
+      })
+
+
+  const cb = await asyncAlert<() => void>({
+    title: "Breakout 71",
+    text: ``,
+    allowClose: true,
+    actions ,
     textAfterButtons: `
         <p>
             <span>Made in France by <a href="https://lecaro.me">Renan LE CARO</a>.</span> 
@@ -2982,7 +2990,7 @@ function repulse(a: Ball, b: BallLike, power: number, impactsBToo: boolean) {
     (((-power * (max - distance)) / (max * 1.2) / 3) *
       Math.min(500, levelTime)) /
     500;
-  if (impactsBToo) {
+  if (impactsBToo && typeof b.vx !== 'undefined' && typeof b.vy !== 'undefined') {
     b.vx += dx * fact;
     b.vy += dy * fact;
   }
@@ -3003,7 +3011,7 @@ function repulse(a: Ball, b: BallLike, power: number, impactsBToo: boolean) {
     vx: -dx * speed + a.vx + (Math.random() - 0.5) * rand,
     vy: -dy * speed + a.vy + (Math.random() - 0.5) * rand,
   });
-  if (impactsBToo) {
+  if (impactsBToo&& typeof b.vx !== 'undefined' && typeof b.vy !== 'undefined') {
     flashes.push({
       type: "particle",
       duration: 100,
@@ -3019,7 +3027,7 @@ function repulse(a: Ball, b: BallLike, power: number, impactsBToo: boolean) {
   }
 }
 
-function attract(a: Ball, b: BallLike, power: number) {
+function attract(a: Ball, b: Ball, power: number) {
   const distance = distanceBetween(a, b);
   // Ensure we don't get soft locked
   const min = gameZoneWidth * 0.5;
@@ -3063,7 +3071,7 @@ function attract(a: Ball, b: BallLike, power: number) {
   });
 }
 
-let mediaRecorder: MediaRecorder,
+let mediaRecorder: MediaRecorder|null,
   captureStream: MediaStream,
   captureTrack: CanvasCaptureMediaStreamTrack,
   recordCanvas: HTMLCanvasElement,
@@ -3137,7 +3145,7 @@ function startRecordingGame() {
   recordCanvas.height = gameZoneHeight;
 
   // drawMainCanvasOnSmallCanvas()
-  const recordedChunks = [];
+  const recordedChunks :Blob[]= [];
 
   const instance = new MediaRecorder(captureStream, {
     videoBitsPerSecond: 3500000,
@@ -3150,7 +3158,7 @@ function startRecordingGame() {
   };
 
   instance.onstop = async function () {
-    let targetDiv: HTMLElement;
+    let targetDiv: HTMLElement|null;
     let blob = new Blob(recordedChunks, { type: "video/webm" });
     if (blob.size < 200000) return; // under 0.2MB, probably bugged out or pointlessly short
 
@@ -3166,8 +3174,6 @@ function startRecordingGame() {
     video.disableRemotePlayback = true;
     video.width = recordCanvas.width;
     video.height = recordCanvas.height;
-    // targetDiv.style.width = recordCanvas.width + 'px'
-    // targetDiv.style.height = recordCanvas.height + 'px'
     video.loop = true;
     video.muted = true;
     video.playsInline = true;
@@ -3251,13 +3257,13 @@ function toggleFullScreen() {
   }
 }
 
-const pressed = {
+const pressed :{[k:string]:number}= {
   ArrowLeft: 0,
   ArrowRight: 0,
   Shift: 0,
 };
 
-function setKeyPressed(key: string, on: 0 | 1) {
+function setKeyPressed(key: string , on: 0 | 1) {
   pressed[key] = on;
   keyboardPuckSpeed =
     ((pressed.ArrowRight - pressed.ArrowLeft) *
@@ -3317,7 +3323,7 @@ function sample<T>(arr: T[]): T {
 }
 
 function getMajorityValue(arr: string[]): string {
-  const count = {};
+  const count :{[k:string]:number}= {};
   arr.forEach((v) => (count[v] = (count[v] || 0) + 1));
   // Object.values inline polyfill
   const max = Math.max(...Object.keys(count).map((k) => count[k]));

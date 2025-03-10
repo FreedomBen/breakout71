@@ -69,7 +69,7 @@ function levelIconHTML(
   return `<img alt="${levelName}" width="${size}" height="${size}" src="${c.toDataURL()}"/>`;
 }
 
-export const icons = {};
+export const icons = {} as {[k:string]:string};
 
 export const allLevels = rawLevelsList
   .map((level) => {
@@ -88,7 +88,18 @@ export const allLevels = rawLevelsList
       svg,
     };
   })
-  .filter((l) => !l.name.startsWith("icon:")) as Level[];
+  .filter((l) => !l.name.startsWith("icon:"))
+    .map((l,li)=>({
+      ...l,
+      threshold:li < 8
+      ? 0
+      : Math.round(
+          Math.min(Math.pow(10, 1 + (li + l.size) / 30) * 10, 5000) * li,
+        ),
+      sortKey:((Math.random() + 3) / 3.5) * l.bricks.filter((i) => i).length
+    }))  as Level[];
+
+
 
 export const upgrades = rawUpgrades.map((u) => ({
   ...u,

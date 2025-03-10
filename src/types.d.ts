@@ -15,8 +15,8 @@ export type Level = {
   bricks: colorString[];
   svg: string;
   color: string;
-  threshold?: number;
-  sortKey?: number;
+  threshold: number;
+  sortKey: number;
 };
 
 export type Palette = { [k: string]: string };
@@ -69,8 +69,8 @@ export type Coin = {
   color: colorString;
   x: number;
   y: number;
-  previousx: number;
-  previousy: number;
+  previousX: number;
+  previousY: number;
   vx: number;
   vy: number;
   sx: number;
@@ -83,40 +83,51 @@ export type Coin = {
 };
 export type Ball = {
   x: number;
-  previousx: number;
+  previousX: number;
   y: number;
-  previousy: number;
+  previousY: number;
   vx: number;
   vy: number;
+  previousVX: number;
+  previousVY: number;
   sx: number;
   sy: number;
   sparks: number;
   piercedSinceBounce: number;
   hitSinceBounce: number;
   hitItem: { index: number; color: string }[];
-  bouncesList?: { x: number; y: number }[];
+  bouncesList: { x: number; y: number }[];
   sapperUses: number;
   destroyed?: boolean;
-  previousvx?: number;
-  previousvy?: number;
 };
 
-export type FlashTypes = "text" | "particle" | "ball";
-
-export type Flash = {
-  type: FlashTypes;
-  text?: string;
-  time: number;
+interface BaseFlash {
+   time: number;
   color: colorString;
-  x: number;
-  y: number;
   duration: number;
   size: number;
-  vx?: number;
-  vy?: number;
-  ethereal?: boolean;
   destroyed?: boolean;
-};
+  x: number;
+  y: number;
+}
+interface ParticleFlash extends BaseFlash{
+  type: 'particle';
+  vx: number;
+  vy: number;
+  ethereal: boolean;
+}
+
+interface TextFlash extends BaseFlash{
+ type:'text';
+   text: string;
+}
+
+interface BallFlash extends BaseFlash{
+  type:'ball';
+}
+
+export type Flash =  ParticleFlash|TextFlash|BallFlash
+
 
 export type RunStats = {
   started: number;
@@ -133,9 +144,11 @@ export type RunStats = {
   max_level: number;
 };
 
-export type PerksMap = Partial<{
+export type PerksMap = {
   [k in PerkId]: number;
-}>;
+};
+
+
 
 export type RunHistoryItem = RunStats & {
   perks?: PerksMap;
