@@ -12,18 +12,19 @@ import {
   RunStats,
   Upgrade,
 } from "./types";
-import { OptionId, options} from "./options";
+import { OptionId, options } from "./options";
 
 const MAX_COINS = 400;
 const MAX_PARTICLES = 600;
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
-const ctx = gameCanvas.getContext("2d", { alpha: false }) as CanvasRenderingContext2D;
+const ctx = gameCanvas.getContext("2d", {
+  alpha: false,
+}) as CanvasRenderingContext2D;
 
 const puckColor = "#FFF";
 let ballSize = 20;
 const coinSize = Math.round(ballSize * 0.8);
 const puckHeight = ballSize;
-
 
 let runLevels: Level[] = [];
 
@@ -39,11 +40,11 @@ bombSVG.src =
 // Whatever
 let puckWidth = 200;
 
-const makeEmptyPerksMap = ()=>{
-  const p = {} as any
-  upgrades.forEach(u=>p[u.id]=0)
-  return p as PerksMap
-}
+const makeEmptyPerksMap = () => {
+  const p = {} as any;
+  upgrades.forEach((u) => (p[u.id] = 0));
+  return p as PerksMap;
+};
 
 const perks: PerksMap = makeEmptyPerksMap();
 
@@ -166,8 +167,12 @@ background.addEventListener("load", () => {
   needsRender = true;
 });
 
+let lastWidth = 0,
+  lastHeight = 0;
 export const fitSize = () => {
   const { width, height } = gameCanvas.getBoundingClientRect();
+  lastWidth = width;
+  lastHeight = height;
   gameCanvas.width = width;
   gameCanvas.height = height;
   ctx.fillStyle = currentLevelInfo()?.color || "black";
@@ -177,12 +182,10 @@ export const fitSize = () => {
   backgroundCanvas.height = height;
 
   gameZoneHeight = isSettingOn("mobile-mode") ? (height * 80) / 100 : height;
-  const baseWidth = Math.round(
-    Math.min(gameCanvas.width, gameZoneHeight * 0.73),
-  );
+  const baseWidth = Math.round(Math.min(lastWidth, gameZoneHeight * 0.73));
   brickWidth = Math.floor(baseWidth / gridSize / 2) * 2;
   gameZoneWidth = brickWidth * gridSize;
-  offsetX = Math.floor((gameCanvas.width - gameZoneWidth) / 2);
+  offsetX = Math.floor((lastWidth - gameZoneWidth) / 2);
   offsetXRoundedDown = offsetX;
   if (offsetX < ballSize) offsetXRoundedDown = 0;
   gameZoneWidthRoundedUp = width - 2 * offsetXRoundedDown;
@@ -201,6 +204,12 @@ export const fitSize = () => {
 };
 window.addEventListener("resize", fitSize);
 window.addEventListener("fullscreenchange", fitSize);
+
+setInterval(() => {
+  // Sometimes, the page changes size without triggering the event (when switching to fullscreen, closing debug panel..)
+  const { width, height } = gameCanvas.getBoundingClientRect();
+  if (width !== lastWidth || height !== lastHeight) fitSize();
+}, 1000);
 
 function recomputeTargetBaseSpeed() {
   // We never want the ball to completely stop, it will move at least 3px per frame
@@ -250,7 +259,7 @@ function spawnExplosion(
       vy: (Math.random() - 0.5) * 30,
       color,
       duration,
-      ethereal:false,
+      ethereal: false,
     });
   }
 }
@@ -280,7 +289,7 @@ function addToScore(coin: Coin) {
       color: coin.color,
       x: coin.previousX,
       y: coin.previousY,
-      vx: (gameCanvas.width - coin.x) / 100,
+      vx: (lastWidth - coin.x) / 100,
       vy: -coin.y / 100,
       ethereal: true,
     });
@@ -306,15 +315,15 @@ function resetBalls() {
   }
   for (let i = 0; i < count; i++) {
     const x = puck - puckWidth / 2 + perBall * (i + 1);
-    const vx=Math.random() > 0.5 ? baseSpeed : -baseSpeed
+    const vx = Math.random() > 0.5 ? baseSpeed : -baseSpeed;
 
     balls.push({
       x,
       previousX: x,
       y: gameZoneHeight - 1.5 * ballSize,
       previousY: gameZoneHeight - 1.5 * ballSize,
-      vx ,
-      previousVX:vx,
+      vx,
+      previousVX: vx,
       vy: -baseSpeed,
       previousVY: -baseSpeed,
 
@@ -341,9 +350,9 @@ function putBallsAtPuck() {
     ball.y = gameZoneHeight - 1.5 * ballSize;
     ball.previousY = ball.y;
     ball.vx = Math.random() > 0.5 ? baseSpeed : -baseSpeed;
-    ball.previousVX=ball.vx
+    ball.previousVX = ball.vx;
     ball.vy = -baseSpeed;
-    ball.previousVY=ball.vy
+    ball.previousVY = ball.vy;
     ball.sx = 0;
     ball.sy = 0;
     ball.hitItem = [];
@@ -484,8 +493,9 @@ function getPossibleUpgrades() {
     .filter((u) => !u?.requires || perks[u?.requires]);
 }
 
-function shuffleLevels(nameToAvoid :string|null= null) {
+function shuffleLevels(nameToAvoid: string | null = null) {
   const target = nextRunOverrides?.level;
+  delete nextRunOverrides.level;
   const firstLevel = nextRunOverrides?.level
     ? allLevels.filter((l) => l.name === target)
     : [];
@@ -502,7 +512,7 @@ function shuffleLevels(nameToAvoid :string|null= null) {
 }
 
 function getUpgraderUnlockPoints() {
-  let list = [] as {threshold:number,title:string}[];
+  let list = [] as { threshold: number; title: string }[];
 
   upgrades.forEach((u) => {
     if (u.threshold) {
@@ -803,8 +813,8 @@ function bordersHitCheck(coin: Coin | Ball, radius: number, delta: number) {
     coin.vy *= -1;
     vhit = 1;
   }
-  if (coin.x > gameCanvas.width - offsetXRoundedDown - radius) {
-    coin.x = gameCanvas.width - offsetXRoundedDown - radius;
+  if (coin.x > lastWidth - offsetXRoundedDown - radius) {
+    coin.x = lastWidth - offsetXRoundedDown - radius;
     coin.vx *= -1;
     hhit = 1;
   }
@@ -902,7 +912,7 @@ function tick() {
               puckHeight
         ) {
           addToScore(coin);
-        } else if (coin.y > gameCanvas.height + coinRadius) {
+        } else if (coin.y > lastHeight + coinRadius) {
           coin.destroyed = true;
           if (perks.compound_interest) {
             resetCombo(coin.x, coin.y);
@@ -1275,7 +1285,7 @@ function ballTick(ball: Ball, delta: number) {
         y: ball.y,
         vx: (Math.random() - 0.5) * baseSpeed,
         vy: (Math.random() - 0.5) * baseSpeed,
-      ethereal:false,
+        ethereal: false,
       });
       ball.sparks = 0;
     }
@@ -1761,15 +1771,15 @@ function render() {
     if (level.svg && background.width && background.complete) {
       if (backgroundCanvas.title !== level.name) {
         backgroundCanvas.title = level.name;
-        backgroundCanvas.width = gameCanvas.width;
-        backgroundCanvas.height = gameCanvas.height;
+        backgroundCanvas.width = lastWidth;
+        backgroundCanvas.height = lastHeight;
         const bgctx = backgroundCanvas.getContext(
           "2d",
         ) as CanvasRenderingContext2D;
         bgctx.fillStyle = level.color || "#000";
-        bgctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-        const pattern=ctx.createPattern(background, "repeat")
-        if(pattern){
+        bgctx.fillRect(0, 0, lastWidth, lastHeight);
+        const pattern = ctx.createPattern(background, "repeat");
+        if (pattern) {
           bgctx.fillStyle = pattern;
           bgctx.fillRect(0, 0, width, height);
         }
@@ -1818,7 +1828,7 @@ function render() {
   );
 
   flashes.forEach((flash) => {
-    const { x, y, time, color, size, type,  duration } = flash;
+    const { x, y, time, color, size, type, duration } = flash;
     const elapsed = levelTime - time;
     ctx.globalAlpha = Math.max(0, Math.min(1, 2 - (elapsed / duration) * 2));
     if (type === "text") {
@@ -1940,8 +1950,8 @@ function render() {
         "Press and hold here to play",
         puckColor,
         puckHeight,
-        gameCanvas.width / 2,
-        gameZoneHeight + (gameCanvas.height - gameZoneHeight) / 2,
+        lastWidth / 2,
+        gameZoneHeight + (lastHeight - gameZoneHeight) / 2,
       );
     }
   } else if (redBottom) {
@@ -1961,7 +1971,7 @@ function render() {
 }
 
 let cachedBricksRender = document.createElement("canvas");
-let cachedBricksRenderKey = '';
+let cachedBricksRenderKey = "";
 
 function renderAllBricks() {
   ctx.globalAlpha = 1;
@@ -2016,7 +2026,7 @@ function renderAllBricks() {
   ctx.drawImage(cachedBricksRender, offsetX, 0);
 }
 
-let cachedGraphics :  {[k:string]:HTMLCanvasElement}= {};
+let cachedGraphics: { [k: string]: HTMLCanvasElement } = {};
 
 function drawPuck(
   ctx: CanvasRenderingContext2D,
@@ -2560,16 +2570,17 @@ window.addEventListener("visibilitychange", () => {
 
 const scoreDisplay = document.getElementById("score") as HTMLButtonElement;
 let alertsOpen = 0,
-  closeModal :null |( ()=>void) = null;
+  closeModal: null | (() => void) = null;
 
 type AsyncAlertAction<t> = {
-    text?: string;
-    value?: t;
-    help?: string;
-    disabled?: boolean;
-    icon?: string;
-    className?: string;
-  }
+  text?: string;
+  value?: t;
+  help?: string;
+  disabled?: boolean;
+  icon?: string;
+  className?: string;
+};
+
 function asyncAlert<t>({
   title,
   text,
@@ -2669,7 +2680,7 @@ ${icon}
     (v: unknown) => {
       alertsOpen--;
       closeModal = null;
-      return v as  t | undefined;
+      return v as t | undefined;
     },
     () => {
       closeModal = null;
@@ -2679,13 +2690,13 @@ ${icon}
 }
 
 // Settings
-let cachedSettings : Partial<{[key in OptionId]:boolean}>= {};
+let cachedSettings: Partial<{ [key in OptionId]: boolean }> = {};
 
 export function isSettingOn(key: OptionId) {
   if (typeof cachedSettings[key] == "undefined") {
     try {
-        const ls=localStorage.getItem("breakout-settings-enable-" + key)
-        if(ls) cachedSettings[key] = JSON.parse(ls) as boolean;
+      const ls = localStorage.getItem("breakout-settings-enable-" + key);
+      if (ls) cachedSettings[key] = JSON.parse(ls) as boolean;
     } catch (e) {
       console.warn(e);
     }
@@ -2749,20 +2760,22 @@ document.getElementById("menu")?.addEventListener("click", (e) => {
 async function openSettingsPanel() {
   pause(true);
 
-  const actions :AsyncAlertAction<()=>void>[]= [{
-        text: "Resume",
-        help: "Return to your run",
-        value() {},
+  const actions: AsyncAlertAction<() => void>[] = [
+    {
+      text: "Resume",
+      help: "Return to your run",
+      value() {},
+    },
+    {
+      text: "Starting perk",
+      help: "Try perks and levels you unlocked",
+      value() {
+        openUnlocksList();
       },
-      {
-        text: "Starting perk",
-        help: "Try perks and levels you unlocked",
-        value() {
-          openUnlocksList();
-        },
-      }];
+    },
+  ];
 
-  for (const key  of Object.keys(options) as OptionId[] ) {
+  for (const key of Object.keys(options) as OptionId[]) {
     if (options[key])
       actions.push({
         disabled: options[key].disabled(),
@@ -2779,102 +2792,101 @@ async function openSettingsPanel() {
   }
   const creativeModeThreshold = Math.max(...upgrades.map((u) => u.threshold));
 
-  if(document.fullscreenEnabled || document.webkitFullscreenEnabled){
-      if(document.fullscreenElement !== null){
-         actions.push( {
-              text: "Exit Fullscreen",
-              icon: icons["icon:exit_fullscreen"],
-              help: "Might not work on some machines",
-              value() {
-                toggleFullScreen();
-              },
-            } )
-      }else{
-          actions.push({
-              icon: icons["icon:fullscreen"],
-              text: "Fullscreen",
-              help: "Might not work on some machines",
-              value() {
-                toggleFullScreen();
-              }
-            })
-      }
+  if (document.fullscreenEnabled || document.webkitFullscreenEnabled) {
+    if (document.fullscreenElement !== null) {
+      actions.push({
+        text: "Exit Fullscreen",
+        icon: icons["icon:exit_fullscreen"],
+        help: "Might not work on some machines",
+        value() {
+          toggleFullScreen();
+        },
+      });
+    } else {
+      actions.push({
+        icon: icons["icon:fullscreen"],
+        text: "Fullscreen",
+        help: "Might not work on some machines",
+        value() {
+          toggleFullScreen();
+        },
+      });
+    }
   }
   actions.push({
-        text: "Creative mode",
-        help:
-          getTotalScore() < creativeModeThreshold
-            ? "Unlocks at total score $" + creativeModeThreshold
-            : "Test runs with custom perks",
-        disabled: getTotalScore() < creativeModeThreshold,
-        async value() {
-          let creativeModePerks :Partial<{ [id in PerkId]:number }>= {},
-            choice: "start" | Upgrade | void;
-          while (
-            (choice = await asyncAlert<"start" | Upgrade>({
-              title: "Select perks",
-              text: 'Select perks below and press "start run" to try them out in a test run. Scores and stats are not recorded.',
-              actionsAsGrid: true,
-              actions: [
-                ...upgrades.map((u) => ({
-                  icon: u.icon,
-                  text: u.name,
-                  help: (creativeModePerks[u.id] || 0) + "/" + u.max,
-                  value: u,
-                  className: creativeModePerks[u.id]
-                    ? ""
-                    : "grey-out-unless-hovered",
-                })),
-                {
-                  text: "Start run",
-                  value: "start",
-                },
-              ],
-            }))
-          ) {
-            if (choice === "start") {
-              restart(creativeModePerks);
+    text: "Creative mode",
+    help:
+      getTotalScore() < creativeModeThreshold
+        ? "Unlocks at total score $" + creativeModeThreshold
+        : "Test runs with custom perks",
+    disabled: getTotalScore() < creativeModeThreshold,
+    async value() {
+      let creativeModePerks: Partial<{ [id in PerkId]: number }> = {},
+        choice: "start" | Upgrade | void;
+      while (
+        (choice = await asyncAlert<"start" | Upgrade>({
+          title: "Select perks",
+          text: 'Select perks below and press "start run" to try them out in a test run. Scores and stats are not recorded.',
+          actionsAsGrid: true,
+          actions: [
+            ...upgrades.map((u) => ({
+              icon: u.icon,
+              text: u.name,
+              help: (creativeModePerks[u.id] || 0) + "/" + u.max,
+              value: u,
+              className: creativeModePerks[u.id]
+                ? ""
+                : "grey-out-unless-hovered",
+            })),
+            {
+              text: "Start run",
+              value: "start",
+            },
+          ],
+        }))
+      ) {
+        if (choice === "start") {
+          restart(creativeModePerks);
 
-              break;
-            } else if (choice) {
-              creativeModePerks[choice.id] =
-                ((creativeModePerks[choice.id] || 0) + 1) % (choice.max + 1);
-            }
-          }
-        },
-      })
-    actions.push({
-        text: "Reset Game",
-        help: "Erase high score and statistics",
-        async value() {
-          if (
-            await asyncAlert({
-              title: "Reset",
-              actions: [
-                {
-                  text: "Yes",
-                  value: true,
-                },
-                {
-                  text: "No",
-                  value: false,
-                },
-              ],
-              allowClose: true,
-            })
-          ) {
-            localStorage.clear();
-            window.location.reload();
-          }
-        },
-      })
-
+          break;
+        } else if (choice) {
+          creativeModePerks[choice.id] =
+            ((creativeModePerks[choice.id] || 0) + 1) % (choice.max + 1);
+        }
+      }
+    },
+  });
+  actions.push({
+    text: "Reset Game",
+    help: "Erase high score and statistics",
+    async value() {
+      if (
+        await asyncAlert({
+          title: "Reset",
+          actions: [
+            {
+              text: "Yes",
+              value: true,
+            },
+            {
+              text: "No",
+              value: false,
+            },
+          ],
+          allowClose: true,
+        })
+      ) {
+        localStorage.clear();
+        window.location.reload();
+      }
+    },
+  });
 
   const cb = await asyncAlert<() => void>({
     title: "Breakout 71",
     text: ``,
     allowClose: true,
-    actions ,
+    actions,
     textAfterButtons: `
         <p>
             <span>Made in France by <a href="https://lecaro.me">Renan LE CARO</a>.</span> 
@@ -2990,7 +3002,11 @@ function repulse(a: Ball, b: BallLike, power: number, impactsBToo: boolean) {
     (((-power * (max - distance)) / (max * 1.2) / 3) *
       Math.min(500, levelTime)) /
     500;
-  if (impactsBToo && typeof b.vx !== 'undefined' && typeof b.vy !== 'undefined') {
+  if (
+    impactsBToo &&
+    typeof b.vx !== "undefined" &&
+    typeof b.vy !== "undefined"
+  ) {
     b.vx += dx * fact;
     b.vy += dy * fact;
   }
@@ -3011,7 +3027,11 @@ function repulse(a: Ball, b: BallLike, power: number, impactsBToo: boolean) {
     vx: -dx * speed + a.vx + (Math.random() - 0.5) * rand,
     vy: -dy * speed + a.vy + (Math.random() - 0.5) * rand,
   });
-  if (impactsBToo&& typeof b.vx !== 'undefined' && typeof b.vy !== 'undefined') {
+  if (
+    impactsBToo &&
+    typeof b.vx !== "undefined" &&
+    typeof b.vy !== "undefined"
+  ) {
     flashes.push({
       type: "particle",
       duration: 100,
@@ -3071,7 +3091,7 @@ function attract(a: Ball, b: Ball, power: number) {
   });
 }
 
-let mediaRecorder: MediaRecorder|null,
+let mediaRecorder: MediaRecorder | null,
   captureStream: MediaStream,
   captureTrack: CanvasCaptureMediaStreamTrack,
   recordCanvas: HTMLCanvasElement,
@@ -3145,7 +3165,7 @@ function startRecordingGame() {
   recordCanvas.height = gameZoneHeight;
 
   // drawMainCanvasOnSmallCanvas()
-  const recordedChunks :Blob[]= [];
+  const recordedChunks: Blob[] = [];
 
   const instance = new MediaRecorder(captureStream, {
     videoBitsPerSecond: 3500000,
@@ -3158,7 +3178,7 @@ function startRecordingGame() {
   };
 
   instance.onstop = async function () {
-    let targetDiv: HTMLElement|null;
+    let targetDiv: HTMLElement | null;
     let blob = new Blob(recordedChunks, { type: "video/webm" });
     if (blob.size < 200000) return; // under 0.2MB, probably bugged out or pointlessly short
 
@@ -3257,13 +3277,13 @@ function toggleFullScreen() {
   }
 }
 
-const pressed :{[k:string]:number}= {
+const pressed: { [k: string]: number } = {
   ArrowLeft: 0,
   ArrowRight: 0,
   Shift: 0,
 };
 
-function setKeyPressed(key: string , on: 0 | 1) {
+function setKeyPressed(key: string, on: 0 | 1) {
   pressed[key] = on;
   keyboardPuckSpeed =
     ((pressed.ArrowRight - pressed.ArrowLeft) *
@@ -3323,7 +3343,7 @@ function sample<T>(arr: T[]): T {
 }
 
 function getMajorityValue(arr: string[]): string {
-  const count :{[k:string]:number}= {};
+  const count: { [k: string]: number } = {};
   arr.forEach((v) => (count[v] = (count[v] || 0) + 1));
   // Object.values inline polyfill
   const max = Math.max(...Object.keys(count).map((k) => count[k]));

@@ -102,7 +102,7 @@ export type Ball = {
 };
 
 interface BaseFlash {
-   time: number;
+  time: number;
   color: colorString;
   duration: number;
   size: number;
@@ -110,24 +110,23 @@ interface BaseFlash {
   x: number;
   y: number;
 }
-interface ParticleFlash extends BaseFlash{
-  type: 'particle';
+interface ParticleFlash extends BaseFlash {
+  type: "particle";
   vx: number;
   vy: number;
   ethereal: boolean;
 }
 
-interface TextFlash extends BaseFlash{
- type:'text';
-   text: string;
+interface TextFlash extends BaseFlash {
+  type: "text";
+  text: string;
 }
 
-interface BallFlash extends BaseFlash{
-  type:'ball';
+interface BallFlash extends BaseFlash {
+  type: "ball";
 }
 
-export type Flash =  ParticleFlash|TextFlash|BallFlash
-
+export type Flash = ParticleFlash | TextFlash | BallFlash;
 
 export type RunStats = {
   started: number;
@@ -147,8 +146,6 @@ export type RunStats = {
 export type PerksMap = {
   [k in PerkId]: number;
 };
-
-
 
 export type RunHistoryItem = RunStats & {
   perks?: PerksMap;
