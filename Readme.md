@@ -22,33 +22,27 @@ There's also an easy mode for kids (slower ball).
 
 # bugs
 
-
-- Easy Cleanup activates twice if the latest Respawn happens before all 
-the coins have been caught or fallen off screen. As you can see, I had 
-Lv 1 on both the perks: the ball hit the second to last brick, the last 
-one is automatically destroyed, but then another one gets respawned and 
-quickly destroyed again.
-
-
-# Game engine features  
-
+- apk version soft locks at start ? 
+ 
+# UX
 - the onboarding feels weird, missing a tutorial
-- apk version soft locks at start.    
-- shinier coins by applying glow to them ? 
-- ask for permanent storage
 - It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
 - add a clickable button to allow sound to play in chrome android
-- offline mode with service worker
 - add pwe manifest 
+- offline mode with service worker
 - see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
+
+# Game engine features  
+
+- shinier coins by applying glow to them
+- ask for permanent storage
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
 - more help somewhere accessible
 - limit GC by reusing coins and particles
 - convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
-- few puck bounces = more choices / upgrades
 - disable zooming (for ios double tap)
-- particles when bouncing on sides / top
+- few puck bounces = more choices / upgrades
 - show total score on end screen (score added to total) 
 - show stats on end screen compared to other runs
 - handle back bouton in menu 
@@ -178,12 +172,15 @@ and let them spend those coins on upgrades. The upgrades would then be explained
 This requires recording a bit more info about each run. 
 I could unlock the "pro stand" at $999 that just holds the play area higher. 
 
+# bad ideas 
+- 
+- particles when bouncing on sides / top
+- 
 
 # Colin's feedback (cwpute/obigre)
  
 IMPROVEMENTS ON EXISTING PERKS  :
 
-* instead of "lives", have the perk be like a fourth wall that prevents the ball from falling down but disapears after one strike. it is functionally the same but provides visual feedback to the player so they know they have that perk.
 * limit levels to only a handful of coulours, like 5 max, so that the colour-related perks are more viable.
 
 GENERAL REMARKS ON DIFFERENT ASPECTS :
