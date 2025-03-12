@@ -22,12 +22,7 @@ There's also an easy mode for kids (slower ball).
 
 # bugs
 
-- having Hot Start and Single puck hit streak perks in a run resets combo from start [29014379] 
-- The ball goes through Sturdy bricks sometimes, but it does not break 
-nor bounce back after hitting them (and indeed this does not cause a 
-miss). In the video you can clearly witness it several time, and it 
-becomes especially apparent towards the end. I guess this is somehow 
-related to Color Piercing or Piercing (or both).
+
 - Easy Cleanup activates twice if the latest Respawn happens before all 
 the coins have been caught or fallen off screen. As you can see, I had 
 Lv 1 on both the perks: the ball hit the second to last brick, the last 

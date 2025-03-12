@@ -700,47 +700,6 @@ function shouldPierceByColor(
     return true;
 }
 
-function ballBrickHitCheck(ball: Ball) {
-    const radius = ballSize / 2;
-    // Make ball/coin bonce, and return bricks that were hit
-    const {x, y, previousX, previousY} = ball;
-
-    const vhit = hitsSomething(previousX, y, radius);
-    const hhit = hitsSomething(x, previousY, radius);
-    const chit =
-        (typeof vhit == "undefined" &&
-            typeof hhit == "undefined" &&
-            hitsSomething(x, y, radius)) ||
-        undefined;
-
-    let pierce = ball.piercedSinceBounce < perks.pierce * 3;
-    if (
-        pierce &&
-        (typeof vhit !== "undefined" ||
-            typeof hhit !== "undefined" ||
-            typeof chit !== "undefined")
-    ) {
-        ball.piercedSinceBounce++;
-    }
-    if (shouldPierceByColor(vhit, hhit, chit)) {
-        pierce = true;
-    }
-
-    if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
-        if (!pierce) {
-            ball.y = ball.previousY;
-            ball.vy *= -1;
-        }
-    }
-    if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
-        if (!pierce) {
-            ball.x = ball.previousX;
-            ball.vx *= -1;
-        }
-    }
-
-    return vhit ?? hhit ?? chit;
-}
 
 function coinBrickHitCheck(coin: Coin) {
     // Make ball/coin bonce, and return bricks that were hit
@@ -1266,7 +1225,48 @@ function ballTick(ball: Ball, delta: number) {
             );
         }
     }
-    const hitBrick = ballBrickHitCheck(ball);
+      const radius = ballSize / 2;
+    // Make ball/coin bonce, and return bricks that were hit
+    const {x, y, previousX, previousY} = ball;
+
+    const vhit = hitsSomething(previousX, y, radius);
+    const hhit = hitsSomething(x, previousY, radius);
+    const chit =
+        (typeof vhit == "undefined" &&
+            typeof hhit == "undefined" &&
+            hitsSomething(x, y, radius)) ||
+        undefined;
+
+    const hitBrick = vhit ?? hhit ?? chit;
+    let sturdyBounce=hitBrick && bricks[hitBrick]!=='black' && perks.sturdy_bricks && perks.sturdy_bricks > Math.random() * 5
+
+    let pierce = false;
+    if(sturdyBounce || typeof hitBrick === "undefined") {
+        // cannot pierce
+    }else if(shouldPierceByColor(vhit, hhit, chit)){
+         pierce = true;
+    }else if (ball.piercedSinceBounce < perks.pierce * 3 ){
+         pierce=true
+        ball.piercedSinceBounce++;
+    }
+
+    if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
+        if (!pierce) {
+            ball.y = ball.previousY;
+            ball.vy *= -1;
+        }
+    }
+    if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
+        if (!pierce) {
+            ball.x = ball.previousX;
+            ball.vx *= -1;
+        }
+    }
+
+    if(sturdyBounce){
+        sounds.wallBeep(x)
+        return
+    }
     if (typeof hitBrick !== "undefined") {
         const initialBrickColor = bricks[hitBrick];
 
@@ -1567,6 +1567,8 @@ function explodeBrick(index: number, ball: Ball, isExplosion: boolean) {
             for (let dy = -size; dy <= size; dy++) {
                 const i = getRowColIndex(row + dy, col + dx);
                 if (bricks[i] && i !== -1) {
+                    // Study bricks resist explisions too
+                    if(bricks[i]!=='black' && perks.sturdy_bricks > Math.random() * 5) continue
                     explodeBrick(i, ball, true);
                 }
             }
@@ -1605,11 +1607,6 @@ function explodeBrick(index: number, ball: Ball, isExplosion: boolean) {
         // Even if it bounces we don't want to count that as a miss
         ball.hitSinceBounce++;
 
-        if (perks.sturdy_bricks && perks.sturdy_bricks > Math.random() * 5) {
-            // Resist
-            sounds.coinBounce(ball.x, 1);
-            return;
-        }
         // Flashing is take care of by the tick loop
         const x = brickCenterX(index),
             y = brickCenterY(index);
@@ -1732,7 +1729,7 @@ function render() {
     if (!isSettingOn("basic") && !level.color && level.svg) {
         // Without this the light trails everything
         ctx.globalCompositeOperation = "source-over";
-        ctx.globalAlpha = 0.4;
+        ctx.globalAlpha = 1;
         ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, width, height);
 
@@ -1962,8 +1959,10 @@ function render() {
         if (hasCombo && perks.right_is_lava) ctx.fillRect(width - 1, 0, 1, height);
     }
 
-    if (perks.top_is_lava && combo > baseCombo())
-        drawRedSquare(ctx, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, 1);
+    if (perks.top_is_lava && combo > baseCombo()){
+        ctx.fillStyle = "red";
+        ctx.fillRect(offsetXRoundedDown, 0, gameZoneWidthRoundedUp, 1);
+    }
     const redBottom = perks.compound_interest && combo > baseCombo();
     ctx.fillStyle = redBottom ? "red" : puckColor;
     if (isSettingOn("mobile-mode")) {
@@ -2294,16 +2293,6 @@ function roundRect(
     ctx.closePath();
 }
 
-function drawRedSquare(
-    ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-) {
-    ctx.fillStyle = "red";
-    ctx.fillRect(x, y, width, height);
-}
 
 function drawIMG(
     ctx: CanvasRenderingContext2D,

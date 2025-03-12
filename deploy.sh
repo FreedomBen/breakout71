@@ -28,8 +28,6 @@ echo "\"$versionCode\"" > src/version.json
 # remove all exif metadata from pictures, because i think fdroid doesn't like that. odd
 find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all=
 
-# expose the git log to the app itself
-git log --pretty=format:' %s' > src/git-log.txt
 
 npx prettier --write src/
 
