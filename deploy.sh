@@ -17,6 +17,7 @@ set -x
 # the version number is just a unix timestamp in minutes
 versionCode=$(($(date +%s) / 60))
 
+
 # Replace the version code and name in gradle for fdroid and play store
 sed -i -e "s/^[[:space:]]*versionCode = .*/        versionCode = $versionCode/" \
        -e "s/^[[:space:]]*versionName = .*/        versionName = \"$versionCode\"/" \
@@ -26,6 +27,9 @@ echo "\"$versionCode\"" > src/version.json
 
 # remove all exif metadata from pictures, because i think fdroid doesn't like that. odd
 find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all=
+
+# expose the git log to the app itself
+git log --pretty=format:' %s' > src/git-log.txt
 
 npx prettier --write src/
 
