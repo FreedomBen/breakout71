@@ -1,0 +1,52 @@
+body {
+  color: #fff;
+  background: #000;
+}
+
+#palette {
+  width: 80px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+}
+
+#palette button.active {
+  transform: scale(1.2);
+}
+
+#levels {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 40px;
+  margin-right: 80px;
+  display: flex;
+}
+
+#levels .level-bricks-preview {
+  position: relative;
+}
+
+#levels > div {
+  grid-template-columns: auto auto;
+  grid-template-areas: ". name"
+                       "buttons bricks";
+  display: grid;
+}
+
+#levels > div > :first-child {
+  grid-area: name;
+}
+
+#levels > div > div:nth-child(2) {
+  flex-direction: column;
+  grid-area: buttons;
+  align-items: flex-end;
+  display: flex;
+}
+
+#levels > div > div:nth-child(3) {
+  grid-area: bricks;
+}
+/*# sourceMappingURL=levels_editor.de5e7f9b.css.map */

@@ -4,15 +4,14 @@ const fs = require('fs')
 const app = express()
 const port = 4400
 
-const srcPath = 'src/levels.json'
 app.use(bodyParser.text({
     type: 'text/plain',
     limit:'1MB'
 }));
 
-app.post('/', (req, res) => {
+app.post('/src/levels.json', (req, res) => {
     if(req.body?.trim()) {
-        fs.writeFileSync(srcPath, req.body)
+        fs.writeFileSync('src/levels.json', req.body)
     }
     res.end('OK')
 })

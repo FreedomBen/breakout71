@@ -1,8 +1,16 @@
-console.log('WTF')
+import {Palette, RawLevel} from "./types";
+import _backgrounds  from './backgrounds.json'
+const backgrounds=_backgrounds as string[];
+import _palette from './palette.json'
+const palette=_palette as Palette;
+import _allLevels from './levels.json'
+let allLevels = _allLevels as RawLevel[];
+
+
 
 let currentCode = '_'
 
-const paletteEl = document.getElementById('palette');
+const paletteEl = document.getElementById('palette') as HTMLDivElement;
 
 Object.entries(palette).forEach(([code, color]) => {
     const btn = document.createElement('button')
@@ -30,8 +38,8 @@ function renderAllLevels() {
         addLevelEditorToList(level, levelIndex)
     })
 }
-
-function addLevelEditorToList(level, levelIndex) {
+const levelsListEl = document?.getElementById('levels') as HTMLDivElement
+function addLevelEditorToList(level:RawLevel, levelIndex:number) {
     const {name, bricks, size, svg, color} = level
     let div = document.createElement('div')
 
@@ -59,15 +67,15 @@ function addLevelEditorToList(level, levelIndex) {
        `;
 
 
-    document.getElementById('levels').appendChild(div)
+    levelsListEl.appendChild(div)
 
     renderLevelBricks(levelIndex)
     updateLevelBackground(levelIndex)
 
 }
 
-function updateLevelBackground(levelIndex) {
-    const div = document.getElementById("bricks-of-" + levelIndex)
+function updateLevelBackground(levelIndex:number) {
+    const div = document.getElementById("bricks-of-" + levelIndex) as HTMLDivElement
     const level = allLevels[levelIndex]
     const {svg, color} = level
     if (color) {
@@ -85,7 +93,7 @@ function updateLevelBackground(levelIndex) {
 
 }
 
-function renderLevelBricks(levelIndex) {
+function renderLevelBricks(levelIndex:number) {
     const {size, bricks} = allLevels[levelIndex]
 
     const buttons = []
@@ -96,7 +104,7 @@ function renderLevelBricks(levelIndex) {
             }px;width:40px;height: 40px; position: absolute" data-set-color-of="${index}" data-level="${levelIndex}"></button>`)
         }
     }
-    const div = document.getElementById("bricks-of-" + levelIndex)
+    const div = document.getElementById("bricks-of-" + levelIndex) as HTMLDivElement
     div.innerHTML = buttons.join('')
     Object.assign(div.style, {
         width: size * 40 + 'px',
@@ -105,36 +113,30 @@ function renderLevelBricks(levelIndex) {
 }
 
 
-document.getElementById('levels').addEventListener('change', e => {
-    const levelIndexStr = e.target.getAttribute('data-level')
+levelsListEl.addEventListener('change', e => {
+    const target=  e.target as HTMLInputElement
+    const levelIndexStr = target.getAttribute('data-level')
     if (levelIndexStr) {
         const levelIndex = parseInt(levelIndexStr)
         const level = allLevels[levelIndex]
-        if (e.target.getAttribute('type') === 'color') {
-
-            level.color = e.target.value
-            level.svg = ''
+        if (target.getAttribute('type') === 'color') {
+            level.color = target.value
+            level.svg = null
             updateLevelBackground(levelIndex)
-        } else if (e.target.getAttribute('type') === 'checkbox' && e.target.hasAttribute('data-field')) {
-            const field = e.target.getAttribute('data-field')
-            if (field === 'focus') {
-                allLevels.forEach(l => l.focus = false)
-            }
-            level[field] = !!e.target.checked
-
         }
-
         save()
     }
 
 })
-document.getElementById('levels').addEventListener('click', e => {
-    const resize = e.target.getAttribute('data-offset-level-size')
-    const moveX = e.target.getAttribute('data-offset-x')
-    const moveY = e.target.getAttribute('data-offset-y')
-    const levelIndexStr = e.target.getAttribute('data-level')
+levelsListEl.addEventListener('click', e => {
+    const target=  e.target as HTMLButtonElement
+    if (target.tagName !== 'BUTTON') return
+
+    const resize = target.getAttribute('data-offset-level-size')
+    const moveX = target.getAttribute('data-offset-x')
+    const moveY = target.getAttribute('data-offset-y')
+    const levelIndexStr = target.getAttribute('data-level')
     if (!levelIndexStr) return
-    if (e.target.tagName !== 'BUTTON') return
 
     const levelIndex = parseInt(levelIndexStr)
     const level = allLevels[levelIndex]
@@ -159,26 +161,17 @@ document.getElementById('levels').addEventListener('click', e => {
             }
         }
         level.bricks = newBricks.map(b => b || '_').join('');
-    } else if (e.target.getAttribute('data-rename')) {
+    } else if (target.getAttribute('data-rename')) {
         const newName = prompt('Name ? ', level.name)
         if (newName) {
             level.name = newName
-            e.target.textContent = newName
+            target.textContent = newName
         }
-    } else if (e.target.getAttribute('data-delete')) {
-
+    } else if (target.getAttribute('data-delete')) {
         if (confirm('Delete level')) {
             allLevels = allLevels.filter((l, i) => i !== levelIndex)
             save().then(() => window.location.reload())
         }
-    } else if (e.target.getAttribute('data-set-bg-svg')) {
-        const newBg = prompt('New svg code', level.svg || '')
-        if (newBg) {
-            level.svg = newBg
-            level.color = ''
-        }
-
-        updateLevelBackground(levelIndex)
     }
     renderLevelBricks(levelIndex)
     save()
@@ -188,47 +181,54 @@ document.getElementById('levels').addEventListener('click', e => {
 
 let applying = ''
 
-function colorPixel(e) {
+function colorPixel(e:Event) {
+    const target=  e.target as HTMLButtonElement
     if (applying === '') return
     console.log('colorPixel', applying)
-    const index = e.target.getAttribute('data-set-color-of')
-    const level = e.target.getAttribute('data-level')
+    const index = target.getAttribute('data-set-color-of')
+    const level = target.getAttribute('data-level')
     if (index && level) {
         const levelIndex = parseInt(level)
-        e.target.style.background = palette[applying] || 'transparent'
+        target.style.background = palette[applying] || 'transparent'
         setBrick(levelIndex, parseInt(index), applying)
     }
 }
 
-function setBrick(levelIndex, index, chr) {
+function setBrick(levelIndex:number, index:number, chr:string) {
     const bricks = allLevels[levelIndex].bricks
     allLevels[levelIndex].bricks = bricks.substring(0, index) + chr + bricks.substring(index + 1);
 }
 
-document.getElementById('levels').addEventListener('mousedown', e => {
-    const index = parseInt(e.target.getAttribute('data-set-color-of'))
-    const level = e.target.getAttribute('data-level')
-    if (typeof index !== "undefined" && level) {
-        const before = allLevels[parseInt(level)].bricks[index] || ''
+let changed=0
+levelsListEl.addEventListener('mousedown', e => {
+    const target=  e.target as HTMLButtonElement
+    const index =  target.getAttribute('data-set-color-of')
+    const level = target.getAttribute('data-level')
+    if (  index   && level) {
+        changed=0
+        const before = allLevels[parseInt(level)].bricks[parseInt(index)] || ''
         applying = before === currentCode ? '_' : currentCode
         console.log({before, applying, currentCode})
         colorPixel(e)
     }
 })
 
-document.getElementById('levels').addEventListener('mouseenter', e => {
+levelsListEl.addEventListener('mouseenter', e => {
     if (applying !== '') {
         colorPixel(e)
+        changed++
     }
-}, true)
+}, true);
 
-document.addEventListener('mouseup', e => {
-    applying = ''
-    save()
-})
+document.addEventListener('mouseup', (e:Event) => {
+    applying = '';
+    if(changed) {
+        save()
+    };
+});
 
 
-document.getElementById('new-level').addEventListener('click', e => {
+(document.getElementById('new-level') as HTMLButtonElement).addEventListener('click', (e:Event) => {
 
     const name = prompt("Name ? ")
     if (!name) return;
@@ -236,8 +236,9 @@ document.getElementById('new-level').addEventListener('click', e => {
     allLevels.push({
         name,
         size: 8,
-        bricks: '',
-        svg: '',
+        bricks: '________________________________________________________________',
+        svg: null,
+        color:''
     })
     const levelIndex = allLevels.length - 1
     addLevelEditorToList(allLevels[levelIndex], levelIndex)
@@ -247,18 +248,19 @@ document.getElementById('new-level').addEventListener('click', e => {
 renderAllLevels()
 
 function save() {
-    return fetch('/', {
-        method: 'POST', headers: {
+    return fetch('http://localhost:4400/src/levels.json', {
+        method: 'POST',
+        headers: {
             'Content-Type': 'text/plain'
         },
         body: JSON.stringify(allLevels, null, 2)
     })
 }
 
-function hashCode(string) {
-    var hash = 0;
-    for (var i = 0; i < string.length; i++) {
-        var code = string.charCodeAt(i);
+function hashCode(string:string) {
+    let hash = 0;
+    for (let i = 0; i < string.length; i++) {
+        let code = string.charCodeAt(i);
         hash = ((hash << 5) - hash) + code;
         hash = hash & hash; // Convert to 32bit integer
     }

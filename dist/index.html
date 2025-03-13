@@ -1,18 +1,3844 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head><script src="/index.497c99a1.js"></script>
     <meta charset="UTF-8">
-    <title>Level editor</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎨</text></svg>">
-    <link rel="stylesheet" href="/index.25267e01.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Breakout 71</title>
+    <meta name="description" content="A breakout game with roguelite mechanics. Break bricks, catch coins, pick upgrades, repeat. Play for free on mobile and desktop.">
+    <style>* {
+  box-sizing: border-box;
+  font-family: Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace;
+}
 
-</head>
-<body>
+body {
+  width: 100vw;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  color: #fff;
+  background-size: 120px 120px;
+  background-color: var(--background1);
+  --background1: #030c23;
+  --background2: #03112a;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 
-<div id="levels"></div>
-<div id="palette">
-<button id="new-level">new</button>
-</div>
+#game {
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
-<script src="/index.23c89b7f.js"></script>
-<script src="/editor.767b7f59.js"></script></body></html>
+#score, #menu {
+  z-index: 1;
+  appearance: none;
+  font: inherit;
+  color: #fff;
+  background: none;
+  border: none;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 10px;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+}
+
+#score:hover, #score:focus, #menu:hover, #menu:focus {
+  cursor: pointer;
+  background: #0000004d;
+}
+
+#score {
+  right: 0;
+}
+
+#menu {
+  left: 0;
+}
+
+@media screen and (orientation: portrait) {
+  #menu > span {
+    display: none;
+  }
+}
+
+.popup {
+  z-index: 10;
+  background: #000000e6;
+  display: flex;
+  position: fixed;
+  inset: 0;
+  overflow: auto;
+}
+
+.popup > div {
+  transform-origin: center;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 450px;
+  margin: auto;
+  padding: 20px 10px;
+  display: flex;
+}
+
+.popup.actionsAsGrid > div {
+  max-width: 800px;
+
+  & section {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    display: grid;
+  }
+}
+
+.popup > div > * {
+  margin: 0;
+  padding: 0;
+}
+
+.popup > div > h2, .popup > div > p {
+  margin-bottom: 20px;
+}
+
+.popup > div > section {
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 20px;
+  display: flex;
+
+  & button {
+    font: inherit;
+    color: #fff;
+    cursor: pointer;
+    text-align: left;
+    background: #000c;
+    border: 1px solid #fff;
+    gap: 10px;
+    margin-top: -1px;
+    padding: 10px;
+    display: flex;
+
+    &:not([disabled]):hover, &:not([disabled]):focus {
+      z-index: 1;
+      border-color: #f1d33b;
+      position: relative;
+    }
+
+    &[disabled] {
+      opacity: .5;
+      filter: saturate(0);
+      pointer-events: none;
+    }
+
+    & > div {
+      flex-grow: 1;
+    }
+
+    & > div > em {
+      opacity: .8;
+      display: block;
+    }
+
+    &.grey-out-unless-hovered {
+      &:not(:hover) {
+        opacity: .6;
+
+        & img {
+          filter: saturate(0);
+        }
+      }
+    }
+  }
+}
+
+.popup button.close-modale {
+  color: #fff;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+
+  &:before {
+    content: "+";
+    font-size: 80px;
+    display: inline-block;
+    position: absolute;
+    top: 34px;
+    left: 26px;
+    transform: translate(-50%, -50%)rotate(45deg);
+  }
+
+  &:hover {
+    background: #000;
+    font-weight: bold;
+  }
+}
+
+.popup .textAfterButtons {
+  color: #ffffff94;
+}
+
+.popup a[href] {
+  color: inherit;
+}
+
+.popup a[href]:hover, .popup a[href]:focus {
+  color: #fff;
+}
+
+.progress {
+  color: #fff;
+  text-align: center;
+  background: #1c1c2f;
+  border-radius: 5px;
+  padding: 5px 10px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 3px 3px 5px #00000080;
+}
+
+.progress > .progress_bar_part {
+  transform-origin: 0 0;
+  z-index: 1;
+  background: #4049ca;
+  animation: 1s ease-out both grow;
+  display: block;
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 3px 3px 5px #00000080;
+}
+
+.progress > span {
+  z-index: 2;
+  display: block;
+  position: relative;
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(0, 1);
+  }
+}
+
+#level-recording-container {
+  text-align: center;
+  max-width: 400px;
+  margin: 40px;
+}
+
+#level-recording-container img, #level-recording-container video {
+  max-width: 100%;
+  height: auto;
+}
+
+#level-recording-container a {
+  display: block;
+}
+
+#level-recording-container a video {
+  border-radius: 10px;
+  outline: 1px solid #fff;
+  margin: 20px auto;
+  display: block;
+  box-shadow: 2px 2px 5px #000;
+}
+
+@media (width >= 1200px) {
+  #level-recording-container {
+    max-width: calc(50vw - 305px);
+    position: absolute;
+    top: 40px;
+    left: 40px;
+  }
+}
+
+.histogram {
+  align-items: stretch;
+  gap: 10px;
+  margin: 10px 0 40px;
+  display: flex;
+}
+
+.histogram > span {
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: flex-end;
+  width: 10px;
+  display: flex;
+  position: relative;
+}
+
+.histogram > span.active > span {
+  background: #4049ca;
+}
+
+.histogram > span > span {
+  background: #1c1c2f;
+  border-radius: 5px;
+  width: 100%;
+  min-height: 1px;
+  display: block;
+}
+
+.histogram > span > span > span {
+  pointer-events: none;
+  white-space: nowrap;
+  transform-origin: 0 100%;
+  text-align: center;
+  font-size: 13px;
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.histogram > span:not(:hover):not(.active) > span > span {
+  opacity: 0;
+}
+
+h2.histogram-title {
+  color: #3b3f75;
+  font-size: 18px;
+}
+
+h2.histogram-title strong {
+  color: #4049ca;
+}
+</style>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕹️</text></svg>">
+  </head>
+  <body>
+    <button id="menu">☰<span> menu</span></button>
+    <button id="score"></button>
+    <canvas id="game"></canvas>
+    <script>// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
+
+(function (modules, entry, mainEntry, parcelRequireName, globalName) {
+  /* eslint-disable no-undef */
+  var globalObject =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof self !== 'undefined'
+      ? self
+      : typeof window !== 'undefined'
+      ? window
+      : typeof global !== 'undefined'
+      ? global
+      : {};
+  /* eslint-enable no-undef */
+
+  // Save the require from previous bundle to this closure if any
+  var previousRequire =
+    typeof globalObject[parcelRequireName] === 'function' &&
+    globalObject[parcelRequireName];
+
+  var cache = previousRequire.cache || {};
+  // Do not use `require` to prevent Webpack from trying to bundle this call
+  var nodeRequire =
+    typeof module !== 'undefined' &&
+    typeof module.require === 'function' &&
+    module.require.bind(module);
+
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire =
+          typeof globalObject[parcelRequireName] === 'function' &&
+          globalObject[parcelRequireName];
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
+        }
+
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
+
+        // Try the node require function if it exists.
+        if (nodeRequire && typeof name === 'string') {
+          return nodeRequire(name);
+        }
+
+        var err = new Error("Cannot find module '" + name + "'");
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
+
+      localRequire.resolve = resolve;
+      localRequire.cache = {};
+
+      var module = (cache[name] = new newRequire.Module(name));
+
+      modules[name][0].call(
+        module.exports,
+        localRequire,
+        module,
+        module.exports,
+        globalObject
+      );
+    }
+
+    return cache[name].exports;
+
+    function localRequire(x) {
+      var res = localRequire.resolve(x);
+      return res === false ? {} : newRequire(res);
+    }
+
+    function resolve(x) {
+      var id = modules[name][1][x];
+      return id != null ? id : x;
+    }
+  }
+
+  function Module(moduleName) {
+    this.id = moduleName;
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.isParcelRequire = true;
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+  newRequire.register = function (id, exports) {
+    modules[id] = [
+      function (require, module) {
+        module.exports = exports;
+      },
+      {},
+    ];
+  };
+
+  Object.defineProperty(newRequire, 'root', {
+    get: function () {
+      return globalObject[parcelRequireName];
+    },
+  });
+
+  globalObject[parcelRequireName] = newRequire;
+
+  for (var i = 0; i < entry.length; i++) {
+    newRequire(entry[i]);
+  }
+
+  if (mainEntry) {
+    // Expose entry point to Node, AMD or browser globals
+    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+    var mainExports = newRequire(mainEntry);
+
+    // CommonJS
+    if (typeof exports === 'object' && typeof module !== 'undefined') {
+      module.exports = mainExports;
+
+      // RequireJS
+    } else if (typeof define === 'function' && define.amd) {
+      define(function () {
+        return mainExports;
+      });
+
+      // <script>
+    } else if (globalName) {
+      this[globalName] = mainExports;
+    }
+  }
+})({"hhTAC":[function(require,module,exports,__globalThis) {
+var global = arguments[3];
+var HMR_HOST = null;
+var HMR_PORT = null;
+var HMR_SECURE = false;
+var HMR_ENV_HASH = "d6ea1d42532a7575";
+var HMR_USE_SSE = false;
+module.bundle.HMR_BUNDLE_ID = "bcc179bbafd39a7c";
+"use strict";
+/* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
+import type {
+  HMRAsset,
+  HMRMessage,
+} from '@parcel/reporter-dev-server/src/HMRServer.js';
+interface ParcelRequire {
+  (string): mixed;
+  cache: {|[string]: ParcelModule|};
+  hotData: {|[string]: mixed|};
+  Module: any;
+  parent: ?ParcelRequire;
+  isParcelRequire: true;
+  modules: {|[string]: [Function, {|[string]: string|}]|};
+  HMR_BUNDLE_ID: string;
+  root: ParcelRequire;
+}
+interface ParcelModule {
+  hot: {|
+    data: mixed,
+    accept(cb: (Function) => void): void,
+    dispose(cb: (mixed) => void): void,
+    // accept(deps: Array<string> | string, cb: (Function) => void): void,
+    // decline(): void,
+    _acceptCallbacks: Array<(Function) => void>,
+    _disposeCallbacks: Array<(mixed) => void>,
+  |};
+}
+interface ExtensionContext {
+  runtime: {|
+    reload(): void,
+    getURL(url: string): string;
+    getManifest(): {manifest_version: number, ...};
+  |};
+}
+declare var module: {bundle: ParcelRequire, ...};
+declare var HMR_HOST: string;
+declare var HMR_PORT: string;
+declare var HMR_ENV_HASH: string;
+declare var HMR_SECURE: boolean;
+declare var HMR_USE_SSE: boolean;
+declare var chrome: ExtensionContext;
+declare var browser: ExtensionContext;
+declare var __parcel__import__: (string) => Promise<void>;
+declare var __parcel__importScripts__: (string) => Promise<void>;
+declare var globalThis: typeof self;
+declare var ServiceWorkerGlobalScope: Object;
+*/ var OVERLAY_ID = '__parcel__error__overlay__';
+var OldModule = module.bundle.Module;
+function Module(moduleName) {
+    OldModule.call(this, moduleName);
+    this.hot = {
+        data: module.bundle.hotData[moduleName],
+        _acceptCallbacks: [],
+        _disposeCallbacks: [],
+        accept: function(fn) {
+            this._acceptCallbacks.push(fn || function() {});
+        },
+        dispose: function(fn) {
+            this._disposeCallbacks.push(fn);
+        }
+    };
+    module.bundle.hotData[moduleName] = undefined;
+}
+module.bundle.Module = Module;
+module.bundle.hotData = {};
+var checkedAssets /*: {|[string]: boolean|} */ , disposedAssets /*: {|[string]: boolean|} */ , assetsToDispose /*: Array<[ParcelRequire, string]> */ , assetsToAccept /*: Array<[ParcelRequire, string]> */ ;
+function getHostname() {
+    return HMR_HOST || (location.protocol.indexOf('http') === 0 ? location.hostname : 'localhost');
+}
+function getPort() {
+    return HMR_PORT || location.port;
+}
+// eslint-disable-next-line no-redeclare
+var parent = module.bundle.parent;
+if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
+    var hostname = getHostname();
+    var port = getPort();
+    var protocol = HMR_SECURE || location.protocol == 'https:' && ![
+        'localhost',
+        '127.0.0.1',
+        '0.0.0.0'
+    ].includes(hostname) ? 'wss' : 'ws';
+    var ws;
+    if (HMR_USE_SSE) ws = new EventSource('/__parcel_hmr');
+    else try {
+        ws = new WebSocket(protocol + '://' + hostname + (port ? ':' + port : '') + '/');
+    } catch (err) {
+        if (err.message) console.error(err.message);
+        ws = {};
+    }
+    // Web extension context
+    var extCtx = typeof browser === 'undefined' ? typeof chrome === 'undefined' ? null : chrome : browser;
+    // Safari doesn't support sourceURL in error stacks.
+    // eval may also be disabled via CSP, so do a quick check.
+    var supportsSourceURL = false;
+    try {
+        (0, eval)('throw new Error("test"); //# sourceURL=test.js');
+    } catch (err) {
+        supportsSourceURL = err.stack.includes('test.js');
+    }
+    // $FlowFixMe
+    ws.onmessage = async function(event /*: {data: string, ...} */ ) {
+        checkedAssets = {} /*: {|[string]: boolean|} */ ;
+        disposedAssets = {} /*: {|[string]: boolean|} */ ;
+        assetsToAccept = [];
+        assetsToDispose = [];
+        var data /*: HMRMessage */  = JSON.parse(event.data);
+        if (data.type === 'reload') fullReload();
+        else if (data.type === 'update') {
+            // Remove error overlay if there is one
+            if (typeof document !== 'undefined') removeErrorOverlay();
+            let assets = data.assets.filter((asset)=>asset.envHash === HMR_ENV_HASH);
+            // Handle HMR Update
+            let handled = assets.every((asset)=>{
+                return asset.type === 'css' || asset.type === 'js' && hmrAcceptCheck(module.bundle.root, asset.id, asset.depsByBundle);
+            });
+            if (handled) {
+                console.clear();
+                // Dispatch custom event so other runtimes (e.g React Refresh) are aware.
+                if (typeof window !== 'undefined' && typeof CustomEvent !== 'undefined') window.dispatchEvent(new CustomEvent('parcelhmraccept'));
+                await hmrApplyUpdates(assets);
+                hmrDisposeQueue();
+                // Run accept callbacks. This will also re-execute other disposed assets in topological order.
+                let processedAssets = {};
+                for(let i = 0; i < assetsToAccept.length; i++){
+                    let id = assetsToAccept[i][1];
+                    if (!processedAssets[id]) {
+                        hmrAccept(assetsToAccept[i][0], id);
+                        processedAssets[id] = true;
+                    }
+                }
+            } else fullReload();
+        }
+        if (data.type === 'error') {
+            // Log parcel errors to console
+            for (let ansiDiagnostic of data.diagnostics.ansi){
+                let stack = ansiDiagnostic.codeframe ? ansiDiagnostic.codeframe : ansiDiagnostic.stack;
+                console.error("\uD83D\uDEA8 [parcel]: " + ansiDiagnostic.message + '\n' + stack + '\n\n' + ansiDiagnostic.hints.join('\n'));
+            }
+            if (typeof document !== 'undefined') {
+                // Render the fancy html overlay
+                removeErrorOverlay();
+                var overlay = createErrorOverlay(data.diagnostics.html);
+                // $FlowFixMe
+                document.body.appendChild(overlay);
+            }
+        }
+    };
+    if (ws instanceof WebSocket) {
+        ws.onerror = function(e) {
+            if (e.message) console.error(e.message);
+        };
+        ws.onclose = function() {
+            console.warn("[parcel] \uD83D\uDEA8 Connection to the HMR server was lost");
+        };
+    }
+}
+function removeErrorOverlay() {
+    var overlay = document.getElementById(OVERLAY_ID);
+    if (overlay) {
+        overlay.remove();
+        console.log("[parcel] \u2728 Error resolved");
+    }
+}
+function createErrorOverlay(diagnostics) {
+    var overlay = document.createElement('div');
+    overlay.id = OVERLAY_ID;
+    let errorHTML = '<div style="background: black; opacity: 0.85; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; font-family: Menlo, Consolas, monospace; z-index: 9999;">';
+    for (let diagnostic of diagnostics){
+        let stack = diagnostic.frames.length ? diagnostic.frames.reduce((p, frame)=>{
+            return `${p}
+<a href="/__parcel_launch_editor?file=${encodeURIComponent(frame.location)}" style="text-decoration: underline; color: #888" onclick="fetch(this.href); return false">${frame.location}</a>
+${frame.code}`;
+        }, '') : diagnostic.stack;
+        errorHTML += `
+      <div>
+        <div style="font-size: 18px; font-weight: bold; margin-top: 20px;">
+          \u{1F6A8} ${diagnostic.message}
+        </div>
+        <pre>${stack}</pre>
+        <div>
+          ${diagnostic.hints.map((hint)=>"<div>\uD83D\uDCA1 " + hint + '</div>').join('')}
+        </div>
+        ${diagnostic.documentation ? `<div>\u{1F4DD} <a style="color: violet" href="${diagnostic.documentation}" target="_blank">Learn more</a></div>` : ''}
+      </div>
+    `;
+    }
+    errorHTML += '</div>';
+    overlay.innerHTML = errorHTML;
+    return overlay;
+}
+function fullReload() {
+    if ('reload' in location) location.reload();
+    else if (extCtx && extCtx.runtime && extCtx.runtime.reload) extCtx.runtime.reload();
+}
+function getParents(bundle, id) /*: Array<[ParcelRequire, string]> */ {
+    var modules = bundle.modules;
+    if (!modules) return [];
+    var parents = [];
+    var k, d, dep;
+    for(k in modules)for(d in modules[k][1]){
+        dep = modules[k][1][d];
+        if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) parents.push([
+            bundle,
+            k
+        ]);
+    }
+    if (bundle.parent) parents = parents.concat(getParents(bundle.parent, id));
+    return parents;
+}
+function updateLink(link) {
+    var href = link.getAttribute('href');
+    if (!href) return;
+    var newLink = link.cloneNode();
+    newLink.onload = function() {
+        if (link.parentNode !== null) // $FlowFixMe
+        link.parentNode.removeChild(link);
+    };
+    newLink.setAttribute('href', // $FlowFixMe
+    href.split('?')[0] + '?' + Date.now());
+    // $FlowFixMe
+    link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+var cssTimeout = null;
+function reloadCSS() {
+    if (cssTimeout) return;
+    cssTimeout = setTimeout(function() {
+        var links = document.querySelectorAll('link[rel="stylesheet"]');
+        for(var i = 0; i < links.length; i++){
+            // $FlowFixMe[incompatible-type]
+            var href /*: string */  = links[i].getAttribute('href');
+            var hostname = getHostname();
+            var servedFromHMRServer = hostname === 'localhost' ? new RegExp('^(https?:\\/\\/(0.0.0.0|127.0.0.1)|localhost):' + getPort()).test(href) : href.indexOf(hostname + ':' + getPort());
+            var absolute = /^https?:\/\//i.test(href) && href.indexOf(location.origin) !== 0 && !servedFromHMRServer;
+            if (!absolute) updateLink(links[i]);
+        }
+        cssTimeout = null;
+    }, 50);
+}
+function hmrDownload(asset) {
+    if (asset.type === 'js') {
+        if (typeof document !== 'undefined') {
+            let script = document.createElement('script');
+            script.src = asset.url + '?t=' + Date.now();
+            if (asset.outputFormat === 'esmodule') script.type = 'module';
+            return new Promise((resolve, reject)=>{
+                var _document$head;
+                script.onload = ()=>resolve(script);
+                script.onerror = reject;
+                (_document$head = document.head) === null || _document$head === void 0 || _document$head.appendChild(script);
+            });
+        } else if (typeof importScripts === 'function') {
+            // Worker scripts
+            if (asset.outputFormat === 'esmodule') return import(asset.url + '?t=' + Date.now());
+            else return new Promise((resolve, reject)=>{
+                try {
+                    importScripts(asset.url + '?t=' + Date.now());
+                    resolve();
+                } catch (err) {
+                    reject(err);
+                }
+            });
+        }
+    }
+}
+async function hmrApplyUpdates(assets) {
+    global.parcelHotUpdate = Object.create(null);
+    let scriptsToRemove;
+    try {
+        // If sourceURL comments aren't supported in eval, we need to load
+        // the update from the dev server over HTTP so that stack traces
+        // are correct in errors/logs. This is much slower than eval, so
+        // we only do it if needed (currently just Safari).
+        // https://bugs.webkit.org/show_bug.cgi?id=137297
+        // This path is also taken if a CSP disallows eval.
+        if (!supportsSourceURL) {
+            let promises = assets.map((asset)=>{
+                var _hmrDownload;
+                return (_hmrDownload = hmrDownload(asset)) === null || _hmrDownload === void 0 ? void 0 : _hmrDownload.catch((err)=>{
+                    // Web extension fix
+                    if (extCtx && extCtx.runtime && extCtx.runtime.getManifest().manifest_version == 3 && typeof ServiceWorkerGlobalScope != 'undefined' && global instanceof ServiceWorkerGlobalScope) {
+                        extCtx.runtime.reload();
+                        return;
+                    }
+                    throw err;
+                });
+            });
+            scriptsToRemove = await Promise.all(promises);
+        }
+        assets.forEach(function(asset) {
+            hmrApply(module.bundle.root, asset);
+        });
+    } finally{
+        delete global.parcelHotUpdate;
+        if (scriptsToRemove) scriptsToRemove.forEach((script)=>{
+            if (script) {
+                var _document$head2;
+                (_document$head2 = document.head) === null || _document$head2 === void 0 || _document$head2.removeChild(script);
+            }
+        });
+    }
+}
+function hmrApply(bundle /*: ParcelRequire */ , asset /*:  HMRAsset */ ) {
+    var modules = bundle.modules;
+    if (!modules) return;
+    if (asset.type === 'css') reloadCSS();
+    else if (asset.type === 'js') {
+        let deps = asset.depsByBundle[bundle.HMR_BUNDLE_ID];
+        if (deps) {
+            if (modules[asset.id]) {
+                // Remove dependencies that are removed and will become orphaned.
+                // This is necessary so that if the asset is added back again, the cache is gone, and we prevent a full page reload.
+                let oldDeps = modules[asset.id][1];
+                for(let dep in oldDeps)if (!deps[dep] || deps[dep] !== oldDeps[dep]) {
+                    let id = oldDeps[dep];
+                    let parents = getParents(module.bundle.root, id);
+                    if (parents.length === 1) hmrDelete(module.bundle.root, id);
+                }
+            }
+            if (supportsSourceURL) // Global eval. We would use `new Function` here but browser
+            // support for source maps is better with eval.
+            (0, eval)(asset.output);
+            // $FlowFixMe
+            let fn = global.parcelHotUpdate[asset.id];
+            modules[asset.id] = [
+                fn,
+                deps
+            ];
+        }
+        // Always traverse to the parent bundle, even if we already replaced the asset in this bundle.
+        // This is required in case modules are duplicated. We need to ensure all instances have the updated code.
+        if (bundle.parent) hmrApply(bundle.parent, asset);
+    }
+}
+function hmrDelete(bundle, id) {
+    let modules = bundle.modules;
+    if (!modules) return;
+    if (modules[id]) {
+        // Collect dependencies that will become orphaned when this module is deleted.
+        let deps = modules[id][1];
+        let orphans = [];
+        for(let dep in deps){
+            let parents = getParents(module.bundle.root, deps[dep]);
+            if (parents.length === 1) orphans.push(deps[dep]);
+        }
+        // Delete the module. This must be done before deleting dependencies in case of circular dependencies.
+        delete modules[id];
+        delete bundle.cache[id];
+        // Now delete the orphans.
+        orphans.forEach((id)=>{
+            hmrDelete(module.bundle.root, id);
+        });
+    } else if (bundle.parent) hmrDelete(bundle.parent, id);
+}
+function hmrAcceptCheck(bundle /*: ParcelRequire */ , id /*: string */ , depsByBundle /*: ?{ [string]: { [string]: string } }*/ ) {
+    if (hmrAcceptCheckOne(bundle, id, depsByBundle)) return true;
+    // Traverse parents breadth first. All possible ancestries must accept the HMR update, or we'll reload.
+    let parents = getParents(module.bundle.root, id);
+    let accepted = false;
+    while(parents.length > 0){
+        let v = parents.shift();
+        let a = hmrAcceptCheckOne(v[0], v[1], null);
+        if (a) // If this parent accepts, stop traversing upward, but still consider siblings.
+        accepted = true;
+        else {
+            // Otherwise, queue the parents in the next level upward.
+            let p = getParents(module.bundle.root, v[1]);
+            if (p.length === 0) {
+                // If there are no parents, then we've reached an entry without accepting. Reload.
+                accepted = false;
+                break;
+            }
+            parents.push(...p);
+        }
+    }
+    return accepted;
+}
+function hmrAcceptCheckOne(bundle /*: ParcelRequire */ , id /*: string */ , depsByBundle /*: ?{ [string]: { [string]: string } }*/ ) {
+    var modules = bundle.modules;
+    if (!modules) return;
+    if (depsByBundle && !depsByBundle[bundle.HMR_BUNDLE_ID]) {
+        // If we reached the root bundle without finding where the asset should go,
+        // there's nothing to do. Mark as "accepted" so we don't reload the page.
+        if (!bundle.parent) return true;
+        return hmrAcceptCheck(bundle.parent, id, depsByBundle);
+    }
+    if (checkedAssets[id]) return true;
+    checkedAssets[id] = true;
+    var cached = bundle.cache[id];
+    assetsToDispose.push([
+        bundle,
+        id
+    ]);
+    if (!cached || cached.hot && cached.hot._acceptCallbacks.length) {
+        assetsToAccept.push([
+            bundle,
+            id
+        ]);
+        return true;
+    }
+}
+function hmrDisposeQueue() {
+    // Dispose all old assets.
+    for(let i = 0; i < assetsToDispose.length; i++){
+        let id = assetsToDispose[i][1];
+        if (!disposedAssets[id]) {
+            hmrDispose(assetsToDispose[i][0], id);
+            disposedAssets[id] = true;
+        }
+    }
+    assetsToDispose = [];
+}
+function hmrDispose(bundle /*: ParcelRequire */ , id /*: string */ ) {
+    var cached = bundle.cache[id];
+    bundle.hotData[id] = {};
+    if (cached && cached.hot) cached.hot.data = bundle.hotData[id];
+    if (cached && cached.hot && cached.hot._disposeCallbacks.length) cached.hot._disposeCallbacks.forEach(function(cb) {
+        cb(bundle.hotData[id]);
+    });
+    delete bundle.cache[id];
+}
+function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
+    // Execute the module.
+    bundle(id);
+    // Run the accept callbacks in the new version of the module.
+    var cached = bundle.cache[id];
+    if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
+        let assetsToAlsoAccept = [];
+        cached.hot._acceptCallbacks.forEach(function(cb) {
+            let additionalAssets = cb(function() {
+                return getParents(module.bundle.root, id);
+            });
+            if (Array.isArray(additionalAssets) && additionalAssets.length) assetsToAlsoAccept.push(...additionalAssets);
+        });
+        if (assetsToAlsoAccept.length) {
+            let handled = assetsToAlsoAccept.every(function(a) {
+                return hmrAcceptCheck(a[0], a[1]);
+            });
+            if (!handled) return fullReload();
+            hmrDisposeQueue();
+        }
+    }
+}
+
+},{}],"3UXKE":[function(require,module,exports,__globalThis) {
+require("24fcd25505014b08")(require("6fd669fa965b6506").getBundleURL('gcK2a') + "index.497c99a1.js");
+
+},{"24fcd25505014b08":"61B45","6fd669fa965b6506":"lgJ39"}],"61B45":[function(require,module,exports,__globalThis) {
+"use strict";
+var cacheLoader = require("ca2a84f7fa4a3bb0");
+module.exports = cacheLoader(function(bundle) {
+    return new Promise(function(resolve, reject) {
+        // Don't insert the same script twice (e.g. if it was already in the HTML)
+        var existingScripts = document.getElementsByTagName('script');
+        if ([].concat(existingScripts).some(function(script) {
+            return script.src === bundle;
+        })) {
+            resolve();
+            return;
+        }
+        var preloadLink = document.createElement('link');
+        preloadLink.href = bundle;
+        preloadLink.rel = 'preload';
+        preloadLink.as = 'script';
+        document.head.appendChild(preloadLink);
+        var script = document.createElement('script');
+        script.async = true;
+        script.type = 'text/javascript';
+        script.src = bundle;
+        script.onerror = function(e) {
+            var error = new TypeError("Failed to fetch dynamically imported module: ".concat(bundle, ". Error: ").concat(e.message));
+            script.onerror = script.onload = null;
+            script.remove();
+            reject(error);
+        };
+        script.onload = function() {
+            script.onerror = script.onload = null;
+            resolve();
+        };
+        document.getElementsByTagName('head')[0].appendChild(script);
+    });
+});
+
+},{"ca2a84f7fa4a3bb0":"j49pS"}],"j49pS":[function(require,module,exports,__globalThis) {
+"use strict";
+var cachedBundles = {};
+var cachedPreloads = {};
+var cachedPrefetches = {};
+function getCache(type) {
+    switch(type){
+        case 'preload':
+            return cachedPreloads;
+        case 'prefetch':
+            return cachedPrefetches;
+        default:
+            return cachedBundles;
+    }
+}
+module.exports = function(loader, type) {
+    return function(bundle) {
+        var cache = getCache(type);
+        if (cache[bundle]) return cache[bundle];
+        return cache[bundle] = loader.apply(null, arguments).catch(function(e) {
+            delete cache[bundle];
+            throw e;
+        });
+    };
+};
+
+},{}],"lgJ39":[function(require,module,exports,__globalThis) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"3qndx":[function(require,module,exports,__globalThis) {
+var _gameTs = require("./game.ts");
+
+},{"./game.ts":"edeGs"}],"edeGs":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "gameCanvas", ()=>gameCanvas);
+parcelHelpers.export(exports, "offsetX", ()=>offsetX);
+parcelHelpers.export(exports, "offsetXRoundedDown", ()=>offsetXRoundedDown);
+parcelHelpers.export(exports, "gameZoneWidth", ()=>gameZoneWidth);
+parcelHelpers.export(exports, "gameZoneWidthRoundedUp", ()=>gameZoneWidthRoundedUp);
+parcelHelpers.export(exports, "gameZoneHeight", ()=>gameZoneHeight);
+parcelHelpers.export(exports, "brickWidth", ()=>brickWidth);
+parcelHelpers.export(exports, "needsRender", ()=>needsRender);
+parcelHelpers.export(exports, "fitSize", ()=>fitSize);
+parcelHelpers.export(exports, "isSettingOn", ()=>isSettingOn);
+parcelHelpers.export(exports, "toggleSetting", ()=>toggleSetting);
+var _loadGameData = require("./loadGameData");
+var _options = require("./options");
+var _sounds = require("./sounds");
+const MAX_COINS = 400;
+const MAX_PARTICLES = 600;
+const gameCanvas = document.getElementById("game");
+const ctx = gameCanvas.getContext("2d", {
+    alpha: false
+});
+const puckColor = "#FFF";
+let ballSize = 20;
+const coinSize = Math.round(ballSize * 0.8);
+const puckHeight = ballSize;
+let runLevels = [];
+let currentLevel = 0;
+const bombSVG = document.createElement("img");
+bombSVG.src = "data:image/svg+xml;base64," + btoa(`<svg width="144" height="144" viewBox="0 0 38.101 38.099" xmlns="http://www.w3.org/2000/svg">
+ <path d="m6.1528 26.516c-2.6992-3.4942-2.9332-8.281-.58305-11.981a10.454 10.454 0 017.3701-4.7582c1.962-.27726 4.1646.05953 5.8835.90027l.45013.22017.89782-.87417c.83748-.81464.91169-.87499 1.0992-.90271.40528-.058713.58876.03425 1.1971.6116l.55451.52679 1.0821-1.0821c1.1963-1.1963 1.383-1.3357 2.1039-1.5877.57898-.20223 1.5681-.19816 2.1691.00897 1.4613.50314 2.3673 1.7622 2.3567 3.2773-.0058.95654-.24464 1.5795-.90924 2.3746-.40936.48928-.55533.81057-.57898 1.2737-.02039.41018.1109.77714.42322 1.1792.30172.38816.3694.61323.2797.93044-.12803.45666-.56674.71598-1.0242.60507-.601-.14597-1.3031-1.3088-1.3969-2.3126-.09459-1.0161.19245-1.8682.92392-2.7432.42567-.50885.5643-.82851.5643-1.3031 0-.50151-.14026-.83177-.51211-1.2028-.50966-.50966-1.0968-.64829-1.781-.41996l-.37348.12477-2.1006 2.1006.52597.55696c.45421.48194.5325.58876.57898.78855.09622.41588.07502.45014-.88396 1.4548l-.87173.9125.26339.57979a10.193 10.193 0 01.9231 4.1001c.03996 2.046-.41996 3.8082-1.4442 5.537-.55044.928-1.0185 1.5013-1.8968 2.3241-.83503.78284-1.5526 1.2827-2.4904 1.7361-3.4266 1.657-7.4721 1.3422-10.549-.82035-.73473-.51782-1.7312-1.4621-2.2515-2.1357zm21.869-4.5584c-.0579-.19734-.05871-2.2662 0-2.4545.11906-.39142.57898-.63361 1.0038-.53005.23812.05708.54147.32455.6116.5382.06279.19163.06769 2.1805.0065 2.3811-.12558.40773-.61649.67602-1.0462.57164-.234-.05708-.51615-.30498-.57568-.50722m3.0417-2.6013c-.12313-.6222.37837-1.1049 1.0479-1.0079.18348.0261.25279.08399 1.0071.83911.75838.75838.81301.82362.84074 1.0112.10193.68499-.40365 1.1938-1.034 1.0405-.1949-.0473-.28786-.12558-1.0144-.85216-.7649-.76409-.80241-.81057-.84645-1.0316m.61323-3.0629a.85623.85623 0 01.59284-.99975c.28949-.09214 2.1814-.08318 2.3917.01141.38734.17369.6279.61078.53984.98181-.06035.25606-.35391.57327-.60181.64992-.25279.07747-2.2278.053-2.4097-.03017-.26013-.11906-.46318-.36125-.51374-.61323" fill="#fff" opacity="0.3"/>
+</svg>`);
+// Whatever
+let puckWidth = 200;
+const makeEmptyPerksMap = ()=>{
+    const p = {};
+    (0, _loadGameData.upgrades).forEach((u)=>p[u.id] = 0);
+    return p;
+};
+const perks = makeEmptyPerksMap();
+let baseSpeed = 12; // applied to x and y
+let combo = 1;
+function baseCombo() {
+    return 1 + perks.base_combo * 3 + perks.smaller_puck * 5;
+}
+function resetCombo(x, y) {
+    const prev = combo;
+    combo = baseCombo();
+    if (!levelTime) combo += perks.hot_start * 15;
+    if (prev > combo && perks.soft_reset) combo += Math.floor((prev - combo) / (1 + perks.soft_reset));
+    const lost = Math.max(0, prev - combo);
+    if (lost) {
+        for(let i = 0; i < lost && i < 8; i++)setTimeout(()=>(0, _sounds.sounds).comboDecrease(), i * 100);
+        if (typeof x !== "undefined" && typeof y !== "undefined") flashes.push({
+            type: "text",
+            text: "-" + lost,
+            time: levelTime,
+            color: "red",
+            x: x,
+            y: y,
+            duration: 150,
+            size: puckHeight
+        });
+    }
+    return lost;
+}
+function decreaseCombo(by, x, y) {
+    const prev = combo;
+    combo = Math.max(baseCombo(), combo - by);
+    const lost = Math.max(0, prev - combo);
+    if (lost) {
+        (0, _sounds.sounds).comboDecrease();
+        if (typeof x !== "undefined" && typeof y !== "undefined") flashes.push({
+            type: "text",
+            text: "-" + lost,
+            time: levelTime,
+            color: "red",
+            x: x,
+            y: y,
+            duration: 300,
+            size: puckHeight
+        });
+    }
+}
+let gridSize = 12;
+let running = false, puck = 400, pauseTimeout = null;
+function play() {
+    if (running) return;
+    running = true;
+    (0, _sounds.getAudioContext)()?.resume().then();
+    resumeRecording();
+    document.body.className = running ? " running " : " paused ";
+}
+function pause(playerAskedForPause) {
+    if (!running) return;
+    if (pauseTimeout) return;
+    pauseTimeout = setTimeout(()=>{
+        running = false;
+        needsRender = true;
+        setTimeout(()=>{
+            if (!running) (0, _sounds.getAudioContext)()?.suspend().then();
+        }, 1000);
+        pauseRecording();
+        pauseTimeout = null;
+        document.body.className = running ? " running " : " paused ";
+    }, Math.min(Math.max(0, pauseUsesDuringRun - 5) * 50, 500));
+    if (playerAskedForPause) // Pausing many times in a run will make pause slower
+    pauseUsesDuringRun++;
+    if (document.exitPointerLock) document.exitPointerLock();
+}
+let offsetX, offsetXRoundedDown, gameZoneWidth, gameZoneWidthRoundedUp, gameZoneHeight, brickWidth, needsRender = true;
+const background = document.createElement("img");
+const backgroundCanvas = document.createElement("canvas");
+background.addEventListener("load", ()=>{
+    needsRender = true;
+});
+let lastWidth = 0, lastHeight = 0;
+const fitSize = ()=>{
+    const { width, height } = gameCanvas.getBoundingClientRect();
+    lastWidth = width;
+    lastHeight = height;
+    gameCanvas.width = width;
+    gameCanvas.height = height;
+    ctx.fillStyle = currentLevelInfo()?.color || "black";
+    ctx.globalAlpha = 1;
+    ctx.fillRect(0, 0, width, height);
+    backgroundCanvas.width = width;
+    backgroundCanvas.height = height;
+    gameZoneHeight = isSettingOn("mobile-mode") ? height * 80 / 100 : height;
+    const baseWidth = Math.round(Math.min(lastWidth, gameZoneHeight * 0.73));
+    brickWidth = Math.floor(baseWidth / gridSize / 2) * 2;
+    gameZoneWidth = brickWidth * gridSize;
+    offsetX = Math.floor((lastWidth - gameZoneWidth) / 2);
+    offsetXRoundedDown = offsetX;
+    if (offsetX < ballSize) offsetXRoundedDown = 0;
+    gameZoneWidthRoundedUp = width - 2 * offsetXRoundedDown;
+    backgroundCanvas.title = "resized";
+    // Ensure puck stays within bounds
+    setMousePos(puck);
+    coins = [];
+    flashes = [];
+    pause(true);
+    putBallsAtPuck();
+    // For safari mobile https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+    document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
+};
+window.addEventListener("resize", fitSize);
+window.addEventListener("fullscreenchange", fitSize);
+setInterval(()=>{
+    // Sometimes, the page changes size without triggering the event (when switching to fullscreen, closing debug panel...)
+    const { width, height } = gameCanvas.getBoundingClientRect();
+    if (width !== lastWidth || height !== lastHeight) fitSize();
+}, 1000);
+function recomputeTargetBaseSpeed() {
+    // We never want the ball to completely stop, it will move at least 3px per frame
+    baseSpeed = Math.max(3, gameZoneWidth / 12 / 10 + currentLevel / 3 + levelTime / 30000 - perks.slow_down * 2);
+}
+function brickCenterX(index) {
+    return offsetX + (index % gridSize + 0.5) * brickWidth;
+}
+function brickCenterY(index) {
+    return (Math.floor(index / gridSize) + 0.5) * brickWidth;
+}
+function getRowColIndex(row, col) {
+    if (row < 0 || col < 0 || row >= gridSize || col >= gridSize) return -1;
+    return row * gridSize + col;
+}
+function spawnExplosion(count, x, y, color, duration = 150, size = coinSize) {
+    if (!!isSettingOn("basic")) return;
+    if (flashes.length > MAX_PARTICLES) // Avoid freezing when lots of explosion happen at once
+    count = 1;
+    for(let i = 0; i < count; i++)flashes.push({
+        type: "particle",
+        time: levelTime,
+        size,
+        x: x + (Math.random() - 0.5) * brickWidth / 2,
+        y: y + (Math.random() - 0.5) * brickWidth / 2,
+        vx: (Math.random() - 0.5) * 30,
+        vy: (Math.random() - 0.5) * 30,
+        color,
+        duration,
+        ethereal: false
+    });
+}
+let score = 0;
+let lastExplosion = 0;
+let highScore = parseFloat(localStorage.getItem("breakout-3-hs") || "0");
+let lastPlayedCoinGrab = 0;
+function addToScore(coin) {
+    coin.destroyed = true;
+    score += coin.points;
+    addToTotalScore(coin.points);
+    if (score > highScore && !isCreativeModeRun) {
+        highScore = score;
+        localStorage.setItem("breakout-3-hs", score.toString());
+    }
+    if (!isSettingOn("basic")) flashes.push({
+        type: "particle",
+        duration: 100 + Math.random() * 50,
+        time: levelTime,
+        size: coinSize / 2,
+        color: coin.color,
+        x: coin.previousX,
+        y: coin.previousY,
+        vx: (lastWidth - coin.x) / 100,
+        vy: -coin.y / 100,
+        ethereal: true
+    });
+    if (Date.now() - lastPlayedCoinGrab > 16) {
+        lastPlayedCoinGrab = Date.now();
+        (0, _sounds.sounds).coinCatch(coin.x);
+    }
+    runStatistics.score += coin.points;
+}
+let balls = [];
+let ballsColor = "white";
+function resetBalls() {
+    const count = 1 + (perks?.multiball || 0);
+    const perBall = puckWidth / (count + 1);
+    balls = [];
+    ballsColor = "#FFF";
+    if (perks.picky_eater || perks.pierce_color) ballsColor = getMajorityValue(bricks.filter((i)=>i)) || "#FFF";
+    for(let i = 0; i < count; i++){
+        const x = puck - puckWidth / 2 + perBall * (i + 1);
+        const vx = Math.random() > 0.5 ? baseSpeed : -baseSpeed;
+        balls.push({
+            x,
+            previousX: x,
+            y: gameZoneHeight - 1.5 * ballSize,
+            previousY: gameZoneHeight - 1.5 * ballSize,
+            vx,
+            previousVX: vx,
+            vy: -baseSpeed,
+            previousVY: -baseSpeed,
+            sx: 0,
+            sy: 0,
+            sparks: 0,
+            piercedSinceBounce: 0,
+            hitSinceBounce: 0,
+            hitItem: [],
+            bouncesList: [],
+            sapperUses: 0
+        });
+    }
+}
+function putBallsAtPuck() {
+    // This reset could be abused to cheat quite easily
+    const count = balls.length;
+    const perBall = puckWidth / (count + 1);
+    balls.forEach((ball, i)=>{
+        const x = puck - puckWidth / 2 + perBall * (i + 1);
+        ball.x = x;
+        ball.previousX = x;
+        ball.y = gameZoneHeight - 1.5 * ballSize;
+        ball.previousY = ball.y;
+        ball.vx = Math.random() > 0.5 ? baseSpeed : -baseSpeed;
+        ball.previousVX = ball.vx;
+        ball.vy = -baseSpeed;
+        ball.previousVY = ball.vy;
+        ball.sx = 0;
+        ball.sy = 0;
+        ball.hitItem = [];
+        ball.hitSinceBounce = 0;
+        ball.piercedSinceBounce = 0;
+    });
+}
+resetBalls();
+// Default, recomputed at each level load
+let bricks = [];
+let flashes = [];
+let coins = [];
+let levelStartScore = 0;
+let levelMisses = 0;
+let levelSpawnedCoins = 0;
+function pickedUpgradesHTMl() {
+    let list = "";
+    for (let u of (0, _loadGameData.upgrades))for(let i = 0; i < perks[u.id]; i++)list += (0, _loadGameData.icons)["icon:" + u.id] + " ";
+    return list;
+}
+async function openUpgradesPicker() {
+    const catchRate = (score - levelStartScore) / (levelSpawnedCoins || 1);
+    let repeats = 1;
+    let choices = 3;
+    let timeGain = "", catchGain = "", missesGain = "";
+    if (levelTime < 30000) {
+        repeats++;
+        choices++;
+        timeGain = " (+1 upgrade and choice)";
+    } else if (levelTime < 60000) {
+        choices++;
+        timeGain = " (+1 choice)";
+    }
+    if (catchRate === 1) {
+        repeats++;
+        choices++;
+        catchGain = " (+1 upgrade and choice)";
+    } else if (catchRate > 0.9) {
+        choices++;
+        catchGain = " (+1 choice)";
+    }
+    if (levelMisses === 0) {
+        repeats++;
+        choices++;
+        missesGain = " (+1 upgrade and choice)";
+    } else if (levelMisses <= 3) {
+        choices++;
+        missesGain = " (+1 choice)";
+    }
+    while(repeats--){
+        const actions = pickRandomUpgrades(choices + perks.one_more_choice - perks.instant_upgrade);
+        if (!actions.length) break;
+        let textAfterButtons = `
+        <p>You just finished level ${currentLevel + 1}/${max_levels()} and picked those upgrades so far : </p><p>${pickedUpgradesHTMl()}</p>
+        <div id="level-recording-container"></div> 
+        
+        `;
+        const upgradeId = await asyncAlert({
+            title: "Pick an upgrade " + (repeats ? "(" + (repeats + 1) + ")" : ""),
+            actions,
+            text: `<p>
+                You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds${timeGain}.
+        You missed ${levelMisses} times ${missesGain}. 
+        ${timeGain && catchGain && missesGain && "Impressive, keep it up !" || (timeGain || catchGain || missesGain) && "Well done !" || "Try to catch all coins, never miss the bricks or clear the level under 30s to gain additional choices and upgrades."}
+        </p>`,
+            allowClose: false,
+            textAfterButtons
+        });
+        perks[upgradeId]++;
+        if (upgradeId === "instant_upgrade") repeats += 2;
+        runStatistics.upgrades_picked++;
+    }
+    resetCombo(undefined, undefined);
+    resetBalls();
+}
+function setLevel(l) {
+    pause(false);
+    if (l > 0) openUpgradesPicker().then();
+    currentLevel = l;
+    levelTime = 0;
+    level_skip_last_uses = 0;
+    lastTickDown = levelTime;
+    levelStartScore = score;
+    levelSpawnedCoins = 0;
+    levelMisses = 0;
+    runStatistics.levelsPlayed++;
+    resetCombo(undefined, undefined);
+    recomputeTargetBaseSpeed();
+    resetBalls();
+    const lvl = currentLevelInfo();
+    if (lvl.size !== gridSize) {
+        gridSize = lvl.size;
+        fitSize();
+    }
+    coins = [];
+    bricks = [
+        ...lvl.bricks
+    ];
+    flashes = [];
+    // This caused problems with accented characters like the ô of côte d'ivoire for odd reasons
+    // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
+    background.src = "data:image/svg+xml;UTF8," + lvl.svg;
+    stopRecording();
+    startRecordingGame();
+}
+function currentLevelInfo() {
+    return runLevels[currentLevel % runLevels.length];
+}
+let totalScoreAtRunStart = getTotalScore();
+function getPossibleUpgrades() {
+    return (0, _loadGameData.upgrades).filter((u)=>totalScoreAtRunStart >= u.threshold).filter((u)=>!u?.requires || perks[u?.requires]);
+}
+function shuffleLevels(nameToAvoid = null) {
+    const target = nextRunOverrides?.level;
+    delete nextRunOverrides.level;
+    const firstLevel = target ? (0, _loadGameData.allLevels).filter((l)=>l.name === target) : [];
+    const restInRandomOrder = (0, _loadGameData.allLevels).filter((l)=>totalScoreAtRunStart >= l.threshold).filter((l)=>l.name !== target).filter((l)=>l.name !== nameToAvoid || (0, _loadGameData.allLevels).length === 1).sort(()=>Math.random() - 0.5);
+    runLevels = firstLevel.concat(restInRandomOrder.slice(0, 10).sort((a, b)=>a.sortKey - b.sortKey));
+}
+function getUpgraderUnlockPoints() {
+    let list = [];
+    (0, _loadGameData.upgrades).forEach((u)=>{
+        if (u.threshold) list.push({
+            threshold: u.threshold,
+            title: u.name + " (Perk)"
+        });
+    });
+    (0, _loadGameData.allLevels).forEach((l)=>{
+        list.push({
+            threshold: l.threshold,
+            title: l.name + " (Level)"
+        });
+    });
+    return list.filter((o)=>o.threshold).sort((a, b)=>a.threshold - b.threshold);
+}
+let lastOffered = {};
+function dontOfferTooSoon(id) {
+    lastOffered[id] = Math.round(Date.now() / 1000);
+}
+function pickRandomUpgrades(count) {
+    let list = getPossibleUpgrades().map((u)=>({
+            ...u,
+            score: Math.random() + (lastOffered[u.id] || 0)
+        })).sort((a, b)=>a.score - b.score).filter((u)=>perks[u.id] < u.max).slice(0, count).sort((a, b)=>a.id > b.id ? 1 : -1);
+    list.forEach((u)=>{
+        dontOfferTooSoon(u.id);
+    });
+    return list.map((u)=>({
+            text: u.name + (perks[u.id] ? " lvl " + (perks[u.id] + 1) : ""),
+            icon: (0, _loadGameData.icons)["icon:" + u.id],
+            value: u.id,
+            help: u.help(perks[u.id] + 1)
+        }));
+}
+let nextRunOverrides = {};
+let isCreativeModeRun = false;
+let pauseUsesDuringRun = 0;
+function restart(creativeModePerks) {
+    // When restarting, we want to avoid restarting with the same level we're on, so we exclude from the next
+    // run's level list
+    totalScoreAtRunStart = getTotalScore();
+    shuffleLevels(levelTime || score ? currentLevelInfo().name : null);
+    resetRunStatistics();
+    score = 0;
+    pauseUsesDuringRun = 0;
+    for (let u of (0, _loadGameData.upgrades))perks[u.id] = 0;
+    if (creativeModePerks) {
+        Object.assign(perks, creativeModePerks);
+        isCreativeModeRun = true;
+    } else {
+        isCreativeModeRun = false;
+        const giftable = getPossibleUpgrades().filter((u)=>u.giftable);
+        const randomGift = nextRunOverrides?.perk || isSettingOn("easy") && "slow_down" || giftable[Math.floor(Math.random() * giftable.length)].id;
+        perks[randomGift] = 1;
+        delete nextRunOverrides.perk;
+        dontOfferTooSoon(randomGift);
+    }
+    setLevel(0);
+    pauseRecording();
+}
+let keyboardPuckSpeed = 0;
+function setMousePos(x) {
+    needsRender = true;
+    puck = x;
+    // We have borders visible, enforce them
+    if (puck < offsetXRoundedDown + puckWidth / 2) puck = offsetXRoundedDown + puckWidth / 2;
+    if (puck > offsetXRoundedDown + gameZoneWidthRoundedUp - puckWidth / 2) puck = offsetXRoundedDown + gameZoneWidthRoundedUp - puckWidth / 2;
+    if (!running && !levelTime) putBallsAtPuck();
+}
+gameCanvas.addEventListener("mouseup", (e)=>{
+    if (e.button !== 0) return;
+    if (running) pause(true);
+    else {
+        play();
+        if (isSettingOn("pointerLock")) gameCanvas.requestPointerLock().then();
+    }
+});
+gameCanvas.addEventListener("mousemove", (e)=>{
+    if (document.pointerLockElement === gameCanvas) setMousePos(puck + e.movementX);
+    else setMousePos(e.x);
+});
+gameCanvas.addEventListener("touchstart", (e)=>{
+    e.preventDefault();
+    if (!e.touches?.length) return;
+    setMousePos(e.touches[0].pageX);
+    play();
+});
+gameCanvas.addEventListener("touchend", (e)=>{
+    e.preventDefault();
+    pause(true);
+});
+gameCanvas.addEventListener("touchcancel", (e)=>{
+    e.preventDefault();
+    pause(true);
+    needsRender = true;
+});
+gameCanvas.addEventListener("touchmove", (e)=>{
+    if (!e.touches?.length) return;
+    setMousePos(e.touches[0].pageX);
+});
+let lastTick = performance.now();
+function brickIndex(x, y) {
+    return getRowColIndex(Math.floor(y / brickWidth), Math.floor((x - offsetX) / brickWidth));
+}
+function hasBrick(index) {
+    if (bricks[index]) return index;
+}
+function hitsSomething(x, y, radius) {
+    return hasBrick(brickIndex(x - radius, y - radius)) ?? hasBrick(brickIndex(x + radius, y - radius)) ?? hasBrick(brickIndex(x + radius, y + radius)) ?? hasBrick(brickIndex(x - radius, y + radius));
+}
+function shouldPierceByColor(vhit, hhit, chit) {
+    if (!perks.pierce_color) return false;
+    if (typeof vhit !== "undefined" && bricks[vhit] !== ballsColor) return false;
+    if (typeof hhit !== "undefined" && bricks[hhit] !== ballsColor) return false;
+    if (typeof chit !== "undefined" && bricks[chit] !== ballsColor) return false;
+    return true;
+}
+function coinBrickHitCheck(coin) {
+    // Make ball/coin bonce, and return bricks that were hit
+    const radius = coinSize / 2;
+    const { x, y, previousX, previousY } = coin;
+    const vhit = hitsSomething(previousX, y, radius);
+    const hhit = hitsSomething(x, previousY, radius);
+    const chit = typeof vhit == "undefined" && typeof hhit == "undefined" && hitsSomething(x, y, radius) || undefined;
+    if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
+        coin.y = coin.previousY;
+        coin.vy *= -1;
+        //   Roll on corners
+        const leftHit = bricks[brickIndex(x - radius, y + radius)];
+        const rightHit = bricks[brickIndex(x + radius, y + radius)];
+        if (leftHit && !rightHit) {
+            coin.vx += 1;
+            coin.sa -= 1;
+        }
+        if (!leftHit && rightHit) {
+            coin.vx -= 1;
+            coin.sa += 1;
+        }
+    }
+    if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
+        coin.x = coin.previousX;
+        coin.vx *= -1;
+    }
+    return vhit ?? hhit ?? chit;
+}
+function bordersHitCheck(coin, radius, delta) {
+    if (coin.destroyed) return;
+    coin.previousX = coin.x;
+    coin.previousY = coin.y;
+    coin.x += coin.vx * delta;
+    coin.y += coin.vy * delta;
+    coin.sx ||= 0;
+    coin.sy ||= 0;
+    coin.sx += coin.previousX - coin.x;
+    coin.sy += coin.previousY - coin.y;
+    coin.sx *= 0.9;
+    coin.sy *= 0.9;
+    if (perks.wind) coin.vx += (puck - (offsetX + gameZoneWidth / 2)) / gameZoneWidth * perks.wind * 0.5;
+    let vhit = 0, hhit = 0;
+    if (coin.x < offsetXRoundedDown + radius) {
+        coin.x = offsetXRoundedDown + radius + (offsetXRoundedDown + radius - coin.x);
+        coin.vx *= -1;
+        hhit = 1;
+    }
+    if (coin.y < radius) {
+        coin.y = radius + (radius - coin.y);
+        coin.vy *= -1;
+        vhit = 1;
+    }
+    if (coin.x > lastWidth - offsetXRoundedDown - radius) {
+        coin.x = lastWidth - offsetXRoundedDown - radius - (coin.x - (lastWidth - offsetXRoundedDown - radius));
+        coin.vx *= -1;
+        hhit = 1;
+    }
+    return hhit + vhit * 2;
+}
+let lastTickDown = 0;
+function tick() {
+    recomputeTargetBaseSpeed();
+    const currentTick = performance.now();
+    puckWidth = gameZoneWidth / 12 * (3 - perks.smaller_puck + perks.bigger_puck);
+    if (keyboardPuckSpeed) setMousePos(puck + keyboardPuckSpeed);
+    if (running) {
+        levelTime += currentTick - lastTick;
+        runStatistics.runTime += currentTick - lastTick;
+        runStatistics.max_combo = Math.max(runStatistics.max_combo, combo);
+        // How many times to compute
+        let delta = Math.min(4, (currentTick - lastTick) / (1000 / 60));
+        delta *= running ? 1 : 0;
+        coins = coins.filter((coin)=>!coin.destroyed);
+        balls = balls.filter((ball)=>!ball.destroyed);
+        const remainingBricks = bricks.filter((b)=>b && b !== "black").length;
+        if (levelTime > lastTickDown + 1000 && perks.hot_start) {
+            lastTickDown = levelTime;
+            decreaseCombo(perks.hot_start, puck, gameZoneHeight - 2 * puckHeight);
+        }
+        if (remainingBricks <= perks.skip_last && !level_skip_last_uses) {
+            bricks.forEach((type, index)=>{
+                if (type) explodeBrick(index, balls[0], true);
+            });
+            level_skip_last_uses++;
+        }
+        if (!remainingBricks && !coins.length) {
+            if (currentLevel + 1 < max_levels()) setLevel(currentLevel + 1);
+            else gameOver("Run finished with " + score + " points", "You cleared all levels for this run.");
+        } else if (running || levelTime) {
+            let playedCoinBounce = false;
+            const coinRadius = Math.round(coinSize / 2);
+            coins.forEach((coin)=>{
+                if (coin.destroyed) return;
+                if (perks.coin_magnet) {
+                    const attractionX = delta * (puck - coin.x) / (100 + Math.pow(coin.y - gameZoneHeight, 2) + Math.pow(coin.x - puck, 2)) * perks.coin_magnet * 100;
+                    coin.vx += attractionX;
+                    coin.sa -= attractionX / 10;
+                }
+                const ratio = 1 - (perks.viscosity * 0.03 + 0.005) * delta;
+                coin.vy *= ratio;
+                coin.vx *= ratio;
+                if (coin.vx > 7 * baseSpeed) coin.vx = 7 * baseSpeed;
+                if (coin.vx < -7 * baseSpeed) coin.vx = -7 * baseSpeed;
+                if (coin.vy > 7 * baseSpeed) coin.vy = 7 * baseSpeed;
+                if (coin.vy < -7 * baseSpeed) coin.vy = -7 * baseSpeed;
+                coin.a += coin.sa;
+                // Gravity
+                coin.vy += delta * coin.weight * 0.8;
+                const speed = Math.abs(coin.sx) + Math.abs(coin.sx);
+                const hitBorder = bordersHitCheck(coin, coinRadius, delta);
+                if (coin.y > gameZoneHeight - coinRadius - puckHeight && coin.y < gameZoneHeight + puckHeight + coin.vy && Math.abs(coin.x - puck) < coinRadius + puckWidth / 2 + // a bit of margin to be nice
+                puckHeight) addToScore(coin);
+                else if (coin.y > lastHeight + coinRadius) {
+                    coin.destroyed = true;
+                    if (perks.compound_interest) resetCombo(coin.x, coin.y);
+                }
+                const hitBrick = coinBrickHitCheck(coin);
+                if (perks.metamorphosis && typeof hitBrick !== "undefined") {
+                    if (bricks[hitBrick] && coin.color !== bricks[hitBrick] && bricks[hitBrick] !== "black" && !coin.coloredABrick) {
+                        bricks[hitBrick] = coin.color;
+                        coin.coloredABrick = true;
+                    }
+                }
+                if (typeof hitBrick !== "undefined" || hitBorder) {
+                    coin.vx *= 0.8;
+                    coin.vy *= 0.8;
+                    coin.sa *= 0.9;
+                    if (speed > 20 && !playedCoinBounce) {
+                        playedCoinBounce = true;
+                        (0, _sounds.sounds).coinBounce(coin.x, 0.2);
+                    }
+                    if (Math.abs(coin.vy) < 3) coin.vy = 0;
+                }
+            });
+            balls.forEach((ball)=>ballTick(ball, delta));
+            if (perks.wind) {
+                const windD = (puck - (offsetX + gameZoneWidth / 2)) / gameZoneWidth * 2 * perks.wind;
+                for(let i = 0; i < perks.wind; i++)if (Math.random() * Math.abs(windD) > 0.5) flashes.push({
+                    type: "particle",
+                    duration: 150,
+                    ethereal: true,
+                    time: levelTime,
+                    size: coinSize / 2,
+                    color: rainbowColor(),
+                    x: offsetXRoundedDown + Math.random() * gameZoneWidthRoundedUp,
+                    y: Math.random() * gameZoneHeight,
+                    vx: windD * 8,
+                    vy: 0
+                });
+            }
+            flashes.forEach((flash)=>{
+                if (flash.type === "particle") {
+                    flash.x += flash.vx * delta;
+                    flash.y += flash.vy * delta;
+                    if (!flash.ethereal) {
+                        flash.vy += 0.5;
+                        if (hasBrick(brickIndex(flash.x, flash.y))) flash.destroyed = true;
+                    }
+                }
+            });
+        }
+        if (combo > baseCombo()) {
+            // The red should still be visible on a white bg
+            const baseParticle = !isSettingOn("basic") && (combo - baseCombo()) * Math.random() > 5 && running && {
+                type: "particle",
+                duration: 100 * (Math.random() + 1),
+                time: levelTime,
+                size: coinSize / 2,
+                color: "red",
+                ethereal: true
+            };
+            if (perks.top_is_lava) baseParticle && flashes.push({
+                ...baseParticle,
+                x: offsetXRoundedDown + Math.random() * gameZoneWidthRoundedUp,
+                y: 0,
+                vx: (Math.random() - 0.5) * 10,
+                vy: 5
+            });
+            if (perks.left_is_lava && baseParticle) flashes.push({
+                ...baseParticle,
+                x: offsetXRoundedDown,
+                y: Math.random() * gameZoneHeight,
+                vx: 5,
+                vy: (Math.random() - 0.5) * 10
+            });
+            if (perks.right_is_lava && baseParticle) flashes.push({
+                ...baseParticle,
+                x: offsetXRoundedDown + gameZoneWidthRoundedUp,
+                y: Math.random() * gameZoneHeight,
+                vx: -5,
+                vy: (Math.random() - 0.5) * 10
+            });
+            if (perks.compound_interest) {
+                let x = puck, attemps = 0;
+                do {
+                    x = offsetXRoundedDown + gameZoneWidthRoundedUp * Math.random();
+                    attemps++;
+                }while (Math.abs(x - puck) < puckWidth / 2 && attemps < 10);
+                baseParticle && flashes.push({
+                    ...baseParticle,
+                    x,
+                    y: gameZoneHeight,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: -5
+                });
+            }
+            if (perks.streak_shots) {
+                const pos = 0.5 - Math.random();
+                baseParticle && flashes.push({
+                    ...baseParticle,
+                    duration: 100,
+                    x: puck + puckWidth * pos,
+                    y: gameZoneHeight - puckHeight,
+                    vx: pos * 10,
+                    vy: -5
+                });
+            }
+        }
+    }
+    render();
+    requestAnimationFrame(tick);
+    lastTick = currentTick;
+}
+function isTelekinesisActive(ball) {
+    return perks.telekinesis && !ball.hitSinceBounce && ball.vy < 0;
+}
+function ballTick(ball, delta) {
+    ball.previousVX = ball.vx;
+    ball.previousVY = ball.vy;
+    let speedLimitDampener = 1 + perks.telekinesis + perks.ball_repulse_ball + perks.puck_repulse_ball + perks.ball_attract_ball;
+    if (isTelekinesisActive(ball)) {
+        speedLimitDampener += 3;
+        ball.vx += (puck - ball.x) / 1000 * delta * perks.telekinesis;
+    }
+    if (ball.vx * ball.vx + ball.vy * ball.vy < baseSpeed * baseSpeed * 2) {
+        ball.vx *= 1 + 0.02 / speedLimitDampener;
+        ball.vy *= 1 + 0.02 / speedLimitDampener;
+    } else {
+        ball.vx *= 1 - 0.02 / speedLimitDampener;
+        ball.vy *= 1 - 0.02 / speedLimitDampener;
+    }
+    // Ball could get stuck horizontally because of ball-ball interactions in repulse/attract
+    if (Math.abs(ball.vy) < 0.2 * baseSpeed) ball.vy += (ball.vy > 0 ? 1 : -1) * 0.02 / speedLimitDampener;
+    if (perks.ball_repulse_ball) for (let b2 of balls){
+        // avoid computing this twice, and repulsing itself
+        if (b2.x >= ball.x) continue;
+        repulse(ball, b2, perks.ball_repulse_ball, true);
+    }
+    if (perks.ball_attract_ball) for (let b2 of balls){
+        // avoid computing this twice, and repulsing itself
+        if (b2.x >= ball.x) continue;
+        attract(ball, b2, perks.ball_attract_ball);
+    }
+    if (perks.puck_repulse_ball && Math.abs(ball.x - puck) < puckWidth / 2 + ballSize * (9 + perks.puck_repulse_ball) / 10) repulse(ball, {
+        x: puck,
+        y: gameZoneHeight
+    }, perks.puck_repulse_ball + 1, false);
+    if (perks.respawn && ball.hitItem?.length > 1 && !isSettingOn("basic")) for(let i = 0; i < ball.hitItem?.length - 1 && i < perks.respawn; i++){
+        const { index, color } = ball.hitItem[i];
+        if (bricks[index] || color === "black") continue;
+        const vertical = Math.random() > 0.5;
+        const dx = Math.random() > 0.5 ? 1 : -1;
+        const dy = Math.random() > 0.5 ? 1 : -1;
+        flashes.push({
+            type: "particle",
+            duration: 250,
+            ethereal: true,
+            time: levelTime,
+            size: coinSize / 2,
+            color,
+            x: brickCenterX(index) + dx * brickWidth / 2,
+            y: brickCenterY(index) + dy * brickWidth / 2,
+            vx: vertical ? 0 : -dx * baseSpeed,
+            vy: vertical ? -dy * baseSpeed : 0
+        });
+    }
+    const borderHitCode = bordersHitCheck(ball, ballSize / 2, delta);
+    if (borderHitCode) {
+        if (perks.left_is_lava && borderHitCode % 2 && ball.x < offsetX + gameZoneWidth / 2) resetCombo(ball.x, ball.y);
+        if (perks.right_is_lava && borderHitCode % 2 && ball.x > offsetX + gameZoneWidth / 2) resetCombo(ball.x, ball.y);
+        if (perks.top_is_lava && borderHitCode >= 2) resetCombo(ball.x, ball.y + ballSize);
+        (0, _sounds.sounds).wallBeep(ball.x);
+        ball.bouncesList?.push({
+            x: ball.previousX,
+            y: ball.previousY
+        });
+    }
+    // Puck collision
+    const ylimit = gameZoneHeight - puckHeight - ballSize / 2;
+    const ballIsUnderPuck = Math.abs(ball.x - puck) < ballSize / 2 + puckWidth / 2;
+    if (ball.y > ylimit && ball.vy > 0 && (ballIsUnderPuck || perks.extra_life && ball.y > ylimit + puckHeight / 2)) {
+        if (ballIsUnderPuck) {
+            const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+            const angle = Math.atan2(-puckWidth / 2, ball.x - puck);
+            ball.vx = speed * Math.cos(angle);
+            ball.vy = speed * Math.sin(angle);
+            (0, _sounds.sounds).wallBeep(ball.x);
+        } else {
+            ball.vy *= -1;
+            perks.extra_life = Math.max(0, perks.extra_life - 1);
+            (0, _sounds.sounds).lifeLost(ball.x);
+            if (!isSettingOn("basic")) for(let i = 0; i < 10; i++)flashes.push({
+                type: "particle",
+                ethereal: false,
+                color: "red",
+                destroyed: false,
+                duration: 150,
+                size: coinSize / 2,
+                time: levelTime,
+                x: ball.x,
+                y: ball.y,
+                vx: Math.random() * baseSpeed * 3,
+                vy: baseSpeed * 3
+            });
+        }
+        if (perks.streak_shots) resetCombo(ball.x, ball.y);
+        if (perks.respawn) ball.hitItem.slice(0, -1).slice(0, perks.respawn).forEach(({ index, color })=>{
+            if (!bricks[index] && color !== "black") bricks[index] = color;
+        });
+        ball.hitItem = [];
+        if (!ball.hitSinceBounce) {
+            runStatistics.misses++;
+            levelMisses++;
+            resetCombo(ball.x, ball.y);
+            flashes.push({
+                type: "text",
+                text: "miss",
+                duration: 500,
+                time: levelTime,
+                size: puckHeight * 1.5,
+                color: "red",
+                x: puck,
+                y: gameZoneHeight - puckHeight * 2
+            });
+        }
+        runStatistics.puck_bounces++;
+        ball.hitSinceBounce = 0;
+        ball.sapperUses = 0;
+        ball.piercedSinceBounce = 0;
+        ball.bouncesList = [
+            {
+                x: ball.previousX,
+                y: ball.previousY
+            }
+        ];
+    }
+    if (ball.y > gameZoneHeight + ballSize / 2 && running) {
+        ball.destroyed = true;
+        runStatistics.balls_lost++;
+        if (!balls.find((b)=>!b.destroyed)) gameOver("Game Over", "You dropped the ball after catching " + score + " coins. ");
+    }
+    const radius = ballSize / 2;
+    // Make ball/coin bonce, and return bricks that were hit
+    const { x, y, previousX, previousY } = ball;
+    const vhit = hitsSomething(previousX, y, radius);
+    const hhit = hitsSomething(x, previousY, radius);
+    const chit = typeof vhit == "undefined" && typeof hhit == "undefined" && hitsSomething(x, y, radius) || undefined;
+    const hitBrick = vhit ?? hhit ?? chit;
+    let sturdyBounce = hitBrick && bricks[hitBrick] !== "black" && perks.sturdy_bricks && perks.sturdy_bricks > Math.random() * 5;
+    let pierce = false;
+    if (sturdyBounce || typeof hitBrick === "undefined") ;
+    else if (shouldPierceByColor(vhit, hhit, chit)) pierce = true;
+    else if (ball.piercedSinceBounce < perks.pierce * 3) {
+        pierce = true;
+        ball.piercedSinceBounce++;
+    }
+    if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
+        if (!pierce) {
+            ball.y = ball.previousY;
+            ball.vy *= -1;
+        }
+    }
+    if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
+        if (!pierce) {
+            ball.x = ball.previousX;
+            ball.vx *= -1;
+        }
+    }
+    if (sturdyBounce) {
+        (0, _sounds.sounds).wallBeep(x);
+        return;
+    }
+    if (typeof hitBrick !== "undefined") {
+        const initialBrickColor = bricks[hitBrick];
+        explodeBrick(hitBrick, ball, false);
+        if (ball.sapperUses < perks.sapper && initialBrickColor !== "black" && // don't replace a brick that bounced with sturdy_bricks
+        !bricks[hitBrick]) {
+            bricks[hitBrick] = "black";
+            ball.sapperUses++;
+        }
+    }
+    if (!isSettingOn("basic")) {
+        ball.sparks += delta * (combo - 1) / 30;
+        if (ball.sparks > 1) {
+            flashes.push({
+                type: "particle",
+                duration: 100 * ball.sparks,
+                time: levelTime,
+                size: coinSize / 2,
+                color: ballsColor,
+                x: ball.x,
+                y: ball.y,
+                vx: (Math.random() - 0.5) * baseSpeed,
+                vy: (Math.random() - 0.5) * baseSpeed,
+                ethereal: false
+            });
+            ball.sparks = 0;
+        }
+    }
+}
+const defaultRunStats = ()=>({
+        started: Date.now(),
+        levelsPlayed: 0,
+        runTime: 0,
+        coins_spawned: 0,
+        score: 0,
+        bricks_broken: 0,
+        misses: 0,
+        balls_lost: 0,
+        puck_bounces: 0,
+        upgrades_picked: 1,
+        max_combo: 1,
+        max_level: 0
+    });
+let runStatistics = defaultRunStats();
+function resetRunStatistics() {
+    runStatistics = defaultRunStats();
+}
+function getTotalScore() {
+    try {
+        return JSON.parse(localStorage.getItem("breakout_71_total_score") || "0");
+    } catch (e) {
+        return 0;
+    }
+}
+function addToTotalScore(points) {
+    if (isCreativeModeRun) return;
+    try {
+        localStorage.setItem("breakout_71_total_score", JSON.stringify(getTotalScore() + points));
+    } catch (e) {}
+}
+function addToTotalPlayTime(ms) {
+    try {
+        localStorage.setItem("breakout_71_total_play_time", JSON.stringify(JSON.parse(localStorage.getItem("breakout_71_total_play_time") || "0") + ms));
+    } catch (e) {}
+}
+function gameOver(title, intro) {
+    if (!running) return;
+    pause(true);
+    stopRecording();
+    addToTotalPlayTime(runStatistics.runTime);
+    runStatistics.max_level = currentLevel + 1;
+    let animationDelay = -300;
+    const getDelay = ()=>{
+        animationDelay += 800;
+        return "animation-delay:" + animationDelay + "ms;";
+    };
+    // unlocks
+    let unlocksInfo = "";
+    const endTs = getTotalScore();
+    const startTs = endTs - score;
+    const list = getUpgraderUnlockPoints();
+    list.filter((u)=>u.threshold > startTs && u.threshold < endTs).forEach((u)=>{
+        unlocksInfo += `
+<p class="progress"  >
+   <span>${u.title}</span>
+    <span class="progress_bar_part" style="${getDelay()}"></span>
+</p>
+`;
+    });
+    const previousUnlockAt = findLast(list, (u)=>u.threshold <= endTs)?.threshold || 0;
+    const nextUnlock = list.find((u)=>u.threshold > endTs);
+    if (nextUnlock) {
+        const total = nextUnlock?.threshold - previousUnlockAt;
+        const done = endTs - previousUnlockAt;
+        intro += `Score ${nextUnlock.threshold - endTs} more points to reach the next unlock.`;
+        const scaleX = (done / total).toFixed(2);
+        unlocksInfo += `
+            <p class="progress"   >
+           <span>${nextUnlock.title}</span>
+        <span style="transform: scale(${scaleX},1);${getDelay()}" class="progress_bar_part"></span>
+        </p>
+
+`;
+        list.slice(list.indexOf(nextUnlock) + 1).slice(0, 3).forEach((u)=>{
+            unlocksInfo += `
+        <p class="progress"  >
+           <span>${u.title}</span> 
+        </p> 
+`;
+        });
+    }
+    // Avoid the sad sound right as we restart a new games
+    combo = 1;
+    asyncAlert({
+        allowClose: true,
+        title,
+        text: `
+        ${isCreativeModeRun ? "<p>This test run and its score are not being recorded</p>" : ""}
+        <p>${intro}</p>
+        ${unlocksInfo}  
+        `,
+        actions: [
+            {
+                value: null,
+                text: "Start a new run",
+                help: ""
+            }
+        ],
+        textAfterButtons: `<div id="level-recording-container"></div>
+        ${getHistograms()} 
+        `
+    }).then(()=>restart());
+}
+function getHistograms() {
+    let runStats = "";
+    try {
+        // Stores only top 100 runs
+        let runsHistory = JSON.parse(localStorage.getItem("breakout_71_runs_history") || "[]");
+        runsHistory.sort((a, b)=>a.score - b.score).reverse();
+        runsHistory = runsHistory.slice(0, 100);
+        runsHistory.push({
+            ...runStatistics,
+            perks,
+            appVersion: (0, _loadGameData.appVersion)
+        });
+        // Generate some histogram
+        if (!isCreativeModeRun) localStorage.setItem("breakout_71_runs_history", JSON.stringify(runsHistory, null, 2));
+        const makeHistogram = (title, getter, unit)=>{
+            let values = runsHistory.map((h)=>getter(h) || 0);
+            let min = Math.min(...values);
+            let max = Math.max(...values);
+            // No point
+            if (min === max) return "";
+            if (max - min < 10) {
+                // This is mostly useful for levels
+                min = Math.max(0, max - 10);
+                max = Math.max(max, min + 10);
+            }
+            // One bin per unique value, max 10
+            const binsCount = Math.min(values.length, 10);
+            if (binsCount < 3) return "";
+            const bins = [];
+            const binsTotal = [];
+            for(let i = 0; i < binsCount; i++){
+                bins.push(0);
+                binsTotal.push(0);
+            }
+            const binSize = (max - min) / bins.length;
+            const binIndexOf = (v)=>Math.min(bins.length - 1, Math.floor((v - min) / binSize));
+            values.forEach((v)=>{
+                if (isNaN(v)) return;
+                const index = binIndexOf(v);
+                bins[index]++;
+                binsTotal[index] += v;
+            });
+            if (bins.filter((b)=>b).length < 3) return "";
+            const maxBin = Math.max(...bins);
+            const lastValue = values[values.length - 1];
+            const activeBin = binIndexOf(lastValue);
+            const bars = bins.map((v, vi)=>{
+                const style = `height: ${v / maxBin * 80}px`;
+                return `<span class="${vi === activeBin ? "active" : ""}"><span style="${style}" title="${v} run${v > 1 ? "s" : ""} between ${Math.floor(min + vi * binSize)} and ${Math.floor(min + (vi + 1) * binSize)}${unit}"
+              ><span>${!v && " " || vi == activeBin && lastValue + unit || Math.round(binsTotal[vi] / v) + unit}</span></span></span>`;
+            }).join("");
+            return `<h2 class="histogram-title">${title} : <strong>${lastValue}${unit}</strong></h2>
+            <div class="histogram">${bars}</div>
+            `;
+        };
+        runStats += makeHistogram("Total score", (r)=>r.score, "");
+        runStats += makeHistogram("Catch rate", (r)=>Math.round(r.score / r.coins_spawned * 100), "%");
+        runStats += makeHistogram("Bricks broken", (r)=>r.bricks_broken, "");
+        runStats += makeHistogram("Bricks broken per minute", (r)=>Math.round(r.bricks_broken / r.runTime * 60000), " bpm");
+        runStats += makeHistogram("Hit rate", (r)=>Math.round((1 - r.misses / r.puck_bounces) * 100), "%");
+        runStats += makeHistogram("Duration per level", (r)=>Math.round(r.runTime / 1000 / r.levelsPlayed), "s");
+        runStats += makeHistogram("Level reached", (r)=>r.levelsPlayed, "");
+        runStats += makeHistogram("Upgrades applied", (r)=>r.upgrades_picked, "");
+        runStats += makeHistogram("Balls lost", (r)=>r.balls_lost, "");
+        runStats += makeHistogram("Average combo", (r)=>Math.round(r.coins_spawned / r.bricks_broken), "");
+        runStats += makeHistogram("Max combo", (r)=>r.max_combo, "");
+        if (runStats) runStats = `<p>Find below your run statistics compared to  your ${runsHistory.length - 1} best runs.</p>` + runStats;
+    } catch (e) {
+        console.warn(e);
+    }
+    return runStats;
+}
+function explodeBrick(index, ball, isExplosion) {
+    const color = bricks[index];
+    if (!color) return;
+    if (color === "black") {
+        delete bricks[index];
+        const x = brickCenterX(index), y = brickCenterY(index);
+        (0, _sounds.sounds).explode(ball.x);
+        const col = index % gridSize;
+        const row = Math.floor(index / gridSize);
+        const size = 1 + perks.bigger_explosions;
+        // Break bricks around
+        for(let dx = -size; dx <= size; dx++)for(let dy = -size; dy <= size; dy++){
+            const i = getRowColIndex(row + dy, col + dx);
+            if (bricks[i] && i !== -1) {
+                // Study bricks resist explisions too
+                if (bricks[i] !== "black" && perks.sturdy_bricks > Math.random() * 5) continue;
+                explodeBrick(i, ball, true);
+            }
+        }
+        // Blow nearby coins
+        coins.forEach((c)=>{
+            const dx = c.x - x;
+            const dy = c.y - y;
+            const d2 = Math.max(brickWidth, Math.abs(dx) + Math.abs(dy));
+            c.vx += dx / d2 * 10 * size / c.weight;
+            c.vy += dy / d2 * 10 * size / c.weight;
+        });
+        lastExplosion = Date.now();
+        flashes.push({
+            type: "ball",
+            duration: 150,
+            time: levelTime,
+            size: brickWidth * 2,
+            color: "white",
+            x,
+            y
+        });
+        spawnExplosion(7 * (1 + perks.bigger_explosions), x, y, "white", 150, coinSize);
+        ball.hitSinceBounce++;
+        runStatistics.bricks_broken++;
+    } else if (color) {
+        // Even if it bounces we don't want to count that as a miss
+        ball.hitSinceBounce++;
+        // Flashing is take care of by the tick loop
+        const x = brickCenterX(index), y = brickCenterY(index);
+        bricks[index] = "";
+        // coins = coins.filter((c) => !c.destroyed);
+        let coinsToSpawn = combo;
+        if (perks.sturdy_bricks) // +10% per level
+        coinsToSpawn += Math.ceil((10 + perks.sturdy_bricks) / 10 * coinsToSpawn);
+        levelSpawnedCoins += coinsToSpawn;
+        runStatistics.coins_spawned += coinsToSpawn;
+        runStatistics.bricks_broken++;
+        const maxCoins = MAX_COINS * (isSettingOn("basic") ? 0.5 : 1);
+        const spawnableCoins = coins.length > MAX_COINS ? 1 : Math.floor(maxCoins - coins.length) / 3;
+        const pointsPerCoin = Math.max(1, Math.ceil(coinsToSpawn / spawnableCoins));
+        while(coinsToSpawn > 0){
+            const points = Math.min(pointsPerCoin, coinsToSpawn);
+            if (points < 0 || isNaN(points)) {
+                console.error({
+                    points
+                });
+                debugger;
+            }
+            coinsToSpawn -= points;
+            const cx = x + (Math.random() - 0.5) * (brickWidth - coinSize), cy = y + (Math.random() - 0.5) * (brickWidth - coinSize);
+            coins.push({
+                points,
+                color: perks.metamorphosis ? color : "gold",
+                x: cx,
+                y: cy,
+                previousX: cx,
+                previousY: cy,
+                // Use previous speed because the ball has already bounced
+                vx: ball.previousVX * (0.5 + Math.random()),
+                vy: ball.previousVY * (0.5 + Math.random()),
+                sx: 0,
+                sy: 0,
+                a: Math.random() * Math.PI * 2,
+                sa: Math.random() - 0.5,
+                weight: 0.8 + Math.random() * 0.2
+            });
+        }
+        combo += Math.max(0, perks.streak_shots + perks.compound_interest + perks.left_is_lava + perks.right_is_lava + perks.top_is_lava + perks.picky_eater - Math.round(Math.random() * perks.soft_reset));
+        if (!isExplosion) {
+            // color change
+            if ((perks.picky_eater || perks.pierce_color) && color !== ballsColor && color) {
+                if (perks.picky_eater) resetCombo(ball.x, ball.y);
+                ballsColor = color;
+            } else (0, _sounds.sounds).comboIncreaseMaybe(combo, ball.x, 1);
+        }
+        flashes.push({
+            type: "ball",
+            duration: 40,
+            time: levelTime,
+            size: brickWidth,
+            color: color,
+            x,
+            y
+        });
+        spawnExplosion(5 + Math.min(combo, 30), x, y, color, 150, coinSize / 2);
+    }
+    if (!bricks[index] && color !== "black") ball.hitItem?.push({
+        index,
+        color
+    });
+}
+function max_levels() {
+    return 7 + perks.extra_levels;
+}
+function render() {
+    if (running) needsRender = true;
+    if (!needsRender) return;
+    needsRender = false;
+    const level = currentLevelInfo();
+    const { width, height } = gameCanvas;
+    if (!width || !height) return;
+    scoreDisplay.innerText = `L${currentLevel + 1}/${max_levels()} $${score}`;
+    // Clear
+    if (!isSettingOn("basic") && !level.color && level.svg) {
+        // Without this the light trails everything
+        ctx.globalCompositeOperation = "source-over";
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, width, height);
+        ctx.globalCompositeOperation = "screen";
+        ctx.globalAlpha = 0.6;
+        coins.forEach((coin)=>{
+            if (!coin.destroyed) drawFuzzyBall(ctx, coin.color, coinSize * 2, coin.x, coin.y);
+        });
+        balls.forEach((ball)=>{
+            drawFuzzyBall(ctx, ballsColor, ballSize * 2, ball.x, ball.y);
+        });
+        ctx.globalAlpha = 0.5;
+        bricks.forEach((color, index)=>{
+            if (!color) return;
+            const x = brickCenterX(index), y = brickCenterY(index);
+            drawFuzzyBall(ctx, color == "black" ? "#666" : color, brickWidth, x, y);
+        });
+        ctx.globalAlpha = 1;
+        flashes.forEach((flash)=>{
+            const { x, y, time, color, size, type, duration } = flash;
+            const elapsed = levelTime - time;
+            ctx.globalAlpha = Math.min(1, 2 - elapsed / duration * 2);
+            if (type === "ball") drawFuzzyBall(ctx, color, size, x, y);
+            if (type === "particle") drawFuzzyBall(ctx, color, size * 3, x, y);
+        });
+        // Decides how brights the bg black parts can get
+        ctx.globalAlpha = 0.2;
+        ctx.globalCompositeOperation = "multiply";
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, width, height);
+        // Decides how dark the background black parts are when lit (1=black)
+        ctx.globalAlpha = 0.8;
+        ctx.globalCompositeOperation = "multiply";
+        if (level.svg && background.width && background.complete) {
+            if (backgroundCanvas.title !== level.name) {
+                backgroundCanvas.title = level.name;
+                backgroundCanvas.width = lastWidth;
+                backgroundCanvas.height = lastHeight;
+                const bgctx = backgroundCanvas.getContext("2d");
+                bgctx.fillStyle = level.color || "#000";
+                bgctx.fillRect(0, 0, lastWidth, lastHeight);
+                const pattern = ctx.createPattern(background, "repeat");
+                if (pattern) {
+                    bgctx.fillStyle = pattern;
+                    bgctx.fillRect(0, 0, width, height);
+                }
+            }
+            ctx.drawImage(backgroundCanvas, 0, 0);
+        } else {
+            // Background not loaded yes
+            ctx.fillStyle = "#000";
+            ctx.fillRect(0, 0, width, height);
+        }
+    } else {
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = "source-over";
+        ctx.fillStyle = level.color || "#000";
+        ctx.fillRect(0, 0, width, height);
+        flashes.forEach((flash)=>{
+            const { x, y, time, color, size, type, duration } = flash;
+            const elapsed = levelTime - time;
+            ctx.globalAlpha = Math.min(1, 2 - elapsed / duration * 2);
+            if (type === "particle") drawBall(ctx, color, size, x, y);
+        });
+    }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+    const lastExplosionDelay = Date.now() - lastExplosion + 5;
+    const shaked = lastExplosionDelay < 200;
+    if (shaked) {
+        const amplitude = (perks.bigger_explosions + 1) * 50 / lastExplosionDelay;
+        ctx.translate(Math.sin(Date.now()) * amplitude, Math.sin(Date.now() + 36) * amplitude);
+    }
+    // Coins
+    ctx.globalAlpha = 1;
+    coins.forEach((coin)=>{
+        if (!coin.destroyed) {
+            ctx.globalCompositeOperation = coin.color === "gold" || level.color ? "source-over" : "screen";
+            drawCoin(ctx, coin.color, coinSize, coin.x, coin.y, level.color || "black", coin.a);
+        }
+    });
+    // Black shadow around balls
+    if (!isSettingOn("basic")) {
+        ctx.globalCompositeOperation = "source-over";
+        ctx.globalAlpha = Math.min(0.8, coins.length / 20);
+        balls.forEach((ball)=>{
+            drawBall(ctx, level.color || "#000", ballSize * 6, ball.x, ball.y);
+        });
+    }
+    ctx.globalCompositeOperation = "source-over";
+    renderAllBricks();
+    ctx.globalCompositeOperation = "screen";
+    flashes = flashes.filter((f)=>levelTime - f.time < f.duration && !f.destroyed);
+    flashes.forEach((flash)=>{
+        const { x, y, time, color, size, type, duration } = flash;
+        const elapsed = levelTime - time;
+        ctx.globalAlpha = Math.max(0, Math.min(1, 2 - elapsed / duration * 2));
+        if (type === "text") {
+            ctx.globalCompositeOperation = "source-over";
+            drawText(ctx, flash.text, color, size, x, y - elapsed / 10);
+        } else if (type === "particle") {
+            ctx.globalCompositeOperation = "screen";
+            drawBall(ctx, color, size, x, y);
+            drawFuzzyBall(ctx, color, size, x, y);
+        }
+    });
+    if (perks.extra_life) {
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = "source-over";
+        ctx.fillStyle = puckColor;
+        for(let i = 0; i < perks.extra_life; i++)ctx.fillRect(offsetXRoundedDown, gameZoneHeight - puckHeight / 2 + 2 * i, gameZoneWidthRoundedUp, 1);
+    }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+    balls.forEach((ball)=>{
+        // The white border around is to distinguish colored balls from coins/bg
+        drawBall(ctx, ballsColor, ballSize, ball.x, ball.y, puckColor);
+        if (isTelekinesisActive(ball)) {
+            ctx.strokeStyle = puckColor;
+            ctx.beginPath();
+            ctx.bezierCurveTo(puck, gameZoneHeight, puck, ball.y, ball.x, ball.y);
+            ctx.stroke();
+        }
+    });
+    // The puck
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+    if (perks.streak_shots && combo > baseCombo()) drawPuck(ctx, "red", puckWidth, puckHeight, -2);
+    drawPuck(ctx, puckColor, puckWidth, puckHeight);
+    if (combo > 1) {
+        ctx.globalCompositeOperation = "source-over";
+        const comboText = "x " + combo;
+        const comboTextWidth = comboText.length * puckHeight / 1.8;
+        const totalWidth = comboTextWidth + coinSize * 2;
+        const left = puck - totalWidth / 2;
+        if (totalWidth < puckWidth) {
+            drawCoin(ctx, "gold", coinSize, left + coinSize / 2, gameZoneHeight - puckHeight / 2, puckColor, 0);
+            drawText(ctx, comboText, "#000", puckHeight, left + coinSize * 1.5, gameZoneHeight - puckHeight / 2, true);
+        } else drawText(ctx, comboText, "#FFF", puckHeight, puck, gameZoneHeight - puckHeight / 2, false);
+    }
+    //  Borders
+    const hasCombo = combo > baseCombo();
+    ctx.globalCompositeOperation = "source-over";
+    if (offsetXRoundedDown) {
+        // draw outside of gaming area to avoid capturing borders in recordings
+        ctx.fillStyle = hasCombo && perks.left_is_lava ? "red" : puckColor;
+        ctx.fillRect(offsetX - 1, 0, 1, height);
+        ctx.fillStyle = hasCombo && perks.right_is_lava ? "red" : puckColor;
+        ctx.fillRect(width - offsetX + 1, 0, 1, height);
+    } else {
+        ctx.fillStyle = "red";
+        if (hasCombo && perks.left_is_lava) ctx.fillRect(0, 0, 1, height);
+        if (hasCombo && perks.right_is_lava) ctx.fillRect(width - 1, 0, 1, height);
+    }
+    if (perks.top_is_lava && combo > baseCombo()) {
+        ctx.fillStyle = "red";
+        ctx.fillRect(offsetXRoundedDown, 0, gameZoneWidthRoundedUp, 1);
+    }
+    const redBottom = perks.compound_interest && combo > baseCombo();
+    ctx.fillStyle = redBottom ? "red" : puckColor;
+    if (isSettingOn("mobile-mode")) {
+        ctx.fillRect(offsetXRoundedDown, gameZoneHeight, gameZoneWidthRoundedUp, 1);
+        if (!running) drawText(ctx, "Press and hold here to play", puckColor, puckHeight, lastWidth / 2, gameZoneHeight + (lastHeight - gameZoneHeight) / 2);
+    } else if (redBottom) ctx.fillRect(offsetXRoundedDown, gameZoneHeight - 1, gameZoneWidthRoundedUp, 1);
+    if (shaked) ctx.resetTransform();
+    recordOneFrame();
+}
+let cachedBricksRender = document.createElement("canvas");
+let cachedBricksRenderKey = "";
+function renderAllBricks() {
+    ctx.globalAlpha = 1;
+    const redBorderOnBricksWithWrongColor = combo > baseCombo() && perks.picky_eater;
+    const newKey = gameZoneWidth + "_" + bricks.join("_") + bombSVG.complete + "_" + redBorderOnBricksWithWrongColor + "_" + ballsColor + "_" + perks.pierce_color;
+    if (newKey !== cachedBricksRenderKey) {
+        cachedBricksRenderKey = newKey;
+        cachedBricksRender.width = gameZoneWidth;
+        cachedBricksRender.height = gameZoneWidth + 1;
+        const canctx = cachedBricksRender.getContext("2d");
+        canctx.clearRect(0, 0, gameZoneWidth, gameZoneWidth);
+        canctx.resetTransform();
+        canctx.translate(-offsetX, 0);
+        // Bricks
+        bricks.forEach((color, index)=>{
+            const x = brickCenterX(index), y = brickCenterY(index);
+            if (!color) return;
+            const borderColor = ballsColor !== color && color !== "black" && redBorderOnBricksWithWrongColor && "red" || color;
+            drawBrick(canctx, color, borderColor, x, y);
+            if (color === "black") {
+                canctx.globalCompositeOperation = "source-over";
+                drawIMG(canctx, bombSVG, brickWidth, x, y);
+            }
+        });
+    }
+    ctx.drawImage(cachedBricksRender, offsetX, 0);
+}
+let cachedGraphics = {};
+function drawPuck(ctx, color, puckWidth, puckHeight, yOffset = 0) {
+    const key = "puck" + color + "_" + puckWidth + "_" + puckHeight;
+    if (!cachedGraphics[key]) {
+        const can = document.createElement("canvas");
+        can.width = puckWidth;
+        can.height = puckHeight * 2;
+        const canctx = can.getContext("2d");
+        canctx.fillStyle = color;
+        canctx.beginPath();
+        canctx.moveTo(0, puckHeight * 2);
+        canctx.lineTo(0, puckHeight * 1.25);
+        canctx.bezierCurveTo(0, puckHeight * 0.75, puckWidth, puckHeight * 0.75, puckWidth, puckHeight * 1.25);
+        canctx.lineTo(puckWidth, puckHeight * 2);
+        canctx.fill();
+        cachedGraphics[key] = can;
+    }
+    ctx.drawImage(cachedGraphics[key], Math.round(puck - puckWidth / 2), gameZoneHeight - puckHeight * 2 + yOffset);
+}
+function drawBall(ctx, color, width, x, y, borderColor = "") {
+    const key = "ball" + color + "_" + width + "_" + borderColor;
+    const size = Math.round(width);
+    if (!cachedGraphics[key]) {
+        const can = document.createElement("canvas");
+        can.width = size;
+        can.height = size;
+        const canctx = can.getContext("2d");
+        canctx.beginPath();
+        canctx.arc(size / 2, size / 2, Math.round(size / 2) - 1, 0, 2 * Math.PI);
+        canctx.fillStyle = color;
+        canctx.fill();
+        if (borderColor) {
+            canctx.lineWidth = 2;
+            canctx.strokeStyle = borderColor;
+            canctx.stroke();
+        }
+        cachedGraphics[key] = can;
+    }
+    ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2));
+}
+const angles = 32;
+function drawCoin(ctx, color, size, x, y, borderColor, rawAngle) {
+    const angle = (Math.round(rawAngle / Math.PI * 2 * angles) % angles + angles) % angles;
+    const key = "coin with halo_" + color + "_" + size + "_" + borderColor + "_" + (color === "gold" ? angle : "whatever");
+    if (!cachedGraphics[key]) {
+        const can = document.createElement("canvas");
+        can.width = size;
+        can.height = size;
+        const canctx = can.getContext("2d");
+        // coin
+        canctx.beginPath();
+        canctx.arc(size / 2, size / 2, size / 2, 0, 2 * Math.PI);
+        canctx.fillStyle = color;
+        canctx.fill();
+        if (color === "gold") {
+            canctx.strokeStyle = borderColor;
+            canctx.stroke();
+            canctx.beginPath();
+            canctx.arc(size / 2, size / 2, size / 2 * 0.6, 0, 2 * Math.PI);
+            canctx.fillStyle = "rgba(255,255,255,0.5)";
+            canctx.fill();
+            canctx.translate(size / 2, size / 2);
+            canctx.rotate(angle / 16);
+            canctx.translate(-size / 2, -size / 2);
+            canctx.globalCompositeOperation = "multiply";
+            drawText(canctx, "$", color, size - 2, size / 2, size / 2 + 1);
+            drawText(canctx, "$", color, size - 2, size / 2, size / 2 + 1);
+        }
+        cachedGraphics[key] = can;
+    }
+    ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2));
+}
+function drawFuzzyBall(ctx, color, width, x, y) {
+    const key = "fuzzy-circle" + color + "_" + width;
+    if (!color) debugger;
+    const size = Math.round(width * 3);
+    if (!cachedGraphics[key]) {
+        const can = document.createElement("canvas");
+        can.width = size;
+        can.height = size;
+        const canctx = can.getContext("2d");
+        const gradient = canctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+        gradient.addColorStop(0, color);
+        gradient.addColorStop(1, "transparent");
+        canctx.fillStyle = gradient;
+        canctx.fillRect(0, 0, size, size);
+        cachedGraphics[key] = can;
+    }
+    ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2));
+}
+function drawBrick(ctx, color, borderColor, x, y) {
+    const tlx = Math.ceil(x - brickWidth / 2);
+    const tly = Math.ceil(y - brickWidth / 2);
+    const brx = Math.ceil(x + brickWidth / 2) - 1;
+    const bry = Math.ceil(y + brickWidth / 2) - 1;
+    const width = brx - tlx, height = bry - tly;
+    const key = "brick" + color + "_" + borderColor + "_" + width + "_" + height;
+    if (!cachedGraphics[key]) {
+        const can = document.createElement("canvas");
+        can.width = width;
+        can.height = height;
+        const bord = 2;
+        const cornerRadius = 2;
+        const canctx = can.getContext("2d");
+        canctx.fillStyle = color;
+        canctx.strokeStyle = borderColor;
+        canctx.lineJoin = "round";
+        canctx.lineWidth = bord;
+        roundRect(canctx, bord / 2, bord / 2, width - bord, height - bord, cornerRadius);
+        canctx.fill();
+        canctx.stroke();
+        cachedGraphics[key] = can;
+    }
+    ctx.drawImage(cachedGraphics[key], tlx, tly, width, height);
+// It's not easy to have a 1px gap between bricks without antialiasing
+}
+function roundRect(ctx, x, y, width, height, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+}
+function drawIMG(ctx, img, size, x, y) {
+    const key = "svg" + img + "_" + size + "_" + img.complete;
+    if (!cachedGraphics[key]) {
+        const can = document.createElement("canvas");
+        can.width = size;
+        can.height = size;
+        const canctx = can.getContext("2d");
+        const ratio = size / Math.max(img.width, img.height);
+        const w = img.width * ratio;
+        const h = img.height * ratio;
+        canctx.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
+        cachedGraphics[key] = can;
+    }
+    ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2));
+}
+function drawText(ctx, text, color, fontSize, x, y, left = false) {
+    const key = "text" + text + "_" + color + "_" + fontSize + "_" + left;
+    if (!cachedGraphics[key]) {
+        const can = document.createElement("canvas");
+        can.width = fontSize * text.length;
+        can.height = fontSize;
+        const canctx = can.getContext("2d");
+        canctx.fillStyle = color;
+        canctx.textAlign = left ? "left" : "center";
+        canctx.textBaseline = "middle";
+        canctx.font = fontSize + "px monospace";
+        canctx.fillText(text, left ? 0 : can.width / 2, can.height / 2, can.width);
+        cachedGraphics[key] = can;
+    }
+    ctx.drawImage(cachedGraphics[key], left ? x : Math.round(x - cachedGraphics[key].width / 2), Math.round(y - cachedGraphics[key].height / 2));
+}
+let levelTime = 0;
+// Limits skip last to one use per level
+let level_skip_last_uses = 0;
+window.addEventListener("visibilitychange", ()=>{
+    if (document.hidden) pause(true);
+});
+const scoreDisplay = document.getElementById("score");
+let alertsOpen = 0, closeModal = null;
+function asyncAlert({ title, text, actions, allowClose = true, textAfterButtons = "", actionsAsGrid = false }) {
+    alertsOpen++;
+    return new Promise((resolve)=>{
+        const popupWrap = document.createElement("div");
+        document.body.appendChild(popupWrap);
+        popupWrap.className = "popup " + (actionsAsGrid ? "actionsAsGrid " : "");
+        function closeWithResult(value) {
+            resolve(value);
+            // Doing this async lets the menu scroll persist if it's shown a second time
+            setTimeout(()=>{
+                document.body.removeChild(popupWrap);
+            });
+        }
+        if (allowClose) {
+            const closeButton = document.createElement("button");
+            closeButton.title = "close";
+            closeButton.className = "close-modale";
+            closeButton.addEventListener("click", (e)=>{
+                e.preventDefault();
+                closeWithResult(undefined);
+            });
+            closeModal = ()=>{
+                closeWithResult(undefined);
+            };
+            popupWrap.appendChild(closeButton);
+        }
+        const popup = document.createElement("div");
+        if (title) {
+            const p = document.createElement("h2");
+            p.innerHTML = title;
+            popup.appendChild(p);
+        }
+        if (text) {
+            const p = document.createElement("div");
+            p.innerHTML = text;
+            popup.appendChild(p);
+        }
+        const buttons = document.createElement("section");
+        popup.appendChild(buttons);
+        actions?.filter((i)=>i).forEach(({ text, value, help, disabled, className = "", icon = "" })=>{
+            const button = document.createElement("button");
+            button.innerHTML = `
+${icon}
+<div>
+                    <strong>${text}</strong>
+                    <em>${help || ""}</em>
+            </div>`;
+            if (disabled) button.setAttribute("disabled", "disabled");
+            else button.addEventListener("click", (e)=>{
+                e.preventDefault();
+                closeWithResult(value);
+            });
+            button.className = className;
+            buttons.appendChild(button);
+        });
+        if (textAfterButtons) {
+            const p = document.createElement("div");
+            p.className = "textAfterButtons";
+            p.innerHTML = textAfterButtons;
+            popup.appendChild(p);
+        }
+        popupWrap.appendChild(popup);
+        popup.querySelector("button:not([disabled])")?.focus();
+    }).then((v)=>{
+        alertsOpen--;
+        closeModal = null;
+        return v;
+    }, ()=>{
+        closeModal = null;
+        alertsOpen--;
+    });
+}
+// Settings
+let cachedSettings = {};
+function isSettingOn(key) {
+    if (typeof cachedSettings[key] == "undefined") try {
+        const ls = localStorage.getItem("breakout-settings-enable-" + key);
+        if (ls) cachedSettings[key] = JSON.parse(ls);
+    } catch (e) {
+        console.warn(e);
+    }
+    return cachedSettings[key] ?? (0, _options.options)[key]?.default ?? false;
+}
+function toggleSetting(key) {
+    cachedSettings[key] = !isSettingOn(key);
+    try {
+        localStorage.setItem("breakout-settings-enable-" + key, JSON.stringify(cachedSettings[key]));
+    } catch (e) {
+        console.warn(e);
+    }
+    (0, _options.options)[key].afterChange();
+}
+scoreDisplay.addEventListener("click", (e)=>{
+    e.preventDefault();
+    openScorePanel().then();
+});
+async function openScorePanel() {
+    pause(true);
+    const cb = await asyncAlert({
+        title: ` ${score} points at level ${currentLevel + 1} / ${max_levels()}`,
+        text: `
+            ${isCreativeModeRun ? "<p>This is a test run, score is not recorded permanently</p>" : ""}
+            <p>Upgrades picked so far : </p>
+            <p>${pickedUpgradesHTMl()}</p>
+        `,
+        allowClose: true,
+        actions: [
+            {
+                text: "Resume",
+                help: "Return to your run",
+                value: ()=>{}
+            },
+            {
+                text: "Restart",
+                help: "Start a brand new run.",
+                value: ()=>{
+                    restart();
+                }
+            }
+        ]
+    });
+    if (cb) cb();
+}
+document.getElementById("menu")?.addEventListener("click", (e)=>{
+    e.preventDefault();
+    openSettingsPanel().then();
+});
+async function openSettingsPanel() {
+    pause(true);
+    const actions = [
+        {
+            text: "Resume",
+            help: "Return to your run",
+            value () {}
+        },
+        {
+            text: "Starting perk",
+            help: "Try perks and levels you unlocked",
+            value () {
+                openUnlocksList();
+            }
+        }
+    ];
+    for (const key of Object.keys((0, _options.options)))if ((0, _options.options)[key]) actions.push({
+        disabled: (0, _options.options)[key].disabled(),
+        icon: isSettingOn(key) ? (0, _loadGameData.icons)["icon:checkmark_checked"] : (0, _loadGameData.icons)["icon:checkmark_unchecked"],
+        text: (0, _options.options)[key].name,
+        help: (0, _options.options)[key].help,
+        value: ()=>{
+            toggleSetting(key);
+            openSettingsPanel();
+        }
+    });
+    const creativeModeThreshold = Math.max(...(0, _loadGameData.upgrades).map((u)=>u.threshold));
+    if (document.fullscreenEnabled || document.webkitFullscreenEnabled) {
+        if (document.fullscreenElement !== null) actions.push({
+            text: "Exit Fullscreen",
+            icon: (0, _loadGameData.icons)["icon:exit_fullscreen"],
+            help: "Might not work on some machines",
+            value () {
+                toggleFullScreen();
+            }
+        });
+        else actions.push({
+            icon: (0, _loadGameData.icons)["icon:fullscreen"],
+            text: "Fullscreen",
+            help: "Might not work on some machines",
+            value () {
+                toggleFullScreen();
+            }
+        });
+    }
+    actions.push({
+        text: "Creative mode",
+        help: getTotalScore() < creativeModeThreshold ? "Unlocks at total score $" + creativeModeThreshold : "Test runs with custom perks",
+        disabled: getTotalScore() < creativeModeThreshold,
+        async value () {
+            let creativeModePerks = {}, choice;
+            while(choice = await asyncAlert({
+                title: "Select perks",
+                text: 'Select perks below and press "start run" to try them out in a test run. Scores and stats are not recorded.',
+                actionsAsGrid: true,
+                actions: [
+                    ...(0, _loadGameData.upgrades).map((u)=>({
+                            icon: u.icon,
+                            text: u.name,
+                            help: (creativeModePerks[u.id] || 0) + "/" + u.max,
+                            value: u,
+                            className: creativeModePerks[u.id] ? "" : "grey-out-unless-hovered"
+                        })),
+                    {
+                        text: "Start run",
+                        value: "start"
+                    }
+                ]
+            })){
+                if (choice === "start") {
+                    restart(creativeModePerks);
+                    break;
+                } else if (choice) creativeModePerks[choice.id] = ((creativeModePerks[choice.id] || 0) + 1) % (choice.max + 1);
+            }
+        }
+    });
+    actions.push({
+        text: "Reset Game",
+        help: "Erase high score and statistics",
+        async value () {
+            if (await asyncAlert({
+                title: "Reset",
+                actions: [
+                    {
+                        text: "Yes",
+                        value: true
+                    },
+                    {
+                        text: "No",
+                        value: false
+                    }
+                ],
+                allowClose: true
+            })) {
+                localStorage.clear();
+                window.location.reload();
+            }
+        }
+    });
+    const cb = await asyncAlert({
+        title: "Breakout 71",
+        text: ``,
+        allowClose: true,
+        actions,
+        textAfterButtons: `
+        <p>
+            <span>Made in France by <a href="https://lecaro.me">Renan LE CARO</a>.</span> 
+            <a href="https://breakout.lecaro.me/privacy.html" target="_blank">Privacy Policy</a>
+            <a href="https://f-droid.org/en/packages/me.lecaro.breakout/" target="_blank">F-Droid</a>
+            <a href="https://play.google.com/store/apps/details?id=me.lecaro.breakout" target="_blank">Google Play</a>
+            <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a> 
+            <a href="https://gitlab.com/lecarore/breakout71" target="_blank">Gitlab</a>
+            <a href="https://breakout.lecaro.me/" target="_blank">Web version</a>
+            <a href="https://news.ycombinator.com/item?id=43183131" target="_blank">HackerNews</a>
+            <span>v.${(0, _loadGameData.appVersion)}</span>
+         </p>
+        `
+    });
+    if (cb) cb();
+}
+async function openUnlocksList() {
+    const ts = getTotalScore();
+    const actions = [
+        ...(0, _loadGameData.upgrades).sort((a, b)=>a.threshold - b.threshold).map(({ name, id, threshold, icon, fullHelp })=>({
+                text: name,
+                help: ts >= threshold ? fullHelp : `Unlocks at total score ${threshold}.`,
+                disabled: ts < threshold,
+                value: {
+                    perk: id
+                },
+                icon
+            })),
+        ...(0, _loadGameData.allLevels).sort((a, b)=>a.threshold - b.threshold).map((l)=>{
+            const available = ts >= l.threshold;
+            return {
+                text: l.name,
+                help: available ? `A ${l.size}x${l.size} level with ${l.bricks.filter((i)=>i).length} bricks` : `Unlocks at total score ${l.threshold}.`,
+                disabled: !available,
+                value: {
+                    level: l.name
+                },
+                icon: (0, _loadGameData.icons)[l.name]
+            };
+        })
+    ];
+    const percentUnlock = Math.round(actions.filter((a)=>!a.disabled).length / actions.length * 100);
+    const tryOn = await asyncAlert({
+        title: `You unlocked ${percentUnlock}% of the game.`,
+        text: `
+                       <p> Your total score is ${ts}. Below are all the upgrades and levels the games has to offer.
+                        ${percentUnlock < 100 ? "The greyed out ones can be unlocked by increasing your total score. The total score increases every time you score in game." : ""}</p> 
+                       `,
+        textAfterButtons: `<p> 
+Your high score is ${highScore}. 
+Click an item above to start a run with it.
+                </p>`,
+        actions,
+        allowClose: true
+    });
+    if (tryOn) {
+        if (!currentLevel || await asyncAlert({
+            title: "Restart run to try this item?",
+            text: "You're about to start a new run with the selected unlocked item, is that really what you wanted ? ",
+            actions: [
+                {
+                    value: true,
+                    text: "Restart game to test item"
+                },
+                {
+                    value: false,
+                    text: "Cancel"
+                }
+            ]
+        })) {
+            nextRunOverrides = tryOn;
+            restart();
+        }
+    }
+}
+function distance2(a, b) {
+    return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2);
+}
+function distanceBetween(a, b) {
+    return Math.sqrt(distance2(a, b));
+}
+function rainbowColor() {
+    return `hsl(${Math.round(levelTime / 4) * 2 % 360},100%,70%)`;
+}
+function repulse(a, b, power, impactsBToo) {
+    const distance = distanceBetween(a, b);
+    // Ensure we don't get soft locked
+    const max = gameZoneWidth / 2;
+    if (distance > max) return;
+    // Unit vector
+    const dx = (a.x - b.x) / distance;
+    const dy = (a.y - b.y) / distance;
+    const fact = -power * (max - distance) / (max * 1.2) / 3 * Math.min(500, levelTime) / 500;
+    if (impactsBToo && typeof b.vx !== "undefined" && typeof b.vy !== "undefined") {
+        b.vx += dx * fact;
+        b.vy += dy * fact;
+    }
+    a.vx -= dx * fact;
+    a.vy -= dy * fact;
+    const speed = 10;
+    const rand = 2;
+    flashes.push({
+        type: "particle",
+        duration: 100,
+        time: levelTime,
+        size: coinSize / 2,
+        color: rainbowColor(),
+        ethereal: true,
+        x: a.x,
+        y: a.y,
+        vx: -dx * speed + a.vx + (Math.random() - 0.5) * rand,
+        vy: -dy * speed + a.vy + (Math.random() - 0.5) * rand
+    });
+    if (impactsBToo && typeof b.vx !== "undefined" && typeof b.vy !== "undefined") flashes.push({
+        type: "particle",
+        duration: 100,
+        time: levelTime,
+        size: coinSize / 2,
+        color: rainbowColor(),
+        ethereal: true,
+        x: b.x,
+        y: b.y,
+        vx: dx * speed + b.vx + (Math.random() - 0.5) * rand,
+        vy: dy * speed + b.vy + (Math.random() - 0.5) * rand
+    });
+}
+function attract(a, b, power) {
+    const distance = distanceBetween(a, b);
+    // Ensure we don't get soft locked
+    const min = gameZoneWidth * 0.5;
+    if (distance < min) return;
+    // Unit vector
+    const dx = (a.x - b.x) / distance;
+    const dy = (a.y - b.y) / distance;
+    const fact = power * (distance - min) / min * Math.min(500, levelTime) / 500;
+    b.vx += dx * fact;
+    b.vy += dy * fact;
+    a.vx -= dx * fact;
+    a.vy -= dy * fact;
+    const speed = 10;
+    const rand = 2;
+    flashes.push({
+        type: "particle",
+        duration: 100,
+        time: levelTime,
+        size: coinSize / 2,
+        color: rainbowColor(),
+        ethereal: true,
+        x: a.x,
+        y: a.y,
+        vx: dx * speed + a.vx + (Math.random() - 0.5) * rand,
+        vy: dy * speed + a.vy + (Math.random() - 0.5) * rand
+    });
+    flashes.push({
+        type: "particle",
+        duration: 100,
+        time: levelTime,
+        size: coinSize / 2,
+        color: rainbowColor(),
+        ethereal: true,
+        x: b.x,
+        y: b.y,
+        vx: -dx * speed + b.vx + (Math.random() - 0.5) * rand,
+        vy: -dy * speed + b.vy + (Math.random() - 0.5) * rand
+    });
+}
+let mediaRecorder, captureStream, captureTrack, recordCanvas, recordCanvasCtx;
+function recordOneFrame() {
+    if (!isSettingOn("record")) return;
+    if (!running) return;
+    if (!captureStream) return;
+    drawMainCanvasOnSmallCanvas();
+    if (captureTrack?.requestFrame) captureTrack?.requestFrame();
+    else if (captureStream?.requestFrame) captureStream.requestFrame();
+}
+function drawMainCanvasOnSmallCanvas() {
+    if (!recordCanvasCtx) return;
+    recordCanvasCtx.drawImage(gameCanvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, recordCanvas.width, recordCanvas.height);
+    // Here we don't use drawText as we don't want to cache a picture for each distinct value of score
+    recordCanvasCtx.fillStyle = "#FFF";
+    recordCanvasCtx.textBaseline = "top";
+    recordCanvasCtx.font = "12px monospace";
+    recordCanvasCtx.textAlign = "right";
+    recordCanvasCtx.fillText(score.toString(), recordCanvas.width - 12, 12);
+    recordCanvasCtx.textAlign = "left";
+    recordCanvasCtx.fillText("Level " + (currentLevel + 1) + "/" + max_levels(), 12, 12);
+}
+function startRecordingGame() {
+    if (!isSettingOn("record")) return;
+    if (!recordCanvas) {
+        // Smaller canvas with fewer details
+        recordCanvas = document.createElement("canvas");
+        recordCanvasCtx = recordCanvas.getContext("2d", {
+            antialias: false,
+            alpha: false
+        });
+        captureStream = recordCanvas.captureStream(0);
+        captureTrack = captureStream.getVideoTracks()[0];
+        const track = (0, _sounds.getAudioRecordingTrack)();
+        if (track) captureStream.addTrack(track.stream.getAudioTracks()[0]);
+    }
+    recordCanvas.width = gameZoneWidthRoundedUp;
+    recordCanvas.height = gameZoneHeight;
+    // drawMainCanvasOnSmallCanvas()
+    const recordedChunks = [];
+    const instance = new MediaRecorder(captureStream, {
+        videoBitsPerSecond: 3500000
+    });
+    mediaRecorder = instance;
+    instance.start();
+    mediaRecorder.pause();
+    instance.ondataavailable = function(event) {
+        recordedChunks.push(event.data);
+    };
+    instance.onstop = async function() {
+        let targetDiv;
+        let blob = new Blob(recordedChunks, {
+            type: "video/webm"
+        });
+        if (blob.size < 200000) return; // under 0.2MB, probably bugged out or pointlessly short
+        while(!(targetDiv = document.getElementById("level-recording-container")))await new Promise((r)=>setTimeout(r, 200));
+        const video = document.createElement("video");
+        video.autoplay = true;
+        video.controls = false;
+        video.disablePictureInPicture = true;
+        video.disableRemotePlayback = true;
+        video.width = recordCanvas.width;
+        video.height = recordCanvas.height;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.src = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.download = captureFileName("webm");
+        a.target = "_blank";
+        a.href = video.src;
+        a.textContent = `Download video (${(blob.size / 1000000).toFixed(2)}MB)`;
+        targetDiv.appendChild(video);
+        targetDiv.appendChild(a);
+    };
+}
+function pauseRecording() {
+    if (!isSettingOn("record")) return;
+    if (mediaRecorder?.state === "recording") mediaRecorder?.pause();
+}
+function resumeRecording() {
+    if (!isSettingOn("record")) return;
+    if (mediaRecorder?.state === "paused") mediaRecorder.resume();
+}
+function stopRecording() {
+    if (!isSettingOn("record")) return;
+    if (!mediaRecorder) return;
+    mediaRecorder?.stop();
+    mediaRecorder = null;
+}
+function captureFileName(ext = "webm") {
+    return "breakout-71-capture-" + new Date().toISOString().replace(/[^0-9\-]+/gi, "-") + "." + ext;
+}
+function findLast(arr, predicate) {
+    let i = arr.length;
+    while(--i)if (predicate(arr[i], i, arr)) return arr[i];
+}
+function toggleFullScreen() {
+    try {
+        if (document.fullscreenElement !== null) {
+            if (document.exitFullscreen) document.exitFullscreen().then();
+            else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+        } else {
+            const docel = document.documentElement;
+            if (docel.requestFullscreen) docel.requestFullscreen().then();
+            else if (docel.webkitRequestFullscreen) docel.webkitRequestFullscreen();
+        }
+    } catch (e) {
+        console.warn(e);
+    }
+}
+const pressed = {
+    ArrowLeft: 0,
+    ArrowRight: 0,
+    Shift: 0
+};
+function setKeyPressed(key, on) {
+    pressed[key] = on;
+    keyboardPuckSpeed = (pressed.ArrowRight - pressed.ArrowLeft) * (1 + pressed.Shift * 2) * gameZoneWidth / 50;
+}
+document.addEventListener("keydown", (e)=>{
+    if (e.key.toLowerCase() === "f" && !e.ctrlKey && !e.metaKey) toggleFullScreen();
+    else if (e.key in pressed) setKeyPressed(e.key, 1);
+    if (e.key === " " && !alertsOpen) {
+        if (running) pause(true);
+        else play();
+    } else return;
+    e.preventDefault();
+});
+document.addEventListener("keyup", (e)=>{
+    const focused = document.querySelector("button:focus");
+    if (e.key in pressed) setKeyPressed(e.key, 0);
+    else if (e.key === "ArrowDown" && focused?.nextElementSibling?.tagName === "BUTTON") focused?.nextElementSibling?.focus();
+    else if (e.key === "ArrowUp" && focused?.previousElementSibling?.tagName === "BUTTON") focused?.previousElementSibling?.focus();
+    else if (e.key === "Escape" && closeModal) closeModal();
+    else if (e.key === "Escape" && running) pause(true);
+    else if (e.key.toLowerCase() === "m" && !alertsOpen) openSettingsPanel().then();
+    else if (e.key.toLowerCase() === "s" && !alertsOpen) openScorePanel().then();
+    else return;
+    e.preventDefault();
+});
+function sample(arr) {
+    return arr[Math.floor(arr.length * Math.random())];
+}
+function getMajorityValue(arr) {
+    const count = {};
+    arr.forEach((v)=>count[v] = (count[v] || 0) + 1);
+    // Object.values inline polyfill
+    const max = Math.max(...Object.keys(count).map((k)=>count[k]));
+    return sample(Object.keys(count).filter((k)=>count[k] == max));
+}
+fitSize();
+restart();
+tick();
+
+},{"./loadGameData":"l1B4x","./options":"d5NoS","./sounds":"dQKPV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l1B4x":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "appVersion", ()=>appVersion);
+parcelHelpers.export(exports, "icons", ()=>icons);
+parcelHelpers.export(exports, "allLevels", ()=>allLevels);
+parcelHelpers.export(exports, "upgrades", ()=>upgrades);
+var _paletteJson = require("./palette.json");
+var _paletteJsonDefault = parcelHelpers.interopDefault(_paletteJson);
+var _levelsJson = require("./levels.json");
+var _levelsJsonDefault = parcelHelpers.interopDefault(_levelsJson);
+var _versionJson = require("./version.json");
+var _versionJsonDefault = parcelHelpers.interopDefault(_versionJson);
+var _rawUpgrades = require("./rawUpgrades");
+var _backgroundsJson = require("./backgrounds.json");
+var _backgroundsJsonDefault = parcelHelpers.interopDefault(_backgroundsJson);
+const backgrounds = (0, _backgroundsJsonDefault.default);
+const palette = (0, _paletteJsonDefault.default);
+const rawLevelsList = (0, _levelsJsonDefault.default);
+const appVersion = (0, _versionJsonDefault.default);
+let levelIconHTMLCanvas = document.createElement("canvas");
+const levelIconHTMLCanvasCtx = levelIconHTMLCanvas.getContext("2d", {
+    antialias: false,
+    alpha: true
+});
+function levelIconHTML(bricks, levelSize, levelName, color) {
+    const size = 40;
+    const c = levelIconHTMLCanvas;
+    const ctx = levelIconHTMLCanvasCtx;
+    c.width = size;
+    c.height = size;
+    if (color) {
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, size, size);
+    } else ctx.clearRect(0, 0, size, size);
+    const pxSize = size / levelSize;
+    for(let x = 0; x < levelSize; x++)for(let y = 0; y < levelSize; y++){
+        const c = bricks[y * levelSize + x];
+        if (c) {
+            ctx.fillStyle = c;
+            ctx.fillRect(Math.floor(pxSize * x), Math.floor(pxSize * y), Math.ceil(pxSize), Math.ceil(pxSize));
+        }
+    }
+    // I don't think many blind people will benefit for this but it's nice to have something to put in "alt"
+    return `<img alt="${levelName}" width="${size}" height="${size}" src="${c.toDataURL()}"/>`;
+}
+const icons = {};
+const allLevels = rawLevelsList.map((level)=>{
+    const bricks = level.bricks.split("").map((c)=>palette[c]).slice(0, level.size * level.size);
+    const icon = levelIconHTML(bricks, level.size, level.name, level.color);
+    icons[level.name] = icon;
+    let svg = level.svg !== null && backgrounds[level.svg];
+    if (!level.color && !svg) svg = backgrounds[hashCode(level.name) % backgrounds.length];
+    return {
+        ...level,
+        bricks,
+        icon,
+        svg
+    };
+}).filter((l)=>!l.name.startsWith("icon:")).map((l, li)=>({
+        ...l,
+        threshold: li < 8 ? 0 : Math.round(Math.min(Math.pow(10, 1 + (li + l.size) / 30) * 10, 5000) * li),
+        sortKey: (Math.random() + 3) / 3.5 * l.bricks.filter((i)=>i).length
+    }));
+const upgrades = (0, _rawUpgrades.rawUpgrades).map((u)=>({
+        ...u,
+        icon: icons["icon:" + u.id]
+    }));
+function hashCode(string) {
+    let hash = 0;
+    for(let i = 0; i < string.length; i++){
+        let code = string.charCodeAt(i);
+        hash = (hash << 5) - hash + code;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
+}
+
+},{"./palette.json":"jhnsJ","./levels.json":"kqnNl","./version.json":"h1X9A","./rawUpgrades":"cvg5m","./backgrounds.json":"el6Kx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"h1X9A":[function(require,module,exports,__globalThis) {
+module.exports = JSON.parse("\"29030875\"");
+
+},{}],"cvg5m":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "rawUpgrades", ()=>rawUpgrades);
+const rawUpgrades = [
+    {
+        requires: "",
+        threshold: 0,
+        giftable: false,
+        id: "extra_life",
+        name: "+1 life",
+        max: 7,
+        help: (lvl)=>`The ball will bounce on the bottom ${lvl} time${lvl > 1 ? "s" : ""} before being lost.`,
+        fullHelp: `Normally, you have one ball per run, and the run is over as soon as you drop it.
+         This perk adds a white bar at the bottom of the screen that will save a ball once, and break in the process. 
+         You'll loose one level of that perk every time a ball bounces at the bottom of the screen. `
+    },
+    {
+        requires: "",
+        threshold: 0,
+        id: "streak_shots",
+        giftable: true,
+        name: "Single puck hit streak",
+        max: 1,
+        help: (lvl)=>`More coins if you break many bricks at once`,
+        fullHelp: `Every time you break a brick, your combo (number of coins per bricks) increases by one. However, as soon as the ball touches your puck, 
+        the combo is reset to its default value, and you'll just get one coin per brick. So you should try to hit many bricks in one go for more score. 
+        Once your combo rises above the base value, your puck will become red to remind you that it will destroy your combo to touch it with the ball.
+         This can stack with other combo related perks, the combo will rise faster but reset more easily as any of the conditions is enough to reset it. `
+    },
+    {
+        requires: "",
+        threshold: 0,
+        id: "base_combo",
+        giftable: true,
+        name: "+3 base combo",
+        max: 7,
+        help: (lvl)=>`Every brick drops at least ${1 + lvl * 3} coins.`,
+        fullHelp: `Your combo (number of coins per bricks) normally starts at 1 at the beginning of the level, and resets to one when you bounce around without hitting anything. 
+        With this perk, the combo starts 3 points higher, so you'll always get at least 4 coins per brick. Whenever your combo reset, it will go back to 4 and not 1. 
+        Your ball will glitter a bit to indicate that its combo is higher than one.`
+    },
+    {
+        requires: "",
+        threshold: 0,
+        giftable: false,
+        id: "slow_down",
+        name: "Slower ball",
+        max: 2,
+        help: (lvl)=>`Ball moves ${lvl > 1 ? "even" : ""} more slowly.`,
+        fullHelp: `The ball starts relatively slow, but every level of your run it will start a bit faster, and it will also accelerate if you spend a lot of time in one level. This perk makes it
+         more manageable. You can get it at the start every time by enabling kid mode in the menu.`
+    },
+    {
+        requires: "",
+        threshold: 0,
+        giftable: false,
+        id: "bigger_puck",
+        name: "Bigger puck",
+        max: 2,
+        help: (lvl)=>`Easily catch ${lvl > 1 ? "even" : ""} more coins.`,
+        fullHelp: `A bigger puck makes it easier to never miss the ball and to catch more coins, and also to precisely angle the bounces (the ball's angle only depends on where it hits the puck). 
+        However, a large puck is harder to use around the sides of the level, and will make it sometimes unavoidable to miss (not hit anything) which comes with downsides. `
+    },
+    {
+        requires: "",
+        threshold: 0,
+        giftable: false,
+        id: "viscosity",
+        name: "Viscosity",
+        max: 3,
+        help: (lvl)=>`${lvl > 1 ? "Even slower" : "Slower"} coins fall.`,
+        fullHelp: `Coins normally accelerate with gravity and explosions to pretty high speeds. This perk constantly makes them slow down, as if they were in some sort of viscous liquid. 
+        This makes catching them easier, and combines nicely with perks that influence the coin's movement. `
+    },
+    {
+        requires: "",
+        threshold: 0,
+        id: "left_is_lava",
+        giftable: true,
+        name: "Avoid left side",
+        max: 1,
+        help: (lvl)=>`More coins if you don't touch the left side.`,
+        fullHelp: `Whenever you break a brick, your combo will increase by one, so you'll get one more coin from all the next bricks you break.
+         However, your combo will reset as soon as your ball hits the left side . 
+        As soon as your combo rises, the left side becomes red to remind you that you should avoid hitting them. 
+        The effect stacks with other combo perks, combo rises faster with more upgrades but will also reset if any
+         of the reset conditions are met.`
+    },
+    {
+        requires: "",
+        threshold: 0,
+        id: "right_is_lava",
+        giftable: true,
+        name: "Avoid right side",
+        max: 1,
+        help: (lvl)=>`More coins if you don't touch the right side.`,
+        fullHelp: `Whenever you break a brick, your combo will increase by one, so you'll get one more coin from all the next bricks you break.
+         However, your combo will reset as soon as your ball hits the right side . 
+        As soon as your combo rises, the right side becomes red to remind you that you should avoid hitting them. 
+        The effect stacks with other combo perks, combo rises faster with more upgrades but will also reset if any
+         of the reset conditions are met.`
+    },
+    {
+        requires: "",
+        threshold: 0,
+        id: "top_is_lava",
+        giftable: true,
+        name: "Sky is the limit",
+        max: 1,
+        help: (lvl)=>`More coins if you don't touch the top.`,
+        fullHelp: `Whenever you break a brick, your combo will increase by one. However, your combo will reset as soon as your ball hit the top of the screen. 
+        When your combo is above the minimum,  a red bar will appear at the top to remind you that you should avoid hitting it. 
+        The effect stacks with other combo perks.`
+    },
+    {
+        requires: "",
+        threshold: 0,
+        giftable: false,
+        id: "skip_last",
+        name: "Easy Cleanup",
+        max: 7,
+        help: (lvl)=>`The last ${lvl > 1 ? lvl + " bricks" : "brick"} left will self-destruct.`,
+        fullHelp: `You need to break all bricks to go to the next level. However, it can be hard to get the last ones. 
+        Clearing a level early brings extra choices when upgrading. Never missing the bricks is also very beneficial. 
+        So if you find it difficult to break the last bricks, getting this perk a few time can help.`
+    },
+    {
+        requires: "",
+        threshold: 500,
+        id: "telekinesis",
+        giftable: true,
+        name: "Puck controls ball",
+        max: 2,
+        help: (lvl)=>lvl == 1 ? `Control the ball's trajectory.` : `Stronger effect on the ball`,
+        fullHelp: `Right after the ball hits your puck, you'll be able to direct it left and right by moving your puck. 
+        The effect stops when the ball hits a brick and resets the next time it touches the puck. It also does nothing when the ball is going downward after bouncing at the top. `
+    },
+    {
+        requires: "",
+        threshold: 1000,
+        giftable: false,
+        id: "coin_magnet",
+        name: "Coins magnet",
+        max: 3,
+        help: (lvl)=>lvl == 1 ? `Puck attracts coins.` : `Stronger effect on the coins`,
+        fullHelp: `Directs the coins to the puck. The effect is stronger if the coin is close to it already. Catching 90% or 100% of coins bring special bonuses in the game. 
+         Another way to catch more coins is to hit bricks from the bottom. The ball's speed and direction impacts the spawned coin's velocity. `
+    },
+    {
+        requires: "",
+        threshold: 1500,
+        id: "multiball",
+        giftable: true,
+        name: "+1 ball",
+        max: 6,
+        help: (lvl)=>`Start every levels with ${lvl + 1} balls.`,
+        fullHelp: `As soon as you drop the ball in Breakout 71, you loose. With this perk, you get two balls, and so you can afford to lose one. 
+         The lost balls come back on the next level. Having more than one balls makes some further perks available, and of course clears the level faster.`
+    },
+    {
+        requires: "",
+        threshold: 2000,
+        giftable: false,
+        id: "smaller_puck",
+        name: "Smaller puck",
+        max: 2,
+        help: (lvl)=>lvl == 1 ? `Also gives +5 base combo.` : `Even smaller puck and higher base combo`,
+        fullHelp: `This makes the puck smaller, which in theory makes some corner shots easier, but really just raises the difficulty. 
+         That's why you also get a nice bonus of +5 coins per brick for all bricks you'll break after picking this.  `
+    },
+    {
+        requires: "",
+        threshold: 3000,
+        id: "pierce",
+        giftable: true,
+        name: "Piercing",
+        max: 3,
+        help: (lvl)=>`Ball pierces ${3 * lvl} bricks after a puck bounce.`,
+        fullHelp: `The ball normally bounces as soon as it touches something. With this perk, it will continue its trajectory for up to 3 bricks broken. 
+        After that, it will bounce on the 4th brick, and you'll need to touch the puck to reset the counter. This combines particularly well with Sapper. `
+    },
+    {
+        requires: "",
+        threshold: 4000,
+        id: "picky_eater",
+        giftable: true,
+        name: "Picky eater",
+        max: 1,
+        help: (lvl)=>`More coins if you break bricks color by color.`,
+        fullHelp: `Whenever you break a brick the same color as your ball, your combo increases by one. 
+        If it's a different color, the ball takes that new color, but the combo resets.
+        The bricks with the right color will get a white border. 
+        Once you get a combo higher than your minimum, the bricks of the wrong color will get a red halo. 
+        If you have more than one ball, they all change color whenever one of them hits a brick.
+        
+        `
+    },
+    {
+        requires: "",
+        threshold: 5000,
+        giftable: false,
+        id: "metamorphosis",
+        name: "Stain",
+        max: 1,
+        help: (lvl)=>`Coins color the bricks they touch.`,
+        fullHelp: `With this perk, coins will be of the color of the brick they come from, and will color the first brick they touch in the same color. Coins spawn with the speed
+        of the ball that broke them, which means you can aim a bit in the direction of the bricks you want to "paint".
+        `
+    },
+    {
+        requires: "",
+        threshold: 6000,
+        id: "compound_interest",
+        giftable: true,
+        name: "Compound interest",
+        max: 1,
+        help: ()=>`+1 combo per brick broken, resets on coin lost`,
+        fullHelp: `Your combo will grow by one every time you break a brick, spawning more and more coin with every brick you break. Be sure however to catch every one of those coins
+        with your puck, as any lost coin will decrease your combo by one point. One your combo is above the minimum, the bottom of the play area will
+        have a red line to remind you that coins should not go there. This perk combines with other combo perks, the combo will rise faster but reset more easily.
+        `
+    },
+    {
+        requires: "",
+        threshold: 7000,
+        id: "hot_start",
+        giftable: true,
+        name: "Hot start",
+        max: 3,
+        help: (lvl)=>`Start at combo ${lvl * 15 + 1}, -${lvl} combo per second`,
+        fullHelp: `At the start of every level, your combo will start at +15 points, but then every second it will be decreased by one. This means the first 15 seconds in a level will spawn
+        many more coins than the following ones, and you should make sure that you clear the level quickly. The effect stacks with other combo related perks, so you might be able to raise 
+        the combo after the 15s timeout, but it will keep ticking down. Every time you take the perk again, the effect will be more dramatic.
+        `
+    },
+    {
+        requires: "",
+        threshold: 9000,
+        id: "sapper",
+        giftable: true,
+        name: "Sapper",
+        max: 7,
+        help: (lvl)=>lvl === 1 ? "The first brick broken becomes a bomb." : `The first ${lvl} bricks broken become bombs.`,
+        fullHelp: `Instead of just disappearing, the first brick you break will be replaced by a bomb brick. Bouncing the ball on the puck re-arms the effect. "Piercing" will instantly
+        detonate the bomb that was just placed. Leveling-up this perk will allow you to place more bombs. Remember that bombs impact the velocity of nearby coins, so too many explosions
+        could make it hard to catch the fruits of your hard work. 
+        `
+    },
+    {
+        requires: "",
+        threshold: 11000,
+        id: "bigger_explosions",
+        name: "Kaboom",
+        max: 1,
+        giftable: false,
+        help: (lvl)=>"Bigger explosions",
+        fullHelp: `The default explosion clears a 3x3 square, with this it becomes a 5x5 square, and the blowback on the coins is also significantly stronger. `
+    },
+    {
+        requires: "",
+        threshold: 13000,
+        giftable: false,
+        id: "extra_levels",
+        name: "+1 level",
+        max: 3,
+        help: (lvl)=>`Play ${lvl + 7} levels instead of 7`,
+        fullHelp: `The default run can last a max of 7 levels, after which the game is over and whatever score you reached is your run score. 
+        Each level of this perk lets you go one level higher. The last levels are often the ones where you make the most score, so the difference can be dramatic.`
+    },
+    {
+        requires: "",
+        threshold: 15000,
+        giftable: false,
+        id: "pierce_color",
+        name: "Color pierce",
+        max: 1,
+        help: (lvl)=>`Balls pierce bricks of their color.`,
+        fullHelp: `Whenever a ball hits a brick of the same color, it will just go through unimpeded. 
+        Once it reaches a brick of a different color, it will break it, take its color and bounce.`
+    },
+    {
+        requires: "",
+        threshold: 18000,
+        giftable: false,
+        id: "soft_reset",
+        name: "Soft reset",
+        max: 2,
+        help: (lvl)=>`Combo grows ${lvl > 1 ? "even" : ""} slower but resets less.`,
+        fullHelp: `The combo normally climbs every time you break a brick. This will sometimes cancel that climb, but also limit the impact of a combo reset.`
+    },
+    {
+        requires: "multiball",
+        threshold: 21000,
+        giftable: false,
+        id: "ball_repulse_ball",
+        name: "Personal space",
+        max: 3,
+        help: (lvl)=>lvl === 1 ? `Balls repulse balls.` : "Stronger repulsion force",
+        fullHelp: `Balls that are less than half a screen width away will start repulsing each other. The repulsion force is stronger if they are close to each other.
+         Particles will jet out to symbolize this force being applied. This perk is only offered if you have more than one ball already.`
+    },
+    {
+        requires: "multiball",
+        threshold: 25000,
+        giftable: false,
+        id: "ball_attract_ball",
+        name: "Gravity",
+        max: 3,
+        help: (lvl)=>lvl === 1 ? `Balls attract balls.` : "Stronger attraction force",
+        fullHelp: `Balls that are more than half a screen width away will start attracting each other. The attraction force is stronger when they are furthest away from each other.
+         Rainbow particles will fly to symbolize the attraction force. This perk is only offered if you have more than one ball already.`
+    },
+    {
+        requires: "",
+        threshold: 30000,
+        giftable: false,
+        id: "puck_repulse_ball",
+        name: "Soft landing",
+        max: 2,
+        help: (lvl)=>lvl === 1 ? `Puck repulses balls.` : "Stronger repulsion force",
+        fullHelp: `When a ball gets close to the puck, it will start slowing down, and even potentially bouncing without touching the puck.`
+    },
+    {
+        requires: "",
+        threshold: 35000,
+        giftable: false,
+        id: "wind",
+        name: "Wind",
+        max: 3,
+        help: (lvl)=>lvl === 1 ? `Puck position creates wind.` : "Stronger wind force",
+        fullHelp: `The wind depends on where your puck is, if it's in the center of the screen nothing happens, if it's on the left it will blow leftwise, if it's on the right of the screen
+        then it will blow rightwise. The wind affects both the balls and coins.`
+    },
+    {
+        requires: "",
+        threshold: 40000,
+        giftable: false,
+        id: "sturdy_bricks",
+        name: "Sturdy bricks",
+        max: 4,
+        help: (lvl)=>lvl === 1 ? `Bricks sometimes resist hits but drop more coins.` : "Bricks resist more and drop more coins",
+        fullHelp: `With level one of this perk, the ball has a 20% chance to bounce harmlessly on bricks, 
+        but generates 10% more coins when it does break one. 
+        This +10% is not shown in the combo number. At level 4 the ball has 80% chance of bouncing and brings 40% more coins.`
+    },
+    {
+        requires: "",
+        threshold: 45000,
+        giftable: false,
+        id: "respawn",
+        name: "Respawn",
+        max: 4,
+        help: (lvl)=>lvl === 1 ? `The first brick hit of two+ will respawn.` : "More bricks can respawn",
+        fullHelp: `After breaking two or more bricks, when the ball hits the puck, the first brick will be put back in place, provided that space is free and the brick wasn't a bomb.
+        Some particle effect will let you know where bricks will appear. Levelling this up lets you respawn up to 4 bricks at a time, but there should always be at least one destroyed.
+        `
+    },
+    {
+        requires: "",
+        threshold: 50000,
+        giftable: false,
+        id: "one_more_choice",
+        name: "+1 choice until run end",
+        max: 3,
+        help: (lvl)=>lvl === 1 ? `Further level ups will offer one more option in the list.` : "Even more options",
+        fullHelp: `Every upgrade menu will have one more option. 
+         Doesn't increase the number of upgrades you can pick.  
+        `
+    },
+    {
+        requires: "",
+        threshold: 55000,
+        giftable: false,
+        id: "instant_upgrade",
+        name: "+2 upgrades now",
+        max: 2,
+        help: (lvl)=>lvl === 1 ? `-1 choice until run end.` : "Even fewer options",
+        fullHelp: `Immediately pick two upgrades, so that you get one free one and one to repay the one used to get this perk. Every further menu to pick upgrades will have fewer options to choose from.`
+    }
+];
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d5NoS":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "options", ()=>options);
+var _game = require("./game");
+const options = {
+    sound: {
+        default: true,
+        name: `Game sounds`,
+        help: `Can slow down some phones.`,
+        afterChange: ()=>{},
+        disabled: ()=>false
+    },
+    "mobile-mode": {
+        default: window.innerHeight > window.innerWidth,
+        name: `Mobile mode`,
+        help: `Leaves space for your thumb.`,
+        afterChange () {
+            (0, _game.fitSize)();
+        },
+        disabled: ()=>false
+    },
+    basic: {
+        default: false,
+        name: `Basic graphics`,
+        help: `Better performance on older devices.`,
+        afterChange: ()=>{},
+        disabled: ()=>false
+    },
+    pointerLock: {
+        default: false,
+        name: `Mouse pointer lock`,
+        help: `Locks and hides the mouse cursor.`,
+        afterChange: ()=>{},
+        disabled: ()=>!(0, _game.gameCanvas).requestPointerLock
+    },
+    easy: {
+        default: false,
+        name: `Kids mode`,
+        help: `Start future runs with "slower ball".`,
+        afterChange: ()=>{},
+        disabled: ()=>false
+    },
+    record: {
+        default: false,
+        name: `Record gameplay videos`,
+        help: `Get a video of each level.`,
+        afterChange: ()=>{},
+        disabled () {
+            return window.location.search.includes("isInWebView=true");
+        }
+    }
+};
+
+},{"./game":"edeGs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dQKPV":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "sounds", ()=>sounds);
+parcelHelpers.export(exports, "getAudioContext", ()=>getAudioContext);
+parcelHelpers.export(exports, "getAudioRecordingTrack", ()=>getAudioRecordingTrack);
+var _game = require("./game");
+const sounds = {
+    wallBeep: (pan)=>{
+        if (!(0, _game.isSettingOn)("sound")) return;
+        createSingleBounceSound(800, pixelsToPan(pan));
+    },
+    comboIncreaseMaybe: (combo, x, volume)=>{
+        if (!(0, _game.isSettingOn)("sound")) return;
+        let delta = 0;
+        if (!isNaN(lastComboPlayed)) {
+            if (lastComboPlayed < combo) delta = 1;
+            if (lastComboPlayed > combo) delta = -1;
+        }
+        playShepard(delta, pixelsToPan(x), volume);
+        lastComboPlayed = combo;
+    },
+    comboDecrease () {
+        if (!(0, _game.isSettingOn)("sound")) return;
+        playShepard(-1, 0.5, 0.5);
+    },
+    coinBounce: (pan, volume)=>{
+        if (!(0, _game.isSettingOn)("sound")) return;
+        createSingleBounceSound(1200, pixelsToPan(pan), volume, 0.1, "triangle");
+    },
+    explode: (pan)=>{
+        if (!(0, _game.isSettingOn)("sound")) return;
+        createExplosionSound(pixelsToPan(pan));
+    },
+    lifeLost (pan) {
+        if (!(0, _game.isSettingOn)("sound")) return;
+        createShatteredGlassSound(pixelsToPan(pan));
+    },
+    coinCatch (pan) {
+        if (!(0, _game.isSettingOn)("sound")) return;
+        createSingleBounceSound(900, pixelsToPan(pan), 0.8, 0.1, "triangle");
+    }
+};
+// How to play the code on the leftconst context = new window.AudioContext();
+let audioContext, audioRecordingTrack;
+function getAudioContext() {
+    if (!audioContext) {
+        if (!(0, _game.isSettingOn)("sound")) return null;
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        audioRecordingTrack = audioContext.createMediaStreamDestination();
+    }
+    return audioContext;
+}
+function getAudioRecordingTrack() {
+    getAudioContext();
+    return audioRecordingTrack;
+}
+function createSingleBounceSound(baseFreq = 800, pan = 0.5, volume = 1, duration = 0.1, type = "sine") {
+    const context = getAudioContext();
+    if (!context) return;
+    const oscillator = createOscillator(context, baseFreq, type);
+    // Create a gain node to control the volume
+    const gainNode = context.createGain();
+    oscillator.connect(gainNode);
+    // Create a stereo panner node for left-right panning
+    const panner = context.createStereoPanner();
+    panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime);
+    gainNode.connect(panner);
+    panner.connect(context.destination);
+    panner.connect(audioRecordingTrack);
+    // Set up the gain envelope to simulate the impact and quick decay
+    gainNode.gain.setValueAtTime(0.8 * volume, context.currentTime); // Initial impact
+    gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + duration); // Quick decay
+    // Start the oscillator
+    oscillator.start(context.currentTime);
+    // Stop the oscillator after the decay
+    oscillator.stop(context.currentTime + duration);
+}
+let noiseBuffer;
+function getNoiseBuffer(context) {
+    if (!noiseBuffer) {
+        const bufferSize = context.sampleRate * 2; // 2 seconds
+        noiseBuffer = context.createBuffer(1, bufferSize, context.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        // Fill the buffer with random noise
+        for(let i = 0; i < bufferSize; i++)output[i] = Math.random() * 2 - 1;
+    }
+    return noiseBuffer;
+}
+function createExplosionSound(pan = 0.5) {
+    const context = getAudioContext();
+    if (!context) return;
+    // Create an audio buffer
+    // Create a noise source
+    const noiseSource = context.createBufferSource();
+    noiseSource.buffer = getNoiseBuffer(context);
+    // Create a gain node to control the volume
+    const gainNode = context.createGain();
+    noiseSource.connect(gainNode);
+    // Create a filter to shape the explosion sound
+    const filter = context.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(1000, context.currentTime); // Set the initial frequency
+    gainNode.connect(filter);
+    // Create a stereo panner node for left-right panning
+    const panner = context.createStereoPanner();
+    panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime); // pan 0 to 1 maps to -1 to 1
+    // Connect filter to panner and then to the destination (speakers)
+    filter.connect(panner);
+    panner.connect(context.destination);
+    panner.connect(audioRecordingTrack);
+    // Ramp down the gain to simulate the explosion's fade-out
+    gainNode.gain.setValueAtTime(1, context.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 1);
+    // Lower the filter frequency over time to create the "explosive" effect
+    filter.frequency.exponentialRampToValueAtTime(60, context.currentTime + 1);
+    // Start the noise source
+    noiseSource.start(context.currentTime);
+    // Stop the noise source after the sound has played
+    noiseSource.stop(context.currentTime + 1);
+}
+function pixelsToPan(pan) {
+    return Math.max(0, Math.min(1, (pan - (0, _game.offsetXRoundedDown)) / (0, _game.gameZoneWidthRoundedUp)));
+}
+let lastComboPlayed = NaN, shepard = 6;
+function playShepard(delta, pan, volume) {
+    const shepardMax = 11, factor = 1.05945594920268, baseNote = 392;
+    shepard += delta;
+    if (shepard > shepardMax) shepard = 0;
+    if (shepard < 0) shepard = shepardMax;
+    const play = (note)=>{
+        const freq = baseNote * Math.pow(factor, note);
+        const diff = Math.abs(note - shepardMax * 0.5);
+        const maxDistanceToIdeal = 1.5 * shepardMax;
+        const vol = Math.max(0, volume * (1 - diff / maxDistanceToIdeal));
+        createSingleBounceSound(freq, pan, vol);
+        return freq.toFixed(2) + " at " + Math.floor(vol * 100) + "% diff " + diff;
+    };
+    play(1 + shepardMax + shepard);
+    play(shepard);
+    play(-1 - shepardMax + shepard);
+}
+function createShatteredGlassSound(pan) {
+    const context = getAudioContext();
+    if (!context) return;
+    const oscillators = [
+        createOscillator(context, 3000, "square"),
+        createOscillator(context, 4500, "square"),
+        createOscillator(context, 6000, "square")
+    ];
+    const gainNode = context.createGain();
+    const noiseSource = context.createBufferSource();
+    noiseSource.buffer = getNoiseBuffer(context);
+    oscillators.forEach((oscillator)=>oscillator.connect(gainNode));
+    noiseSource.connect(gainNode);
+    gainNode.gain.setValueAtTime(0.2, context.currentTime);
+    oscillators.forEach((oscillator)=>oscillator.start());
+    noiseSource.start();
+    oscillators.forEach((oscillator)=>oscillator.stop(context.currentTime + 0.2));
+    noiseSource.stop(context.currentTime + 0.2);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.2);
+    // Create a stereo panner node for left-right panning
+    const panner = context.createStereoPanner();
+    panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime);
+    gainNode.connect(panner);
+    panner.connect(context.destination);
+    panner.connect(audioRecordingTrack);
+    gainNode.connect(panner);
+}
+// Helper function to create an oscillator with a specific frequency
+function createOscillator(context, frequency, type) {
+    const oscillator = context.createOscillator();
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, context.currentTime);
+    return oscillator;
+}
+
+},{"./game":"edeGs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hhTAC","3UXKE","3qndx"], "3qndx", "parcelRequire94c2")
+
+</script>
+  </body>
+</html>
