@@ -1,3 +1,5 @@
+console.log('WTF')
+
 let currentCode = '_'
 
 const paletteEl = document.getElementById('palette');

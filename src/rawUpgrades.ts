@@ -7,9 +7,10 @@ export const rawUpgrades = [
     name: "+1 life",
     max: 7,
     help: (lvl: number) =>
-      `Survive dropping the ball ${lvl} time${lvl > 1 ? "s" : ""}.`,
-    fullHelp: `Normally, you just have one life, and the run is over as soon as you drop it.
-         With this perk, you can survive dropping the ball once. A heart in the top right corner will remind you of how many extra lives you have. `,
+      `The ball will bounce on the bottom ${lvl} time${lvl > 1 ? "s" : ""} before being lost.`,
+    fullHelp: `Normally, you have one ball per run, and the run is over as soon as you drop it.
+         This perk adds a white bar at the bottom of the screen that will save a ball once, and break in the process. 
+         You'll loose one level of that perk every time a ball bounces at the bottom of the screen. `,
   },
   {
     requires: "",
@@ -163,8 +164,7 @@ export const rawUpgrades = [
     max: 6,
     help: (lvl: number) => `Start every levels with ${lvl + 1} balls.`,
     fullHelp: `As soon as you drop the ball in Breakout 71, you loose. With this perk, you get two balls, and so you can afford to lose one. 
-         The lost balls come back on the next level or whenever you use one of your extra lives, if you picked that perk. Having more than one balls makes 
-         some further perks available, and of course clears the level faster.`,
+         The lost balls come back on the next level. Having more than one balls makes some further perks available, and of course clears the level faster.`,
   },
   {
     requires: "",

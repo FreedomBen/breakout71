@@ -2,7 +2,7 @@
 # Credits
 
 I pulled many background patterns from https://pattern.monster/
-They are displayed in [patterns.html](patterns.html) for easy inclusion.
+They are displayed in [patterns.html](editor/patterns.html) for easy inclusion.
 
 Some of the sound generating code was written by ChatGPT, and heavily
 adapted to my usage over time.
