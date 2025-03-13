@@ -4,7 +4,7 @@
   "description": "A roguelite take on the breakout genre, optimised for short runs and replayability.",
   "scripts": {
     "start": "rm -rf .parcel-cache && run-p dev:*",
-    "dev:game-fe": "parcel src/*.html --lazy",
+    "dev:game-fe": "parcel src/*.html --lazy --no-hmr",
     "dev:editor-be": "nodemon editserver.js  --watch editserver.js",
     "build": "rm -f dist/* && parcel build src/index.html"
   },

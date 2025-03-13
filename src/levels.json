@@ -116,7 +116,7 @@
     "name": "We come in peace",
     "size": 13,
     "bricks": "________________a_____a_______a___a_______aaaaaaa_____aaBaaaBaa___aaaaaaaaaaa__aaaaaaaaaaa__a_aaaaaaa_a__a_a_____a_a_____aa_aa_____________________________",
-    "svg": 24,
+    "svg": 29,
     "color": ""
   },
   {
@@ -151,8 +151,8 @@
     "name": "Enderman",
     "size": 10,
     "bricks": "___________gggggggg__gggggggg__gggggggg__gggggggg__vvvggvvv__gggggggg__gggggggg__gggggggg_____________________",
-    "svg": "",
-    "color": "#26a269"
+    "svg": null,
+    "color": "#154b07"
   },
   {
     "name": "Mushroom",
@@ -165,7 +165,7 @@
     "name": "Tulip",
     "size": 11,
     "bricks": "______________R_R_R______RRRRR______RRRRR______RRRRR_______RRR_________k________k_k_k______k_k_k_______kkk_________k________________",
-    "svg": 29,
+    "svg": 17,
     "color": ""
   },
   {
@@ -179,7 +179,7 @@
     "name": "Marion",
     "size": 9,
     "bricks": "rr_____rr_rr___rr__rrr_rrr__rrrrrrr__rr_r_rr__rr___rr__rr___rr__rr___rr_rrr___rrr",
-    "svg": null,
+    "svg": 27,
     "color": ""
   },
   {

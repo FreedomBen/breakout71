@@ -117,7 +117,9 @@ let running = false,
 function play() {
   if (running) return;
   running = true;
-  getAudioContext()?.resume().then();
+
+  startRecordingGame();
+  getAudioContext()?.resume();
   resumeRecording();
   document.body.className = running ? " running " : " paused ";
 }
@@ -132,7 +134,7 @@ function pause(playerAskedForPause: boolean) {
       needsRender = true;
 
       setTimeout(() => {
-        if (!running) getAudioContext()?.suspend().then();
+        if (!running) getAudioContext()?.suspend();
       }, 1000);
 
       pauseRecording();
@@ -446,9 +448,10 @@ async function openUpgradesPicker() {
 }
 
 function setLevel(l: number) {
+  stopRecording();
   pause(false);
   if (l > 0) {
-    openUpgradesPicker().then();
+    openUpgradesPicker();
   }
   currentLevel = l;
 
@@ -476,8 +479,6 @@ function setLevel(l: number) {
   // This caused problems with accented characters like the ô of côte d'ivoire for odd reasons
   // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
   background.src = "data:image/svg+xml;UTF8," + lvl.svg;
-  stopRecording();
-  startRecordingGame();
 }
 
 function currentLevelInfo() {
@@ -625,7 +626,7 @@ gameCanvas.addEventListener("mouseup", (e) => {
   } else {
     play();
     if (isSettingOn("pointerLock")) {
-      gameCanvas.requestPointerLock().then();
+      gameCanvas.requestPointerLock();
     }
   }
 });
@@ -2516,7 +2517,7 @@ export function toggleSetting(key: OptionId) {
 
 scoreDisplay.addEventListener("click", (e) => {
   e.preventDefault();
-  openScorePanel().then();
+  openScorePanel();
 });
 
 async function openScorePanel() {
@@ -2551,7 +2552,7 @@ async function openScorePanel() {
 
 document.getElementById("menu")?.addEventListener("click", (e) => {
   e.preventDefault();
-  openSettingsPanel().then();
+  openSettingsPanel();
 });
 
 async function openSettingsPanel() {
@@ -2941,6 +2942,7 @@ function startRecordingGame() {
   if (!isSettingOn("record")) {
     return;
   }
+  if(mediaRecorder) return;
   if (!recordCanvas) {
     // Smaller canvas with fewer details
     recordCanvas = document.createElement("canvas");
@@ -3058,14 +3060,14 @@ function toggleFullScreen() {
   try {
     if (document.fullscreenElement !== null) {
       if (document.exitFullscreen) {
-        document.exitFullscreen().then();
+        document.exitFullscreen();
       } else if (document.webkitCancelFullScreen) {
         document.webkitCancelFullScreen();
       }
     } else {
       const docel = document.documentElement;
       if (docel.requestFullscreen) {
-        docel.requestFullscreen().then();
+        docel.requestFullscreen();
       } else if (docel.webkitRequestFullscreen) {
         docel.webkitRequestFullscreen();
       }
@@ -3127,9 +3129,9 @@ document.addEventListener("keyup", (e) => {
   } else if (e.key === "Escape" && running) {
     pause(true);
   } else if (e.key.toLowerCase() === "m" && !alertsOpen) {
-    openSettingsPanel().then();
+    openSettingsPanel();
   } else if (e.key.toLowerCase() === "s" && !alertsOpen) {
-    openScorePanel().then();
+    openScorePanel();
   } else {
     return;
   }

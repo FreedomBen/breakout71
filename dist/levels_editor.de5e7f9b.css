@@ -28,6 +28,10 @@ body {
   position: relative;
 }
 
+#levels input[type="number"] {
+  width: 50px;
+}
+
 #levels > div {
   grid-template-columns: auto auto;
   grid-template-areas: ". name"

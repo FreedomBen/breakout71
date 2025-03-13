@@ -3,8 +3,7 @@ import _palette from "./palette.json";
 import _rawLevelsList from "./levels.json";
 import _appVersion from "./version.json";
 import { rawUpgrades } from "./rawUpgrades";
-import _backgrounds from "./backgrounds.json";
-const backgrounds = _backgrounds as string[];
+import {getLevelBackground} from "./getLevelBackground";
 const palette = _palette as Palette;
 
 const rawLevelsList = _rawLevelsList as RawLevel[];
@@ -50,7 +49,7 @@ function levelIconHTML(
       }
     }
   }
-  // I don't think many blind people will benefit for this but it's nice to have something to put in "alt"
+  // I don't think many blind people will benefit for this, but it's nice to have something to put in "alt"
   return `<img alt="${levelName}" width="${size}" height="${size}" src="${c.toDataURL()}"/>`;
 }
 
@@ -64,16 +63,11 @@ export const allLevels = rawLevelsList
       .slice(0, level.size * level.size);
     const icon = levelIconHTML(bricks, level.size, level.name, level.color);
     icons[level.name] = icon;
-    let svg = level.svg !== null && backgrounds[level.svg];
-
-    if (!level.color && !svg) {
-      svg = backgrounds[hashCode(level.name) % backgrounds.length];
-    }
     return {
       ...level,
       bricks,
       icon,
-      svg,
+      svg:getLevelBackground(level),
     };
   })
   .filter((l) => !l.name.startsWith("icon:"))
@@ -92,13 +86,3 @@ export const upgrades = rawUpgrades.map((u) => ({
   ...u,
   icon: icons["icon:" + u.id],
 })) as Upgrade[];
-
-function hashCode(string: string) {
-  let hash = 0;
-  for (let i = 0; i < string.length; i++) {
-    let code = string.charCodeAt(i);
-    hash = (hash << 5) - hash + code;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return Math.abs(hash);
-}
