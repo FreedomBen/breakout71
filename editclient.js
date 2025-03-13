@@ -5,7 +5,7 @@ const paletteEl = document.getElementById('palette');
 Object.entries(palette).forEach(([code, color]) => {
     const btn = document.createElement('button')
     Object.assign(btn.style, {
-        background: color ||'linear-gradient(45deg,black,white)',
+        background: color || 'linear-gradient(45deg,black,white)',
         display: 'inline-block',
         width: '40px',
         height: '40px',
@@ -26,12 +26,11 @@ Object.entries(palette).forEach(([code, color]) => {
 function renderAllLevels() {
     allLevels.forEach((level, levelIndex) => {
         addLevelEditorToList(level, levelIndex)
-
     })
 }
 
 function addLevelEditorToList(level, levelIndex) {
-    const {name, bricks, size, svg,color} = level
+    const {name, bricks, size, svg, color} = level
     let div = document.createElement('div')
 
 
@@ -46,7 +45,9 @@ function addLevelEditorToList(level, levelIndex) {
             <button data-offset-x="0"  data-offset-y="-1" data-level="${levelIndex}">U</button>
             <button data-offset-x="0"  data-offset-y="1" data-level="${levelIndex}">D</button>
             <input type="color" value="${level.color || ''}" data-level="${levelIndex}" />
-            <button data-level="${levelIndex}" data-set-bg-svg="true" >${svg?'replace':'set'}</button> 
+            <input type="number" value="${level.svg || (hashCode(level.name) % backgrounds.length)}" data-level="${levelIndex}" data-num-val="svg" />
+            
+            <button data-level="${levelIndex}" data-set-bg-svg="true" >${svg ? 'replace' : 'set'}</button> 
  
            
             </div>
@@ -54,6 +55,8 @@ function addLevelEditorToList(level, levelIndex) {
             <div class="level-bricks-preview" id="bricks-of-${levelIndex}" > 
             </div>
        `;
+
+
     document.getElementById('levels').appendChild(div)
 
     renderLevelBricks(levelIndex)
@@ -61,13 +64,23 @@ function addLevelEditorToList(level, levelIndex) {
 
 }
 
-function updateLevelBackground(levelIndex){
-    const div=document.getElementById("bricks-of-"+levelIndex)
-    const {svg, color}= allLevels[levelIndex]
-    Object.assign(div.style, svg ?
-        {backgroundImage:`url('data:image/svg+xml,${encodeURIComponent(svg)}')`, backgroundColor:'transparent'} :
-        {backgroundImage:'none', backgroundColor:color||'#111'}
-   )
+function updateLevelBackground(levelIndex) {
+    const div = document.getElementById("bricks-of-" + levelIndex)
+    const level = allLevels[levelIndex]
+    const {svg, color} = level
+    if (color) {
+        Object.assign(div.style, {backgroundImage: 'none', backgroundColor: color})
+    } else {
+        const index = svg || (hashCode(level.name) % backgrounds.length)
+        const svgSource=backgrounds[index]
+        console.log(index)
+        div.setAttribute('data-svg',svgSource)
+        Object.assign(div.style, {
+            backgroundImage: `url("data:image/svg+xml;UTF8,${encodeURIComponent(svgSource)}")`,
+            backgroundColor: 'transparent'
+        })
+    }
+
 }
 
 function renderLevelBricks(levelIndex) {
@@ -90,21 +103,20 @@ function renderLevelBricks(levelIndex) {
 }
 
 
-
 document.getElementById('levels').addEventListener('change', e => {
     const levelIndexStr = e.target.getAttribute('data-level')
-    if ( levelIndexStr) {
+    if (levelIndexStr) {
         const levelIndex = parseInt(levelIndexStr)
         const level = allLevels[levelIndex]
-        if( e.target.getAttribute('type') === 'color'){
+        if (e.target.getAttribute('type') === 'color') {
 
             level.color = e.target.value
             level.svg = ''
             updateLevelBackground(levelIndex)
-        }else if( e.target.getAttribute('type') === 'checkbox' && e.target.hasAttribute('data-field')){
-            const field=e.target.getAttribute('data-field')
-            if(field==='focus'){
-                allLevels.forEach(l=>l.focus=false)
+        } else if (e.target.getAttribute('type') === 'checkbox' && e.target.hasAttribute('data-field')) {
+            const field = e.target.getAttribute('data-field')
+            if (field === 'focus') {
+                allLevels.forEach(l => l.focus = false)
             }
             level[field] = !!e.target.checked
 
@@ -120,7 +132,7 @@ document.getElementById('levels').addEventListener('click', e => {
     const moveY = e.target.getAttribute('data-offset-y')
     const levelIndexStr = e.target.getAttribute('data-level')
     if (!levelIndexStr) return
-    if (e.target.tagName!=='BUTTON') return
+    if (e.target.tagName !== 'BUTTON') return
 
     const levelIndex = parseInt(levelIndexStr)
     const level = allLevels[levelIndex]
@@ -128,39 +140,39 @@ document.getElementById('levels').addEventListener('click', e => {
 
     if (resize) {
         const newSize = size + parseInt(resize)
-        const newBricks = new Array(newSize*newSize).fill('_')
+        const newBricks = new Array(newSize * newSize).fill('_')
         for (let x = 0; x < Math.min(size, newSize); x++) {
             for (let y = 0; y < Math.min(size, newSize); y++) {
                 newBricks[y * newSize + x] = bricks.split('')[y * size + x] || '_'
             }
         }
         level.size = newSize;
-        level.bricks = newBricks.map(b=>b||'_').join('');
+        level.bricks = newBricks.map(b => b || '_').join('');
     } else if (moveX && moveY) {
         const dx = parseInt(moveX), dy = parseInt(moveY)
-        const newBricks = new Array(size*size).fill('_')
+        const newBricks = new Array(size * size).fill('_')
         for (let x = 0; x < size; x++) {
             for (let y = 0; y < size; y++) {
-                newBricks[(y + dy) * size + (x + dx)] = bricks.split('')[y * size + x]|| '_'
+                newBricks[(y + dy) * size + (x + dx)] = bricks.split('')[y * size + x] || '_'
             }
         }
-        level.bricks = newBricks.map(b=>b||'_').join('');
+        level.bricks = newBricks.map(b => b || '_').join('');
     } else if (e.target.getAttribute('data-rename')) {
         const newName = prompt('Name ? ', level.name)
         if (newName) {
             level.name = newName
             e.target.textContent = newName
         }
-    }else if (e.target.getAttribute('data-delete')) {
+    } else if (e.target.getAttribute('data-delete')) {
 
         if (confirm('Delete level')) {
-            allLevels=allLevels.filter((l,i)=>i!==levelIndex)
-            save().then(()=>window.location.reload())
+            allLevels = allLevels.filter((l, i) => i !== levelIndex)
+            save().then(() => window.location.reload())
         }
-    }else if(e.target.getAttribute('data-set-bg-svg')){
-        const newBg = prompt('New svg code',level.svg||'')
-        if(newBg){
-            level.svg=newBg
+    } else if (e.target.getAttribute('data-set-bg-svg')) {
+        const newBg = prompt('New svg code', level.svg || '')
+        if (newBg) {
+            level.svg = newBg
             level.color = ''
         }
 
@@ -175,24 +187,26 @@ document.getElementById('levels').addEventListener('click', e => {
 let applying = ''
 
 function colorPixel(e) {
-    if ( applying === '') return
-    console.log('colorPixel',applying)
+    if (applying === '') return
+    console.log('colorPixel', applying)
     const index = e.target.getAttribute('data-set-color-of')
     const level = e.target.getAttribute('data-level')
     if (index && level) {
         const levelIndex = parseInt(level)
-        e.target.style.background = palette[applying]||'transparent'
-        setBrick(levelIndex,parseInt(index),applying)
+        e.target.style.background = palette[applying] || 'transparent'
+        setBrick(levelIndex, parseInt(index), applying)
     }
 }
-function setBrick(levelIndex,index,chr) {
-    const bricks=allLevels[levelIndex].bricks
-    allLevels[levelIndex].bricks = bricks.substring(0,index) + chr + bricks.substring(index+1);
+
+function setBrick(levelIndex, index, chr) {
+    const bricks = allLevels[levelIndex].bricks
+    allLevels[levelIndex].bricks = bricks.substring(0, index) + chr + bricks.substring(index + 1);
 }
+
 document.getElementById('levels').addEventListener('mousedown', e => {
     const index = parseInt(e.target.getAttribute('data-set-color-of'))
     const level = e.target.getAttribute('data-level')
-    if (typeof index !=="undefined"  && level) {
+    if (typeof index !== "undefined" && level) {
         const before = allLevels[parseInt(level)].bricks[index] || ''
         applying = before === currentCode ? '_' : currentCode
         console.log({before, applying, currentCode})
@@ -235,6 +249,16 @@ function save() {
         method: 'POST', headers: {
             'Content-Type': 'text/plain'
         },
-        body:   JSON.stringify(allLevels, null, 2)
+        body: JSON.stringify(allLevels, null, 2)
     })
+}
+
+function hashCode(string) {
+    var hash = 0;
+    for (var i = 0; i < string.length; i++) {
+        var code = string.charCodeAt(i);
+        hash = ((hash << 5) - hash) + code;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
 }

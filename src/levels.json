@@ -151,8 +151,8 @@
     "name": "Enderman",
     "size": 10,
     "bricks": "___________gggggggg__gggggggg__gggggggg__gggggggg__vvvggvvv__gggggggg__gggggggg__gggggggg_____________________",
-    "svg": null,
-    "color": "#ffffff"
+    "svg": "",
+    "color": "#26a269"
   },
   {
     "name": "Mushroom",

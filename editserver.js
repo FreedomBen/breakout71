@@ -34,6 +34,7 @@ ${fs.readFileSync('./editclient.css').toString()}
 <script>
 let allLevels = ${fs.readFileSync(srcPath).toString()};
 let palette = ${fs.readFileSync('src/palette.json').toString()};
+let backgrounds = ${fs.readFileSync('src/backgrounds.json').toString()};
 ${fs.readFileSync('./editclient.js').toString()}
 </script>  
 </body>  

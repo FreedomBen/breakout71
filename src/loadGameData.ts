@@ -11,7 +11,6 @@ const rawLevelsList = _rawLevelsList as RawLevel[];
 
 export const appVersion = _appVersion as string;
 
-let attributed = 0;
 
 let levelIconHTMLCanvas = document.createElement("canvas");
 const levelIconHTMLCanvasCtx = levelIconHTMLCanvas.getContext("2d", {
@@ -69,8 +68,7 @@ export const allLevels = rawLevelsList
     let svg = level.svg!==null && backgrounds[level.svg]
 
     if (!level.color && !svg) {
-      svg = backgrounds[attributed % backgrounds.length];
-      attributed++;
+      svg = backgrounds[hashCode(level.name) % backgrounds.length];
     }
     return {
       ...level,
@@ -95,3 +93,14 @@ export const upgrades = rawUpgrades.map((u) => ({
   ...u,
   icon: icons["icon:" + u.id],
 })) as Upgrade[];
+
+
+function hashCode(string:string){
+    let hash = 0;
+    for (let i = 0; i < string.length; i++) {
+        let code = string.charCodeAt(i);
+        hash = ((hash<<5)-hash)+code;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
+}

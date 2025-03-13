@@ -495,13 +495,13 @@ function getPossibleUpgrades() {
 function shuffleLevels(nameToAvoid: string | null = null) {
     const target = nextRunOverrides?.level;
     delete nextRunOverrides.level;
-    const firstLevel = nextRunOverrides?.level
+    const firstLevel = target
         ? allLevels.filter((l) => l.name === target)
         : [];
 
     const restInRandomOrder = allLevels
         .filter((l) => totalScoreAtRunStart >= l.threshold)
-        .filter((l) => l.name !== nextRunOverrides?.level)
+        .filter((l) => l.name !== target)
         .filter((l) => l.name !== nameToAvoid || allLevels.length === 1)
         .sort(() => Math.random() - 0.5);
 
