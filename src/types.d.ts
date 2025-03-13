@@ -6,7 +6,7 @@ export type RawLevel = {
   name: string;
   size: number;
   bricks: string;
-  svg: number|null;
+  svg: number | null;
   color: string;
 };
 export type Level = {

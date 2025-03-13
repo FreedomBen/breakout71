@@ -4,13 +4,12 @@ import _rawLevelsList from "./levels.json";
 import _appVersion from "./version.json";
 import { rawUpgrades } from "./rawUpgrades";
 import _backgrounds from "./backgrounds.json";
-const backgrounds = _backgrounds as string[]
+const backgrounds = _backgrounds as string[];
 const palette = _palette as Palette;
 
 const rawLevelsList = _rawLevelsList as RawLevel[];
 
 export const appVersion = _appVersion as string;
-
 
 let levelIconHTMLCanvas = document.createElement("canvas");
 const levelIconHTMLCanvasCtx = levelIconHTMLCanvas.getContext("2d", {
@@ -65,7 +64,7 @@ export const allLevels = rawLevelsList
       .slice(0, level.size * level.size);
     const icon = levelIconHTML(bricks, level.size, level.name, level.color);
     icons[level.name] = icon;
-    let svg = level.svg!==null && backgrounds[level.svg]
+    let svg = level.svg !== null && backgrounds[level.svg];
 
     if (!level.color && !svg) {
       svg = backgrounds[hashCode(level.name) % backgrounds.length];
@@ -94,13 +93,12 @@ export const upgrades = rawUpgrades.map((u) => ({
   icon: icons["icon:" + u.id],
 })) as Upgrade[];
 
-
-function hashCode(string:string){
-    let hash = 0;
-    for (let i = 0; i < string.length; i++) {
-        let code = string.charCodeAt(i);
-        hash = ((hash<<5)-hash)+code;
-        hash = hash & hash; // Convert to 32bit integer
-    }
-    return Math.abs(hash);
+function hashCode(string: string) {
+  let hash = 0;
+  for (let i = 0; i < string.length; i++) {
+    let code = string.charCodeAt(i);
+    hash = (hash << 5) - hash + code;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
 }
