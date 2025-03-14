@@ -1,4 +1,4 @@
-import { fitSize, gameCanvas } from "./game";
+import { fitSize } from "./game";
 
 export const options = {
   sound: {
@@ -29,7 +29,7 @@ export const options = {
     name: `Mouse pointer lock`,
     help: `Locks and hides the mouse cursor.`,
     afterChange: () => {},
-    disabled: () => !gameCanvas.requestPointerLock,
+    disabled: () => !document.body.requestPointerLock,
   },
   easy: {
     default: false,

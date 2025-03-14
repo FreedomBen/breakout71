@@ -137,7 +137,7 @@ There's also an easy mode for kids (slower ball).
 - ball attracted by bricks of the color of the ball
 - ball avoids brick of wrong color
 - coins avoid ball of different color
-- colored coins only (coins should be of the color of the ball to count)
+- colored coins only (coins should be of the color of the ball to count )
 
 
 # Balancing ideas

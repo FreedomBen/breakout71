@@ -197,6 +197,8 @@ export  type GameState = {
     needsRender: boolean;
     // Current run score
     score: number;
+    // levelTime of the last time the score increase, to render the score differently
+    lastScoreIncrease: number;
     // levelTime of the last explosion, for screen shake
     lastExplosion: number;
     // High score at the beginning of the run
@@ -222,10 +224,19 @@ export  type GameState = {
     coinSize: number;
     puckHeight: number;
     totalScoreAtRunStart: number;
+    isCreativeModeRun: boolean;
+    pauseUsesDuringRun: number;
+    keyboardPuckSpeed: number;
+    lastTick: number;
+    lastTickDown: number;
+    runStatistics: RunStats;
+    lastOffered: Partial<{ [k in PerkId]: number }>;
+    levelTime: number;
+    autoCleanUses: number;
 }
 
-export type RunParams={
+export type RunParams = {
     level?: string;
-    levelToAvoid?:string;
-    perks?:Partial<PerksMap>
+    levelToAvoid?: string;
+    perks?: Partial<PerksMap>
 }

@@ -43,7 +43,7 @@ export function baseCombo() {
 export function resetCombo(x: number | undefined, y: number | undefined) {
     const prev = gameState.combo;
     gameState.combo = baseCombo();
-    if (!levelTime) {
+    if (!gameState.levelTime) {
         gameState.combo += gameState.perks.hot_start * 15;
     }
     if (prev > gameState.combo && gameState.perks.soft_reset) {
@@ -58,7 +58,7 @@ export function resetCombo(x: number | undefined, y: number | undefined) {
             gameState.flashes.push({
                 type: "text",
                 text: "-" + lost,
-                time: levelTime,
+                time: gameState.levelTime,
                 color: "red",
                 x: x,
                 y: y,
@@ -81,7 +81,7 @@ export function decreaseCombo(by: number, x: number, y: number) {
             gameState.flashes.push({
                 type: "text",
                 text: "-" + lost,
-                time: levelTime,
+                time: gameState.levelTime,
                 color: "red",
                 x: x,
                 y: y,
@@ -120,12 +120,12 @@ export function pause(playerAskedForPause: boolean) {
             gameState.pauseTimeout = null;
             document.body.className = gameState.running ? " running " : " paused ";
         },
-        Math.min(Math.max(0, pauseUsesDuringRun - 5) * 50, 500),
+        Math.min(Math.max(0, gameState.pauseUsesDuringRun - 5) * 50, 500),
     );
 
     if (playerAskedForPause) {
         // Pausing many times in a run will make pause slower
-        pauseUsesDuringRun++;
+        gameState.pauseUsesDuringRun++;
     }
 
     if (document.exitPointerLock) {
@@ -188,7 +188,7 @@ export function recomputeTargetBaseSpeed() {
         3,
         gameState.gameZoneWidth / 12 / 10 +
         gameState.currentLevel / 3 +
-        levelTime / (30 * 1000) -
+        gameState.levelTime / (30 * 1000) -
         gameState.perks.slow_down * 2,
     );
 }
@@ -222,7 +222,7 @@ export function spawnExplosion(
     for (let i = 0; i < count; i++) {
         gameState.flashes.push({
             type: "particle",
-            time: levelTime,
+            time: gameState.levelTime,
             size,
             x: x + ((Math.random() - 0.5) * gameState.brickWidth) / 2,
             y: y + ((Math.random() - 0.5) * gameState.brickWidth) / 2,
@@ -239,9 +239,10 @@ export function spawnExplosion(
 export function addToScore(coin: Coin) {
     coin.destroyed = true;
     gameState.score += coin.points;
+    gameState.lastScoreIncrease = gameState.levelTime;
 
     addToTotalScore(coin.points);
-    if (gameState.score > gameState.highScore && !isCreativeModeRun) {
+    if (gameState.score > gameState.highScore && !gameState.isCreativeModeRun) {
         gameState.highScore = gameState.score;
         localStorage.setItem("breakout-3-hs", gameState.score.toString());
     }
@@ -249,7 +250,7 @@ export function addToScore(coin: Coin) {
         gameState.flashes.push({
             type: "particle",
             duration: 100 + Math.random() * 50,
-            time: levelTime,
+            time: gameState.levelTime,
             size: gameState.coinSize / 2,
             color: coin.color,
             x: coin.previousX,
@@ -264,7 +265,7 @@ export function addToScore(coin: Coin) {
         gameState.lastPlayedCoinGrab = Date.now();
         sounds.coinCatch(coin.x);
     }
-    runStatistics.score += coin.points;
+    gameState.runStatistics.score += coin.points;
 }
 
 
@@ -285,11 +286,11 @@ async function openUpgradesPicker() {
     let timeGain = "",
         catchGain = "",
         missesGain = "";
-    if (levelTime < 30 * 1000) {
+    if (gameState.levelTime < 30 * 1000) {
         repeats++;
         choices++;
         timeGain = " (+1 upgrade and choice)";
-    } else if (levelTime < 60 * 1000) {
+    } else if (gameState.levelTime < 60 * 1000) {
         choices++;
         timeGain = " (+1 choice)";
     }
@@ -325,7 +326,7 @@ async function openUpgradesPicker() {
             title: "Pick an upgrade " + (repeats ? "(" + (repeats + 1) + ")" : ""),
             actions,
             text: `<p>
-                You caught ${gameState.score - gameState.levelStartScore} coins ${catchGain} out of ${gameState.levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds${timeGain}.
+                You caught ${gameState.score - gameState.levelStartScore} coins ${catchGain} out of ${gameState.levelSpawnedCoins} in ${Math.round(gameState.levelTime / 1000)} seconds${timeGain}.
         You missed ${gameState.levelMisses} times ${missesGain}. 
         ${(timeGain && catchGain && missesGain && "Impressive, keep it up !") || ((timeGain || catchGain || missesGain) && "Well done !") || "Try to catch all coins, never miss the bricks or clear the level under 30s to gain additional choices and upgrades."}
         </p>`,
@@ -338,7 +339,7 @@ async function openUpgradesPicker() {
             repeats += 2;
         }
 
-        runStatistics.upgrades_picked++;
+        gameState.runStatistics.upgrades_picked++;
     }
     resetCombo(undefined, undefined);
     resetBalls(gameState);
@@ -352,13 +353,13 @@ export function setLevel(l: number) {
     }
     gameState.currentLevel = l;
 
-    levelTime = 0;
-    level_skip_last_uses = 0;
-    lastTickDown = levelTime;
+    gameState.levelTime = 0;
+    gameState.autoCleanUses = 0;
+    gameState.lastTickDown = gameState.levelTime;
     gameState.levelStartScore = gameState.score;
     gameState.levelSpawnedCoins = 0;
     gameState.levelMisses = 0;
-    runStatistics.levelsPlayed++;
+    gameState.runStatistics.levelsPlayed++;
 
     resetCombo(undefined, undefined);
     recomputeTargetBaseSpeed();
@@ -383,7 +384,7 @@ export function currentLevelInfo() {
 }
 
 
-export function getPossibleUpgrades(gameState:GameState) {
+export function getPossibleUpgrades(gameState: GameState) {
     return upgrades
         .filter((u) => gameState.totalScoreAtRunStart >= u.threshold)
         .filter((u) => !u?.requires || gameState.perks[u?.requires]);
@@ -413,22 +414,20 @@ export function getUpgraderUnlockPoints() {
         .sort((a, b) => a.threshold - b.threshold);
 }
 
-let lastOffered = {} as { [k in PerkId]: number };
-
-export function dontOfferTooSoon(id: PerkId) {
-    lastOffered[id] = Math.round(Date.now() / 1000);
+export function dontOfferTooSoon(gameState: GameState, id: PerkId) {
+    gameState.lastOffered[id] = Math.round(Date.now() / 1000);
 }
 
 export function pickRandomUpgrades(count: number) {
     let list = getPossibleUpgrades(gameState)
-        .map((u) => ({...u, score: Math.random() + (lastOffered[u.id] || 0)}))
+        .map((u) => ({...u, score: Math.random() + (gameState.lastOffered[u.id] || 0)}))
         .sort((a, b) => a.score - b.score)
         .filter((u) => gameState.perks[u.id] < u.max)
         .slice(0, count)
         .sort((a, b) => (a.id > b.id ? 1 : -1));
 
     list.forEach((u) => {
-        dontOfferTooSoon(u.id);
+        dontOfferTooSoon(gameState, u.id);
     });
 
     return list.map((u) => ({
@@ -437,15 +436,6 @@ export function pickRandomUpgrades(count: number) {
         value: u.id as PerkId,
         help: u.help(gameState.perks[u.id] + 1),
     }));
-}
-
-
-export function restart(params:RunParams) {
-     Object.assign(gameState, newGameState(params))
-    resetRunStatistics();
-    pauseUsesDuringRun = 0;
-    pauseRecording();
-    setLevel(0);
 }
 
 
@@ -460,7 +450,7 @@ export function setMousePos(x: number) {
     if (gameState.puckPosition > gameState.offsetXRoundedDown + gameState.gameZoneWidthRoundedUp - gameState.puckWidth / 2) {
         gameState.puckPosition = gameState.offsetXRoundedDown + gameState.gameZoneWidthRoundedUp - gameState.puckWidth / 2;
     }
-    if (!gameState.running && !levelTime) {
+    if (!gameState.running && !gameState.levelTime) {
         putBallsAtPuck(gameState);
     }
 }
@@ -636,17 +626,17 @@ export function tick() {
     gameState.puckWidth =
         (gameState.gameZoneWidth / 12) * (3 - gameState.perks.smaller_puck + gameState.perks.bigger_puck);
 
-    if (keyboardPuckSpeed) {
-        setMousePos(gameState.puckPosition + keyboardPuckSpeed);
+    if (gameState.keyboardPuckSpeed) {
+        setMousePos(gameState.puckPosition + gameState.keyboardPuckSpeed);
     }
 
     if (gameState.running) {
-        levelTime += currentTick - lastTick;
-        runStatistics.runTime += currentTick - lastTick;
-        runStatistics.max_combo = Math.max(runStatistics.max_combo, gameState.combo);
+        gameState.levelTime += currentTick - gameState.lastTick;
+        gameState.runStatistics.runTime += currentTick - gameState.lastTick;
+        gameState.runStatistics.max_combo = Math.max(gameState.runStatistics.max_combo, gameState.combo);
 
         // How many times to compute
-        let delta = Math.min(4, (currentTick - lastTick) / (1000 / 60));
+        let delta = Math.min(4, (currentTick - gameState.lastTick) / (1000 / 60));
         delta *= gameState.running ? 1 : 0;
 
         gameState.coins = gameState.coins.filter((coin) => !coin.destroyed);
@@ -654,18 +644,18 @@ export function tick() {
 
         const remainingBricks = gameState.bricks.filter((b) => b && b !== "black").length;
 
-        if (levelTime > lastTickDown + 1000 && gameState.perks.hot_start) {
-            lastTickDown = levelTime;
+        if (gameState.levelTime > gameState.lastTickDown + 1000 && gameState.perks.hot_start) {
+            gameState.lastTickDown = gameState.levelTime;
             decreaseCombo(gameState.perks.hot_start, gameState.puckPosition, gameState.gameZoneHeight - 2 * gameState.puckHeight);
         }
 
-        if (remainingBricks <= gameState.perks.skip_last && !level_skip_last_uses) {
+        if (remainingBricks <= gameState.perks.skip_last && !gameState.autoCleanUses) {
             gameState.bricks.forEach((type, index) => {
                 if (type) {
                     explodeBrick(index, gameState.balls[0], true);
                 }
             });
-            level_skip_last_uses++;
+            gameState.autoCleanUses++;
         }
         if (!remainingBricks && !gameState.coins.length) {
             if (gameState.currentLevel + 1 < max_levels()) {
@@ -676,7 +666,7 @@ export function tick() {
                     "You cleared all levels for this run.",
                 );
             }
-        } else if (gameState.running || levelTime) {
+        } else if (gameState.running || gameState.levelTime) {
             let playedCoinBounce = false;
             const coinRadius = Math.round(gameState.coinSize / 2);
 
@@ -767,7 +757,7 @@ export function tick() {
                             type: "particle",
                             duration: 150,
                             ethereal: true,
-                            time: levelTime,
+                            time: gameState.levelTime,
                             size: gameState.coinSize / 2,
                             color: rainbowColor(),
                             x: gameState.offsetXRoundedDown + Math.random() * gameState.gameZoneWidthRoundedUp,
@@ -800,7 +790,7 @@ export function tick() {
                 gameState.running && {
                     type: "particle" as const,
                     duration: 100 * (Math.random() + 1),
-                    time: levelTime,
+                    time: gameState.levelTime,
                     size: gameState.coinSize / 2,
                     color: "red",
                     ethereal: true,
@@ -871,7 +861,7 @@ export function tick() {
     render();
 
     requestAnimationFrame(tick);
-    lastTick = currentTick;
+    gameState.lastTick = currentTick;
 }
 
 export function isTelekinesisActive(ball: Ball) {
@@ -947,7 +937,7 @@ export function ballTick(ball: Ball, delta: number) {
                 type: "particle",
                 duration: 250,
                 ethereal: true,
-                time: levelTime,
+                time: gameState.levelTime,
                 size: gameState.coinSize / 2,
                 color,
                 x: brickCenterX(index) + (dx * gameState.brickWidth) / 2,
@@ -1011,7 +1001,7 @@ export function ballTick(ball: Ball, delta: number) {
                         destroyed: false,
                         duration: 150,
                         size: gameState.coinSize / 2,
-                        time: levelTime,
+                        time: gameState.levelTime,
                         x: ball.x,
                         y: ball.y,
                         vx: Math.random() * gameState.baseSpeed * 3,
@@ -1033,21 +1023,21 @@ export function ballTick(ball: Ball, delta: number) {
         }
         ball.hitItem = [];
         if (!ball.hitSinceBounce) {
-            runStatistics.misses++;
+            gameState.runStatistics.misses++;
             gameState.levelMisses++;
             resetCombo(ball.x, ball.y);
             gameState.flashes.push({
                 type: "text",
                 text: "miss",
                 duration: 500,
-                time: levelTime,
+                time: gameState.levelTime,
                 size: gameState.puckHeight * 1.5,
                 color: "red",
                 x: gameState.puckPosition,
                 y: gameState.gameZoneHeight - gameState.puckHeight * 2,
             });
         }
-        runStatistics.puck_bounces++;
+        gameState.runStatistics.puck_bounces++;
         ball.hitSinceBounce = 0;
         ball.sapperUses = 0;
         ball.piercedSinceBounce = 0;
@@ -1061,7 +1051,7 @@ export function ballTick(ball: Ball, delta: number) {
 
     if (ball.y > gameState.gameZoneHeight + gameState.ballSize / 2 && gameState.running) {
         ball.destroyed = true;
-        runStatistics.balls_lost++;
+        gameState.runStatistics.balls_lost++;
         if (!gameState.balls.find((b) => !b.destroyed)) {
             gameOver(
                 "Game Over",
@@ -1136,7 +1126,7 @@ export function ballTick(ball: Ball, delta: number) {
             gameState.flashes.push({
                 type: "particle",
                 duration: 100 * ball.sparks,
-                time: levelTime,
+                time: gameState.levelTime,
                 size: gameState.coinSize / 2,
                 color: gameState.ballsColor,
                 x: ball.x,
@@ -1167,10 +1157,6 @@ const defaultRunStats = () =>
     }) as RunStats;
 
 
-export function resetRunStatistics() {
-    runStatistics = defaultRunStats();
-}
-
 export function getTotalScore() {
     try {
         return JSON.parse(localStorage.getItem("breakout_71_total_score") || "0");
@@ -1180,7 +1166,7 @@ export function getTotalScore() {
 }
 
 export function addToTotalScore(points: number) {
-    if (isCreativeModeRun) return;
+    if (gameState.isCreativeModeRun) return;
     try {
         localStorage.setItem(
             "breakout_71_total_score",
@@ -1207,8 +1193,8 @@ export function gameOver(title: string, intro: string) {
     if (!gameState.running) return;
     pause(true);
     stopRecording();
-    addToTotalPlayTime(runStatistics.runTime);
-    runStatistics.max_level = gameState.currentLevel + 1;
+    addToTotalPlayTime(gameState.runStatistics.runTime);
+    gameState.runStatistics.max_level = gameState.currentLevel + 1;
 
     let animationDelay = -300;
     const getDelay = () => {
@@ -1266,7 +1252,7 @@ export function gameOver(title: string, intro: string) {
         allowClose: true,
         title,
         text: `
-        ${isCreativeModeRun ? "<p>This test run and its score are not being recorded</p>" : ""}
+        ${gameState.isCreativeModeRun ? "<p>This test run and its score are not being recorded</p>" : ""}
         <p>${intro}</p>
         ${unlocksInfo}  
         `,
@@ -1280,7 +1266,7 @@ export function gameOver(title: string, intro: string) {
         textAfterButtons: `<div id="level-recording-container"></div>
         ${getHistograms()} 
         `,
-    }).then(() => restart({levelToAvoid:  currentLevelInfo().name}));
+    }).then(() => restart({levelToAvoid: currentLevelInfo().name}));
 }
 
 export function getHistograms() {
@@ -1293,10 +1279,10 @@ export function getHistograms() {
         runsHistory.sort((a, b) => a.score - b.score).reverse();
         runsHistory = runsHistory.slice(0, 100);
 
-        runsHistory.push({...runStatistics, perks: gameState.perks, appVersion});
+        runsHistory.push({...gameState.runStatistics, perks: gameState.perks, appVersion});
 
         // Generate some histogram
-        if (!isCreativeModeRun)
+        if (!gameState.isCreativeModeRun)
             localStorage.setItem(
                 "breakout_71_runs_history",
                 JSON.stringify(runsHistory, null, 2),
@@ -1436,7 +1422,7 @@ export function explodeBrick(index: number, ball: Ball, isExplosion: boolean) {
         gameState.flashes.push({
             type: "ball",
             duration: 150,
-            time: levelTime,
+            time: gameState.levelTime,
             size: gameState.brickWidth * 2,
             color: "white",
             x,
@@ -1451,7 +1437,7 @@ export function explodeBrick(index: number, ball: Ball, isExplosion: boolean) {
             gameState.coinSize,
         );
         ball.hitSinceBounce++;
-        runStatistics.bricks_broken++;
+        gameState.runStatistics.bricks_broken++;
     } else if (color) {
         // Even if it bounces we don't want to count that as a miss
         ball.hitSinceBounce++;
@@ -1472,8 +1458,8 @@ export function explodeBrick(index: number, ball: Ball, isExplosion: boolean) {
         }
 
         gameState.levelSpawnedCoins += coinsToSpawn;
-        runStatistics.coins_spawned += coinsToSpawn;
-        runStatistics.bricks_broken++;
+        gameState.runStatistics.coins_spawned += coinsToSpawn;
+        gameState.runStatistics.bricks_broken++;
         const maxCoins = gameState.MAX_COINS * (isSettingOn("basic") ? 0.5 : 1);
         const spawnableCoins =
             gameState.coins.length > gameState.MAX_COINS ? 1 : Math.floor(maxCoins - gameState.coins.length) / 3;
@@ -1541,7 +1527,7 @@ export function explodeBrick(index: number, ball: Ball, isExplosion: boolean) {
         gameState.flashes.push({
             type: "ball",
             duration: 40,
-            time: levelTime,
+            time: gameState.levelTime,
             size: gameState.brickWidth,
             color: color,
             x,
@@ -1574,6 +1560,9 @@ export function render() {
     if (!width || !height) return;
 
     scoreDisplay.innerText = `L${gameState.currentLevel + 1}/${max_levels()} $${gameState.score}`;
+    Object.assign(scoreDisplay.style, gameState.lastScoreIncrease < gameState.levelTime - 500 ?
+        {color: 'gold', fontWeight: 'bold', opacity: 1} : {opacity: 0.5})
+
     // Clear
     if (!isSettingOn("basic") && !level.color && level.svg) {
         // Without this the light trails everything
@@ -1601,7 +1590,7 @@ export function render() {
         ctx.globalAlpha = 1;
         gameState.flashes.forEach((flash) => {
             const {x, y, time, color, size, type, duration} = flash;
-            const elapsed = levelTime - time;
+            const elapsed = gameState.levelTime - time;
             ctx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2);
             if (type === "ball") {
                 drawFuzzyBall(ctx, color, size, x, y);
@@ -1649,7 +1638,7 @@ export function render() {
 
         gameState.flashes.forEach((flash) => {
             const {x, y, time, color, size, type, duration} = flash;
-            const elapsed = levelTime - time;
+            const elapsed = gameState.levelTime - time;
             ctx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2);
             if (type === "particle") {
                 drawBall(ctx, color, size, x, y);
@@ -1702,12 +1691,12 @@ export function render() {
 
     ctx.globalCompositeOperation = "screen";
     gameState.flashes = gameState.flashes.filter(
-        (f) => levelTime - f.time < f.duration && !f.destroyed,
+        (f) => gameState.levelTime - f.time < f.duration && !f.destroyed,
     );
 
     gameState.flashes.forEach((flash) => {
         const {x, y, time, color, size, type, duration} = flash;
-        const elapsed = levelTime - time;
+        const elapsed = gameState.levelTime - time;
         ctx.globalAlpha = Math.max(0, Math.min(1, 2 - (elapsed / duration) * 2));
         if (type === "text") {
             ctx.globalCompositeOperation = "source-over";
@@ -2203,9 +2192,6 @@ export function drawText(
     );
 }
 
-let levelTime = 0;
-// Limits skip last to one use per level
-let level_skip_last_uses = 0;
 
 window.addEventListener("visibilitychange", () => {
     if (document.hidden) {
@@ -2372,7 +2358,7 @@ async function openScorePanel() {
     const cb = await asyncAlert({
         title: ` ${gameState.score} points at level ${gameState.currentLevel + 1} / ${max_levels()}`,
         text: `
-            ${isCreativeModeRun ? "<p>This is a test run, score is not recorded permanently</p>" : ""}
+            ${gameState.isCreativeModeRun ? "<p>This is a test run, score is not recorded permanently</p>" : ""}
             <p>Upgrades picked so far : </p>
             <p>${pickedUpgradesHTMl()}</p>
         `,
@@ -2388,7 +2374,7 @@ async function openScorePanel() {
                 text: "Restart",
                 help: "Start a brand new run.",
                 value: () => {
-                     restart({levelToAvoid:  currentLevelInfo().name})
+                    restart({levelToAvoid: currentLevelInfo().name})
                 },
             },
         ],
@@ -2493,7 +2479,7 @@ async function openSettingsPanel() {
                 }))
                 ) {
                 if (choice === "start") {
-                    restart({perks:creativeModePerks});
+                    restart({perks: creativeModePerks});
 
                     break;
                 } else if (choice) {
@@ -2633,7 +2619,7 @@ export function distanceBetween(
 }
 
 export function rainbowColor(): colorString {
-    return `hsl(${(Math.round(levelTime / 4) * 2) % 360},100%,70%)`;
+    return `hsl(${(Math.round(gameState.levelTime / 4) * 2) % 360},100%,70%)`;
 }
 
 export function repulse(a: Ball, b: BallLike, power: number, impactsBToo: boolean) {
@@ -2646,7 +2632,7 @@ export function repulse(a: Ball, b: BallLike, power: number, impactsBToo: boolea
     const dy = (a.y - b.y) / distance;
     const fact =
         (((-power * (max - distance)) / (max * 1.2) / 3) *
-            Math.min(500, levelTime)) /
+            Math.min(500, gameState.levelTime)) /
         500;
     if (
         impactsBToo &&
@@ -2664,7 +2650,7 @@ export function repulse(a: Ball, b: BallLike, power: number, impactsBToo: boolea
     gameState.flashes.push({
         type: "particle",
         duration: 100,
-        time: levelTime,
+        time: gameState.levelTime,
         size: gameState.coinSize / 2,
         color: rainbowColor(),
         ethereal: true,
@@ -2681,7 +2667,7 @@ export function repulse(a: Ball, b: BallLike, power: number, impactsBToo: boolea
         gameState.flashes.push({
             type: "particle",
             duration: 100,
-            time: levelTime,
+            time: gameState.levelTime,
             size: gameState.coinSize / 2,
             color: rainbowColor(),
             ethereal: true,
@@ -2703,7 +2689,7 @@ export function attract(a: Ball, b: Ball, power: number) {
     const dy = (a.y - b.y) / distance;
 
     const fact =
-        (((power * (distance - min)) / min) * Math.min(500, levelTime)) / 500;
+        (((power * (distance - min)) / min) * Math.min(500, gameState.levelTime)) / 500;
     b.vx += dx * fact;
     b.vy += dy * fact;
     a.vx -= dx * fact;
@@ -2714,7 +2700,7 @@ export function attract(a: Ball, b: Ball, power: number) {
     gameState.flashes.push({
         type: "particle",
         duration: 100,
-        time: levelTime,
+        time: gameState.levelTime,
         size: gameState.coinSize / 2,
         color: rainbowColor(),
         ethereal: true,
@@ -2726,7 +2712,7 @@ export function attract(a: Ball, b: Ball, power: number) {
     gameState.flashes.push({
         type: "particle",
         duration: 100,
-        time: levelTime,
+        time: gameState.levelTime,
         size: gameState.coinSize / 2,
         color: rainbowColor(),
         ethereal: true,
@@ -2933,7 +2919,7 @@ const pressed: { [k: string]: number } = {
 
 export function setKeyPressed(key: string, on: 0 | 1) {
     pressed[key] = on;
-    keyboardPuckSpeed =
+    gameState.keyboardPuckSpeed =
         ((pressed.ArrowRight - pressed.ArrowLeft) *
             (1 + pressed.Shift * 2) *
             gameState.gameZoneWidth) /
@@ -2987,15 +2973,8 @@ document.addEventListener("keyup", (e) => {
 });
 
 
-let isCreativeModeRun = false;
-let pauseUsesDuringRun = 0;
-let keyboardPuckSpeed = 0;
-let lastTick = performance.now();
-let lastTickDown = 0;
-let runStatistics = defaultRunStats();
-
-function newGameState(params:RunParams): GameState {
-    const totalScoreAtRunStart=getTotalScore()
+function newGameState(params: RunParams): GameState {
+    const totalScoreAtRunStart = getTotalScore()
     const firstLevel = params?.level ? allLevels.filter((l) => l.name === params?.level) : [];
 
     const restInRandomOrder = allLevels
@@ -3008,14 +2987,12 @@ function newGameState(params:RunParams): GameState {
         restInRandomOrder.slice(0, 7 + 3).sort((a, b) => a.sortKey - b.sortKey),
     );
 
-    const perks={...makeEmptyPerksMap(),...(params?.perks || {})}
-    isCreativeModeRun =sumOfKeys(perks)> 1
+    const perks = {...makeEmptyPerksMap(), ...(params?.perks || {})}
 
-
-    const gameState:GameState = {
+    const gameState: GameState = {
         runLevels,
         currentLevel: 0,
-        perks ,
+        perks,
         puckWidth: 200,
         baseSpeed: 12,
         combo: 1,
@@ -3033,6 +3010,7 @@ function newGameState(params:RunParams): GameState {
         brickWidth: 0,
         needsRender: true,
         score: 0,
+        lastScoreIncrease: -1000,
         lastExplosion: -1000,
         highScore: parseFloat(localStorage.getItem("breakout-3-hs") || "0"),
         balls: [],
@@ -3050,25 +3028,42 @@ function newGameState(params:RunParams): GameState {
         ballSize: 20,
         coinSize: 14,
         puckHeight: 20,
-        totalScoreAtRunStart
+        totalScoreAtRunStart,
+        isCreativeModeRun: sumOfKeys(perks) > 1,
+        pauseUsesDuringRun: 0,
+        keyboardPuckSpeed: 0,
+        lastTick: performance.now(),
+        lastTickDown: 0,
+        runStatistics: defaultRunStats(),
+        lastOffered: {},
+        levelTime: 0,
+        autoCleanUses: 0,
     }
     resetBalls(gameState);
 
-    if(!sumOfKeys(gameState.perks)){
+    if (!sumOfKeys(gameState.perks)) {
         const giftable = getPossibleUpgrades(gameState).filter((u) => u.giftable);
         const randomGift = (isSettingOn("easy") && "slow_down") ||
             giftable[Math.floor(Math.random() * giftable.length)].id;
         perks[randomGift] = 1;
-        dontOfferTooSoon(randomGift);
+        dontOfferTooSoon(gameState, randomGift);
     }
-
+    for (let perk of upgrades) {
+        if (gameState.perks[perk.id]) {
+            dontOfferTooSoon(gameState, perk.id)
+        }
+    }
     return gameState
 }
 
 
-
-
 export const gameState = newGameState({})
+
+export function restart(params: RunParams) {
+    Object.assign(gameState, newGameState(params))
+    pauseRecording();
+    setLevel(0);
+}
 
 restart({});
 fitSize();
