@@ -33,6 +33,7 @@ export function moveLevel(level: RawLevel, dx: number, dy: number) {
 }
 
 export function setBrick(level: RawLevel, index: number, colorCode: string) {
+    console.log('setBrick', level.name, index, colorCode)
     const {size} = level
     const newBricks=[]
     for (let x = 0; x < size; x++) {

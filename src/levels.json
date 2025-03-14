@@ -41,7 +41,7 @@
   {
     "name": "Dots",
     "size": 9,
-    "bricks": "b_t_a_c_C__________b_t_a_c__________v_b_t_a_c__________v_b_t_a__________p_v_b_t_a",
+    "bricks": "b_t_a_c____________b_t_a_c__________P_b_t_a_c__________P_b_t_a____________P_b_t_a",
     "svg": null
   },
   {
@@ -95,7 +95,7 @@
   {
     "name": "Temple",
     "size": 11,
-    "bricks": "_______________WWW______WWWWWWW___WWWWWWWWW___t_t_t_t____b_b_b_b____v_v_v_v____p_p_p_p____P_P_P_P____WWWWWWW___WWWWWWWWW_",
+    "bricks": "_______________WWW______WWWWWWW___WWWWWWWWW___b_b_b_b____b_b_b_b____v_v_v_v____P_P_P_P____P_P_P_P____WWWWWWW___WWWWWWWWW_",
     "svg": null,
     "color": ""
   },
@@ -109,7 +109,7 @@
   {
     "name": "Ship",
     "size": 11,
-    "bricks": "____sWW________sWWW_______sWWW_______s___OOOOOOOOOOOOOO_OBOBOBOBOO__OOOOOOOO_bbbbbbbbgbbbbgbbbbggbbbggbbbbbbbb",
+    "bricks": "____sWW________sWWW_______sWWW_______s___OOOOOOOOOOOOOO_OBOBOBOBOO__OOOOOOOO_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb___________",
     "svg": 19
   },
   {
@@ -279,7 +279,7 @@
   {
     "name": "Ocean Sunrise",
     "size": 8,
-    "bricks": "SSSSSSSSSSSyySSSSSyyyySSSyyWWyySbttaattbbbttttbbbbbttbbbbbbbbbbb",
+    "bricks": "SSSSSSSSSSSyySSSSSyyyySSSyyyyyySbttttttbbbttttbbbbbttbbbbbbbbbbb",
     "svg": 12,
     "color": ""
   },
@@ -648,7 +648,7 @@
   {
     "name": "Bird",
     "size": 13,
-    "bricks": "_______RRR____R____RSSSR___RR__RSSWWWR__RSR_RSWWBWR__RSSRRSW_WWyy_RSSSRSWWWR___RSSSSSSRR_____RRSSyyyy______RSyyyyy___RRRRSyyyy____RSSSRyyy_____RRRR________",
+    "bricks": "_______RRR____R____RSSSR___RR__RSSWWWR__RSR_RSWWBWR__RSSRRSWWWWyy_RSSSRSWWWR___RSSSSSSRR_____RRSSyyyy______RSyyyyy___RRRRSyyyy____RSSSRyyy_____RRRR______________________",
     "svg": null,
     "color": ""
   },

@@ -32,41 +32,40 @@ There's also an easy mode for kids (slower ball).
 - add pwe manifest 
 - offline mode with service worker
 - see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
+- translation
+- when game resumes near bottom, be unvulnerable for .5s ? , once per level
 
 # Game engine features  
 
-- shinier coins by applying glow to them
 - ask for permanent storage
-- experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
 - more help somewhere accessible
 - limit GC by reusing coins and particles
 - convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
 - disable zooming (for ios double tap)
 - few puck bounces = more choices / upgrades
 - show total score on end screen (score added to total) 
-- show stats on end screen compared to other runs
 - handle back bouton in menu 
-- mouvement relatif du puck
-- balls should collide with each other
-- when game resumes near bottom, be unvulnerable for .5s ? , once per level
-- apply global curve / brightness to canvas when things blow, or just always to make neon effect better
+- balls could collide with each other
 - manifest for PWA (android and apple)  
-- lights shadows  
 - Offline mode web for iphone 
 - controller support on web/mobile
-- webgl rendering
 - enable export of gameplay capture in webview
 - endgame histograms could work as filters, when you hover a bar, all other histograms would show the stats of those runs only, without changing reference of categories
-- sound when ball changes color
-- option : don't pause on mobile when lifting finger
-- option : accelerated relative movements on mobile
-- maybe just have 10 background, and always use the same one for the nth level of each run  ?  
 - would be nice to have a leaderboard for not using each perk too. Like "best runs without hot start"
 - restart run on r
 - when missing, redo particle trail, but give speed to particle that matches ball direction
 
+# graphics
+- apply global curve / brightness to canvas when things blow, or just always to make neon effect better
+- lights shadows  
+- webgl rendering
+- shinier coins by applying glow to them
+- different visual effects on ball to represent which perks it's imbued with (pierce, sapper…). remove visual while it's not affected (can't pierce/sap anymore until touching the puck).
+- experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
+- the white outline on bricks associated with picky eater kinda works but i feel it's more distracting than anything. maybe try something different ? put a cross on matching coloured bricks, or the contrary, grey out other bricks.
+
 # New perks ideas 
-- second puck (symmeric to the first one)
+- second puck (symmetric to the first one)
 - keep combo between level, loose half your run score when missing any bricks
 - offer next level choice after upgrade pick
 - ban 3 random perks from pool, doesn't tell you which ones, gain 2 upgrades 
@@ -99,7 +98,7 @@ There's also an easy mode for kids (slower ball).
 - bricks attract coins
 - breaking bricks stains neighbours
 - extra kick after bouncing on puck
-- transparent coins
+- transparents coins
 - coins of different colors repulse
 - bricks follow game of life pattern with one update every second 
 - 2x coins when ball goes downward / upward, half that amount otherwise ?
@@ -138,18 +137,8 @@ There's also an easy mode for kids (slower ball).
 - ball avoids brick of wrong color
 - coins avoid ball of different color
 - colored coins only (coins should be of the color of the ball to count )
-
-
-# Balancing ideas
-
-The dominant strategy now is Compound Interest lvl 3 + coin magnet/viscosity/
-and hot start + explosives and multiball
-
-- make Compound Interest less OP making it full reset when coins lost
-- cap hot start to lvl 2, or make it decrease faster
-- make puck smaller as combo increases ? 
-- coin magnet has no effect when too close, or coins might overshoot, or coins bounce and spread more ? 
-- add red anti-coins, they destroy your combo and your score, and they behave like heavier coins.  
+- level flips horizontally every time a ball bounces on puck
+- coins that hit the puck disappear, missed ones are scored
 
 # extra levels
 
@@ -159,17 +148,30 @@ and hot start + explosives and multiball
 - animals
 - countries flags and shapes, with name as background
 
-# big features
+# extra settings
 
-- use ts and a bundler to get fewer bugs and compatibility with old browsers / webviews
-- final bosses (large vertical level that scrolls down faster and faster)
-- split screen multiplayer
-- translation
-- Add color schemes into the game (ex : Catppuccin, Dracula, Terminal, etc)
 - add a toggle to switch between the “coin” design and colored bubbles
-- sandbox mode
+- on mobile, relative movement of the touch would be amplified and added to the puck 
+- option : don't pause on mobile when lifting finger
+
+# Unlockable infinite mode
+
+Allow players to loop the game, adding one hasard per loop, making it harder and harder to exploit each strategy. The high score are separated from the main mode. The scores are added for unlock. You no longer get upgrades after the first 7 levels. The score you make in each level is instead multiplied by the number of "upgrades" and "choices" you would have had.
+
+Possible challenges : 
+    - Add negative coins that make the coin magnet less usage
+    - add negative bricks that clear coins and reset combo
+    - add a brick eating enemy that forces you to play fast
+    - add a force field for 10s that negates hots start
+    - other perks can be randomly turned off
+    - ball keeps accelerating until unplayable
+    - graphical effects like trail, contrast, blur to make it harder to see what's going on
+
+# extend re-playability
 - hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..
 - stats by lack of perk, like "best score without using hot start". 
+- split screen multiplayer
+- Add color schemes into the game (ex : Catppuccin, Dracula, Terminal, etc)
 
 Instead of automatically unlocking things at the end of each run, add the coins to the user's account, 
 and let them spend those coins on upgrades. The upgrades would then be explained. They could have a condition like
@@ -177,27 +179,36 @@ and let them spend those coins on upgrades. The upgrades would then be explained
 This requires recording a bit more info about each run. 
 I could unlock the "pro stand" at $999 that just holds the play area higher. 
 
-# bad ideas 
-- 
-- particles when bouncing on sides / top
-- 
+# increase skill ceiling
+
+- make puck smaller as combo increases ? 
+- nerf coin magnet : 
+  - no effect when too close
+  - coins overshoot
+  - coins bounce and spread more ? 
+- add red anti-coins that apply downgrades
+  - destroy your combo
+  - hurt your score
+  - behave like heavier coins.  
+  - deactivate a perk for this level
+  - reduce your number of coins 
+  - destroy all coins on screen 
+  - lowers your combo 
+  - reduce your choice for your next perk 
+   
+- final bosses (large vertical level that scrolls down faster and faster)
+- when the player reaches the last level, allow them to loop the run, unlocking a permanent bonus for this run. For example: +5 combo, +1 life per loop… the counterpart would be hazards that slowly populate the levels.
+ 
+ 
+
+
 
 # Colin's feedback (cwpute/obigre)
  
-IMPROVEMENTS ON EXISTING PERKS  :
-
-* limit levels to only a handful of coulours, like 5 max, so that the colour-related perks are more viable.
-
-GENERAL REMARKS ON DIFFERENT ASPECTS :
-
-* when the player reaches the last level, alow them to loop the run, unlocking a permanent bonus for this run. For example: +5 combo, +1 life per loop… the counterpart would be hazards that slowly populate the levels.
-* different visual effects on ball to represent which perks it's imbued with (pierce, sapper…). remove visual while it's not affected (can't pierce/sap anymore until touching the puck).
-* always visually put the ball on top of coins so as to clearly see it. sometimes a black outline appears to distinguesh it from coins, this should be used more often imo.
-* not brick-shaped bricks, or tilted bricks, that can bounce the ball into fun angles to spice up the game. or even moving blocks !
 * reward the player with more choices/perks for breaking a brick while having reached an increasing combo thresholds. 5 combo, then 10, then 20, then 40 etc… once a threshold is reached you aren't rewarded for that threshold again until you start a rew run
 * inspired by Balatro's score system : have some perks add to the multiplicator, and some others to the amount of coins in a brick (or the raw value of coins inside), so that you users want to improve both for maximized profit ! maybe tie one of the to perks that help you, and the other to perks that are bad to you, so that gambling players are forced to make their life harder
-* the white outline on bricks asociated with picky eater kinda works but i feel it's more distracting than anything. maybe try something different ? put a cross on matching coloured bricks, or the contrary, grey out other bricks.
-* also regarding colour : make it so the ball always start with a colour that matches one currently present in the level. sometimes you don't have white present and it's a waste of a combo :/
-* negative coins, they would spawn from bricks as a hazard and do any of the following: -deactivate a perk for this level -reduce your number of coins -reduce your choice for your next perk -despawn all current coins on screen -lowers your combo. they could either be a negative perk with a bonus, like the small puck, or a hazard that spawns in later levels.
-* the way combos look on the puck was better when you didn't see the coin visual on it ! now it easily overflows out of the puck with reduced visibility
 
+
+# other
+
+* not brick-shaped bricks, or tilted bricks, that can bounce the ball into fun angles to spice up the game. or even moving blocks !

@@ -45,7 +45,10 @@ function App() {
 
 
 
-    return <div onMouseUp={() => setApplying('')} onMouseLeave={() => setApplying('')}>
+    return <div onMouseUp={() => {
+        console.log('mouse up')
+        setApplying('')
+    }} >
         <div id={"levels"}>
             {
                 levels.map((level, li) => {
@@ -58,9 +61,12 @@ function App() {
                                 brickButtons.push(<button
                                     key={index}
                                     onMouseDown={() => {
-                                        const color = selected === bricks[index] ? '_' : applying
-                                        setApplying(color)
-                                        updateLevel(li, setBrick(level, index, color))
+                                        if(!applying){
+                                            console.log(selected, bricks[index],applying)
+                                            const color = selected === bricks[index] ? '_' : selected
+                                            setApplying(color)
+                                            updateLevel(li, setBrick(level, index, color))
+                                        }
                                     }}
                                     onMouseEnter={() => {
                                         if (applying) {

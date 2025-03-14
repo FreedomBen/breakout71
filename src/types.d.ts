@@ -69,6 +69,7 @@ export type Coin = {
     color: colorString;
     x: number;
     y: number;
+    size: number;
     previousX: number;
     previousY: number;
     vx: number;

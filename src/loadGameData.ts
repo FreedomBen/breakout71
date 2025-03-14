@@ -19,7 +19,6 @@ const levelIconHTMLCanvasCtx = levelIconHTMLCanvas.getContext("2d", {
 function levelIconHTML(
   bricks: string[],
   levelSize: number,
-  levelName: string,
   color: string,
 ) {
   const size = 40;
@@ -49,8 +48,8 @@ function levelIconHTML(
       }
     }
   }
-  // I don't think many blind people will benefit for this, but it's nice to have something to put in "alt"
-  return `<img alt="${levelName}" width="${size}" height="${size}" src="${c.toDataURL()}"/>`;
+
+  return `<img alt="" width="${size}" height="${size}" src="${c.toDataURL()}"/>`;
 }
 
 export const icons = {} as { [k: string]: string };
@@ -61,7 +60,7 @@ export const allLevels = rawLevelsList
       .split("")
       .map((c) => palette[c])
       .slice(0, level.size * level.size);
-    const icon = levelIconHTML(bricks, level.size, level.name, level.color);
+    const icon = levelIconHTML(bricks, level.size,   level.color);
     icons[level.name] = icon;
     return {
       ...level,
