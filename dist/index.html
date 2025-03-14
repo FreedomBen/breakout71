@@ -633,6 +633,7 @@ parcelHelpers.export(exports, "captureFileName", ()=>captureFileName);
 parcelHelpers.export(exports, "findLast", ()=>findLast);
 parcelHelpers.export(exports, "toggleFullScreen", ()=>toggleFullScreen);
 parcelHelpers.export(exports, "setKeyPressed", ()=>setKeyPressed);
+parcelHelpers.export(exports, "newGameState", ()=>newGameState);
 parcelHelpers.export(exports, "gameState", ()=>gameState);
 parcelHelpers.export(exports, "restart", ()=>restart);
 var _loadGameData = require("./loadGameData");
@@ -1367,20 +1368,6 @@ function ballTick(ball, delta) {
         }
     }
 }
-const defaultRunStats = ()=>({
-        started: Date.now(),
-        levelsPlayed: 0,
-        runTime: 0,
-        coins_spawned: 0,
-        score: 0,
-        bricks_broken: 0,
-        misses: 0,
-        balls_lost: 0,
-        puck_bounces: 0,
-        upgrades_picked: 1,
-        max_combo: 1,
-        max_level: 0
-    });
 function getTotalScore() {
     try {
         return JSON.parse(localStorage.getItem("breakout_71_total_score") || "0");
@@ -2635,7 +2622,20 @@ function newGameState(params) {
         keyboardPuckSpeed: 0,
         lastTick: performance.now(),
         lastTickDown: 0,
-        runStatistics: defaultRunStats(),
+        runStatistics: {
+            started: Date.now(),
+            levelsPlayed: 0,
+            runTime: 0,
+            coins_spawned: 0,
+            score: 0,
+            bricks_broken: 0,
+            misses: 0,
+            balls_lost: 0,
+            puck_bounces: 0,
+            upgrades_picked: 1,
+            max_combo: 1,
+            max_level: 0
+        },
         lastOffered: {},
         levelTime: 0,
         autoCleanUses: 0

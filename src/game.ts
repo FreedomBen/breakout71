@@ -665,7 +665,7 @@ export function tick() {
                     ) {
                         gameState.bricks[hitBrick] = coin.color;
                         coin.coloredABrick = true;
-                        sounds.colorChange(coin.x,0.3)
+                        sounds.colorChange(coin.x, 0.3)
                     }
                 }
                 if (typeof hitBrick !== "undefined" || hitBorder) {
@@ -1079,22 +1079,6 @@ export function ballTick(ball: Ball, delta: number) {
     }
 }
 
-const defaultRunStats = () =>
-    ({
-        started: Date.now(),
-        levelsPlayed: 0,
-        runTime: 0,
-        coins_spawned: 0,
-        score: 0,
-        bricks_broken: 0,
-        misses: 0,
-        balls_lost: 0,
-        puck_bounces: 0,
-        upgrades_picked: 1,
-        max_combo: 1,
-        max_level: 0,
-    }) as RunStats;
-
 
 export function getTotalScore() {
     try {
@@ -1463,12 +1447,12 @@ export function explodeBrick(index: number, ball: Ball, isExplosion: boolean) {
                 if (gameState.perks.picky_eater) {
                     resetCombo(gameState, ball.x, ball.y);
                 }
-                sounds.colorChange(ball.x,0.8)
-                gameState.lastExplosion=gameState.levelTime
+                sounds.colorChange(ball.x, 0.8)
+                gameState.lastExplosion = gameState.levelTime
                 gameState.ballsColor = color;
-                if(!isSettingOn('basic')) {
-                    gameState.balls.forEach(ball=>{
-                    spawnExplosion(7, ball.previousX, ball.previousY, color, 150, 15)
+                if (!isSettingOn('basic')) {
+                    gameState.balls.forEach(ball => {
+                        spawnExplosion(7, ball.previousX, ball.previousY, color, 150, 15)
                     })
                 }
             } else {
@@ -2927,7 +2911,7 @@ document.addEventListener("keyup", async (e) => {
 });
 
 
-function newGameState(params: RunParams): GameState {
+export function newGameState(params: RunParams): GameState {
     const totalScoreAtRunStart = getTotalScore()
     const firstLevel = params?.level ? allLevels.filter((l) => l.name === params?.level) : [];
 
@@ -2988,7 +2972,20 @@ function newGameState(params: RunParams): GameState {
         keyboardPuckSpeed: 0,
         lastTick: performance.now(),
         lastTickDown: 0,
-        runStatistics: defaultRunStats(),
+        runStatistics: {
+            started: Date.now(),
+            levelsPlayed: 0,
+            runTime: 0,
+            coins_spawned: 0,
+            score: 0,
+            bricks_broken: 0,
+            misses: 0,
+            balls_lost: 0,
+            puck_bounces: 0,
+            upgrades_picked: 1,
+            max_combo: 1,
+            max_level: 0,
+        },
         lastOffered: {},
         levelTime: 0,
         autoCleanUses: 0,
