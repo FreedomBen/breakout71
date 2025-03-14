@@ -3,10 +3,10 @@ import {RawLevel} from "./types";
 export function resizeLevel(level: RawLevel, sizeDelta: number) {
     const {size, bricks} = level
     const newSize = Math.max(1, size + sizeDelta)
-    const newBricks = new Array(newSize * newSize).fill('_')
-    for (let x = 0; x < Math.min(size, newSize); x++) {
-        for (let y = 0; y < Math.min(size, newSize); y++) {
-            newBricks[y * newSize + x] = bricks.split('')[y * size + x] || '_'
+    const newBricks = []
+    for (let x = 0; x <  newSize; x++) {
+        for (let y = 0; y <  newSize; y++) {
+            newBricks[y * newSize + x] = brickAt(level, x, y )
         }
     }
     return {
@@ -15,12 +15,16 @@ export function resizeLevel(level: RawLevel, sizeDelta: number) {
     }
 }
 
+export function brickAt(level:RawLevel, x:number,y:number){
+   return x>=0 && x < level.size && y>= 0 && y< level.size && level.bricks.split('')[y * level.size + x] || '_'
+}
+
 export function moveLevel(level: RawLevel, dx: number, dy: number) {
-    const {size, bricks} = level
+    const {size} = level
     const newBricks = new Array(size * size).fill('_')
     for (let x = 0; x < size; x++) {
         for (let y = 0; y < size; y++) {
-            newBricks[y * size + x] = bricks.split('')[(y - dy) * size + (x - dx)] || '_'
+            newBricks[y * size + x] = brickAt(level, x - dx, y - dy)
         }
     }
     return {
@@ -29,12 +33,15 @@ export function moveLevel(level: RawLevel, dx: number, dy: number) {
 }
 
 export function setBrick(level: RawLevel, index: number, colorCode: string) {
-    let bricksString = level.bricks.slice(0, level.size * level.size)
-
-    if (bricksString.length < level.size * level.size) {
-        bricksString += '_'.repeat(level.size * level.size - bricksString.length)
+    const {size} = level
+    const newBricks=[]
+    for (let x = 0; x < size; x++) {
+        for (let y = 0; y < size; y++) {
+            const brickIndex=y * size + x
+            newBricks[brickIndex] = (brickIndex === index && colorCode ) || brickAt(level, x , y)
+        }
     }
-    const bricks = bricksString.split('')
-    bricks[index] = colorCode
-    return {bricks: bricks.join('')}
+    return {
+        bricks: newBricks.join('')
+    }
 }

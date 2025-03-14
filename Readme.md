@@ -134,6 +134,11 @@ There's also an easy mode for kids (slower ball).
 - [colin] wormhole - the puck sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect
 - [colin] hitman - hit the marked brick for +5 combo. each level increases the combo you get for it.
 - [colin] sweet spot - place your puck directly below a moving spot at the top of the level to increase your combo
+- ball attracted by bricks of the color of the ball
+- ball avoids brick of wrong color
+- coins avoid ball of different color
+- colored coins only (coins should be of the color of the ball to count)
+
 
 # Balancing ideas
 

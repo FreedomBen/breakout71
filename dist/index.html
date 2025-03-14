@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head><script src="/index.c0fd3053.js"></script>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -468,164 +468,110 @@ h2.histogram-title strong {
       this[globalName] = mainExports;
     }
   }
-})({"eBxNa":[function(require,module,exports,__globalThis) {
-require("f4e3916d5ea9aa97")(require("c38567b56f7e0944").getBundleURL('gcK2a') + "index.c0fd3053.js");
-
-},{"f4e3916d5ea9aa97":"61B45","c38567b56f7e0944":"lgJ39"}],"61B45":[function(require,module,exports,__globalThis) {
-"use strict";
-var cacheLoader = require("ca2a84f7fa4a3bb0");
-module.exports = cacheLoader(function(bundle) {
-    return new Promise(function(resolve, reject) {
-        // Don't insert the same script twice (e.g. if it was already in the HTML)
-        var existingScripts = document.getElementsByTagName('script');
-        if ([].concat(existingScripts).some(function(script) {
-            return script.src === bundle;
-        })) {
-            resolve();
-            return;
-        }
-        var preloadLink = document.createElement('link');
-        preloadLink.href = bundle;
-        preloadLink.rel = 'preload';
-        preloadLink.as = 'script';
-        document.head.appendChild(preloadLink);
-        var script = document.createElement('script');
-        script.async = true;
-        script.type = 'text/javascript';
-        script.src = bundle;
-        script.onerror = function(e) {
-            var error = new TypeError("Failed to fetch dynamically imported module: ".concat(bundle, ". Error: ").concat(e.message));
-            script.onerror = script.onload = null;
-            script.remove();
-            reject(error);
-        };
-        script.onload = function() {
-            script.onerror = script.onload = null;
-            resolve();
-        };
-        document.getElementsByTagName('head')[0].appendChild(script);
-    });
-});
-
-},{"ca2a84f7fa4a3bb0":"j49pS"}],"j49pS":[function(require,module,exports,__globalThis) {
-"use strict";
-var cachedBundles = {};
-var cachedPreloads = {};
-var cachedPrefetches = {};
-function getCache(type) {
-    switch(type){
-        case 'preload':
-            return cachedPreloads;
-        case 'prefetch':
-            return cachedPrefetches;
-        default:
-            return cachedBundles;
-    }
-}
-module.exports = function(loader, type) {
-    return function(bundle) {
-        var cache = getCache(type);
-        if (cache[bundle]) return cache[bundle];
-        return cache[bundle] = loader.apply(null, arguments).catch(function(e) {
-            delete cache[bundle];
-            throw e;
-        });
-    };
-};
-
-},{}],"lgJ39":[function(require,module,exports,__globalThis) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"3qndx":[function(require,module,exports,__globalThis) {
+})({"3qndx":[function(require,module,exports,__globalThis) {
 var _gameTs = require("./game.ts");
 
 },{"./game.ts":"edeGs"}],"edeGs":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "gameCanvas", ()=>gameCanvas);
-parcelHelpers.export(exports, "offsetX", ()=>offsetX);
-parcelHelpers.export(exports, "offsetXRoundedDown", ()=>offsetXRoundedDown);
-parcelHelpers.export(exports, "gameZoneWidth", ()=>gameZoneWidth);
-parcelHelpers.export(exports, "gameZoneWidthRoundedUp", ()=>gameZoneWidthRoundedUp);
-parcelHelpers.export(exports, "gameZoneHeight", ()=>gameZoneHeight);
-parcelHelpers.export(exports, "brickWidth", ()=>brickWidth);
-parcelHelpers.export(exports, "needsRender", ()=>needsRender);
+parcelHelpers.export(exports, "baseCombo", ()=>baseCombo);
+parcelHelpers.export(exports, "resetCombo", ()=>resetCombo);
+parcelHelpers.export(exports, "decreaseCombo", ()=>decreaseCombo);
+parcelHelpers.export(exports, "play", ()=>play);
+parcelHelpers.export(exports, "pause", ()=>pause);
 parcelHelpers.export(exports, "fitSize", ()=>fitSize);
+parcelHelpers.export(exports, "recomputeTargetBaseSpeed", ()=>recomputeTargetBaseSpeed);
+parcelHelpers.export(exports, "brickCenterX", ()=>brickCenterX);
+parcelHelpers.export(exports, "brickCenterY", ()=>brickCenterY);
+parcelHelpers.export(exports, "getRowColIndex", ()=>getRowColIndex);
+parcelHelpers.export(exports, "spawnExplosion", ()=>spawnExplosion);
+parcelHelpers.export(exports, "addToScore", ()=>addToScore);
+parcelHelpers.export(exports, "pickedUpgradesHTMl", ()=>pickedUpgradesHTMl);
+parcelHelpers.export(exports, "setLevel", ()=>setLevel);
+parcelHelpers.export(exports, "currentLevelInfo", ()=>currentLevelInfo);
+parcelHelpers.export(exports, "getPossibleUpgrades", ()=>getPossibleUpgrades);
+parcelHelpers.export(exports, "getUpgraderUnlockPoints", ()=>getUpgraderUnlockPoints);
+parcelHelpers.export(exports, "dontOfferTooSoon", ()=>dontOfferTooSoon);
+parcelHelpers.export(exports, "pickRandomUpgrades", ()=>pickRandomUpgrades);
+parcelHelpers.export(exports, "restart", ()=>restart);
+parcelHelpers.export(exports, "setMousePos", ()=>setMousePos);
+parcelHelpers.export(exports, "brickIndex", ()=>brickIndex);
+parcelHelpers.export(exports, "hasBrick", ()=>hasBrick);
+parcelHelpers.export(exports, "hitsSomething", ()=>hitsSomething);
+parcelHelpers.export(exports, "shouldPierceByColor", ()=>shouldPierceByColor);
+parcelHelpers.export(exports, "coinBrickHitCheck", ()=>coinBrickHitCheck);
+parcelHelpers.export(exports, "bordersHitCheck", ()=>bordersHitCheck);
+parcelHelpers.export(exports, "tick", ()=>tick);
+parcelHelpers.export(exports, "isTelekinesisActive", ()=>isTelekinesisActive);
+parcelHelpers.export(exports, "ballTick", ()=>ballTick);
+parcelHelpers.export(exports, "resetRunStatistics", ()=>resetRunStatistics);
+parcelHelpers.export(exports, "getTotalScore", ()=>getTotalScore);
+parcelHelpers.export(exports, "addToTotalScore", ()=>addToTotalScore);
+parcelHelpers.export(exports, "addToTotalPlayTime", ()=>addToTotalPlayTime);
+parcelHelpers.export(exports, "gameOver", ()=>gameOver);
+parcelHelpers.export(exports, "getHistograms", ()=>getHistograms);
+parcelHelpers.export(exports, "explodeBrick", ()=>explodeBrick);
+parcelHelpers.export(exports, "max_levels", ()=>max_levels);
+parcelHelpers.export(exports, "render", ()=>render);
+parcelHelpers.export(exports, "renderAllBricks", ()=>renderAllBricks);
+parcelHelpers.export(exports, "drawPuck", ()=>drawPuck);
+parcelHelpers.export(exports, "drawBall", ()=>drawBall);
+parcelHelpers.export(exports, "drawCoin", ()=>drawCoin);
+parcelHelpers.export(exports, "drawFuzzyBall", ()=>drawFuzzyBall);
+parcelHelpers.export(exports, "drawBrick", ()=>drawBrick);
+parcelHelpers.export(exports, "roundRect", ()=>roundRect);
+parcelHelpers.export(exports, "drawIMG", ()=>drawIMG);
+parcelHelpers.export(exports, "drawText", ()=>drawText);
+parcelHelpers.export(exports, "asyncAlert", ()=>asyncAlert);
 parcelHelpers.export(exports, "isSettingOn", ()=>isSettingOn);
 parcelHelpers.export(exports, "toggleSetting", ()=>toggleSetting);
+parcelHelpers.export(exports, "distance2", ()=>distance2);
+parcelHelpers.export(exports, "distanceBetween", ()=>distanceBetween);
+parcelHelpers.export(exports, "rainbowColor", ()=>rainbowColor);
+parcelHelpers.export(exports, "repulse", ()=>repulse);
+parcelHelpers.export(exports, "attract", ()=>attract);
+parcelHelpers.export(exports, "recordOneFrame", ()=>recordOneFrame);
+parcelHelpers.export(exports, "drawMainCanvasOnSmallCanvas", ()=>drawMainCanvasOnSmallCanvas);
+parcelHelpers.export(exports, "startRecordingGame", ()=>startRecordingGame);
+parcelHelpers.export(exports, "pauseRecording", ()=>pauseRecording);
+parcelHelpers.export(exports, "resumeRecording", ()=>resumeRecording);
+parcelHelpers.export(exports, "stopRecording", ()=>stopRecording);
+parcelHelpers.export(exports, "captureFileName", ()=>captureFileName);
+parcelHelpers.export(exports, "findLast", ()=>findLast);
+parcelHelpers.export(exports, "toggleFullScreen", ()=>toggleFullScreen);
+parcelHelpers.export(exports, "setKeyPressed", ()=>setKeyPressed);
+parcelHelpers.export(exports, "gameState", ()=>gameState);
 var _loadGameData = require("./loadGameData");
 var _options = require("./options");
 var _sounds = require("./sounds");
-const MAX_COINS = 400;
-const MAX_PARTICLES = 600;
+var _resetBalls = require("./resetBalls");
+var _gameUtils = require("./game_utils");
 const gameCanvas = document.getElementById("game");
 const ctx = gameCanvas.getContext("2d", {
     alpha: false
 });
-const puckColor = "#FFF";
-let ballSize = 20;
-const coinSize = Math.round(ballSize * 0.8);
-const puckHeight = ballSize;
-let runLevels = [];
-let currentLevel = 0;
 const bombSVG = document.createElement("img");
 bombSVG.src = "data:image/svg+xml;base64," + btoa(`<svg width="144" height="144" viewBox="0 0 38.101 38.099" xmlns="http://www.w3.org/2000/svg">
  <path d="m6.1528 26.516c-2.6992-3.4942-2.9332-8.281-.58305-11.981a10.454 10.454 0 017.3701-4.7582c1.962-.27726 4.1646.05953 5.8835.90027l.45013.22017.89782-.87417c.83748-.81464.91169-.87499 1.0992-.90271.40528-.058713.58876.03425 1.1971.6116l.55451.52679 1.0821-1.0821c1.1963-1.1963 1.383-1.3357 2.1039-1.5877.57898-.20223 1.5681-.19816 2.1691.00897 1.4613.50314 2.3673 1.7622 2.3567 3.2773-.0058.95654-.24464 1.5795-.90924 2.3746-.40936.48928-.55533.81057-.57898 1.2737-.02039.41018.1109.77714.42322 1.1792.30172.38816.3694.61323.2797.93044-.12803.45666-.56674.71598-1.0242.60507-.601-.14597-1.3031-1.3088-1.3969-2.3126-.09459-1.0161.19245-1.8682.92392-2.7432.42567-.50885.5643-.82851.5643-1.3031 0-.50151-.14026-.83177-.51211-1.2028-.50966-.50966-1.0968-.64829-1.781-.41996l-.37348.12477-2.1006 2.1006.52597.55696c.45421.48194.5325.58876.57898.78855.09622.41588.07502.45014-.88396 1.4548l-.87173.9125.26339.57979a10.193 10.193 0 01.9231 4.1001c.03996 2.046-.41996 3.8082-1.4442 5.537-.55044.928-1.0185 1.5013-1.8968 2.3241-.83503.78284-1.5526 1.2827-2.4904 1.7361-3.4266 1.657-7.4721 1.3422-10.549-.82035-.73473-.51782-1.7312-1.4621-2.2515-2.1357zm21.869-4.5584c-.0579-.19734-.05871-2.2662 0-2.4545.11906-.39142.57898-.63361 1.0038-.53005.23812.05708.54147.32455.6116.5382.06279.19163.06769 2.1805.0065 2.3811-.12558.40773-.61649.67602-1.0462.57164-.234-.05708-.51615-.30498-.57568-.50722m3.0417-2.6013c-.12313-.6222.37837-1.1049 1.0479-1.0079.18348.0261.25279.08399 1.0071.83911.75838.75838.81301.82362.84074 1.0112.10193.68499-.40365 1.1938-1.034 1.0405-.1949-.0473-.28786-.12558-1.0144-.85216-.7649-.76409-.80241-.81057-.84645-1.0316m.61323-3.0629a.85623.85623 0 01.59284-.99975c.28949-.09214 2.1814-.08318 2.3917.01141.38734.17369.6279.61078.53984.98181-.06035.25606-.35391.57327-.60181.64992-.25279.07747-2.2278.053-2.4097-.03017-.26013-.11906-.46318-.36125-.51374-.61323" fill="#fff" opacity="0.3"/>
 </svg>`);
-// Whatever
-let puckWidth = 200;
 const makeEmptyPerksMap = ()=>{
     const p = {};
     (0, _loadGameData.upgrades).forEach((u)=>p[u.id] = 0);
     return p;
 };
-const perks = makeEmptyPerksMap();
-let baseSpeed = 12; // applied to x and y
-let combo = 1;
 function baseCombo() {
-    return 1 + perks.base_combo * 3 + perks.smaller_puck * 5;
+    return 1 + gameState.perks.base_combo * 3 + gameState.perks.smaller_puck * 5;
 }
 function resetCombo(x, y) {
-    const prev = combo;
-    combo = baseCombo();
-    if (!levelTime) combo += perks.hot_start * 15;
-    if (prev > combo && perks.soft_reset) combo += Math.floor((prev - combo) / (1 + perks.soft_reset));
-    const lost = Math.max(0, prev - combo);
+    const prev = gameState.combo;
+    gameState.combo = baseCombo();
+    if (!levelTime) gameState.combo += gameState.perks.hot_start * 15;
+    if (prev > gameState.combo && gameState.perks.soft_reset) gameState.combo += Math.floor((prev - gameState.combo) / (1 + gameState.perks.soft_reset));
+    const lost = Math.max(0, prev - gameState.combo);
     if (lost) {
         for(let i = 0; i < lost && i < 8; i++)setTimeout(()=>(0, _sounds.sounds).comboDecrease(), i * 100);
-        if (typeof x !== "undefined" && typeof y !== "undefined") flashes.push({
+        if (typeof x !== "undefined" && typeof y !== "undefined") gameState.flashes.push({
             type: "text",
             text: "-" + lost,
             time: levelTime,
@@ -633,18 +579,18 @@ function resetCombo(x, y) {
             x: x,
             y: y,
             duration: 150,
-            size: puckHeight
+            size: gameState.puckHeight
         });
     }
     return lost;
 }
 function decreaseCombo(by, x, y) {
-    const prev = combo;
-    combo = Math.max(baseCombo(), combo - by);
-    const lost = Math.max(0, prev - combo);
+    const prev = gameState.combo;
+    gameState.combo = Math.max(baseCombo(), gameState.combo - by);
+    const lost = Math.max(0, prev - gameState.combo);
     if (lost) {
         (0, _sounds.sounds).comboDecrease();
-        if (typeof x !== "undefined" && typeof y !== "undefined") flashes.push({
+        if (typeof x !== "undefined" && typeof y !== "undefined") gameState.flashes.push({
             type: "text",
             text: "-" + lost,
             time: levelTime,
@@ -652,48 +598,44 @@ function decreaseCombo(by, x, y) {
             x: x,
             y: y,
             duration: 300,
-            size: puckHeight
+            size: gameState.puckHeight
         });
     }
 }
-let gridSize = 12;
-let running = false, puck = 400, pauseTimeout = null;
 function play() {
-    if (running) return;
-    running = true;
+    if (gameState.running) return;
+    gameState.running = true;
     startRecordingGame();
     (0, _sounds.getAudioContext)()?.resume();
     resumeRecording();
-    document.body.className = running ? " running " : " paused ";
+    document.body.className = gameState.running ? " running " : " paused ";
 }
 function pause(playerAskedForPause) {
-    if (!running) return;
-    if (pauseTimeout) return;
-    pauseTimeout = setTimeout(()=>{
-        running = false;
-        needsRender = true;
+    if (!gameState.running) return;
+    if (gameState.pauseTimeout) return;
+    gameState.pauseTimeout = setTimeout(()=>{
+        gameState.running = false;
+        gameState.needsRender = true;
         setTimeout(()=>{
-            if (!running) (0, _sounds.getAudioContext)()?.suspend();
+            if (!gameState.running) (0, _sounds.getAudioContext)()?.suspend();
         }, 1000);
         pauseRecording();
-        pauseTimeout = null;
-        document.body.className = running ? " running " : " paused ";
+        gameState.pauseTimeout = null;
+        document.body.className = gameState.running ? " running " : " paused ";
     }, Math.min(Math.max(0, pauseUsesDuringRun - 5) * 50, 500));
     if (playerAskedForPause) // Pausing many times in a run will make pause slower
     pauseUsesDuringRun++;
     if (document.exitPointerLock) document.exitPointerLock();
 }
-let offsetX, offsetXRoundedDown, gameZoneWidth, gameZoneWidthRoundedUp, gameZoneHeight, brickWidth, needsRender = true;
 const background = document.createElement("img");
 const backgroundCanvas = document.createElement("canvas");
 background.addEventListener("load", ()=>{
-    needsRender = true;
+    gameState.needsRender = true;
 });
-let lastWidth = 0, lastHeight = 0;
 const fitSize = ()=>{
     const { width, height } = gameCanvas.getBoundingClientRect();
-    lastWidth = width;
-    lastHeight = height;
+    gameState.canvasWidth = width;
+    gameState.canvasHeight = height;
     gameCanvas.width = width;
     gameCanvas.height = height;
     ctx.fillStyle = currentLevelInfo()?.color || "black";
@@ -701,21 +643,21 @@ const fitSize = ()=>{
     ctx.fillRect(0, 0, width, height);
     backgroundCanvas.width = width;
     backgroundCanvas.height = height;
-    gameZoneHeight = isSettingOn("mobile-mode") ? height * 80 / 100 : height;
-    const baseWidth = Math.round(Math.min(lastWidth, gameZoneHeight * 0.73));
-    brickWidth = Math.floor(baseWidth / gridSize / 2) * 2;
-    gameZoneWidth = brickWidth * gridSize;
-    offsetX = Math.floor((lastWidth - gameZoneWidth) / 2);
-    offsetXRoundedDown = offsetX;
-    if (offsetX < ballSize) offsetXRoundedDown = 0;
-    gameZoneWidthRoundedUp = width - 2 * offsetXRoundedDown;
+    gameState.gameZoneHeight = isSettingOn("mobile-mode") ? height * 80 / 100 : height;
+    const baseWidth = Math.round(Math.min(gameState.canvasWidth, gameState.gameZoneHeight * 0.73));
+    gameState.brickWidth = Math.floor(baseWidth / gameState.gridSize / 2) * 2;
+    gameState.gameZoneWidth = gameState.brickWidth * gameState.gridSize;
+    gameState.offsetX = Math.floor((gameState.canvasWidth - gameState.gameZoneWidth) / 2);
+    gameState.offsetXRoundedDown = gameState.offsetX;
+    if (gameState.offsetX < gameState.ballSize) gameState.offsetXRoundedDown = 0;
+    gameState.gameZoneWidthRoundedUp = width - 2 * gameState.offsetXRoundedDown;
     backgroundCanvas.title = "resized";
     // Ensure puck stays within bounds
-    setMousePos(puck);
-    coins = [];
-    flashes = [];
+    setMousePos(gameState.puckPosition);
+    gameState.coins = [];
+    gameState.flashes = [];
     pause(true);
-    putBallsAtPuck();
+    (0, _resetBalls.putBallsAtPuck)(gameState);
     // For safari mobile https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
     document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
 };
@@ -724,32 +666,32 @@ window.addEventListener("fullscreenchange", fitSize);
 setInterval(()=>{
     // Sometimes, the page changes size without triggering the event (when switching to fullscreen, closing debug panel...)
     const { width, height } = gameCanvas.getBoundingClientRect();
-    if (width !== lastWidth || height !== lastHeight) fitSize();
+    if (width !== gameState.canvasWidth || height !== gameState.canvasHeight) fitSize();
 }, 1000);
 function recomputeTargetBaseSpeed() {
     // We never want the ball to completely stop, it will move at least 3px per frame
-    baseSpeed = Math.max(3, gameZoneWidth / 12 / 10 + currentLevel / 3 + levelTime / 30000 - perks.slow_down * 2);
+    gameState.baseSpeed = Math.max(3, gameState.gameZoneWidth / 12 / 10 + gameState.currentLevel / 3 + levelTime / 30000 - gameState.perks.slow_down * 2);
 }
 function brickCenterX(index) {
-    return offsetX + (index % gridSize + 0.5) * brickWidth;
+    return gameState.offsetX + (index % gameState.gridSize + 0.5) * gameState.brickWidth;
 }
 function brickCenterY(index) {
-    return (Math.floor(index / gridSize) + 0.5) * brickWidth;
+    return (Math.floor(index / gameState.gridSize) + 0.5) * gameState.brickWidth;
 }
 function getRowColIndex(row, col) {
-    if (row < 0 || col < 0 || row >= gridSize || col >= gridSize) return -1;
-    return row * gridSize + col;
+    if (row < 0 || col < 0 || row >= gameState.gridSize || col >= gameState.gridSize) return -1;
+    return row * gameState.gridSize + col;
 }
-function spawnExplosion(count, x, y, color, duration = 150, size = coinSize) {
+function spawnExplosion(count, x, y, color, duration = 150, size = gameState.coinSize) {
     if (!!isSettingOn("basic")) return;
-    if (flashes.length > MAX_PARTICLES) // Avoid freezing when lots of explosion happen at once
+    if (gameState.flashes.length > gameState.MAX_PARTICLES) // Avoid freezing when lots of explosion happen at once
     count = 1;
-    for(let i = 0; i < count; i++)flashes.push({
+    for(let i = 0; i < count; i++)gameState.flashes.push({
         type: "particle",
         time: levelTime,
         size,
-        x: x + (Math.random() - 0.5) * brickWidth / 2,
-        y: y + (Math.random() - 0.5) * brickWidth / 2,
+        x: x + (Math.random() - 0.5) * gameState.brickWidth / 2,
+        y: y + (Math.random() - 0.5) * gameState.brickWidth / 2,
         vx: (Math.random() - 0.5) * 30,
         vy: (Math.random() - 0.5) * 30,
         color,
@@ -757,103 +699,39 @@ function spawnExplosion(count, x, y, color, duration = 150, size = coinSize) {
         ethereal: false
     });
 }
-let score = 0;
-let lastExplosion = 0;
-let highScore = parseFloat(localStorage.getItem("breakout-3-hs") || "0");
-let lastPlayedCoinGrab = 0;
 function addToScore(coin) {
     coin.destroyed = true;
-    score += coin.points;
+    gameState.score += coin.points;
     addToTotalScore(coin.points);
-    if (score > highScore && !isCreativeModeRun) {
-        highScore = score;
-        localStorage.setItem("breakout-3-hs", score.toString());
+    if (gameState.score > gameState.highScore && !isCreativeModeRun) {
+        gameState.highScore = gameState.score;
+        localStorage.setItem("breakout-3-hs", gameState.score.toString());
     }
-    if (!isSettingOn("basic")) flashes.push({
+    if (!isSettingOn("basic")) gameState.flashes.push({
         type: "particle",
         duration: 100 + Math.random() * 50,
         time: levelTime,
-        size: coinSize / 2,
+        size: gameState.coinSize / 2,
         color: coin.color,
         x: coin.previousX,
         y: coin.previousY,
-        vx: (lastWidth - coin.x) / 100,
+        vx: (gameState.canvasWidth - coin.x) / 100,
         vy: -coin.y / 100,
         ethereal: true
     });
-    if (Date.now() - lastPlayedCoinGrab > 16) {
-        lastPlayedCoinGrab = Date.now();
+    if (Date.now() - gameState.lastPlayedCoinGrab > 16) {
+        gameState.lastPlayedCoinGrab = Date.now();
         (0, _sounds.sounds).coinCatch(coin.x);
     }
     runStatistics.score += coin.points;
 }
-let balls = [];
-let ballsColor = "white";
-function resetBalls() {
-    const count = 1 + (perks?.multiball || 0);
-    const perBall = puckWidth / (count + 1);
-    balls = [];
-    ballsColor = "#FFF";
-    if (perks.picky_eater || perks.pierce_color) ballsColor = getMajorityValue(bricks.filter((i)=>i)) || "#FFF";
-    for(let i = 0; i < count; i++){
-        const x = puck - puckWidth / 2 + perBall * (i + 1);
-        const vx = Math.random() > 0.5 ? baseSpeed : -baseSpeed;
-        balls.push({
-            x,
-            previousX: x,
-            y: gameZoneHeight - 1.5 * ballSize,
-            previousY: gameZoneHeight - 1.5 * ballSize,
-            vx,
-            previousVX: vx,
-            vy: -baseSpeed,
-            previousVY: -baseSpeed,
-            sx: 0,
-            sy: 0,
-            sparks: 0,
-            piercedSinceBounce: 0,
-            hitSinceBounce: 0,
-            hitItem: [],
-            bouncesList: [],
-            sapperUses: 0
-        });
-    }
-}
-function putBallsAtPuck() {
-    // This reset could be abused to cheat quite easily
-    const count = balls.length;
-    const perBall = puckWidth / (count + 1);
-    balls.forEach((ball, i)=>{
-        const x = puck - puckWidth / 2 + perBall * (i + 1);
-        ball.x = x;
-        ball.previousX = x;
-        ball.y = gameZoneHeight - 1.5 * ballSize;
-        ball.previousY = ball.y;
-        ball.vx = Math.random() > 0.5 ? baseSpeed : -baseSpeed;
-        ball.previousVX = ball.vx;
-        ball.vy = -baseSpeed;
-        ball.previousVY = ball.vy;
-        ball.sx = 0;
-        ball.sy = 0;
-        ball.hitItem = [];
-        ball.hitSinceBounce = 0;
-        ball.piercedSinceBounce = 0;
-    });
-}
-resetBalls();
-// Default, recomputed at each level load
-let bricks = [];
-let flashes = [];
-let coins = [];
-let levelStartScore = 0;
-let levelMisses = 0;
-let levelSpawnedCoins = 0;
 function pickedUpgradesHTMl() {
     let list = "";
-    for (let u of (0, _loadGameData.upgrades))for(let i = 0; i < perks[u.id]; i++)list += (0, _loadGameData.icons)["icon:" + u.id] + " ";
+    for (let u of (0, _loadGameData.upgrades))for(let i = 0; i < gameState.perks[u.id]; i++)list += (0, _loadGameData.icons)["icon:" + u.id] + " ";
     return list;
 }
 async function openUpgradesPicker() {
-    const catchRate = (score - levelStartScore) / (levelSpawnedCoins || 1);
+    const catchRate = (gameState.score - gameState.levelStartScore) / (gameState.levelSpawnedCoins || 1);
     let repeats = 1;
     let choices = 3;
     let timeGain = "", catchGain = "", missesGain = "";
@@ -873,19 +751,19 @@ async function openUpgradesPicker() {
         choices++;
         catchGain = " (+1 choice)";
     }
-    if (levelMisses === 0) {
+    if (gameState.levelMisses === 0) {
         repeats++;
         choices++;
         missesGain = " (+1 upgrade and choice)";
-    } else if (levelMisses <= 3) {
+    } else if (gameState.levelMisses <= 3) {
         choices++;
         missesGain = " (+1 choice)";
     }
     while(repeats--){
-        const actions = pickRandomUpgrades(choices + perks.one_more_choice - perks.instant_upgrade);
+        const actions = pickRandomUpgrades(choices + gameState.perks.one_more_choice - gameState.perks.instant_upgrade);
         if (!actions.length) break;
         let textAfterButtons = `
-        <p>You just finished level ${currentLevel + 1}/${max_levels()} and picked those upgrades so far : </p><p>${pickedUpgradesHTMl()}</p>
+        <p>You just finished level ${gameState.currentLevel + 1}/${max_levels()} and picked those upgrades so far : </p><p>${pickedUpgradesHTMl()}</p>
         <div id="level-recording-container"></div> 
         
         `;
@@ -893,62 +771,54 @@ async function openUpgradesPicker() {
             title: "Pick an upgrade " + (repeats ? "(" + (repeats + 1) + ")" : ""),
             actions,
             text: `<p>
-                You caught ${score - levelStartScore} coins ${catchGain} out of ${levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds${timeGain}.
-        You missed ${levelMisses} times ${missesGain}. 
+                You caught ${gameState.score - gameState.levelStartScore} coins ${catchGain} out of ${gameState.levelSpawnedCoins} in ${Math.round(levelTime / 1000)} seconds${timeGain}.
+        You missed ${gameState.levelMisses} times ${missesGain}. 
         ${timeGain && catchGain && missesGain && "Impressive, keep it up !" || (timeGain || catchGain || missesGain) && "Well done !" || "Try to catch all coins, never miss the bricks or clear the level under 30s to gain additional choices and upgrades."}
         </p>`,
             allowClose: false,
             textAfterButtons
         });
-        perks[upgradeId]++;
+        gameState.perks[upgradeId]++;
         if (upgradeId === "instant_upgrade") repeats += 2;
         runStatistics.upgrades_picked++;
     }
     resetCombo(undefined, undefined);
-    resetBalls();
+    (0, _resetBalls.resetBalls)(gameState);
 }
 function setLevel(l) {
     stopRecording();
     pause(false);
     if (l > 0) openUpgradesPicker();
-    currentLevel = l;
+    gameState.currentLevel = l;
     levelTime = 0;
     level_skip_last_uses = 0;
     lastTickDown = levelTime;
-    levelStartScore = score;
-    levelSpawnedCoins = 0;
-    levelMisses = 0;
+    gameState.levelStartScore = gameState.score;
+    gameState.levelSpawnedCoins = 0;
+    gameState.levelMisses = 0;
     runStatistics.levelsPlayed++;
     resetCombo(undefined, undefined);
     recomputeTargetBaseSpeed();
-    resetBalls();
+    (0, _resetBalls.resetBalls)(gameState);
     const lvl = currentLevelInfo();
-    if (lvl.size !== gridSize) {
-        gridSize = lvl.size;
+    if (lvl.size !== gameState.gridSize) {
+        gameState.gridSize = lvl.size;
         fitSize();
     }
-    coins = [];
-    bricks = [
+    gameState.coins = [];
+    gameState.bricks = [
         ...lvl.bricks
     ];
-    flashes = [];
+    gameState.flashes = [];
     // This caused problems with accented characters like the ô of côte d'ivoire for odd reasons
     // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
     background.src = "data:image/svg+xml;UTF8," + lvl.svg;
 }
 function currentLevelInfo() {
-    return runLevels[currentLevel % runLevels.length];
+    return gameState.runLevels[gameState.currentLevel % gameState.runLevels.length];
 }
-let totalScoreAtRunStart = getTotalScore();
-function getPossibleUpgrades() {
-    return (0, _loadGameData.upgrades).filter((u)=>totalScoreAtRunStart >= u.threshold).filter((u)=>!u?.requires || perks[u?.requires]);
-}
-function shuffleLevels(nameToAvoid = null) {
-    const target = nextRunOverrides?.level;
-    delete nextRunOverrides.level;
-    const firstLevel = target ? (0, _loadGameData.allLevels).filter((l)=>l.name === target) : [];
-    const restInRandomOrder = (0, _loadGameData.allLevels).filter((l)=>totalScoreAtRunStart >= l.threshold).filter((l)=>l.name !== target).filter((l)=>l.name !== nameToAvoid || (0, _loadGameData.allLevels).length === 1).sort(()=>Math.random() - 0.5);
-    runLevels = firstLevel.concat(restInRandomOrder.slice(0, 10).sort((a, b)=>a.sortKey - b.sortKey));
+function getPossibleUpgrades(gameState) {
+    return (0, _loadGameData.upgrades).filter((u)=>gameState.totalScoreAtRunStart >= u.threshold).filter((u)=>!u?.requires || gameState.perks[u?.requires]);
 }
 function getUpgraderUnlockPoints() {
     let list = [];
@@ -971,65 +841,45 @@ function dontOfferTooSoon(id) {
     lastOffered[id] = Math.round(Date.now() / 1000);
 }
 function pickRandomUpgrades(count) {
-    let list = getPossibleUpgrades().map((u)=>({
+    let list = getPossibleUpgrades(gameState).map((u)=>({
             ...u,
             score: Math.random() + (lastOffered[u.id] || 0)
-        })).sort((a, b)=>a.score - b.score).filter((u)=>perks[u.id] < u.max).slice(0, count).sort((a, b)=>a.id > b.id ? 1 : -1);
+        })).sort((a, b)=>a.score - b.score).filter((u)=>gameState.perks[u.id] < u.max).slice(0, count).sort((a, b)=>a.id > b.id ? 1 : -1);
     list.forEach((u)=>{
         dontOfferTooSoon(u.id);
     });
     return list.map((u)=>({
-            text: u.name + (perks[u.id] ? " lvl " + (perks[u.id] + 1) : ""),
+            text: u.name + (gameState.perks[u.id] ? " lvl " + (gameState.perks[u.id] + 1) : ""),
             icon: (0, _loadGameData.icons)["icon:" + u.id],
             value: u.id,
-            help: u.help(perks[u.id] + 1)
+            help: u.help(gameState.perks[u.id] + 1)
         }));
 }
-let nextRunOverrides = {};
-let isCreativeModeRun = false;
-let pauseUsesDuringRun = 0;
-function restart(creativeModePerks) {
-    // When restarting, we want to avoid restarting with the same level we're on, so we exclude from the next
-    // run's level list
-    totalScoreAtRunStart = getTotalScore();
-    shuffleLevels(levelTime || score ? currentLevelInfo().name : null);
+function restart(params) {
+    Object.assign(gameState, newGameState(params));
     resetRunStatistics();
-    score = 0;
     pauseUsesDuringRun = 0;
-    for (let u of (0, _loadGameData.upgrades))perks[u.id] = 0;
-    if (creativeModePerks) {
-        Object.assign(perks, creativeModePerks);
-        isCreativeModeRun = true;
-    } else {
-        isCreativeModeRun = false;
-        const giftable = getPossibleUpgrades().filter((u)=>u.giftable);
-        const randomGift = nextRunOverrides?.perk || isSettingOn("easy") && "slow_down" || giftable[Math.floor(Math.random() * giftable.length)].id;
-        perks[randomGift] = 1;
-        delete nextRunOverrides.perk;
-        dontOfferTooSoon(randomGift);
-    }
-    setLevel(0);
     pauseRecording();
+    setLevel(0);
 }
-let keyboardPuckSpeed = 0;
 function setMousePos(x) {
-    needsRender = true;
-    puck = x;
+    gameState.needsRender = true;
+    gameState.puckPosition = x;
     // We have borders visible, enforce them
-    if (puck < offsetXRoundedDown + puckWidth / 2) puck = offsetXRoundedDown + puckWidth / 2;
-    if (puck > offsetXRoundedDown + gameZoneWidthRoundedUp - puckWidth / 2) puck = offsetXRoundedDown + gameZoneWidthRoundedUp - puckWidth / 2;
-    if (!running && !levelTime) putBallsAtPuck();
+    if (gameState.puckPosition < gameState.offsetXRoundedDown + gameState.puckWidth / 2) gameState.puckPosition = gameState.offsetXRoundedDown + gameState.puckWidth / 2;
+    if (gameState.puckPosition > gameState.offsetXRoundedDown + gameState.gameZoneWidthRoundedUp - gameState.puckWidth / 2) gameState.puckPosition = gameState.offsetXRoundedDown + gameState.gameZoneWidthRoundedUp - gameState.puckWidth / 2;
+    if (!gameState.running && !levelTime) (0, _resetBalls.putBallsAtPuck)(gameState);
 }
 gameCanvas.addEventListener("mouseup", (e)=>{
     if (e.button !== 0) return;
-    if (running) pause(true);
+    if (gameState.running) pause(true);
     else {
         play();
         if (isSettingOn("pointerLock")) gameCanvas.requestPointerLock();
     }
 });
 gameCanvas.addEventListener("mousemove", (e)=>{
-    if (document.pointerLockElement === gameCanvas) setMousePos(puck + e.movementX);
+    if (document.pointerLockElement === gameCanvas) setMousePos(gameState.puckPosition + e.movementX);
     else setMousePos(e.x);
 });
 gameCanvas.addEventListener("touchstart", (e)=>{
@@ -1045,32 +895,31 @@ gameCanvas.addEventListener("touchend", (e)=>{
 gameCanvas.addEventListener("touchcancel", (e)=>{
     e.preventDefault();
     pause(true);
-    needsRender = true;
+    gameState.needsRender = true;
 });
 gameCanvas.addEventListener("touchmove", (e)=>{
     if (!e.touches?.length) return;
     setMousePos(e.touches[0].pageX);
 });
-let lastTick = performance.now();
 function brickIndex(x, y) {
-    return getRowColIndex(Math.floor(y / brickWidth), Math.floor((x - offsetX) / brickWidth));
+    return getRowColIndex(Math.floor(y / gameState.brickWidth), Math.floor((x - gameState.offsetX) / gameState.brickWidth));
 }
 function hasBrick(index) {
-    if (bricks[index]) return index;
+    if (gameState.bricks[index]) return index;
 }
 function hitsSomething(x, y, radius) {
     return hasBrick(brickIndex(x - radius, y - radius)) ?? hasBrick(brickIndex(x + radius, y - radius)) ?? hasBrick(brickIndex(x + radius, y + radius)) ?? hasBrick(brickIndex(x - radius, y + radius));
 }
 function shouldPierceByColor(vhit, hhit, chit) {
-    if (!perks.pierce_color) return false;
-    if (typeof vhit !== "undefined" && bricks[vhit] !== ballsColor) return false;
-    if (typeof hhit !== "undefined" && bricks[hhit] !== ballsColor) return false;
-    if (typeof chit !== "undefined" && bricks[chit] !== ballsColor) return false;
+    if (!gameState.perks.pierce_color) return false;
+    if (typeof vhit !== "undefined" && gameState.bricks[vhit] !== gameState.ballsColor) return false;
+    if (typeof hhit !== "undefined" && gameState.bricks[hhit] !== gameState.ballsColor) return false;
+    if (typeof chit !== "undefined" && gameState.bricks[chit] !== gameState.ballsColor) return false;
     return true;
 }
 function coinBrickHitCheck(coin) {
     // Make ball/coin bonce, and return bricks that were hit
-    const radius = coinSize / 2;
+    const radius = gameState.coinSize / 2;
     const { x, y, previousX, previousY } = coin;
     const vhit = hitsSomething(previousX, y, radius);
     const hhit = hitsSomething(x, previousY, radius);
@@ -1079,8 +928,8 @@ function coinBrickHitCheck(coin) {
         coin.y = coin.previousY;
         coin.vy *= -1;
         //   Roll on corners
-        const leftHit = bricks[brickIndex(x - radius, y + radius)];
-        const rightHit = bricks[brickIndex(x + radius, y + radius)];
+        const leftHit = gameState.bricks[brickIndex(x - radius, y + radius)];
+        const rightHit = gameState.bricks[brickIndex(x + radius, y + radius)];
         if (leftHit && !rightHit) {
             coin.vx += 1;
             coin.sa -= 1;
@@ -1108,10 +957,10 @@ function bordersHitCheck(coin, radius, delta) {
     coin.sy += coin.previousY - coin.y;
     coin.sx *= 0.9;
     coin.sy *= 0.9;
-    if (perks.wind) coin.vx += (puck - (offsetX + gameZoneWidth / 2)) / gameZoneWidth * perks.wind * 0.5;
+    if (gameState.perks.wind) coin.vx += (gameState.puckPosition - (gameState.offsetX + gameState.gameZoneWidth / 2)) / gameState.gameZoneWidth * gameState.perks.wind * 0.5;
     let vhit = 0, hhit = 0;
-    if (coin.x < offsetXRoundedDown + radius) {
-        coin.x = offsetXRoundedDown + radius + (offsetXRoundedDown + radius - coin.x);
+    if (coin.x < gameState.offsetXRoundedDown + radius) {
+        coin.x = gameState.offsetXRoundedDown + radius + (gameState.offsetXRoundedDown + radius - coin.x);
         coin.vx *= -1;
         hhit = 1;
     }
@@ -1120,74 +969,73 @@ function bordersHitCheck(coin, radius, delta) {
         coin.vy *= -1;
         vhit = 1;
     }
-    if (coin.x > lastWidth - offsetXRoundedDown - radius) {
-        coin.x = lastWidth - offsetXRoundedDown - radius - (coin.x - (lastWidth - offsetXRoundedDown - radius));
+    if (coin.x > gameState.canvasWidth - gameState.offsetXRoundedDown - radius) {
+        coin.x = gameState.canvasWidth - gameState.offsetXRoundedDown - radius - (coin.x - (gameState.canvasWidth - gameState.offsetXRoundedDown - radius));
         coin.vx *= -1;
         hhit = 1;
     }
     return hhit + vhit * 2;
 }
-let lastTickDown = 0;
 function tick() {
     recomputeTargetBaseSpeed();
     const currentTick = performance.now();
-    puckWidth = gameZoneWidth / 12 * (3 - perks.smaller_puck + perks.bigger_puck);
-    if (keyboardPuckSpeed) setMousePos(puck + keyboardPuckSpeed);
-    if (running) {
+    gameState.puckWidth = gameState.gameZoneWidth / 12 * (3 - gameState.perks.smaller_puck + gameState.perks.bigger_puck);
+    if (keyboardPuckSpeed) setMousePos(gameState.puckPosition + keyboardPuckSpeed);
+    if (gameState.running) {
         levelTime += currentTick - lastTick;
         runStatistics.runTime += currentTick - lastTick;
-        runStatistics.max_combo = Math.max(runStatistics.max_combo, combo);
+        runStatistics.max_combo = Math.max(runStatistics.max_combo, gameState.combo);
         // How many times to compute
         let delta = Math.min(4, (currentTick - lastTick) / (1000 / 60));
-        delta *= running ? 1 : 0;
-        coins = coins.filter((coin)=>!coin.destroyed);
-        balls = balls.filter((ball)=>!ball.destroyed);
-        const remainingBricks = bricks.filter((b)=>b && b !== "black").length;
-        if (levelTime > lastTickDown + 1000 && perks.hot_start) {
+        delta *= gameState.running ? 1 : 0;
+        gameState.coins = gameState.coins.filter((coin)=>!coin.destroyed);
+        gameState.balls = gameState.balls.filter((ball)=>!ball.destroyed);
+        const remainingBricks = gameState.bricks.filter((b)=>b && b !== "black").length;
+        if (levelTime > lastTickDown + 1000 && gameState.perks.hot_start) {
             lastTickDown = levelTime;
-            decreaseCombo(perks.hot_start, puck, gameZoneHeight - 2 * puckHeight);
+            decreaseCombo(gameState.perks.hot_start, gameState.puckPosition, gameState.gameZoneHeight - 2 * gameState.puckHeight);
         }
-        if (remainingBricks <= perks.skip_last && !level_skip_last_uses) {
-            bricks.forEach((type, index)=>{
-                if (type) explodeBrick(index, balls[0], true);
+        if (remainingBricks <= gameState.perks.skip_last && !level_skip_last_uses) {
+            gameState.bricks.forEach((type, index)=>{
+                if (type) explodeBrick(index, gameState.balls[0], true);
             });
             level_skip_last_uses++;
         }
-        if (!remainingBricks && !coins.length) {
-            if (currentLevel + 1 < max_levels()) setLevel(currentLevel + 1);
-            else gameOver("Run finished with " + score + " points", "You cleared all levels for this run.");
-        } else if (running || levelTime) {
+        if (!remainingBricks && !gameState.coins.length) {
+            if (gameState.currentLevel + 1 < max_levels()) setLevel(gameState.currentLevel + 1);
+            else gameOver("Run finished with " + gameState.score + " points", "You cleared all levels for this run.");
+        } else if (gameState.running || levelTime) {
             let playedCoinBounce = false;
-            const coinRadius = Math.round(coinSize / 2);
-            coins.forEach((coin)=>{
+            const coinRadius = Math.round(gameState.coinSize / 2);
+            gameState.coins.forEach((coin)=>{
                 if (coin.destroyed) return;
-                if (perks.coin_magnet) {
-                    const attractionX = delta * (puck - coin.x) / (100 + Math.pow(coin.y - gameZoneHeight, 2) + Math.pow(coin.x - puck, 2)) * perks.coin_magnet * 100;
+                if (gameState.perks.coin_magnet) {
+                    const attractionX = delta * (gameState.puckPosition - coin.x) / (100 + Math.pow(coin.y - gameState.gameZoneHeight, 2) + Math.pow(coin.x - gameState.puckPosition, 2)) * gameState.perks.coin_magnet * 100;
                     coin.vx += attractionX;
                     coin.sa -= attractionX / 10;
                 }
-                const ratio = 1 - (perks.viscosity * 0.03 + 0.005) * delta;
+                const ratio = 1 - (gameState.perks.viscosity * 0.03 + 0.005) * delta;
                 coin.vy *= ratio;
                 coin.vx *= ratio;
-                if (coin.vx > 7 * baseSpeed) coin.vx = 7 * baseSpeed;
-                if (coin.vx < -7 * baseSpeed) coin.vx = -7 * baseSpeed;
-                if (coin.vy > 7 * baseSpeed) coin.vy = 7 * baseSpeed;
-                if (coin.vy < -7 * baseSpeed) coin.vy = -7 * baseSpeed;
+                if (coin.vx > 7 * gameState.baseSpeed) coin.vx = 7 * gameState.baseSpeed;
+                if (coin.vx < -7 * gameState.baseSpeed) coin.vx = -7 * gameState.baseSpeed;
+                if (coin.vy > 7 * gameState.baseSpeed) coin.vy = 7 * gameState.baseSpeed;
+                if (coin.vy < -7 * gameState.baseSpeed) coin.vy = -7 * gameState.baseSpeed;
                 coin.a += coin.sa;
                 // Gravity
                 coin.vy += delta * coin.weight * 0.8;
                 const speed = Math.abs(coin.sx) + Math.abs(coin.sx);
                 const hitBorder = bordersHitCheck(coin, coinRadius, delta);
-                if (coin.y > gameZoneHeight - coinRadius - puckHeight && coin.y < gameZoneHeight + puckHeight + coin.vy && Math.abs(coin.x - puck) < coinRadius + puckWidth / 2 + // a bit of margin to be nice
-                puckHeight) addToScore(coin);
-                else if (coin.y > lastHeight + coinRadius) {
+                if (coin.y > gameState.gameZoneHeight - coinRadius - gameState.puckHeight && coin.y < gameState.gameZoneHeight + gameState.puckHeight + coin.vy && Math.abs(coin.x - gameState.puckPosition) < coinRadius + gameState.puckWidth / 2 + // a bit of margin to be nice
+                gameState.puckHeight) addToScore(coin);
+                else if (coin.y > gameState.canvasHeight + coinRadius) {
                     coin.destroyed = true;
-                    if (perks.compound_interest) resetCombo(coin.x, coin.y);
+                    if (gameState.perks.compound_interest) resetCombo(coin.x, coin.y);
                 }
                 const hitBrick = coinBrickHitCheck(coin);
-                if (perks.metamorphosis && typeof hitBrick !== "undefined") {
-                    if (bricks[hitBrick] && coin.color !== bricks[hitBrick] && bricks[hitBrick] !== "black" && !coin.coloredABrick) {
-                        bricks[hitBrick] = coin.color;
+                if (gameState.perks.metamorphosis && typeof hitBrick !== "undefined") {
+                    if (gameState.bricks[hitBrick] && coin.color !== gameState.bricks[hitBrick] && gameState.bricks[hitBrick] !== "black" && !coin.coloredABrick) {
+                        gameState.bricks[hitBrick] = coin.color;
                         coin.coloredABrick = true;
                     }
                 }
@@ -1202,23 +1050,23 @@ function tick() {
                     if (Math.abs(coin.vy) < 3) coin.vy = 0;
                 }
             });
-            balls.forEach((ball)=>ballTick(ball, delta));
-            if (perks.wind) {
-                const windD = (puck - (offsetX + gameZoneWidth / 2)) / gameZoneWidth * 2 * perks.wind;
-                for(let i = 0; i < perks.wind; i++)if (Math.random() * Math.abs(windD) > 0.5) flashes.push({
+            gameState.balls.forEach((ball)=>ballTick(ball, delta));
+            if (gameState.perks.wind) {
+                const windD = (gameState.puckPosition - (gameState.offsetX + gameState.gameZoneWidth / 2)) / gameState.gameZoneWidth * 2 * gameState.perks.wind;
+                for(let i = 0; i < gameState.perks.wind; i++)if (Math.random() * Math.abs(windD) > 0.5) gameState.flashes.push({
                     type: "particle",
                     duration: 150,
                     ethereal: true,
                     time: levelTime,
-                    size: coinSize / 2,
+                    size: gameState.coinSize / 2,
                     color: rainbowColor(),
-                    x: offsetXRoundedDown + Math.random() * gameZoneWidthRoundedUp,
-                    y: Math.random() * gameZoneHeight,
+                    x: gameState.offsetXRoundedDown + Math.random() * gameState.gameZoneWidthRoundedUp,
+                    y: Math.random() * gameState.gameZoneHeight,
                     vx: windD * 8,
                     vy: 0
                 });
             }
-            flashes.forEach((flash)=>{
+            gameState.flashes.forEach((flash)=>{
                 if (flash.type === "particle") {
                     flash.x += flash.vx * delta;
                     flash.y += flash.vy * delta;
@@ -1229,58 +1077,58 @@ function tick() {
                 }
             });
         }
-        if (combo > baseCombo()) {
+        if (gameState.combo > baseCombo()) {
             // The red should still be visible on a white bg
-            const baseParticle = !isSettingOn("basic") && (combo - baseCombo()) * Math.random() > 5 && running && {
+            const baseParticle = !isSettingOn("basic") && (gameState.combo - baseCombo()) * Math.random() > 5 && gameState.running && {
                 type: "particle",
                 duration: 100 * (Math.random() + 1),
                 time: levelTime,
-                size: coinSize / 2,
+                size: gameState.coinSize / 2,
                 color: "red",
                 ethereal: true
             };
-            if (perks.top_is_lava) baseParticle && flashes.push({
+            if (gameState.perks.top_is_lava) baseParticle && gameState.flashes.push({
                 ...baseParticle,
-                x: offsetXRoundedDown + Math.random() * gameZoneWidthRoundedUp,
+                x: gameState.offsetXRoundedDown + Math.random() * gameState.gameZoneWidthRoundedUp,
                 y: 0,
                 vx: (Math.random() - 0.5) * 10,
                 vy: 5
             });
-            if (perks.left_is_lava && baseParticle) flashes.push({
+            if (gameState.perks.left_is_lava && baseParticle) gameState.flashes.push({
                 ...baseParticle,
-                x: offsetXRoundedDown,
-                y: Math.random() * gameZoneHeight,
+                x: gameState.offsetXRoundedDown,
+                y: Math.random() * gameState.gameZoneHeight,
                 vx: 5,
                 vy: (Math.random() - 0.5) * 10
             });
-            if (perks.right_is_lava && baseParticle) flashes.push({
+            if (gameState.perks.right_is_lava && baseParticle) gameState.flashes.push({
                 ...baseParticle,
-                x: offsetXRoundedDown + gameZoneWidthRoundedUp,
-                y: Math.random() * gameZoneHeight,
+                x: gameState.offsetXRoundedDown + gameState.gameZoneWidthRoundedUp,
+                y: Math.random() * gameState.gameZoneHeight,
                 vx: -5,
                 vy: (Math.random() - 0.5) * 10
             });
-            if (perks.compound_interest) {
-                let x = puck, attemps = 0;
+            if (gameState.perks.compound_interest) {
+                let x = gameState.puckPosition, attemps = 0;
                 do {
-                    x = offsetXRoundedDown + gameZoneWidthRoundedUp * Math.random();
+                    x = gameState.offsetXRoundedDown + gameState.gameZoneWidthRoundedUp * Math.random();
                     attemps++;
-                }while (Math.abs(x - puck) < puckWidth / 2 && attemps < 10);
-                baseParticle && flashes.push({
+                }while (Math.abs(x - gameState.puckPosition) < gameState.puckWidth / 2 && attemps < 10);
+                baseParticle && gameState.flashes.push({
                     ...baseParticle,
                     x,
-                    y: gameZoneHeight,
+                    y: gameState.gameZoneHeight,
                     vx: (Math.random() - 0.5) * 10,
                     vy: -5
                 });
             }
-            if (perks.streak_shots) {
+            if (gameState.perks.streak_shots) {
                 const pos = 0.5 - Math.random();
-                baseParticle && flashes.push({
+                baseParticle && gameState.flashes.push({
                     ...baseParticle,
                     duration: 100,
-                    x: puck + puckWidth * pos,
-                    y: gameZoneHeight - puckHeight,
+                    x: gameState.puckPosition + gameState.puckWidth * pos,
+                    y: gameState.gameZoneHeight - gameState.puckHeight,
                     vx: pos * 10,
                     vy: -5
                 });
@@ -1292,17 +1140,17 @@ function tick() {
     lastTick = currentTick;
 }
 function isTelekinesisActive(ball) {
-    return perks.telekinesis && !ball.hitSinceBounce && ball.vy < 0;
+    return gameState.perks.telekinesis && !ball.hitSinceBounce && ball.vy < 0;
 }
 function ballTick(ball, delta) {
     ball.previousVX = ball.vx;
     ball.previousVY = ball.vy;
-    let speedLimitDampener = 1 + perks.telekinesis + perks.ball_repulse_ball + perks.puck_repulse_ball + perks.ball_attract_ball;
+    let speedLimitDampener = 1 + gameState.perks.telekinesis + gameState.perks.ball_repulse_ball + gameState.perks.puck_repulse_ball + gameState.perks.ball_attract_ball;
     if (isTelekinesisActive(ball)) {
         speedLimitDampener += 3;
-        ball.vx += (puck - ball.x) / 1000 * delta * perks.telekinesis;
+        ball.vx += (gameState.puckPosition - ball.x) / 1000 * delta * gameState.perks.telekinesis;
     }
-    if (ball.vx * ball.vx + ball.vy * ball.vy < baseSpeed * baseSpeed * 2) {
+    if (ball.vx * ball.vx + ball.vy * ball.vy < gameState.baseSpeed * gameState.baseSpeed * 2) {
         ball.vx *= 1 + 0.02 / speedLimitDampener;
         ball.vy *= 1 + 0.02 / speedLimitDampener;
     } else {
@@ -1310,45 +1158,45 @@ function ballTick(ball, delta) {
         ball.vy *= 1 - 0.02 / speedLimitDampener;
     }
     // Ball could get stuck horizontally because of ball-ball interactions in repulse/attract
-    if (Math.abs(ball.vy) < 0.2 * baseSpeed) ball.vy += (ball.vy > 0 ? 1 : -1) * 0.02 / speedLimitDampener;
-    if (perks.ball_repulse_ball) for (let b2 of balls){
+    if (Math.abs(ball.vy) < 0.2 * gameState.baseSpeed) ball.vy += (ball.vy > 0 ? 1 : -1) * 0.02 / speedLimitDampener;
+    if (gameState.perks.ball_repulse_ball) for (let b2 of gameState.balls){
         // avoid computing this twice, and repulsing itself
         if (b2.x >= ball.x) continue;
-        repulse(ball, b2, perks.ball_repulse_ball, true);
+        repulse(ball, b2, gameState.perks.ball_repulse_ball, true);
     }
-    if (perks.ball_attract_ball) for (let b2 of balls){
+    if (gameState.perks.ball_attract_ball) for (let b2 of gameState.balls){
         // avoid computing this twice, and repulsing itself
         if (b2.x >= ball.x) continue;
-        attract(ball, b2, perks.ball_attract_ball);
+        attract(ball, b2, gameState.perks.ball_attract_ball);
     }
-    if (perks.puck_repulse_ball && Math.abs(ball.x - puck) < puckWidth / 2 + ballSize * (9 + perks.puck_repulse_ball) / 10) repulse(ball, {
-        x: puck,
-        y: gameZoneHeight
-    }, perks.puck_repulse_ball + 1, false);
-    if (perks.respawn && ball.hitItem?.length > 1 && !isSettingOn("basic")) for(let i = 0; i < ball.hitItem?.length - 1 && i < perks.respawn; i++){
+    if (gameState.perks.puck_repulse_ball && Math.abs(ball.x - gameState.puckPosition) < gameState.puckWidth / 2 + gameState.ballSize * (9 + gameState.perks.puck_repulse_ball) / 10) repulse(ball, {
+        x: gameState.puckPosition,
+        y: gameState.gameZoneHeight
+    }, gameState.perks.puck_repulse_ball + 1, false);
+    if (gameState.perks.respawn && ball.hitItem?.length > 1 && !isSettingOn("basic")) for(let i = 0; i < ball.hitItem?.length - 1 && i < gameState.perks.respawn; i++){
         const { index, color } = ball.hitItem[i];
-        if (bricks[index] || color === "black") continue;
+        if (gameState.bricks[index] || color === "black") continue;
         const vertical = Math.random() > 0.5;
         const dx = Math.random() > 0.5 ? 1 : -1;
         const dy = Math.random() > 0.5 ? 1 : -1;
-        flashes.push({
+        gameState.flashes.push({
             type: "particle",
             duration: 250,
             ethereal: true,
             time: levelTime,
-            size: coinSize / 2,
+            size: gameState.coinSize / 2,
             color,
-            x: brickCenterX(index) + dx * brickWidth / 2,
-            y: brickCenterY(index) + dy * brickWidth / 2,
-            vx: vertical ? 0 : -dx * baseSpeed,
-            vy: vertical ? -dy * baseSpeed : 0
+            x: brickCenterX(index) + dx * gameState.brickWidth / 2,
+            y: brickCenterY(index) + dy * gameState.brickWidth / 2,
+            vx: vertical ? 0 : -dx * gameState.baseSpeed,
+            vy: vertical ? -dy * gameState.baseSpeed : 0
         });
     }
-    const borderHitCode = bordersHitCheck(ball, ballSize / 2, delta);
+    const borderHitCode = bordersHitCheck(ball, gameState.ballSize / 2, delta);
     if (borderHitCode) {
-        if (perks.left_is_lava && borderHitCode % 2 && ball.x < offsetX + gameZoneWidth / 2) resetCombo(ball.x, ball.y);
-        if (perks.right_is_lava && borderHitCode % 2 && ball.x > offsetX + gameZoneWidth / 2) resetCombo(ball.x, ball.y);
-        if (perks.top_is_lava && borderHitCode >= 2) resetCombo(ball.x, ball.y + ballSize);
+        if (gameState.perks.left_is_lava && borderHitCode % 2 && ball.x < gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(ball.x, ball.y);
+        if (gameState.perks.right_is_lava && borderHitCode % 2 && ball.x > gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(ball.x, ball.y);
+        if (gameState.perks.top_is_lava && borderHitCode >= 2) resetCombo(ball.x, ball.y + gameState.ballSize);
         (0, _sounds.sounds).wallBeep(ball.x);
         ball.bouncesList?.push({
             x: ball.previousX,
@@ -1356,51 +1204,51 @@ function ballTick(ball, delta) {
         });
     }
     // Puck collision
-    const ylimit = gameZoneHeight - puckHeight - ballSize / 2;
-    const ballIsUnderPuck = Math.abs(ball.x - puck) < ballSize / 2 + puckWidth / 2;
-    if (ball.y > ylimit && ball.vy > 0 && (ballIsUnderPuck || perks.extra_life && ball.y > ylimit + puckHeight / 2)) {
+    const ylimit = gameState.gameZoneHeight - gameState.puckHeight - gameState.ballSize / 2;
+    const ballIsUnderPuck = Math.abs(ball.x - gameState.puckPosition) < gameState.ballSize / 2 + gameState.puckWidth / 2;
+    if (ball.y > ylimit && ball.vy > 0 && (ballIsUnderPuck || gameState.perks.extra_life && ball.y > ylimit + gameState.puckHeight / 2)) {
         if (ballIsUnderPuck) {
             const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
-            const angle = Math.atan2(-puckWidth / 2, ball.x - puck);
+            const angle = Math.atan2(-gameState.puckWidth / 2, ball.x - gameState.puckPosition);
             ball.vx = speed * Math.cos(angle);
             ball.vy = speed * Math.sin(angle);
             (0, _sounds.sounds).wallBeep(ball.x);
         } else {
             ball.vy *= -1;
-            perks.extra_life = Math.max(0, perks.extra_life - 1);
+            gameState.perks.extra_life = Math.max(0, gameState.perks.extra_life - 1);
             (0, _sounds.sounds).lifeLost(ball.x);
-            if (!isSettingOn("basic")) for(let i = 0; i < 10; i++)flashes.push({
+            if (!isSettingOn("basic")) for(let i = 0; i < 10; i++)gameState.flashes.push({
                 type: "particle",
                 ethereal: false,
                 color: "red",
                 destroyed: false,
                 duration: 150,
-                size: coinSize / 2,
+                size: gameState.coinSize / 2,
                 time: levelTime,
                 x: ball.x,
                 y: ball.y,
-                vx: Math.random() * baseSpeed * 3,
-                vy: baseSpeed * 3
+                vx: Math.random() * gameState.baseSpeed * 3,
+                vy: gameState.baseSpeed * 3
             });
         }
-        if (perks.streak_shots) resetCombo(ball.x, ball.y);
-        if (perks.respawn) ball.hitItem.slice(0, -1).slice(0, perks.respawn).forEach(({ index, color })=>{
-            if (!bricks[index] && color !== "black") bricks[index] = color;
+        if (gameState.perks.streak_shots) resetCombo(ball.x, ball.y);
+        if (gameState.perks.respawn) ball.hitItem.slice(0, -1).slice(0, gameState.perks.respawn).forEach(({ index, color })=>{
+            if (!gameState.bricks[index] && color !== "black") gameState.bricks[index] = color;
         });
         ball.hitItem = [];
         if (!ball.hitSinceBounce) {
             runStatistics.misses++;
-            levelMisses++;
+            gameState.levelMisses++;
             resetCombo(ball.x, ball.y);
-            flashes.push({
+            gameState.flashes.push({
                 type: "text",
                 text: "miss",
                 duration: 500,
                 time: levelTime,
-                size: puckHeight * 1.5,
+                size: gameState.puckHeight * 1.5,
                 color: "red",
-                x: puck,
-                y: gameZoneHeight - puckHeight * 2
+                x: gameState.puckPosition,
+                y: gameState.gameZoneHeight - gameState.puckHeight * 2
             });
         }
         runStatistics.puck_bounces++;
@@ -1414,23 +1262,23 @@ function ballTick(ball, delta) {
             }
         ];
     }
-    if (ball.y > gameZoneHeight + ballSize / 2 && running) {
+    if (ball.y > gameState.gameZoneHeight + gameState.ballSize / 2 && gameState.running) {
         ball.destroyed = true;
         runStatistics.balls_lost++;
-        if (!balls.find((b)=>!b.destroyed)) gameOver("Game Over", "You dropped the ball after catching " + score + " coins. ");
+        if (!gameState.balls.find((b)=>!b.destroyed)) gameOver("Game Over", "You dropped the ball after catching " + gameState.score + " coins. ");
     }
-    const radius = ballSize / 2;
+    const radius = gameState.ballSize / 2;
     // Make ball/coin bonce, and return bricks that were hit
     const { x, y, previousX, previousY } = ball;
     const vhit = hitsSomething(previousX, y, radius);
     const hhit = hitsSomething(x, previousY, radius);
     const chit = typeof vhit == "undefined" && typeof hhit == "undefined" && hitsSomething(x, y, radius) || undefined;
     const hitBrick = vhit ?? hhit ?? chit;
-    let sturdyBounce = hitBrick && bricks[hitBrick] !== "black" && perks.sturdy_bricks && perks.sturdy_bricks > Math.random() * 5;
+    let sturdyBounce = hitBrick && gameState.bricks[hitBrick] !== "black" && gameState.perks.sturdy_bricks && gameState.perks.sturdy_bricks > Math.random() * 5;
     let pierce = false;
     if (sturdyBounce || typeof hitBrick === "undefined") ;
     else if (shouldPierceByColor(vhit, hhit, chit)) pierce = true;
-    else if (ball.piercedSinceBounce < perks.pierce * 3) {
+    else if (ball.piercedSinceBounce < gameState.perks.pierce * 3) {
         pierce = true;
         ball.piercedSinceBounce++;
     }
@@ -1451,27 +1299,27 @@ function ballTick(ball, delta) {
         return;
     }
     if (typeof hitBrick !== "undefined") {
-        const initialBrickColor = bricks[hitBrick];
+        const initialBrickColor = gameState.bricks[hitBrick];
         explodeBrick(hitBrick, ball, false);
-        if (ball.sapperUses < perks.sapper && initialBrickColor !== "black" && // don't replace a brick that bounced with sturdy_bricks
-        !bricks[hitBrick]) {
-            bricks[hitBrick] = "black";
+        if (ball.sapperUses < gameState.perks.sapper && initialBrickColor !== "black" && // don't replace a brick that bounced with sturdy_bricks
+        !gameState.bricks[hitBrick]) {
+            gameState.bricks[hitBrick] = "black";
             ball.sapperUses++;
         }
     }
     if (!isSettingOn("basic")) {
-        ball.sparks += delta * (combo - 1) / 30;
+        ball.sparks += delta * (gameState.combo - 1) / 30;
         if (ball.sparks > 1) {
-            flashes.push({
+            gameState.flashes.push({
                 type: "particle",
                 duration: 100 * ball.sparks,
                 time: levelTime,
-                size: coinSize / 2,
-                color: ballsColor,
+                size: gameState.coinSize / 2,
+                color: gameState.ballsColor,
                 x: ball.x,
                 y: ball.y,
-                vx: (Math.random() - 0.5) * baseSpeed,
-                vy: (Math.random() - 0.5) * baseSpeed,
+                vx: (Math.random() - 0.5) * gameState.baseSpeed,
+                vy: (Math.random() - 0.5) * gameState.baseSpeed,
                 ethereal: false
             });
             ball.sparks = 0;
@@ -1492,7 +1340,6 @@ const defaultRunStats = ()=>({
         max_combo: 1,
         max_level: 0
     });
-let runStatistics = defaultRunStats();
 function resetRunStatistics() {
     runStatistics = defaultRunStats();
 }
@@ -1515,11 +1362,11 @@ function addToTotalPlayTime(ms) {
     } catch (e) {}
 }
 function gameOver(title, intro) {
-    if (!running) return;
+    if (!gameState.running) return;
     pause(true);
     stopRecording();
     addToTotalPlayTime(runStatistics.runTime);
-    runStatistics.max_level = currentLevel + 1;
+    runStatistics.max_level = gameState.currentLevel + 1;
     let animationDelay = -300;
     const getDelay = ()=>{
         animationDelay += 800;
@@ -1528,7 +1375,7 @@ function gameOver(title, intro) {
     // unlocks
     let unlocksInfo = "";
     const endTs = getTotalScore();
-    const startTs = endTs - score;
+    const startTs = endTs - gameState.score;
     const list = getUpgraderUnlockPoints();
     list.filter((u)=>u.threshold > startTs && u.threshold < endTs).forEach((u)=>{
         unlocksInfo += `
@@ -1561,7 +1408,7 @@ function gameOver(title, intro) {
         });
     }
     // Avoid the sad sound right as we restart a new games
-    combo = 1;
+    gameState.combo = 1;
     asyncAlert({
         allowClose: true,
         title,
@@ -1580,7 +1427,9 @@ function gameOver(title, intro) {
         textAfterButtons: `<div id="level-recording-container"></div>
         ${getHistograms()} 
         `
-    }).then(()=>restart());
+    }).then(()=>restart({
+            levelToAvoid: currentLevelInfo().name
+        }));
 }
 function getHistograms() {
     let runStats = "";
@@ -1591,7 +1440,7 @@ function getHistograms() {
         runsHistory = runsHistory.slice(0, 100);
         runsHistory.push({
             ...runStatistics,
-            perks,
+            perks: gameState.perks,
             appVersion: (0, _loadGameData.appVersion)
         });
         // Generate some histogram
@@ -1655,43 +1504,43 @@ function getHistograms() {
     return runStats;
 }
 function explodeBrick(index, ball, isExplosion) {
-    const color = bricks[index];
+    const color = gameState.bricks[index];
     if (!color) return;
     if (color === "black") {
-        delete bricks[index];
+        delete gameState.bricks[index];
         const x = brickCenterX(index), y = brickCenterY(index);
         (0, _sounds.sounds).explode(ball.x);
-        const col = index % gridSize;
-        const row = Math.floor(index / gridSize);
-        const size = 1 + perks.bigger_explosions;
+        const col = index % gameState.gridSize;
+        const row = Math.floor(index / gameState.gridSize);
+        const size = 1 + gameState.perks.bigger_explosions;
         // Break bricks around
         for(let dx = -size; dx <= size; dx++)for(let dy = -size; dy <= size; dy++){
             const i = getRowColIndex(row + dy, col + dx);
-            if (bricks[i] && i !== -1) {
+            if (gameState.bricks[i] && i !== -1) {
                 // Study bricks resist explisions too
-                if (bricks[i] !== "black" && perks.sturdy_bricks > Math.random() * 5) continue;
+                if (gameState.bricks[i] !== "black" && gameState.perks.sturdy_bricks > Math.random() * 5) continue;
                 explodeBrick(i, ball, true);
             }
         }
         // Blow nearby coins
-        coins.forEach((c)=>{
+        gameState.coins.forEach((c)=>{
             const dx = c.x - x;
             const dy = c.y - y;
-            const d2 = Math.max(brickWidth, Math.abs(dx) + Math.abs(dy));
+            const d2 = Math.max(gameState.brickWidth, Math.abs(dx) + Math.abs(dy));
             c.vx += dx / d2 * 10 * size / c.weight;
             c.vy += dy / d2 * 10 * size / c.weight;
         });
-        lastExplosion = Date.now();
-        flashes.push({
+        gameState.lastExplosion = Date.now();
+        gameState.flashes.push({
             type: "ball",
             duration: 150,
             time: levelTime,
-            size: brickWidth * 2,
+            size: gameState.brickWidth * 2,
             color: "white",
             x,
             y
         });
-        spawnExplosion(7 * (1 + perks.bigger_explosions), x, y, "white", 150, coinSize);
+        spawnExplosion(7 * (1 + gameState.perks.bigger_explosions), x, y, "white", 150, gameState.coinSize);
         ball.hitSinceBounce++;
         runStatistics.bricks_broken++;
     } else if (color) {
@@ -1699,16 +1548,16 @@ function explodeBrick(index, ball, isExplosion) {
         ball.hitSinceBounce++;
         // Flashing is take care of by the tick loop
         const x = brickCenterX(index), y = brickCenterY(index);
-        bricks[index] = "";
+        gameState.bricks[index] = "";
         // coins = coins.filter((c) => !c.destroyed);
-        let coinsToSpawn = combo;
-        if (perks.sturdy_bricks) // +10% per level
-        coinsToSpawn += Math.ceil((10 + perks.sturdy_bricks) / 10 * coinsToSpawn);
-        levelSpawnedCoins += coinsToSpawn;
+        let coinsToSpawn = gameState.combo;
+        if (gameState.perks.sturdy_bricks) // +10% per level
+        coinsToSpawn += Math.ceil((10 + gameState.perks.sturdy_bricks) / 10 * coinsToSpawn);
+        gameState.levelSpawnedCoins += coinsToSpawn;
         runStatistics.coins_spawned += coinsToSpawn;
         runStatistics.bricks_broken++;
-        const maxCoins = MAX_COINS * (isSettingOn("basic") ? 0.5 : 1);
-        const spawnableCoins = coins.length > MAX_COINS ? 1 : Math.floor(maxCoins - coins.length) / 3;
+        const maxCoins = gameState.MAX_COINS * (isSettingOn("basic") ? 0.5 : 1);
+        const spawnableCoins = gameState.coins.length > gameState.MAX_COINS ? 1 : Math.floor(maxCoins - gameState.coins.length) / 3;
         const pointsPerCoin = Math.max(1, Math.ceil(coinsToSpawn / spawnableCoins));
         while(coinsToSpawn > 0){
             const points = Math.min(pointsPerCoin, coinsToSpawn);
@@ -1719,10 +1568,10 @@ function explodeBrick(index, ball, isExplosion) {
                 debugger;
             }
             coinsToSpawn -= points;
-            const cx = x + (Math.random() - 0.5) * (brickWidth - coinSize), cy = y + (Math.random() - 0.5) * (brickWidth - coinSize);
-            coins.push({
+            const cx = x + (Math.random() - 0.5) * (gameState.brickWidth - gameState.coinSize), cy = y + (Math.random() - 0.5) * (gameState.brickWidth - gameState.coinSize);
+            gameState.coins.push({
                 points,
-                color: perks.metamorphosis ? color : "gold",
+                color: gameState.perks.metamorphosis ? color : "gold",
                 x: cx,
                 y: cy,
                 previousX: cx,
@@ -1737,41 +1586,41 @@ function explodeBrick(index, ball, isExplosion) {
                 weight: 0.8 + Math.random() * 0.2
             });
         }
-        combo += Math.max(0, perks.streak_shots + perks.compound_interest + perks.left_is_lava + perks.right_is_lava + perks.top_is_lava + perks.picky_eater - Math.round(Math.random() * perks.soft_reset));
+        gameState.combo += Math.max(0, gameState.perks.streak_shots + gameState.perks.compound_interest + gameState.perks.left_is_lava + gameState.perks.right_is_lava + gameState.perks.top_is_lava + gameState.perks.picky_eater - Math.round(Math.random() * gameState.perks.soft_reset));
         if (!isExplosion) {
             // color change
-            if ((perks.picky_eater || perks.pierce_color) && color !== ballsColor && color) {
-                if (perks.picky_eater) resetCombo(ball.x, ball.y);
-                ballsColor = color;
-            } else (0, _sounds.sounds).comboIncreaseMaybe(combo, ball.x, 1);
+            if ((gameState.perks.picky_eater || gameState.perks.pierce_color) && color !== gameState.ballsColor && color) {
+                if (gameState.perks.picky_eater) resetCombo(ball.x, ball.y);
+                gameState.ballsColor = color;
+            } else (0, _sounds.sounds).comboIncreaseMaybe(gameState.combo, ball.x, 1);
         }
-        flashes.push({
+        gameState.flashes.push({
             type: "ball",
             duration: 40,
             time: levelTime,
-            size: brickWidth,
+            size: gameState.brickWidth,
             color: color,
             x,
             y
         });
-        spawnExplosion(5 + Math.min(combo, 30), x, y, color, 150, coinSize / 2);
+        spawnExplosion(5 + Math.min(gameState.combo, 30), x, y, color, 150, gameState.coinSize / 2);
     }
-    if (!bricks[index] && color !== "black") ball.hitItem?.push({
+    if (!gameState.bricks[index] && color !== "black") ball.hitItem?.push({
         index,
         color
     });
 }
 function max_levels() {
-    return 7 + perks.extra_levels;
+    return 7 + gameState.perks.extra_levels;
 }
 function render() {
-    if (running) needsRender = true;
-    if (!needsRender) return;
-    needsRender = false;
+    if (gameState.running) gameState.needsRender = true;
+    if (!gameState.needsRender) return;
+    gameState.needsRender = false;
     const level = currentLevelInfo();
     const { width, height } = gameCanvas;
     if (!width || !height) return;
-    scoreDisplay.innerText = `L${currentLevel + 1}/${max_levels()} $${score}`;
+    scoreDisplay.innerText = `L${gameState.currentLevel + 1}/${max_levels()} $${gameState.score}`;
     // Clear
     if (!isSettingOn("basic") && !level.color && level.svg) {
         // Without this the light trails everything
@@ -1781,20 +1630,20 @@ function render() {
         ctx.fillRect(0, 0, width, height);
         ctx.globalCompositeOperation = "screen";
         ctx.globalAlpha = 0.6;
-        coins.forEach((coin)=>{
-            if (!coin.destroyed) drawFuzzyBall(ctx, coin.color, coinSize * 2, coin.x, coin.y);
+        gameState.coins.forEach((coin)=>{
+            if (!coin.destroyed) drawFuzzyBall(ctx, coin.color, gameState.coinSize * 2, coin.x, coin.y);
         });
-        balls.forEach((ball)=>{
-            drawFuzzyBall(ctx, ballsColor, ballSize * 2, ball.x, ball.y);
+        gameState.balls.forEach((ball)=>{
+            drawFuzzyBall(ctx, gameState.ballsColor, gameState.ballSize * 2, ball.x, ball.y);
         });
         ctx.globalAlpha = 0.5;
-        bricks.forEach((color, index)=>{
+        gameState.bricks.forEach((color, index)=>{
             if (!color) return;
             const x = brickCenterX(index), y = brickCenterY(index);
-            drawFuzzyBall(ctx, color == "black" ? "#666" : color, brickWidth, x, y);
+            drawFuzzyBall(ctx, color == "black" ? "#666" : color, gameState.brickWidth, x, y);
         });
         ctx.globalAlpha = 1;
-        flashes.forEach((flash)=>{
+        gameState.flashes.forEach((flash)=>{
             const { x, y, time, color, size, type, duration } = flash;
             const elapsed = levelTime - time;
             ctx.globalAlpha = Math.min(1, 2 - elapsed / duration * 2);
@@ -1812,11 +1661,11 @@ function render() {
         if (level.svg && background.width && background.complete) {
             if (backgroundCanvas.title !== level.name) {
                 backgroundCanvas.title = level.name;
-                backgroundCanvas.width = lastWidth;
-                backgroundCanvas.height = lastHeight;
+                backgroundCanvas.width = gameState.canvasWidth;
+                backgroundCanvas.height = gameState.canvasHeight;
                 const bgctx = backgroundCanvas.getContext("2d");
                 bgctx.fillStyle = level.color || "#000";
-                bgctx.fillRect(0, 0, lastWidth, lastHeight);
+                bgctx.fillRect(0, 0, gameState.canvasWidth, gameState.canvasHeight);
                 const pattern = ctx.createPattern(background, "repeat");
                 if (pattern) {
                     bgctx.fillStyle = pattern;
@@ -1834,7 +1683,7 @@ function render() {
         ctx.globalCompositeOperation = "source-over";
         ctx.fillStyle = level.color || "#000";
         ctx.fillRect(0, 0, width, height);
-        flashes.forEach((flash)=>{
+        gameState.flashes.forEach((flash)=>{
             const { x, y, time, color, size, type, duration } = flash;
             const elapsed = levelTime - time;
             ctx.globalAlpha = Math.min(1, 2 - elapsed / duration * 2);
@@ -1843,33 +1692,33 @@ function render() {
     }
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
-    const lastExplosionDelay = Date.now() - lastExplosion + 5;
+    const lastExplosionDelay = Date.now() - gameState.lastExplosion + 5;
     const shaked = lastExplosionDelay < 200;
     if (shaked) {
-        const amplitude = (perks.bigger_explosions + 1) * 50 / lastExplosionDelay;
+        const amplitude = (gameState.perks.bigger_explosions + 1) * 50 / lastExplosionDelay;
         ctx.translate(Math.sin(Date.now()) * amplitude, Math.sin(Date.now() + 36) * amplitude);
     }
     // Coins
     ctx.globalAlpha = 1;
-    coins.forEach((coin)=>{
+    gameState.coins.forEach((coin)=>{
         if (!coin.destroyed) {
             ctx.globalCompositeOperation = coin.color === "gold" || level.color ? "source-over" : "screen";
-            drawCoin(ctx, coin.color, coinSize, coin.x, coin.y, level.color || "black", coin.a);
+            drawCoin(ctx, coin.color, gameState.coinSize, coin.x, coin.y, level.color || "black", coin.a);
         }
     });
     // Black shadow around balls
     if (!isSettingOn("basic")) {
         ctx.globalCompositeOperation = "source-over";
-        ctx.globalAlpha = Math.min(0.8, coins.length / 20);
-        balls.forEach((ball)=>{
-            drawBall(ctx, level.color || "#000", ballSize * 6, ball.x, ball.y);
+        ctx.globalAlpha = Math.min(0.8, gameState.coins.length / 20);
+        gameState.balls.forEach((ball)=>{
+            drawBall(ctx, level.color || "#000", gameState.ballSize * 6, ball.x, ball.y);
         });
     }
     ctx.globalCompositeOperation = "source-over";
     renderAllBricks();
     ctx.globalCompositeOperation = "screen";
-    flashes = flashes.filter((f)=>levelTime - f.time < f.duration && !f.destroyed);
-    flashes.forEach((flash)=>{
+    gameState.flashes = gameState.flashes.filter((f)=>levelTime - f.time < f.duration && !f.destroyed);
+    gameState.flashes.forEach((flash)=>{
         const { x, y, time, color, size, type, duration } = flash;
         const elapsed = levelTime - time;
         ctx.globalAlpha = Math.max(0, Math.min(1, 2 - elapsed / duration * 2));
@@ -1882,64 +1731,64 @@ function render() {
             drawFuzzyBall(ctx, color, size, x, y);
         }
     });
-    if (perks.extra_life) {
+    if (gameState.perks.extra_life) {
         ctx.globalAlpha = 1;
         ctx.globalCompositeOperation = "source-over";
-        ctx.fillStyle = puckColor;
-        for(let i = 0; i < perks.extra_life; i++)ctx.fillRect(offsetXRoundedDown, gameZoneHeight - puckHeight / 2 + 2 * i, gameZoneWidthRoundedUp, 1);
+        ctx.fillStyle = gameState.puckColor;
+        for(let i = 0; i < gameState.perks.extra_life; i++)ctx.fillRect(gameState.offsetXRoundedDown, gameState.gameZoneHeight - gameState.puckHeight / 2 + 2 * i, gameState.gameZoneWidthRoundedUp, 1);
     }
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
-    balls.forEach((ball)=>{
+    gameState.balls.forEach((ball)=>{
         // The white border around is to distinguish colored balls from coins/bg
-        drawBall(ctx, ballsColor, ballSize, ball.x, ball.y, puckColor);
+        drawBall(ctx, gameState.ballsColor, gameState.ballSize, ball.x, ball.y, gameState.puckColor);
         if (isTelekinesisActive(ball)) {
-            ctx.strokeStyle = puckColor;
+            ctx.strokeStyle = gameState.puckColor;
             ctx.beginPath();
-            ctx.bezierCurveTo(puck, gameZoneHeight, puck, ball.y, ball.x, ball.y);
+            ctx.bezierCurveTo(gameState.puckPosition, gameState.gameZoneHeight, gameState.puckPosition, ball.y, ball.x, ball.y);
             ctx.stroke();
         }
     });
     // The puck
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
-    if (perks.streak_shots && combo > baseCombo()) drawPuck(ctx, "red", puckWidth, puckHeight, -2);
-    drawPuck(ctx, puckColor, puckWidth, puckHeight);
-    if (combo > 1) {
+    if (gameState.perks.streak_shots && gameState.combo > baseCombo()) drawPuck(ctx, "red", gameState.puckWidth, gameState.puckHeight, -2);
+    drawPuck(ctx, gameState.puckColor, gameState.puckWidth, gameState.puckHeight);
+    if (gameState.combo > 1) {
         ctx.globalCompositeOperation = "source-over";
-        const comboText = "x " + combo;
-        const comboTextWidth = comboText.length * puckHeight / 1.8;
-        const totalWidth = comboTextWidth + coinSize * 2;
-        const left = puck - totalWidth / 2;
-        if (totalWidth < puckWidth) {
-            drawCoin(ctx, "gold", coinSize, left + coinSize / 2, gameZoneHeight - puckHeight / 2, puckColor, 0);
-            drawText(ctx, comboText, "#000", puckHeight, left + coinSize * 1.5, gameZoneHeight - puckHeight / 2, true);
-        } else drawText(ctx, comboText, "#FFF", puckHeight, puck, gameZoneHeight - puckHeight / 2, false);
+        const comboText = "x " + gameState.combo;
+        const comboTextWidth = comboText.length * gameState.puckHeight / 1.8;
+        const totalWidth = comboTextWidth + gameState.coinSize * 2;
+        const left = gameState.puckPosition - totalWidth / 2;
+        if (totalWidth < gameState.puckWidth) {
+            drawCoin(ctx, "gold", gameState.coinSize, left + gameState.coinSize / 2, gameState.gameZoneHeight - gameState.puckHeight / 2, gameState.puckColor, 0);
+            drawText(ctx, comboText, "#000", gameState.puckHeight, left + gameState.coinSize * 1.5, gameState.gameZoneHeight - gameState.puckHeight / 2, true);
+        } else drawText(ctx, comboText, "#FFF", gameState.puckHeight, gameState.puckPosition, gameState.gameZoneHeight - gameState.puckHeight / 2, false);
     }
     //  Borders
-    const hasCombo = combo > baseCombo();
+    const hasCombo = gameState.combo > baseCombo();
     ctx.globalCompositeOperation = "source-over";
-    if (offsetXRoundedDown) {
+    if (gameState.offsetXRoundedDown) {
         // draw outside of gaming area to avoid capturing borders in recordings
-        ctx.fillStyle = hasCombo && perks.left_is_lava ? "red" : puckColor;
-        ctx.fillRect(offsetX - 1, 0, 1, height);
-        ctx.fillStyle = hasCombo && perks.right_is_lava ? "red" : puckColor;
-        ctx.fillRect(width - offsetX + 1, 0, 1, height);
+        ctx.fillStyle = hasCombo && gameState.perks.left_is_lava ? "red" : gameState.puckColor;
+        ctx.fillRect(gameState.offsetX - 1, 0, 1, height);
+        ctx.fillStyle = hasCombo && gameState.perks.right_is_lava ? "red" : gameState.puckColor;
+        ctx.fillRect(width - gameState.offsetX + 1, 0, 1, height);
     } else {
         ctx.fillStyle = "red";
-        if (hasCombo && perks.left_is_lava) ctx.fillRect(0, 0, 1, height);
-        if (hasCombo && perks.right_is_lava) ctx.fillRect(width - 1, 0, 1, height);
+        if (hasCombo && gameState.perks.left_is_lava) ctx.fillRect(0, 0, 1, height);
+        if (hasCombo && gameState.perks.right_is_lava) ctx.fillRect(width - 1, 0, 1, height);
     }
-    if (perks.top_is_lava && combo > baseCombo()) {
+    if (gameState.perks.top_is_lava && gameState.combo > baseCombo()) {
         ctx.fillStyle = "red";
-        ctx.fillRect(offsetXRoundedDown, 0, gameZoneWidthRoundedUp, 1);
+        ctx.fillRect(gameState.offsetXRoundedDown, 0, gameState.gameZoneWidthRoundedUp, 1);
     }
-    const redBottom = perks.compound_interest && combo > baseCombo();
-    ctx.fillStyle = redBottom ? "red" : puckColor;
+    const redBottom = gameState.perks.compound_interest && gameState.combo > baseCombo();
+    ctx.fillStyle = redBottom ? "red" : gameState.puckColor;
     if (isSettingOn("mobile-mode")) {
-        ctx.fillRect(offsetXRoundedDown, gameZoneHeight, gameZoneWidthRoundedUp, 1);
-        if (!running) drawText(ctx, "Press and hold here to play", puckColor, puckHeight, lastWidth / 2, gameZoneHeight + (lastHeight - gameZoneHeight) / 2);
-    } else if (redBottom) ctx.fillRect(offsetXRoundedDown, gameZoneHeight - 1, gameZoneWidthRoundedUp, 1);
+        ctx.fillRect(gameState.offsetXRoundedDown, gameState.gameZoneHeight, gameState.gameZoneWidthRoundedUp, 1);
+        if (!gameState.running) drawText(ctx, "Press and hold here to play", gameState.puckColor, gameState.puckHeight, gameState.canvasWidth / 2, gameState.gameZoneHeight + (gameState.canvasHeight - gameState.gameZoneHeight) / 2);
+    } else if (redBottom) ctx.fillRect(gameState.offsetXRoundedDown, gameState.gameZoneHeight - 1, gameState.gameZoneWidthRoundedUp, 1);
     if (shaked) ctx.resetTransform();
     recordOneFrame();
 }
@@ -1947,29 +1796,29 @@ let cachedBricksRender = document.createElement("canvas");
 let cachedBricksRenderKey = "";
 function renderAllBricks() {
     ctx.globalAlpha = 1;
-    const redBorderOnBricksWithWrongColor = combo > baseCombo() && perks.picky_eater;
-    const newKey = gameZoneWidth + "_" + bricks.join("_") + bombSVG.complete + "_" + redBorderOnBricksWithWrongColor + "_" + ballsColor + "_" + perks.pierce_color;
+    const redBorderOnBricksWithWrongColor = gameState.combo > baseCombo() && gameState.perks.picky_eater;
+    const newKey = gameState.gameZoneWidth + "_" + gameState.bricks.join("_") + bombSVG.complete + "_" + redBorderOnBricksWithWrongColor + "_" + gameState.ballsColor + "_" + gameState.perks.pierce_color;
     if (newKey !== cachedBricksRenderKey) {
         cachedBricksRenderKey = newKey;
-        cachedBricksRender.width = gameZoneWidth;
-        cachedBricksRender.height = gameZoneWidth + 1;
+        cachedBricksRender.width = gameState.gameZoneWidth;
+        cachedBricksRender.height = gameState.gameZoneWidth + 1;
         const canctx = cachedBricksRender.getContext("2d");
-        canctx.clearRect(0, 0, gameZoneWidth, gameZoneWidth);
+        canctx.clearRect(0, 0, gameState.gameZoneWidth, gameState.gameZoneWidth);
         canctx.resetTransform();
-        canctx.translate(-offsetX, 0);
+        canctx.translate(-gameState.offsetX, 0);
         // Bricks
-        bricks.forEach((color, index)=>{
+        gameState.bricks.forEach((color, index)=>{
             const x = brickCenterX(index), y = brickCenterY(index);
             if (!color) return;
-            const borderColor = ballsColor !== color && color !== "black" && redBorderOnBricksWithWrongColor && "red" || color;
+            const borderColor = gameState.ballsColor !== color && color !== "black" && redBorderOnBricksWithWrongColor && "red" || color;
             drawBrick(canctx, color, borderColor, x, y);
             if (color === "black") {
                 canctx.globalCompositeOperation = "source-over";
-                drawIMG(canctx, bombSVG, brickWidth, x, y);
+                drawIMG(canctx, bombSVG, gameState.brickWidth, x, y);
             }
         });
     }
-    ctx.drawImage(cachedBricksRender, offsetX, 0);
+    ctx.drawImage(cachedBricksRender, gameState.offsetX, 0);
 }
 let cachedGraphics = {};
 function drawPuck(ctx, color, puckWidth, puckHeight, yOffset = 0) {
@@ -1988,7 +1837,7 @@ function drawPuck(ctx, color, puckWidth, puckHeight, yOffset = 0) {
         canctx.fill();
         cachedGraphics[key] = can;
     }
-    ctx.drawImage(cachedGraphics[key], Math.round(puck - puckWidth / 2), gameZoneHeight - puckHeight * 2 + yOffset);
+    ctx.drawImage(cachedGraphics[key], Math.round(gameState.puckPosition - puckWidth / 2), gameState.gameZoneHeight - puckHeight * 2 + yOffset);
 }
 function drawBall(ctx, color, width, x, y, borderColor = "") {
     const key = "ball" + color + "_" + width + "_" + borderColor;
@@ -2062,10 +1911,10 @@ function drawFuzzyBall(ctx, color, width, x, y) {
     ctx.drawImage(cachedGraphics[key], Math.round(x - size / 2), Math.round(y - size / 2));
 }
 function drawBrick(ctx, color, borderColor, x, y) {
-    const tlx = Math.ceil(x - brickWidth / 2);
-    const tly = Math.ceil(y - brickWidth / 2);
-    const brx = Math.ceil(x + brickWidth / 2) - 1;
-    const bry = Math.ceil(y + brickWidth / 2) - 1;
+    const tlx = Math.ceil(x - gameState.brickWidth / 2);
+    const tly = Math.ceil(y - gameState.brickWidth / 2);
+    const brx = Math.ceil(x + gameState.brickWidth / 2) - 1;
+    const bry = Math.ceil(y + gameState.brickWidth / 2) - 1;
     const width = brx - tlx, height = bry - tly;
     const key = "brick" + color + "_" + borderColor + "_" + width + "_" + height;
     if (!cachedGraphics[key]) {
@@ -2238,7 +2087,7 @@ scoreDisplay.addEventListener("click", (e)=>{
 async function openScorePanel() {
     pause(true);
     const cb = await asyncAlert({
-        title: ` ${score} points at level ${currentLevel + 1} / ${max_levels()}`,
+        title: ` ${gameState.score} points at level ${gameState.currentLevel + 1} / ${max_levels()}`,
         text: `
             ${isCreativeModeRun ? "<p>This is a test run, score is not recorded permanently</p>" : ""}
             <p>Upgrades picked so far : </p>
@@ -2255,7 +2104,9 @@ async function openScorePanel() {
                 text: "Restart",
                 help: "Start a brand new run.",
                 value: ()=>{
-                    restart();
+                    restart({
+                        levelToAvoid: currentLevelInfo().name
+                    });
                 }
             }
         ]
@@ -2336,7 +2187,9 @@ async function openSettingsPanel() {
                 ]
             })){
                 if (choice === "start") {
-                    restart(creativeModePerks);
+                    restart({
+                        perks: creativeModePerks
+                    });
                     break;
                 } else if (choice) creativeModePerks[choice.id] = ((creativeModePerks[choice.id] || 0) + 1) % (choice.max + 1);
             }
@@ -2419,14 +2272,14 @@ async function openUnlocksList() {
                         ${percentUnlock < 100 ? "The greyed out ones can be unlocked by increasing your total score. The total score increases every time you score in game." : ""}</p> 
                        `,
         textAfterButtons: `<p> 
-Your high score is ${highScore}. 
+Your high score is ${gameState.highScore}. 
 Click an item above to start a run with it.
                 </p>`,
         actions,
         allowClose: true
     });
     if (tryOn) {
-        if (!currentLevel || await asyncAlert({
+        if (!gameState.currentLevel || await asyncAlert({
             title: "Restart run to try this item?",
             text: "You're about to start a new run with the selected unlocked item, is that really what you wanted ? ",
             actions: [
@@ -2439,10 +2292,7 @@ Click an item above to start a run with it.
                     text: "Cancel"
                 }
             ]
-        })) {
-            nextRunOverrides = tryOn;
-            restart();
-        }
+        })) restart(tryOn);
     }
 }
 function distance2(a, b) {
@@ -2457,7 +2307,7 @@ function rainbowColor() {
 function repulse(a, b, power, impactsBToo) {
     const distance = distanceBetween(a, b);
     // Ensure we don't get soft locked
-    const max = gameZoneWidth / 2;
+    const max = gameState.gameZoneWidth / 2;
     if (distance > max) return;
     // Unit vector
     const dx = (a.x - b.x) / distance;
@@ -2471,11 +2321,11 @@ function repulse(a, b, power, impactsBToo) {
     a.vy -= dy * fact;
     const speed = 10;
     const rand = 2;
-    flashes.push({
+    gameState.flashes.push({
         type: "particle",
         duration: 100,
         time: levelTime,
-        size: coinSize / 2,
+        size: gameState.coinSize / 2,
         color: rainbowColor(),
         ethereal: true,
         x: a.x,
@@ -2483,11 +2333,11 @@ function repulse(a, b, power, impactsBToo) {
         vx: -dx * speed + a.vx + (Math.random() - 0.5) * rand,
         vy: -dy * speed + a.vy + (Math.random() - 0.5) * rand
     });
-    if (impactsBToo && typeof b.vx !== "undefined" && typeof b.vy !== "undefined") flashes.push({
+    if (impactsBToo && typeof b.vx !== "undefined" && typeof b.vy !== "undefined") gameState.flashes.push({
         type: "particle",
         duration: 100,
         time: levelTime,
-        size: coinSize / 2,
+        size: gameState.coinSize / 2,
         color: rainbowColor(),
         ethereal: true,
         x: b.x,
@@ -2499,7 +2349,7 @@ function repulse(a, b, power, impactsBToo) {
 function attract(a, b, power) {
     const distance = distanceBetween(a, b);
     // Ensure we don't get soft locked
-    const min = gameZoneWidth * 0.5;
+    const min = gameState.gameZoneWidth * 0.5;
     if (distance < min) return;
     // Unit vector
     const dx = (a.x - b.x) / distance;
@@ -2511,11 +2361,11 @@ function attract(a, b, power) {
     a.vy -= dy * fact;
     const speed = 10;
     const rand = 2;
-    flashes.push({
+    gameState.flashes.push({
         type: "particle",
         duration: 100,
         time: levelTime,
-        size: coinSize / 2,
+        size: gameState.coinSize / 2,
         color: rainbowColor(),
         ethereal: true,
         x: a.x,
@@ -2523,11 +2373,11 @@ function attract(a, b, power) {
         vx: dx * speed + a.vx + (Math.random() - 0.5) * rand,
         vy: dy * speed + a.vy + (Math.random() - 0.5) * rand
     });
-    flashes.push({
+    gameState.flashes.push({
         type: "particle",
         duration: 100,
         time: levelTime,
-        size: coinSize / 2,
+        size: gameState.coinSize / 2,
         color: rainbowColor(),
         ethereal: true,
         x: b.x,
@@ -2539,7 +2389,7 @@ function attract(a, b, power) {
 let mediaRecorder, captureStream, captureTrack, recordCanvas, recordCanvasCtx;
 function recordOneFrame() {
     if (!isSettingOn("record")) return;
-    if (!running) return;
+    if (!gameState.running) return;
     if (!captureStream) return;
     drawMainCanvasOnSmallCanvas();
     if (captureTrack?.requestFrame) captureTrack?.requestFrame();
@@ -2547,15 +2397,15 @@ function recordOneFrame() {
 }
 function drawMainCanvasOnSmallCanvas() {
     if (!recordCanvasCtx) return;
-    recordCanvasCtx.drawImage(gameCanvas, offsetXRoundedDown, 0, gameZoneWidthRoundedUp, gameZoneHeight, 0, 0, recordCanvas.width, recordCanvas.height);
+    recordCanvasCtx.drawImage(gameCanvas, gameState.offsetXRoundedDown, 0, gameState.gameZoneWidthRoundedUp, gameState.gameZoneHeight, 0, 0, recordCanvas.width, recordCanvas.height);
     // Here we don't use drawText as we don't want to cache a picture for each distinct value of score
     recordCanvasCtx.fillStyle = "#FFF";
     recordCanvasCtx.textBaseline = "top";
     recordCanvasCtx.font = "12px monospace";
     recordCanvasCtx.textAlign = "right";
-    recordCanvasCtx.fillText(score.toString(), recordCanvas.width - 12, 12);
+    recordCanvasCtx.fillText(gameState.score.toString(), recordCanvas.width - 12, 12);
     recordCanvasCtx.textAlign = "left";
-    recordCanvasCtx.fillText("Level " + (currentLevel + 1) + "/" + max_levels(), 12, 12);
+    recordCanvasCtx.fillText("Level " + (gameState.currentLevel + 1) + "/" + max_levels(), 12, 12);
 }
 function startRecordingGame() {
     if (!isSettingOn("record")) return;
@@ -2572,8 +2422,8 @@ function startRecordingGame() {
         const track = (0, _sounds.getAudioRecordingTrack)();
         if (track) captureStream.addTrack(track.stream.getAudioTracks()[0]);
     }
-    recordCanvas.width = gameZoneWidthRoundedUp;
-    recordCanvas.height = gameZoneHeight;
+    recordCanvas.width = gameState.gameZoneWidthRoundedUp;
+    recordCanvas.height = gameState.gameZoneHeight;
     // drawMainCanvasOnSmallCanvas()
     const recordedChunks = [];
     const instance = new MediaRecorder(captureStream, {
@@ -2654,13 +2504,13 @@ const pressed = {
 };
 function setKeyPressed(key, on) {
     pressed[key] = on;
-    keyboardPuckSpeed = (pressed.ArrowRight - pressed.ArrowLeft) * (1 + pressed.Shift * 2) * gameZoneWidth / 50;
+    keyboardPuckSpeed = (pressed.ArrowRight - pressed.ArrowLeft) * (1 + pressed.Shift * 2) * gameState.gameZoneWidth / 50;
 }
 document.addEventListener("keydown", (e)=>{
     if (e.key.toLowerCase() === "f" && !e.ctrlKey && !e.metaKey) toggleFullScreen();
     else if (e.key in pressed) setKeyPressed(e.key, 1);
     if (e.key === " " && !alertsOpen) {
-        if (running) pause(true);
+        if (gameState.running) pause(true);
         else play();
     } else return;
     e.preventDefault();
@@ -2671,27 +2521,83 @@ document.addEventListener("keyup", (e)=>{
     else if (e.key === "ArrowDown" && focused?.nextElementSibling?.tagName === "BUTTON") focused?.nextElementSibling?.focus();
     else if (e.key === "ArrowUp" && focused?.previousElementSibling?.tagName === "BUTTON") focused?.previousElementSibling?.focus();
     else if (e.key === "Escape" && closeModal) closeModal();
-    else if (e.key === "Escape" && running) pause(true);
+    else if (e.key === "Escape" && gameState.running) pause(true);
     else if (e.key.toLowerCase() === "m" && !alertsOpen) openSettingsPanel();
     else if (e.key.toLowerCase() === "s" && !alertsOpen) openScorePanel();
     else return;
     e.preventDefault();
 });
-function sample(arr) {
-    return arr[Math.floor(arr.length * Math.random())];
+let isCreativeModeRun = false;
+let pauseUsesDuringRun = 0;
+let keyboardPuckSpeed = 0;
+let lastTick = performance.now();
+let lastTickDown = 0;
+let runStatistics = defaultRunStats();
+function newGameState(params) {
+    const totalScoreAtRunStart = getTotalScore();
+    const firstLevel = params?.level ? (0, _loadGameData.allLevels).filter((l)=>l.name === params?.level) : [];
+    const restInRandomOrder = (0, _loadGameData.allLevels).filter((l)=>totalScoreAtRunStart >= l.threshold).filter((l)=>l.name !== params?.level).filter((l)=>l.name !== params?.levelToAvoid).sort(()=>Math.random() - 0.5);
+    const runLevels = firstLevel.concat(restInRandomOrder.slice(0, 10).sort((a, b)=>a.sortKey - b.sortKey));
+    const perks = {
+        ...makeEmptyPerksMap(),
+        ...params?.perks || {}
+    };
+    isCreativeModeRun = (0, _gameUtils.sumOfKeys)(perks) > 1;
+    const gameState = {
+        runLevels,
+        currentLevel: 0,
+        perks,
+        puckWidth: 200,
+        baseSpeed: 12,
+        combo: 1,
+        gridSize: 12,
+        running: false,
+        puckPosition: 400,
+        pauseTimeout: null,
+        canvasWidth: 0,
+        canvasHeight: 0,
+        offsetX: 0,
+        offsetXRoundedDown: 0,
+        gameZoneWidth: 0,
+        gameZoneWidthRoundedUp: 0,
+        gameZoneHeight: 0,
+        brickWidth: 0,
+        needsRender: true,
+        score: 0,
+        lastExplosion: -1000,
+        highScore: parseFloat(localStorage.getItem("breakout-3-hs") || "0"),
+        balls: [],
+        ballsColor: "white",
+        bricks: [],
+        flashes: [],
+        coins: [],
+        levelStartScore: 0,
+        levelMisses: 0,
+        levelSpawnedCoins: 0,
+        lastPlayedCoinGrab: 0,
+        MAX_COINS: 400,
+        MAX_PARTICLES: 600,
+        puckColor: "#FFF",
+        ballSize: 20,
+        coinSize: 14,
+        puckHeight: 20,
+        totalScoreAtRunStart
+    };
+    (0, _resetBalls.resetBalls)(gameState);
+    if (!(0, _gameUtils.sumOfKeys)(gameState.perks)) {
+        const giftable = getPossibleUpgrades(gameState).filter((u)=>u.giftable);
+        const randomGift = isSettingOn("easy") && "slow_down" || giftable[Math.floor(Math.random() * giftable.length)].id;
+        perks[randomGift] = 1;
+        dontOfferTooSoon(randomGift);
+    }
+    return gameState;
 }
-function getMajorityValue(arr) {
-    const count = {};
-    arr.forEach((v)=>count[v] = (count[v] || 0) + 1);
-    // Object.values inline polyfill
-    const max = Math.max(...Object.keys(count).map((k)=>count[k]));
-    return sample(Object.keys(count).filter((k)=>count[k] == max));
-}
+const gameState = newGameState({});
+restart({});
 fitSize();
-restart();
 tick();
 
-},{"./loadGameData":"l1B4x","./options":"d5NoS","./sounds":"dQKPV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l1B4x":[function(require,module,exports,__globalThis) {
+},{"./loadGameData":"l1B4x","./options":"d5NoS","./sounds":"dQKPV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./resetBalls":"gVgfx","./game_utils":"cEeac"}],"l1B4x":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "appVersion", ()=>appVersion);
@@ -2756,7 +2662,13 @@ const upgrades = (0, _rawUpgrades.rawUpgrades).map((u)=>({
         icon: icons["icon:" + u.id]
     }));
 
-},{"./palette.json":"jhnsJ","./levels.json":"kqnNl","./version.json":"h1X9A","./rawUpgrades":"cvg5m","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./getLevelBackground":"7OIPf"}],"h1X9A":[function(require,module,exports,__globalThis) {
+},{"./palette.json":"jhnsJ","./levels.json":"kqnNl","./version.json":"h1X9A","./rawUpgrades":"cvg5m","./getLevelBackground":"7OIPf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jhnsJ":[function(require,module,exports,__globalThis) {
+module.exports = JSON.parse("{\"_\":\"\",\"B\":\"black\",\"W\":\"white\",\"g\":\"#231f20\",\"y\":\"#ffd300\",\"b\":\"#6262EA\",\"t\":\"#5DA3EA\",\"s\":\"#E67070\",\"r\":\"#e32119\",\"R\":\"#ab0c0c\",\"c\":\"#59EEA3\",\"G\":\"#A1F051\",\"v\":\"#A664E8\",\"p\":\"#E869E8\",\"a\":\"#5BECEC\",\"C\":\"#53EE53\",\"S\":\"#F44848\",\"P\":\"#E66BA8\",\"O\":\"#F29E4A\",\"k\":\"#618227\",\"e\":\"#e1c8b4\",\"l\":\"#9b9fa4\"}");
+
+},{}],"kqnNl":[function(require,module,exports,__globalThis) {
+module.exports = JSON.parse('[{"name":"71 mini","size":5,"bricks":"bbb____bt__btt__b_t___ttt","svg":23,"color":""},{"name":"Butterfly","bricks":"_________bb_t_t_bbbbb_t_bbbbbbbtbbbb_bbbtbbb____btb____bbbtbbb__bb_t_bb___________________","size":9,"svg":20,"color":""},{"name":"Castle","size":7,"bricks":"s_s_s_ssssssssssBBBssssBBBssttbbbttttbbbtttbtbtbt","svg":16},{"name":"Eyes","size":9,"bricks":"ttttttt__tWWWWWWW_tWrrWttW_tWWWWWWW_ttttttt_____t______ttttt____ttttt_____t_t","svg":null,"color":""},{"name":"Creeper","size":10,"bricks":"___________ccGGccGG__cGccGcGc__GBBccBBc__cBBGcBBc__GccBBGGc__ccBBBBcG__GGBBBBcG__cGBccBGc___________","svg":22},{"name":"Stairs","size":8,"bricks":"tt______tt______bbtt____bbtt____vvbbtt__vvbbtt__ppvvbbttppvvbbtt","svg":14},{"name":"Dots","size":9,"bricks":"b_t_a_c_C__________b_t_a_c__________v_b_t_a_c__________v_b_t_a__________p_v_b_t_a","svg":null},{"name":"Lines","size":9,"bricks":"aaaaaaaa___________tttttttt_________aaaaaaaa___________tttttttt_________aaaaaaaa","svg":8,"color":""},{"name":"Heart","size":15,"bricks":"__________________RRR___RRR_____RSSSR_RSSSR___RSWWSSRSSSSSR__RSWSSSSSSSSSR__RSSSSSSSSSSSR__RSWSSSSSSSSSR___RSSSSSSSSSR_____RSSSSSSSR_______RSSSSSR_________RSSSR___________RSR_____________R____________________________________","svg":17,"color":""},{"name":"Swiss","size":7,"bricks":"________RRRRR__RRWRR__RWWWR__RRWRR__RRRRR","svg":13,"color":""},{"name":"Germany","size":6,"bricks":"_______gggg__rrrr__yyyy","svg":null,"color":""},{"name":"France","size":8,"bricks":"_________ttWWrr__ttWWrr__ttWWrr__ttWWrr__ttWWrr________","svg":null,"color":""},{"name":"Smiley","size":8,"bricks":"_________yy__yy__yy__yy__________________yyyyyy___yyyy__________","svg":29,"color":""},{"name":"Labyrinthe","size":11,"bricks":"_______tttS_Stttt_S________t___S__Stt_ttttt____t_____S__ttt_S_S____t___t_tttt_t_S_t____tSt_t_t_Sttt___t_t_____Sttt_tttttS","svg":21},{"name":"Temple","size":11,"bricks":"_______________WWW______WWWWWWW___WWWWWWWWW___t_t_t_t____b_b_b_b____v_v_v_v____p_p_p_p____P_P_P_P____WWWWWWW___WWWWWWWWW_","svg":null,"color":""},{"name":"Pacman","size":12,"bricks":"____yyyy______yyyyyyyy___yyyyByyyyy__yyyyyyyyy__yyyyyyyy____yyyyyy______yyyyyy___S_Syyyyyyyy_____yyyyyyyyy___yyyyyyyyyy___yyyyyyyy______yyyy","svg":7,"color":""},{"name":"Ship","size":11,"bricks":"____sWW________sWWW_______sWWW_______s___OOOOOOOOOOOOOO_OBOBOBOBOO__OOOOOOOO_bbbbbbbbgbbbbgbbbbggbbbggbbbbbbbb","svg":19},{"name":"We come in peace","size":13,"bricks":"________________a_____a_______a___a_______aaaaaaa_____aaBaaaBaa___aaaaaaaaaaa__aaaaaaaaaaa__a_aaaaaaa_a__a_a_____a_a_____aa_aa_____________________________","svg":29,"color":""},{"name":"Space mushroom","size":10,"bricks":"______________WW_______WWWW_____WWWWWW___WWBWWBWW__WWWWWWWW____W__W_____W_WW_W___W_W__W_W","svg":6,"color":""},{"name":"Wololo","size":9,"bricks":"____WW_OOW___WW__OWW__W___OWWWbbbW_WWW_WbW_WOW__WWb__OW__bbb__O___W_W__O___W_W__O","svg":null,"color":""},{"name":"Small heart","size":15,"bricks":"________________________________RRRR___RRRR___RrWWrR_RWWrrR__RWWrrrRWWrrrR__RrrrrrrrrrrrR__RrrrrrrrrrrrR___RrrrrrrrrrR_____RrrrrrrrR_______RrrrrrR_________RrrrR___________RrR_____________R______________________","svg":29,"color":""},{"name":"Eye","size":9,"bricks":"____________ggg_____gWWWg___gWbbbWg_gWWbBbWWg_gWbbbWg___gWWWg_____ggg____________","svg":null,"color":"#5da3ea"},{"name":"Enderman","size":10,"bricks":"___________gggggggg__gggggggg__gggggggg__gggggggg__vvvggvvv__gggggggg__gggggggg__gggggggg_____________________","svg":null,"color":"#154b07"},{"name":"Mushroom","size":16,"bricks":"_____________________rrrrWW________WWrrrrWWWW_____WWrrrrrrWWWW____WrrWWWWrrWWW___rrrWWWWWWrrrrr__rrrWWWWWWrrWWr__WrrWWWWWWrWWWW__WWrrWWWWrrWWWW__WWrrrrrrrrrWWr__WrrWWWWWWWWrrr_____WWBWWBWW_______WWWBWWBWWW______WWWWWWWWWW_______WWWWWWWW____________________","svg":null,"color":""},{"name":"Tulip","size":11,"bricks":"______________R_R_R______RRRRR______RRRRR______RRRRR_______RRR_________k________k_k_k______k_k_k_______kkk_________k________________","svg":17,"color":""},{"name":"Chain","size":7,"bricks":"yyy____yBy____yyyyy____yBy____yyyyy____yBy____yyy","svg":31,"color":""},{"name":"Marion","size":9,"bricks":"rr_____rr_rr___rr__rrr_rrr__rrrrrrr__rr_r_rr__rr___rr__rr___rr__rr___rr_rrr___rrr","svg":27,"color":""},{"name":"Renan","size":9,"bricks":"yyyyyyy___yyyyyyy__yy___yy__yy___yy__yyyyyy___yy_yy____yy__yy___yy___yy_yyy___yyy","svg":3,"color":""},{"name":"Violet Pairs","size":8,"bricks":"b_b_b_b_b_b_b_b__________t_t_t_t_t_t_t_t________b_b_b_b_b_b_b_b","svg":5,"color":""},{"name":"Red Cups","size":11,"bricks":"___________rBr_rBr_rBrrrr_rrr_rrr___________r_rBr_rBr_rr_rrr_rrr_r___________rBr_rBr_rBrrrr_rrr_rrr__________","svg":23,"color":""},{"name":"Cactus","size":10,"bricks":"____G______rG_Gk______G_Gk______kkkk_r_____kkk_G______GkGk_____rGkk_______Gk________kk________kk_____","svg":27,"color":""},{"name":"Sunny Face","size":11,"bricks":"____yyy______yyyyyyy___yyyyyyyyy__yyyyyyyyy_yyyWWyWWyyyyyyyyyyyyyyyyyyyyyyyyy_yyWWWWWyy__yyyWWWyyy___yyyyyyy______yyy","svg":null,"color":"#5da3ea"},{"name":"Mountain","size":9,"bricks":"_______________W_______WWW______GGWW__W_GGGGG_kkkGGGGG_kkkkGGGGkkkkkGGGGkkkkkkGGG_________","svg":15,"color":""},{"name":"Dollar","size":17,"bricks":"________________________G_G______________G_G____________GGGGGGG_________GGGGGGGGG_______GG__G_G__GG______GG__G_G__GG______GG__G_G___________GGGGGGGG__________GGGGGGGG___________G_G__GG______GG__G_G__GG______GG__G_G__GG_______GGGGGGGGG_________GGGGGGG____________G_G______________G_G________________________","svg":null,"color":""},{"name":"Waves","size":8,"bricks":"___bbb____bbb____bbttbbbbbttbbbbttttaatttttaattttaaaaaaa","svg":20,"color":""},{"name":"Box","size":8,"bricks":"yyyyyyyyy______yy_bbbb_yy_b__b_yy_b__b_yy_bbbb_yy______yyyyyyyyy","svg":30,"color":"","squared":false},{"name":"Rose","size":9,"bricks":"__SS______SSSS_____SSSS_____SSSS______SS_k______k_kk_____kk_k______kk________k","svg":4,"color":""},{"name":"Time","size":9,"bricks":"__________WWWWWWW___WWWWW_____yyy_______y________y_______WyW_____WyyyW___yyyyyyy__________","svg":9,"color":"","squared":false},{"name":"Watermelon","size":8,"bricks":"_____Sk_____SSBk___SBSSk__SSSSSk_SSBSSk_SBSSSSk_kSSSkk___kkk____","svg":28,"color":""},{"name":"Worms","size":13,"bricks":"___sssss_______sssssss______WWsWWsss_____WBsBWsss_____WBsBWsss_____WWsWWsss_____sssssss_______ssssss_____WWWWWWss_______WssWs__s_____ssss__sss___sssssssssss__sssssssss_ss","svg":null,"color":"","squared":false},{"name":"Ocean Sunrise","size":8,"bricks":"SSSSSSSSSSSyySSSSSyyyySSSyyWWyySbttaattbbbttttbbbbbttbbbbbbbbbbb","svg":12,"color":""},{"name":"Crosses","size":13,"bricks":"b___b___b___b__v___v___v___vvv_vvv_vvv___v___v___v__p___p___p___ppp_ppp_ppp_ppp___p___p___p__P___P___P___PPP_PPP_PPP___P___P___P__p___p___p___ppp_ppp_ppp_ppp___p___p___p","svg":10,"color":""},{"name":"Negative space","size":9,"bricks":"tttttttttt_t_t_t_t_________b_b_b_b_bbbbbbbbbb_b_b_b_b___________t_t_t_t_ttttttttt_________","svg":null},{"name":"UK","size":11,"bricks":"brbbWrWbbrbbbrbWrWbrbbbbbrWrWrbbbWWWWWrWWWWWrrrrrrrrrrrWWWWWrWWWWWbbbrWrWrbbbbbrbWrWbrbbbrbbWrWbbrb__________","svg":null,"color":""},{"name":"Greece","size":11,"bricks":"ttWttttttttttWttWWWWWWWWWWWttttttttWttWWWWWWttWttttttttWWWWWWWWWWWtttttttttttWWWWWWWWWWWttttttttttt__________","svg":null,"color":""},{"name":"Russia","size":8,"bricks":"________WWWWWWWWWWWWWWWWttttttttttttttttrrrrrrrrrrrrrrrr________________","svg":null,"color":""},{"name":"Ukraine","size":8,"bricks":"________ttttttttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyy________","svg":null,"color":""},{"name":"Poland","size":7,"bricks":"________WWWWW__WWWWW__rrrrr__rrrrr_______________","svg":null,"color":""},{"name":"Yellow 71","size":9,"bricks":"_________yyyyy__yyyyyyy_yyy___yy__yy__yyy__yy_yyy___yy_yy____yy_yy____yy__________________","svg":26,"color":""},{"name":"71 on white","size":6,"bricks":"WWWWWWrrrWWrWWrWrrWrWWWrWrWWWrWWWWWW______","svg":null},{"name":"Blue 71","size":8,"bricks":"ttttt__bttttt_bb___ttbbb__tt__bb__tt__bb_tt___bb_tt___bb_tt___bb","svg":null,"color":""},{"name":"Seventy one","size":21,"bricks":"rr_yy_rrry_yrrry_yrrrr_ry_yr__y_yr_ry_y_r_rr_yy_rr_yy_r_ry_y_r_r_ry_yr__y_yr_ry_y_r_rr_y_yrrry_yrrryyy_r_yyy__________________y______________r_____yyyrrry_yrrryyyrr_y_y__yrr_y_yrr_y_yr__y_yyyyrrr_y_rrry_yrrryyy____________________yrrryyyrrr_________yy_r_ry_yrr_____________rrry_yrrryyyyyyyyyyyy_____________________________________________________________________________________________________________________________","svg":null},{"name":"B71","size":10,"bricks":"__________bbbtttt_b_b__b__tbb_b__b__t_b_bbb__t__b_b__b_t__b_b__bt___b_bbb_t__bbb__________","svg":null},{"name":"Pig","size":9,"bricks":"__________PP___PP__PPP_PPP__WWPPPWW__WBPPPBW__PPsssPP__PsBsBsP__PPsssPP___________","svg":null},{"name":"Big Pig","size":15,"bricks":"________________sss_______sss__ss__sssss__ss____sssssssss_____sWBsssssBWs___ssBBsssssBBss__ssss_____ssss__sss_sssss_sss__sss_sBsBs_sss__sss_sssss_sss___sss_____sss____sssssssssss__GGGsssssssssGGGGGGsGsssssGsGGGGGGssGGGGGssGGG_______________","svg":2,"color":""},{"name":"Donkey Kong","size":9,"bricks":"OOr__a___OOr__a___ppppppp_O______a________a____pppppppr_a______b_a___O__ppppppp__","svg":null,"color":""},{"name":"Banana","size":12,"bricks":"_________________e__________eee_________eee_________eee_________eeeyy_____yyeeyyyy___yyyyey_yC___yy_yyy___C_____yyyy_________yyyy_________yyyy","svg":null},{"name":"Fox","size":8,"bricks":"e______eee_OO_eeeeOOOOeeeOBOOBOeOOOOOOOO_WWBBWW___WWWW_____WW___","svg":null},{"name":"Wiki","size":10,"bricks":"_______________________GGGG_____GGkkGG___GkggggkG__GgWWWWgG__GkggggkG___GGkkGG_____GGGG_______________________","svg":null},{"name":"Baby Dog","size":8,"bricks":"_______W__eeeeWWWWeeWeWWWegWegeeeeWWWWee_eWggWe__eWWWWe____WW","svg":null},{"name":"Cute dog","size":9,"bricks":"__________O_____O_OOOWWWOOOOOWWWWWOOOOeWWWWOO_eBeWWBW__eBeWWBW___eWBWW_____WRW____________","svg":null},{"name":"icon:extra_life","size":9,"bricks":"___________rr_rr___rrrrrrr_rrrrrrrrrrrrrrrrrr_rrrrrrr___rrrrr_____rrr_______r_____________","svg":null},{"name":"icon:streak_shots","size":8,"bricks":"_W_W_W__W_W_W_W_tttttt_WttttttW_tttttt_W______W______W_____WWWW","svg":null},{"name":"icon:base_combo","size":8,"bricks":"ttttttttttyyttttttyytyyttttttyyttyyttttttyytyyttttttyytttttttttt________","svg":null},{"name":"icon:slow_down","size":10,"bricks":"_____________kk_______kkkk_____kkkkkkGG__kkkkkkGBG_kkkkkkGGGGkkkkkkGG__GGGGGG____GG__GG_____________","svg":null},{"name":"icon:bigger_puck","size":8,"bricks":"_________tttttt__tttttt______________________W___________WWWWWW_","svg":null},{"name":"icon:viscosity","size":8,"bricks":"________tt______bbtt__ttbbbbttbbbtbbtbbbbbtbbtbbbbbybbybbbbbbbbb","svg":null},{"name":"icon:left_is_lava","size":8,"bricks":"r_______rtttttt_rtttttt_r_______r_______r____W__r_______r_WWW___","svg":null},{"name":"icon:right_is_lava","size":8,"bricks":"_______r_ttttttr_ttttttr_______r_______r_____W_r_______r__WWW__r","svg":null},{"name":"icon:telekinesis","size":8,"bricks":"_____PW_____s______P______s_______P_______s_______P_____WWWWW","svg":null},{"name":"icon:top_is_lava","size":8,"bricks":"rrrrrrrr_tttttt__tttttt____________________W_______________WWW__","svg":null},{"name":"icon:coin_magnet","size":8,"bricks":"__y__y_yy_________y_y_y_y________y_y______________y______WWW____","svg":null},{"name":"icon:skip_last","size":5,"bricks":"_ttt_t_t_ttt_ttt_t_t_ttt_","svg":null},{"name":"icon:multiball","size":8,"bricks":"_________tttttt__tttttt___________W__W____________________WWW___","svg":null},{"name":"icon:smaller_puck","size":8,"bricks":"_________tttttt__tttttt_____________W_____________________WW____","svg":null},{"name":"icon:pierce","size":6,"bricks":"ttttttttttWtttt__ttt__ttt__ttt__tttt","svg":null},{"name":"icon:picky_eater","size":8,"bricks":"rtrtrtrttrtrtrtrrtrtrtrt____________________t_____________WWWW","svg":null},{"name":"icon:metamorphosis","size":8,"bricks":"aaaaaa__aaaa__________W___________ttaatt__tttttt_________WWW","svg":null},{"name":"icon:compound_interest","size":8,"bricks":"_________tttttt__ttt__t______y_____________W__y_________rrWWWrrr","svg":null},{"name":"icon:hot_start","size":7,"bricks":"ttttttttttt_tt_____W_____y_y_____y_____y_y_WWW_y_","svg":null},{"name":"icon:sapper","size":9,"bricks":"_____WW______W__W_tttWttt_yttgggtt__tgggggt__tgggggt__tgggggt__ttgggtt__ttttttt___________","svg":null,"color":"#000000"},{"name":"icon:bigger_explosions","size":8,"bricks":"__r_______ry_rr___ryry__ryyyW_rr_rrWyyy___yryrr__yrry_rr_rr","svg":null},{"name":"icon:extra_levels","size":6,"bricks":"__________b__t_bb_ttt_b__t_bbb____________","svg":null},{"name":"icon:pierce_color","size":8,"bricks":"bb___bbbb__b_bbb_____bbb____bbbbb____bbbbb____bbbbb____bbbbb____","svg":null},{"name":"icon:soft_reset","size":8,"bricks":"___rg_____rrgg___rryggg_rryWggggrryWgggg_ryyggg___rrgg_____rg___","svg":null},{"name":"icon:ball_repulse_ball","size":8,"bricks":"WsP__PsWs______sP______P________________P______Ps______sWsP__PsW","svg":null},{"name":"icon:ball_attract_ball","size":8,"bricks":"__P__P____s__s__PsW__WsP________________PsW__WsP__s__s____P__P__","svg":null},{"name":"icon:puck_repulse_ball","size":8,"bricks":"__________________W_______s___W___P__s______P____________WWW__","svg":null},{"name":"A","size":7,"bricks":"___t_____ttt___t___t__t___t_tttttttt_____tt_____t","svg":null},{"name":"B","size":9,"bricks":"_bbbbb_____bb_bb____bb_bb____bb_bb____bbbb_____bb_bb____bb_bb____bb_bb___bbbbb____","svg":null},{"name":"C","size":8,"bricks":"__rrrr___rrrrrr_rrr___rrrr______rr______rrr___rr_rrrrrr___rrrr","svg":null},{"name":"D","size":8,"bricks":"_GGGGG____GG__G___GG__GG__GG__GG__GG__GG__GG__GG__GG__G__GGGGG","svg":null},{"name":"e","size":8,"bricks":"__tttt___tttttt_tt____tttt____tttttttttttt_______tt__tt___tttt_","svg":null},{"name":"icon:wind","size":9,"bricks":"_ss______s___PPPP_s_________sssssss___________sssssss_s________s___PPPP__ss","svg":null},{"name":"icon:sturdy_bricks","size":7,"bricks":"ttbttttbtttbtt____W_____W_W___W___W_______WWW____","svg":null},{"name":"icon:respawn","size":9,"bricks":"tttt___ttttt__t__ttta_ttt_______________________________W_________________WWW","svg":null},{"name":"Elephant","size":18,"bricks":"_________________________llll_________lll_llllll_lll___lsssllllllllsssl__lsssllllllllsssl__lsssllBllBllsssl__lssllWllllWllssl___ll__llllll__ll_________llll_______________ll______________llll______________ll________________________________________________________________________________________________________________________________________","svg":25,"color":""},{"name":"Orca","size":20,"bricks":"____________________________________________________________________________________________BBBBB____BBB_BBB___BBBBBBB____BBBBB___BBBBBBBBB____BBB___BBBBWBBWWW_____BBBBBBBBBBBWWWW_____BBBBBBBBBBWWWWW_____BBBBBBBBBWWWWW_______BBBBBBBWWWWW___________WWBBWWW______________BBB_BB______________BB__B______________________________________________________________________________________________________________________________","svg":null,"color":"#1c71d8"},{"name":"Shark","size":17,"bricks":"__________________________________________g_______________ggg____________ggggggg_________ggggggggg_______ggggggggggg_____gggggWWWggggg____gBgWWWWWWWgBg___ggWWWWrWrWWWWgg__ggWWWrrrrrWWWgg_ggWWWrrrrrrrWWWggggWWrrrrrrrrrWWgggWWWrWrWrWrWrWWWggWWrrWWWWWWWrrWWggWWWWWWWWWWWWWWWg_________________","svg":null,"color":"#3584e4"},{"name":"Bird","size":13,"bricks":"_______RRR____R____RSSSR___RR__RSSWWWR__RSR_RSWWBWR__RSSRRSW_WWyy_RSSSRSWWWR___RSSSSSSRR_____RRSSyyyy______RSyyyyy___RRRRSyyyy____RSSSRyyy_____RRRR________","svg":null,"color":""},{"name":"Tux","size":14,"bricks":"_____gggg________gggggggg_____gggggggggg____gggggggggg___gggggggggggg__gggWBggWBggg__gggBBggBBggg__ggggyyyygggg_ggggggyyggggggggggWWWWWWggggg_gWWWWWWWWg_g__WWWWWWWWWW____WWWWWWWWWW____yyy____yyy__","svg":null,"color":"#62a0ea"},{"name":"Armenia","size":6,"bricks":"_______rrrr__bbbb__yyyy_____________","svg":null,"color":""},{"name":"Austria","size":6,"bricks":"_______rrrr__WWWW__rrrr______","svg":null,"color":""},{"name":"Benin","size":8,"bricks":"_________kkyyyy__kkyyyy__kkrrrr__kkrrrr__________________________","svg":null,"color":""},{"name":"Botswana","size":10,"bricks":"___________tttttttt__tttttttt__tttttttt__WWWWWWWW__BBBBBBBB__WWWWWWWW__tttttttt__tttttttt__tttttttt___________","svg":null,"color":""},{"name":"Bulgaria","size":6,"bricks":"_______WWWW__cccc__rrrr_____________","svg":null,"color":""},{"name":"Canada","size":7,"bricks":"________rWWWr__rWrWr__rWWWr______________________","svg":null,"color":""},{"name":"Chad","size":8,"bricks":"_________bbyyRR__bbyyRR__bbyyRR","svg":null,"color":""},{"name":"China","size":8,"bricks":"_________RRyRRR__RyRyRR__RRyRRR__RRRRRR","svg":null,"color":""},{"name":"Colombia","size":7,"bricks":"________yyyyy__yyyyy__bbbbb__RRRRR_______________","svg":null,"color":""},{"name":"Republic of the Congo","size":7,"bricks":"________kkkyy__kkyyr__kyyrr__yyrrr_______________","svg":null,"color":""},{"name":"C\xf4te d\'Ivoire","size":8,"bricks":"_________OOWWGG__OOWWGG__OOWWGG","svg":null,"color":""},{"name":"Denmark","size":8,"bricks":"_________rrWrrr__rrWrrr__WWWWWW__rrWrrr__rrWrrr","svg":null,"color":""},{"name":"El Salvador","size":8,"bricks":"_________bbbbbb__bbbbbb__WWWkWW__WWkWWW__bbbbbb__bbbbbb","svg":null,"color":""},{"name":"Egypt","size":8,"bricks":"_________RRRRRR__RRRRRR__WWWyWW__WWyWWW__gggggg__gggggg","svg":null,"color":"#1c71d8"},{"name":"Estonia","size":8,"bricks":"_________tttttt__tttttt__gggggg__gggggg__WWWWWW__WWWWWW","svg":null,"color":"#986a44"},{"name":"Finland","size":6,"bricks":"_______WtWW__tttt__WtWW_____________","svg":null,"color":""},{"name":"Gabon","size":5,"bricks":"______CCC__yyy__ttt______","svg":null,"color":""},{"name":"Georgia","size":9,"bricks":"__________WrWrWrW__WWWrWWW__rrrrrrr__WWWrWWW__WrWrWrW__________________","svg":null,"color":""},{"name":"Guinea","size":8,"bricks":"_________rryycc__rryycc__rryycc","svg":null,"color":""},{"name":"Indonesia","size":6,"bricks":"_______rrrr__rrrr__WWWW__WWWW_______","svg":null,"color":""},{"name":"icon:one_more_choice","size":7,"bricks":"ttt____tbbb___tbttt__tbtbbb__btbbb___tbbb____bbb_","svg":null},{"name":"icon:instant_upgrade","size":5,"bricks":"ttt__tbbb_tbbb_tbbb__bbb_","svg":null},{"name":"icon:checkmark_checked","size":6,"bricks":"_WWWWGWBBBGGGGBGGWWGGGBWWBGBBW_WWWW_","svg":null},{"name":"icon:checkmark_unchecked","size":6,"bricks":"_WWWW_WBBBBWWBBBBWWBBBBWWBBBBW_WWWW_","svg":null},{"name":"icon:fullscreen","size":6,"bricks":"WW__WWW____W____________W____WWW__WW","svg":null},{"name":"icon:exit_fullscreen","size":6,"bricks":"_W__W_WW__WW____________WW__WW_W__W_","svg":null}]');
+
+},{}],"h1X9A":[function(require,module,exports,__globalThis) {
 module.exports = JSON.parse("\"29030875\"");
 
 },{}],"cvg5m":[function(require,module,exports,__globalThis) {
@@ -3141,7 +3053,63 @@ const rawUpgrades = [
     }
 ];
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d5NoS":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports,__globalThis) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"7OIPf":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "hashCode", ()=>hashCode);
+parcelHelpers.export(exports, "getLevelBackground", ()=>getLevelBackground);
+var _backgroundsJson = require("./backgrounds.json");
+var _backgroundsJsonDefault = parcelHelpers.interopDefault(_backgroundsJson);
+function hashCode(string) {
+    let hash = 0;
+    for(let i = 0; i < string.length; i++){
+        let code = string.charCodeAt(i);
+        hash = (hash << 5) - hash + code;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
+}
+const backgrounds = (0, _backgroundsJsonDefault.default);
+function getLevelBackground(level) {
+    let svg = level.svg !== null && backgrounds[level.svg % backgrounds.length];
+    if (!level.color && !svg) svg = backgrounds[hashCode(level.name) % backgrounds.length];
+    return svg;
+}
+
+},{"./backgrounds.json":"el6Kx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"el6Kx":[function(require,module,exports,__globalThis) {
+module.exports = JSON.parse("[\"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><path d='M3.25 10h13.5M10 3.25v13.5' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M11 6a5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5 5 5 0 015 5' stroke='none' fill='white'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><path d='M10-10L20 0v10L10 0zM20 0L10-10V0l10 10zm0 10L10 0v10l10 10zm0 10L10 10v10l10 10zM0 20l10-10v10L0 30zm0-10L10 0v10L0 20zM0 0l10-10V0L0 10z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M15.986 4.186 4.1 16.072v.58L16.566 4.186Zm7.62 0 12.38 12.38v-.58l-11.8-11.8Zm12.38 19.248L23.52 35.9h.58l11.886-11.886ZM4.1 23.52v.58l11.8 11.8h.58z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25'><path d='M9.19 0v3.93A9.187 9.187 0 003.93 9.19H0m0 6.618h3.93a9.188 9.188 0 005.26 5.26V25m6.619 0v-3.93a9.188 9.188 0 005.261-5.261H25m0-6.618h-3.93A9.188 9.188 0 0015.81 3.93V0' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='29' height='33.487'><path d='M29 20.928v14.813M14.5 12.56v16.745M29-2.559v6.744l-14.5 8.374L0 4.189v-6.745m29 6.742l14.5 8.37m0 16.745L29 20.928l-14.5 8.376L0 20.931l-14.5 8.376m0-16.744L0 4.189m0 31.487V20.931' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='29' height='50.115'><path d='M14.498 16.858L0 8.488.002-8.257l14.5-8.374L29-8.26l-.002 16.745zm0 50.06L0 58.548l.002-16.745 14.5-8.373L29 41.8l-.002 16.744zM28.996 41.8l-14.498-8.37.002-16.744L29 8.312l14.498 8.37-.002 16.745zm-29 0l-14.498-8.37.002-16.744L0 8.312l14.498 8.37-.002 16.745z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='62' height='68'><rect x='0' y='0' width='62' height='68' fill='black'/><path d='M41.845 51.072h3.465v-7.035h-7.076v13.999H52.18V37.21H31.117m0 27.79V37.21M20.389 51.07h-3.466v-7.034H24v13.999H10.055V37.21h21.062m10.728-20.283h3.465v7.035h-7.076V9.964H52.18V30.79H31.117m0-27.789v27.79M20.389 16.927h-3.466v7.035H24V9.964H10.055V30.79h21.062M3 3h56v62H3.126z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='26.55' height='25'><rect x='0' y='0' width='26.55' height='25' fill='black'/><path d='M0 10.86v3.22c2.7.08 4.9 2.31 4.9 5.03V25h3.2v-5.9c0-4.48-3.63-8.16-8.1-8.24ZM18.17 25h3.21v-5.9a5.05 5.05 0 0 1 5.03-5.02h.14v-3.21h-.14a8.27 8.27 0 0 0-8.24 8.24zm3.21-25h-3.21v1.64a5.05 5.05 0 0 1-5.03 5.02A5.05 5.05 0 0 1 8.1 1.64V0H4.89v1.64c0 4.53 3.7 8.24 8.25 8.24 4.53 0 8.24-3.7 8.24-8.24z' stroke='none' fill='white'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='79.392'><path d='m.135 40.054-14.277-25.722M0 40.054l14.278-25.722M0 40.054v-40m0 40-20-20 20-20 20 20Zm-.135-.716L14.142 65.06M0 39.338-14.278 65.06M0 39.338v40m0-40 20 20-20 20-20-20Zm40.136.716L25.858 14.332M40 40.054l14.278-25.722M40 40.054v-40m-20 20 20-20 20 20-20 20Zm19.865 19.284L54.142 65.06M40 39.338 25.722 65.06M40 39.338v40m20-20-20 20-20-20 20-20Z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='50' height='29.442'><path d='M35.569-17.373 22.959 4.468l-12.61-21.841Zm0 29.442-12.61 21.84-12.61-21.84Zm25-14.721-12.61 21.841-12.61-21.841zm0 29.441-12.61 21.842-12.61-21.842Zm-33.478 0L39.7 4.95l12.61 21.84zM10.569-2.652l-12.61 21.841-12.61-21.841Zm0 29.441-12.61 21.842-12.61-21.842Zm-33.478 0L-10.3 4.95l12.61 21.84zm25-14.72L14.7-9.773l12.61 21.842zm0 29.441L14.7 19.67l12.61 21.841z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='59.428'><path d='M0 70.975V47.881m20-1.692L8.535 52.808v13.239L20 72.667l11.465-6.62V52.808zm0-32.95l11.465-6.62V-6.619L20-13.24 8.535-6.619V6.619L20 13.24m8.535 4.927v13.238L40 38.024l11.465-6.62V18.166L40 11.546zM20 36.333L0 47.88m0 0v23.094m0 0l20 11.548 20-11.548V47.88m0 0L20 36.333m0 0l20 11.549M0 11.547l-11.465 6.619v13.239L0 38.025l11.465-6.62v-13.24L0 11.548v-23.094l20-11.547 20 11.547v23.094M20 36.333V13.24' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='70' height='8'><path d='M-.02 22c8.373 0 11.938-4.695 16.32-9.662C20.785 7.258 25.728 2 35 2c9.272 0 14.215 5.258 18.7 10.338C58.082 17.305 61.647 22 70.02 22M-.02 14.002C8.353 14 11.918 9.306 16.3 4.339 20.785-.742 25.728-6 35-6 44.272-6 49.215-.742 53.7 4.339c4.382 4.967 7.947 9.661 16.32 9.664M70 6.004c-8.373-.001-11.918-4.698-16.3-9.665C49.215-8.742 44.272-14 35-14c-9.272 0-14.215 5.258-18.7 10.339C11.918 1.306 8.353 6-.02 6.002' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='45' height='51.96'><path d='M52.48 44.47a15 15 0 01-14.96 0 15 15 0 00-7.48 12.96M7.48 44.42a15 15 0 01-14.96 0M15 57.44c0-5.35-2.9-10.35-7.52-13.02a15 15 0 017.48-12.97M7.48 18.5a14.97 14.97 0 01-14.98-.03m15.02-.03A15 15 0 0115 5.47a15 15 0 00-4.4-10.62m23.8.05A15 15 0 0030 5.53a15 15 0 017.48 12.96 14.9 14.9 0 0015.02-.03m-22.5 13a15.13 15.13 0 017.52 13.01m-7.56-39a15 15 0 01-14.96 0M7.48 18.5a15 15 0 017.48 12.96 15 15 0 0015.04 0 15 15 0 017.48-12.96' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns=\\\"http://www.w3.org/2000/svg\\\" xml:space=\\\"preserve\\\" width=\\\"45.491\\\" height=\\\"44.293\\\" viewBox=\\\"0 0 12.036 11.719\\\"><path d=\\\"M-.036-.081h12.157V11.82H-.036z\\\" style=\\\"fill:#000;stroke:none;stroke-width:.112189;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/><path d=\\\"M.051.134h3.622v3.615h3.981V7.55h4.13v4.006\\\" style=\\\"fill:none;stroke:#fff;stroke-width:.307996;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='72' height='43.875'><path d='m14.296 7.185 7.236 7.234L36.002-.048l14.47 14.47 7.236-7.233L36-14.518Zm-7.275 7.251 7.258 7.26 7.259-7.26-7.258-7.259zm-28.798 14.76 7.237 7.237L-.023 21.916 14.452 36.39l7.26-7.258L0 7.42Zm50.746 7.193-7.258-7.258-7.26 7.258 7.26 7.26zm57.568.046 7.24-7.238L72 7.42 50.282 29.137l7.259 7.259L72.02 21.918Zm-28.993-.042-7.26-7.258-7.258 7.258 7.26 7.26zm.233 14.742L36 29.358 14.223 51.135l7.258 7.258L36 43.875l14.518 14.517ZM50.453 14.45l7.259 7.26 7.258-7.26-7.258-7.257z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns=\\\"http://www.w3.org/2000/svg\\\" xml:space=\\\"preserve\\\" width=\\\"88.718\\\" height=\\\"59.048\\\" viewBox=\\\"0 0 23.473 15.623\\\"><path d=\\\"M-.036-.081h23.591v15.862H-.036z\\\" style=\\\"fill:#000;stroke:none;stroke-width:.180422;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/><path d=\\\"M-1.054 7.864h26.127M-1.185 15.474h26.128M11.545 7.765V-2.431M4.444 8.028v7.389M17.637 8.06v7.39\\\" style=\\\"fill:#fff;stroke:#fff;stroke-width:.307996;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/></svg>\",\"<svg xmlns=\\\"http://www.w3.org/2000/svg\\\" xml:space=\\\"preserve\\\" width=\\\"45.491\\\" height=\\\"44.293\\\" viewBox=\\\"0 0 12.036 11.719\\\"><path d=\\\"M-.036-.081h12.157V11.82H-.036z\\\" style=\\\"fill:#000;stroke:none;stroke-width:.112189;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/><path d=\\\"M5.997 9.079c1.941-1.892 5.045-5.609 3.495-6.38-1.43-.71-2.665.599-3.317 1.603-.521-.96-1.47-2.616-2.839-1.655-1.898 1.334.838 5.026 2.661 6.432\\\" style=\\\"fill:none;stroke:#fff;stroke-width:.307996;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M27.26 5.415c-.55 0-.9.55-.65 1l2.45 4.75c.2.5.85.5 1.15.1l3.15-4.5c.3-.4 0-1.05-.55-1.1zM10.689 8.068c-.406-.051-.822.31-.778.748l.5 5.3c.05.5.6.8 1.05.5l4.55-3.05c.45-.3.4-.95-.05-1.15l-5.1-2.3a.605.605 0 0 0-.172-.048zM2.406 24.584a.635.635 0 0 0-.345.081l-4.75 2.4c-.45.2-.5.85-.1 1.15l4.45 3.15c.4.3 1 0 1.1-.5l.3-5.55c0-.412-.31-.712-.655-.73zm40 0a.635.635 0 0 0-.345.081l-4.75 2.4c-.45.2-.5.85-.1 1.15l4.45 3.15c.4.3 1 0 1.1-.5l.3-5.55c0-.412-.31-.712-.655-.73zm-22.17 3.108a.744.744 0 0 0-.675.723l.4 5.55c.05.5.6.8 1.05.5l4.45-2.95c.45-.25.4-.9-.05-1.15l-4.8-2.6a.702.702 0 0 0-.376-.073z' stroke='none' fill='white'/></svg>\",\"<svg xmlns=\\\"http://www.w3.org/2000/svg\\\" xml:space=\\\"preserve\\\" width=\\\"45.701\\\" height=\\\"36.148\\\" viewBox=\\\"0 0 12.092 9.564\\\"><path d=\\\"M-.036-.081h12.157V11.82H-.036z\\\" style=\\\"fill:#000;stroke:none;stroke-width:.112189;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\" transform=\\\"translate(0 -.76)\\\"/><path d=\\\"M.049 2.794c2.088-1.328 4.06-1.436 5.864-.036 1.804 1.401 5.21.78 6.074.013M.157 5.687C2.245 4.359 4.217 4.25 6.02 5.65c1.803 1.401 5.21.78 6.074.013M.137 8.792C2.225 7.465 4.197 7.356 6 8.757s5.21.779 6.074.013\\\" style=\\\"fill:none;stroke:#fff;stroke-width:.307999;stroke-linecap:square;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000\\\" transform=\\\"translate(0 -.76)\\\"/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M45.69 13.342c-1.677.945-3.557 1.6-5.48 1.588-1.922-.012-3.795-.691-5.462-1.653-1.668-.962-3.156-2.202-4.637-3.435-1.48-1.232-2.97-2.47-4.641-3.427-1.67-.957-3.547-1.628-5.47-1.628-1.923 0-3.8.67-5.47 1.628-1.67.956-3.161 2.195-4.641 3.427-1.48 1.233-2.97 2.473-4.637 3.435-1.667.962-3.54 1.641-5.463 1.653-1.922.012-3.802-.643-5.478-1.588v13.316c1.676-.945 3.556-1.6 5.478-1.588 1.923.012 3.796.691 5.463 1.653 1.668.962 3.156 2.202 4.637 3.435 1.48 1.232 2.97 2.47 4.641 3.427 1.67.957 3.547 1.628 5.47 1.628 1.923 0 3.8-.67 5.47-1.628 1.67-.956 3.161-2.195 4.641-3.427 1.48-1.233 2.97-2.473 4.637-3.435 1.667-.962 3.54-1.641 5.463-1.653 1.922-.012 3.802.643 5.478 1.588z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns=\\\"http://www.w3.org/2000/svg\\\" xml:space=\\\"preserve\\\" width=\\\"45.491\\\" height=\\\"44.293\\\" viewBox=\\\"0 0 12.036 11.719\\\"><path d=\\\"M-.036-.081h12.157V11.82H-.036z\\\" style=\\\"fill:#000;stroke:none;stroke-width:.112189;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/><path d=\\\"M.058.132h6.413V6.34H2.006v4.024h8.68v-8.96H8.303v7.292H3.979\\\" style=\\\"fill:none;stroke:#fff;stroke-width:.307996;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/><path d=\\\"M3.73 3.095H.034v8.58\\\" style=\\\"fill:none;stroke:#fff;stroke-width:.307996;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/></svg>\",\"<svg xmlns=\\\"http://www.w3.org/2000/svg\\\" xml:space=\\\"preserve\\\" width=\\\"88.718\\\" height=\\\"59.048\\\" viewBox=\\\"0 0 23.473 15.623\\\"><path d=\\\"M-.036-.081h23.591v15.862H-.036z\\\" style=\\\"fill:#000;stroke:none;stroke-width:.180422;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/><path d=\\\"m23.463 8.674.044-8.608L11.47 6.941-.06.166\\\" style=\\\"fill:none;stroke:#fff;stroke-width:.307996;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/><path d=\\\"M11.472 6.937v8.574l11.943-6.896M11.507 15.438-.024 8.78\\\" style=\\\"fill:none;stroke:#fff;stroke-width:.307996;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;-inkscape-stroke:none;paint-order:markers stroke fill;stop-color:#000\\\"/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='40'><path d='M0 0v5.436c.385-.146.767.123 1.163.82.948 1.674 2.214 2.996 3.46 4.294C6.977 13.002 9.2 15.318 9.2 19.995c0 4.679-2.223 6.994-4.577 9.447-1.246 1.299-2.512 2.621-3.46 4.295-.396.698-.777.966-1.163.82V40h1.198v-.005c0-4.678 2.224-6.992 4.579-9.445 1.245-1.298 2.51-2.62 3.459-4.295.654-1.154 1.273-1.154 1.926 0 .95 1.673 2.214 2.997 3.46 4.295 2.353 2.452 4.578 4.767 4.578 9.445V40h.8v-5.442c-.252-.095-.504-.365-.762-.82-.95-1.675-2.214-2.998-3.46-4.296-2.353-2.452-4.576-4.768-4.576-9.447-.001-4.678 2.221-6.993 4.575-9.445 1.246-1.298 2.512-2.62 3.46-4.294.259-.456.511-.725.763-.82V0h-.8c0 4.676-2.224 6.991-4.577 9.442-1.246 1.298-2.512 2.621-3.46 4.296-.653 1.153-1.273 1.153-1.926 0-.948-1.675-2.214-2.998-3.46-4.296C3.424 6.991 1.2 4.676 1.2 0Z' stroke='none' fill='white'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='50' height='33.333'><path d='M25 .806v2.79h.8V.806Zm0 4.465v2.791h.8v-2.79Zm-2.043 3.902-2.32 1.55.444.665 2.32-1.55-.443-.665zm4.885 0-.444.665 2.32 1.55.445-.665zM-.4 10.61v2.79h.8v-2.79zm50 0v2.79h.8v-2.79zm-30.356 1.042-2.32 1.55.443.666 2.322-1.55-.444-.666zm12.311 0-.444.665 2.32 1.55.445-.664zm3.783 2.566-.444.666 2.321 1.55.444-.666zm-19.852.025-2.32 1.55.444.665 2.32-1.55zm-15.886.77v2.79h.8v-2.79Zm50 0v2.79h.8v-2.79Zm-50 4.465v2.79h.8v-2.79h-.8Zm50 0v2.79h.8v-2.79h-.8zM2.442 23.379l-.444.665 2.32 1.55.445-.665zm45.115 0-2.32 1.55.443.666 2.322-1.55-.444-.666zM6.155 25.86l-.444.665 2.32 1.55.445-.665zm37.69 0-2.322 1.55.444.665 2.321-1.55-.444-.666zM9.937 28.424l-.444.665 2.32 1.55.445-.665-2.321-1.55zm30.11.003-2.321 1.55.444.666 2.321-1.55zM25 29.737v2.79h.8v-2.79z' stroke='none' fill='white'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='69.282' height='40'><path d='M34.641-20v80m34.64-40L0-20m69.282 80L0 20m69.282 0L0 60m69.282-80L0 20m69.282-40v80M0-20v80M34.64 40l11.547-20m11.547 20l11.547 20M34.641 40h23.094m11.547-20L57.735 40M46.188 20L34.641 40l11.547 20h23.094L80.83 40 69.282 20H46.188zM34.641 40l11.547-20m11.547 20l11.547 20M34.641 40h23.094m11.547-20L57.735 40M46.188 20L34.641 40l11.547 20h23.094L80.83 40 69.282 20H46.188zM34.641 0l11.547-20M57.735 0l11.547 20M34.642 0h23.093m11.547-20L57.735 0M46.188-20L34.641 0l11.547 20h23.094L80.83 0 69.282-20H46.188zM34.641 40L23.094 20M11.547 40L0 60m34.64-20H11.548M0 20l11.547 20m11.547-20l11.547 20-11.547 20H0l-11.547-20L0 20h23.094zM34.641 0L23.094-20M11.547 0L0 20M34.64 0H11.548M0-20L11.547 0m11.547-20L34.641 0 23.094 20H0L-11.547 0 0-20h23.094z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='29' height='50.115'><path d='M14.5 6.628L8.886 3.372v-6.515L14.502-6.4l5.612 3.257-.001 6.514zm0 50.06l-5.613-3.256v-6.515l5.614-3.258 5.612 3.257-.001 6.515zm14.497-25.117l-5.612-3.257v-6.515L29 18.541l5.612 3.257-.001 6.515zm-29 0l-5.612-3.257v-6.515L0 18.541l5.612 3.257v6.515zM14.5 11.82L4.36 5.967l.002-11.706 10.14-5.855L24.638-5.74l-.001 11.707zm0 50.06L4.36 56.028l.002-11.706 10.14-5.855 10.137 5.852-.001 11.707zm14.498-25.118L18.858 30.91l.002-11.707L29 13.349l10.137 5.853-.001 11.706zm-29 0l-10.139-5.852.002-11.707L0 13.349l10.138 5.853-.002 11.706zm14.501-19.905L0 8.488.002-8.257l14.5-8.374L29-8.26l-.002 16.745zm0 50.06L0 58.548l.002-16.745 14.5-8.373L29 41.8l-.002 16.744zM28.996 41.8l-14.498-8.37.002-16.744L29 8.312l14.498 8.37-.002 16.745zm-29 0l-14.498-8.37.002-16.744L0 8.312l14.498 8.37-.002 16.745z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><path d='M6.13-.002.005 6.125v1.059L6.59 13.77l.013-.014 16.243 16.24L6.617 46.23.535 40.15l10.147-10.153L.004 19.318v1.037l9.644 9.641-9.646 9.65v1.03L12.73 53.402l-6.082 6.082-6.127-6.127.014-.015-.533-.531v1.06l6.127 6.127h1.055l6.586-6.584-.012-.012 16.246-16.246L46.236 53.39l-6.082 6.082-10.15-10.15-10.68 10.677h1.033l9.647-9.644 9.646 9.644h1.034l12.722-12.723 6.082 6.082-6.125 6.125-.013-.011-.528.527h1.057l6.123-6.123V52.81l-6.58-6.58-.016.015L37.16 29.996 53.393 13.77l6.082 6.082-10.15 10.144 10.677 10.678v-1.031l-9.647-9.647 9.647-9.64v-1.038L47.279 6.596 53.361.514l6.13 6.127-.016.013.527.53V6.123L53.879-.002h-1.057l-6.586 6.586.014.012-16.244 16.246L13.77 6.607l6.082-6.08 10.153 10.15L40.684-.001H39.65l-9.646 9.647-9.647-9.647h-1.03L6.601 12.723.52 6.64 6.646.514l.012.013.528-.529H6.13zm7.114 7.113 16.76 16.76 16.762-16.76 6.127 6.127-16.764 16.758 16.764 16.762-6.127 6.127-16.76-16.76-16.762 16.76-6.127-6.127 16.758-16.762L7.117 13.238l6.127-6.127z' stroke='none' fill='white'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='80' height='97.989'><path d='m40 15.681 20.818-48.593-6.307-14.72-14.51 33.87-14.512-33.87-6.307 14.72zm0 .803-8.204 19.15L40 54.782l8.205-19.15zm14.511 33.872-6.306-14.723L40 54.783l-8.204-19.15-6.307 14.723L40 84.227zm0-29.445-6.306 14.722 6.306 14.723 6.307-14.723zM25.49 50.356l6.307-14.723-6.307-14.722-6.307 14.722zm0-29.445L19.182 6.19l-6.307 14.724 6.307 14.72zm29.022 0 6.307 14.722 6.308-14.72-6.308-14.724zm-14.51 92.76 20.817-48.594-6.307-14.721-14.51 33.871L25.49 50.356l-6.307 14.721zM25.488 50.355l-6.307-14.723-6.307 14.722 6.307 14.722zm29.022 0 6.307 14.721 6.308-14.722-6.308-14.722zm12.615-29.443-6.308 14.72 6.308 14.722 6.307-14.722zm-54.25 29.443 6.307-14.722-6.307-14.72-6.308 14.72zm0-29.442L6.567 6.189.26 20.91l6.307 14.722zm54.25 0 6.308 14.72 6.307-14.722L73.433 6.19zm0 29.442-6.307 14.722L67.126 79.8l6.307-14.722zM12.876 79.8l6.307-14.722-6.307-14.722-6.308 14.722zm0-29.444L6.567 35.633.26 50.356l6.307 14.721zm54.25 0 6.308 14.722 6.307-14.721-6.307-14.723zm0 29.444 6.308 14.723L79.741 79.8l-6.307-14.722zm-54.25 0L6.567 65.077.26 79.8l6.307 14.723z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><path d='M9 20.502h0A7.5 7.5 0 0 1 1.5 28 7.5 7.5 0 0 0-6 35.5h0a7.5 7.5 0 0 1-7.5 7.499 7.476 7.476 0 0 1-5.304-2.196A7.482 7.482 0 0 1-21 35.5h0a7.5 7.5 0 0 1 7.5-7.5A7.5 7.5 0 0 0-6 20.502h0a7.5 7.5 0 1 1 15 0zm15 0h0A7.5 7.5 0 0 1 16.5 28a7.476 7.476 0 0 1-5.304-2.196A7.482 7.482 0 0 1 9 20.502h0c0-2.072-.84-3.947-2.197-5.303A7.477 7.477 0 0 0 1.5 13.002a7.476 7.476 0 0 1-5.304-2.196A7.482 7.482 0 0 1-6 5.503h0a7.5 7.5 0 1 1 15 0h0c0 2.07.84 3.945 2.196 5.303a7.476 7.476 0 0 0 5.304 2.196c2.07 0 3.945.84 5.303 2.197A7.471 7.471 0 0 1 24 20.502zm15 0h0A7.5 7.5 0 0 1 31.5 28a7.5 7.5 0 0 0-7.5 7.5h0a7.5 7.5 0 0 1-7.5 7.499 7.476 7.476 0 0 1-5.304-2.196A7.482 7.482 0 0 1 9 35.5h0a7.5 7.5 0 0 1 7.5-7.5 7.5 7.5 0 0 0 7.5-7.498h0a7.5 7.5 0 1 1 15 0zm0-30h0A7.5 7.5 0 0 1 31.5-2 7.5 7.5 0 0 0 24 5.5h0a7.5 7.5 0 0 1-7.5 7.499 7.476 7.476 0 0 1-5.304-2.196A7.482 7.482 0 0 1 9 5.5h0A7.5 7.5 0 0 1 16.5-2 7.5 7.5 0 0 0 24-9.498h0a7.5 7.5 0 1 1 15 0zm-22.5 37.5a7.5 7.5 0 0 0-7.5 7.5c0-2.072-.84-3.947-2.197-5.303A7.477 7.477 0 0 0 1.5 28.002 7.5 7.5 0 0 0 9 20.503c0 2.07.84 3.945 2.196 5.303a7.476 7.476 0 0 0 5.304 2.196zm15-15a7.5 7.5 0 0 0-7.5 7.5c0-2.072-.84-3.947-2.197-5.303a7.477 7.477 0 0 0-5.303-2.197A7.5 7.5 0 0 0 24 5.503c0 2.07.84 3.945 2.196 5.303a7.476 7.476 0 0 0 5.304 2.196z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='69.282'><path d='M13.333-3.849v23.094M6.667-15.396l20 11.547M13.333-19.245l20 11.547M20 0v23.094m20-34.641l-6.667 3.849-6.666 3.849L20 0M0-11.547l6.667 3.849 6.666 3.849L20 0m0-23.094l20 11.547v23.094L20 23.094l-6.667-3.849-6.666-3.849L0 11.547v-23.094l6.667-3.849 6.666-3.849zM40-3.769L20 7.698m20-3.849l-16.253 9.384L20 15.396M6.667-7.698v23.094m6.666 50.037v23.094M6.667 53.886l20 11.547M13.333 50.037l20 11.547M20 69.282v23.094m20-34.641l-6.667 3.849-6.666 3.849L20 69.282M0 57.735l6.667 3.849 6.666 3.849L20 69.282m0-23.094l20 11.547v23.094L20 92.376l-6.667-3.849-6.666-3.849L0 80.829V57.735l6.667-3.849 6.666-3.849zm20 19.325L20 76.98m20-3.849L20 84.678M6.667 61.584v23.094m26.666-53.886v23.094m-6.666-34.641l20 11.547M33.333 15.396l20 11.547M40 34.641v23.094m20-34.641l-6.667 3.849-6.666 3.849L40 34.641M20 23.094l6.667 3.849 6.666 3.849L40 34.641m0-23.094l20 11.547v23.094L40 57.735l-6.667-3.849-6.666-3.849L20 46.188V23.094l6.667-3.849 6.666-3.849zm20 19.325L40 42.339m20-3.849L40 50.037M26.667 26.943v23.094M-6.667 30.792v23.094m-6.666-34.641l20 11.547M-6.667 15.396l20 11.547M0 34.641v23.094m20-34.641l-6.667 3.849-6.666 3.849L0 34.641m-20-11.547l6.667 3.849 6.666 3.849L0 34.641m0-23.094l20 11.547v23.094L0 57.735l-6.667-3.849-6.666-3.849L-20 46.188V23.094l6.667-3.849 6.666-3.849zm20 19.325L0 42.339m20-3.849L0 50.037m-13.333-23.094v23.094' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M46.231 19.999a5.937 7.48 0 01-5.937 7.48A5.937 7.48 0 0134.357 20a5.937 7.48 0 015.937-7.48 5.937 7.48 0 015.937 7.48zm-40.421 0a5.937 7.48 0 01-5.937 7.48A5.937 7.48 0 01-6.064 20a5.937 7.48 0 015.937-7.48 5.937 7.48 0 015.937 7.48zm20.21 20.285a5.937 7.48 0 01-5.937 7.48 5.937 7.48 0 01-5.936-7.48 5.937 7.48 0 015.936-7.48 5.937 7.48 0 015.937 7.48zm0-40.57a5.937 7.48 0 01-5.937 7.48 5.937 7.48 0 01-5.936-7.48 5.937 7.48 0 015.936-7.48 5.937 7.48 0 015.937 7.48zM-5.732 46.942c1.676-.944 3.556-1.6 5.478-1.587 1.924.011 3.796.69 5.463 1.653 1.668.962 3.156 2.202 4.637 3.434 1.48 1.233 2.97 2.471 4.641 3.428 1.67.957 3.547 1.627 5.47 1.627 1.924 0 3.8-.67 5.47-1.627s3.161-2.195 4.642-3.428c1.48-1.232 2.968-2.472 4.636-3.434 1.667-.963 3.54-1.642 5.463-1.653 1.922-.012 3.802.643 5.479 1.587V33.628c-1.677.944-3.557 1.6-5.479 1.587-1.923-.011-3.796-.69-5.463-1.653-1.668-.962-3.156-2.202-4.636-3.434-1.48-1.233-2.971-2.471-4.642-3.428-1.67-.957-3.546-1.627-5.47-1.627-1.923 0-3.8.67-5.47 1.627s-3.161 2.195-4.641 3.428c-1.48 1.232-2.97 2.472-4.637 3.434-1.667.963-3.54 1.641-5.463 1.653-1.922.012-3.802-.643-5.478-1.587zM45.647-6.943c-1.677.944-3.557 1.6-5.479 1.587-1.923-.011-3.796-.69-5.463-1.653-1.668-.962-3.156-2.202-4.636-3.434-1.48-1.233-2.971-2.471-4.642-3.428-1.67-.957-3.546-1.627-5.47-1.627-1.923 0-3.8.67-5.47 1.627s-3.161 2.195-4.641 3.428c-1.48 1.232-2.97 2.472-4.637 3.434-1.667.963-3.54 1.642-5.463 1.653-1.922.012-3.802-.643-5.478-1.587V6.372c1.676-.944 3.556-1.6 5.478-1.587 1.924.012 3.796.69 5.463 1.653C6.877 7.4 8.365 8.64 9.846 9.872c1.48 1.233 2.97 2.471 4.641 3.428 1.67.957 3.547 1.627 5.47 1.627 1.924 0 3.8-.67 5.47-1.627s3.161-2.195 4.642-3.428c1.48-1.232 2.968-2.472 4.636-3.434 1.667-.963 3.54-1.642 5.463-1.653 1.922-.012 3.802.643 5.479 1.587z' stroke-width='1' stroke='white' fill='none'/></svg>\"]");
+
+},{}],"d5NoS":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "options", ()=>options);
@@ -3317,7 +3285,7 @@ function createExplosionSound(pan = 0.5) {
     noiseSource.stop(context.currentTime + 1);
 }
 function pixelsToPan(pan) {
-    return Math.max(0, Math.min(1, (pan - (0, _game.offsetXRoundedDown)) / (0, _game.gameZoneWidthRoundedUp)));
+    return Math.max(0, Math.min(1, (pan - (0, _game.gameState).offsetXRoundedDown) / (0, _game.gameState).gameZoneWidthRoundedUp));
 }
 let lastComboPlayed = NaN, shepard = 6;
 function playShepard(delta, pan, volume) {
@@ -3372,7 +3340,85 @@ function createOscillator(context, frequency, type) {
     return oscillator;
 }
 
-},{"./game":"edeGs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["eBxNa","3qndx"], "3qndx", "parcelRequire94c2")
+},{"./game":"edeGs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gVgfx":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "resetBalls", ()=>resetBalls);
+parcelHelpers.export(exports, "putBallsAtPuck", ()=>putBallsAtPuck);
+var _gameUtils = require("./game_utils");
+function resetBalls(gameState) {
+    const count = 1 + (gameState.perks?.multiball || 0);
+    const perBall = gameState.puckWidth / (count + 1);
+    gameState.balls = [];
+    gameState.ballsColor = "#FFF";
+    if (gameState.perks.picky_eater || gameState.perks.pierce_color) gameState.ballsColor = (0, _gameUtils.getMajorityValue)(gameState.bricks.filter((i)=>i)) || "#FFF";
+    for(let i = 0; i < count; i++){
+        const x = gameState.puckPosition - gameState.puckWidth / 2 + perBall * (i + 1);
+        const vx = Math.random() > 0.5 ? gameState.baseSpeed : -gameState.baseSpeed;
+        gameState.balls.push({
+            x,
+            previousX: x,
+            y: gameState.gameZoneHeight - 1.5 * gameState.ballSize,
+            previousY: gameState.gameZoneHeight - 1.5 * gameState.ballSize,
+            vx,
+            previousVX: vx,
+            vy: -gameState.baseSpeed,
+            previousVY: -gameState.baseSpeed,
+            sx: 0,
+            sy: 0,
+            sparks: 0,
+            piercedSinceBounce: 0,
+            hitSinceBounce: 0,
+            hitItem: [],
+            bouncesList: [],
+            sapperUses: 0
+        });
+    }
+}
+function putBallsAtPuck(gameState) {
+    // This reset could be abused to cheat quite easily
+    const count = gameState.balls.length;
+    const perBall = gameState.puckWidth / (count + 1);
+    gameState.balls.forEach((ball, i)=>{
+        const x = gameState.puckPosition - gameState.puckWidth / 2 + perBall * (i + 1);
+        ball.x = x;
+        ball.previousX = x;
+        ball.y = gameState.gameZoneHeight - 1.5 * gameState.ballSize;
+        ball.previousY = ball.y;
+        ball.vx = Math.random() > 0.5 ? gameState.baseSpeed : -gameState.baseSpeed;
+        ball.previousVX = ball.vx;
+        ball.vy = -gameState.baseSpeed;
+        ball.previousVY = ball.vy;
+        ball.sx = 0;
+        ball.sy = 0;
+        ball.hitItem = [];
+        ball.hitSinceBounce = 0;
+        ball.piercedSinceBounce = 0;
+    });
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./game_utils":"cEeac"}],"cEeac":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getMajorityValue", ()=>getMajorityValue);
+parcelHelpers.export(exports, "sample", ()=>sample);
+parcelHelpers.export(exports, "sumOfKeys", ()=>sumOfKeys);
+function getMajorityValue(arr) {
+    const count = {};
+    arr.forEach((v)=>count[v] = (count[v] || 0) + 1);
+    // Object.values inline polyfill
+    const max = Math.max(...Object.keys(count).map((k)=>count[k]));
+    return sample(Object.keys(count).filter((k)=>count[k] == max));
+}
+function sample(arr) {
+    return arr[Math.floor(arr.length * Math.random())];
+}
+function sumOfKeys(obj) {
+    if (!obj) return 0;
+    return Object.values(obj)?.reduce((a, b)=>a + b, 0) || 0;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["3qndx"], "3qndx", "parcelRequire94c2")
 
 </script>
   </body>

@@ -4,7 +4,7 @@ import _palette from './palette.json'
 import _allLevels from './levels.json'
 import {getLevelBackground, hashCode} from "./getLevelBackground";
 import {createRoot} from 'react-dom/client';
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {moveLevel, resizeLevel, setBrick} from "./levels_editor_util";
 
 const backgrounds = _backgrounds as string[];
@@ -12,17 +12,6 @@ const backgrounds = _backgrounds as string[];
 const palette = _palette as Palette;
 
 let allLevels = _allLevels as RawLevel[];
-
-
-function save() {
-    return fetch('http://localhost:4400/src/levels.json', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'text/plain'
-        },
-        body: JSON.stringify(allLevels, null, 2)
-    })
-}
 
 
 function App() {
@@ -33,11 +22,28 @@ function App() {
     const updateLevel = useCallback((index: number, change: Partial<RawLevel>) => {
         setLevels(list => list.map((l, li) => li === index ? {...l, ...change} : l))
     }, []);
+
     const deleteLevel = useCallback((li: number) => {
         if (confirm('Delete level')) {
-            allLevels = allLevels.filter((l, i) => i !== li)
+            setLevels(allLevels.filter((l, i) => i !== li))
         }
     }, [])
+
+    useEffect(()=>{
+       const timoutId= setTimeout(()=>{
+              return fetch('http://localhost:4400/src/levels.json', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain'
+                    },
+                    body: JSON.stringify(levels, null, 2)
+                });
+
+        },500)
+        return ()=>clearTimeout(timoutId)
+    },[levels])
+
+
 
     return <div onMouseUp={() => setApplying('')} onMouseLeave={() => setApplying('')}>
         <div id={"levels"}>

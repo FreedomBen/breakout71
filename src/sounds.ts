@@ -1,8 +1,6 @@
 import {
-  gameZoneWidthRoundedUp,
+  gameState,
   isSettingOn,
-  offsetX,
-  offsetXRoundedDown,
 } from "./game";
 
 export const sounds = {
@@ -160,7 +158,7 @@ function createExplosionSound(pan = 0.5) {
 function pixelsToPan(pan: number) {
   return Math.max(
     0,
-    Math.min(1, (pan - offsetXRoundedDown) / gameZoneWidthRoundedUp),
+    Math.min(1, (pan - gameState.offsetXRoundedDown) / gameState.gameZoneWidthRoundedUp),
   );
 }
 
