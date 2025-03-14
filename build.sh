@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# the version number is just a unix timestamp in minutes
+versionCode=$1
+
 source ~/.nvm/nvm.sh;
 
 nvm install v21
@@ -21,8 +24,6 @@ set -e
 set -x
 
 
-# the version number is just a unix timestamp in minutes
-versionCode=$(($(date +%s) / 60))
 
 
 # Replace the version code and name in gradle for fdroid and play store
@@ -48,9 +49,3 @@ npm run build
 rm -rf ./app/src/main/assets/*
 cp public/* dist
 cp dist/* ./app/src/main/assets/
-
-# Create a release commit and tag
-git add .
-git commit -m "Build $versionCode"
-git tag -a $versionCode -m $versionCode
-git push

@@ -1,6 +1,10 @@
 #!/bin/bash
 
-bash ./build.sh
+versionCode=$(($(date +%s) / 60))
+
+bash ./build.sh $versionCode
+
+# we don't add a version tag to let fdroid ignore this build
 
 # upload to breakout-v3-staging.lecaro.me
 DOMAIN="breakout-v3-staging.lecaro.me"
@@ -9,5 +13,3 @@ PUBLIC_CONTENT="./dist/*"
 ssh staging "mkdir -p /opt/mup-nginx-proxy/config/html/static_sites/$DOMAIN"
 rsync -avz --delete  $PUBLIC_CONTENT staging:/opt/mup-nginx-proxy/config/html/static_sites/$DOMAIN
 
-# upload to itch.io , upload the index file directly
-butler push "./dist/index.html" renanlecaro/breakout71:nightly --userversion $versionCode
