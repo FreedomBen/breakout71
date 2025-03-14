@@ -1,4 +1,5 @@
 if ("serviceWorker" in navigator &&
     window.location.search.includes("isPWA=true")) {
-    navigator.serviceWorker.register("sw-b71.js");
+    // @ts-ignore
+    navigator.serviceWorker.register(new URL('sw-b71.js', import.meta.url));
 }
