@@ -46,7 +46,7 @@ export const options = {
     disabled() {
       return window.location.search.includes("isInWebView=true");
     },
-  },
+  }
 } as const satisfies { [k: string]: OptionDef };
 
 export type OptionDef = {

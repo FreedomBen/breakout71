@@ -33,6 +33,11 @@ sed -i -e "s/^[[:space:]]*versionCode = .*/        versionCode = $versionCode/" 
 
 echo "\"$versionCode\"" > src/version.json
 
+# Update service worker
+sed -i -e "s/VERSION = .*/ VERSION = '$versionCode'/"  ./public/sw-b71.js
+
+
+
 # remove all exif metadata from pictures, because i think fdroid doesn't like that. odd
 find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all=
 

@@ -13,6 +13,7 @@
   "author": "Renan LE CARO",
   "license": "GNU AGPLv3",
   "dependencies": {
+    "@parcel/service-worker": "^2.13.3",
     "@parcel/transformer-less": "^2.13.3",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",

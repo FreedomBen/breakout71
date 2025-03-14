@@ -17,6 +17,7 @@ import {putBallsAtPuck, resetBalls} from "./resetBalls";
 import {makeEmptyPerksMap, sumOfKeys} from "./game_utils";
 import {baseCombo, decreaseCombo, resetCombo} from "./combo";
 
+import './sw_loader'
 
 const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
 const ctx = gameCanvas.getContext("2d", {
@@ -2382,6 +2383,7 @@ async function openSettingsPanel() {
             });
         }
     }
+
     actions.push({
         text: "Sandbox mode",
         help:
