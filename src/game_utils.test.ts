@@ -1,4 +1,5 @@
-import {getMajorityValue, sample, sumOfKeys} from "./game_utils";
+import {getMajorityValue, makeEmptyPerksMap, sample, sumOfKeys} from "./game_utils";
+import {Upgrade} from "./types";
 
 describe('getMajorityValue', ()=>{
 
@@ -38,5 +39,11 @@ describe('sumOfKeys', ()=>{
     })
     it('returns 0 for null',()=>{
         expect(sumOfKeys(null)).toEqual(0)
+    })
+})
+describe('makeEmptyPerksMap', ()=>{
+    it('returns an object',()=>{
+        expect(makeEmptyPerksMap([{id:"ball_attract_ball"}])).toEqual({ball_attract_ball:0})
+        expect(makeEmptyPerksMap([])).toEqual({})
     })
 })

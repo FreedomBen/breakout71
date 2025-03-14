@@ -1,5 +1,5 @@
 
-import {PerksMap, Upgrade} from "./types";
+import {PerkId, PerksMap, Upgrade} from "./types";
 
 export function getMajorityValue(arr: string[]): string {
     const count: { [k: string]: number } = {};
@@ -19,7 +19,7 @@ export function sumOfKeys(obj:{[key:string]:number} | undefined | null){
     return Object.values(obj)?.reduce((a,b)=>a+b,0) ||0
 }
 
-export const makeEmptyPerksMap = (upgrades:Upgrade[]) => {
+export const makeEmptyPerksMap = (upgrades: { id:PerkId }[]) => {
     const p = {} as any;
     upgrades.forEach((u) => (p[u.id] = 0));
     return p as PerksMap;

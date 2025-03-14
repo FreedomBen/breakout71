@@ -181,10 +181,16 @@ exports.export = function(dest, destName, get) {
 },{}],"7OIPf":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "hashCode", ()=>hashCode);
 parcelHelpers.export(exports, "getLevelBackground", ()=>getLevelBackground);
+parcelHelpers.export(exports, "hashCode", ()=>hashCode);
 var _backgroundsJson = require("./backgrounds.json");
 var _backgroundsJsonDefault = parcelHelpers.interopDefault(_backgroundsJson);
+const backgrounds = (0, _backgroundsJsonDefault.default);
+function getLevelBackground(level) {
+    let svg = level.svg !== null && backgrounds[level.svg % backgrounds.length];
+    if (!level.color && !svg) svg = backgrounds[hashCode(level.name) % backgrounds.length];
+    return svg;
+}
 function hashCode(string) {
     let hash = 0;
     for(let i = 0; i < string.length; i++){
@@ -193,12 +199,6 @@ function hashCode(string) {
         hash = hash & hash; // Convert to 32bit integer
     }
     return Math.abs(hash);
-}
-const backgrounds = (0, _backgroundsJsonDefault.default);
-function getLevelBackground(level) {
-    let svg = level.svg !== null && backgrounds[level.svg % backgrounds.length];
-    if (!level.color && !svg) svg = backgrounds[hashCode(level.name) % backgrounds.length];
-    return svg;
 }
 
 },{"./backgrounds.json":"el6Kx","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"el6Kx":[function(require,module,exports,__globalThis) {
