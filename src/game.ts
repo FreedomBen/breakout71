@@ -57,6 +57,7 @@ export function pause(playerAskedForPause: boolean) {
       pauseRecording();
       gameState.pauseTimeout = null;
       document.body.className = gameState.running ? " running " : " paused ";
+      scoreDisplay.className = "";
     },
     Math.min(Math.max(0, gameState.pauseUsesDuringRun - 5) * 50, 500),
   );
@@ -1624,13 +1625,15 @@ export function render() {
   const { width, height } = gameCanvas;
   if (!width || !height) return;
 
-  scoreDisplay.innerText = `L${gameState.currentLevel + 1}/${max_levels()} $${gameState.score}`;
-  Object.assign(
-    scoreDisplay.style,
-    gameState.lastScoreIncrease < gameState.levelTime - 30
-      ? { color: "gold", fontWeight: "bold", opacity: 1 }
-      : { opacity: 0.5, fontWeight: "normal", color: "white" },
-  );
+  if (gameState.currentLevel || gameState.levelTime) {
+    menuLabel.innerText = `L${gameState.currentLevel + 1}/${max_levels()}`;
+  } else {
+    menuLabel.innerText = "menu";
+  }
+  scoreDisplay.innerText = `$${gameState.score}`;
+
+  scoreDisplay.className =
+    gameState.lastScoreIncrease > gameState.levelTime - 500 ? "active" : "";
 
   // Clear
   if (!isSettingOn("basic") && !level.color && level.svg) {
@@ -2315,6 +2318,7 @@ window.addEventListener("visibilitychange", () => {
 });
 
 const scoreDisplay = document.getElementById("score") as HTMLButtonElement;
+const menuLabel = document.getElementById("menuLabel") as HTMLButtonElement;
 let alertsOpen = 0,
   closeModal: null | (() => void) = null;
 
@@ -2616,6 +2620,7 @@ async function openSettingsPanel() {
       if (
         await asyncAlert({
           title: "Reset",
+          text: "You will loose all progress you made in the game, are you sure ? ",
           actions: [
             {
               text: "Yes",

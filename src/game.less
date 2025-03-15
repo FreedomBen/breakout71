@@ -55,15 +55,16 @@ body {
 
 #score {
   right: 0;
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.3s;
+  &.active {
+    color: gold;
+    transition: color 0.01s;
+  }
 }
 
 #menu {
   left: 0;
-  @media screen and (orientation: portrait) {
-    & > span {
-      display: none;
-    }
-  }
 }
 
 .popup {

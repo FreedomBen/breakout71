@@ -41,7 +41,7 @@
   {
     "name": "Dots",
     "size": 9,
-    "bricks": "b_t_a_c____________b_t_a_c__________P_b_t_a_c__________P_b_t_a____________P_b_t_a",
+    "bricks": "b_t_a_c_c__________b_t_a_c__________P_b_t_a_c__________P_b_t_a__________P_P_b_t_a",
     "svg": null
   },
   {
