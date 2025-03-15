@@ -3,7 +3,7 @@ import _palette from "./palette.json";
 import _rawLevelsList from "./levels.json";
 import _appVersion from "./version.json";
 import { rawUpgrades } from "./rawUpgrades";
-import {getLevelBackground} from "./getLevelBackground";
+import { getLevelBackground } from "./getLevelBackground";
 const palette = _palette as Palette;
 
 const rawLevelsList = _rawLevelsList as RawLevel[];
@@ -16,11 +16,7 @@ const levelIconHTMLCanvasCtx = levelIconHTMLCanvas.getContext("2d", {
   alpha: true,
 }) as CanvasRenderingContext2D;
 
-function levelIconHTML(
-  bricks: string[],
-  levelSize: number,
-  color: string,
-) {
+function levelIconHTML(bricks: string[], levelSize: number, color: string) {
   const size = 40;
   const c = levelIconHTMLCanvas;
   const ctx = levelIconHTMLCanvasCtx;
@@ -60,13 +56,13 @@ export const allLevels = rawLevelsList
       .split("")
       .map((c) => palette[c])
       .slice(0, level.size * level.size);
-    const icon = levelIconHTML(bricks, level.size,   level.color);
+    const icon = levelIconHTML(bricks, level.size, level.color);
     icons[level.name] = icon;
     return {
       ...level,
       bricks,
       icon,
-      svg:getLevelBackground(level),
+      svg: getLevelBackground(level),
     };
   })
   .filter((l) => !l.name.startsWith("icon:"))

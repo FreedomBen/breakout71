@@ -1,8 +1,11 @@
 #!/bin/bash
 
+set -e
+set -x
 versionCode=$(($(date +%s) / 60))
 
 bash ./build.sh $versionCode
+
 
 # we don't add a version tag to let fdroid ignore this build
 

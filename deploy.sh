@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -x
+
 versionCode=$(($(date +%s) / 60))
 
 bash ./build.sh $versionCode

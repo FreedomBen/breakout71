@@ -12,7 +12,7 @@ class MainActivity : android.app.Activity() {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,er
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
 //        WebView.setWebContentsDebuggingEnabled(true)

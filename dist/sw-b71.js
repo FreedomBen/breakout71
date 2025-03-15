@@ -1,5 +1,5 @@
 // The version of the cache.
-const VERSION = '29032991';
+const VERSION = "29033834";
 // The name of the cache
 const CACHE_NAME = `breakout-71-${VERSION}`;
 // The static resources that the app needs to function.
@@ -24,7 +24,7 @@ self.addEventListener("activate", (event)=>{
     })());
 });
 self.addEventListener("fetch", (event)=>{
-    if (event.request.mode === "navigate" && event.request.url.endsWith('/index.html?isPWA=true')) {
+    if (event.request.mode === "navigate" && event.request.url.endsWith("/index.html?isPWA=true")) {
         event.respondWith(caches.match("/"));
         return;
     }

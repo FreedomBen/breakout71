@@ -17,5 +17,5 @@ app.post('/src/levels.json', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port http://localhost:${port}`)
+  console.info(`Editor BE listening on port http://localhost:${port}`)
 })

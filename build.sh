@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # the version number is just a unix timestamp in minutes
-versionCode=$1
+
+defaultVersionCode=$(($(date +%s) / 60))
+versionCode=${1:-$defaultVersionCode}
+
+# TODO crash without app version
 
 source ~/.nvm/nvm.sh;
 
@@ -48,4 +52,5 @@ npm run build
 
 rm -rf ./app/src/main/assets/*
 cp public/* dist
-cp dist/* ./app/src/main/assets/
+rm -rf ./app/src/main/assets/*
+cp dist/index.html ./app/src/main/assets/

@@ -259,8 +259,8 @@ const backgrounds = (0, _backgroundsJsonDefault.default);
 const palette = (0, _paletteJsonDefault.default);
 let allLevels = (0, _levelsJsonDefault.default);
 function App() {
-    const [selected, setSelected] = (0, _react.useState)('W');
-    const [applying, setApplying] = (0, _react.useState)('');
+    const [selected, setSelected] = (0, _react.useState)("W");
+    const [applying, setApplying] = (0, _react.useState)("");
     const [levels, setLevels] = (0, _react.useState)(allLevels);
     const updateLevel = (0, _react.useCallback)((index, change)=>{
         setLevels((list)=>list.map((l, li)=>li === index ? {
@@ -269,14 +269,14 @@ function App() {
                 } : l));
     }, []);
     const deleteLevel = (0, _react.useCallback)((li)=>{
-        if (confirm('Delete level')) setLevels(allLevels.filter((l, i)=>i !== li));
+        if (confirm("Delete level")) setLevels(allLevels.filter((l, i)=>i !== li));
     }, []);
     (0, _react.useEffect)(()=>{
         const timoutId = setTimeout(()=>{
-            return fetch('http://localhost:4400/src/levels.json', {
-                method: 'POST',
+            return fetch("http://localhost:4400/src/levels.json", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'text/plain'
+                    "Content-Type": "text/plain"
                 },
                 body: JSON.stringify(levels, null, 2)
             });
@@ -287,8 +287,7 @@ function App() {
     ]);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         onMouseUp: ()=>{
-            console.log('mouse up');
-            setApplying('');
+            setApplying("");
         },
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -301,8 +300,7 @@ function App() {
                         brickButtons.push(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                             onMouseDown: ()=>{
                                 if (!applying) {
-                                    console.log(selected, bricks[index], applying);
-                                    const color = selected === bricks[index] ? '_' : selected;
+                                    const color = selected === bricks[index] ? "_" : selected;
                                     setApplying(color);
                                     updateLevel(li, (0, _levelsEditorUtil.setBrick)(level, index, color));
                                 }
@@ -311,25 +309,25 @@ function App() {
                                 if (applying) updateLevel(li, (0, _levelsEditorUtil.setBrick)(level, index, applying));
                             },
                             style: {
-                                background: palette[bricks[index]] || 'transparent',
+                                background: palette[bricks[index]] || "transparent",
                                 left: x * 40,
                                 top: y * 40,
                                 width: 40,
                                 height: 40,
-                                position: 'absolute'
+                                position: "absolute"
                             }
                         }, index, false, {
                             fileName: "src/levels_editor.tsx",
-                            lineNumber: 61,
-                            columnNumber: 51
+                            lineNumber: 63,
+                            columnNumber: 17
                         }, this));
                     }
                     const background = color ? {
-                        backgroundImage: 'none',
+                        backgroundImage: "none",
                         backgroundColor: color
                     } : {
                         backgroundImage: `url("data:image/svg+xml;UTF8,${encodeURIComponent((0, _getLevelBackground.getLevelBackground)(level))}")`,
-                        backgroundColor: 'transparent'
+                        backgroundColor: "transparent"
                     };
                     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                         children: [
@@ -341,8 +339,8 @@ function App() {
                                     })
                             }, void 0, false, {
                                 fileName: "src/levels_editor.tsx",
-                                lineNumber: 90,
-                                columnNumber: 29
+                                lineNumber: 99,
+                                columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                 children: [
@@ -351,85 +349,85 @@ function App() {
                                         children: "Delete"
                                     }, void 0, false, {
                                         fileName: "src/levels_editor.tsx",
-                                        lineNumber: 92,
-                                        columnNumber: 33
+                                        lineNumber: 105,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.resizeLevel)(level, -1)),
                                         children: "-"
                                     }, void 0, false, {
                                         fileName: "src/levels_editor.tsx",
-                                        lineNumber: 93,
-                                        columnNumber: 33
+                                        lineNumber: 106,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.resizeLevel)(level, 1)),
                                         children: "+"
                                     }, void 0, false, {
                                         fileName: "src/levels_editor.tsx",
-                                        lineNumber: 94,
-                                        columnNumber: 33
+                                        lineNumber: 109,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.moveLevel)(level, -1, 0)),
                                         children: "L"
                                     }, void 0, false, {
                                         fileName: "src/levels_editor.tsx",
-                                        lineNumber: 95,
-                                        columnNumber: 33
+                                        lineNumber: 112,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.moveLevel)(level, 1, 0)),
                                         children: "R"
                                     }, void 0, false, {
                                         fileName: "src/levels_editor.tsx",
-                                        lineNumber: 96,
-                                        columnNumber: 33
+                                        lineNumber: 117,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.moveLevel)(level, 0, -1)),
                                         children: "U"
                                     }, void 0, false, {
                                         fileName: "src/levels_editor.tsx",
-                                        lineNumber: 97,
-                                        columnNumber: 33
+                                        lineNumber: 120,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.moveLevel)(level, 0, 1)),
                                         children: "D"
                                     }, void 0, false, {
                                         fileName: "src/levels_editor.tsx",
-                                        lineNumber: 98,
-                                        columnNumber: 33
+                                        lineNumber: 125,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                                         type: "color",
-                                        value: level.color || '',
+                                        value: level.color || "",
                                         onChange: (e)=>e.target.value && updateLevel(li, {
                                                 color: e.target.value
                                             })
                                     }, void 0, false, {
                                         fileName: "src/levels_editor.tsx",
-                                        lineNumber: 99,
-                                        columnNumber: 33
+                                        lineNumber: 128,
+                                        columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                                         type: "number",
                                         value: level.svg || (0, _getLevelBackground.hashCode)(level.name) % backgrounds.length,
                                         onChange: (e)=>!isNaN(parseFloat(e.target.value)) && updateLevel(li, {
-                                                color: '',
+                                                color: "",
                                                 svg: parseFloat(e.target.value)
                                             })
                                     }, void 0, false, {
                                         fileName: "src/levels_editor.tsx",
-                                        lineNumber: 101,
-                                        columnNumber: 33
+                                        lineNumber: 135,
+                                        columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/levels_editor.tsx",
-                                lineNumber: 91,
-                                columnNumber: 29
+                                lineNumber: 104,
+                                columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                 className: "level-bricks-preview",
@@ -441,42 +439,42 @@ function App() {
                                 children: brickButtons
                             }, void 0, false, {
                                 fileName: "src/levels_editor.tsx",
-                                lineNumber: 109,
-                                columnNumber: 29
+                                lineNumber: 147,
+                                columnNumber: 15
                             }, this)
                         ]
                     }, li, true, {
                         fileName: "src/levels_editor.tsx",
-                        lineNumber: 89,
-                        columnNumber: 32
+                        lineNumber: 98,
+                        columnNumber: 13
                     }, this);
                 })
             }, void 0, false, {
                 fileName: "src/levels_editor.tsx",
-                lineNumber: 52,
-                columnNumber: 9
+                lineNumber: 54,
+                columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 id: "palette",
                 children: Object.entries(palette).map(([code, color])=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                        className: code === selected ? 'active' : '',
+                        className: code === selected ? "active" : "",
                         style: {
-                            background: color || 'linear-gradient(45deg,black,white)',
-                            display: 'inline-block',
-                            width: '40px',
-                            height: '40px',
-                            border: '1px solid black'
+                            background: color || "linear-gradient(45deg,black,white)",
+                            display: "inline-block",
+                            width: "40px",
+                            height: "40px",
+                            border: "1px solid black"
                         },
                         onClick: ()=>setSelected(code)
                     }, code, false, {
                         fileName: "src/levels_editor.tsx",
-                        lineNumber: 127,
-                        columnNumber: 64
+                        lineNumber: 163,
+                        columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "src/levels_editor.tsx",
-                lineNumber: 125,
-                columnNumber: 9
+                lineNumber: 161,
+                columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                 id: "new-level",
@@ -488,29 +486,29 @@ function App() {
                             {
                                 name,
                                 size: 8,
-                                bricks: '________________________________________________________________',
+                                bricks: "________________________________________________________________",
                                 svg: null,
-                                color: ''
+                                color: ""
                             }
                         ]);
                 },
                 children: "new"
             }, void 0, false, {
                 fileName: "src/levels_editor.tsx",
-                lineNumber: 141,
-                columnNumber: 9
+                lineNumber: 177,
+                columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/levels_editor.tsx",
-        lineNumber: 48,
-        columnNumber: 12
+        lineNumber: 49,
+        columnNumber: 5
     }, this);
 }
-const root = (0, _client.createRoot)(document.getElementById('app'));
+const root = (0, _client.createRoot)(document.getElementById("app"));
 root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(App, {}, void 0, false, {
     fileName: "src/levels_editor.tsx",
-    lineNumber: 160,
+    lineNumber: 203,
     columnNumber: 13
 }, undefined));
 
@@ -16268,22 +16266,21 @@ function resizeLevel(level, sizeDelta) {
     for(let x = 0; x < newSize; x++)for(let y = 0; y < newSize; y++)newBricks[y * newSize + x] = brickAt(level, x, y);
     return {
         size: newSize,
-        bricks: newBricks.join('')
+        bricks: newBricks.join("")
     };
 }
 function brickAt(level, x, y) {
-    return x >= 0 && x < level.size && y >= 0 && y < level.size && level.bricks.split('')[y * level.size + x] || '_';
+    return x >= 0 && x < level.size && y >= 0 && y < level.size && level.bricks.split("")[y * level.size + x] || "_";
 }
 function moveLevel(level, dx, dy) {
     const { size } = level;
-    const newBricks = new Array(size * size).fill('_');
+    const newBricks = new Array(size * size).fill("_");
     for(let x = 0; x < size; x++)for(let y = 0; y < size; y++)newBricks[y * size + x] = brickAt(level, x - dx, y - dy);
     return {
-        bricks: newBricks.join('')
+        bricks: newBricks.join("")
     };
 }
 function setBrick(level, index, colorCode) {
-    console.log('setBrick', level.name, index, colorCode);
     const { size } = level;
     const newBricks = [];
     for(let x = 0; x < size; x++)for(let y = 0; y < size; y++){
@@ -16291,7 +16288,7 @@ function setBrick(level, index, colorCode) {
         newBricks[brickIndex] = brickIndex === index && colorCode || brickAt(level, x, y);
     }
     return {
-        bricks: newBricks.join('')
+        bricks: newBricks.join("")
     };
 }
 
