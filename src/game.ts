@@ -2470,11 +2470,9 @@ scoreDisplay.addEventListener("click", (e) => {
 
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
-     pause(true)
+    pause(true);
   }
 });
-
-
 
 async function openScorePanel() {
   pause(true);
