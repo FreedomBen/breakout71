@@ -10,6 +10,5 @@
 local.properties
 node_modules
 *.zip
-app/release/app-release.aab
-app-release.aab
+app/release/
 .parcel-cache/
