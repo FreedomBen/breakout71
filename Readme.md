@@ -20,9 +20,13 @@ It's very lean and does not take much storage space (Roughly 0.1MB).
 If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
 There's also an easy mode for kids (slower ball).
 
-# bugs
+# Next
 
-- apk version soft locks at start ? 
+
+- separate particles by type
+- reuse coins and particles
+- sturdy bricks map of remaining hits
+
  
 # UX
 - the onboarding feels weird, missing a tutorial
@@ -55,9 +59,10 @@ There's also an easy mode for kids (slower ball).
 - restart run on r
 - when missing, redo particle trail, but give speed to particle that matches ball direction
 
+
 # graphics
 - apply global curve / brightness to canvas when things blow, or just always to make neon effect better
-- lights shadows  
+- lights shadows with background gradient light map ? 
 - webgl rendering
 - shinier coins by applying glow to them
 - different visual effects on ball to represent which perks it's imbued with (pierce, sapper…). remove visual while it's not affected (can't pierce/sap anymore until touching the puck).

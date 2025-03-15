@@ -1,13 +1,15 @@
-import { gameState, isSettingOn } from "./game";
+import { gameState } from "./game";
+
+import {isOptionOn} from "./options";
 
 export const sounds = {
   wallBeep: (pan: number) => {
-    if (!isSettingOn("sound")) return;
+    if (!isOptionOn("sound")) return;
     createSingleBounceSound(800, pixelsToPan(pan));
   },
 
   comboIncreaseMaybe: (combo: number, x: number, volume: number) => {
-    if (!isSettingOn("sound")) return;
+    if (!isOptionOn("sound")) return;
     let delta = 0;
     if (!isNaN(lastComboPlayed)) {
       if (lastComboPlayed < combo) delta = 1;
@@ -18,24 +20,24 @@ export const sounds = {
   },
 
   comboDecrease() {
-    if (!isSettingOn("sound")) return;
+    if (!isOptionOn("sound")) return;
     playShepard(-1, 0.5, 0.5);
   },
   coinBounce: (pan: number, volume: number) => {
-    if (!isSettingOn("sound")) return;
+    if (!isOptionOn("sound")) return;
     createSingleBounceSound(1200, pixelsToPan(pan), volume, 0.1, "triangle");
   },
   explode: (pan: number) => {
-    if (!isSettingOn("sound")) return;
+    if (!isOptionOn("sound")) return;
     createExplosionSound(pixelsToPan(pan));
   },
   lifeLost(pan: number) {
-    if (!isSettingOn("sound")) return;
+    if (!isOptionOn("sound")) return;
     createShatteredGlassSound(pixelsToPan(pan));
   },
 
   coinCatch(pan: number) {
-    if (!isSettingOn("sound")) return;
+    if (!isOptionOn("sound")) return;
     createSingleBounceSound(900, pixelsToPan(pan), 0.8, 0.1, "triangle");
   },
   colorChange(pan: number, volume: number) {
@@ -50,7 +52,7 @@ let audioContext: AudioContext,
 
 export function getAudioContext() {
   if (!audioContext) {
-    if (!isSettingOn("sound")) return null;
+    if (!isOptionOn("sound")) return null;
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     audioRecordingTrack = audioContext.createMediaStreamDestination();
   }
