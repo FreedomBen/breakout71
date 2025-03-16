@@ -104,7 +104,7 @@ export const rawUpgrades = [
     id: "skip_last",
     max: 7,
     name: t('upgrades.skip_last.name'),
-    help: (lvl: number) => t('upgrades.skip_last.help', {lvl} ),
+    help: (lvl: number) => lvl==1 ?  t('upgrades.skip_last.help'  ) : t('upgrades.skip_last.help_plural', {lvl} ),
     fullHelp: t('upgrades.skip_last.fullHelp'),
 
   },
@@ -337,7 +337,7 @@ export const rawUpgrades = [
     id: "one_more_choice",
     max: 3,
     name: t('upgrades.one_more_choice.name'),
-    help: (lvl: number) =>  lvl == 1 ? t('upgrades.one_more_choice.help'): t('upgrades.one_more_choice.help_plural'),
+    help: (lvl: number) =>  t('upgrades.one_more_choice.help'),
     fullHelp: t('upgrades.one_more_choice.fullHelp'),
 
   },
@@ -348,7 +348,7 @@ export const rawUpgrades = [
     id: "instant_upgrade",
     max: 2,
     name: t('upgrades.instant_upgrade.name'),
-    help: (lvl: number) =>  lvl == 1 ? t('upgrades.instant_upgrade.help'): t('upgrades.instant_upgrade.help_plural'),
+    help: (lvl: number) =>    t('upgrades.instant_upgrade.help') ,
     fullHelp: t('upgrades.instant_upgrade.fullHelp'),
 
   },

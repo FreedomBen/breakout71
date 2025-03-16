@@ -19,21 +19,6 @@
 			<package_node>
 				<name>main</name>
 				<children>
-					<concept_node>
-						<name>appName</name>
-						<description/>
-						<comment/>
-						<translations>
-							<translation>
-								<language>en-US</language>
-								<approved>false</approved>
-							</translation>
-							<translation>
-								<language>fr-FR</language>
-								<approved>false</approved>
-							</translation>
-						</translations>
-					</concept_node>
 					<folder_node>
 						<name>gameOver</name>
 						<children>
@@ -678,6 +663,36 @@
 								</translations>
 							</concept_node>
 							<concept_node>
+								<name>language</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>language_help</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
 								<name>mobile</name>
 								<description/>
 								<comment/>
@@ -1279,21 +1294,6 @@
 							</concept_node>
 						</children>
 					</folder_node>
-					<concept_node>
-						<name>tagLine</name>
-						<description/>
-						<comment/>
-						<translations>
-							<translation>
-								<language>en-US</language>
-								<approved>false</approved>
-							</translation>
-							<translation>
-								<language>fr-FR</language>
-								<approved>false</approved>
-							</translation>
-						</translations>
-					</concept_node>
 					<folder_node>
 						<name>unlocks</name>
 						<children>
@@ -2031,21 +2031,6 @@
 										</translations>
 									</concept_node>
 									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
 										<name>name</name>
 										<description/>
 										<comment/>
@@ -2232,21 +2217,6 @@
 									</concept_node>
 									<concept_node>
 										<name>help</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>help_plural</name>
 										<description/>
 										<comment/>
 										<translations>
@@ -2692,6 +2662,21 @@
 									</concept_node>
 									<concept_node>
 										<name>help</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>fr-FR</language>
+												<approved>false</approved>
+											</translation>
+										</translations>
+									</concept_node>
+									<concept_node>
+										<name>help_plural</name>
 										<description/>
 										<comment/>
 										<translations>

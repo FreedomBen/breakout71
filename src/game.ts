@@ -7,7 +7,7 @@ import {makeEmptyPerksMap, sumOfKeys} from "./game_utils";
 import {baseCombo, decreaseCombo, resetCombo} from "./combo";
 
 import "./sw_loader";
-import {t} from "./i18n/i18n";
+import {getCurrentLang, t} from "./i18n/i18n";
 import {getSettingValue, setSettingValue} from "./settings";
 
 const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
@@ -2636,6 +2636,34 @@ async function openSettingsPanel() {
             }
         },
     });
+
+    actions.push({
+         text: t('main_menu.language'),
+        help: t('main_menu.language_help'),
+        async value() {
+            const pick = await asyncAlert({
+                    title: t('main_menu.language'),
+                    text: t('main_menu.language_help'),
+                    actions: [
+                        {
+                            text: 'English',
+                            value: 'en',
+                        },
+                        {
+                            text: 'Français',
+                            value: 'fr',
+                        },
+                    ],
+                    allowClose: true,
+                })
+             if (
+                pick && pick!==getCurrentLang()
+            ) {
+                setSettingValue('lang', pick)
+                window.location.reload()
+            }
+        },
+    })
 
     const cb = await asyncAlert<() => void>({
         title: t('main_menu.title'),

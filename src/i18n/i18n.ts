@@ -5,9 +5,12 @@ import {getSettingValue} from "../settings";
 type translationKeys = keyof typeof en
 type translation= { [key in translationKeys] : string }
 const languages:Record<string, translation>= {fr,en}
+export function getCurrentLang(){
+   return  getSettingValue('lang',getFirstBrowserLanguage())
+}
 
 export function t(key: translationKeys, params: {[key:string]:any} = {}):string {
-    const lang = getSettingValue('lang',getFirstBrowserLanguage())
+    const lang = getCurrentLang()
     let template=languages[lang]?.[key] || languages.en[key]
     for(let key in params){
         template=template.split('{{'+key+'}}').join(`${params[key]}`)
