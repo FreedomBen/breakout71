@@ -22,7 +22,6 @@ There's also an easy mode for kids (slower ball).
 
 # Next
 
-
 - separate particles by type
 - reuse coins and particles
 - sturdy bricks map of remaining hits
