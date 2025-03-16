@@ -15,7 +15,7 @@ export function recordOneFrame(gameState: GameState) {
   if (!isOptionOn("record")) {
     return;
   }
-  if (!gameState.running) return;
+  // if (!gameState.running) return;
   if (!captureStream) return;
   drawMainCanvasOnSmallCanvas(gameState);
   if (captureTrack?.requestFrame) {

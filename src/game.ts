@@ -84,6 +84,7 @@ export function pause(playerAskedForPause: boolean) {
       gameState.pauseTimeout = null;
       document.body.className = gameState.running ? " running " : " paused ";
       scoreDisplay.className = "";
+      gameState.needsRender=true
     },
     Math.min(Math.max(0, gameState.pauseUsesDuringRun - 5) * 50, 500),
   );
@@ -455,8 +456,13 @@ export function tick() {
     gameState.runStatistics.runTime += timeDeltaMs;
     gameStateTick(gameState, frames);
   }
-  render(gameState);
-  recordOneFrame(gameState);
+  if(gameState.running || gameState.needsRender){
+    gameState.needsRender=false
+    render(gameState);
+  }
+  if(gameState.running){
+    recordOneFrame(gameState);
+  }
   requestAnimationFrame(tick);
 }
 
@@ -684,6 +690,7 @@ async function openSettingsPanel() {
   });
   if (cb) {
     cb();
+    gameState.needsRender=true
   }
 }
 

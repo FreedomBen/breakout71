@@ -88,6 +88,8 @@ export function newGameState(params: RunParams): GameState {
     },
     lastOffered: {},
     levelTime: 0,
+    levelWallBounces: 0,
+    needsRender: true,
     autoCleanUses: 0,
   };
   resetBalls(gameState);

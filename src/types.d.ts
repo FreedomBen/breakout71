@@ -190,6 +190,8 @@ export type GameState = {
   combo: number;
   // Whether the game is running or paused
   running: boolean;
+  // Whether the game should be re-rendered once even if not running
+  needsRender: boolean;
   // Position of the center of the puck on the canvas in pixels, from the left of the canvas.
   puckPosition: number;
   // Will be set if the game is about to be paused. Game pause is delayed by a few milliseconds if you pause a few times in a run,

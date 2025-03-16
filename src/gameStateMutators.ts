@@ -35,6 +35,7 @@ import { isOptionOn } from "./options";
 export function setMousePos(gameState: GameState, x: number) {
   // Sets the puck position, and updates the ball position if they are supposed to follow it
   gameState.puckPosition = x;
+  gameState.needsRender=true
 }
 
 function getBallDefaultVx(gameState: GameState) {
@@ -43,6 +44,7 @@ function getBallDefaultVx(gameState: GameState) {
     (Math.random() > 0.5 ? gameState.baseSpeed : -gameState.baseSpeed)
   );
 }
+
 export function resetBalls(gameState: GameState) {
   const count = 1 + (gameState.perks?.multiball || 0);
   const perBall = gameState.puckWidth / (count + 1);
