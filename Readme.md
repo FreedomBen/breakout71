@@ -161,7 +161,7 @@ There's also an easy mode for kids (slower ball).
 - [colin] faster style - augmente le combo en fonction de la vitesse de la balle
 - [colin] perk: analyzer - permet de voir les caractéristiques cachées des blocs (sturdy…)
 - [colin] perk: roulette - gagne instantanément 2 perks aléatoires
-
+- let coins go out of bounds left and right, where they'll get lost, but +1 combo per brick
 
 # extra levels
 
