@@ -9,9 +9,9 @@ app.use(bodyParser.text({
     limit:'1MB'
 }));
 
-app.post('/src/levels.json', (req, res) => {
+app.post('/src/data/levels.json', (req, res) => {
     if(req.body?.trim()) {
-        fs.writeFileSync('src/levels.json', req.body)
+        fs.writeFileSync('src/data/levels.json', req.body)
     }
     res.end('OK')
 })

@@ -1,7 +1,6 @@
 import { gameState } from "./game";
 
-
-import {isOptionOn} from "./options";
+import { isOptionOn } from "./options";
 
 export const sounds = {
   wallBeep: (pan: number) => {

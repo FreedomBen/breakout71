@@ -35,10 +35,10 @@ sed -i -e "s/^[[:space:]]*versionCode = .*/        versionCode = $versionCode/" 
        -e "s/^[[:space:]]*versionName = .*/        versionName = \"$versionCode\"/" \
        ./app/build.gradle.kts
 
-echo "\"$versionCode\"" > src/version.json
+echo "\"$versionCode\"" > src/data/version.json
 
 # Update service worker
-sed -i -e "s/VERSION = .*/ VERSION = '$versionCode'/"  ./src/sw-b71.js
+sed -i -e "s/VERSION = .*/ VERSION = '$versionCode'/"  ./src/PWA/sw-b71.js
 
 
 
@@ -48,8 +48,9 @@ find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all=
 
 npx prettier --write src/
 
-npm run build
-
+npx jest
+rm -rf dist/*
+npx parcel build src/index.html
 rm -rf ./app/src/main/assets/*
 cp public/* dist
 rm -rf ./app/src/main/assets/*

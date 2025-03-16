@@ -4,7 +4,6 @@ import {
   sample,
   sumOfKeys,
 } from "./game_utils";
-import { Upgrade } from "./types";
 
 describe("getMajorityValue", () => {
   it("returns the most common string", () => {

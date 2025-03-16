@@ -47,6 +47,7 @@ There's also an easy mode for kids (slower ball).
 - translation
 - when game resumes near bottom, be unvulnerable for .5s ? , once per level
 
+
 # Game engine features  
 
 - ask for permanent storage
@@ -153,6 +154,14 @@ There's also an easy mode for kids (slower ball).
 - level flips horizontally every time a ball bounces on puck
 - coins that hit the puck disappear, missed ones are scored
 - squirell : keep coins on screen to have a higher combo
+- [colin] peaceful combo - le combo monte chaque seconde tant que les 2+ balles ne se touchent pas OU qu'on ne touche pas de bloc explosif.
+- [colin] close quarters - balle attirée par tous les blocs/par un bloc aléatoire, actif à portée de bloc (+1bloc au lvlup)/proportionnel à une force (+puissance au lvlup)…
+- [colin] shocks - balls can bounce off of each others and produce a shock that destroys a random block at the current combo
+- [colin] plusieurs perks qui déclenchent des effets quand une balle est perdue. par ex: +3 combo à chaque balle perdue, 5 blocs transformés en bombe, balle et coins ralentis, blocs régénérés…
+- [colin] faster style - augmente le combo en fonction de la vitesse de la balle
+- [colin] perk: analyzer - permet de voir les caractéristiques cachées des blocs (sturdy…)
+- [colin] perk: roulette - gagne instantanément 2 perks aléatoires
+
 
 # extra levels
 
@@ -195,7 +204,7 @@ This requires recording a bit more info about each run.
 I could unlock the "pro stand" at $999 that just holds the play area higher. 
 
 # increase skill ceiling
-
+- reroll mechanic, rerolls are reward for better play
 - make puck smaller as combo increases ? 
 - nerf coin magnet : 
   - no effect when too close
@@ -214,9 +223,7 @@ I could unlock the "pro stand" at $999 that just holds the play area higher.
 - final bosses (large vertical level that scrolls down faster and faster)
 - when the player reaches the last level, allow them to loop the run, unlocking a permanent bonus for this run. For example: +5 combo, +1 life per loop… the counterpart would be hazards that slowly populate the levels.
  
- 
-
-
+  
 
 # Colin's feedback (cwpute/obigre)
  

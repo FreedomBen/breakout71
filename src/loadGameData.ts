@@ -1,52 +1,16 @@
 import { Level, Palette, RawLevel, Upgrade } from "./types";
-import _palette from "./palette.json";
-import _rawLevelsList from "./levels.json";
-import _appVersion from "./version.json";
+import _palette from "./data/palette.json";
+import _rawLevelsList from "./data/levels.json";
+import _appVersion from "./data/version.json";
 import { rawUpgrades } from "./rawUpgrades";
 import { getLevelBackground } from "./getLevelBackground";
+import { levelIconHTML } from "./levelIcon";
+
 const palette = _palette as Palette;
 
 const rawLevelsList = _rawLevelsList as RawLevel[];
 
 export const appVersion = _appVersion as string;
-
-let levelIconHTMLCanvas = document.createElement("canvas");
-const levelIconHTMLCanvasCtx = levelIconHTMLCanvas.getContext("2d", {
-  antialias: false,
-  alpha: true,
-}) as CanvasRenderingContext2D;
-
-function levelIconHTML(bricks: string[], levelSize: number, color: string) {
-  const size = 40;
-  const c = levelIconHTMLCanvas;
-  const ctx = levelIconHTMLCanvasCtx;
-  c.width = size;
-  c.height = size;
-
-  if (color) {
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, size, size);
-  } else {
-    ctx.clearRect(0, 0, size, size);
-  }
-  const pxSize = size / levelSize;
-  for (let x = 0; x < levelSize; x++) {
-    for (let y = 0; y < levelSize; y++) {
-      const c = bricks[y * levelSize + x];
-      if (c) {
-        ctx.fillStyle = c;
-        ctx.fillRect(
-          Math.floor(pxSize * x),
-          Math.floor(pxSize * y),
-          Math.ceil(pxSize),
-          Math.ceil(pxSize),
-        );
-      }
-    }
-  }
-
-  return `<img alt="" width="${size}" height="${size}" src="${c.toDataURL()}"/>`;
-}
 
 export const icons = {} as { [k: string]: string };
 

@@ -1,6 +1,6 @@
-import _palette from "./palette.json";
-import _rawLevelsList from "./levels.json";
-import _appVersion from "./version.json";
+import _palette from "./data/palette.json";
+import _rawLevelsList from "./data/levels.json";
+import _appVersion from "./data/version.json";
 
 describe("json data checks", () => {
   it("_rawLevelsList has icon levels", () => {

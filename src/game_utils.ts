@@ -1,5 +1,5 @@
-import {Ball, GameState, PerkId, PerksMap} from "./types";
-import {icons, upgrades} from "./loadGameData";
+import { Ball, GameState, PerkId, PerksMap } from "./types";
+import { icons, upgrades } from "./loadGameData";
 
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
@@ -26,8 +26,8 @@ export const makeEmptyPerksMap = (upgrades: { id: PerkId }[]) => {
 
 export function brickCenterX(gameState: GameState, index: number) {
   return (
-      gameState.offsetX +
-      ((index % gameState.gridSize) + 0.5) * gameState.brickWidth
+    gameState.offsetX +
+    ((index % gameState.gridSize) + 0.5) * gameState.brickWidth
   );
 }
 
@@ -37,10 +37,10 @@ export function brickCenterY(gameState: GameState, index: number) {
 
 export function getRowColIndex(gameState: GameState, row: number, col: number) {
   if (
-      row < 0 ||
-      col < 0 ||
-      row >= gameState.gridSize ||
-      col >= gameState.gridSize
+    row < 0 ||
+    col < 0 ||
+    row >= gameState.gridSize ||
+    col >= gameState.gridSize
   )
     return -1;
   return row * gameState.gridSize + col;
@@ -48,8 +48,8 @@ export function getRowColIndex(gameState: GameState, row: number, col: number) {
 
 export function getPossibleUpgrades(gameState: GameState) {
   return upgrades
-      .filter((u) => gameState.totalScoreAtRunStart >= u.threshold)
-      .filter((u) => !u?.requires || gameState.perks[u?.requires]);
+    .filter((u) => gameState.totalScoreAtRunStart >= u.threshold)
+    .filter((u) => !u?.requires || gameState.perks[u?.requires]);
 }
 
 export function max_levels(gameState: GameState) {
@@ -67,8 +67,8 @@ export function pickedUpgradesHTMl(gameState: GameState) {
 
 export function currentLevelInfo(gameState: GameState) {
   return gameState.runLevels[
-  gameState.currentLevel % gameState.runLevels.length
-      ];
+    gameState.currentLevel % gameState.runLevels.length
+  ];
 }
 
 export function isTelekinesisActive(gameState: GameState, ball: Ball) {
@@ -76,8 +76,8 @@ export function isTelekinesisActive(gameState: GameState, ball: Ball) {
 }
 
 export function findLast<T>(
-    arr: T[],
-    predicate: (item: T, index: number, array: T[]) => boolean,
+  arr: T[],
+  predicate: (item: T, index: number, array: T[]) => boolean,
 ) {
   let i = arr.length;
   while (--i)
@@ -87,15 +87,15 @@ export function findLast<T>(
 }
 
 export function distance2(
-    a: { x: number; y: number },
-    b: { x: number; y: number },
+  a: { x: number; y: number },
+  b: { x: number; y: number },
 ) {
   return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2);
 }
 
 export function distanceBetween(
-    a: { x: number; y: number },
-    b: { x: number; y: number },
+  a: { x: number; y: number },
+  b: { x: number; y: number },
 ) {
   return Math.sqrt(distance2(a, b));
 }

@@ -8,7 +8,7 @@
   },
   {
     "name": "Butterfly",
-    "bricks": "_________bb_t_t_bbbbb_t_bbbbbbbtbbbb_bbbtbbb____btb____bbbtbbb__bb_t_bb___________________",
+    "bricks": "_________bb_t_t_bbbbb_t_bbbbbbbtbbbb_bbbtbbb____btb____bbbtbbb__bb_t_bb__________",
     "size": 9,
     "svg": 20,
     "color": ""
@@ -834,5 +834,12 @@
     "size": 6,
     "bricks": "_W__W_WW__WW____________WW__WW_W__W_",
     "svg": null
+  },
+  {
+    "name": "icon:concave_puck",
+    "size": 8,
+    "bricks": "___________W_______________W_______________W_____________WWWWW__",
+    "svg": null,
+    "color": ""
   }
 ]

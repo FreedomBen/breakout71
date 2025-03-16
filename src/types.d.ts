@@ -1,5 +1,5 @@
-import {rawUpgrades} from "./rawUpgrades";
-import {options} from "./options";
+import { rawUpgrades } from "./rawUpgrades";
+import { options } from "./options";
 
 export type colorString = string;
 
@@ -98,7 +98,6 @@ export type Ball = {
   piercedSinceBounce: number;
   hitSinceBounce: number;
   hitItem: { index: number; color: string }[];
-  bouncesList: { x: number; y: number }[];
   sapperUses: number;
   destroyed?: boolean;
 };
@@ -141,6 +140,7 @@ export type RunStats = {
   misses: number;
   balls_lost: number;
   puck_bounces: number;
+  wall_bounces: number;
   upgrades_picked: number;
   max_combo: number;
   max_level: number;
@@ -233,6 +233,7 @@ export type GameState = {
   runStatistics: RunStats;
   lastOffered: Partial<{ [k in PerkId]: number }>;
   levelTime: number;
+  levelWallBounces: number;
   autoCleanUses: number;
 };
 

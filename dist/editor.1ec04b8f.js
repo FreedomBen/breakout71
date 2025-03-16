@@ -142,10 +142,10 @@
       this[globalName] = mainExports;
     }
   }
-})({"9zw4T":[function(require,module,exports,__globalThis) {
-require("6f2db3dd8d20283b")(require("27e61996b32b4a9a").getBundleURL('ouAZg') + "index.c0fd3053.js");
+})({"7Iayr":[function(require,module,exports,__globalThis) {
+require("4e14309168f23be0")(require("275cab9bde4ab8f8").getBundleURL('jo05F') + "editor.1350aee5.js");
 
-},{"6f2db3dd8d20283b":"61B45","27e61996b32b4a9a":"lgJ39"}],"61B45":[function(require,module,exports,__globalThis) {
+},{"4e14309168f23be0":"61B45","275cab9bde4ab8f8":"lgJ39"}],"61B45":[function(require,module,exports,__globalThis) {
 "use strict";
 var cacheLoader = require("ca2a84f7fa4a3bb0");
 module.exports = cacheLoader(function(bundle) {
@@ -242,16 +242,16 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"iSxqL":[function(require,module,exports,__globalThis) {
+},{}],"9Ly5x":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _backgroundsJson = require("./backgrounds.json");
+var _backgroundsJson = require("../data/backgrounds.json");
 var _backgroundsJsonDefault = parcelHelpers.interopDefault(_backgroundsJson);
-var _paletteJson = require("./palette.json");
+var _paletteJson = require("../data/palette.json");
 var _paletteJsonDefault = parcelHelpers.interopDefault(_paletteJson);
-var _levelsJson = require("./levels.json");
+var _levelsJson = require("../data/levels.json");
 var _levelsJsonDefault = parcelHelpers.interopDefault(_levelsJson);
-var _getLevelBackground = require("./getLevelBackground");
+var _getLevelBackground = require("../getLevelBackground");
 var _client = require("react-dom/client");
 var _react = require("react");
 var _levelsEditorUtil = require("./levels_editor_util");
@@ -273,7 +273,7 @@ function App() {
     }, []);
     (0, _react.useEffect)(()=>{
         const timoutId = setTimeout(()=>{
-            return fetch("http://localhost:4400/src/levels.json", {
+            return fetch("http://localhost:4400/src/data/levels.json", {
                 method: "POST",
                 headers: {
                     "Content-Type": "text/plain"
@@ -317,7 +317,7 @@ function App() {
                                 position: "absolute"
                             }
                         }, index, false, {
-                            fileName: "src/levels_editor.tsx",
+                            fileName: "src/level_editor/levels_editor.tsx",
                             lineNumber: 63,
                             columnNumber: 17
                         }, this));
@@ -338,7 +338,7 @@ function App() {
                                         name: e.target.value
                                     })
                             }, void 0, false, {
-                                fileName: "src/levels_editor.tsx",
+                                fileName: "src/level_editor/levels_editor.tsx",
                                 lineNumber: 99,
                                 columnNumber: 15
                             }, this),
@@ -348,7 +348,7 @@ function App() {
                                         onClick: ()=>deleteLevel(li),
                                         children: "Delete"
                                     }, void 0, false, {
-                                        fileName: "src/levels_editor.tsx",
+                                        fileName: "src/level_editor/levels_editor.tsx",
                                         lineNumber: 105,
                                         columnNumber: 17
                                     }, this),
@@ -356,7 +356,7 @@ function App() {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.resizeLevel)(level, -1)),
                                         children: "-"
                                     }, void 0, false, {
-                                        fileName: "src/levels_editor.tsx",
+                                        fileName: "src/level_editor/levels_editor.tsx",
                                         lineNumber: 106,
                                         columnNumber: 17
                                     }, this),
@@ -364,7 +364,7 @@ function App() {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.resizeLevel)(level, 1)),
                                         children: "+"
                                     }, void 0, false, {
-                                        fileName: "src/levels_editor.tsx",
+                                        fileName: "src/level_editor/levels_editor.tsx",
                                         lineNumber: 109,
                                         columnNumber: 17
                                     }, this),
@@ -372,7 +372,7 @@ function App() {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.moveLevel)(level, -1, 0)),
                                         children: "L"
                                     }, void 0, false, {
-                                        fileName: "src/levels_editor.tsx",
+                                        fileName: "src/level_editor/levels_editor.tsx",
                                         lineNumber: 112,
                                         columnNumber: 17
                                     }, this),
@@ -380,7 +380,7 @@ function App() {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.moveLevel)(level, 1, 0)),
                                         children: "R"
                                     }, void 0, false, {
-                                        fileName: "src/levels_editor.tsx",
+                                        fileName: "src/level_editor/levels_editor.tsx",
                                         lineNumber: 117,
                                         columnNumber: 17
                                     }, this),
@@ -388,7 +388,7 @@ function App() {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.moveLevel)(level, 0, -1)),
                                         children: "U"
                                     }, void 0, false, {
-                                        fileName: "src/levels_editor.tsx",
+                                        fileName: "src/level_editor/levels_editor.tsx",
                                         lineNumber: 120,
                                         columnNumber: 17
                                     }, this),
@@ -396,7 +396,7 @@ function App() {
                                         onClick: ()=>updateLevel(li, (0, _levelsEditorUtil.moveLevel)(level, 0, 1)),
                                         children: "D"
                                     }, void 0, false, {
-                                        fileName: "src/levels_editor.tsx",
+                                        fileName: "src/level_editor/levels_editor.tsx",
                                         lineNumber: 125,
                                         columnNumber: 17
                                     }, this),
@@ -407,7 +407,7 @@ function App() {
                                                 color: e.target.value
                                             })
                                     }, void 0, false, {
-                                        fileName: "src/levels_editor.tsx",
+                                        fileName: "src/level_editor/levels_editor.tsx",
                                         lineNumber: 128,
                                         columnNumber: 17
                                     }, this),
@@ -419,13 +419,13 @@ function App() {
                                                 svg: parseFloat(e.target.value)
                                             })
                                     }, void 0, false, {
-                                        fileName: "src/levels_editor.tsx",
+                                        fileName: "src/level_editor/levels_editor.tsx",
                                         lineNumber: 135,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
-                                fileName: "src/levels_editor.tsx",
+                                fileName: "src/level_editor/levels_editor.tsx",
                                 lineNumber: 104,
                                 columnNumber: 15
                             }, this),
@@ -438,19 +438,19 @@ function App() {
                                 },
                                 children: brickButtons
                             }, void 0, false, {
-                                fileName: "src/levels_editor.tsx",
+                                fileName: "src/level_editor/levels_editor.tsx",
                                 lineNumber: 147,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, li, true, {
-                        fileName: "src/levels_editor.tsx",
+                        fileName: "src/level_editor/levels_editor.tsx",
                         lineNumber: 98,
                         columnNumber: 13
                     }, this);
                 })
             }, void 0, false, {
-                fileName: "src/levels_editor.tsx",
+                fileName: "src/level_editor/levels_editor.tsx",
                 lineNumber: 54,
                 columnNumber: 7
             }, this),
@@ -467,12 +467,12 @@ function App() {
                         },
                         onClick: ()=>setSelected(code)
                     }, code, false, {
-                        fileName: "src/levels_editor.tsx",
+                        fileName: "src/level_editor/levels_editor.tsx",
                         lineNumber: 163,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
-                fileName: "src/levels_editor.tsx",
+                fileName: "src/level_editor/levels_editor.tsx",
                 lineNumber: 161,
                 columnNumber: 7
             }, this),
@@ -494,25 +494,25 @@ function App() {
                 },
                 children: "new"
             }, void 0, false, {
-                fileName: "src/levels_editor.tsx",
+                fileName: "src/level_editor/levels_editor.tsx",
                 lineNumber: 177,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
-        fileName: "src/levels_editor.tsx",
+        fileName: "src/level_editor/levels_editor.tsx",
         lineNumber: 49,
         columnNumber: 5
     }, this);
 }
 const root = (0, _client.createRoot)(document.getElementById("app"));
 root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(App, {}, void 0, false, {
-    fileName: "src/levels_editor.tsx",
+    fileName: "src/level_editor/levels_editor.tsx",
     lineNumber: 203,
     columnNumber: 13
 }, undefined));
 
-},{"react/jsx-dev-runtime":"iTorj","./backgrounds.json":"el6Kx","./palette.json":"jhnsJ","./levels.json":"kqnNl","./getLevelBackground":"7OIPf","react-dom/client":"lOjBx","react":"21dqq","./levels_editor_util":"lt8Nt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iTorj":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"iTorj","../data/backgrounds.json":"31wW4","../data/palette.json":"ktRBU","../data/levels.json":"8JSUc","../getLevelBackground":"7OIPf","react-dom/client":"lOjBx","react":"21dqq","./levels_editor_util":"lfafp","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iTorj":[function(require,module,exports,__globalThis) {
 'use strict';
 module.exports = require("ee51401569654d91");
 
@@ -16252,7 +16252,7 @@ module.exports = require("b0f0e6b9e8349dac");
     "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
 })();
 
-},{"6f0162e9ab224cd4":"21dqq"}],"lt8Nt":[function(require,module,exports,__globalThis) {
+},{"6f0162e9ab224cd4":"21dqq"}],"lfafp":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "resizeLevel", ()=>resizeLevel);
@@ -16292,6 +16292,6 @@ function setBrick(level, index, colorCode) {
     };
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["9zw4T","iSxqL"], "iSxqL", "parcelRequire94c2")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["7Iayr","9Ly5x"], "9Ly5x", "parcelRequire94c2")
 
-//# sourceMappingURL=levels_editor.ef3c2e1a.js.map
+//# sourceMappingURL=editor.1ec04b8f.js.map

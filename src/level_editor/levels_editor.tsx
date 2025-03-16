@@ -1,8 +1,8 @@
-import { Palette, RawLevel } from "./types";
-import _backgrounds from "./backgrounds.json";
-import _palette from "./palette.json";
-import _allLevels from "./levels.json";
-import { getLevelBackground, hashCode } from "./getLevelBackground";
+import { Palette, RawLevel } from "../types";
+import _backgrounds from "../data/backgrounds.json";
+import _palette from "../data/palette.json";
+import _allLevels from "../data/levels.json";
+import { getLevelBackground, hashCode } from "../getLevelBackground";
 import { createRoot } from "react-dom/client";
 import { useCallback, useEffect, useState } from "react";
 import { moveLevel, resizeLevel, setBrick } from "./levels_editor_util";
@@ -34,7 +34,7 @@ function App() {
 
   useEffect(() => {
     const timoutId = setTimeout(() => {
-      return fetch("http://localhost:4400/src/levels.json", {
+      return fetch("http://localhost:4400/src/data/levels.json", {
         method: "POST",
         headers: {
           "Content-Type": "text/plain",
