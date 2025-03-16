@@ -359,7 +359,7 @@ export function getUpgraderUnlockPoints() {
         if (u.threshold) {
             list.push({
                 threshold: u.threshold,
-                title: u.name + ' '+t('level_up.unlocked_perk'),
+                title: u.name + ' ' + t('level_up.unlocked_perk'),
             });
         }
     });
@@ -367,7 +367,7 @@ export function getUpgraderUnlockPoints() {
     allLevels.forEach((l) => {
         list.push({
             threshold: l.threshold,
-            title: l.name + ' ' +t('level_up.unlocked_level'),
+            title: l.name + ' ' + t('level_up.unlocked_level'),
         });
     });
 
@@ -398,7 +398,7 @@ export function pickRandomUpgrades(count: number) {
     return list.map((u) => ({
         text:
             u.name +
-            (gameState.perks[u.id] ? t('level_up.upgrade_perk_to_level',{level:gameState.perks[u.id] + 1}) : ""),
+            (gameState.perks[u.id] ? t('level_up.upgrade_perk_to_level', {level: gameState.perks[u.id] + 1}) : ""),
         icon: icons["icon:" + u.id],
         value: u.id as PerkId,
         help: u.help(gameState.perks[u.id] + 1),
@@ -674,7 +674,7 @@ export function tick() {
             } else {
                 gameOver(
                     t('gameOver.win.title'),
-                    t('gameOver.win.summary',{score:gameState.score}),
+                    t('gameOver.win.summary', {score: gameState.score}),
                 );
             }
         } else if (gameState.running || gameState.levelTime) {
@@ -1107,9 +1107,9 @@ export function ballTick(ball: Ball, delta: number) {
         ball.destroyed = true;
         gameState.runStatistics.balls_lost++;
         if (!gameState.balls.find((b) => !b.destroyed)) {
-                gameOver(
-                    t('gameOver.lost.title'),
-                    t('gameOver.lost.summary',{score:gameState.score}))
+            gameOver(
+                t('gameOver.lost.title'),
+                t('gameOver.lost.summary', {score: gameState.score}))
         }
     }
     const radius = gameState.ballSize / 2;
@@ -1260,7 +1260,7 @@ export function gameOver(title: string, intro: string) {
         const total = nextUnlock?.threshold - previousUnlockAt;
         const done = endTs - previousUnlockAt;
 
-        intro += t('gameOver.next_unlock', {points:nextUnlock.threshold - endTs}) ;
+        intro += t('gameOver.next_unlock', {points: nextUnlock.threshold - endTs});
 
         const scaleX = (done / total).toFixed(2);
         unlocksInfo += `
@@ -1287,7 +1287,7 @@ export function gameOver(title: string, intro: string) {
     );
     if (unlockedItems.length) {
 
-        unlocksInfo += `<p>${t('gameOver.unlocked_count',{count:unlockedItems.length})} ${unlockedItems.map((u) => u.title).join(", ")}</p>`;
+        unlocksInfo += `<p>${t('gameOver.unlocked_count', {count: unlockedItems.length})} ${unlockedItems.map((u) => u.title).join(", ")}</p>`;
     }
 
     // Avoid the sad sound right as we restart a new games
@@ -1297,9 +1297,9 @@ export function gameOver(title: string, intro: string) {
         allowClose: true,
         title,
         text: `
-        ${gameState.isCreativeModeRun ?  `<p>${t('gameOver.test_run')}</p> ` : ""}
+        ${gameState.isCreativeModeRun ? `<p>${t('gameOver.test_run')}</p> ` : ""}
         <p>${intro}</p>
-        <p>${t('gameOver.cumulative_total',{startTs, endTs})}</p>
+        <p>${t('gameOver.cumulative_total', {startTs, endTs})}</p>
         ${unlocksInfo}  
         `,
         actions: [
@@ -1396,7 +1396,7 @@ export function getHistograms() {
         );
         runStats += makeHistogram(t('gameOver.stats.bricks_broken'), (r) => r.bricks_broken, "");
         runStats += makeHistogram(
-            t('gameOver.stats.bricks_per_minute') ,
+            t('gameOver.stats.bricks_per_minute'),
             (r) => Math.round((r.bricks_broken / r.runTime) * 1000 * 60),
             "",
         );
@@ -1422,7 +1422,7 @@ export function getHistograms() {
 
         if (runStats) {
             runStats =
-                `<p>${t('gameOver.stats.intro',{count:runsHistory.length - 1})}</p>` +
+                `<p>${t('gameOver.stats.intro', {count: runsHistory.length - 1})}</p>` +
                 runStats;
         }
     } catch (e) {
@@ -1632,10 +1632,10 @@ export function render() {
     if (!width || !height) return;
 
     if (gameState.currentLevel || gameState.levelTime) {
-        menuLabel.innerText = t('play.current_lvl',{
-            level:gameState.currentLevel + 1,
-            max:max_levels()
-        }) ;
+        menuLabel.innerText = t('play.current_lvl', {
+            level: gameState.currentLevel + 1,
+            max: max_levels()
+        });
     } else {
         menuLabel.innerText = t('play.menu_label')
     }
@@ -2468,8 +2468,8 @@ document.addEventListener("visibilitychange", () => {
 async function openScorePanel() {
     pause(true);
     const cb = await asyncAlert({
-        title: t('score_panel.title',{
-            score:gameState.score,level:gameState.currentLevel + 1,max:max_levels()
+        title: t('score_panel.title', {
+            score: gameState.score, level: gameState.currentLevel + 1, max: max_levels()
         }),
         text: `
             ${gameState.isCreativeModeRun ? "<p>${t('score_panel.test_run}</p>" : ""}
@@ -2508,8 +2508,8 @@ async function openSettingsPanel() {
 
     const actions: AsyncAlertAction<() => void>[] = [
         {
-                text: t('main_menu.resume'),
-                help: t('main_menu.resume_help'),
+            text: t('main_menu.resume'),
+            help: t('main_menu.resume_help'),
             value() {
             },
         },
@@ -2567,7 +2567,7 @@ async function openSettingsPanel() {
         text: t('sandbox.title'),
         help:
             getTotalScore() < creativeModeThreshold
-                ? t('sandbox.unlocks_at',{score:creativeModeThreshold})
+                ? t('sandbox.unlocks_at', {score: creativeModeThreshold})
                 : t('sandbox.help'),
         disabled: getTotalScore() < creativeModeThreshold,
         async value() {
@@ -2578,8 +2578,8 @@ async function openSettingsPanel() {
 
             while (
                 (choice = await asyncAlert<"start" | Upgrade>({
-                    title:t('sandbox.title'),
-                    text:t('sandbox.instructions'),
+                    title: t('sandbox.title'),
+                    text: t('sandbox.instructions'),
                     actionsAsGrid: true,
                     actions: [
                         ...upgrades.map((u) => ({
@@ -2592,7 +2592,7 @@ async function openSettingsPanel() {
                                 : "grey-out-unless-hovered",
                         })),
                         {
-                            text:t('sandbox.start') ,
+                            text: t('sandbox.start'),
                             value: "start",
                         },
                     ],
@@ -2638,27 +2638,29 @@ async function openSettingsPanel() {
     });
 
     actions.push({
-         text: t('main_menu.language'),
+        text: t('main_menu.language'),
         help: t('main_menu.language_help'),
         async value() {
             const pick = await asyncAlert({
-                    title: t('main_menu.language'),
-                    text: t('main_menu.language_help'),
-                    actions: [
-                        {
-                            text: 'English',
-                            value: 'en',
-                        },
-                        {
-                            text: 'Français',
-                            value: 'fr',
-                        },
-                    ],
-                    allowClose: true,
-                })
-             if (
-                pick && pick!==getCurrentLang()
+                title: t('main_menu.language'),
+                text: t('main_menu.language_help'),
+                actions: [
+                    {
+                        text: 'English',
+                        value: 'en',
+                    },
+                    {
+                        text: 'Français',
+                        value: 'fr',
+                    },
+                ],
+                allowClose: true,
+            })
+            if (
+                pick && pick !== getCurrentLang() &&
+                await confirmRestart()
             ) {
+
                 setSettingValue('lang', pick)
                 window.location.reload()
             }
@@ -2685,7 +2687,7 @@ async function openUnlocksList() {
             .map(({name, id, threshold, icon, fullHelp}) => ({
                 text: name,
                 help:
-                    ts >= threshold ? fullHelp :t('unlocks.unlocks_at',{threshold}),
+                    ts >= threshold ? fullHelp : t('unlocks.unlocks_at', {threshold}),
                 disabled: ts < threshold,
                 value: {perks: {[id]: 1}} as RunParams,
                 icon,
@@ -2699,8 +2701,8 @@ async function openUnlocksList() {
                     help: available
 
                         ?
-                        t('unlocks.level_description',{size:l.size, bricks:l.bricks.filter((i) => i).length})
-                        : t('unlocks.unlocks_at',{threshold:l.threshold}) ,
+                        t('unlocks.level_description', {size: l.size, bricks: l.bricks.filter((i) => i).length})
+                        : t('unlocks.unlocks_at', {threshold: l.threshold}),
                     disabled: !available,
                     value: {level: l.name} as RunParams,
                     icon: icons[l.name],
@@ -2712,8 +2714,8 @@ async function openUnlocksList() {
         (actions.filter((a) => !a.disabled).length / actions.length) * 100,
     );
     const tryOn = await asyncAlert<RunParams>({
-        title: t('unlocks.title',{percentUnlock}) ,
-        text: `<p>${t('unlocks.intro',{ts})}
+        title: t('unlocks.title', {percentUnlock}),
+        text: `<p>${t('unlocks.intro', {ts})}
    ${percentUnlock < 100 ? t('unlocks.greyed_out_help') : ""}</p> 
                        `,
         textAfterButtons: `<p> 
@@ -2725,25 +2727,32 @@ Click an item above to start a run with it.
     });
     if (tryOn) {
         if (
-            !gameState.currentLevel ||
-            (await asyncAlert({
-                title: t('unlocks.restart_title'),
-                text: t('unlocks.restart_text'),
-                actions: [
-                    {
-                        value: true,
-                        text: t('unlocks.restart_confirm'),
-                    },
-                    {
-                        value: false,
-                        text: t('unlocks.restart_cancel'),
-                    },
-                ],
-            }))
+            await confirmRestart()
         ) {
             restart(tryOn);
         }
     }
+}
+
+export async function confirmRestart() {
+    if (!gameState.currentLevel) return true
+
+    return asyncAlert({
+        title: t('confirmRestart.title'),
+        text: t('confirmRestart.text'),
+        actions: [
+            {
+                value: true,
+                text: t('confirmRestart.yes'),
+            },
+            {
+                value: false,
+                text: t('confirmRestart.no'),
+            },
+        ],
+    })
+
+
 }
 
 export function distance2(
@@ -2989,8 +2998,8 @@ export function startRecordingGame() {
         a.download = captureFileName("webm");
         a.target = "_blank";
         a.href = video.src;
-        a.textContent = t('main_menu.record_download',{
-            size:(blob.size / 1000000).toFixed(2)
+        a.textContent = t('main_menu.record_download', {
+            size: (blob.size / 1000000).toFixed(2)
         });
         targetDiv.appendChild(video);
         targetDiv.appendChild(a);
@@ -3119,22 +3128,11 @@ document.addEventListener("keyup", async (e) => {
     } else if (e.key.toLowerCase() === "m" && !alertsOpen) {
         openSettingsPanel().then();
     } else if (e.key.toLowerCase() === "s" && !alertsOpen) {
-         openScorePanel().then();
+        openScorePanel().then();
     } else if (e.key.toLowerCase() === "r" && !alertsOpen) {
-        if(gameState.currentLevel<3 || await asyncAlert({
-            title:t('play.confirm_restart'),
-            actions:[
-                {
-                  value:true ,
-                  text:t('play.confirm_restart_yes')
-                },
-                {
-                  value:false ,
-                  text:t('play.confirm_restart_no')
-                }
-            ]
-        }))
-        restart({levelToAvoid: currentLevelInfo().name});
+        if (await confirmRestart()) {
+            restart({levelToAvoid: currentLevelInfo().name});
+        }
     } else {
         return;
     }
