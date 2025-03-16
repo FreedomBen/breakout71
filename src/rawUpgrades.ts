@@ -255,9 +255,9 @@ export const rawUpgrades = [
     threshold: 18000,
     giftable: false,
     id: "soft_reset",
-    max: 2,
+    max: 9,
     name: t('upgrades.soft_reset.name'),
-    help: (lvl: number) =>    t('upgrades.soft_reset.help'),
+    help: (lvl: number) =>    t('upgrades.soft_reset.help',{percent:10*lvl}),
     fullHelp: t('upgrades.soft_reset.fullHelp'),
 
 

@@ -1,4 +1,5 @@
-import { rawUpgrades } from "./rawUpgrades";
+import {rawUpgrades} from "./rawUpgrades";
+import {options} from "./options";
 
 export type colorString = string;
 
@@ -194,8 +195,7 @@ export type GameState = {
   // Will be set if the game is about to be paused. Game pause is delayed by a few milliseconds if you pause a few times in a run,
   // to avoid abuse of the "release to pause" feature on mobile.
   pauseTimeout: NodeJS.Timeout | null;
-  // Whether the game should be rendered at the next tick, even if the game is paused
-  needsRender: boolean;
+
   // Current run score
   score: number;
   // levelTime of the last time the score increase, to render the score differently
@@ -241,3 +241,10 @@ export type RunParams = {
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
 };
+export type OptionDef = {
+  default: boolean;
+  name: string;
+  help: string;
+  disabled: () => boolean;
+};
+export type OptionId = keyof typeof options;

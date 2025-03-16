@@ -86,15 +86,7 @@ Whenever your combo resets, it only looses half of its value.
 However, whenever it should increase, it has 50% chance of staying the same. 
 If you pick it a second time, the effect is more pronounced : the combo keeps 66% of its value on reset, but only grows 33% of the time.
 If you have many perks that grow the combo every time a brick breaks, then it will still grow every time just slower.
-
-# Longer runs
-
-The default run lasts 7 levels. The selection process is to pick those levels at random, then sort them (more or less) by 
-number of bricks present, so that runs start with smaller levels and the bigger ones are left for the end. You can extend
-the run by picking up to three times the "+1 level" upgrade.
-
-"Sturdy bricks" and "Respawn" can also extend the game time significantly.
-
+ 
 # Aiming
 
 What decides how the ball flies away is only the position of the puck hit. If the ball hits the puck dead center, it will

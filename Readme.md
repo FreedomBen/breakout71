@@ -20,14 +20,23 @@ It's very lean and does not take much storage space (Roughly 0.1MB).
 If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
 There's also an easy mode for kids (slower ball).
 
+ 
 # Next
 
+- extract game tick function to be able to test it
+- extract sound logic, only set the params as a gamestate object
 - separate particles by type
 - reuse coins and particles
 - sturdy bricks map of remaining hits
 
+# bugs
+
+* [colin] parfois je dois appuyer plusieurs fois sur "Start a new run" pour vraiment commencer une nouvelle partie. dans ce cas, lhécran de jeu derrière se "désassombrit" comme si le jeu avait démarré plusieurs parties en même temps.
+* [colin] lorsque le puck est trop petit, l'affichage du combo disparaît. mais c'est peut-être volontaire pour qu'il ne dépasse pas du puck ? afficher simplement le chiffre serait suffisant et tiendrait dans le puck
+* [colin] le niveau bug parfois et ne peux pas démarrer. dans ce cas, la balle apparait comme démarrant sans être attachée au puck, comme si la partie avait déjà commencée. il faut redémarrer B71 pour que ça fonctionne
  
 # UX
+- instead of the free perk at level one, offer to skip lvl 1 and directly pick 4 perks, but only if you manage to clear lvl 1 with 4 upgrades. 
 - the onboarding feels weird, missing a tutorial
 - It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
@@ -143,6 +152,7 @@ There's also an easy mode for kids (slower ball).
 - colored coins only (coins should be of the color of the ball to count )
 - level flips horizontally every time a ball bounces on puck
 - coins that hit the puck disappear, missed ones are scored
+- squirell : keep coins on screen to have a higher combo
 
 # extra levels
 
@@ -170,6 +180,7 @@ Possible challenges :
     - other perks can be randomly turned off
     - ball keeps accelerating until unplayable
     - graphical effects like trail, contrast, blur to make it harder to see what's going on
+    - ball creates a draft behind itself that blows coins in odd patterns
 
 # extend re-playability
 - hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..
