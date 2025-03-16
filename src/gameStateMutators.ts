@@ -35,7 +35,7 @@ import { isOptionOn } from "./options";
 export function setMousePos(gameState: GameState, x: number) {
   // Sets the puck position, and updates the ball position if they are supposed to follow it
   gameState.puckPosition = x;
-  gameState.needsRender=true
+  gameState.needsRender = true;
 }
 
 function getBallDefaultVx(gameState: GameState) {
