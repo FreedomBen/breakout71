@@ -25,7 +25,7 @@
   "gameOver.win.summary": "Vous avez nettoyé tous les niveaux pour cette partie, en attrapant {{score}} pièces au total.",
   "gameOver.win.title": "Partie terminée",
   "level_up.after_buttons": "Vous venez de terminer le niveau {{level}}/{{max}} et vous avez choisi ces améliorations jusqu'à présent :",
-  "level_up.before_buttons": "Vous avez attrapé {{score}} pièces {{catchGain}} sur {{levelSpawnedCoins}} en {{time}} secondes {{timeGain}}.\n\nVous avez raté les briques {{levelMisses}} fois {{missesGain} et touché les cotés et le haut de la zone de jeu {{levelWallBounces}} fois {{wallHitsGain}}.\n\n{{compliment}}",
+  "level_up.before_buttons": "Vous avez attrapé {{score}} pièces {{catchGain}} sur {{levelSpawnedCoins}} en {{time}} secondes {{timeGain}}.\n\nVous avez raté les briques {{levelMisses}} fois {{missesGain}} et touché les cotés et le haut de la zone de jeu {{levelWallBounces}} fois {{wallHitsGain}}.\n\n{{compliment}}",
   "level_up.compliment_advice": "Essayez d'attraper toutes les pièces, de ne jamais rater les briques, de ne pas toucher les murs ou de terminer le niveau en moins de 30 secondes pour obtenir des choix supplémentaires et des améliorations.",
   "level_up.compliment_good": "Bravo !",
   "level_up.compliment_perfect": "Impressionnant, continuez comme ça !",
