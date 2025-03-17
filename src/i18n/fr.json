@@ -11,7 +11,7 @@
   "gameOver.stats.balls_lost": "Balles perdues",
   "gameOver.stats.bricks_broken": "Briques cassées",
   "gameOver.stats.bricks_per_minute": "Briques cassées par minute",
-  "gameOver.stats.catch_rate": "Taux de capture des pièces",
+  "gameOver.stats.catch_rate": "Pièces attrapées",
   "gameOver.stats.combo_avg": "Combo moyen",
   "gameOver.stats.combo_max": "Combo maximum",
   "gameOver.stats.duration_per_level": "Durée par niveau",

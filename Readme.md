@@ -15,7 +15,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 # System requirements 
 
-Breakout 71 can work offline and perform well even on low-end devices. 
+Breakout 71 can work offline (add it to home screen) and perform well even on low-end devices. 
 It's very lean and does not take much storage space (Roughly 0.1MB).
 If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
 There's also an easy mode for kids (slower ball).
@@ -23,7 +23,7 @@ There's also an easy mode for kids (slower ball).
  
 # Next
 
-- extract game tick function to be able to test it
+
 - extract sound logic, only set the params as a gamestate object
 - separate particles by type
 - reuse coins and particles
