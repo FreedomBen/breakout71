@@ -51,6 +51,7 @@ import {
   closeModal,
 } from "./asyncAlert";
 import { isOptionOn, options, toggleOption } from "./options";
+import {hashCode} from "./getLevelBackground";
 
 export function play() {
   if (gameState.running) return;
@@ -662,6 +663,7 @@ async function openSettingsPanel() {
         localStorageContent[key] = value;
       }
 
+      const signedPayload=JSON.stringify(localStorageContent)
       const dlLink = document.createElement("a");
 
       dlLink.setAttribute(
@@ -671,7 +673,8 @@ async function openSettingsPanel() {
             JSON.stringify({
               fileType: "B71-save-file",
               appVersion,
-              localStorageContent,
+              signedPayload,
+              key: hashCode('Security by obscurity, but really the game is oss so eh'+signedPayload)
             }),
           ),
       );
@@ -722,7 +725,7 @@ async function openSettingsPanel() {
               const {
                 fileType,
                 appVersion: fileVersion,
-                localStorageContent,
+                signedPayload,key
               } = JSON.parse(content);
               if (fileType !== "B71-save-file")
                 throw new Error("Not a B71 save file");
@@ -732,6 +735,12 @@ async function openSettingsPanel() {
                     fileVersion +
                     " or newer.",
                 );
+
+              if(key!== hashCode('Security by obscurity, but really the game is oss so eh'+signedPayload)){
+                throw new Error("Key does not match content.")
+              }
+
+              const localStorageContent=JSON.parse(signedPayload)
               localStorage.clear();
               for (let key in localStorageContent) {
                 localStorage.setItem(key, localStorageContent[key]);
