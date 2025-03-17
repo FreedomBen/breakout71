@@ -8,7 +8,7 @@ import {
   RunParams,
   Upgrade,
 } from "./types";
-import { getAudioContext } from "./sounds";
+import {getAudioContext, playPendingSounds} from "./sounds";
 import {
   currentLevelInfo,
   getRowColIndex,
@@ -429,7 +429,6 @@ export function bordersHitCheck(
 
   return hhit + vhit * 2;
 }
-
 export function tick() {
   const currentTick = performance.now();
   const timeDeltaMs = currentTick - gameState.lastTick;
@@ -457,6 +456,9 @@ export function tick() {
   }
   if (gameState.running) {
     recordOneFrame(gameState);
+  }
+  if(isOptionOn('sound')  ){
+    playPendingSounds(gameState)
   }
   requestAnimationFrame(tick);
 }

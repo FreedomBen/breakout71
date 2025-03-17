@@ -23,7 +23,6 @@ There's also an easy mode for kids (slower ball).
  
 # Next
 
-
 - extract sound logic, only set the params as a gamestate object
 - separate particles by type
 - reuse coins and particles

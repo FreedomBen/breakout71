@@ -1,13 +1,9 @@
-import { GameState, RunParams } from "./types";
-import { getTotalScore } from "./settings";
-import { allLevels, upgrades } from "./loadGameData";
-import {
-  getPossibleUpgrades,
-  makeEmptyPerksMap,
-  sumOfKeys,
-} from "./game_utils";
-import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
-import { isOptionOn } from "./options";
+import {GameState, RunParams} from "./types";
+import {getTotalScore} from "./settings";
+import {allLevels, upgrades} from "./loadGameData";
+import {defaultSounds, getPossibleUpgrades, makeEmptyPerksMap, sumOfKeys,} from "./game_utils";
+import {dontOfferTooSoon, resetBalls} from "./gameStateMutators";
+import {isOptionOn} from "./options";
 
 export function newGameState(params: RunParams): GameState {
   const totalScoreAtRunStart = getTotalScore();
@@ -91,6 +87,7 @@ export function newGameState(params: RunParams): GameState {
     levelWallBounces: 0,
     needsRender: true,
     autoCleanUses: 0,
+    ...defaultSounds()
   };
   resetBalls(gameState);
 
@@ -109,3 +106,4 @@ export function newGameState(params: RunParams): GameState {
   }
   return gameState;
 }
+

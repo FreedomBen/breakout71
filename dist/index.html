@@ -765,6 +765,7 @@ function tick() {
         (0, _render.render)(gameState);
     }
     if (gameState.running) (0, _recording.recordOneFrame)(gameState);
+    if ((0, _options.isOptionOn)('sound')) (0, _sounds.playPendingSounds)(gameState);
     requestAnimationFrame(tick);
 }
 window.addEventListener("visibilitychange", ()=>{
@@ -1185,7 +1186,7 @@ window.stressTest = ()=>restart({
         }
     });
 
-},{"./loadGameData":"l1B4x","./sounds":"dQKPV","./game_utils":"cEeac","./PWA/sw_loader":"2n0gK","./i18n/i18n":"eNPRm","./settings":"5blfu","./gameStateMutators":"9ZeQl","./render":"9AS2t","./recording":"godmD","./newGameState":"aQN6X","./asyncAlert":"rSqLY","./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./getLevelBackground":"7OIPf"}],"l1B4x":[function(require,module,exports,__globalThis) {
+},{"./loadGameData":"l1B4x","./sounds":"dQKPV","./game_utils":"cEeac","./PWA/sw_loader":"2n0gK","./i18n/i18n":"eNPRm","./settings":"5blfu","./gameStateMutators":"9ZeQl","./render":"9AS2t","./recording":"godmD","./newGameState":"aQN6X","./asyncAlert":"rSqLY","./options":"d5NoS","./getLevelBackground":"7OIPf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l1B4x":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "appVersion", ()=>appVersion);
@@ -1756,49 +1757,62 @@ function levelIconHTML(bricks, levelSize, color) {
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dQKPV":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "playPendingSounds", ()=>playPendingSounds);
 parcelHelpers.export(exports, "sounds", ()=>sounds);
 parcelHelpers.export(exports, "getAudioContext", ()=>getAudioContext);
 parcelHelpers.export(exports, "getAudioRecordingTrack", ()=>getAudioRecordingTrack);
-var _game = require("./game");
 var _options = require("./options");
+let lastPlay = Date.now();
+function playPendingSounds(gameState) {
+    if (lastPlay > Date.now() - 60) return;
+    lastPlay = Date.now();
+    for(let key in gameState.aboutToPlaySound){
+        const soundName = key;
+        const ex = gameState.aboutToPlaySound[soundName];
+        if (ex.vol) {
+            sounds[soundName](Math.min(2, ex.vol), pixelsToPan(gameState, ex.x), gameState.combo);
+            ex.vol = 0;
+        }
+    }
+}
 const sounds = {
-    wallBeep: (pan)=>{
+    wallBeep: (vol, pan, combo)=>{
         if (!(0, _options.isOptionOn)("sound")) return;
-        createSingleBounceSound(800, pixelsToPan(pan));
+        createSingleBounceSound(800, pan, vol);
     },
-    comboIncreaseMaybe: (combo, x, volume)=>{
+    comboIncreaseMaybe: (volume, pan, combo)=>{
         if (!(0, _options.isOptionOn)("sound")) return;
         let delta = 0;
         if (!isNaN(lastComboPlayed)) {
             if (lastComboPlayed < combo) delta = 1;
             if (lastComboPlayed > combo) delta = -1;
         }
-        playShepard(delta, pixelsToPan(x), volume);
+        playShepard(delta, pan, volume);
         lastComboPlayed = combo;
     },
-    comboDecrease () {
+    comboDecrease (volume, pan, combo) {
         if (!(0, _options.isOptionOn)("sound")) return;
-        playShepard(-1, 0.5, 0.5);
+        playShepard(-1, pan, volume);
     },
-    coinBounce: (pan, volume)=>{
+    coinBounce: (volume, pan, combo)=>{
         if (!(0, _options.isOptionOn)("sound")) return;
-        createSingleBounceSound(1200, pixelsToPan(pan), volume, 0.1, "triangle");
+        createSingleBounceSound(1200, pan, volume, 0.1, "triangle");
     },
-    explode: (pan)=>{
+    explode: (volume, pan, combo)=>{
         if (!(0, _options.isOptionOn)("sound")) return;
-        createExplosionSound(pixelsToPan(pan));
+        createExplosionSound(pan);
     },
-    lifeLost (pan) {
+    lifeLost (volume, pan, combo) {
         if (!(0, _options.isOptionOn)("sound")) return;
-        createShatteredGlassSound(pixelsToPan(pan));
+        createShatteredGlassSound(pan);
     },
-    coinCatch (pan) {
+    coinCatch (volume, pan, combo) {
         if (!(0, _options.isOptionOn)("sound")) return;
-        createSingleBounceSound(900, pixelsToPan(pan), 0.8, 0.1, "triangle");
+        createSingleBounceSound(900, pan, volume, 0.1, "triangle");
     },
-    colorChange (pan, volume) {
-        createSingleBounceSound(400, pixelsToPan(pan), volume, 0.5, "sine");
-        createSingleBounceSound(800, pixelsToPan(pan), volume * 0.5, 0.2, "square");
+    colorChange (volume, pan, combo) {
+        createSingleBounceSound(400, pan, volume, 0.5, "sine");
+        createSingleBounceSound(800, pan, volume * 0.5, 0.2, "square");
     }
 };
 // How to play the code on the leftconst context = new window.AudioContext();
@@ -1879,8 +1893,8 @@ function createExplosionSound(pan = 0.5) {
     // Stop the noise source after the sound has played
     noiseSource.stop(context.currentTime + 1);
 }
-function pixelsToPan(pan) {
-    return Math.max(0, Math.min(1, (pan - (0, _game.gameState).offsetXRoundedDown) / (0, _game.gameState).gameZoneWidthRoundedUp));
+function pixelsToPan(gameState, pan) {
+    return Math.max(0, Math.min(1, (pan - gameState.offsetXRoundedDown) / gameState.gameZoneWidthRoundedUp));
 }
 let lastComboPlayed = NaN, shepard = 6;
 function playShepard(delta, pan, volume) {
@@ -1935,7 +1949,7 @@ function createOscillator(context, frequency, type) {
     return oscillator;
 }
 
-},{"./game":"edeGs","./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d5NoS":[function(require,module,exports,__globalThis) {
+},{"./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d5NoS":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "options", ()=>options);
@@ -2001,6 +2015,7 @@ parcelHelpers.export(exports, "isTelekinesisActive", ()=>isTelekinesisActive);
 parcelHelpers.export(exports, "findLast", ()=>findLast);
 parcelHelpers.export(exports, "distance2", ()=>distance2);
 parcelHelpers.export(exports, "distanceBetween", ()=>distanceBetween);
+parcelHelpers.export(exports, "defaultSounds", ()=>defaultSounds);
 var _loadGameData = require("./loadGameData");
 function getMajorityValue(arr) {
     const count = {};
@@ -2057,6 +2072,44 @@ function distance2(a, b) {
 }
 function distanceBetween(a, b) {
     return Math.sqrt(distance2(a, b));
+}
+function defaultSounds() {
+    return {
+        aboutToPlaySound: {
+            wallBeep: {
+                vol: 0,
+                x: 0
+            },
+            comboIncreaseMaybe: {
+                vol: 0,
+                x: 0
+            },
+            comboDecrease: {
+                vol: 0,
+                x: 0
+            },
+            coinBounce: {
+                vol: 0,
+                x: 0
+            },
+            explode: {
+                vol: 0,
+                x: 0
+            },
+            lifeLost: {
+                vol: 0,
+                x: 0
+            },
+            coinCatch: {
+                vol: 0,
+                x: 0
+            },
+            colorChange: {
+                vol: 0,
+                x: 0
+            }
+        }
+    };
 }
 
 },{"./loadGameData":"l1B4x","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2n0gK":[function(require,module,exports,__globalThis) {
@@ -2115,6 +2168,7 @@ parcelHelpers.export(exports, "spawnExplosion", ()=>spawnExplosion);
 parcelHelpers.export(exports, "explodeBrick", ()=>explodeBrick);
 parcelHelpers.export(exports, "dontOfferTooSoon", ()=>dontOfferTooSoon);
 parcelHelpers.export(exports, "pickRandomUpgrades", ()=>pickRandomUpgrades);
+parcelHelpers.export(exports, "schedulGameSound", ()=>schedulGameSound);
 parcelHelpers.export(exports, "addToScore", ()=>addToScore);
 parcelHelpers.export(exports, "setLevel", ()=>setLevel);
 parcelHelpers.export(exports, "rainbowColor", ()=>rainbowColor);
@@ -2122,7 +2176,6 @@ parcelHelpers.export(exports, "repulse", ()=>repulse);
 parcelHelpers.export(exports, "attract", ()=>attract);
 parcelHelpers.export(exports, "gameStateTick", ()=>gameStateTick);
 parcelHelpers.export(exports, "ballTick", ()=>ballTick);
-var _sounds = require("./sounds");
 var _gameUtils = require("./game_utils");
 var _i18N = require("./i18n/i18n");
 var _loadGameData = require("./loadGameData");
@@ -2208,7 +2261,7 @@ function resetCombo(gameState, x, y) {
     if (prev > gameState.combo && gameState.perks.soft_reset) gameState.combo += Math.floor((prev - gameState.combo) * (gameState.perks.soft_reset * 10) / 100);
     const lost = Math.max(0, prev - gameState.combo);
     if (lost) {
-        for(let i = 0; i < lost && i < 8; i++)setTimeout(()=>(0, _sounds.sounds).comboDecrease(), i * 100);
+        for(let i = 0; i < lost && i < 8; i++)setTimeout(()=>schedulGameSound(gameState, 'comboDecrease', x, 1), i * 100);
         if (typeof x !== "undefined" && typeof y !== "undefined") gameState.flashes.push({
             type: "text",
             text: "-" + lost,
@@ -2227,7 +2280,7 @@ function decreaseCombo(gameState, by, x, y) {
     gameState.combo = Math.max(baseCombo(gameState), gameState.combo - by);
     const lost = Math.max(0, prev - gameState.combo);
     if (lost) {
-        (0, _sounds.sounds).comboDecrease();
+        schedulGameSound(gameState, 'comboDecrease', x, 1);
         if (typeof x !== "undefined" && typeof y !== "undefined") gameState.flashes.push({
             type: "text",
             text: "-" + lost,
@@ -2263,7 +2316,7 @@ function explodeBrick(gameState, index, ball, isExplosion) {
     if (color === "black") {
         delete gameState.bricks[index];
         const x = (0, _gameUtils.brickCenterX)(gameState, index), y = (0, _gameUtils.brickCenterY)(gameState, index);
-        (0, _sounds.sounds).explode(ball.x);
+        schedulGameSound(gameState, 'explode', ball.x, 1);
         const col = index % gameState.gridSize;
         const row = Math.floor(index / gameState.gridSize);
         const size = 1 + gameState.perks.bigger_explosions;
@@ -2346,13 +2399,13 @@ function explodeBrick(gameState, index, ball, isExplosion) {
             // color change
             if ((gameState.perks.picky_eater || gameState.perks.pierce_color) && color !== gameState.ballsColor && color) {
                 if (gameState.perks.picky_eater) resetCombo(gameState, ball.x, ball.y);
-                (0, _sounds.sounds).colorChange(ball.x, 0.8);
+                schedulGameSound(gameState, 'colorChange', ball.x, 0.8);
                 gameState.lastExplosion = gameState.levelTime;
                 gameState.ballsColor = color;
                 if (!(0, _options.isOptionOn)("basic")) gameState.balls.forEach((ball)=>{
                     spawnExplosion(gameState, 7, ball.previousX, ball.previousY, color, 150, 15);
                 });
-            } else (0, _sounds.sounds).comboIncreaseMaybe(gameState.combo, ball.x, 1);
+            } else schedulGameSound(gameState, 'comboIncreaseMaybe', ball.x, 1);
         }
         gameState.flashes.push({
             type: "ball",
@@ -2390,6 +2443,14 @@ function pickRandomUpgrades(gameState, count) {
             help: u.help(gameState.perks[u.id] + 1)
         }));
 }
+function schedulGameSound(gameState, sound, x, vol) {
+    if (!vol) return;
+    x ??= gameState.offsetX + gameState.gameZoneWidth / 2;
+    const ex = gameState.aboutToPlaySound[sound];
+    if (ex.vol) console.log('Combined sounds for ' + sound);
+    ex.x = (x * vol + ex.x * ex.vol) / (vol + ex.vol);
+    ex.vol += vol;
+}
 function addToScore(gameState, coin) {
     coin.destroyed = true;
     gameState.score += coin.points;
@@ -2413,7 +2474,7 @@ function addToScore(gameState, coin) {
     });
     if (Date.now() - gameState.lastPlayedCoinGrab > 16) {
         gameState.lastPlayedCoinGrab = Date.now();
-        (0, _sounds.sounds).coinCatch(coin.x);
+        schedulGameSound(gameState, 'coinCatch', coin.x, 1);
     }
     gameState.runStatistics.score += coin.points;
 }
@@ -2553,7 +2614,6 @@ frames = 1) {
             score: gameState.score
         }));
     } else if (gameState.running || gameState.levelTime) {
-        let playedCoinBounce = false;
         const coinRadius = Math.round(gameState.coinSize / 2);
         gameState.coins.forEach((coin)=>{
             if (coin.destroyed) return;
@@ -2585,17 +2645,14 @@ frames = 1) {
                 if (gameState.bricks[hitBrick] && coin.color !== gameState.bricks[hitBrick] && gameState.bricks[hitBrick] !== "black" && !coin.coloredABrick) {
                     gameState.bricks[hitBrick] = coin.color;
                     coin.coloredABrick = true;
-                    (0, _sounds.sounds).colorChange(coin.x, 0.3);
+                    schedulGameSound(gameState, 'colorChange', coin.x, 0.3);
                 }
             }
             if (typeof hitBrick !== "undefined" || hitBorder) {
                 coin.vx *= 0.8;
                 coin.vy *= 0.8;
                 coin.sa *= 0.9;
-                if (speed > 20 && !playedCoinBounce) {
-                    playedCoinBounce = true;
-                    (0, _sounds.sounds).coinBounce(coin.x, 0.2);
-                }
+                if (speed > 20) schedulGameSound(gameState, 'coinBounce', coin.x, 0.2);
                 if (Math.abs(coin.vy) < 3) coin.vy = 0;
             }
         });
@@ -2739,7 +2796,7 @@ function ballTick(gameState, ball, delta) {
         if (gameState.perks.left_is_lava && borderHitCode % 2 && ball.x < gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(gameState, ball.x, ball.y);
         if (gameState.perks.right_is_lava && borderHitCode % 2 && ball.x > gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(gameState, ball.x, ball.y);
         if (gameState.perks.top_is_lava && borderHitCode >= 2) resetCombo(gameState, ball.x, ball.y + gameState.ballSize);
-        (0, _sounds.sounds).wallBeep(ball.x);
+        schedulGameSound(gameState, 'wallBeep', ball.x, 1);
         gameState.levelWallBounces++;
         gameState.runStatistics.wall_bounces++;
     }
@@ -2752,11 +2809,11 @@ function ballTick(gameState, ball, delta) {
             const angle = Math.atan2(-gameState.puckWidth / 2, (ball.x - gameState.puckPosition) * (gameState.perks.concave_puck ? -0.5 : 1));
             ball.vx = speed * Math.cos(angle);
             ball.vy = speed * Math.sin(angle);
-            (0, _sounds.sounds).wallBeep(ball.x);
+            schedulGameSound(gameState, 'wallBeep', ball.x, 1);
         } else {
             ball.vy *= -1;
             gameState.perks.extra_life = Math.max(0, gameState.perks.extra_life - 1);
-            (0, _sounds.sounds).lifeLost(ball.x);
+            schedulGameSound(gameState, 'lifeLost', ball.x, 1);
             if (!(0, _options.isOptionOn)("basic")) for(let i = 0; i < 10; i++)gameState.flashes.push({
                 type: "particle",
                 ethereal: false,
@@ -2831,7 +2888,7 @@ function ballTick(gameState, ball, delta) {
         }
     }
     if (sturdyBounce) {
-        (0, _sounds.sounds).wallBeep(x);
+        schedulGameSound(gameState, 'wallBeep', x, 1);
         return;
     }
     if (typeof hitBrick !== "undefined") {
@@ -2863,7 +2920,7 @@ function ballTick(gameState, ball, delta) {
     }
 }
 
-},{"./sounds":"dQKPV","./game_utils":"cEeac","./i18n/i18n":"eNPRm","./loadGameData":"l1B4x","./settings":"5blfu","./render":"9AS2t","./gameOver":"caCAf","./game":"edeGs","./recording":"godmD","./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9AS2t":[function(require,module,exports,__globalThis) {
+},{"./game_utils":"cEeac","./i18n/i18n":"eNPRm","./loadGameData":"l1B4x","./settings":"5blfu","./render":"9AS2t","./gameOver":"caCAf","./game":"edeGs","./recording":"godmD","./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9AS2t":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "gameCanvas", ()=>gameCanvas);
@@ -3742,7 +3799,8 @@ function newGameState(params) {
         levelTime: 0,
         levelWallBounces: 0,
         needsRender: true,
-        autoCleanUses: 0
+        autoCleanUses: 0,
+        ...(0, _gameUtils.defaultSounds)()
     };
     (0, _gameStateMutators.resetBalls)(gameState);
     if (!(0, _gameUtils.sumOfKeys)(gameState.perks)) {

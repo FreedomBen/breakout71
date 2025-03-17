@@ -237,6 +237,16 @@ export type GameState = {
   levelTime: number;
   levelWallBounces: number;
   autoCleanUses: number;
+  aboutToPlaySound:{
+    wallBeep:{vol:number, x:number},
+    comboIncreaseMaybe:{vol:number, x:number},
+    comboDecrease:{vol:number, x:number},
+    coinBounce:{vol:number, x:number},
+    explode:{vol:number, x:number},
+    lifeLost:{vol:number, x:number},
+    coinCatch:{vol:number, x:number},
+    colorChange:{vol:number, x:number},
+  }
 };
 
 export type RunParams = {
