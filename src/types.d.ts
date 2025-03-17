@@ -248,6 +248,5 @@ export type OptionDef = {
   default: boolean;
   name: string;
   help: string;
-  disabled: () => boolean;
 };
 export type OptionId = keyof typeof options;

@@ -52,12 +52,6 @@ import {
 } from "./asyncAlert";
 import { isOptionOn, options, toggleOption } from "./options";
 
-bombSVG.src =
-  "data:image/svg+xml;base64," +
-  btoa(`<svg width="144" height="144" viewBox="0 0 38.101 38.099" xmlns="http://www.w3.org/2000/svg">
- <path d="m6.1528 26.516c-2.6992-3.4942-2.9332-8.281-.58305-11.981a10.454 10.454 0 017.3701-4.7582c1.962-.27726 4.1646.05953 5.8835.90027l.45013.22017.89782-.87417c.83748-.81464.91169-.87499 1.0992-.90271.40528-.058713.58876.03425 1.1971.6116l.55451.52679 1.0821-1.0821c1.1963-1.1963 1.383-1.3357 2.1039-1.5877.57898-.20223 1.5681-.19816 2.1691.00897 1.4613.50314 2.3673 1.7622 2.3567 3.2773-.0058.95654-.24464 1.5795-.90924 2.3746-.40936.48928-.55533.81057-.57898 1.2737-.02039.41018.1109.77714.42322 1.1792.30172.38816.3694.61323.2797.93044-.12803.45666-.56674.71598-1.0242.60507-.601-.14597-1.3031-1.3088-1.3969-2.3126-.09459-1.0161.19245-1.8682.92392-2.7432.42567-.50885.5643-.82851.5643-1.3031 0-.50151-.14026-.83177-.51211-1.2028-.50966-.50966-1.0968-.64829-1.781-.41996l-.37348.12477-2.1006 2.1006.52597.55696c.45421.48194.5325.58876.57898.78855.09622.41588.07502.45014-.88396 1.4548l-.87173.9125.26339.57979a10.193 10.193 0 01.9231 4.1001c.03996 2.046-.41996 3.8082-1.4442 5.537-.55044.928-1.0185 1.5013-1.8968 2.3241-.83503.78284-1.5526 1.2827-2.4904 1.7361-3.4266 1.657-7.4721 1.3422-10.549-.82035-.73473-.51782-1.7312-1.4621-2.2515-2.1357zm21.869-4.5584c-.0579-.19734-.05871-2.2662 0-2.4545.11906-.39142.57898-.63361 1.0038-.53005.23812.05708.54147.32455.6116.5382.06279.19163.06769 2.1805.0065 2.3811-.12558.40773-.61649.67602-1.0462.57164-.234-.05708-.51615-.30498-.57568-.50722m3.0417-2.6013c-.12313-.6222.37837-1.1049 1.0479-1.0079.18348.0261.25279.08399 1.0071.83911.75838.75838.81301.82362.84074 1.0112.10193.68499-.40365 1.1938-1.034 1.0405-.1949-.0473-.28786-.12558-1.0144-.85216-.7649-.76409-.80241-.81057-.84645-1.0316m.61323-3.0629a.85623.85623 0 01.59284-.99975c.28949-.09214 2.1814-.08318 2.3917.01141.38734.17369.6279.61078.53984.98181-.06035.25606-.35391.57327-.60181.64992-.25279.07747-2.2278.053-2.4097-.03017-.26013-.11906-.46318-.36125-.51374-.61323" fill="#fff" opacity="0.3"/>
-</svg>`);
-
 export function play() {
   if (gameState.running) return;
   gameState.running = true;
@@ -261,8 +255,8 @@ gameCanvas.addEventListener("mouseup", (e) => {
     pause(true);
   } else {
     play();
-    if (isOptionOn("pointerLock")) {
-      gameCanvas.requestPointerLock();
+    if (isOptionOn("pointerLock") && gameCanvas.requestPointerLock) {
+      gameCanvas.requestPointerLock().then();
     }
   }
 });
@@ -543,7 +537,6 @@ async function openSettingsPanel() {
   for (const key of Object.keys(options) as OptionId[]) {
     if (options[key])
       actions.push({
-        disabled: options[key].disabled(),
         icon: isOptionOn(key)
           ? icons["icon:checkmark_checked"]
           : icons["icon:checkmark_unchecked"],
@@ -652,6 +645,116 @@ async function openSettingsPanel() {
         localStorage.clear();
         window.location.reload();
       }
+    },
+  });
+
+  actions.push({
+    text: t("main_menu.download_save_file"),
+    help: t("main_menu.download_save_file_help"),
+    async value() {
+      const localStorageContent: Record<string, string> = {};
+
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i) as string;
+        const value = localStorage.getItem(key) as string;
+
+        // Store the key-value pair in the object
+        localStorageContent[key] = value;
+      }
+
+      const dlLink = document.createElement("a");
+
+      dlLink.setAttribute(
+        "href",
+        "data:application/json;base64," +
+          btoa(
+            JSON.stringify({
+              fileType: "B71-save-file",
+              appVersion,
+              localStorageContent,
+            }),
+          ),
+      );
+
+      dlLink.setAttribute(
+        "download",
+        "b71-save-" +
+          new Date()
+            .toISOString()
+            .slice(0, 19)
+            .replace(/[^0-9]+/gi, "-") +
+          ".b71",
+      );
+      document.body.appendChild(dlLink);
+      dlLink.click();
+      setTimeout(() => document.body.removeChild(dlLink), 1000);
+    },
+  });
+
+  actions.push({
+    text: t("main_menu.load_save_file"),
+    help: t("main_menu.load_save_file_help"),
+    async value() {
+      if (!document.getElementById("save_file_picker")) {
+        let input: HTMLInputElement = document.createElement("input");
+        input.setAttribute("type", "file");
+        input.setAttribute("id", "save_file_picker");
+        input.setAttribute("accept", ".b71");
+        input.style.position = "absolute";
+        input.style.left = "-1000px";
+        input.addEventListener("change", async (e) => {
+          try {
+            const file = input && input.files?.item(0);
+            if (file) {
+              const content = await new Promise<string>((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function () {
+                  resolve(reader.result?.toString() || "");
+                };
+                reader.onerror = function () {
+                  reject(reader.error);
+                };
+
+                // Read the file as a text string
+
+                reader.readAsText(file);
+              });
+              const {
+                fileType,
+                appVersion: fileVersion,
+                localStorageContent,
+              } = JSON.parse(content);
+              if (fileType !== "B71-save-file")
+                throw new Error("Not a B71 save file");
+              if (fileVersion > appVersion)
+                throw new Error(
+                  "Please update your app first, this file is for version " +
+                    fileVersion +
+                    " or newer.",
+                );
+              localStorage.clear();
+              for (let key in localStorageContent) {
+                localStorage.setItem(key, localStorageContent[key]);
+              }
+              await asyncAlert({
+                title: t("main_menu.save_file_loaded"),
+                text: t("main_menu.save_file_loaded_help"),
+                actions: [{ text: t("main_menu.save_file_loaded_ok") }],
+              });
+              window.location.reload();
+            }
+          } catch (e: any) {
+            await asyncAlert({
+              title: t("main_menu.save_file_error"),
+              text: e.message,
+              actions: [{ text: t("main_menu.save_file_loaded_ok") }],
+            });
+          }
+          input.value = "";
+        });
+        document.body.appendChild(input);
+      }
+      document.getElementById("save_file_picker")?.click();
     },
   });
 
