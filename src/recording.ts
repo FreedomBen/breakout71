@@ -117,18 +117,40 @@ export function startRecordingGame(gameState: GameState) {
     video.loop = true;
     video.muted = true;
     video.playsInline = true;
+
     video.src = URL.createObjectURL(blob);
+    targetDiv.appendChild(video);
 
     const a = document.createElement("a");
     a.download = captureFileName("webm");
     a.target = "_blank";
-    a.href = video.src;
+    if (window.location.href.endsWith("index.html?isInWebView=true")) {
+      a.href = await blobToBase64(blob);
+    } else {
+      a.href = video.src;
+    }
+
     a.textContent = t("main_menu.record_download", {
       size: (blob.size / 1000000).toFixed(2),
     });
-    targetDiv.appendChild(video);
     targetDiv.appendChild(a);
   };
+}
+
+function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader();
+
+    reader.onload = function () {
+      resolve(reader.result);
+    };
+    reader.onerror = function (e) {
+      console.error(e);
+      reject(new Error("Failed to readAsDataURL of the video "));
+    };
+
+    reader.readAsDataURL(blob);
+  });
 }
 
 export function pauseRecording() {

@@ -150,7 +150,6 @@ export type PerksMap = {
   [k in PerkId]: number;
 };
 
-// TODO ensure T has a destroyed;boolean field
 export type ReusableArray<T> = {
   // All items below that index should not be destroyed
   indexMin: number;

@@ -1284,9 +1284,7 @@ export function append<T>(
     where.list[where.indexMin].destroyed = false;
     makeItem(where.list[where.indexMin]);
     where.indexMin++;
-    console.log("Reused item " + where.indexMin);
   } else {
-    console.log("Created item " + where.indexMin);
     const p = { destroyed: false };
     makeItem(p);
     where.list.push(p);
@@ -1321,5 +1319,3 @@ export function forEachLiveOne<T>(
     }
   });
 }
-
-//TODO check destroyed usage in code
