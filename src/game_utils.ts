@@ -1,5 +1,5 @@
-import {Ball, GameState, PerkId, PerksMap} from "./types";
-import {icons, upgrades} from "./loadGameData";
+import { Ball, GameState, PerkId, PerksMap } from "./types";
+import { icons, upgrades } from "./loadGameData";
 
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
@@ -101,16 +101,16 @@ export function distanceBetween(
 }
 
 export function defaultSounds() {
-    return {
-        aboutToPlaySound: {
-            wallBeep: {vol: 0, x: 0},
-            comboIncreaseMaybe: {vol: 0, x: 0},
-            comboDecrease: {vol: 0, x: 0},
-            coinBounce: {vol: 0, x: 0},
-            explode: {vol: 0, x: 0},
-            lifeLost: {vol: 0, x: 0},
-            coinCatch: {vol: 0, x: 0},
-            colorChange: {vol: 0, x: 0},
-        }
-    }
+  return {
+    aboutToPlaySound: {
+      wallBeep: { vol: 0, x: 0 },
+      comboIncreaseMaybe: { vol: 0, x: 0 },
+      comboDecrease: { vol: 0, x: 0 },
+      coinBounce: { vol: 0, x: 0 },
+      explode: { vol: 0, x: 0 },
+      lifeLost: { vol: 0, x: 0 },
+      coinCatch: { vol: 0, x: 0 },
+      colorChange: { vol: 0, x: 0 },
+    },
+  };
 }

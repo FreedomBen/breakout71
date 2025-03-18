@@ -1,4 +1,4 @@
-import { baseCombo } from "./gameStateMutators";
+import { baseCombo, forEachLiveOne, liveCount } from "./gameStateMutators";
 import {
   brickCenterX,
   brickCenterY,
@@ -54,9 +54,8 @@ export function render(gameState: GameState) {
 
     ctx.globalCompositeOperation = "screen";
     ctx.globalAlpha = 0.6;
-    gameState.coins.forEach((coin) => {
-      if (!coin.destroyed)
-        drawFuzzyBall(ctx, coin.color, gameState.coinSize * 2, coin.x, coin.y);
+    forEachLiveOne(gameState.coins, (coin) => {
+      drawFuzzyBall(ctx, coin.color, gameState.coinSize * 2, coin.x, coin.y);
     });
     gameState.balls.forEach((ball) => {
       drawFuzzyBall(
@@ -81,17 +80,19 @@ export function render(gameState: GameState) {
       );
     });
     ctx.globalAlpha = 1;
-    gameState.flashes.forEach((flash) => {
-      const { x, y, time, color, size, type, duration } = flash;
+    forEachLiveOne(gameState.lights, (flash) => {
+      const { x, y, time, color, size, duration } = flash;
       const elapsed = gameState.levelTime - time;
       ctx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2);
-      if (type === "ball") {
-        drawFuzzyBall(ctx, color, size, x, y);
-      }
-      if (type === "particle") {
-        drawFuzzyBall(ctx, color, size * 3, x, y);
-      }
+      drawFuzzyBall(ctx, color, size, x, y);
     });
+    forEachLiveOne(gameState.particles, (flash) => {
+      const { x, y, time, color, size, duration } = flash;
+      const elapsed = gameState.levelTime - time;
+      ctx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2);
+      drawFuzzyBall(ctx, color, size * 3, x, y);
+    });
+
     // Decides how brights the bg black parts can get
     ctx.globalAlpha = 0.2;
     ctx.globalCompositeOperation = "multiply";
@@ -128,14 +129,11 @@ export function render(gameState: GameState) {
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = level.color || "#000";
     ctx.fillRect(0, 0, width, height);
-
-    gameState.flashes.forEach((flash) => {
-      const { x, y, time, color, size, type, duration } = flash;
+    forEachLiveOne(gameState.particles, (flash) => {
+      const { x, y, time, color, size, duration } = flash;
       const elapsed = gameState.levelTime - time;
       ctx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2);
-      if (type === "particle") {
-        drawBall(ctx, color, size, x, y);
-      }
+      drawBall(ctx, color, size, x, y);
     });
   }
 
@@ -161,27 +159,24 @@ export function render(gameState: GameState) {
   }
   // Coins
   ctx.globalAlpha = 1;
-
-  gameState.coins.forEach((coin) => {
-    if (!coin.destroyed) {
-      ctx.globalCompositeOperation =
-        coin.color === "gold" || level.color ? "source-over" : "screen";
-      drawCoin(
-        ctx,
-        coin.color,
-        coin.size,
-        coin.x,
-        coin.y,
-        level.color || "black",
-        coin.a,
-      );
-    }
+  forEachLiveOne(gameState.coins, (coin) => {
+    ctx.globalCompositeOperation =
+      coin.color === "gold" || level.color ? "source-over" : "screen";
+    drawCoin(
+      ctx,
+      coin.color,
+      coin.size,
+      coin.x,
+      coin.y,
+      level.color || "black",
+      coin.a,
+    );
   });
 
   // Black shadow around balls
   if (!isOptionOn("basic")) {
     ctx.globalCompositeOperation = "source-over";
-    ctx.globalAlpha = Math.min(0.8, gameState.coins.length / 20);
+    ctx.globalAlpha = Math.min(0.8, liveCount(gameState.coins) / 20);
     gameState.balls.forEach((ball) => {
       drawBall(
         ctx,
@@ -197,22 +192,21 @@ export function render(gameState: GameState) {
   renderAllBricks();
 
   ctx.globalCompositeOperation = "screen";
-  gameState.flashes = gameState.flashes.filter(
-    (f) => gameState.levelTime - f.time < f.duration && !f.destroyed,
-  );
-
-  gameState.flashes.forEach((flash) => {
-    const { x, y, time, color, size, type, duration } = flash;
+  forEachLiveOne(gameState.texts, (flash) => {
+    const { x, y, time, color, size, duration } = flash;
     const elapsed = gameState.levelTime - time;
     ctx.globalAlpha = Math.max(0, Math.min(1, 2 - (elapsed / duration) * 2));
-    if (type === "text") {
-      ctx.globalCompositeOperation = "source-over";
-      drawText(ctx, flash.text, color, size, x, y - elapsed / 10);
-    } else if (type === "particle") {
-      ctx.globalCompositeOperation = "screen";
-      drawBall(ctx, color, size, x, y);
-      drawFuzzyBall(ctx, color, size, x, y);
-    }
+    ctx.globalCompositeOperation = "source-over";
+    drawText(ctx, flash.text, color, size, x, y - elapsed / 10);
+  });
+
+  forEachLiveOne(gameState.particles, (particle) => {
+    const { x, y, time, color, size, duration } = particle;
+    const elapsed = gameState.levelTime - time;
+    ctx.globalAlpha = Math.max(0, Math.min(1, 2 - (elapsed / duration) * 2));
+    ctx.globalCompositeOperation = "screen";
+    drawBall(ctx, color, size, x, y);
+    drawFuzzyBall(ctx, color, size, x, y);
   });
 
   if (gameState.perks.extra_life) {

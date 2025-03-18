@@ -113,22 +113,22 @@ interface BaseFlash {
 }
 
 interface ParticleFlash extends BaseFlash {
-  type: "particle";
+  // type: "particle";
   vx: number;
   vy: number;
   ethereal: boolean;
 }
 
 interface TextFlash extends BaseFlash {
-  type: "text";
+  // type: "text";
   text: string;
 }
 
-interface BallFlash extends BaseFlash {
-  type: "ball";
+interface LightFlash extends BaseFlash {
+  // type: "ball";
 }
 
-export type Flash = ParticleFlash | TextFlash | BallFlash;
+export type Flash = ParticleFlash | TextFlash | LightFlash;
 
 export type RunStats = {
   started: number;
@@ -153,9 +153,10 @@ export type PerksMap = {
 // TODO ensure T has a destroyed;boolean field
 export type ReusableArray<T> = {
   // All items below that index should not be destroyed
-  indexMin:number;
-  list:T[]
-}
+  indexMin: number;
+  total: number;
+  list: T[];
+};
 
 export type RunHistoryItem = RunStats & {
   perks?: PerksMap;
@@ -197,6 +198,7 @@ export type GameState = {
   combo: number;
   // Whether the game is running or paused
   running: boolean;
+  ballStickToPuck: boolean;
   // Whether the game should be re-rendered once even if not running
   needsRender: boolean;
   // Position of the center of the puck on the canvas in pixels, from the left of the canvas.
@@ -220,11 +222,9 @@ export type GameState = {
   // Array of bricks to display. 'black' means bomb. '' means no brick.
   bricks: colorString[];
 
-
-
-  particles: ReusableArray<ParticleFlash>
-  texts: ReusableArray<TextFlash>
-  lights: ReusableArray<BallFlash>
+  particles: ReusableArray<ParticleFlash>;
+  texts: ReusableArray<TextFlash>;
+  lights: ReusableArray<LightFlash>;
   coins: ReusableArray<Coin>;
   levelStartScore: number;
   levelMisses: number;
@@ -248,16 +248,16 @@ export type GameState = {
   levelTime: number;
   levelWallBounces: number;
   autoCleanUses: number;
-  aboutToPlaySound:{
-    wallBeep:{vol:number, x:number},
-    comboIncreaseMaybe:{vol:number, x:number},
-    comboDecrease:{vol:number, x:number},
-    coinBounce:{vol:number, x:number},
-    explode:{vol:number, x:number},
-    lifeLost:{vol:number, x:number},
-    coinCatch:{vol:number, x:number},
-    colorChange:{vol:number, x:number},
-  }
+  aboutToPlaySound: {
+    wallBeep: { vol: number; x: number };
+    comboIncreaseMaybe: { vol: number; x: number };
+    comboDecrease: { vol: number; x: number };
+    coinBounce: { vol: number; x: number };
+    explode: { vol: number; x: number };
+    lifeLost: { vol: number; x: number };
+    coinCatch: { vol: number; x: number };
+    colorChange: { vol: number; x: number };
+  };
 };
 
 export type RunParams = {

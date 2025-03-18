@@ -1,10 +1,14 @@
-import {GameState, RunParams} from "./types";
-import {getTotalScore} from "./settings";
-import {allLevels, upgrades} from "./loadGameData";
-import {defaultSounds, getPossibleUpgrades, makeEmptyPerksMap, sumOfKeys,} from "./game_utils";
-import {dontOfferTooSoon, resetBalls} from "./gameStateMutators";
-import {isOptionOn} from "./options";
-
+import { GameState, RunParams } from "./types";
+import { getTotalScore } from "./settings";
+import { allLevels, upgrades } from "./loadGameData";
+import {
+  defaultSounds,
+  getPossibleUpgrades,
+  makeEmptyPerksMap,
+  sumOfKeys,
+} from "./game_utils";
+import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
+import { isOptionOn } from "./options";
 
 export function newGameState(params: RunParams): GameState {
   const totalScoreAtRunStart = getTotalScore();
@@ -33,6 +37,7 @@ export function newGameState(params: RunParams): GameState {
     combo: 1,
     gridSize: 12,
     running: false,
+    ballStickToPuck: true,
     puckPosition: 400,
     pauseTimeout: null,
     canvasWidth: 0,
@@ -50,10 +55,10 @@ export function newGameState(params: RunParams): GameState {
     balls: [],
     ballsColor: "white",
     bricks: [],
-    lights: {indexMin:0,list:[]},
-    particles: {indexMin:0,list:[]},
-    texts: {indexMin:0,list:[]},
-    coins: {indexMin:0,list:[]},
+    lights: { indexMin: 0, total: 0, list: [] },
+    particles: { indexMin: 0, total: 0, list: [] },
+    texts: { indexMin: 0, total: 0, list: [] },
+    coins: { indexMin: 0, total: 0, list: [] },
     levelStartScore: 0,
     levelMisses: 0,
     levelSpawnedCoins: 0,
@@ -90,7 +95,7 @@ export function newGameState(params: RunParams): GameState {
     levelWallBounces: 0,
     needsRender: true,
     autoCleanUses: 0,
-    ...defaultSounds()
+    ...defaultSounds(),
   };
   resetBalls(gameState);
 
@@ -109,4 +114,3 @@ export function newGameState(params: RunParams): GameState {
   }
   return gameState;
 }
-

@@ -1,31 +1,36 @@
-
 import { isOptionOn } from "./options";
-import {GameState} from "./types";
+import { GameState } from "./types";
 
-let lastPlay = Date.now()
+let lastPlay = Date.now();
 
-export function playPendingSounds(gameState:GameState){
-  if(lastPlay>Date.now()-60){
-    return
+export function playPendingSounds(gameState: GameState) {
+  if (lastPlay > Date.now() - 60) {
+    return;
   }
-  lastPlay=Date.now()
-  for(let key in gameState.aboutToPlaySound){
-    const soundName = key as keyof GameState["aboutToPlaySound"]
-    const ex = gameState.aboutToPlaySound[soundName] as {vol:number, x:number}
-    if(ex.vol){
-      sounds[soundName](Math.min(2,ex.vol),pixelsToPan(gameState, ex.x), gameState.combo)
-      ex.vol=0
+  lastPlay = Date.now();
+  for (let key in gameState.aboutToPlaySound) {
+    const soundName = key as keyof GameState["aboutToPlaySound"];
+    const ex = gameState.aboutToPlaySound[soundName] as {
+      vol: number;
+      x: number;
+    };
+    if (ex.vol) {
+      sounds[soundName](
+        Math.min(2, ex.vol),
+        pixelsToPan(gameState, ex.x),
+        gameState.combo,
+      );
+      ex.vol = 0;
     }
   }
-
 }
 export const sounds = {
-  wallBeep: (vol:number, pan: number, combo:number) => {
+  wallBeep: (vol: number, pan: number, combo: number) => {
     if (!isOptionOn("sound")) return;
     createSingleBounceSound(800, pan, vol);
   },
 
-  comboIncreaseMaybe: ( volume: number,pan: number,combo: number, ) => {
+  comboIncreaseMaybe: (volume: number, pan: number, combo: number) => {
     if (!isOptionOn("sound")) return;
     let delta = 0;
     if (!isNaN(lastComboPlayed)) {
@@ -36,28 +41,28 @@ export const sounds = {
     lastComboPlayed = combo;
   },
 
-  comboDecrease(volume: number,pan: number,combo: number) {
+  comboDecrease(volume: number, pan: number, combo: number) {
     if (!isOptionOn("sound")) return;
     playShepard(-1, pan, volume);
   },
-  coinBounce: (volume: number,pan: number,combo: number) => {
+  coinBounce: (volume: number, pan: number, combo: number) => {
     if (!isOptionOn("sound")) return;
     createSingleBounceSound(1200, pan, volume, 0.1, "triangle");
   },
-  explode: (volume: number,pan: number,combo: number) => {
+  explode: (volume: number, pan: number, combo: number) => {
     if (!isOptionOn("sound")) return;
     createExplosionSound(pan);
   },
-  lifeLost(volume: number,pan: number,combo: number) {
+  lifeLost(volume: number, pan: number, combo: number) {
     if (!isOptionOn("sound")) return;
     createShatteredGlassSound(pan);
   },
 
-  coinCatch(volume: number,pan: number,combo: number) {
+  coinCatch(volume: number, pan: number, combo: number) {
     if (!isOptionOn("sound")) return;
-    createSingleBounceSound(900, (pan), volume, 0.1, "triangle");
+    createSingleBounceSound(900, pan, volume, 0.1, "triangle");
   },
-  colorChange(volume: number,pan: number,combo: number) {
+  colorChange(volume: number, pan: number, combo: number) {
     createSingleBounceSound(400, pan, volume, 0.5, "sine");
     createSingleBounceSound(800, pan, volume * 0.5, 0.2, "square");
   },
@@ -175,7 +180,7 @@ function createExplosionSound(pan = 0.5) {
   noiseSource.stop(context.currentTime + 1);
 }
 
-function pixelsToPan(gameState:GameState, pan: number) {
+function pixelsToPan(gameState: GameState, pan: number) {
   return Math.max(
     0,
     Math.min(

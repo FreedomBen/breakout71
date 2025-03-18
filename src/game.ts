@@ -3,12 +3,15 @@ import {
   Ball,
   Coin,
   GameState,
+  LightFlash,
   OptionId,
+  ParticleFlash,
   PerkId,
   RunParams,
+  TextFlash,
   Upgrade,
 } from "./types";
-import {getAudioContext, playPendingSounds} from "./sounds";
+import { getAudioContext, playPendingSounds } from "./sounds";
 import {
   currentLevelInfo,
   getRowColIndex,
@@ -20,6 +23,8 @@ import "./PWA/sw_loader";
 import { getCurrentLang, t } from "./i18n/i18n";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import {
+  empty,
+  forEachLiveOne,
   gameStateTick,
   normalizeGameState,
   pickRandomUpgrades,
@@ -51,11 +56,12 @@ import {
   closeModal,
 } from "./asyncAlert";
 import { isOptionOn, options, toggleOption } from "./options";
-import {hashCode} from "./getLevelBackground";
+import { hashCode } from "./getLevelBackground";
 
 export function play() {
   if (gameState.running) return;
   gameState.running = true;
+  gameState.ballStickToPuck = false;
 
   startRecordingGame(gameState);
   getAudioContext()?.resume();
@@ -95,6 +101,10 @@ export function pause(playerAskedForPause: boolean) {
 }
 
 export const fitSize = () => {
+  const past_off = gameState.offsetXRoundedDown,
+    past_width = gameState.gameZoneWidthRoundedUp,
+    past_heigh = gameState.gameZoneHeight;
+
   const { width, height } = gameCanvas.getBoundingClientRect();
   gameState.canvasWidth = width;
   gameState.canvasHeight = height;
@@ -123,10 +133,27 @@ export const fitSize = () => {
   backgroundCanvas.title = "resized";
   // Ensure puck stays within bounds
   setMousePos(gameState, gameState.puckPosition);
-  gameState.coins = [];
-  gameState.flashes = [];
+
+  function mapXY(item: ParticleFlash | TextFlash | LightFlash) {
+    item.x =
+      gameState.offsetXRoundedDown +
+      ((item.x - past_off) / past_width) * gameState.gameZoneWidthRoundedUp;
+    item.y = (item.y / past_heigh) * gameState.gameZoneHeight;
+  }
+  function mapXYPastCoord(coin: Coin | Ball) {
+    coin.x =
+      gameState.offsetXRoundedDown +
+      ((coin.x - past_off) / past_width) * gameState.gameZoneWidthRoundedUp;
+    coin.y = (coin.y / past_heigh) * gameState.gameZoneHeight;
+    coin.previousX = coin.x;
+    coin.previousY = coin.y;
+  }
+  gameState.balls.forEach(mapXYPastCoord);
+  forEachLiveOne(gameState.coins, mapXYPastCoord);
+  forEachLiveOne(gameState.particles, mapXY);
+  forEachLiveOne(gameState.texts, mapXY);
+  forEachLiveOne(gameState.lights, mapXY);
   pause(true);
-  putBallsAtPuck(gameState);
   // For safari mobile https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
   document.documentElement.style.setProperty(
     "--vh",
@@ -273,7 +300,9 @@ gameCanvas.addEventListener("mousemove", (e) => {
 gameCanvas.addEventListener("touchstart", (e) => {
   e.preventDefault();
   if (!e.touches?.length) return;
+
   setMousePos(gameState, e.touches[0].pageX);
+  normalizeGameState(gameState);
   play();
 });
 gameCanvas.addEventListener("touchend", (e) => {
@@ -442,7 +471,6 @@ export function tick() {
       gameState.puckPosition + gameState.keyboardPuckSpeed,
     );
   }
-
   normalizeGameState(gameState);
 
   if (gameState.running) {
@@ -457,8 +485,8 @@ export function tick() {
   if (gameState.running) {
     recordOneFrame(gameState);
   }
-  if(isOptionOn('sound')  ){
-    playPendingSounds(gameState)
+  if (isOptionOn("sound")) {
+    playPendingSounds(gameState);
   }
   requestAnimationFrame(tick);
 }
@@ -514,10 +542,13 @@ async function openScorePanel() {
   }
 }
 
-document.getElementById("menu")?.addEventListener("click", (e) => {
-  e.preventDefault();
-  openSettingsPanel();
-});
+(document.getElementById("menu") as HTMLButtonElement).addEventListener(
+  "click",
+  (e) => {
+    e.preventDefault();
+    openSettingsPanel();
+  },
+);
 
 async function openSettingsPanel() {
   pause(true);
@@ -665,7 +696,7 @@ async function openSettingsPanel() {
         localStorageContent[key] = value;
       }
 
-      const signedPayload=JSON.stringify(localStorageContent)
+      const signedPayload = JSON.stringify(localStorageContent);
       const dlLink = document.createElement("a");
 
       dlLink.setAttribute(
@@ -676,7 +707,10 @@ async function openSettingsPanel() {
               fileType: "B71-save-file",
               appVersion,
               signedPayload,
-              key: hashCode('Security by obscurity, but really the game is oss so eh'+signedPayload)
+              key: hashCode(
+                "Security by obscurity, but really the game is oss so eh" +
+                  signedPayload,
+              ),
             }),
           ),
       );
@@ -727,7 +761,8 @@ async function openSettingsPanel() {
               const {
                 fileType,
                 appVersion: fileVersion,
-                signedPayload,key
+                signedPayload,
+                key,
               } = JSON.parse(content);
               if (fileType !== "B71-save-file")
                 throw new Error("Not a B71 save file");
@@ -738,11 +773,17 @@ async function openSettingsPanel() {
                     " or newer.",
                 );
 
-              if(key!== hashCode('Security by obscurity, but really the game is oss so eh'+signedPayload)){
-                throw new Error("Key does not match content.")
+              if (
+                key !==
+                hashCode(
+                  "Security by obscurity, but really the game is oss so eh" +
+                    signedPayload,
+                )
+              ) {
+                throw new Error("Key does not match content.");
               }
 
-              const localStorageContent=JSON.parse(signedPayload)
+              const localStorageContent = JSON.parse(signedPayload);
               localStorage.clear();
               for (let key in localStorageContent) {
                 localStorage.setItem(key, localStorageContent[key]);
@@ -982,4 +1023,4 @@ tick();
 // @ts-ignore
 // window.stressTest= ()=>restart({level:'Shark',perks:{base_combo:100, pierce:10, multiball:8}})
 window.stressTest = () =>
-  restart({ level: "Shark", perks: { sapper: 2, pierce: 10, multiball: 3 } });
+  restart({ level: "Bird", perks: { sapper: 2, pierce: 10, multiball: 3 } });

@@ -1,8 +1,10 @@
 package me.lecaro.breakout
+
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -18,8 +20,11 @@ import android.widget.Toast
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.jar.Manifest
 
 const val CHOOSE_FILE_REQUEST_CODE = 548459
+const val PERM_REQUEST_CODE = 66622635
+
 class MainActivity : android.app.Activity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -28,13 +33,73 @@ class MainActivity : android.app.Activity() {
         when (requestCode) {
             CHOOSE_FILE_REQUEST_CODE -> {
                 if (resultCode == RESULT_OK) {
-                    filePathCallback?.onReceiveValue(WebChromeClient.FileChooserParams.parseResult(resultCode, data))
+                    filePathCallback?.onReceiveValue(
+                        WebChromeClient.FileChooserParams.parseResult(
+                            resultCode,
+                            data
+                        )
+                    )
                     filePathCallback = null
                 }
             }
         }
     }
+        override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+            when (requestCode) {
+                PERM_REQUEST_CODE -> {
+                    if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                        downloadFile()
+                    } else {
+                        Toast.makeText(this, "We cant make a save file without that permission", Toast.LENGTH_SHORT).show()
+                    }
+                    return
+                }
+            }
+        }
     var filePathCallback: ValueCallback<Array<Uri>>? = null
+    var fileToDownload:String? = null
+
+    fun downloadFile(){
+       val url = fileToDownload ?: return
+        try{
+            if (!url.startsWith("data:")) {
+                Log.w("DL", "url ignored because it does not start with data:")
+                return
+            }
+            val sdf = SimpleDateFormat("yyyy-M-dd-hh-mm")
+            val currentDate = sdf.format(Date())
+            // Extract filename from contentDisposition if available
+
+
+            if (url.startsWith("data:application/json;base64,")) {
+                Log.d("DL", "saving application/json ")
+                val base64Data = url.substringAfterLast(',')
+                val decodedBytes =
+                    android.util.Base64.decode(base64Data, android.util.Base64.DEFAULT)
+                val jsonData = String(decodedBytes);
+                val dir =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                val fileName = "breakout-71-save-$currentDate.b71"
+                val file = File(dir, fileName)
+                file.writeText(jsonData)
+                Toast.makeText(this, "Saved in $dir", Toast.LENGTH_LONG).show()
+                Log.d("DL", "finished saving application/json ")
+
+            } else if (url.startsWith("data:video/webm;base64,")) {
+                Log.d("DL", "saving video/webm ")
+                // TODO
+                Log.d("DL", "finished savign video/webm ")
+            } else {
+                Log.w("DL", "unexpected type " + url)
+            }
+            }catch (e:Exception){
+                Log.e("DL", "Error ${e.message}")
+                Toast.makeText(this, "Error ${e.message}", Toast.LENGTH_LONG).show()
+
+            }
+
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -46,8 +111,9 @@ class MainActivity : android.app.Activity() {
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         webView.settings.setSupportZoom(false)
-        webView.loadUrl("file:///android_asset/index.html?isInWebView=true")
 
+        webView.loadUrl("file:///android_asset/index.html?isInWebView=true")
+        val activity=this;
 
         webView.webChromeClient = object : WebChromeClient() {
             override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
@@ -57,43 +123,35 @@ class MainActivity : android.app.Activity() {
                 )
                 return true
             }
-            override fun onShowFileChooser(webView: WebView?, filePathCallback: ValueCallback<Array<Uri>>?, fileChooserParams: FileChooserParams?): Boolean {
-                startActivityForResult(fileChooserParams?.createIntent(), CHOOSE_FILE_REQUEST_CODE)
-                this@MainActivity.filePathCallback = filePathCallback
-                return true
+
+            override fun onShowFileChooser(
+                webView: WebView?,
+                filePathCallback: ValueCallback<Array<Uri>>?,
+                fileChooserParams: FileChooserParams?
+            ): Boolean {
+                try{
+
+                    startActivityForResult(fileChooserParams?.createIntent(), CHOOSE_FILE_REQUEST_CODE)
+                    this@MainActivity.filePathCallback = filePathCallback
+                    return true
+                }catch (e:Exception){
+                  Log.e("DL", "Error ${e.message}")
+                    Toast.makeText(activity, "Error ${e.message}", Toast.LENGTH_LONG).show()
+
+                    return false
+                }
             }
         }
+
         webView.setDownloadListener(DownloadListener { url, userAgent, contentDisposition, mimetype, contentLength ->
 
-            if (!url.startsWith("data:")) {
-                Log.w("DL","url ignored because it does not start with data:")
-                return@DownloadListener
-            }
-            val sdf = SimpleDateFormat("yyyy-M-dd-hh-mm")
-            val currentDate = sdf.format(Date())
-            // Extract filename from contentDisposition if available
-
-            if (url.startsWith("data:application/json;base64,")) {
-                Log.d("DL","saving application/json ")
-                val base64Data = url.substringAfterLast(',')
-                val decodedBytes = android.util.Base64.decode(base64Data, android.util.Base64.DEFAULT)
-                val jsonData = String(decodedBytes)
-                ;
-                val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                val fileName = "breakout-71-save-$currentDate.b71"
-                val file = File(dir, fileName)
-                file.writeText(jsonData)
-                Toast.makeText(this, "Saved in $dir", Toast. LENGTH_LONG).show()
-                Log.d("DL","finished saving application/json ")
-
-            }else if (url.startsWith("data:video/webm;base64,")){
-                Log.d("DL","saving video/webm ")
-                // TODO
-                Log.d("DL","finished savign video/webm ")
+                fileToDownload = url
+            if (activity.checkSelfPermission( android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                activity.requestPermissions(arrayOf( android.Manifest.permission.WRITE_EXTERNAL_STORAGE), PERM_REQUEST_CODE)
             }else{
-                Log.w("DL","unexpected type "+url)
+                downloadFile()
             }
-
         })
 
 

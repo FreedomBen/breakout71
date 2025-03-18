@@ -323,12 +323,12 @@ export const rawUpgrades = [
     giftable: false,
     id: "sturdy_bricks",
     max: 4,
-    name: t("upgrades.telekinesis.name"),
+    name: t("upgrades.sturdy_bricks.name"),
     help: (lvl: number) =>
       lvl == 1
-        ? t("upgrades.telekinesis.help")
-        : t("upgrades.telekinesis.help_plural"),
-    fullHelp: t("upgrades.telekinesis.fullHelp"),
+        ? t("upgrades.sturdy_bricks.help")
+        : t("upgrades.sturdy_bricks.help_plural"),
+    fullHelp: t("upgrades.sturdy_bricks.fullHelp"),
   },
   {
     requires: "",

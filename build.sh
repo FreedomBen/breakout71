@@ -5,7 +5,6 @@
 defaultVersionCode=$(($(date +%s) / 60))
 versionCode=${1:-$defaultVersionCode}
 
-# TODO crash without app version
 
 source ~/.nvm/nvm.sh;
 
@@ -14,13 +13,6 @@ nvm use v21
 
 if [[ $(node --version) != v21* ]]; then
   echo "run first: nvm use v21"
-  exit 1
-fi
-
-
-if grep -rE "T[O]DO|F[I]XME|console\.log" src
-then
-  echo "You have left some TO""DO or logs"
   exit 1
 fi
 

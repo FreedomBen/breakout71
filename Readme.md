@@ -3,6 +3,8 @@
 Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 - [Play now](https://breakout.lecaro.me/)  
+- [Donate](https://paypal.me/renanlecaro)
+- [Discord](https://discord.gg/DZSPqyJkwP)
 - [Post your comments on itch.io](https://renanlecaro.itch.io/breakout71)   
 - [Help and tips about the game](./Help.md)
 - [Credits](./Credits.md) 
@@ -10,7 +12,6 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 - [HackerNews thread](https://news.ycombinator.com/item?id=43183131)  
-- [Donate](https://github.com/sponsors/renanlecaro)
 
 
 # System requirements 
@@ -22,8 +23,7 @@ There's also an easy mode for kids (slower ball).
 
  
 # Next
-
-- separate particles by type, reuse coins and particles
+- check which color you get if picking a color related perk
 - sturdy bricks map of remaining hits
 
 # bugs
@@ -159,6 +159,9 @@ There's also an easy mode for kids (slower ball).
 - [colin] perk: analyzer - permet de voir les caractéristiques cachées des blocs (sturdy…)
 - [colin] perk: roulette - gagne instantanément 2 perks aléatoires
 - let coins go out of bounds left and right, where they'll get lost, but +1 combo per brick
+-   more combo if no coin catch
+- combo climbs every time a ball bounces on puck (but bounce is random?)
+- 
 
 # extra levels
 

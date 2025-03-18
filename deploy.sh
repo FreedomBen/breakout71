@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if grep -rE "T[O]DO|F[I]XME|console\.log" src
+then
+  echo "You have left some TO""DO or logs"
+  exit 1
+fi
+
 set -e
 set -x
 
