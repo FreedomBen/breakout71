@@ -2919,6 +2919,17 @@ function ballTick(gameState, ball, delta) {
         }
     }
 }
+function append(makeItem, where) {
+    while(where.list[where.indexMin] && !where.list[where.indexMin].destroyed && where.indexMin < where.list.length)where.indexMin++;
+    if (where.indexMin < where.list.length) {
+        makeItem(where.list[where.indexMin]);
+        where.indexMin++;
+    } else where.list.push(makeItem(null));
+}
+function destroy(where, index) {
+    where.list[index].destroyed = true;
+    where.indexMin = Math.min(where.indexMin, index);
+}
 
 },{"./game_utils":"cEeac","./i18n/i18n":"eNPRm","./loadGameData":"l1B4x","./settings":"5blfu","./render":"9AS2t","./gameOver":"caCAf","./game":"edeGs","./recording":"godmD","./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9AS2t":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -3762,8 +3773,22 @@ function newGameState(params) {
         balls: [],
         ballsColor: "white",
         bricks: [],
-        flashes: [],
-        coins: [],
+        lights: {
+            indexMin: 0,
+            list: []
+        },
+        particles: {
+            indexMin: 0,
+            list: []
+        },
+        texts: {
+            indexMin: 0,
+            list: []
+        },
+        coins: {
+            indexMin: 0,
+            list: []
+        },
         levelStartScore: 0,
         levelMisses: 0,
         levelSpawnedCoins: 0,

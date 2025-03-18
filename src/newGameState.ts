@@ -5,6 +5,7 @@ import {defaultSounds, getPossibleUpgrades, makeEmptyPerksMap, sumOfKeys,} from 
 import {dontOfferTooSoon, resetBalls} from "./gameStateMutators";
 import {isOptionOn} from "./options";
 
+
 export function newGameState(params: RunParams): GameState {
   const totalScoreAtRunStart = getTotalScore();
   const firstLevel = params?.level
@@ -49,8 +50,10 @@ export function newGameState(params: RunParams): GameState {
     balls: [],
     ballsColor: "white",
     bricks: [],
-    flashes: [],
-    coins: [],
+    lights: {indexMin:0,list:[]},
+    particles: {indexMin:0,list:[]},
+    texts: {indexMin:0,list:[]},
+    coins: {indexMin:0,list:[]},
     levelStartScore: 0,
     levelMisses: 0,
     levelSpawnedCoins: 0,

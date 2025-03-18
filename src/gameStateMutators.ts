@@ -1,4 +1,4 @@
-import {Ball, BallLike, Coin, colorString, GameState, PerkId} from "./types";
+import {Ball, BallLike, Coin, colorString, GameState, PerkId, ReusableArray} from "./types";
 
 import {
     brickCenterX,
@@ -1243,4 +1243,24 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
             ball.sparks = 0;
         }
     }
+}
+
+function append<T>(makeItem:(match:T|null)=>T,where:ReusableArray<T>){
+    while(where.list[where.indexMin] && !where.list[where.indexMin].destroyed
+        && where.indexMin<where.list.length){
+        where.indexMin++
+    }
+
+    if(where.indexMin<where.list.length){
+        makeItem(where.list[where.indexMin])
+        where.indexMin++
+    }else{
+        where.list.push(makeItem(null))
+    }
+}
+
+function destroy<T>(where:ReusableArray<T>, index:number){
+    where.list[index].destroyed=true
+    where.indexMin = Math.min(where.indexMin, index)
+
 }

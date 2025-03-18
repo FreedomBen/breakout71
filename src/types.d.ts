@@ -150,6 +150,13 @@ export type PerksMap = {
   [k in PerkId]: number;
 };
 
+// TODO ensure T has a destroyed;boolean field
+export type ReusableArray<T> = {
+  // All items below that index should not be destroyed
+  indexMin:number;
+  list:T[]
+}
+
 export type RunHistoryItem = RunStats & {
   perks?: PerksMap;
   appVersion?: string;
@@ -213,8 +220,12 @@ export type GameState = {
   // Array of bricks to display. 'black' means bomb. '' means no brick.
   bricks: colorString[];
 
-  flashes: Flash[];
-  coins: Coin[];
+
+
+  particles: ReusableArray<ParticleFlash>
+  texts: ReusableArray<TextFlash>
+  lights: ReusableArray<BallFlash>
+  coins: ReusableArray<Coin>;
   levelStartScore: number;
   levelMisses: number;
   levelSpawnedCoins: number;
