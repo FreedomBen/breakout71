@@ -61,10 +61,10 @@ class MainActivity : android.app.Activity() {
             val decodedBytes = android.util.Base64.decode(base64Data, android.util.Base64.DEFAULT)
 
             if (url.startsWith("data:application/json;base64,")) {
-            writeFile(decodedBytes,  "breakout-71-save-$currentDate.b71", "application/b71")
+            writeFile(decodedBytes,  "breakout-71-save-$currentDate.json", "application/json")
 
             } else if (url.startsWith("data:video/webm;base64,")) {
-            writeFile(decodedBytes,  "breakout-71-gameplay-capture-$currentDate.webm", "application/b71")
+            writeFile(decodedBytes,  "breakout-71-gameplay-capture-$currentDate.webm", "video/webm")
             } else {
                 Log.w("DL", "unexpected type " + url)
             }
@@ -85,7 +85,7 @@ class MainActivity : android.app.Activity() {
                     val contentValues = ContentValues().apply {
                         put(MediaStore.Downloads.DISPLAY_NAME, fileName)
                         put(MediaStore.Downloads.MIME_TYPE,mime )
-                        put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+                        put(MediaStore.Downloads.RELATIVE_PATH,  Environment.DIRECTORY_DOWNLOADS)
                     }
 
                     val uri: Uri? = contentResolver.insert(

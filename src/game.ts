@@ -738,7 +738,7 @@ async function openSettingsPanel() {
         let input: HTMLInputElement = document.createElement("input");
         input.setAttribute("type", "file");
         input.setAttribute("id", "save_file_picker");
-        input.setAttribute("accept", ".b71");
+        input.setAttribute("accept", ".b71,.json");
         input.style.position = "absolute";
         input.style.left = "-1000px";
         input.addEventListener("change", async (e) => {
