@@ -12,3 +12,4 @@ node_modules
 *.zip
 app/release/
 .parcel-cache/
+dist
