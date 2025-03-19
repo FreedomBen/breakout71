@@ -1,5 +1,5 @@
 // The version of the cache.
-const VERSION = "29038489";
+const VERSION = "29039826";
 
 // The name of the cache
 const CACHE_NAME = `breakout-71-${VERSION}`;

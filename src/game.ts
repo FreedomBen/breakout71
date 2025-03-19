@@ -273,8 +273,6 @@ export async function openUpgradesPicker(gameState: GameState) {
 
     gameState.runStatistics.upgrades_picked++;
   }
-  resetCombo(gameState, undefined, undefined);
-  resetBalls(gameState);
 }
 
 gameCanvas.addEventListener("mouseup", (e) => {

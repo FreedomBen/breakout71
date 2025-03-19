@@ -23,8 +23,10 @@ There's also an easy mode for kids (slower ball).
 
  
 # Next
-- check which color you get if picking a color related perk
-- sturdy bricks map of remaining hits
+- different visual effects on ball to represent which perks it's imbued with (pierce, sapper…). remove visual while it's not affected (can't pierce/sap anymore until touching the puck).
+- check which ball color you get right after picking a color related perk
+- sturdy bricks:  map of remaining hits
+- looks like offline PWA mode does not work 
 
 # bugs
 
@@ -67,11 +69,10 @@ There's also an easy mode for kids (slower ball).
 
 
 # graphics
-- apply global curve / brightness to canvas when things blow, or just always to make neon effect better
+
 - lights shadows with background gradient light map ? 
 - webgl rendering
 - shinier coins by applying glow to them
-- different visual effects on ball to represent which perks it's imbued with (pierce, sapper…). remove visual while it's not affected (can't pierce/sap anymore until touching the puck).
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
 - the white outline on bricks associated with picky eater kinda works but i feel it's more distracting than anything. maybe try something different ? put a cross on matching coloured bricks, or the contrary, grey out other bricks.
 
@@ -160,8 +161,7 @@ There's also an easy mode for kids (slower ball).
 - [colin] perk: roulette - gagne instantanément 2 perks aléatoires
 - let coins go out of bounds left and right, where they'll get lost, but +1 combo per brick
 -   more combo if no coin catch
-- combo climbs every time a ball bounces on puck (but bounce is random?)
-- 
+- combo climbs every time a ball bounces on puck (but bounce is random?) 
 
 # extra levels
 

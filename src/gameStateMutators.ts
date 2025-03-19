@@ -82,7 +82,6 @@ export function resetBalls(gameState: GameState) {
 
       sx: 0,
       sy: 0,
-      sparks: 0,
       piercedSinceBounce: 0,
       hitSinceBounce: 0,
       hitItem: [],
@@ -166,9 +165,7 @@ export function resetCombo(
 ) {
   const prev = gameState.combo;
   gameState.combo = baseCombo(gameState);
-  if (!gameState.levelTime) {
-    gameState.combo += gameState.perks.hot_start * 15;
-  }
+
   if (prev > gameState.combo && gameState.perks.soft_reset) {
     gameState.combo += Math.floor(
       ((prev - gameState.combo) * (gameState.perks.soft_reset * 10)) / 100,
@@ -467,14 +464,13 @@ export function addToScore(gameState: GameState, coin: Coin) {
   gameState.runStatistics.score += coin.points;
 }
 
-export function setLevel(gameState: GameState, l: number) {
+export async function setLevel(gameState: GameState, l: number) {
   stopRecording();
   pause(false);
   if (l > 0) {
-    openUpgradesPicker(gameState);
+    await openUpgradesPicker(gameState);
   }
   gameState.currentLevel = l;
-
   gameState.levelTime = 0;
   gameState.levelWallBounces = 0;
   gameState.autoCleanUses = 0;
@@ -484,7 +480,9 @@ export function setLevel(gameState: GameState, l: number) {
   gameState.levelMisses = 0;
   gameState.runStatistics.levelsPlayed++;
 
-  resetCombo(gameState, undefined, undefined);
+  // Reset combo silently
+  gameState.combo = baseCombo(gameState) + gameState.perks.hot_start * 15;
+
   resetBalls(gameState);
 
   const lvl = currentLevelInfo(gameState);
@@ -1161,21 +1159,36 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   }
 
   if (!isOptionOn("basic")) {
-    ball.sparks += (delta * (gameState.combo - 1)) / 30;
-    if (ball.sparks > 1) {
+    const remainingPierce =
+      gameState.perks.pierce * 3 - ball.piercedSinceBounce;
+    const remainingSapper = ball.sapperUses < gameState.perks.sapper;
+    const extraCombo = gameState.combo - 1;
+    if (
+      (extraCombo && Math.random() > 0.1 / (1 + extraCombo)) ||
+      (remainingSapper && Math.random() > 0.1 / (1 + remainingSapper)) ||
+      (extraCombo && Math.random() > 0.1 / (1 + extraCombo))
+    ) {
+      const color = remainingSapper
+        ? Math.random() > 0.5
+          ? "orange"
+          : "red"
+        : gameState.ballsColor;
+
       makeParticle(
         gameState,
         ball.x,
         ball.y,
-        (Math.random() - 0.5) * gameState.baseSpeed,
-        (Math.random() - 0.5) * gameState.baseSpeed,
-        gameState.ballsColor,
-        false,
+        gameState.perks.pierce_color || remainingPierce
+          ? -ball.vx + ((Math.random() - 0.5) * gameState.baseSpeed) / 3
+          : (Math.random() - 0.5) * gameState.baseSpeed,
+        gameState.perks.pierce_color || remainingPierce
+          ? -ball.vy + ((Math.random() - 0.5) * gameState.baseSpeed) / 3
+          : (Math.random() - 0.5) * gameState.baseSpeed,
+        color,
+        true,
         gameState.coinSize / 2,
-        100 * ball.sparks,
+        100,
       );
-
-      ball.sparks = 0;
     }
   }
 }

@@ -94,7 +94,6 @@ export type Ball = {
   previousVY: number;
   sx: number;
   sy: number;
-  sparks: number;
   piercedSinceBounce: number;
   hitSinceBounce: number;
   hitItem: { index: number; color: string }[];
