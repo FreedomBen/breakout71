@@ -1,5 +1,5 @@
-import {Ball, GameState, PerkId, PerksMap} from "./types";
-import {icons, upgrades} from "./loadGameData";
+import { Ball, GameState, PerkId, PerksMap } from "./types";
+import { icons, upgrades } from "./loadGameData";
 
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
@@ -72,10 +72,10 @@ export function currentLevelInfo(gameState: GameState) {
 }
 
 export function isTelekinesisActive(gameState: GameState, ball: Ball) {
-  return gameState.perks.telekinesis  && ball.vy < 0;
+  return gameState.perks.telekinesis && ball.vy < 0;
 }
 export function isYoyoActive(gameState: GameState, ball: Ball) {
-  return gameState.perks.yoyo &&  ball.vy > 0;
+  return gameState.perks.yoyo && ball.vy > 0;
 }
 
 export function findLast<T>(
@@ -103,9 +103,8 @@ export function distanceBetween(
   return Math.sqrt(distance2(a, b));
 }
 
-
-export function clamp(value, min, max){
-    return Math.max(min, Math.min(value, max))
+export function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(value, max));
 }
 export function defaultSounds() {
   return {
@@ -123,29 +122,29 @@ export function defaultSounds() {
 }
 
 export function shouldPierceByColor(
-    gameState: GameState,
-    vhit: number | undefined,
-    hhit: number | undefined,
-    chit: number | undefined,
+  gameState: GameState,
+  vhit: number | undefined,
+  hhit: number | undefined,
+  chit: number | undefined,
 ) {
-    if (!gameState.perks.pierce_color) return false;
-    if (
-        typeof vhit !== "undefined" &&
-        gameState.bricks[vhit] !== gameState.ballsColor
-    ) {
-        return false;
-    }
-    if (
-        typeof hhit !== "undefined" &&
-        gameState.bricks[hhit] !== gameState.ballsColor
-    ) {
-        return false;
-    }
-    if (
-        typeof chit !== "undefined" &&
-        gameState.bricks[chit] !== gameState.ballsColor
-    ) {
-        return false;
-    }
-    return true;
+  if (!gameState.perks.pierce_color) return false;
+  if (
+    typeof vhit !== "undefined" &&
+    gameState.bricks[vhit] !== gameState.ballsColor
+  ) {
+    return false;
+  }
+  if (
+    typeof hhit !== "undefined" &&
+    gameState.bricks[hhit] !== gameState.ballsColor
+  ) {
+    return false;
+  }
+  if (
+    typeof chit !== "undefined" &&
+    gameState.bricks[chit] !== gameState.ballsColor
+  ) {
+    return false;
+  }
+  return true;
 }

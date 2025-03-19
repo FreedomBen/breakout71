@@ -383,7 +383,7 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-    threshold:70000,
+    threshold: 70000,
     giftable: false,
     id: "asceticism",
     max: 1,
@@ -393,7 +393,7 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-    threshold:75000,
+    threshold: 75000,
     giftable: false,
     id: "unbounded",
     max: 1,
@@ -403,7 +403,7 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-    threshold:80000,
+    threshold: 80000,
     giftable: false,
     id: "shunt",
     max: 1,
@@ -413,7 +413,7 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-    threshold:85000,
+    threshold: 85000,
     giftable: false,
     id: "yoyo",
     max: 2,
@@ -423,17 +423,17 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-    threshold:90000,
+    threshold: 90000,
     giftable: false,
     id: "nbricks",
     max: 3,
     name: t("upgrades.nbricks.name"),
-    help: (lvl: number) => t("upgrades.nbricks.help",{lvl}),
+    help: (lvl: number) => t("upgrades.nbricks.help", { lvl }),
     fullHelp: t("upgrades.nbricks.fullHelp"),
   },
   {
     requires: "",
-    threshold:95000,
+    threshold: 95000,
     giftable: false,
     id: "etherealcoins",
     max: 1,
@@ -443,7 +443,7 @@ export const rawUpgrades = [
   },
   {
     requires: "multiball",
-    threshold:100000,
+    threshold: 100000,
     giftable: false,
     id: "shocks",
     max: 1,
@@ -453,7 +453,7 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-    threshold:105000,
+    threshold: 105000,
     giftable: false,
     id: "zen",
     max: 1,
@@ -463,7 +463,7 @@ export const rawUpgrades = [
   },
   {
     requires: "extra_life",
-    threshold:110000,
+    threshold: 110000,
     giftable: false,
     id: "sacrifice",
     max: 1,
@@ -474,27 +474,27 @@ export const rawUpgrades = [
 
   {
     requires: "",
-    threshold:115000,
+    threshold: 115000,
     giftable: false,
     id: "trampoline",
     max: 3,
     name: t("upgrades.trampoline.name"),
-    help: (lvl: number) => t("upgrades.trampoline.help",{lvl}),
+    help: (lvl: number) => t("upgrades.trampoline.help", { lvl }),
     fullHelp: t("upgrades.trampoline.fullHelp"),
   },
   {
     requires: "",
-    threshold:120000,
+    threshold: 120000,
     giftable: false,
     id: "ghost_coins",
     max: 1,
     name: t("upgrades.ghost_coins.name"),
-    help: (lvl: number) => t("upgrades.ghost_coins.help",{lvl}),
+    help: (lvl: number) => t("upgrades.ghost_coins.help", { lvl }),
     fullHelp: t("upgrades.ghost_coins.fullHelp"),
   },
   {
     requires: "",
-    threshold:125000,
+    threshold: 125000,
     giftable: false,
     id: "forgiving",
     max: 1,
@@ -504,7 +504,7 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-    threshold:130000,
+    threshold: 130000,
     giftable: false,
     id: "ball_attracts_coins",
     max: 3,
@@ -512,5 +512,4 @@ export const rawUpgrades = [
     help: (lvl: number) => t("upgrades.ball_attracts_coins.help"),
     fullHelp: t("upgrades.ball_attracts_coins.fullHelp"),
   },
-
 ] as const;

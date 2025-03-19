@@ -1270,7 +1270,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./upgrades":"1u3Dx"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29040074\"");
+module.exports = JSON.parse("\"29040298\"");
 
 },{}],"6rQoT":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2402,7 +2402,7 @@ function spawnExplosion(gameState, count, x, y, color) {
     for(let i = 0; i < count; i++)makeParticle(gameState, x + (Math.random() - 0.5) * gameState.brickWidth / 2, y + (Math.random() - 0.5) * gameState.brickWidth / 2, (Math.random() - 0.5) * 30, (Math.random() - 0.5) * 30, color, false);
 }
 function explosionAt(gameState, index, x, y, ball) {
-    if (gameState.bricks[index] == 'black') delete gameState.bricks[index];
+    if (gameState.bricks[index] == "black") delete gameState.bricks[index];
     schedulGameSound(gameState, "explode", ball.x, 1);
     const col = index % gameState.gridSize;
     const row = Math.floor(index / gameState.gridSize);
@@ -2710,7 +2710,7 @@ frames = 1) {
             if (!gameState.perks.etherealcoins) {
                 const flip = gameState.perks.helium > 0 && Math.abs(coin.x - gameState.puckPosition) * 2 > gameState.puckWidth + coin.size;
                 coin.vy += frames * coin.weight * 0.8 * (flip ? -1 : 1);
-                if (flip && !(0, _options.isOptionOn)('basic') && Math.random() < 0.1) makeParticle(gameState, coin.x, coin.y, 0, gameState.baseSpeed, rainbowColor(), true, 5, 250);
+                if (flip && !(0, _options.isOptionOn)("basic") && Math.random() < 0.1) makeParticle(gameState, coin.x, coin.y, 0, gameState.baseSpeed, rainbowColor(), true, 5, 250);
             }
             const speed = Math.abs(coin.sx) + Math.abs(coin.sx);
             const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);

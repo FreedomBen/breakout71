@@ -1,4 +1,4 @@
-import {allLevels, appVersion, icons, upgrades} from "./loadGameData";
+import { allLevels, appVersion, icons, upgrades } from "./loadGameData";
 import {
   Ball,
   Coin,
@@ -11,12 +11,17 @@ import {
   TextFlash,
   Upgrade,
 } from "./types";
-import {getAudioContext, playPendingSounds} from "./sounds";
-import {currentLevelInfo, getRowColIndex, max_levels, pickedUpgradesHTMl,} from "./game_utils";
+import { getAudioContext, playPendingSounds } from "./sounds";
+import {
+  currentLevelInfo,
+  getRowColIndex,
+  max_levels,
+  pickedUpgradesHTMl,
+} from "./game_utils";
 
 import "./PWA/sw_loader";
-import {getCurrentLang, t} from "./i18n/i18n";
-import {getSettingValue, getTotalScore, setSettingValue} from "./settings";
+import { getCurrentLang, t } from "./i18n/i18n";
+import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import {
   forEachLiveOne,
   gameStateTick,
@@ -25,12 +30,28 @@ import {
   setLevel,
   setMousePos,
 } from "./gameStateMutators";
-import {backgroundCanvas, ctx, gameCanvas, render, scoreDisplay,} from "./render";
-import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} from "./recording";
-import {newGameState} from "./newGameState";
-import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal,} from "./asyncAlert";
-import {isOptionOn, options, toggleOption} from "./options";
-import {hashCode} from "./getLevelBackground";
+import {
+  backgroundCanvas,
+  ctx,
+  gameCanvas,
+  render,
+  scoreDisplay,
+} from "./render";
+import {
+  pauseRecording,
+  recordOneFrame,
+  resumeRecording,
+  startRecordingGame,
+} from "./recording";
+import { newGameState } from "./newGameState";
+import {
+  alertsOpen,
+  asyncAlert,
+  AsyncAlertAction,
+  closeModal,
+} from "./asyncAlert";
+import { isOptionOn, options, toggleOption } from "./options";
+import { hashCode } from "./getLevelBackground";
 
 export function play() {
   if (gameState.running) return;
@@ -406,8 +427,7 @@ async function openScorePanel() {
 async function openSettingsPanel() {
   pause(true);
 
-  const actions: AsyncAlertAction<() => void>[] = [
-  ];
+  const actions: AsyncAlertAction<() => void>[] = [];
 
   for (const key of Object.keys(options) as OptionId[]) {
     if (options[key])
@@ -449,21 +469,18 @@ async function openSettingsPanel() {
       });
     }
   }
-  actions.push(
-    {
-      text: t("main_menu.resume"),
-      help: t("main_menu.resume_help"),
-      value() {},
-    })
   actions.push({
-      text: t("main_menu.unlocks"),
-      help: t("main_menu.unlocks_help"),
-      value() {
-        openUnlocksList();
-      },
-    })
-
-
+    text: t("main_menu.resume"),
+    help: t("main_menu.resume_help"),
+    value() {},
+  });
+  actions.push({
+    text: t("main_menu.unlocks"),
+    help: t("main_menu.unlocks_help"),
+    value() {
+      openUnlocksList();
+    },
+  });
 
   actions.push({
     text: t("sandbox.title"),
