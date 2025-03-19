@@ -69,7 +69,7 @@
     "name": "Germany",
     "size": 6,
     "bricks": "_______gggg__rrrr__yyyy",
-    "svg": null,
+    "svg": 8,
     "color": ""
   },
   {
@@ -843,7 +843,7 @@
     "color": ""
   },
   {
-    "name": "icon:antigrav",
+    "name": "icon:helium",
     "size": 8,
     "bricks": "v______vvv____vvv______vv______vv______vv______vv______v__WWWW__",
     "svg": null,
@@ -887,7 +887,56 @@
   {
     "name": "icon:etherealcoins",
     "size": 11,
-    "bricks": "___WWWWW_____W_y___W____W_ttt_W___W__ttt_yW__W_______W__W_______W_W_y_y_____WW_____W_y_WW_WWW_____WWWWWWWWWWWW___________",
+    "bricks": "_____v_________vvv________ttt________ttt_______vtttv_____vvtttvv____vvtttvv____vvtttvv____v_ryr_v_______r________________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:shocks",
+    "size": 8,
+    "bricks": "_r__r_r_rWWWyy_r_WWW__r_yWWWyry_y_ryyy_rry__WWW___ryWWWryr__WWWy",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:zen",
+    "size": 9,
+    "bricks": "___vv______vvvv______vv______bbbb____bbbbbb____bbbb____tttttt__tttttttt__tttttt__",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:sacrifice",
+    "size": 9,
+    "bricks": "__r___r___rrr_rrr_rrWWWWWrrrrWrWrWrrrrWWrWWrr_rrWWWrr___rWrWr_____rrr_______r____",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:trampoline",
+    "size": 8,
+    "bricks": "__y_y__y_y___y____llll___lygygl_lgggWggl_lgyggl__gllllg__g____g_",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:ghost_coins",
+    "size": 7,
+    "bricks": "__yyy___yyyyy_yyOyOyyyyyyyyyyyOOOyyyyyyyyyyy_y_yy",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:forgiving",
+    "size": 8,
+    "bricks": "____G______G_G____G___G__G_____GG_____G__G___G____G_G____WWWWW__",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:ball_attracts_coins",
+    "size": 8,
+    "bricks": "WWW_____WWW_y___WWW____y__y_y____y____y_____y_____y____y___y_y__",
     "svg": null,
     "color": ""
   }

@@ -103,6 +103,10 @@ export function distanceBetween(
   return Math.sqrt(distance2(a, b));
 }
 
+
+export function clamp(value, min, max){
+    return Math.max(min, Math.min(value, max))
+}
 export function defaultSounds() {
   return {
     aboutToPlaySound: {

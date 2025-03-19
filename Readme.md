@@ -75,19 +75,15 @@ There's also an easy mode for kids (slower ball).
 - the white outline on bricks associated with picky eater kinda works but i feel it's more distracting than anything. maybe try something different ? put a cross on matching coloured bricks, or the contrary, grey out other bricks.
 
 # New perks ideas 
-- [colin] shocks - balls can bounce off of each others and produce a shock that destroys a random block at the current combo
+
 - second puck (symmetric to the first one)
-- keep combo between level, loose half your run score when missing any bricks
 - offer next level choice after upgrade pick
 - ban 3 random perks from pool, doesn't tell you which ones, gain 2 upgrades 
 - 3 random perks immediately, or maybe "all level get twice as many upgrades, but they are applied randomly, and you aren't told which ones you have."
 - wrap left / right
 - pause and cheat again 
 - wrap top / bottom : coins fall back from top of screen, ball flies to the top and comes back from the screen bottom ? 
-- faster coins, double value
-- +1 upgrade per level but -2 choices
-- n% of the broken bricks respawn when the ball touches the puck
-- bricks break 50% of the time but drop 50% more coins
+- faster coins, double value 
 - wind (puck positions adds force to coins and balls)
 - balls repulse coins
 - n% of coins missed respawn at the top
@@ -95,10 +91,7 @@ There's also an easy mode for kids (slower ball).
 - coins repulse coins (could get really laggy)
 - balls repulse coins
 - balls attract coins
-- twice as many coins after a wall bounce, twice as little otherwise ? 
-- fusion reactor (gather coins in one spot to triple their value)
-- missing makes you loose all score of level, but otherwise multiplier goes up after each breaking
-- soft reset, cut combo in half instead of zero
+- twice as many coins after a wall bounce, twice as little otherwise ?
 - missile goes when you catch coin
 - missile goes when you break a brick
 - puck bounce +1 combo, hit nothing resets
@@ -124,14 +117,13 @@ There's also an easy mode for kids (slower ball).
 - coins don't have gravity
 - [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
 - [colin] side pucks - same as above but with two side pucks.
-- [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks
-- [colin] phantom coins - coins pass through bricks
+- [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks 
 - [colin] drifting coins - coins slowly drift away from the brick they were generated from, and they need to be collected by the ball
 - [colin] bigger ball - self-explanatory
 - [colin] smaller ball - yes.
 - [colin] sturdy ball - does more damage to bricks, to conter sturdy bricks
 - [colin] accumulation - coins aglutinate into bigger coins that hold more value
-- [colin] forgiving - you can miss several times without losing your combo. or alternatively, include this ability into the soft reset perk.
+
 - [colin] plot - plot the ball's trajectory as you position your puck
 - [colin] golden corners - catch coins at the sides of the puck to double their value
 - [colin] varied diet - your combo grows if you keep hitting different coloured bricks each time
