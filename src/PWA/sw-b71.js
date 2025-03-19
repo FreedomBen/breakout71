@@ -1,5 +1,5 @@
 // The version of the cache.
-const VERSION = "29039830";
+const VERSION = "29039851";
 
 // The name of the cache
 const CACHE_NAME = `breakout-71-${VERSION}`;
@@ -12,7 +12,7 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
-      cache.addAll(APP_STATIC_RESOURCES);
+      await cache.addAll(APP_STATIC_RESOURCES);
     })(),
   );
 });
