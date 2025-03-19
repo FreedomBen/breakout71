@@ -23,10 +23,8 @@ There's also an easy mode for kids (slower ball).
 
  
 # Next
-- different visual effects on ball to represent which perks it's imbued with (pierce, sapper…). remove visual while it's not affected (can't pierce/sap anymore until touching the puck).
-- check which ball color you get right after picking a color related perk
+
 - sturdy bricks:  map of remaining hits
-- looks like offline PWA mode does not work 
 
 # bugs
 
@@ -77,6 +75,7 @@ There's also an easy mode for kids (slower ball).
 - the white outline on bricks associated with picky eater kinda works but i feel it's more distracting than anything. maybe try something different ? put a cross on matching coloured bricks, or the contrary, grey out other bricks.
 
 # New perks ideas 
+- [colin] shocks - balls can bounce off of each others and produce a shock that destroys a random block at the current combo
 - second puck (symmetric to the first one)
 - keep combo between level, loose half your run score when missing any bricks
 - offer next level choice after upgrade pick
@@ -123,8 +122,6 @@ There's also an easy mode for kids (slower ball).
 - gravity is flipped on the opposite side to the puck (for coins)
 - balls have gravity
 - coins don't have gravity
-- [colin] yoyo - when the ball falls back down, it curbs towards your puck (after hitting a brick or top)
-- [colin] single block combo - get +1 combo if the ball only breaks a single block before reaching the puck
 - [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
 - [colin] side pucks - same as above but with two side pucks.
 - [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks
@@ -154,13 +151,10 @@ There's also an easy mode for kids (slower ball).
 - squirell : keep coins on screen to have a higher combo
 - [colin] peaceful combo - le combo monte chaque seconde tant que les 2+ balles ne se touchent pas OU qu'on ne touche pas de bloc explosif.
 - [colin] close quarters - balle attirée par tous les blocs/par un bloc aléatoire, actif à portée de bloc (+1bloc au lvlup)/proportionnel à une force (+puissance au lvlup)…
-- [colin] shocks - balls can bounce off of each others and produce a shock that destroys a random block at the current combo
 - [colin] plusieurs perks qui déclenchent des effets quand une balle est perdue. par ex: +3 combo à chaque balle perdue, 5 blocs transformés en bombe, balle et coins ralentis, blocs régénérés…
 - [colin] faster style - augmente le combo en fonction de la vitesse de la balle
 - [colin] perk: analyzer - permet de voir les caractéristiques cachées des blocs (sturdy…)
 - [colin] perk: roulette - gagne instantanément 2 perks aléatoires
-- let coins go out of bounds left and right, where they'll get lost, but +1 combo per brick
--   more combo if no coin catch
 - combo climbs every time a ball bounces on puck (but bounce is random?) 
 
 # extra levels

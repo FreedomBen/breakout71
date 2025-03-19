@@ -1,5 +1,5 @@
-import { Ball, GameState, PerkId, PerksMap } from "./types";
-import { icons, upgrades } from "./loadGameData";
+import {Ball, GameState, PerkId, PerksMap} from "./types";
+import {icons, upgrades} from "./loadGameData";
 
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
@@ -72,7 +72,10 @@ export function currentLevelInfo(gameState: GameState) {
 }
 
 export function isTelekinesisActive(gameState: GameState, ball: Ball) {
-  return gameState.perks.telekinesis && !ball.hitSinceBounce && ball.vy < 0;
+  return gameState.perks.telekinesis  && ball.vy < 0;
+}
+export function isYoyoActive(gameState: GameState, ball: Ball) {
+  return gameState.perks.yoyo &&  ball.vy > 0;
 }
 
 export function findLast<T>(
@@ -113,4 +116,32 @@ export function defaultSounds() {
       colorChange: { vol: 0, x: 0 },
     },
   };
+}
+
+export function shouldPierceByColor(
+    gameState: GameState,
+    vhit: number | undefined,
+    hhit: number | undefined,
+    chit: number | undefined,
+) {
+    if (!gameState.perks.pierce_color) return false;
+    if (
+        typeof vhit !== "undefined" &&
+        gameState.bricks[vhit] !== gameState.ballsColor
+    ) {
+        return false;
+    }
+    if (
+        typeof hhit !== "undefined" &&
+        gameState.bricks[hhit] !== gameState.ballsColor
+    ) {
+        return false;
+    }
+    if (
+        typeof chit !== "undefined" &&
+        gameState.bricks[chit] !== gameState.ballsColor
+    ) {
+        return false;
+    }
+    return true;
 }

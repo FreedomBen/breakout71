@@ -838,7 +838,56 @@
   {
     "name": "icon:concave_puck",
     "size": 8,
-    "bricks": "___________W_______________W_______________W_____________WWWWW__",
+    "bricks": "___________W_______________W____________W__W__W_WW___WW_WWWWWWW_",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:antigrav",
+    "size": 8,
+    "bricks": "v______vvv____vvv______vv______vv______vv______vv______v__WWWW__",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:asceticism",
+    "size": 8,
+    "bricks": "_________y____y____W____y______y_________y____y_________y_WWWW_y",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:unbounded",
+    "size": 9,
+    "bricks": "y_WWWWW_y__________yttttt____ttttt__y____W__y______________y_y____________WWW___y",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:shunt",
+    "size": 8,
+    "bricks": "_______y______yy______yy__yCCyyy__y__yyy_yy__yyy_yy__yyyyyy__yyy",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:yoyo",
+    "size": 8,
+    "bricks": "_rrrrrr_rrrrrrrrrrrrrrrr_WWWWWW_rWrrrrrrrrWrrrrr_rrWrrr_____W___",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:nbricks",
+    "size": 6,
+    "bricks": "yy__yyyyy_yyyyyyyyyyyyyyyy_yyyyy__yy",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:etherealcoins",
+    "size": 11,
+    "bricks": "___WWWWW_____W_y___W____W_ttt_W___W__ttt_yW__W_______W__W_______W_W_y_y_____WW_____W_y_WW_WWW_____WWWWWWWWWWWW___________",
     "svg": null,
     "color": ""
   }

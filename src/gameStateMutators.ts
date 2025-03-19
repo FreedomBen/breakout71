@@ -19,29 +19,27 @@ import {
   getMajorityValue,
   getPossibleUpgrades,
   getRowColIndex,
-  isTelekinesisActive,
-  max_levels,
+  isTelekinesisActive, isYoyoActive,
+  max_levels, shouldPierceByColor,
 } from "./game_utils";
-import { t } from "./i18n/i18n";
-import { icons } from "./loadGameData";
+import {t} from "./i18n/i18n";
+import {icons} from "./loadGameData";
 
-import { addToTotalScore } from "./settings";
-import { background } from "./render";
-import { gameOver } from "./gameOver";
+import {addToTotalScore} from "./settings";
+import {background} from "./render";
+import {gameOver} from "./gameOver";
 import {
-  bordersHitCheck,
   brickIndex,
-  coinBrickHitCheck,
   fitSize,
   gameState,
   hasBrick,
   hitsSomething,
   openUpgradesPicker,
   pause,
-  shouldPierceByColor,
+
 } from "./game";
-import { stopRecording } from "./recording";
-import { isOptionOn } from "./options";
+import {stopRecording} from "./recording";
+import {isOptionOn} from "./options";
 
 export function setMousePos(gameState: GameState, x: number) {
   // Sets the puck position, and updates the ball position if they are supposed to follow it
@@ -284,11 +282,9 @@ export function explodeBrick(
       y,
       "white",
     );
-    ball.hitSinceBounce++;
     gameState.runStatistics.bricks_broken++;
   } else if (color) {
     // Even if it bounces we don't want to count that as a miss
-    ball.hitSinceBounce++;
 
     // Flashing is take care of by the tick loop
     const x = brickCenterX(gameState, index),
@@ -341,15 +337,16 @@ export function explodeBrick(
       );
     }
 
-    gameState.combo += Math.max(
-      0,
-      gameState.perks.streak_shots +
+    gameState.combo +=  gameState.perks.streak_shots +
         gameState.perks.compound_interest +
         gameState.perks.left_is_lava +
         gameState.perks.right_is_lava +
         gameState.perks.top_is_lava +
-        gameState.perks.picky_eater,
-    );
+        gameState.perks.picky_eater+
+        gameState.perks.asceticism +
+        gameState.perks.unbounded
+
+    ;
 
     if (!isExplosion) {
       // color change
@@ -462,6 +459,9 @@ export function addToScore(gameState: GameState, coin: Coin) {
     schedulGameSound(gameState, "coinCatch", coin.x, 1);
   }
   gameState.runStatistics.score += coin.points;
+  if(gameState.perks.asceticism){
+    resetCombo(gameState, coin.x, coin.y)
+  }
 }
 
 export async function setLevel(gameState: GameState, l: number) {
@@ -472,6 +472,7 @@ export async function setLevel(gameState: GameState, l: number) {
   }
   gameState.currentLevel = l;
   gameState.levelTime = 0;
+  gameState.noBricksSince = 0;
   gameState.levelWallBounces = 0;
   gameState.autoCleanUses = 0;
   gameState.lastTickDown = gameState.levelTime;
@@ -481,7 +482,10 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.runStatistics.levelsPlayed++;
 
   // Reset combo silently
-  gameState.combo = baseCombo(gameState) + gameState.perks.hot_start * 15;
+  if(!gameState.perks.shunt) {
+    gameState.combo = baseCombo(gameState)
+  }
+   gameState.combo  += gameState.perks.hot_start * 15;
 
   resetBalls(gameState);
 
@@ -610,6 +614,100 @@ export function attract(gameState: GameState, a: Ball, b: Ball, power: number) {
   );
 }
 
+export function coinBrickHitCheck(gameState: GameState, coin: Coin) {
+  // Make ball/coin bonce, and return bricks that were hit
+  const radius = coin.size / 2;
+  const {x, y, previousX, previousY} = coin;
+
+  const vhit = hitsSomething(previousX, y, radius);
+  const hhit = hitsSomething(x, previousY, radius);
+  const chit =
+      (typeof vhit == "undefined" &&
+          typeof hhit == "undefined" &&
+          hitsSomething(x, y, radius)) ||
+      undefined;
+
+  if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
+    coin.y = coin.previousY;
+    coin.vy *= -1;
+
+    //   Roll on corners
+    const leftHit = gameState.bricks[brickIndex(x - radius, y + radius)];
+    const rightHit = gameState.bricks[brickIndex(x + radius, y + radius)];
+
+    if (leftHit && !rightHit) {
+      coin.vx += 1;
+      coin.sa -= 1;
+    }
+    if (!leftHit && rightHit) {
+      coin.vx -= 1;
+      coin.sa += 1;
+    }
+  }
+  if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
+    coin.x = coin.previousX;
+    coin.vx *= -1;
+  }
+  return vhit ?? hhit ?? chit;
+}
+
+export function bordersHitCheck(
+    gameState: GameState,
+    coin: Coin | Ball,
+    radius: number,
+    delta: number,
+) {
+  if (coin.destroyed) return;
+  coin.previousX = coin.x;
+  coin.previousY = coin.y;
+  coin.x += coin.vx * delta;
+  coin.y += coin.vy * delta;
+  coin.sx ||= 0;
+  coin.sy ||= 0;
+  coin.sx += coin.previousX - coin.x;
+  coin.sy += coin.previousY - coin.y;
+  coin.sx *= 0.9;
+  coin.sy *= 0.9;
+
+  if (gameState.perks.wind) {
+    coin.vx +=
+        ((gameState.puckPosition -
+                (gameState.offsetX + gameState.gameZoneWidth / 2)) /
+            gameState.gameZoneWidth) *
+        gameState.perks.wind *
+        0.5;
+  }
+
+  let vhit = 0,
+      hhit = 0;
+
+  if (coin.x < gameState.offsetXRoundedDown + radius && !gameState.perks.unbounded) {
+    coin.x =
+        gameState.offsetXRoundedDown +
+        radius +
+        (gameState.offsetXRoundedDown + radius - coin.x);
+    coin.vx *= -1;
+    hhit = 1;
+  }
+  if (coin.y < radius) {
+    coin.y = radius + (radius - coin.y);
+    coin.vy *= -1;
+    vhit = 1;
+  }
+  if (coin.x > gameState.canvasWidth - gameState.offsetXRoundedDown - radius && !gameState.perks.unbounded) {
+    coin.x =
+        gameState.canvasWidth -
+        gameState.offsetXRoundedDown -
+        radius -
+        (coin.x -
+            (gameState.canvasWidth - gameState.offsetXRoundedDown - radius));
+    coin.vx *= -1;
+    hhit = 1;
+  }
+
+  return hhit + vhit * 2;
+}
+
 export function gameStateTick(
   gameState: GameState,
   // How many frames to compute at once, can go above 1 to compensate lag
@@ -650,7 +748,10 @@ export function gameStateTick(
     });
     gameState.autoCleanUses++;
   }
-  if (!remainingBricks && !liveCount(gameState.coins)) {
+  if(!remainingBricks &&gameState.noBricksSince==0 ){
+    gameState.noBricksSince ||= gameState.levelTime
+  }
+  if (!remainingBricks  && ( !liveCount(gameState.coins) || (gameState.levelTime > gameState.noBricksSince+5000))) {
     if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
     } else {
@@ -664,16 +765,19 @@ export function gameStateTick(
 
     forEachLiveOne(gameState.coins, (coin, coinIndex) => {
       if (gameState.perks.coin_magnet) {
-        const attractionX =
-          ((frames * (gameState.puckPosition - coin.x)) /
-            (100 +
+        const strength = 100/ (100 +
               Math.pow(coin.y - gameState.gameZoneHeight, 2) +
-              Math.pow(coin.x - gameState.puckPosition, 2))) *
-          gameState.perks.coin_magnet *
-          100;
+              Math.pow(coin.x - gameState.puckPosition, 2)) *
+          gameState.perks.coin_magnet          ;
+
+        const attractionX = frames * (gameState.puckPosition - coin.x) *strength
+
         coin.vx += attractionX;
+        coin.vy +=  frames * (gameState.gameZoneHeight - coin.y) * strength / 2
         coin.sa -= attractionX / 10;
+
       }
+
 
       const ratio = 1 - (gameState.perks.viscosity * 0.03 + 0.005) * frames;
 
@@ -688,10 +792,26 @@ export function gameStateTick(
       coin.a += coin.sa;
 
       // Gravity
-      coin.vy += frames * coin.weight * 0.8;
+      if(!gameState.perks.etherealcoins){
+       const flip =   gameState.perks.antigrav >0 && Math.abs(coin.x - gameState.puckPosition)*2>gameState.puckWidth+coin.size
+       coin.vy += frames * coin.weight * 0.8 * (flip?-1:1);
+        if(flip && !isOptionOn('basic') && Math.random()<0.1){
+          makeParticle(gameState,
+              coin.x,
+              coin.y,
+              0,
+              gameState.baseSpeed,
+              rainbowColor(),
+              true,
+              5,
+              250
+              )
+        }
+
+      }
 
       const speed = Math.abs(coin.sx) + Math.abs(coin.sx);
-      const hitBorder = bordersHitCheck(coin, coin.size / 2, frames);
+      const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
 
       if (
         coin.y > gameState.gameZoneHeight - coinRadius - gameState.puckHeight &&
@@ -708,9 +828,12 @@ export function gameStateTick(
         if (gameState.perks.compound_interest) {
           resetCombo(gameState, coin.x, coin.y);
         }
+      }else if( gameState.perks.unbounded && (coin.x<-50 || coin.x>gameState.canvasWidth+50)){
+      // Out of bound on sides
+        destroy(gameState.coins, coinIndex);
       }
 
-      const hitBrick = coinBrickHitCheck(coin);
+      const hitBrick = coinBrickHitCheck(gameState, coin);
 
       if (gameState.perks.metamorphosis && typeof hitBrick !== "undefined") {
         if (
@@ -895,12 +1018,20 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     gameState.perks.ball_repulse_ball +
     gameState.perks.puck_repulse_ball +
     gameState.perks.ball_attract_ball;
+
   if (isTelekinesisActive(gameState, ball)) {
     speedLimitDampener += 3;
     ball.vx +=
       ((gameState.puckPosition - ball.x) / 1000) *
       delta *
       gameState.perks.telekinesis;
+  }
+  if (isYoyoActive(gameState, ball)) {
+    speedLimitDampener += 3;
+    ball.vx +=
+      ((gameState.puckPosition - ball.x) / 1000) *
+      delta *
+      gameState.perks.yoyo;
   }
 
   if (
@@ -980,7 +1111,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     }
   }
 
-  const borderHitCode = bordersHitCheck(ball, gameState.ballSize / 2, delta);
+  const borderHitCode = bordersHitCheck(gameState, ball, gameState.ballSize / 2, delta);
   if (borderHitCode) {
     if (
       gameState.perks.left_is_lava &&
@@ -1053,6 +1184,16 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     if (gameState.perks.streak_shots) {
       resetCombo(gameState, ball.x, ball.y);
     }
+    if(gameState.perks.nbricks ){
+      if(ball.hitSinceBounce){
+        if(gameState.perks.nbricks===ball.hitSinceBounce){
+          gameState.combo+=gameState.perks.nbricks
+        }else{
+          resetCombo(gameState, ball.x,ball.y)
+        }
+
+      }
+    }
 
     if (gameState.perks.respawn) {
       ball.hitItem
@@ -1084,9 +1225,10 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     ball.piercedSinceBounce = 0;
   }
 
-  if (
-    ball.y > gameState.gameZoneHeight + gameState.ballSize / 2 &&
-    gameState.running
+  const lostOnSides = gameState.perks.unbounded && ball.x < 50 || ball.x>gameState.canvasWidth+50
+  if (gameState.running &&
+    (ball.y > gameState.gameZoneHeight + gameState.ballSize / 2 || lostOnSides)
+
   ) {
     ball.destroyed = true;
     gameState.runStatistics.balls_lost++;
@@ -1119,7 +1261,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   let pierce = false;
   if (sturdyBounce || typeof hitBrick === "undefined") {
     // cannot pierce
-  } else if (shouldPierceByColor(vhit, hhit, chit)) {
+  } else if (shouldPierceByColor(gameState, vhit, hhit, chit)) {
     pierce = true;
   } else if (ball.piercedSinceBounce < gameState.perks.pierce * 3) {
     pierce = true;
@@ -1146,6 +1288,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   if (typeof hitBrick !== "undefined") {
     const initialBrickColor = gameState.bricks[hitBrick];
 
+    ball.hitSinceBounce++;
     explodeBrick(gameState, hitBrick, ball, false);
 
     if (

@@ -1,4 +1,4 @@
-import { rawUpgrades } from "./rawUpgrades";
+import { rawUpgrades } from "./upgrades";
 import { options } from "./options";
 
 export type colorString = string;
@@ -244,6 +244,7 @@ export type GameState = {
   runStatistics: RunStats;
   lastOffered: Partial<{ [k in PerkId]: number }>;
   levelTime: number;
+  noBricksSince: number ;
   levelWallBounces: number;
   autoCleanUses: number;
   aboutToPlaySound: {

@@ -2,7 +2,7 @@ import { Level, Palette, RawLevel, Upgrade } from "./types";
 import _palette from "./data/palette.json";
 import _rawLevelsList from "./data/levels.json";
 import _appVersion from "./data/version.json";
-import { rawUpgrades } from "./rawUpgrades";
+import { rawUpgrades } from "./upgrades";
 import { getLevelBackground } from "./getLevelBackground";
 import { levelIconHTML } from "./levelIcon";
 

@@ -1,4 +1,4 @@
-import { allLevels, appVersion, icons, upgrades } from "./loadGameData";
+import {allLevels, appVersion, icons, upgrades} from "./loadGameData";
 import {
   Ball,
   Coin,
@@ -11,52 +11,26 @@ import {
   TextFlash,
   Upgrade,
 } from "./types";
-import { getAudioContext, playPendingSounds } from "./sounds";
-import {
-  currentLevelInfo,
-  getRowColIndex,
-  max_levels,
-  pickedUpgradesHTMl,
-} from "./game_utils";
+import {getAudioContext, playPendingSounds} from "./sounds";
+import {currentLevelInfo, getRowColIndex, max_levels, pickedUpgradesHTMl,} from "./game_utils";
 
 import "./PWA/sw_loader";
-import { getCurrentLang, t } from "./i18n/i18n";
-import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
+import {getCurrentLang, t} from "./i18n/i18n";
+import {getSettingValue, getTotalScore, setSettingValue} from "./settings";
 import {
-  empty,
   forEachLiveOne,
   gameStateTick,
   normalizeGameState,
   pickRandomUpgrades,
-  putBallsAtPuck,
-  resetBalls,
-  resetCombo,
   setLevel,
   setMousePos,
 } from "./gameStateMutators";
-import {
-  backgroundCanvas,
-  bombSVG,
-  ctx,
-  gameCanvas,
-  render,
-  scoreDisplay,
-} from "./render";
-import {
-  pauseRecording,
-  recordOneFrame,
-  resumeRecording,
-  startRecordingGame,
-} from "./recording";
-import { newGameState } from "./newGameState";
-import {
-  alertsOpen,
-  asyncAlert,
-  AsyncAlertAction,
-  closeModal,
-} from "./asyncAlert";
-import { isOptionOn, options, toggleOption } from "./options";
-import { hashCode } from "./getLevelBackground";
+import {backgroundCanvas, ctx, gameCanvas, render, scoreDisplay,} from "./render";
+import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} from "./recording";
+import {newGameState} from "./newGameState";
+import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal,} from "./asyncAlert";
+import {isOptionOn, options, toggleOption} from "./options";
+import {hashCode} from "./getLevelBackground";
 
 export function play() {
   if (gameState.running) return;
@@ -337,125 +311,6 @@ export function hitsSomething(x: number, y: number, radius: number) {
   );
 }
 
-export function shouldPierceByColor(
-  vhit: number | undefined,
-  hhit: number | undefined,
-  chit: number | undefined,
-) {
-  if (!gameState.perks.pierce_color) return false;
-  if (
-    typeof vhit !== "undefined" &&
-    gameState.bricks[vhit] !== gameState.ballsColor
-  ) {
-    return false;
-  }
-  if (
-    typeof hhit !== "undefined" &&
-    gameState.bricks[hhit] !== gameState.ballsColor
-  ) {
-    return false;
-  }
-  if (
-    typeof chit !== "undefined" &&
-    gameState.bricks[chit] !== gameState.ballsColor
-  ) {
-    return false;
-  }
-  return true;
-}
-
-export function coinBrickHitCheck(coin: Coin) {
-  // Make ball/coin bonce, and return bricks that were hit
-  const radius = coin.size / 2;
-  const { x, y, previousX, previousY } = coin;
-
-  const vhit = hitsSomething(previousX, y, radius);
-  const hhit = hitsSomething(x, previousY, radius);
-  const chit =
-    (typeof vhit == "undefined" &&
-      typeof hhit == "undefined" &&
-      hitsSomething(x, y, radius)) ||
-    undefined;
-
-  if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
-    coin.y = coin.previousY;
-    coin.vy *= -1;
-
-    //   Roll on corners
-    const leftHit = gameState.bricks[brickIndex(x - radius, y + radius)];
-    const rightHit = gameState.bricks[brickIndex(x + radius, y + radius)];
-
-    if (leftHit && !rightHit) {
-      coin.vx += 1;
-      coin.sa -= 1;
-    }
-    if (!leftHit && rightHit) {
-      coin.vx -= 1;
-      coin.sa += 1;
-    }
-  }
-  if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
-    coin.x = coin.previousX;
-    coin.vx *= -1;
-  }
-  return vhit ?? hhit ?? chit;
-}
-
-export function bordersHitCheck(
-  coin: Coin | Ball,
-  radius: number,
-  delta: number,
-) {
-  if (coin.destroyed) return;
-  coin.previousX = coin.x;
-  coin.previousY = coin.y;
-  coin.x += coin.vx * delta;
-  coin.y += coin.vy * delta;
-  coin.sx ||= 0;
-  coin.sy ||= 0;
-  coin.sx += coin.previousX - coin.x;
-  coin.sy += coin.previousY - coin.y;
-  coin.sx *= 0.9;
-  coin.sy *= 0.9;
-
-  if (gameState.perks.wind) {
-    coin.vx +=
-      ((gameState.puckPosition -
-        (gameState.offsetX + gameState.gameZoneWidth / 2)) /
-        gameState.gameZoneWidth) *
-      gameState.perks.wind *
-      0.5;
-  }
-
-  let vhit = 0,
-    hhit = 0;
-
-  if (coin.x < gameState.offsetXRoundedDown + radius) {
-    coin.x =
-      gameState.offsetXRoundedDown +
-      radius +
-      (gameState.offsetXRoundedDown + radius - coin.x);
-    coin.vx *= -1;
-    hhit = 1;
-  }
-  if (coin.y < radius) {
-    coin.y = radius + (radius - coin.y);
-    coin.vy *= -1;
-    vhit = 1;
-  }
-  if (coin.x > gameState.canvasWidth - gameState.offsetXRoundedDown - radius) {
-    coin.x =
-      gameState.canvasWidth -
-      gameState.offsetXRoundedDown -
-      radius -
-      (coin.x -
-        (gameState.canvasWidth - gameState.offsetXRoundedDown - radius));
-    coin.vx *= -1;
-    hhit = 1;
-  }
-
-  return hhit + vhit * 2;
-}
 export function tick() {
   const currentTick = performance.now();
   const timeDeltaMs = currentTick - gameState.lastTick;
@@ -552,18 +407,6 @@ async function openSettingsPanel() {
   pause(true);
 
   const actions: AsyncAlertAction<() => void>[] = [
-    {
-      text: t("main_menu.resume"),
-      help: t("main_menu.resume_help"),
-      value() {},
-    },
-    {
-      text: t("main_menu.unlocks"),
-      help: t("main_menu.unlocks_help"),
-      value() {
-        openUnlocksList();
-      },
-    },
   ];
 
   for (const key of Object.keys(options) as OptionId[]) {
@@ -606,6 +449,21 @@ async function openSettingsPanel() {
       });
     }
   }
+  actions.push(
+    {
+      text: t("main_menu.resume"),
+      help: t("main_menu.resume_help"),
+      value() {},
+    })
+  actions.push({
+      text: t("main_menu.unlocks"),
+      help: t("main_menu.unlocks_help"),
+      value() {
+        openUnlocksList();
+      },
+    })
+
+
 
   actions.push({
     text: t("sandbox.title"),
