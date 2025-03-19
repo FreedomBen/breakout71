@@ -495,7 +495,7 @@ export async function setLevel(gameState: GameState, l: number) {
   empty(gameState.lights);
   empty(gameState.texts);
   gameState.bricks = [...lvl.bricks];
-
+  gameState.needsRender = true;
   // This caused problems with accented characters like the ô of côte d'ivoire for odd reasons
   // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
   background.src = "data:image/svg+xml;UTF8," + lvl.svg;
