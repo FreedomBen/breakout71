@@ -514,7 +514,7 @@ export function repulse(
 ) {
   const distance = distanceBetween(a, b);
   // Ensure we don't get soft locked
-  const max = gameState.gameZoneWidth / 2;
+  const max = gameState.gameZoneWidth / 4;
   if (distance > max) return;
   // Unit vector
   const dx = (a.x - b.x) / distance;
@@ -569,7 +569,7 @@ export function repulse(
 export function attract(gameState: GameState, a: Ball, b: Ball, power: number) {
   const distance = distanceBetween(a, b);
   // Ensure we don't get soft locked
-  const min = gameState.gameZoneWidth * 0.5;
+  const min = (gameState.gameZoneWidth * 3) / 4;
   if (distance < min) return;
   // Unit vector
   const dx = (a.x - b.x) / distance;

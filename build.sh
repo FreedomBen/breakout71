@@ -35,15 +35,14 @@ sed -i -e "s/VERSION = .*/ VERSION = '$versionCode'/"  ./src/PWA/sw-b71.js
 
 
 # remove all exif metadata from pictures, because i think fdroid doesn't like that. odd
-find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all=
-
+find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all= -overwrite_original
 
 npx prettier --write src/
 
 npx jest
-rm -rf dist/*
-npx parcel build src/index.html
+rm -rf build/*
+npx parcel build src/index.html --dist-dir build
 rm -rf ./app/src/main/assets/*
-cp public/* dist
+cp public/* build
 rm -rf ./app/src/main/assets/*
-cp dist/index.html ./app/src/main/assets/
+cp build/index.html ./app/src/main/assets/
