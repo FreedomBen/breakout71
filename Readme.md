@@ -114,9 +114,6 @@ There's also an easy mode for kids (slower ball).
 - puck bounce predictions rendered with particles or lines (requires big refactor)
 - the more balls are close to a brick, the more coins she spawns when breaking
 - combo resets when puck moves
-- gravity is flipped on the opposite side to the puck (for coins)
-- balls have gravity
-- coins don't have gravity
 - [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
 - [colin] side pucks - same as above but with two side pucks.
 - [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks 
@@ -218,4 +215,5 @@ I could unlock the "pro stand" at $999 that just holds the play area higher.
 
 # other
 
-* not brick-shaped bricks, or tilted bricks, that can bounce the ball into fun angles to spice up the game. or even moving blocks !
+- balls have gravity : quite hard to balance the strenght of flying off the puck
+- non brick-shaped bricks, tilted bricks,moving blocks : not yet
