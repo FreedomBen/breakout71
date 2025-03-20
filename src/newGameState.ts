@@ -31,6 +31,7 @@ export function newGameState(params: RunParams): GameState {
   const gameState: GameState = {
     runLevels,
     currentLevel: 0,
+    upgradesOfferedFor: -1,
     perks,
     puckWidth: 200,
     baseSpeed: 12,

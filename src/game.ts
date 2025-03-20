@@ -394,7 +394,7 @@ async function openScorePanel() {
       max: max_levels(gameState),
     }),
     text: `
-            ${gameState.isCreativeModeRun ? "<p>${t('score_panel.test_run}</p>" : ""}
+            ${gameState.isCreativeModeRun ? `<p>${t("score_panel.test_run")}</p>` : ""}
             <p>${t("score_panel.upgrades_picked")}</p>
             <p>${pickedUpgradesHTMl(gameState)}</p>
         `,

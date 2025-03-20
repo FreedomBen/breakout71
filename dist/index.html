@@ -842,7 +842,7 @@ async function openScorePanel() {
             max: (0, _gameUtils.max_levels)(gameState)
         }),
         text: `
-            ${gameState.isCreativeModeRun ? "<p>${t('score_panel.test_run}</p>" : ""}
+            ${gameState.isCreativeModeRun ? `<p>${(0, _i18N.t)("score_panel.test_run")}</p>` : ""}
             <p>${(0, _i18N.t)("score_panel.upgrades_picked")}</p>
             <p>${(0, _gameUtils.pickedUpgradesHTMl)(gameState)}</p>
         `,
@@ -1271,7 +1271,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29041790\"");
+module.exports = JSON.parse("\"29041811\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2604,7 +2604,9 @@ function addToScore(gameState, coin) {
     if (gameState.perks.asceticism) resetCombo(gameState, coin.x, coin.y);
 }
 async function setLevel(gameState, l) {
-    // Here to alleviade double upgrades issues
+    // Here to alleviate double upgrades issues
+    if (gameState.upgradesOfferedFor >= l) return console.warn("Extra upgrade request ignored ");
+    gameState.upgradesOfferedFor = l;
     (0, _game.pause)(false);
     (0, _recording.stopRecording)();
     if (l > 0) await (0, _game.openUpgradesPicker)(gameState);
@@ -4003,6 +4005,7 @@ function newGameState(params) {
     const gameState = {
         runLevels,
         currentLevel: 0,
+        upgradesOfferedFor: -1,
         perks,
         puckWidth: 200,
         baseSpeed: 12,

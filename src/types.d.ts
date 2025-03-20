@@ -183,6 +183,7 @@ export type GameState = {
   gridSize: number;
   // 0 based index of the current level in the run (level X / 7)
   currentLevel: number;
+  upgradesOfferedFor: number;
 
   // 10 levels selected randomly at start for the run
   runLevels: Level[];

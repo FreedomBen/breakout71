@@ -497,8 +497,11 @@ export function addToScore(gameState: GameState, coin: Coin) {
 }
 
 export async function setLevel(gameState: GameState, l: number) {
-  // Here to alleviade double upgrades issues
-
+  // Here to alleviate double upgrades issues
+  if (gameState.upgradesOfferedFor >= l) {
+    return console.warn("Extra upgrade request ignored ");
+  }
+  gameState.upgradesOfferedFor = l;
   pause(false);
   stopRecording();
   if (l > 0) {
