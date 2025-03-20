@@ -559,7 +559,7 @@ export const rawUpgrades = [
     threshold: 135000,
     giftable: false,
     id: "reach",
-    max: 3,
+    max: 1,
     name: t("upgrades.reach.name"),
     help: (lvl: number) => t("upgrades.reach.help", { lvl }),
     fullHelp: t("upgrades.reach.fullHelp"),
