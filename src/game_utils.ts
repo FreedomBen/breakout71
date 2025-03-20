@@ -148,3 +148,26 @@ export function shouldPierceByColor(
   }
   return true;
 }
+
+export function countBricksAbove(gameState: GameState, index: number) {
+  const col = index % gameState.gridSize;
+  const row = Math.floor(index / gameState.gridSize);
+  let count = 0;
+  for (let y = 0; y < row; y++) {
+    if (gameState.bricks[col + y * gameState.gridSize]) {
+      count++;
+    }
+  }
+  return count;
+}
+export function countBricksBelow(gameState: GameState, index: number) {
+  const col = index % gameState.gridSize;
+  const row = Math.floor(index / gameState.gridSize);
+  let count = 0;
+  for (let y = row + 1; y < gameState.gridSize; y++) {
+    if (gameState.bricks[col + y * gameState.gridSize]) {
+      count++;
+    }
+  }
+  return count;
+}

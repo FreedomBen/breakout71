@@ -15,6 +15,8 @@ import {
   brickCenterX,
   brickCenterY,
   clamp,
+  countBricksAbove,
+  countBricksBelow,
   currentLevelInfo,
   distance2,
   distanceBetween,
@@ -367,6 +369,17 @@ export function explodeBrick(
       gameState.perks.zen +
       gameState.perks.unbounded;
 
+    if (gameState.perks.reach) {
+      if (
+        countBricksAbove(gameState, index) &&
+        !countBricksBelow(gameState, index)
+      ) {
+        resetCombo(gameState, x, y);
+      } else {
+        gameState.combo += gameState.perks.reach;
+      }
+    }
+
     if (!isExplosion) {
       // color change
       if (
@@ -503,7 +516,7 @@ export async function setLevel(gameState: GameState, l: number) {
   // Reset combo silently
   const finalCombo = gameState.combo;
   gameState.combo = baseCombo(gameState);
-  if (!gameState.perks.shunt) {
+  if (gameState.perks.shunt) {
     gameState.combo += Math.round(
       Math.max(
         0,

@@ -46,7 +46,10 @@ export async function asyncAlert<t>({
     closeModaleButton.style.display = allowClose ? "" : "none";
 
     const popup = document.createElement("div");
+    let closed = false;
     function closeWithResult(value: t | undefined) {
+      if (closed) return;
+      closed = true;
       document.body.style.minHeight = document.body.scrollHeight + "px";
       setTimeout(() => (document.body.style.minHeight = ""), 100);
       popup.remove();
@@ -137,7 +140,7 @@ ${icon}
 function updateAlertsOpen(delta: number) {
   alertsOpen += delta;
   if (alertsOpen > 1) {
-    throw new Error("Cannot open two alerts at once");
+    alert("Two alerts where opened at once");
   }
   document.body.classList[alertsOpen ? "add" : "remove"]("has-alert-open");
 }

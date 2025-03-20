@@ -897,8 +897,3 @@ export function restart(params: RunParams) {
 restart({});
 fitSize();
 tick();
-
-// @ts-ignore
-// window.stressTest= ()=>restart({level:'Shark',perks:{base_combo:100, pierce:10, multiball:8}})
-window.stressTest = () =>
-  restart({ level: "Bird", perks: { sapper: 2, pierce: 10, multiball: 3 } });

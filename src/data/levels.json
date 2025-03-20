@@ -939,5 +939,12 @@
     "bricks": "WWW_____WWW_y___WWW____y__y_y____y____y_____y_____y____y___y_y__",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:reach",
+    "size": 8,
+    "bricks": "_________yyyyyy__yyyyyy__yyyyyy__rrrrrr_______W____________WWW__",
+    "svg": null,
+    "color": ""
   }
 ]

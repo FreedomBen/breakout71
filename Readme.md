@@ -116,12 +116,10 @@ There's also an easy mode for kids (slower ball).
 - combo resets when puck moves
 - [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
 - [colin] side pucks - same as above but with two side pucks.
-- [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks 
-- [colin] drifting coins - coins slowly drift away from the brick they were generated from, and they need to be collected by the ball
+- [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks
 - [colin] bigger ball - self-explanatory
 - [colin] smaller ball - yes.
 - [colin] sturdy ball - does more damage to bricks, to conter sturdy bricks
-- [colin] accumulation - coins agglutinate into bigger coins that hold more value
 - [colin] plot - plot the ball's trajectory as you position your puck
 - [colin] golden corners - catch coins at the sides of the puck to double their value
 - [colin] varied diet - your combo grows if you keep hitting different coloured bricks each time

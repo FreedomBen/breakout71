@@ -2,6 +2,8 @@ import { baseCombo, forEachLiveOne, liveCount } from "./gameStateMutators";
 import {
   brickCenterX,
   brickCenterY,
+  countBricksAbove,
+  countBricksBelow,
   currentLevelInfo,
   isTelekinesisActive,
   isYoyoActive,
@@ -17,7 +19,6 @@ export const ctx = gameCanvas.getContext("2d", {
   alpha: false,
 }) as CanvasRenderingContext2D;
 export const bombSVG = document.createElement("img");
-
 bombSVG.src =
   "data:image/svg+xml;base64," +
   btoa(`<svg width="144" height="144" viewBox="0 0 38.101 38.099" xmlns="http://www.w3.org/2000/svg">
@@ -150,13 +151,11 @@ export function render(gameState: GameState) {
       Math.sin(Date.now() + 36) * amplitude,
     );
   }
-  if (gameState.perks.bigger_explosions && !isOptionOn("basic")) {
-    if (shaked) {
-      gameCanvas.style.filter =
-        "brightness(" + (1 + 100 / (1 + lastExplosionDelay)) + ")";
-    } else {
-      gameCanvas.style.filter = "";
-    }
+  if (gameState.perks.bigger_explosions && !isOptionOn("basic") && shaked) {
+    gameCanvas.style.filter =
+      "brightness(" + (1 + 100 / (1 + lastExplosionDelay)) + ")";
+  } else {
+    gameCanvas.style.filter = "";
   }
   // Coins
   ctx.globalAlpha = 1;
@@ -417,14 +416,18 @@ export function renderAllBricks() {
 
       if (!color) return;
 
-      const borderColor =
+      let redBecauseOfReach =
+        gameState.perks.reach &&
+        countBricksAbove(gameState, index) &&
+        !countBricksBelow(gameState, index);
+      let redBorder =
         (gameState.ballsColor !== color &&
           color !== "black" &&
-          redBorderOnBricksWithWrongColor &&
-          "red") ||
-        color;
+          redBorderOnBricksWithWrongColor) ||
+        redBecauseOfReach;
 
-      drawBrick(canctx, color, borderColor, x, y);
+      drawBrick(canctx, color, (redBorder && "red") || color, x, y);
+
       if (color === "black") {
         canctx.globalCompositeOperation = "source-over";
         drawIMG(canctx, bombSVG, gameState.brickWidth, x, y);
