@@ -22,6 +22,7 @@
   "gameOver.stats.upgrades_applied": "Upgrades applied",
   "gameOver.test_run": "This test run and its score are not being recorded",
   "gameOver.unlocked_count": "You unlocked {{count}} item(s) :",
+  "gameOver.upgrades_picked": "Upgrades active at the end of the run",
   "gameOver.win.summary": "You cleared all levels for this run, catching {{score}} coins in total.",
   "gameOver.win.title": "Run finished",
   "level_up.after_buttons": "You just finished level {{level}}/{{max}} and picked those upgrades so far :",

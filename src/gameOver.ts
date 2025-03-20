@@ -2,7 +2,7 @@ import { allLevels, appVersion, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { RunHistoryItem } from "./types";
 import { gameState, pause, restart } from "./game";
-import { currentLevelInfo, findLast } from "./game_utils";
+import { currentLevelInfo, findLast, pickedUpgradesHTMl } from "./game_utils";
 import { getTotalScore } from "./settings";
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
@@ -129,6 +129,8 @@ export function gameOver(title: string, intro: string) {
       },
     ],
     textAfterButtons: `<div id="level-recording-container"></div>
+            <p>${t("gameOver.upgrades_picked")}</p>
+            <p>${pickedUpgradesHTMl(gameState)}</p>
         ${getHistograms()} 
         `,
   }).then(() => restart({ levelToAvoid: currentLevelInfo(gameState).name }));

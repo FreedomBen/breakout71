@@ -50,8 +50,12 @@ export async function asyncAlert<t>({
     function closeWithResult(value: t | undefined) {
       if (closed) return;
       closed = true;
+      Array.prototype.forEach.call(
+        popup.querySelectorAll("button:not([disabled])"),
+        (b) => (b.disabled = true),
+      );
       document.body.style.minHeight = document.body.scrollHeight + "px";
-      setTimeout(() => (document.body.style.minHeight = ""), 100);
+      setTimeout(() => (document.body.style.minHeight = ""), 0);
       popup.remove();
       resolve(value);
     }

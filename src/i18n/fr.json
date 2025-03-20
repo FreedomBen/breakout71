@@ -22,6 +22,7 @@
   "gameOver.stats.upgrades_applied": "Mises à jour appliquées",
   "gameOver.test_run": "Cette partie de test et son score ne sont pas enregistrés.",
   "gameOver.unlocked_count": "Vous avez débloqué {{count}} objet(s) :",
+  "gameOver.upgrades_picked": "Amélioration actives en fin de partie",
   "gameOver.win.summary": "Vous avez nettoyé tous les niveaux pour cette partie, en attrapant {{score}} pièces au total.",
   "gameOver.win.title": "Partie terminée",
   "level_up.after_buttons": "Vous venez de terminer le niveau {{level}}/{{max}} et vous avez choisi ces améliorations jusqu'à présent :",

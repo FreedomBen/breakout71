@@ -497,8 +497,10 @@ export function addToScore(gameState: GameState, coin: Coin) {
 }
 
 export async function setLevel(gameState: GameState, l: number) {
-  stopRecording();
+  // Here to alleviade double upgrades issues
+
   pause(false);
+  stopRecording();
   if (l > 0) {
     await openUpgradesPicker(gameState);
   }
@@ -794,7 +796,7 @@ export function gameStateTick(
     });
     gameState.autoCleanUses++;
   }
-  if (!remainingBricks && gameState.noBricksSince == 0) {
+  if (gameState.running && !remainingBricks && gameState.noBricksSince == 0) {
     gameState.noBricksSince ||= gameState.levelTime;
   }
   if (
@@ -803,7 +805,9 @@ export function gameStateTick(
       gameState.levelTime > gameState.noBricksSince + 5000)
   ) {
     if (gameState.currentLevel + 1 < max_levels(gameState)) {
-      setLevel(gameState, gameState.currentLevel + 1);
+      if (gameState.running) {
+        setLevel(gameState, gameState.currentLevel + 1);
+      }
     } else {
       gameOver(
         t("gameOver.win.title"),
@@ -895,7 +899,8 @@ export function gameStateTick(
         }
       } else if (
         gameState.perks.unbounded &&
-        (coin.x < -50 || coin.x > gameState.canvasWidth + 50)
+        (coin.x < -gameState.gameZoneWidth / 2 ||
+          coin.x > gameState.canvasWidth + gameState.gameZoneWidth / 2)
       ) {
         // Out of bound on sides
         destroy(gameState.coins, coinIndex);
@@ -1391,8 +1396,8 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   }
 
   const lostOnSides =
-    (gameState.perks.unbounded && ball.x < 50) ||
-    ball.x > gameState.canvasWidth + 50;
+    (gameState.perks.unbounded && ball.x < -gameState.gameZoneWidth / 2) ||
+    ball.x > gameState.canvasWidth + gameState.gameZoneWidth / 2;
   if (
     gameState.running &&
     (ball.y > gameState.gameZoneHeight + gameState.ballSize / 2 || lostOnSides)
