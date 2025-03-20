@@ -520,7 +520,7 @@ export async function setLevel(gameState: GameState, l: number) {
     gameState.combo += Math.round(
       Math.max(
         0,
-        ((finalCombo - gameState.combo) * 25 * gameState.perks.shunt) / 100,
+        ((finalCombo - gameState.combo) * 20 * gameState.perks.shunt) / 100,
       ),
     );
   }
@@ -1364,16 +1364,16 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     ball.hitItem = [];
     if (!ball.hitSinceBounce) {
       gameState.runStatistics.misses++;
-      gameState.levelMisses++;
       if (gameState.perks.forgiving) {
-        const indexes = gameState.bricks
-          .map((b, i) => (b ? i : -1))
-          .filter((i) => i > -1);
-        const pick = sample(indexes);
-        explodeBrick(gameState, pick, ball, false);
+        const loss = Math.floor(
+          (gameState.levelMisses / 10) *
+            (gameState.combo - baseCombo(gameState)),
+        );
+        decreaseCombo(gameState, loss, ball.x, ball.y - gameState.ballSize);
       } else {
         resetCombo(gameState, ball.x, ball.y);
       }
+      gameState.levelMisses++;
       makeText(
         gameState,
         gameState.puckPosition,

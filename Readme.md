@@ -142,6 +142,7 @@ There's also an easy mode for kids (slower ball).
 - [colin] perk: analyzer - permet de voir les caractéristiques cachées des blocs (sturdy…)
 - [colin] perk: roulette - gagne instantanément 2 perks aléatoires
 - combo climbs every time a ball bounces on puck (but bounce is random?) 
+- combo climbs by 1 every 2 second, unless no coin was caught, then it resets
 
 # extra levels
 
