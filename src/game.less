@@ -23,7 +23,7 @@ body {
 }
 
 #game {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
@@ -66,16 +66,29 @@ body {
 #menu {
   left: 0;
 }
+body.has-alert-open {
+  height: auto;
+  overflow: visible;
+}
+body:not(.has-alert-open) #popup {
+  display: none;
+}
+#popup {
+  &::before {
+    z-index: 10;
+    content: "";
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+  }
 
-.popup {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 10;
   display: flex;
   overflow: auto;
 
   & > div {
+    z-index: 11;
+    position: relative;
     margin: auto;
     padding: 20px 10px;
     transform-origin: center;
@@ -157,7 +170,7 @@ body {
     }
   }
 
-  button.close-modale {
+  button#close-modale {
     color: white;
     position: absolute;
     top: 0;
@@ -168,6 +181,7 @@ body {
     border: none;
     cursor: pointer;
     overflow: hidden;
+    z-index: 11;
 
     &:before {
       content: "+";
@@ -258,13 +272,6 @@ body {
       box-shadow: 2px 2px 5px black;
       margin: 20px auto;
     }
-  }
-
-  @media (min-width: 1200px) {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    max-width: calc((100vw - 450px) / 2 - 80px);
   }
 }
 

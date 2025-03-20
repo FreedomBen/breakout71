@@ -230,7 +230,7 @@
   "upgrades.top_is_lava.help": "Plus de pièces si vous ne touchez pas le haut de la zone de jeu",
   "upgrades.top_is_lava.name": "Icare ",
   "upgrades.trampoline.fullHelp": "Une des rares améliorations à ne pas avoir de condition de remise à zéro",
-  "upgrades.trampoline.help": "+{{lvl}} combo à chaque rebond d'une balle sur le palet",
+  "upgrades.trampoline.help": "+{{lvl}} combo à chaque rebond d'une balle sur le palet,-{{lvl}} combo à chaque rebond au plafond",
   "upgrades.trampoline.name": "Trampoline",
   "upgrades.unbounded.fullHelp": "J'espère que vous avez prévu un moyen de récupérer vos balles",
   "upgrades.unbounded.help": "+1 combo par brique, plus de cotés",

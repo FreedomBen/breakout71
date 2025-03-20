@@ -230,7 +230,7 @@
   "upgrades.top_is_lava.help": "More coins if you don't touch the top.",
   "upgrades.top_is_lava.name": "Sky is the limit",
   "upgrades.trampoline.fullHelp": "One of the rare  combo upgrades that don't add a reset condition",
-  "upgrades.trampoline.help": "+{{lvl}} combo per puck bounce",
+  "upgrades.trampoline.help": "+{{lvl}} combo per puck bounce,-{{lvl}} combo per ceiling bounce",
   "upgrades.trampoline.name": "Trampoline",
   "upgrades.unbounded.fullHelp": "I hope you've found a way to keep your ball on screen",
   "upgrades.unbounded.help": "+1 combo per brick, no more sides",

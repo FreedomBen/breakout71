@@ -501,10 +501,15 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.runStatistics.levelsPlayed++;
 
   // Reset combo silently
-  const finalCombo=gameState.combo
+  const finalCombo = gameState.combo;
   gameState.combo = baseCombo(gameState);
   if (!gameState.perks.shunt) {
-    gameState.combo += Math.round(Math.max(0,(finalCombo-gameState.combo)*25*gameState.perks.shunt/100))
+    gameState.combo += Math.round(
+      Math.max(
+        0,
+        ((finalCombo - gameState.combo) * 25 * gameState.perks.shunt) / 100,
+      ),
+    );
   }
   gameState.combo += gameState.perks.hot_start * 15;
 
@@ -1224,6 +1229,14 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
 
     if (gameState.perks.top_is_lava && borderHitCode >= 2) {
       resetCombo(gameState, ball.x, ball.y + gameState.ballSize);
+    }
+    if (gameState.perks.trampoline && borderHitCode >= 2) {
+      decreaseCombo(
+        gameState,
+        gameState.perks.trampoline,
+        ball.x,
+        ball.y + gameState.ballSize,
+      );
     }
 
     schedulGameSound(gameState, "wallBeep", ball.x, 1);

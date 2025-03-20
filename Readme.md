@@ -24,6 +24,7 @@ There's also an easy mode for kids (slower ball).
  
 # Next
 
+- stop scrolling back to top in menu 
 - render next level behind upgrade picker again 
 - sturdy bricks:  map of remaining hits
 
@@ -76,7 +77,7 @@ There's also an easy mode for kids (slower ball).
 - the white outline on bricks associated with picky eater kinda works but i feel it's more distracting than anything. maybe try something different ? put a cross on matching coloured bricks, or the contrary, grey out other bricks.
 
 # New perks ideas 
-
+- bricks are invisible, but ..
 - second puck (symmetric to the first one)
 - offer next level choice after upgrade pick
 - ban 3 random perks from pool, doesn't tell you which ones, gain 2 upgrades 

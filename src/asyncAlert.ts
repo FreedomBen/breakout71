@@ -12,7 +12,20 @@ export type AsyncAlertAction<t> = {
   className?: string;
 };
 
-export function asyncAlert<t>({
+const popupWrap = document.getElementById("popup") as HTMLDivElement;
+const closeModaleButton = document.getElementById(
+  "close-modale",
+) as HTMLButtonElement;
+closeModaleButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (closeModal) closeModal();
+});
+
+closeModaleButton.title = t("play.close_modale_window_tooltip");
+
+let lastClickedItemIndex = -1;
+
+export async function asyncAlert<t>({
   title,
   text,
   actions,
@@ -27,35 +40,26 @@ export function asyncAlert<t>({
   allowClose?: boolean;
   actionsAsGrid?: boolean;
 }): Promise<t | void> {
-  alertsOpen++;
+  updateAlertsOpen(+1);
   return new Promise((resolve) => {
-    const popupWrap = document.createElement("div");
-    document.body.appendChild(popupWrap);
-    popupWrap.className = "popup " + (actionsAsGrid ? "actionsAsGrid " : "");
+    popupWrap.className = actionsAsGrid ? " " : "";
+    closeModaleButton.style.display = allowClose ? "" : "none";
 
+    const popup = document.createElement("div");
     function closeWithResult(value: t | undefined) {
+      document.body.style.minHeight = document.body.scrollHeight + "px";
+      setTimeout(() => (document.body.style.minHeight = ""), 100);
+      popup.remove();
       resolve(value);
-      // Doing this async lets the menu scroll persist if it's shown a second time
-      setTimeout(() => {
-        document.body.removeChild(popupWrap);
-      });
     }
 
     if (allowClose) {
-      const closeButton = document.createElement("button");
-      closeButton.title = t("play.close_modale_window_tooltip");
-      closeButton.className = "close-modale";
-      closeButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        closeWithResult(undefined);
-      });
       closeModal = () => {
         closeWithResult(undefined);
       };
-      popupWrap.appendChild(closeButton);
+    } else {
+      closeModal = null;
     }
-
-    const popup = document.createElement("div");
 
     if (title) {
       const p = document.createElement("h2");
@@ -70,32 +74,39 @@ export function asyncAlert<t>({
     }
 
     const buttons = document.createElement("section");
+    buttons.className = "actions";
     popup.appendChild(buttons);
 
     actions
       ?.filter((i) => i)
-      .forEach(({ text, value, help, disabled, className = "", icon = "" }) => {
-        const button = document.createElement("button");
+      .forEach(
+        ({ text, value, help, disabled, className = "", icon = "" }, index) => {
+          const button = document.createElement("button");
 
-        button.innerHTML = `
+          button.innerHTML = `
 ${icon}
 <div>
                     <strong>${text}</strong>
                     <em>${help || ""}</em>
             </div>`;
 
-        if (disabled) {
-          button.setAttribute("disabled", "disabled");
-        } else {
-          button.addEventListener("click", (e) => {
-            e.preventDefault();
-            closeWithResult(value);
-          });
-        }
-        button.className = className;
-        buttons.appendChild(button);
-      });
+          if (disabled) {
+            button.setAttribute("disabled", "disabled");
+          } else {
+            button.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              closeWithResult(value);
+              // Focus "same" button if it's still there
+              lastClickedItemIndex = index;
+            });
+          }
 
+          button.className =
+            className + (lastClickedItemIndex === index ? " needs-focus" : "");
+          buttons.appendChild(button);
+        },
+      );
     if (textAfterButtons) {
       const p = document.createElement("div");
       p.className = "textAfterButtons";
@@ -105,17 +116,28 @@ ${icon}
 
     popupWrap.appendChild(popup);
     (
-      popup.querySelector("button:not([disabled])") as HTMLButtonElement
+      popupWrap.querySelector(
+        `section.actions > button.needs-focus`,
+      ) as HTMLButtonElement
     )?.focus();
+    lastClickedItemIndex = -1;
   }).then(
     (v: unknown) => {
-      alertsOpen--;
+      updateAlertsOpen(-1);
       closeModal = null;
       return v as t | undefined;
     },
     () => {
       closeModal = null;
-      alertsOpen--;
+      updateAlertsOpen(-1);
     },
   );
+}
+
+function updateAlertsOpen(delta: number) {
+  alertsOpen += delta;
+  if (alertsOpen > 1) {
+    throw new Error("Cannot open two alerts at once");
+  }
+  document.body.classList[alertsOpen ? "add" : "remove"]("has-alert-open");
 }

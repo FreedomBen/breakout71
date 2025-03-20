@@ -61,7 +61,8 @@ export function play() {
   startRecordingGame(gameState);
   getAudioContext()?.resume();
   resumeRecording();
-  document.body.className = gameState.running ? " running " : " paused ";
+
+  // document.body.classList[gameState.running ? 'add' : 'remove']('running')
 }
 
 export function pause(playerAskedForPause: boolean) {
@@ -78,7 +79,7 @@ export function pause(playerAskedForPause: boolean) {
 
       pauseRecording();
       gameState.pauseTimeout = null;
-      document.body.className = gameState.running ? " running " : " paused ";
+      // document.body.className = gameState.running ? " running " : " paused ";
       scoreDisplay.className = "";
       gameState.needsRender = true;
     },
@@ -373,7 +374,9 @@ window.addEventListener("visibilitychange", () => {
 
 scoreDisplay.addEventListener("click", (e) => {
   e.preventDefault();
-  openScorePanel();
+  if (!alertsOpen) {
+    openScorePanel();
+  }
 });
 
 document.addEventListener("visibilitychange", () => {
@@ -420,7 +423,9 @@ async function openScorePanel() {
   "click",
   (e) => {
     e.preventDefault();
-    openSettingsPanel();
+    if (!alertsOpen) {
+      openSettingsPanel();
+    }
   },
 );
 
