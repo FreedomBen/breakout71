@@ -1271,7 +1271,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29041682\"");
+module.exports = JSON.parse("\"29041685\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -3392,7 +3392,7 @@ function renderAllBricks() {
         (0, _game.gameState).bricks.forEach((color, index)=>{
             const x = (0, _gameUtils.brickCenterX)((0, _game.gameState), index), y = (0, _gameUtils.brickCenterY)((0, _game.gameState), index);
             if (!color) return;
-            let redBecauseOfReach = (0, _game.gameState).perks.reach && (0, _gameUtils.countBricksAbove)((0, _game.gameState), index) && !(0, _gameUtils.countBricksBelow)((0, _game.gameState), index);
+            let redBecauseOfReach = (0, _game.gameState).perks.reach && (0, _game.gameState).combo > (0, _gameStateMutators.baseCombo)((0, _game.gameState)) && (0, _gameUtils.countBricksAbove)((0, _game.gameState), index) && !(0, _gameUtils.countBricksBelow)((0, _game.gameState), index);
             let redBorder = (0, _game.gameState).ballsColor !== color && color !== "black" && redBorderOnBricksWithWrongColor || redBecauseOfReach;
             drawBrick(canctx, color, redBorder && "red" || color, x, y);
             if (color === "black") {

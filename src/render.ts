@@ -418,6 +418,7 @@ export function renderAllBricks() {
 
       let redBecauseOfReach =
         gameState.perks.reach &&
+        gameState.combo > baseCombo(gameState) &&
         countBricksAbove(gameState, index) &&
         !countBricksBelow(gameState, index);
       let redBorder =
