@@ -199,7 +199,7 @@
   "upgrades.shocks.help": "Collision explosive entre balles",
   "upgrades.shocks.name": "Choc",
   "upgrades.shunt.fullHelp": "Démarrage à chaud sera simplement ajouté au combo actuel",
-  "upgrades.shunt.help": "Le combo ne se remet plus à zéro en début de niveau",
+  "upgrades.shunt.help": "Garer {{percent}}%  du combo au changement de niveau ",
   "upgrades.shunt.name": "Shunt",
   "upgrades.skip_last.fullHelp": "Vous devez casser toutes les briques pour passer au niveau suivant. \n\nCependant, il peut être difficile d'obtenir les dernières briques.\n\nTerminer un niveau plus tôt permet d'obtenir des choix supplémentaires lors de la mise à niveau. \n\nNe jamais manquer de briques est également très avantageux.\n\nDonc, si vous avez du mal à casser les dernières briques, obtenir cet avantage plusieurs fois peut vous aider.",
   "upgrades.skip_last.help": "La dernière brique s'autodétruit.",

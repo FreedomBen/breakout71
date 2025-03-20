@@ -406,9 +406,9 @@ export const rawUpgrades = [
     threshold: 80000,
     giftable: false,
     id: "shunt",
-    max: 1,
+    max: 3,
     name: t("upgrades.shunt.name"),
-    help: (lvl: number) => t("upgrades.shunt.help"),
+    help: (lvl: number) => t("upgrades.shunt.help",{percent:lvl*25}),
     fullHelp: t("upgrades.shunt.fullHelp"),
   },
   {

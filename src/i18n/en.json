@@ -199,7 +199,7 @@
   "upgrades.shocks.help": "Explosive balls collisions",
   "upgrades.shocks.name": "Shocks",
   "upgrades.shunt.fullHelp": "If you also have hot start, the hot start is just added to the current combo",
-  "upgrades.shunt.help": "Combo no longer resets between levels",
+  "upgrades.shunt.help": "Keep {{percent}}% of your combo between levels",
   "upgrades.shunt.name": "Shunt",
   "upgrades.skip_last.fullHelp": "You need to break all bricks to go to the next level. However, it can be hard to get the last ones. \n\nClearing a level early brings extra choices when upgrading. Never missing the bricks is also very beneficial. \n\nSo if you find it difficult to break the last bricks, getting this perk a few time can help.",
   "upgrades.skip_last.help": "The last brick will explode.",

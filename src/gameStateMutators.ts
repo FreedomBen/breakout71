@@ -501,8 +501,10 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.runStatistics.levelsPlayed++;
 
   // Reset combo silently
+  const finalCombo=gameState.combo
+  gameState.combo = baseCombo(gameState);
   if (!gameState.perks.shunt) {
-    gameState.combo = baseCombo(gameState);
+    gameState.combo += Math.round(Math.max(0,(finalCombo-gameState.combo)*25*gameState.perks.shunt/100))
   }
   gameState.combo += gameState.perks.hot_start * 15;
 

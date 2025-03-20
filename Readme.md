@@ -24,6 +24,7 @@ There's also an easy mode for kids (slower ball).
  
 # Next
 
+- render next level behind upgrade picker again 
 - sturdy bricks:  map of remaining hits
 
 # bugs
@@ -122,8 +123,7 @@ There's also an easy mode for kids (slower ball).
 - [colin] bigger ball - self-explanatory
 - [colin] smaller ball - yes.
 - [colin] sturdy ball - does more damage to bricks, to conter sturdy bricks
-- [colin] accumulation - coins aglutinate into bigger coins that hold more value
-
+- [colin] accumulation - coins agglutinate into bigger coins that hold more value
 - [colin] plot - plot the ball's trajectory as you position your puck
 - [colin] golden corners - catch coins at the sides of the puck to double their value
 - [colin] varied diet - your combo grows if you keep hitting different coloured bricks each time
@@ -139,9 +139,7 @@ There's also an easy mode for kids (slower ball).
 - coins avoid ball of different color
 - colored coins only (coins should be of the color of the ball to count )
 - level flips horizontally every time a ball bounces on puck
-- coins that hit the puck disappear, missed ones are scored
-- squirell : keep coins on screen to have a higher combo
-- [colin] peaceful combo - le combo monte chaque seconde tant que les 2+ balles ne se touchent pas OU qu'on ne touche pas de bloc explosif.
+- coins that hit the puck disappear, missed ones are scored 
 - [colin] close quarters - balle attirée par tous les blocs/par un bloc aléatoire, actif à portée de bloc (+1bloc au lvlup)/proportionnel à une force (+puissance au lvlup)…
 - [colin] plusieurs perks qui déclenchent des effets quand une balle est perdue. par ex: +3 combo à chaque balle perdue, 5 blocs transformés en bombe, balle et coins ralentis, blocs régénérés…
 - [colin] faster style - augmente le combo en fonction de la vitesse de la balle
