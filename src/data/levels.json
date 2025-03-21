@@ -36,7 +36,8 @@
     "name": "Stairs",
     "size": 8,
     "bricks": "tt______tt______bbtt____bbtt____vvbbtt__vvbbtt__ppvvbbttppvvbbtt",
-    "svg": 14
+    "svg": 18,
+    "color": ""
   },
   {
     "name": "Dots",
