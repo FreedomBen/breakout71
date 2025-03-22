@@ -251,13 +251,10 @@ export function explosionAt(
   y: number,
   ball: Ball,
 ) {
-
-    const size = 1 + gameState.perks.bigger_explosions;
+  const size = 1 + gameState.perks.bigger_explosions;
   schedulGameSound(gameState, "explode", ball.x, 1);
-  if(index!==-1){
-
+  if (index !== -1) {
     if (gameState.bricks[index] == "black") delete gameState.bricks[index];
-
 
     const col = index % gameState.gridSize;
     const row = Math.floor(index / gameState.gridSize);
@@ -276,7 +273,6 @@ export function explosionAt(
         }
       }
     }
-
   }
   // Blow nearby coins
   forEachLiveOne(gameState.coins, (c) => {
@@ -1001,7 +997,7 @@ export function gameStateTick(
               clamp(b.y - y, -limit, limit) +
               ((Math.random() - 0.5) * limit) / 3;
 
-            let index = brickIndex(x, y); 
+            let index = brickIndex(x, y);
             explosionAt(gameState, index, x, y, a);
           }
         }),
