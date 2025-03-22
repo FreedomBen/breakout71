@@ -1271,7 +1271,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29044264\"");
+module.exports = JSON.parse("\"29044306\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2629,7 +2629,7 @@ async function setLevel(gameState, l) {
     if (l > 0) await (0, _game.openUpgradesPicker)(gameState);
     gameState.currentLevel = l;
     gameState.levelTime = 0;
-    gameState.noBricksSince = 0;
+    gameState.winAt = 0;
     gameState.levelWallBounces = 0;
     gameState.autoCleanUses = 0;
     gameState.lastTickDown = gameState.levelTime;
@@ -2778,8 +2778,12 @@ frames = 1) {
         gameState.autoCleanUses++;
     }
     const hasPendingBricks = gameState.perks.respawn && gameState.balls.find((b)=>b.hitItem.length > 1);
-    if (gameState.running && !remainingBricks && gameState.noBricksSince == 0 && !hasPendingBricks) gameState.noBricksSince ||= gameState.levelTime;
-    if (!remainingBricks && (!liveCount(gameState.coins) || gameState.levelTime > gameState.noBricksSince + 5000)) {
+    if (gameState.running && !remainingBricks && !hasPendingBricks) {
+        if (!gameState.winAt) gameState.winAt = gameState.levelTime + 5000;
+    } else gameState.winAt = 0;
+    if (// Delayed win when coins are still flying
+    gameState.winAt && gameState.levelTime > gameState.winAt || //   instant win condition
+    gameState.running && gameState.levelTime && !remainingBricks && !liveCount(gameState.coins)) {
         if (gameState.currentLevel + 1 < (0, _gameUtils.max_levels)(gameState)) {
             if (gameState.running) setLevel(gameState, gameState.currentLevel + 1);
         } else (0, _gameOver.gameOver)((0, _i18N.t)("gameOver.win.title"), (0, _i18N.t)("gameOver.win.summary", {
@@ -4100,7 +4104,7 @@ function newGameState(params) {
         },
         lastOffered: {},
         levelTime: 0,
-        noBricksSince: 0,
+        winAt: 0,
         levelWallBounces: 0,
         needsRender: true,
         autoCleanUses: 0,

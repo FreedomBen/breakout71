@@ -521,7 +521,7 @@ export async function setLevel(gameState: GameState, l: number) {
   }
   gameState.currentLevel = l;
   gameState.levelTime = 0;
-  gameState.noBricksSince = 0;
+  gameState.winAt = 0;
   gameState.levelWallBounces = 0;
   gameState.autoCleanUses = 0;
   gameState.lastTickDown = gameState.levelTime;
@@ -814,18 +814,23 @@ export function gameStateTick(
   const hasPendingBricks =
     gameState.perks.respawn &&
     gameState.balls.find((b) => b.hitItem.length > 1);
-  if (
-    gameState.running &&
-    !remainingBricks &&
-    gameState.noBricksSince == 0 &&
-    !hasPendingBricks
-  ) {
-    gameState.noBricksSince ||= gameState.levelTime;
+
+  if (gameState.running && !remainingBricks && !hasPendingBricks) {
+    if (!gameState.winAt) {
+      gameState.winAt = gameState.levelTime + 5000;
+    }
+  } else {
+    gameState.winAt = 0;
   }
+
   if (
-    !remainingBricks &&
-    (!liveCount(gameState.coins) ||
-      gameState.levelTime > gameState.noBricksSince + 5000)
+    // Delayed win when coins are still flying
+    (gameState.winAt && gameState.levelTime > gameState.winAt) ||
+    //   instant win condition
+    (gameState.running &&
+      gameState.levelTime &&
+      !remainingBricks &&
+      !liveCount(gameState.coins))
   ) {
     if (gameState.currentLevel + 1 < max_levels(gameState)) {
       if (gameState.running) {

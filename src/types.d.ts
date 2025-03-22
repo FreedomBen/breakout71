@@ -251,7 +251,7 @@ export type GameState = {
   runStatistics: RunStats;
   lastOffered: Partial<{ [k in PerkId]: number }>;
   levelTime: number;
-  noBricksSince: number;
+  winAt: number;
   levelWallBounces: number;
   autoCleanUses: number;
   aboutToPlaySound: {
