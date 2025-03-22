@@ -251,29 +251,33 @@ export function explosionAt(
   y: number,
   ball: Ball,
 ) {
-  if (gameState.bricks[index] == "black") delete gameState.bricks[index];
 
+    const size = 1 + gameState.perks.bigger_explosions;
   schedulGameSound(gameState, "explode", ball.x, 1);
+  if(index!==-1){
 
-  const col = index % gameState.gridSize;
-  const row = Math.floor(index / gameState.gridSize);
-  const size = 1 + gameState.perks.bigger_explosions;
-  // Break bricks around
-  for (let dx = -size; dx <= size; dx++) {
-    for (let dy = -size; dy <= size; dy++) {
-      const i = getRowColIndex(gameState, row + dy, col + dx);
-      if (gameState.bricks[i] && i !== -1) {
-        // Study bricks resist explosions too
-        if (
-          gameState.bricks[i] !== "black" &&
-          gameState.perks.sturdy_bricks > Math.random() * 5
-        )
-          continue;
-        explodeBrick(gameState, i, ball, true);
+    if (gameState.bricks[index] == "black") delete gameState.bricks[index];
+
+
+    const col = index % gameState.gridSize;
+    const row = Math.floor(index / gameState.gridSize);
+    // Break bricks around
+    for (let dx = -size; dx <= size; dx++) {
+      for (let dy = -size; dy <= size; dy++) {
+        const i = getRowColIndex(gameState, row + dy, col + dx);
+        if (gameState.bricks[i] && i !== -1) {
+          // Study bricks resist explosions too
+          if (
+            gameState.bricks[i] !== "black" &&
+            gameState.perks.sturdy_bricks > Math.random() * 5
+          )
+            continue;
+          explodeBrick(gameState, i, ball, true);
+        }
       }
     }
-  }
 
+  }
   // Blow nearby coins
   forEachLiveOne(gameState.coins, (c) => {
     const dx = c.x - x;
@@ -997,8 +1001,7 @@ export function gameStateTick(
               clamp(b.y - y, -limit, limit) +
               ((Math.random() - 0.5) * limit) / 3;
 
-            let index = brickIndex(x, y);
-
+            let index = brickIndex(x, y); 
             explosionAt(gameState, index, x, y, a);
           }
         }),

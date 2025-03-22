@@ -2489,18 +2489,20 @@ function spawnExplosion(gameState, count, x, y, color) {
     for(let i = 0; i < count; i++)makeParticle(gameState, x + (Math.random() - 0.5) * gameState.brickWidth / 2, y + (Math.random() - 0.5) * gameState.brickWidth / 2, (Math.random() - 0.5) * 30, (Math.random() - 0.5) * 30, color, false);
 }
 function explosionAt(gameState, index, x, y, ball) {
-    if (gameState.bricks[index] == "black") delete gameState.bricks[index];
-    schedulGameSound(gameState, "explode", ball.x, 1);
-    const col = index % gameState.gridSize;
-    const row = Math.floor(index / gameState.gridSize);
     const size = 1 + gameState.perks.bigger_explosions;
-    // Break bricks around
-    for(let dx = -size; dx <= size; dx++)for(let dy = -size; dy <= size; dy++){
-        const i = (0, _gameUtils.getRowColIndex)(gameState, row + dy, col + dx);
-        if (gameState.bricks[i] && i !== -1) {
-            // Study bricks resist explosions too
-            if (gameState.bricks[i] !== "black" && gameState.perks.sturdy_bricks > Math.random() * 5) continue;
-            explodeBrick(gameState, i, ball, true);
+    schedulGameSound(gameState, "explode", ball.x, 1);
+    if (index !== -1) {
+        if (gameState.bricks[index] == "black") delete gameState.bricks[index];
+        const col = index % gameState.gridSize;
+        const row = Math.floor(index / gameState.gridSize);
+        // Break bricks around
+        for(let dx = -size; dx <= size; dx++)for(let dy = -size; dy <= size; dy++){
+            const i = (0, _gameUtils.getRowColIndex)(gameState, row + dy, col + dx);
+            if (gameState.bricks[i] && i !== -1) {
+                // Study bricks resist explosions too
+                if (gameState.bricks[i] !== "black" && gameState.perks.sturdy_bricks > Math.random() * 5) continue;
+                explodeBrick(gameState, i, ball, true);
+            }
         }
     }
     // Blow nearby coins
