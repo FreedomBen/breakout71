@@ -26,7 +26,6 @@ import {
   isTelekinesisActive,
   isYoyoActive,
   max_levels,
-  sample,
   shouldPierceByColor,
 } from "./game_utils";
 import { t } from "./i18n/i18n";
@@ -49,6 +48,14 @@ import { isOptionOn } from "./options";
 
 export function setMousePos(gameState: GameState, x: number) {
   // Sets the puck position, and updates the ball position if they are supposed to follow it
+  if (
+    gameState.running &&
+    gameState.levelTime > 500 &&
+    gameState.perks.passive_income &&
+    Math.abs(x - gameState.puckPosition) > 3
+  ) {
+    resetCombo(gameState, x, gameState.gameZoneHeight - gameState.puckHeight);
+  }
   gameState.puckPosition = x;
   gameState.needsRender = true;
 }
@@ -88,6 +95,7 @@ export function resetBalls(gameState: GameState) {
       sy: 0,
       piercedSinceBounce: 0,
       hitSinceBounce: 0,
+      brokenSinceBounce: 0,
       hitItem: [],
       sapperUses: 0,
     });
@@ -116,6 +124,7 @@ export function putBallsAtPuck(gameState: GameState) {
     ball.sy = 0;
     ball.hitItem = [];
     ball.hitSinceBounce = 0;
+    ball.brokenSinceBounce = 0;
     ball.piercedSinceBounce = 0;
   });
 }
@@ -367,6 +376,8 @@ export function explodeBrick(
       gameState.perks.picky_eater +
       gameState.perks.asceticism +
       gameState.perks.zen +
+      gameState.perks.passive_income +
+      gameState.perks.nbricks +
       gameState.perks.unbounded;
 
     if (gameState.perks.reach) {
@@ -499,6 +510,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
 export async function setLevel(gameState: GameState, l: number) {
   // Here to alleviate double upgrades issues
   if (gameState.upgradesOfferedFor >= l) {
+    debugger;
     return console.warn("Extra upgrade request ignored ");
   }
   gameState.upgradesOfferedFor = l;
@@ -531,8 +543,6 @@ export async function setLevel(gameState: GameState, l: number) {
   }
   gameState.combo += gameState.perks.hot_start * 15;
 
-  resetBalls(gameState);
-
   const lvl = currentLevelInfo(gameState);
   if (lvl.size !== gameState.gridSize) {
     gameState.gridSize = lvl.size;
@@ -543,6 +553,8 @@ export async function setLevel(gameState: GameState, l: number) {
   empty(gameState.lights);
   empty(gameState.texts);
   gameState.bricks = [...lvl.bricks];
+  // Balls color will depend on most common brick color sometimes
+  resetBalls(gameState);
   gameState.needsRender = true;
   // This caused problems with accented characters like the ô of côte d'ivoire for odd reasons
   // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
@@ -799,7 +811,15 @@ export function gameStateTick(
     });
     gameState.autoCleanUses++;
   }
-  if (gameState.running && !remainingBricks && gameState.noBricksSince == 0) {
+  const hasPendingBricks =
+    gameState.perks.respawn &&
+    gameState.balls.find((b) => b.hitItem.length > 1);
+  if (
+    gameState.running &&
+    !remainingBricks &&
+    gameState.noBricksSince == 0 &&
+    !hasPendingBricks
+  ) {
     gameState.noBricksSince ||= gameState.levelTime;
   }
   if (
@@ -1350,14 +1370,11 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     if (gameState.perks.trampoline) {
       gameState.combo += gameState.perks.trampoline;
     }
-    if (gameState.perks.nbricks) {
-      if (ball.hitSinceBounce) {
-        if (gameState.perks.nbricks === ball.hitSinceBounce) {
-          gameState.combo += gameState.perks.nbricks;
-        } else {
-          resetCombo(gameState, ball.x, ball.y);
-        }
-      }
+    if (
+      gameState.perks.nbricks &&
+      gameState.perks.nbricks !== ball.brokenSinceBounce
+    ) {
+      resetCombo(gameState, ball.x, ball.y);
     }
 
     if (gameState.perks.respawn) {
@@ -1394,6 +1411,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     }
     gameState.runStatistics.puck_bounces++;
     ball.hitSinceBounce = 0;
+    ball.brokenSinceBounce = 0;
     ball.sapperUses = 0;
     ball.piercedSinceBounce = 0;
   }
@@ -1427,52 +1445,50 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     undefined;
 
   const hitBrick = vhit ?? hhit ?? chit;
-  let sturdyBounce =
-    hitBrick &&
-    gameState.bricks[hitBrick] !== "black" &&
-    gameState.perks.sturdy_bricks &&
-    gameState.perks.sturdy_bricks > Math.random() * 5;
 
-  let pierce = false;
-  if (sturdyBounce || typeof hitBrick === "undefined") {
-    // cannot pierce
-  } else if (shouldPierceByColor(gameState, vhit, hhit, chit)) {
-    pierce = true;
-  } else if (ball.piercedSinceBounce < gameState.perks.pierce * 3) {
-    pierce = true;
-    ball.piercedSinceBounce++;
-  }
-
-  if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
-    if (!pierce) {
-      ball.y = ball.previousY;
-      ball.vy *= -1;
-    }
-  }
-  if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
-    if (!pierce) {
-      ball.x = ball.previousX;
-      ball.vx *= -1;
-    }
-  }
-
-  if (sturdyBounce) {
-    schedulGameSound(gameState, "wallBeep", x, 1);
-    return;
-  }
   if (typeof hitBrick !== "undefined") {
-    const initialBrickColor = gameState.bricks[hitBrick];
+    let sturdyBounce =
+      gameState.bricks[hitBrick] !== "black" &&
+      gameState.perks.sturdy_bricks &&
+      gameState.perks.sturdy_bricks > Math.random() * 5;
 
     ball.hitSinceBounce++;
-    explodeBrick(gameState, hitBrick, ball, false);
+    let pierce = false;
+    if (sturdyBounce) {
+      schedulGameSound(gameState, "wallBeep", x, 1);
+    } else if (shouldPierceByColor(gameState, vhit, hhit, chit)) {
+      pierce = true;
+    } else if (ball.piercedSinceBounce < gameState.perks.pierce * 3) {
+      pierce = true;
+      ball.piercedSinceBounce++;
+    }
 
-    if (
-      ball.sapperUses < gameState.perks.sapper &&
-      initialBrickColor !== "black" && // don't replace a brick that bounced with sturdy_bricks
-      !gameState.bricks[hitBrick]
-    ) {
-      gameState.bricks[hitBrick] = "black";
-      ball.sapperUses++;
+    if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
+      if (!pierce) {
+        ball.y = ball.previousY;
+        ball.vy *= -1;
+      }
+    }
+    if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
+      if (!pierce) {
+        ball.x = ball.previousX;
+        ball.vx *= -1;
+      }
+    }
+
+    if (!sturdyBounce) {
+      const initialBrickColor = gameState.bricks[hitBrick];
+      ball.brokenSinceBounce++;
+
+      explodeBrick(gameState, hitBrick, ball, false);
+      if (
+        ball.sapperUses < gameState.perks.sapper &&
+        initialBrickColor !== "black" && // don't replace a brick that bounced with sturdy_bricks
+        !gameState.bricks[hitBrick]
+      ) {
+        gameState.bricks[hitBrick] = "black";
+        ball.sapperUses++;
+      }
     }
   }
 

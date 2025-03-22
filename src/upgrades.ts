@@ -564,4 +564,15 @@ export const rawUpgrades = [
     help: (lvl: number) => t("upgrades.reach.help", { lvl }),
     fullHelp: t("upgrades.reach.fullHelp"),
   },
+  {
+    requires: "",
+    rejects: "",
+    threshold: 140000,
+    giftable: false,
+    id: "passive_income",
+    max: 1,
+    name: t("upgrades.passive_income.name"),
+    help: (lvl: number) => t("upgrades.passive_income.help"),
+    fullHelp: t("upgrades.passive_income.fullHelp"),
+  },
 ] as const;

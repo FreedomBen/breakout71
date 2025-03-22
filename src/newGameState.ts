@@ -38,6 +38,7 @@ export function newGameState(params: RunParams): GameState {
     combo: 1,
     gridSize: 12,
     running: false,
+    isGameOver: false,
     ballStickToPuck: true,
     puckPosition: 400,
     pauseTimeout: null,

@@ -188,11 +188,8 @@ I could unlock the "pro stand" at $999 that just holds the play area higher.
 
 # increase skill ceiling
 - reroll mechanic, rerolls are reward for better play
-- make puck smaller as combo increases ? 
-- nerf coin magnet : 
-  - no effect when too close
-  - coins overshoot
-  - coins bounce and spread more ? 
+- make puck smaller as combo increases ?
+
 - add red anti-coins that apply downgrades
   - destroy your combo
   - hurt your score

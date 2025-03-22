@@ -947,5 +947,12 @@
     "bricks": "_________yyyyyy__yyyyyy__yyyyyy__rrrrrr_______W____________WWW__",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:passive_income",
+    "size": 8,
+    "bricks": "__________tttt____tttt_______________W___________________rWWWr__",
+    "svg": null,
+    "color": ""
   }
 ]

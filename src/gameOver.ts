@@ -45,6 +45,8 @@ export function addToTotalPlayTime(ms: number) {
 
 export function gameOver(title: string, intro: string) {
   if (!gameState.running) return;
+  if (gameState.isGameOver) return;
+  gameState.isGameOver = true;
   pause(true);
   stopRecording();
   addToTotalPlayTime(gameState.runStatistics.runTime);
