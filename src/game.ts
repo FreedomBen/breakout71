@@ -992,6 +992,7 @@ restart(
           telekinesis: 2,
           yoyo: 2,
           metamorphosis: 1,
+          implosions:1
         },
       }
     : {},

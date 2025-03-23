@@ -996,5 +996,26 @@
     "bricks": "__y___y__y__y_y__y_y__t__y____ttt_____tWWWt___tWWgWWt_tttWWWttt__________________",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:side_kick",
+    "size": 8,
+    "bricks": "_WW__y_yWWWWy_y_WWWW_y_y_WW_y_y_r_r______r_r____r_r______r_r____",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:implosions",
+    "size": 8,
+    "bricks": "y______W__ryW_W__yr_WW____r_WWWy_WWW_rr___WW_rrryW_Wy___W_____y_",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:corner_shot",
+    "size": 9,
+    "bricks": "___W____y___W_y______W___y____W_y______W___y____W______W_W_WWW_WW_W_WWWWWW_W_WWWW",
+    "svg": null,
+    "color": ""
   }
 ]

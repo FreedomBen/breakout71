@@ -149,24 +149,16 @@ export function normalizeGameState(gameState: GameState) {
     (gameState.gameZoneWidth / 12) *
     (3 - gameState.perks.smaller_puck + gameState.perks.bigger_puck);
 
-  if (
-    gameState.puckPosition <
-    gameState.offsetXRoundedDown + gameState.puckWidth / 2
-  ) {
-    gameState.puckPosition =
-      gameState.offsetXRoundedDown + gameState.puckWidth / 2;
-  }
-  if (
-    gameState.puckPosition >
-    gameState.offsetXRoundedDown +
+  let minX = gameState.perks.corner_shot  && gameState.levelTime? gameState.offsetXRoundedDown - gameState.puckWidth / 2 : gameState.offsetXRoundedDown + gameState.puckWidth / 2
+
+  let maxX = gameState.perks.corner_shot && gameState.levelTime? gameState.offsetXRoundedDown +
+      gameState.gameZoneWidthRoundedUp +
+      gameState.puckWidth / 2 : gameState.offsetXRoundedDown +
       gameState.gameZoneWidthRoundedUp -
       gameState.puckWidth / 2
-  ) {
-    gameState.puckPosition =
-      gameState.offsetXRoundedDown +
-      gameState.gameZoneWidthRoundedUp -
-      gameState.puckWidth / 2;
-  }
+
+  gameState.puckPosition = clamp(gameState.puckPosition,minX,maxX)
+
   if (gameState.ballStickToPuck) {
     putBallsAtPuck(gameState);
   }
@@ -248,6 +240,33 @@ export function spawnExplosion(
     );
   }
 }
+export function spawnImplosion(
+  gameState: GameState,
+  count: number,
+  x: number,
+  y: number,
+  color: string,
+) {
+  if (!!isOptionOn("basic")) return;
+
+  if (liveCount(gameState.particles) > getCurrentMaxParticles()) {
+    // Avoid freezing when lots of explosion happen at once
+    count = 1;
+  }
+  for (let i = 0; i < count; i++) {
+    const dx=((Math.random() - 0.5) * gameState.brickWidth) / 2
+    const dy=((Math.random() - 0.5) * gameState.brickWidth) / 2
+    makeParticle(
+      gameState,
+      x -dx*10 ,
+      y -dy*10,
+      dx,
+      dy,
+      color,
+      false,
+    );
+  }
+}
 
 export function explosionAt(
   gameState: GameState,
@@ -275,17 +294,27 @@ export function explosionAt(
       }
     }
   }
+
+  const factor = gameState.perks.implosions ? -1:1
   // Blow nearby coins
   forEachLiveOne(gameState.coins, (c) => {
     const dx = c.x - x;
     const dy = c.y - y;
     const d2 = Math.max(gameState.brickWidth, Math.abs(dx) + Math.abs(dy));
-    c.vx += ((dx / d2) * 10 * size) / c.weight;
-    c.vy += ((dy / d2) * 10 * size) / c.weight;
+    c.vx += ((dx / d2) * 10 * size) / c.weight * factor;
+    c.vy += ((dy / d2) * 10 * size) / c.weight* factor;
   });
   gameState.lastExplosion = Date.now();
 
   makeLight(gameState, x, y, "white", gameState.brickWidth * 2, 150);
+  if(gameState.perks.implosions){
+    spawnImplosion(
+        gameState,
+    7 * (1 + gameState.perks.bigger_explosions),
+    x,
+    y,
+    "white")
+  }else{
 
   spawnExplosion(
     gameState,
@@ -294,6 +323,8 @@ export function explosionAt(
     y,
     "white",
   );
+  }
+
   gameState.runStatistics.bricks_broken++;
 
   if (gameState.perks.zen) {
@@ -381,6 +412,14 @@ export function explodeBrick(
       gameState.perks.passive_income +
       gameState.perks.nbricks +
       gameState.perks.unbounded;
+
+    if(gameState.perks.side_kick) {
+      if(Math.abs(ball.vx) > Math.abs(ball.vy)){
+      gameState.combo +=  gameState.perks.side_kick
+      }else  {
+        decreaseCombo(gameState, gameState.perks.side_kick, ball.x,ball.y)
+      }
+    }
 
     if (gameState.perks.reach) {
       if (

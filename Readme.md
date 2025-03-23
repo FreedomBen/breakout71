@@ -72,13 +72,14 @@ There's also an easy mode for kids (slower ball).
 
 # New perks ideas 
 
+- [colin] Side-kick - briser un bloc par le côté génère plus de coins que par le dessus ou le dessous.
 - [colin] Corner shot - the puck can go beyond the screen limits so as to make corner shots easier.
 - [colin] Mental charge - the puck is divided into two smaller pucks, then 3 smaller ones at lvl 2
-- [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran
+- [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). 
+- lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran
 - [colin] Combos extrêmes: lvl2 pour tous les combos, qui fait que le combo rapporte doubl ou triple, mais si sur un niveau la condition n'est pas respectée alors le perk ne donne plus de combo bonus pour ce niveau.
 - [colin] Mytosis - les blocs bombe n'explosent pas mais relâchent une nouvelle balle à la place
 - [colin] Juggle - au début du niveau, chaque balle est lancée l'une après au lieu de toutes à la fois
-- [colin] Side-kick - briser un bloc par le côté génère plus de coins que par le dessus ou le dessous.
 - [colin] Capital - les vies non perdues à la fin du niveau rapportent un bonus de points
 - bricks are invisible, but ..
 - second puck (symmetric to the first one)

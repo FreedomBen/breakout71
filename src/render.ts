@@ -301,7 +301,6 @@ export function render(gameState: GameState) {
         true,
       );
     } else {
-      console.log({comboTextWidth,pw:gameState.puckWidth,combo:gameState.combo, comboText})
       drawText(
         ctx,
         comboTextWidth > gameState.puckWidth  ? gameState.combo.toString() : comboText,
