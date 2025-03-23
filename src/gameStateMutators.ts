@@ -49,6 +49,7 @@ import {
 } from "./game";
 import { stopRecording } from "./recording";
 import { isOptionOn } from "./options";
+import {use} from "react";
 
 export function setMousePos(gameState: GameState, x: number) {
   // Sets the puck position, and updates the ball position if they are supposed to follow it
@@ -97,7 +98,7 @@ export function resetBalls(gameState: GameState) {
 
       sx: 0,
       sy: 0,
-      piercedSinceBounce: 0,
+      piercePoints: gameState.perks.pierce*3,
       hitSinceBounce: 0,
       brokenSinceBounce: 0,
       hitItem: [],
@@ -129,7 +130,7 @@ export function putBallsAtPuck(gameState: GameState) {
     ball.hitItem = [];
     ball.hitSinceBounce = 0;
     ball.brokenSinceBounce = 0;
-    ball.piercedSinceBounce = 0;
+    ball.piercePoints = gameState.perks.pierce * 3;
   });
 }
 
@@ -258,10 +259,6 @@ export function explosionAt(
   const size = 1 + gameState.perks.bigger_explosions;
   schedulGameSound(gameState, "explode", ball.x, 1);
   if (index !== -1) {
-    if (gameState.bricks[index] == "black") {
-        setBrick(gameState, index, "")
-    }
-
     const col = index % gameState.gridSize;
     const row = Math.floor(index / gameState.gridSize);
     // Break bricks around
@@ -271,8 +268,9 @@ export function explosionAt(
         if (gameState.bricks[i] && i !== -1) {
           // Study bricks resist explosions too
           gameState.brickHP[i]--
-          if (gameState.brickHP<=0)
-          explodeBrick(gameState, i, ball, true);
+          if (gameState.brickHP<=0) {
+            explodeBrick(gameState, i, ball, true);
+          }
         }
       }
     }
@@ -315,6 +313,7 @@ export function explodeBrick(
   if (color === "black") {
     const x = brickCenterX(gameState, index),
       y = brickCenterY(gameState, index);
+    setBrick(gameState, index, '')
     explosionAt(gameState, index, x, y, ball);
   } else if (color) {
     // Even if it bounces we don't want to count that as a miss
@@ -684,7 +683,7 @@ export function attract(gameState: GameState, a: Ball, b: Ball, power: number) {
 }
 
 export function coinBrickHitCheck(gameState: GameState, coin: Coin) {
-  if (gameState.perks.ghost_coins) return undefined;
+
   // Make ball/coin bonce, and return bricks that were hit
   const radius = coin.size / 2;
   const { x, y, previousX, previousY } = coin;
@@ -696,27 +695,29 @@ export function coinBrickHitCheck(gameState: GameState, coin: Coin) {
       typeof hhit == "undefined" &&
       hitsSomething(x, y, radius)) ||
     undefined;
+  if(!gameState.perks.ghost_coins){
 
-  if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
-    coin.y = coin.previousY;
-    coin.vy *= -1;
+    if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
+      coin.y = coin.previousY;
+      coin.vy *= -1;
 
-    //   Roll on corners
-    const leftHit = gameState.bricks[brickIndex(x - radius, y + radius)];
-    const rightHit = gameState.bricks[brickIndex(x + radius, y + radius)];
+      //   Roll on corners
+      const leftHit = gameState.bricks[brickIndex(x - radius, y + radius)];
+      const rightHit = gameState.bricks[brickIndex(x + radius, y + radius)];
 
-    if (leftHit && !rightHit) {
-      coin.vx += 1;
-      coin.sa -= 1;
+      if (leftHit && !rightHit) {
+        coin.vx += 1;
+        coin.sa -= 1;
+      }
+      if (!leftHit && rightHit) {
+        coin.vx -= 1;
+        coin.sa += 1;
+      }
     }
-    if (!leftHit && rightHit) {
-      coin.vx -= 1;
-      coin.sa += 1;
+    if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
+      coin.x = coin.previousX;
+      coin.vx *= -1;
     }
-  }
-  if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
-    coin.x = coin.previousX;
-    coin.vx *= -1;
   }
   return vhit ?? hhit ?? chit;
 }
@@ -963,7 +964,8 @@ export function gameStateTick(
           schedulGameSound(gameState, "colorChange", coin.x, 0.3);
         }
       }
-      if (typeof hitBrick !== "undefined" || hitBorder) {
+
+      if ((!gameState.perks.ghost_coins && typeof hitBrick !== "undefined") || hitBorder) {
         coin.vx *= 0.8;
         coin.vy *= 0.8;
         coin.sa *= 0.9;
@@ -1408,7 +1410,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
         });
     }
     ball.hitItem = [];
-    if (!ball.hitSinceBounce) {
+    if (!ball.hitSinceBounce && gameState.bricks.find(i=>i)) {
       gameState.runStatistics.misses++;
       if (gameState.perks.forgiving) {
         const loss = Math.floor(
@@ -1434,7 +1436,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     ball.hitSinceBounce = 0;
     ball.brokenSinceBounce = 0;
     ball.sapperUses = 0;
-    ball.piercedSinceBounce = 0;
+    ball.piercePoints = gameState.perks.pierce*3;
   }
 
   const lostOnSides =
@@ -1468,21 +1470,21 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   const hitBrick = vhit ?? hhit ?? chit;
 
   if (typeof hitBrick !== "undefined") {
-    // TODO higher damage balls
-    gameState.brickHP[hitBrick]--
-    let sturdyBounce = gameState.brickHP[hitBrick]
 
     ball.hitSinceBounce++;
     let pierce = false;
-    if (sturdyBounce) {
-      schedulGameSound(gameState, "wallBeep", x, 1);
-    } else if (shouldPierceByColor(gameState, vhit, hhit, chit)) {
-      pierce = true;
-    } else if (ball.piercedSinceBounce < gameState.perks.pierce * 3) {
-      pierce = true;
-      ball.piercedSinceBounce++;
-    }
+    let damage= 1+(shouldPierceByColor(gameState, vhit, hhit, chit) ? gameState.perks.pierce_color :0)
 
+    gameState.brickHP[hitBrick]-=damage
+
+    const used = Math.min(ball.piercePoints, Math.max(1,gameState.brickHP[hitBrick]))
+    gameState.brickHP[hitBrick]-=used
+    ball.piercePoints-=used
+
+    if(gameState.brickHP[hitBrick]<0){
+      gameState.brickHP[hitBrick]=0
+      pierce=true
+    }
     if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
       if (!pierce) {
         ball.y = ball.previousY;
@@ -1496,7 +1498,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
       }
     }
 
-    if (!sturdyBounce) {
+    if (!gameState.brickHP[hitBrick]) {
       const initialBrickColor = gameState.bricks[hitBrick];
       ball.brokenSinceBounce++;
 
@@ -1513,8 +1515,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   }
 
   if (!isOptionOn("basic")) {
-    const remainingPierce =
-      gameState.perks.pierce * 3 - ball.piercedSinceBounce;
+    const remainingPierce =  ball.piercePoints;
     const remainingSapper = ball.sapperUses < gameState.perks.sapper;
     const extraCombo = gameState.combo - 1;
     if (

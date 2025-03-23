@@ -388,6 +388,8 @@ export function renderAllBricks() {
     gameState.perks.picky_eater &&
     !isOptionOn("basic");
 
+  const clairVoyance=  gameState.perks.clairvoyant && gameState.brickHP.reduce((a,b)=>a+b,0)
+
   const newKey =
     gameState.gameZoneWidth +
     "_" +
@@ -399,7 +401,7 @@ export function renderAllBricks() {
     gameState.ballsColor +
     "_" +
     gameState.perks.pierce_color +
-  "_"+ gameState.brickHP.reduce((a,b)=>a+b,0);
+  "_"+ clairVoyance;
   if (newKey !== cachedBricksRenderKey) {
     cachedBricksRenderKey = newKey;
 
@@ -430,7 +432,7 @@ export function renderAllBricks() {
 
         canctx.globalCompositeOperation = "source-over";
       drawBrick(canctx, color, (redBorder && "red") || color, x, y);
-      if(gameState.brickHP[index]>1){
+      if(gameState.brickHP[index]>1 && gameState.perks.clairvoyant){
         canctx.globalCompositeOperation="destination-out"
         drawText(canctx, gameState.brickHP[index].toString(), "white", gameState.puckHeight, x,y )
       }

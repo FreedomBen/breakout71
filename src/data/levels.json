@@ -989,5 +989,12 @@
     "bricks": "___t______tt__tttttt_ttttttttttttt____tt_____t___",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:clairvoyant",
+    "size": 9,
+    "bricks": "__y___y__y__y_y__y_y__t__y____ttt_____tWWWt___tWWgWWt_tttWWWttt__________________",
+    "svg": null,
+    "color": ""
   }
 ]

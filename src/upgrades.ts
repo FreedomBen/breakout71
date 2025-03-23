@@ -275,9 +275,9 @@ export const rawUpgrades = [
     threshold: 15000,
     giftable: false,
     id: "pierce_color",
-    max: 1,
+    max: 4,
     name: t("upgrades.pierce_color.name"),
-    help: (lvl: number) => t("upgrades.pierce_color.help"),
+    help: (lvl: number) => t("upgrades.pierce_color.help",{lvl}),
     fullHelp: t("upgrades.pierce_color.fullHelp"),
   },
   {
@@ -574,5 +574,16 @@ export const rawUpgrades = [
     name: t("upgrades.passive_income.name"),
     help: (lvl: number) => t("upgrades.passive_income.help"),
     fullHelp: t("upgrades.passive_income.fullHelp"),
+  },
+  {
+    requires: "",
+    rejects: "",
+    threshold: 145000,
+    giftable: false,
+    id: "clairvoyant",
+    max: 1,
+    name: t("upgrades.clairvoyant.name"),
+    help: (lvl: number) => t("upgrades.clairvoyant.help"),
+    fullHelp: t("upgrades.clairvoyant.fullHelp"),
   },
 ] as const;

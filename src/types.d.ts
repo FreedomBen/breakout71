@@ -94,8 +94,8 @@ export type Ball = {
   previousVY: number;
   sx: number;
   sy: number;
-  // Uses of the pierce perk only
-  piercedSinceBounce: number;
+  // Ability to pierce N HP
+  piercePoints: number;
   // Any bounce counts, even if brick resisted the hit
   hitSinceBounce: number;
   // Brick was really broken ,but could have been respawned as a bomb

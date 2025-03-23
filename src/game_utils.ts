@@ -1,5 +1,6 @@
 import { Ball, GameState, PerkId, PerksMap } from "./types";
 import { icons, upgrades } from "./loadGameData";
+import {t} from "./i18n/i18n";
 
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
@@ -63,6 +64,14 @@ export function pickedUpgradesHTMl(gameState: GameState) {
       list += icons["icon:" + u.id] + " ";
   }
   return list;
+}
+export function levelsListHTMl(gameState: GameState) {
+  if(!gameState.perks.clairvoyant) return ''
+  let list = "";
+  for (let i=0;i<max_levels(gameState);i++) {
+    list += `<span style="opacity: ${i>=gameState.currentLevel ? 1:0.2}">${icons[gameState.runLevels[i].name]}</span>`  ;
+  }
+  return `<p>${t('score_panel.upcoming_levels')}</p><p>${list}</p>`;
 }
 
 export function currentLevelInfo(gameState: GameState) {

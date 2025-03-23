@@ -22,9 +22,7 @@ If the app stutters, turn on "fast mode" in the settings to render a simplified 
 There's also an easy mode for kids (slower ball).
  
 # Next
- 
-- sturdy bricks:  map of remaining hits
-
+  
 # bugs
 
 - perk : travel map 

@@ -14,7 +14,7 @@ import {
 import { getAudioContext, playPendingSounds } from "./sounds";
 import {
   currentLevelInfo,
-  getRowColIndex,
+  getRowColIndex, levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,
 } from "./game_utils";
@@ -271,7 +271,10 @@ export async function openUpgradesPicker(gameState: GameState) {
         wallHitsGain,
         compliment,
       })}
-        </p>`,
+        </p>
+
+        <p>${levelsListHTMl(gameState)}</p>
+`,
       allowClose: false,
       textAfterButtons,
     })) as PerkId;
@@ -432,6 +435,8 @@ async function openScorePanel() {
             ${gameState.isCreativeModeRun ? `<p>${t("score_panel.test_run")}</p>` : ""}
             <p>${t("score_panel.upgrades_picked")}</p>
             <p>${pickedUpgradesHTMl(gameState)}</p>
+            
+        <p>${levelsListHTMl(gameState)}</p>
         `,
     allowClose: true,
   });
