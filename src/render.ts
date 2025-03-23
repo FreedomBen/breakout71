@@ -281,7 +281,6 @@ export function render(gameState: GameState) {
     const comboTextWidth = (comboText.length * gameState.puckHeight) / 1.8;
     const totalWidth = comboTextWidth + gameState.coinSize * 2;
     const left = gameState.puckPosition - totalWidth / 2;
-
     if (totalWidth < gameState.puckWidth) {
       drawCoin(
         ctx,
@@ -302,11 +301,12 @@ export function render(gameState: GameState) {
         true,
       );
     } else {
+      console.log({comboTextWidth,pw:gameState.puckWidth,combo:gameState.combo, comboText})
       drawText(
         ctx,
-        comboText,
-        "#FFF",
-        gameState.puckHeight,
+        comboTextWidth > gameState.puckWidth  ? gameState.combo.toString() : comboText,
+        "#000",
+        comboTextWidth > gameState.puckWidth ? 12:20,
         gameState.puckPosition,
         gameState.gameZoneHeight - gameState.puckHeight / 2,
         false,

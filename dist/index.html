@@ -3515,7 +3515,15 @@ function render(gameState) {
         if (totalWidth < gameState.puckWidth) {
             drawCoin(ctx, "gold", gameState.coinSize, left + gameState.coinSize / 2, gameState.gameZoneHeight - gameState.puckHeight / 2, gameState.puckColor, 0);
             drawText(ctx, comboText, "#000", gameState.puckHeight, left + gameState.coinSize * 1.5, gameState.gameZoneHeight - gameState.puckHeight / 2, true);
-        } else drawText(ctx, comboText, "#FFF", gameState.puckHeight, gameState.puckPosition, gameState.gameZoneHeight - gameState.puckHeight / 2, false);
+        } else {
+            console.log({
+                comboTextWidth,
+                pw: gameState.puckWidth,
+                combo: gameState.combo,
+                comboText
+            });
+            drawText(ctx, comboTextWidth > gameState.puckWidth ? gameState.combo.toString() : comboText, "#000", comboTextWidth > gameState.puckWidth ? 12 : 20, gameState.puckPosition, gameState.gameZoneHeight - gameState.puckHeight / 2, false);
+        }
     }
     //  Borders
     const hasCombo = gameState.combo > (0, _gameStateMutators.baseCombo)(gameState);
