@@ -57,6 +57,7 @@ export function newGameState(params: RunParams): GameState {
     balls: [],
     ballsColor: "white",
     bricks: [],
+    brickHP: [],
     lights: { indexMin: 0, total: 0, list: [] },
     particles: { indexMin: 0, total: 0, list: [] },
     texts: { indexMin: 0, total: 0, list: [] },

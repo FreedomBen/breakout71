@@ -258,7 +258,9 @@ export function explosionAt(
   const size = 1 + gameState.perks.bigger_explosions;
   schedulGameSound(gameState, "explode", ball.x, 1);
   if (index !== -1) {
-    if (gameState.bricks[index] == "black") delete gameState.bricks[index];
+    if (gameState.bricks[index] == "black") {
+        setBrick(gameState, index, "")
+    }
 
     const col = index % gameState.gridSize;
     const row = Math.floor(index / gameState.gridSize);
@@ -268,11 +270,8 @@ export function explosionAt(
         const i = getRowColIndex(gameState, row + dy, col + dx);
         if (gameState.bricks[i] && i !== -1) {
           // Study bricks resist explosions too
-          if (
-            gameState.bricks[i] !== "black" &&
-            gameState.perks.sturdy_bricks > Math.random() * 5
-          )
-            continue;
+          gameState.brickHP[i]--
+          if (gameState.brickHP<=0)
           explodeBrick(gameState, i, ball, true);
         }
       }
@@ -308,7 +307,7 @@ export function explodeBrick(
   gameState: GameState,
   index: number,
   ball: Ball,
-  isExplosion: boolean,
+  isExplosion: boolean
 ) {
   const color = gameState.bricks[index];
   if (!color) return;
@@ -324,7 +323,7 @@ export function explodeBrick(
     const x = brickCenterX(gameState, index),
       y = brickCenterY(gameState, index);
 
-    gameState.bricks[index] = "";
+    setBrick(    gameState,index,"");
 
     let coinsToSpawn = gameState.combo;
     if (gameState.perks.sturdy_bricks) {
@@ -556,7 +555,11 @@ export async function setLevel(gameState: GameState, l: number) {
   empty(gameState.particles);
   empty(gameState.lights);
   empty(gameState.texts);
-  gameState.bricks = [...lvl.bricks];
+  gameState.bricks = []
+  for(let i=0;i<lvl.size*lvl.size;i++){
+    setBrick(gameState, i,lvl.bricks[i])
+  }
+
   // Balls color will depend on most common brick color sometimes
   resetBalls(gameState);
   gameState.needsRender = true;
@@ -564,6 +567,12 @@ export async function setLevel(gameState: GameState, l: number) {
   // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
   background.src = "data:image/svg+xml;UTF8," + lvl.svg;
 }
+
+function setBrick(gameState:GameState, index:number, color:string){
+  gameState.bricks[index] = color||'';
+  gameState.brickHP[index] =  (color === 'black' && 1) ||(color && 1+gameState.perks.sturdy_bricks)||0
+}
+
 
 export function rainbowColor(): colorString {
   return `hsl(${(Math.round(gameState.levelTime / 4) * 2) % 360},100%,70%)`;
@@ -947,6 +956,7 @@ export function gameStateTick(
           gameState.bricks[hitBrick] !== "black" &&
           !coin.coloredABrick
         ) {
+          // Not using setbrick because we don't want to reset HP
           gameState.bricks[hitBrick] = coin.color;
           coin.coloredABrick = true;
 
@@ -1390,8 +1400,11 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
         .slice(0, -1)
         .slice(0, gameState.perks.respawn)
         .forEach(({ index, color }) => {
-          if (!gameState.bricks[index] && color !== "black")
-            gameState.bricks[index] = color;
+          if (!gameState.bricks[index] && color !== "black") {
+            // respawns with full hp
+            setBrick(gameState, index, color);
+          }
+            // gameState.bricks[index] = color;
         });
     }
     ball.hitItem = [];
@@ -1455,10 +1468,9 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   const hitBrick = vhit ?? hhit ?? chit;
 
   if (typeof hitBrick !== "undefined") {
-    let sturdyBounce =
-      gameState.bricks[hitBrick] !== "black" &&
-      gameState.perks.sturdy_bricks &&
-      gameState.perks.sturdy_bricks > Math.random() * 5;
+    // TODO higher damage balls
+    gameState.brickHP[hitBrick]--
+    let sturdyBounce = gameState.brickHP[hitBrick]
 
     ball.hitSinceBounce++;
     let pierce = false;
@@ -1494,7 +1506,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
         initialBrickColor !== "black" && // don't replace a brick that bounced with sturdy_bricks
         !gameState.bricks[hitBrick]
       ) {
-        gameState.bricks[hitBrick] = "black";
+        setBrick(gameState, hitBrick, "black")
         ball.sapperUses++;
       }
     }

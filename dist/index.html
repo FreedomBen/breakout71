@@ -2604,7 +2604,7 @@ function explosionAt(gameState, index, x, y, ball) {
     const size = 1 + gameState.perks.bigger_explosions;
     schedulGameSound(gameState, "explode", ball.x, 1);
     if (index !== -1) {
-        if (gameState.bricks[index] == "black") delete gameState.bricks[index];
+        if (gameState.bricks[index] == "black") setBrick(gameState, index, "");
         const col = index % gameState.gridSize;
         const row = Math.floor(index / gameState.gridSize);
         // Break bricks around
@@ -2612,8 +2612,8 @@ function explosionAt(gameState, index, x, y, ball) {
             const i = (0, _gameUtils.getRowColIndex)(gameState, row + dy, col + dx);
             if (gameState.bricks[i] && i !== -1) {
                 // Study bricks resist explosions too
-                if (gameState.bricks[i] !== "black" && gameState.perks.sturdy_bricks > Math.random() * 5) continue;
-                explodeBrick(gameState, i, ball, true);
+                gameState.brickHP[i]--;
+                if (gameState.brickHP <= 0) explodeBrick(gameState, i, ball, true);
             }
         }
     }
@@ -2641,7 +2641,7 @@ function explodeBrick(gameState, index, ball, isExplosion) {
         // Even if it bounces we don't want to count that as a miss
         // Flashing is take care of by the tick loop
         const x = (0, _gameUtils.brickCenterX)(gameState, index), y = (0, _gameUtils.brickCenterY)(gameState, index);
-        gameState.bricks[index] = "";
+        setBrick(gameState, index, "");
         let coinsToSpawn = gameState.combo;
         if (gameState.perks.sturdy_bricks) // +10% per level
         coinsToSpawn += Math.ceil((10 + gameState.perks.sturdy_bricks) / 10 * coinsToSpawn);
@@ -2765,15 +2765,18 @@ async function setLevel(gameState, l) {
     empty(gameState.particles);
     empty(gameState.lights);
     empty(gameState.texts);
-    gameState.bricks = [
-        ...lvl.bricks
-    ];
+    gameState.bricks = [];
+    for(let i = 0; i < lvl.size * lvl.size; i++)setBrick(gameState, i, lvl.bricks[i]);
     // Balls color will depend on most common brick color sometimes
     resetBalls(gameState);
     gameState.needsRender = true;
     // This caused problems with accented characters like the ô of côte d'ivoire for odd reasons
     // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
     (0, _render.background).src = "data:image/svg+xml;UTF8," + lvl.svg;
+}
+function setBrick(gameState, index, color) {
+    gameState.bricks[index] = color || '';
+    gameState.brickHP[index] = color === 'black' && 1 || color && 1 + gameState.perks.sturdy_bricks || 0;
 }
 function rainbowColor() {
     return `hsl(${Math.round((0, _game.gameState).levelTime / 4) * 2 % 360},100%,70%)`;
@@ -2946,6 +2949,7 @@ frames = 1) {
             const hitBrick = coinBrickHitCheck(gameState, coin);
             if (gameState.perks.metamorphosis && typeof hitBrick !== "undefined") {
                 if (gameState.bricks[hitBrick] && coin.color !== gameState.bricks[hitBrick] && gameState.bricks[hitBrick] !== "black" && !coin.coloredABrick) {
+                    // Not using setbrick because we don't want to reset HP
                     gameState.bricks[hitBrick] = coin.color;
                     coin.coloredABrick = true;
                     schedulGameSound(gameState, "colorChange", coin.x, 0.3);
@@ -3123,7 +3127,9 @@ function ballTick(gameState, ball, delta) {
         if (gameState.perks.trampoline) gameState.combo += gameState.perks.trampoline;
         if (gameState.perks.nbricks && gameState.perks.nbricks !== ball.brokenSinceBounce) resetCombo(gameState, ball.x, ball.y);
         if (gameState.perks.respawn) ball.hitItem.slice(0, -1).slice(0, gameState.perks.respawn).forEach(({ index, color })=>{
-            if (!gameState.bricks[index] && color !== "black") gameState.bricks[index] = color;
+            if (!gameState.bricks[index] && color !== "black") // respawns with full hp
+            setBrick(gameState, index, color);
+        // gameState.bricks[index] = color;
         });
         ball.hitItem = [];
         if (!ball.hitSinceBounce) {
@@ -3157,7 +3163,9 @@ function ballTick(gameState, ball, delta) {
     const chit = typeof vhit == "undefined" && typeof hhit == "undefined" && (0, _game.hitsSomething)(x, y, radius) || undefined;
     const hitBrick = vhit ?? hhit ?? chit;
     if (typeof hitBrick !== "undefined") {
-        let sturdyBounce = gameState.bricks[hitBrick] !== "black" && gameState.perks.sturdy_bricks && gameState.perks.sturdy_bricks > Math.random() * 5;
+        // TODO higher damage balls
+        gameState.brickHP[hitBrick]--;
+        let sturdyBounce = gameState.brickHP[hitBrick];
         ball.hitSinceBounce++;
         let pierce = false;
         if (sturdyBounce) schedulGameSound(gameState, "wallBeep", x, 1);
@@ -3184,7 +3192,7 @@ function ballTick(gameState, ball, delta) {
             explodeBrick(gameState, hitBrick, ball, false);
             if (ball.sapperUses < gameState.perks.sapper && initialBrickColor !== "black" && // don't replace a brick that bounced with sturdy_bricks
             !gameState.bricks[hitBrick]) {
-                gameState.bricks[hitBrick] = "black";
+                setBrick(gameState, hitBrick, "black");
                 ball.sapperUses++;
             }
         }
@@ -3514,7 +3522,7 @@ let cachedBricksRenderKey = "";
 function renderAllBricks() {
     ctx.globalAlpha = 1;
     const redBorderOnBricksWithWrongColor = (0, _game.gameState).combo > (0, _gameStateMutators.baseCombo)((0, _game.gameState)) && (0, _game.gameState).perks.picky_eater && !(0, _options.isOptionOn)("basic");
-    const newKey = (0, _game.gameState).gameZoneWidth + "_" + (0, _game.gameState).bricks.join("_") + bombSVG.complete + "_" + redBorderOnBricksWithWrongColor + "_" + (0, _game.gameState).ballsColor + "_" + (0, _game.gameState).perks.pierce_color;
+    const newKey = (0, _game.gameState).gameZoneWidth + "_" + (0, _game.gameState).bricks.join("_") + bombSVG.complete + "_" + redBorderOnBricksWithWrongColor + "_" + (0, _game.gameState).ballsColor + "_" + (0, _game.gameState).perks.pierce_color + "_" + (0, _game.gameState).brickHP.reduce((a, b)=>a + b, 0);
     if (newKey !== cachedBricksRenderKey) {
         cachedBricksRenderKey = newKey;
         cachedBricksRender.width = (0, _game.gameState).gameZoneWidth;
@@ -3529,7 +3537,12 @@ function renderAllBricks() {
             if (!color) return;
             let redBecauseOfReach = (0, _game.gameState).perks.reach && (0, _gameUtils.countBricksAbove)((0, _game.gameState), index) && !(0, _gameUtils.countBricksBelow)((0, _game.gameState), index);
             let redBorder = (0, _game.gameState).ballsColor !== color && color !== "black" && redBorderOnBricksWithWrongColor || redBecauseOfReach;
+            canctx.globalCompositeOperation = "source-over";
             drawBrick(canctx, color, redBorder && "red" || color, x, y);
+            if ((0, _game.gameState).brickHP[index] > 1) {
+                canctx.globalCompositeOperation = "destination-out";
+                drawText(canctx, (0, _game.gameState).brickHP[index].toString(), "white", (0, _game.gameState).puckHeight, x, y);
+            }
             if (color === "black") {
                 canctx.globalCompositeOperation = "source-over";
                 drawIMG(canctx, bombSVG, (0, _game.gameState).brickWidth, x, y);
@@ -4165,6 +4178,7 @@ function newGameState(params) {
         balls: [],
         ballsColor: "white",
         bricks: [],
+        brickHP: [],
         lights: {
             indexMin: 0,
             total: 0,

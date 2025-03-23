@@ -20,12 +20,9 @@ Breakout 71 can work offline (add it to home screen) and perform well even on lo
 It's very lean and does not take much storage space (Roughly 0.1MB).
 If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
 There's also an easy mode for kids (slower ball).
-
  
 # Next
-
-- stop scrolling back to top in menu 
-- render next level behind upgrade picker again 
+ 
 - sturdy bricks:  map of remaining hits
 
 # bugs

@@ -226,6 +226,8 @@ export type GameState = {
   ballsColor: colorString;
   // Array of bricks to display. 'black' means bomb. '' means no brick.
   bricks: colorString[];
+  // Number of times a brick has been hit already
+  brickHP: number[];
 
   particles: ReusableArray<ParticleFlash>;
   texts: ReusableArray<TextFlash>;

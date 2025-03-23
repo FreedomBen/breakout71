@@ -398,7 +398,8 @@ export function renderAllBricks() {
     "_" +
     gameState.ballsColor +
     "_" +
-    gameState.perks.pierce_color;
+    gameState.perks.pierce_color +
+  "_"+ gameState.brickHP.reduce((a,b)=>a+b,0);
   if (newKey !== cachedBricksRenderKey) {
     cachedBricksRenderKey = newKey;
 
@@ -427,7 +428,12 @@ export function renderAllBricks() {
           redBorderOnBricksWithWrongColor) ||
         redBecauseOfReach;
 
+        canctx.globalCompositeOperation = "source-over";
       drawBrick(canctx, color, (redBorder && "red") || color, x, y);
+      if(gameState.brickHP[index]>1){
+        canctx.globalCompositeOperation="destination-out"
+        drawText(canctx, gameState.brickHP[index].toString(), "white", gameState.puckHeight, x,y )
+      }
 
       if (color === "black") {
         canctx.globalCompositeOperation = "source-over";
