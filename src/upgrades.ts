@@ -277,7 +277,7 @@ export const rawUpgrades = [
     id: "pierce_color",
     max: 4,
     name: t("upgrades.pierce_color.name"),
-    help: (lvl: number) => t("upgrades.pierce_color.help",{lvl}),
+    help: (lvl: number) => t("upgrades.pierce_color.help", { lvl }),
     fullHelp: t("upgrades.pierce_color.fullHelp"),
   },
   {
@@ -594,7 +594,7 @@ export const rawUpgrades = [
     id: "side_kick",
     max: 3,
     name: t("upgrades.side_kick.name"),
-    help: (lvl: number) => t("upgrades.side_kick.help",{lvl}),
+    help: (lvl: number) => t("upgrades.side_kick.help", { lvl }),
     fullHelp: t("upgrades.side_kick.fullHelp"),
   },
   {

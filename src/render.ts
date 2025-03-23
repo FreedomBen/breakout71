@@ -303,9 +303,11 @@ export function render(gameState: GameState) {
     } else {
       drawText(
         ctx,
-        comboTextWidth > gameState.puckWidth  ? gameState.combo.toString() : comboText,
+        comboTextWidth > gameState.puckWidth
+          ? gameState.combo.toString()
+          : comboText,
         "#000",
-        comboTextWidth > gameState.puckWidth ? 12:20,
+        comboTextWidth > gameState.puckWidth ? 12 : 20,
         gameState.puckPosition,
         gameState.gameZoneHeight - gameState.puckHeight / 2,
         false,
@@ -387,7 +389,8 @@ export function renderAllBricks() {
     gameState.perks.picky_eater &&
     !isOptionOn("basic");
 
-  const clairVoyance=  gameState.perks.clairvoyant && gameState.brickHP.reduce((a,b)=>a+b,0)
+  const clairVoyance =
+    gameState.perks.clairvoyant && gameState.brickHP.reduce((a, b) => a + b, 0);
 
   const newKey =
     gameState.gameZoneWidth +
@@ -400,7 +403,8 @@ export function renderAllBricks() {
     gameState.ballsColor +
     "_" +
     gameState.perks.pierce_color +
-  "_"+ clairVoyance;
+    "_" +
+    clairVoyance;
   if (newKey !== cachedBricksRenderKey) {
     cachedBricksRenderKey = newKey;
 
@@ -429,11 +433,18 @@ export function renderAllBricks() {
           redBorderOnBricksWithWrongColor) ||
         redBecauseOfReach;
 
-        canctx.globalCompositeOperation = "source-over";
+      canctx.globalCompositeOperation = "source-over";
       drawBrick(canctx, color, (redBorder && "red") || color, x, y);
-      if(gameState.brickHP[index]>1 && gameState.perks.clairvoyant){
-        canctx.globalCompositeOperation="destination-out"
-        drawText(canctx, gameState.brickHP[index].toString(), "white", gameState.puckHeight, x,y )
+      if (gameState.brickHP[index] > 1 && gameState.perks.clairvoyant) {
+        canctx.globalCompositeOperation = "destination-out";
+        drawText(
+          canctx,
+          gameState.brickHP[index].toString(),
+          "white",
+          gameState.puckHeight,
+          x,
+          y,
+        );
       }
 
       if (color === "black") {

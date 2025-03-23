@@ -14,7 +14,8 @@ import {
 import { getAudioContext, playPendingSounds } from "./sounds";
 import {
   currentLevelInfo,
-  getRowColIndex, levelsListHTMl,
+  getRowColIndex,
+  levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,
 } from "./game_utils";
@@ -992,7 +993,7 @@ restart(
           telekinesis: 2,
           yoyo: 2,
           metamorphosis: 1,
-          implosions:1
+          implosions: 1,
         },
       }
     : {},

@@ -1368,7 +1368,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29045721\"");
+module.exports = JSON.parse("\"29046079\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2426,10 +2426,10 @@ function pickedUpgradesHTMl(gameState) {
     return list;
 }
 function levelsListHTMl(gameState) {
-    if (!gameState.perks.clairvoyant) return '';
+    if (!gameState.perks.clairvoyant) return "";
     let list = "";
     for(let i = 0; i < max_levels(gameState); i++)list += `<span style="opacity: ${i >= gameState.currentLevel ? 1 : 0.2}">${(0, _loadGameData.icons)[gameState.runLevels[i].name]}</span>`;
-    return `<p>${(0, _i18N.t)('score_panel.upcoming_levels')}</p><p>${list}</p>`;
+    return `<p>${(0, _i18N.t)("score_panel.upcoming_levels")}</p><p>${list}</p>`;
 }
 function currentLevelInfo(gameState) {
     return gameState.runLevels[gameState.currentLevel % gameState.runLevels.length];
@@ -2711,7 +2711,7 @@ function explodeBrick(gameState, index, ball, isExplosion) {
     if (!color) return;
     if (color === "black") {
         const x = (0, _gameUtils.brickCenterX)(gameState, index), y = (0, _gameUtils.brickCenterY)(gameState, index);
-        setBrick(gameState, index, '');
+        setBrick(gameState, index, "");
         explosionAt(gameState, index, x, y, ball);
     } else if (color) {
         // Even if it bounces we don't want to count that as a miss
@@ -2855,8 +2855,8 @@ async function setLevel(gameState, l) {
     (0, _render.background).src = "data:image/svg+xml;UTF8," + lvl.svg;
 }
 function setBrick(gameState, index, color) {
-    gameState.bricks[index] = color || '';
-    gameState.brickHP[index] = color === 'black' && 1 || color && 1 + gameState.perks.sturdy_bricks || 0;
+    gameState.bricks[index] = color || "";
+    gameState.brickHP[index] = color === "black" && 1 || color && 1 + gameState.perks.sturdy_bricks || 0;
 }
 function rainbowColor() {
     return `hsl(${Math.round((0, _game.gameState).levelTime / 4) * 2 % 360},100%,70%)`;
