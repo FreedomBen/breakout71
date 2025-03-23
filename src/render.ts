@@ -281,6 +281,7 @@ export function render(gameState: GameState) {
     const comboTextWidth = (comboText.length * gameState.puckHeight) / 1.8;
     const totalWidth = comboTextWidth + gameState.coinSize * 2;
     const left = gameState.puckPosition - totalWidth / 2;
+
     if (totalWidth < gameState.puckWidth) {
       drawCoin(
         ctx,

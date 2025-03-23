@@ -42,7 +42,7 @@ export async function asyncAlert<t>({
 }): Promise<t | void> {
   updateAlertsOpen(+1);
   return new Promise((resolve) => {
-    popupWrap.className = actionsAsGrid ? " " : "";
+    popupWrap.className = actionsAsGrid ? " actionsAsGrid" : "";
     closeModaleButton.style.display = allowClose ? "" : "none";
 
     const popup = document.createElement("div");

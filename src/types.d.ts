@@ -236,8 +236,8 @@ export type GameState = {
   levelSpawnedCoins: number;
   lastPlayedCoinGrab: number;
 
-  MAX_COINS: number;
-  MAX_PARTICLES: number;
+  // MAX_COINS: number;
+  // MAX_PARTICLES: number;
   puckColor: colorString;
   ballSize: number;
   coinSize: number;

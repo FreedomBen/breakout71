@@ -65,8 +65,6 @@ export function newGameState(params: RunParams): GameState {
     levelMisses: 0,
     levelSpawnedCoins: 0,
     lastPlayedCoinGrab: 0,
-    MAX_COINS: 400,
-    MAX_PARTICLES: 600,
     puckColor: "#FFF",
     ballSize: 20,
     coinSize: 14,

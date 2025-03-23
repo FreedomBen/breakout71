@@ -954,5 +954,40 @@
     "bricks": "__________tttt____tttt_______________W___________________rWWWr__",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:restart",
+    "size": 10,
+    "bricks": "__GGGGGGGG__GGGGGGGG________GG________GG__G_____GG_GGG____GGGGGGG___GG_GGG____GG_GGGGGGGGG_GGGGGGGGG",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:settings",
+    "size": 8,
+    "bricks": "__l__l___llllll_llllllll_ll__ll__ll__ll_llllllll_llllll___l__l__",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:unlocks",
+    "size": 7,
+    "bricks": "eeee___e__e___e__e______llll___llll___llll___llll",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:sandbox",
+    "size": 8,
+    "bricks": "________________________y_ttt__yyyttt_yyyytttyyyytttttyyyyyyyyyy",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:continue",
+    "size": 7,
+    "bricks": "___t______tt__tttttt_ttttttttttttt____tt_____t___",
+    "svg": null,
+    "color": ""
   }
 ]

@@ -21,10 +21,17 @@ import {
 
 import "./PWA/sw_loader";
 import { getCurrentLang, t } from "./i18n/i18n";
-import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
+import {
+  cycleMaxCoins, cycleMaxParticles,
+  getCurrentMaxCoins,
+  getCurrentMaxParticles,
+  getSettingValue,
+  getTotalScore,
+  setSettingValue
+} from "./settings";
 import {
   forEachLiveOne,
-  gameStateTick,
+  gameStateTick, liveCount,
   normalizeGameState,
   pickRandomUpgrades,
   setLevel,
@@ -363,8 +370,27 @@ export function tick() {
   if (isOptionOn("sound")) {
     playPendingSounds(gameState);
   }
+
   requestAnimationFrame(tick);
+  FPSCounter++
 }
+
+let FPSCounter=0
+let FPSDisplay=document.getElementById('FPSDisplay') as HTMLDivElement
+setInterval(()=>{
+  if(isOptionOn('show_fps')){
+    FPSDisplay.innerText=FPSCounter+' FPS '+
+        liveCount(gameState.coins)+' COINS '+
+        (
+            liveCount(gameState.particles)+
+            liveCount(gameState.texts)+
+            liveCount(gameState.lights)
+        ) + ' PARTICLES '
+  }else{
+    FPSDisplay.innerText=''
+  }
+  FPSCounter=0
+},1000)
 
 window.addEventListener("visibilitychange", () => {
   if (document.hidden) {
@@ -398,25 +424,8 @@ async function openScorePanel() {
             <p>${t("score_panel.upgrades_picked")}</p>
             <p>${pickedUpgradesHTMl(gameState)}</p>
         `,
-    allowClose: true,
-    actions: [
-      {
-        text: t("score_panel.resume"),
-        help: t("score_panel.resume_help"),
-        value: () => {},
-      },
-      {
-        text: t("score_panel.restart"),
-        help: t("score_panel.restart_help"),
-        value: () => {
-          restart({ levelToAvoid: currentLevelInfo(gameState).name });
-        },
-      },
-    ],
+    allowClose: true
   });
-  if (cb) {
-    cb();
-  }
 }
 
 (document.getElementById("menu") as HTMLButtonElement).addEventListener(
@@ -424,70 +433,34 @@ async function openScorePanel() {
   (e) => {
     e.preventDefault();
     if (!alertsOpen) {
-      openSettingsPanel();
+      openMainMenu();
     }
   },
 );
 
-async function openSettingsPanel() {
+
+async function openMainMenu() {
   pause(true);
 
-  const actions: AsyncAlertAction<() => void>[] = [];
 
-  for (const key of Object.keys(options) as OptionId[]) {
-    if (options[key])
-      actions.push({
-        icon: isOptionOn(key)
-          ? icons["icon:checkmark_checked"]
-          : icons["icon:checkmark_unchecked"],
-        text: options[key].name,
-        help: options[key].help,
-        value: () => {
-          toggleOption(key);
-          if (key === "mobile-mode") fitSize();
-
-          openSettingsPanel();
-        },
-      });
-  }
   const creativeModeThreshold = Math.max(...upgrades.map((u) => u.threshold));
+  const actions:AsyncAlertAction<()=>void>[]=[{
 
-  if (document.fullscreenEnabled || document.webkitFullscreenEnabled) {
-    if (document.fullscreenElement !== null) {
-      actions.push({
-        text: t("main_menu.fullscreen_exit"),
-        help: t("main_menu.fullscreen_exit_help"),
-        icon: icons["icon:exit_fullscreen"],
-        value() {
-          toggleFullScreen();
-        },
-      });
-    } else {
-      actions.push({
-        text: t("main_menu.fullscreen"),
-        help: t("main_menu.fullscreen_help"),
-
-        icon: icons["icon:fullscreen"],
-        value() {
-          toggleFullScreen();
-        },
-      });
-    }
-  }
-  actions.push({
-    text: t("main_menu.resume"),
-    help: t("main_menu.resume_help"),
-    value() {},
-  });
-  actions.push({
+    text: t("main_menu.settings_title"),
+    help: t("main_menu.settings_help"),
+    icon:icons['icon:settings'],
+    value() {
+      openSettingsMenu()
+    },
+  },{
+    icon:icons['icon:unlocks'],
     text: t("main_menu.unlocks"),
     help: t("main_menu.unlocks_help"),
     value() {
       openUnlocksList();
     },
-  });
-
-  actions.push({
+  },{
+          icon:icons['icon:sandbox'],
     text: t("sandbox.title"),
     help:
       getTotalScore() < creativeModeThreshold
@@ -495,6 +468,7 @@ async function openSettingsPanel() {
         : t("sandbox.help"),
     disabled: getTotalScore() < creativeModeThreshold,
     async value() {
+
       let creativeModePerks: Partial<{ [id in PerkId]: number }> =
           getSettingValue("creativeModePerks", {}),
         choice: "start" | Upgrade | void;
@@ -517,22 +491,98 @@ async function openSettingsPanel() {
             {
               text: t("sandbox.start"),
               value: "start",
+        icon:icons['icon:continue'],
             },
           ],
         }))
       ) {
         if (choice === "start") {
-          setSettingValue("creativeModePerks", creativeModePerks);
           restart({ perks: creativeModePerks });
-
-          break;
+          break
         } else if (choice) {
           creativeModePerks[choice.id] =
             ((creativeModePerks[choice.id] || 0) + 1) % (choice.max + 1);
+          setSettingValue("creativeModePerks", creativeModePerks);
         }
       }
     },
+  },
+
+      {
+        icon:icons['icon:restart'],
+        text: t("score_panel.restart"),
+        help: t("score_panel.restart_help"),
+        value: () => {
+          restart({ levelToAvoid: currentLevelInfo(gameState).name });
+        },
+      },
+    {
+        icon:icons['icon:continue'],
+    text: t("main_menu.resume"),
+    help: t("main_menu.resume_help"),
+    value() {},
+  },
+  ] ;
+
+
+  const cb = await asyncAlert<() => void>({
+    title: t("main_menu.title"),
+    text: ``,
+    allowClose: true,
+    actions,
+    textAfterButtons: t("main_menu.footer_html", { appVersion }),
   });
+  if (cb) {
+    cb();
+    gameState.needsRender = true;
+  }
+}
+
+async function openSettingsMenu() {
+  pause(true);
+
+  const actions: AsyncAlertAction<() => void>[] = [];
+
+  for (const key of Object.keys(options) as OptionId[]) {
+    if (options[key])
+      actions.push({
+        icon: isOptionOn(key)
+          ? icons["icon:checkmark_checked"]
+          : icons["icon:checkmark_unchecked"],
+        text: options[key].name,
+        help: options[key].help,
+        value: () => {
+          toggleOption(key);
+          if (key === "mobile-mode") fitSize();
+
+          openSettingsMenu();
+        },
+      });
+  }
+  if (document.fullscreenEnabled || document.webkitFullscreenEnabled) {
+    if (document.fullscreenElement !== null) {
+      actions.push({
+        text: t("main_menu.fullscreen_exit"),
+        help: t("main_menu.fullscreen_exit_help"),
+        icon: icons["icon:exit_fullscreen"],
+        value() {
+          toggleFullScreen();
+          openSettingsMenu();
+        },
+      });
+    } else {
+      actions.push({
+        text: t("main_menu.fullscreen"),
+        help: t("main_menu.fullscreen_help"),
+
+        icon: icons["icon:fullscreen"],
+        value() {
+          toggleFullScreen();
+          openSettingsMenu();
+        },
+      });
+    }
+  }
   actions.push({
     text: t("main_menu.reset"),
     help: t("main_menu.reset_help"),
@@ -714,12 +764,34 @@ async function openSettingsPanel() {
     },
   });
 
+
+  actions.push({
+    text: t("main_menu.max_coins",{max:getCurrentMaxCoins()}),
+    help: t("main_menu.max_coins_help"),
+    async value() {
+      cycleMaxCoins()
+     await openSettingsMenu()
+    },
+  });
+  actions.push({
+    text: t("main_menu.max_particles",{max:getCurrentMaxParticles()}),
+    help: t("main_menu.max_particles_help"),
+    async value() {
+      cycleMaxParticles()
+     await openSettingsMenu()
+    },
+  });
+
+  actions.push({
+    text: t("main_menu.resume"),
+    help: t("main_menu.resume_help"),
+    value() {},
+  });
   const cb = await asyncAlert<() => void>({
-    title: t("main_menu.title"),
-    text: ``,
+    title: t("main_menu.settings_title"),
+    text:  t("main_menu.settings_help"),
     allowClose: true,
-    actions,
-    textAfterButtons: t("main_menu.footer_html", { appVersion }),
+    actions
   });
   if (cb) {
     cb();
@@ -873,7 +945,7 @@ document.addEventListener("keyup", async (e) => {
   } else if (e.key === "Escape" && gameState.running) {
     pause(true);
   } else if (e.key.toLowerCase() === "m" && !alertsOpen) {
-    openSettingsPanel().then();
+    openMainMenu().then();
   } else if (e.key.toLowerCase() === "s" && !alertsOpen) {
     openScorePanel().then();
   } else if (e.key.toLowerCase() === "r" && !alertsOpen) {

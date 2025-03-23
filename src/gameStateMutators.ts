@@ -31,7 +31,7 @@ import {
 import { t } from "./i18n/i18n";
 import { icons } from "./loadGameData";
 
-import { addToTotalScore } from "./settings";
+import {addToTotalScore, getCurrentMaxCoins, getCurrentMaxParticles} from "./settings";
 import { background } from "./render";
 import { gameOver } from "./gameOver";
 import {
@@ -226,7 +226,7 @@ export function spawnExplosion(
 ) {
   if (!!isOptionOn("basic")) return;
 
-  if (liveCount(gameState.particles) > gameState.MAX_PARTICLES) {
+  if (liveCount(gameState.particles) > getCurrentMaxParticles()) {
     // Avoid freezing when lots of explosion happen at once
     count = 1;
   }
@@ -333,9 +333,9 @@ export function explodeBrick(
     gameState.levelSpawnedCoins += coinsToSpawn;
     gameState.runStatistics.coins_spawned += coinsToSpawn;
     gameState.runStatistics.bricks_broken++;
-    const maxCoins = gameState.MAX_COINS * (isOptionOn("basic") ? 0.5 : 1);
+    const maxCoins = getCurrentMaxCoins() * (isOptionOn("basic") ? 0.5 : 1);
     const spawnableCoins =
-      liveCount(gameState.coins) > gameState.MAX_COINS
+      liveCount(gameState.coins) > getCurrentMaxCoins()
         ? 1
         : Math.floor(maxCoins - liveCount(gameState.coins)) / 3;
 
@@ -1319,7 +1319,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
       if (gameState.perks.extra_life < 0) {
         gameState.perks.extra_life = 0;
       } else if (gameState.perks.sacrifice) {
-        if (liveCount(gameState.coins) < gameState.MAX_COINS / 2) {
+        if (liveCount(gameState.coins) < getCurrentMaxCoins() / 2) {
           //     true duplication
           let remaining = liveCount(gameState.coins);
 

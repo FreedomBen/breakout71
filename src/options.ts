@@ -19,6 +19,11 @@ export const options = {
     name: t("main_menu.basic"),
     help: t("main_menu.basic_help"),
   },
+  show_fps: {
+    default: false,
+    name: t("main_menu.show_fps"),
+    help: t("main_menu.show_fps_help"),
+  },
   pointerLock: {
     default: false,
     name: t("main_menu.pointer_lock"),

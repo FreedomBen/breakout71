@@ -66,6 +66,26 @@ body {
 #menu {
   left: 0;
 }
+
+#FPSDisplay{
+  z-index: 1;
+  white-space: nowrap;
+  padding: 10px;
+  line-height: 20px;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.8;
+  
+  color:white;
+    padding: 0;
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+    transform-origin: top left;
+    transform: rotate(-90deg);
+}
+
 body.has-alert-open {
   height: auto;
   overflow: visible;
@@ -162,7 +182,7 @@ body:not(.has-alert-open) #popup {
   }
 
   &.actionsAsGrid > div {
-    max-width: 800px;
+    max-width: none;
 
     section {
       display: grid;

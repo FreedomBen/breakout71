@@ -30,8 +30,7 @@ There's also an easy mode for kids (slower ball).
 
 # bugs
 
-- perk : travel map
-- stairs level has no bg, probably svg -1
+- perk : travel map 
 * [colin] parfois je dois appuyer plusieurs fois sur "Start a new run" pour vraiment commencer une nouvelle partie. dans ce cas, lhécran de jeu derrière se "désassombrit" comme si le jeu avait démarré plusieurs parties en même temps.
 * [colin] lorsque le puck est trop petit, l'affichage du combo disparaît. mais c'est peut-être volontaire pour qu'il ne dépasse pas du puck ? afficher simplement le chiffre serait suffisant et tiendrait dans le puck
 * [colin] le niveau bug parfois et ne peux pas démarrer. dans ce cas, la balle apparait comme démarrant sans être attachée au puck, comme si la partie avait déjà commencée. il faut redémarrer B71 pour que ça fonctionne

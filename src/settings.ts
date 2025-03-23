@@ -33,3 +33,17 @@ export function addToTotalScore(gameState: GameState, points: number) {
   if (gameState.isCreativeModeRun) return;
   setSettingValue("breakout_71_total_score", getTotalScore() + points);
 }
+
+
+export function getCurrentMaxCoins(){
+    return Math.pow(2,getSettingValue('max_coins', 1))*200
+}
+export function getCurrentMaxParticles(){
+    return Math.pow(2,getSettingValue('max_particles', 1))*200
+}
+export function cycleMaxCoins(){
+  setSettingValue('max_coins', (getSettingValue('max_coins', 1)+1)%6)
+}
+export function cycleMaxParticles(){
+  setSettingValue('max_particles', (getSettingValue('max_particles', 1)+1)%6)
+}
