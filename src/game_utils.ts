@@ -1,8 +1,6 @@
 import { Ball, GameState, PerkId, PerksMap } from "./types";
 import { icons, upgrades } from "./loadGameData";
 
-
-
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
   arr.forEach((v) => (count[v] = (count[v] || 0) + 1));

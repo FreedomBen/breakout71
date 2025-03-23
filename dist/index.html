@@ -642,7 +642,7 @@ function play() {
 function pause(playerAskedForPause) {
     if (!gameState.running) return;
     if (gameState.pauseTimeout) return;
-    gameState.pauseTimeout = setTimeout(()=>{
+    const stop = ()=>{
         gameState.running = false;
         setTimeout(()=>{
             if (!gameState.running) (0, _sounds.getAudioContext)()?.suspend();
@@ -652,9 +652,12 @@ function pause(playerAskedForPause) {
         // document.body.className = gameState.running ? " running " : " paused ";
         (0, _render.scoreDisplay).className = "";
         gameState.needsRender = true;
-    }, Math.min(Math.max(0, gameState.pauseUsesDuringRun - 5) * 50, 500));
-    if (playerAskedForPause) // Pausing many times in a run will make pause slower
-    gameState.pauseUsesDuringRun++;
+    };
+    if (playerAskedForPause) {
+        // Pausing many times in a run will make pause slower
+        gameState.pauseUsesDuringRun++;
+        gameState.pauseTimeout = setTimeout(stop, Math.min(Math.max(0, gameState.pauseUsesDuringRun - 5) * 50, 500));
+    } else stop();
     if (document.exitPointerLock) document.exitPointerLock();
 }
 const fitSize = ()=>{
@@ -842,10 +845,10 @@ function tick() {
     FPSCounter++;
 }
 let FPSCounter = 0;
-let FPSDisplay = document.getElementById('FPSDisplay');
+let FPSDisplay = document.getElementById("FPSDisplay");
 setInterval(()=>{
-    if ((0, _options.isOptionOn)('show_fps')) FPSDisplay.innerText = FPSCounter + ' FPS ' + (0, _gameStateMutators.liveCount)(gameState.coins) + ' COINS ' + ((0, _gameStateMutators.liveCount)(gameState.particles) + (0, _gameStateMutators.liveCount)(gameState.texts) + (0, _gameStateMutators.liveCount)(gameState.lights)) + ' PARTICLES ';
-    else FPSDisplay.innerText = '';
+    if ((0, _options.isOptionOn)("show_fps")) FPSDisplay.innerText = FPSCounter + " FPS " + (0, _gameStateMutators.liveCount)(gameState.coins) + " COINS " + ((0, _gameStateMutators.liveCount)(gameState.particles) + (0, _gameStateMutators.liveCount)(gameState.texts) + (0, _gameStateMutators.liveCount)(gameState.lights)) + " PARTICLES ";
+    else FPSDisplay.innerText = "";
     FPSCounter = 0;
 }, 1000);
 window.addEventListener("visibilitychange", ()=>{
@@ -885,13 +888,13 @@ async function openMainMenu() {
         {
             text: (0, _i18N.t)("main_menu.settings_title"),
             help: (0, _i18N.t)("main_menu.settings_help"),
-            icon: (0, _loadGameData.icons)['icon:settings'],
+            icon: (0, _loadGameData.icons)["icon:settings"],
             value () {
                 openSettingsMenu();
             }
         },
         {
-            icon: (0, _loadGameData.icons)['icon:unlocks'],
+            icon: (0, _loadGameData.icons)["icon:unlocks"],
             text: (0, _i18N.t)("main_menu.unlocks"),
             help: (0, _i18N.t)("main_menu.unlocks_help"),
             value () {
@@ -899,7 +902,7 @@ async function openMainMenu() {
             }
         },
         {
-            icon: (0, _loadGameData.icons)['icon:sandbox'],
+            icon: (0, _loadGameData.icons)["icon:sandbox"],
             text: (0, _i18N.t)("sandbox.title"),
             help: (0, _settings.getTotalScore)() < creativeModeThreshold ? (0, _i18N.t)("sandbox.unlocks_at", {
                 score: creativeModeThreshold
@@ -922,7 +925,7 @@ async function openMainMenu() {
                         {
                             text: (0, _i18N.t)("sandbox.start"),
                             value: "start",
-                            icon: (0, _loadGameData.icons)['icon:continue']
+                            icon: (0, _loadGameData.icons)["icon:continue"]
                         }
                     ]
                 })){
@@ -939,7 +942,7 @@ async function openMainMenu() {
             }
         },
         {
-            icon: (0, _loadGameData.icons)['icon:restart'],
+            icon: (0, _loadGameData.icons)["icon:restart"],
             text: (0, _i18N.t)("score_panel.restart"),
             help: (0, _i18N.t)("score_panel.restart_help"),
             value: ()=>{
@@ -949,7 +952,7 @@ async function openMainMenu() {
             }
         },
         {
-            icon: (0, _loadGameData.icons)['icon:continue'],
+            icon: (0, _loadGameData.icons)["icon:continue"],
             text: (0, _i18N.t)("main_menu.resume"),
             help: (0, _i18N.t)("main_menu.resume_help"),
             value () {}
@@ -1345,7 +1348,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29044319\"");
+module.exports = JSON.parse("\"29045711\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -1996,16 +1999,16 @@ function addToTotalScore(gameState, points) {
     setSettingValue("breakout_71_total_score", getTotalScore() + points);
 }
 function getCurrentMaxCoins() {
-    return Math.pow(2, getSettingValue('max_coins', 1)) * 200;
+    return Math.pow(2, getSettingValue("max_coins", 1)) * 200;
 }
 function getCurrentMaxParticles() {
-    return Math.pow(2, getSettingValue('max_particles', 1)) * 200;
+    return Math.pow(2, getSettingValue("max_particles", 1)) * 200;
 }
 function cycleMaxCoins() {
-    setSettingValue('max_coins', (getSettingValue('max_coins', 1) + 1) % 6);
+    setSettingValue("max_coins", (getSettingValue("max_coins", 1) + 1) % 6);
 }
 function cycleMaxParticles() {
-    setSettingValue('max_particles', (getSettingValue('max_particles', 1) + 1) % 6);
+    setSettingValue("max_particles", (getSettingValue("max_particles", 1) + 1) % 6);
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6rQoT":[function(require,module,exports,__globalThis) {

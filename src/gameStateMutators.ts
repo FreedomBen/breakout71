@@ -31,7 +31,11 @@ import {
 import { t } from "./i18n/i18n";
 import { icons } from "./loadGameData";
 
-import {addToTotalScore, getCurrentMaxCoins, getCurrentMaxParticles} from "./settings";
+import {
+  addToTotalScore,
+  getCurrentMaxCoins,
+  getCurrentMaxParticles,
+} from "./settings";
 import { background } from "./render";
 import { gameOver } from "./gameOver";
 import {

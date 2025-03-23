@@ -78,6 +78,15 @@ There's also an easy mode for kids (slower ball).
 - the white outline on bricks associated with picky eater kinda works but i feel it's more distracting than anything. maybe try something different ? put a cross on matching coloured bricks, or the contrary, grey out other bricks.
 
 # New perks ideas 
+
+- [colin] Corner shot - the puck can go beyond the screen limits so as to make corner shots easier.
+- [colin] Mental charge - the puck is divided into two smaller pucks, then 3 smaller ones at lvl 2
+- [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran
+- [colin] Combos extrêmes: lvl2 pour tous les combos, qui fait que le combo rapporte doubl ou triple, mais si sur un niveau la condition n'est pas respectée alors le perk ne donne plus de combo bonus pour ce niveau.
+- [colin] Mytosis - les blocs bombe n'explosent pas mais relâchent une nouvelle balle à la place
+- [colin] Juggle - au début du niveau, chaque balle est lancée l'une après au lieu de toutes à la fois
+- [colin] Side-kick - briser un bloc par le côté génère plus de coins que par le dessus ou le dessous.
+- [colin] Capital - les vies non perdues à la fin du niveau rapportent un bonus de points
 - bricks are invisible, but ..
 - second puck (symmetric to the first one)
 - offer next level choice after upgrade pick
@@ -159,9 +168,15 @@ There's also an easy mode for kids (slower ball).
 - on mobile, relative movement of the touch would be amplified and added to the puck 
 - option : don't pause on mobile when lifting finger
 
-# Unlockable infinite mode
+# Premium: infinite mode
 
-Allow players to loop the game, adding one hasard per loop, making it harder and harder to exploit each strategy. The high score are separated from the main mode. The scores are added for unlock. You no longer get upgrades after the first 7 levels. The score you make in each level is instead multiplied by the number of "upgrades" and "choices" you would have had.
+Allow players to loop the game, adding one hasard per loop, making it harder and harder to exploit each strategy. 
+The high score are separated from the main mode. The scores are added for unlock. You no longer get upgrades after the first 7 levels.
+The score you make in each level is instead multiplied by the number of "upgrades" and "choices" you would have had.
+
+The score is your "fuel", and lets you pick the next level from a list. Each level has a cost, preview, and one or two downgrades. 
+Each downgrade acts as a score multiplier. 
+Your goal is no longer to score higher, but to go farther
 
 Possible challenges : 
     - Add negative coins that make the coin magnet less usage
@@ -172,6 +187,17 @@ Possible challenges :
     - ball keeps accelerating until unplayable
     - graphical effects like trail, contrast, blur to make it harder to see what's going on
     - ball creates a draft behind itself that blows coins in odd patterns
+
+- add red anti-coins that apply downgrades
+  - destroy your combo
+  - hurt your score
+  - behave like heavier coins.  
+  - deactivate a perk for this level
+  - reduce your number of coins 
+  - destroy all coins on screen 
+  - lowers your combo 
+  - reduce your choice for your next perk 
+   
 
 # extend re-playability
 - hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..
@@ -186,23 +212,14 @@ This requires recording a bit more info about each run.
 I could unlock the "pro stand" at $999 that just holds the play area higher. 
 
 # increase skill ceiling
+
 - reroll mechanic, rerolls are reward for better play
 - make puck smaller as combo increases ?
 
-- add red anti-coins that apply downgrades
-  - destroy your combo
-  - hurt your score
-  - behave like heavier coins.  
-  - deactivate a perk for this level
-  - reduce your number of coins 
-  - destroy all coins on screen 
-  - lowers your combo 
-  - reduce your choice for your next perk 
-   
 - final bosses (large vertical level that scrolls down faster and faster)
 - when the player reaches the last level, allow them to loop the run, unlocking a permanent bonus for this run. For example: +5 combo, +1 life per loop… the counterpart would be hazards that slowly populate the levels.
  
-  
+
 
 # Colin's feedback (cwpute/obigre)
  

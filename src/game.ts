@@ -22,16 +22,18 @@ import {
 import "./PWA/sw_loader";
 import { getCurrentLang, t } from "./i18n/i18n";
 import {
-  cycleMaxCoins, cycleMaxParticles,
+  cycleMaxCoins,
+  cycleMaxParticles,
   getCurrentMaxCoins,
   getCurrentMaxParticles,
   getSettingValue,
   getTotalScore,
-  setSettingValue
+  setSettingValue,
 } from "./settings";
 import {
   forEachLiveOne,
-  gameStateTick, liveCount,
+  gameStateTick,
+  liveCount,
   normalizeGameState,
   pickRandomUpgrades,
   setLevel,
@@ -76,26 +78,29 @@ export function pause(playerAskedForPause: boolean) {
   if (!gameState.running) return;
   if (gameState.pauseTimeout) return;
 
-  gameState.pauseTimeout = setTimeout(
-    () => {
-      gameState.running = false;
+  const stop = () => {
+    gameState.running = false;
 
-      setTimeout(() => {
-        if (!gameState.running) getAudioContext()?.suspend();
-      }, 1000);
+    setTimeout(() => {
+      if (!gameState.running) getAudioContext()?.suspend();
+    }, 1000);
 
-      pauseRecording();
-      gameState.pauseTimeout = null;
-      // document.body.className = gameState.running ? " running " : " paused ";
-      scoreDisplay.className = "";
-      gameState.needsRender = true;
-    },
-    Math.min(Math.max(0, gameState.pauseUsesDuringRun - 5) * 50, 500),
-  );
+    pauseRecording();
+    gameState.pauseTimeout = null;
+    // document.body.className = gameState.running ? " running " : " paused ";
+    scoreDisplay.className = "";
+    gameState.needsRender = true;
+  };
 
   if (playerAskedForPause) {
     // Pausing many times in a run will make pause slower
     gameState.pauseUsesDuringRun++;
+    gameState.pauseTimeout = setTimeout(
+      stop,
+      Math.min(Math.max(0, gameState.pauseUsesDuringRun - 5) * 50, 500),
+    );
+  } else {
+    stop();
   }
 
   if (document.exitPointerLock) {
@@ -143,6 +148,7 @@ export const fitSize = () => {
       ((item.x - past_off) / past_width) * gameState.gameZoneWidthRoundedUp;
     item.y = (item.y / past_heigh) * gameState.gameZoneHeight;
   }
+
   function mapXYPastCoord(coin: Coin | Ball) {
     coin.x =
       gameState.offsetXRoundedDown +
@@ -151,6 +157,7 @@ export const fitSize = () => {
     coin.previousX = coin.x;
     coin.previousY = coin.y;
   }
+
   gameState.balls.forEach(mapXYPastCoord);
   forEachLiveOne(gameState.coins, mapXYPastCoord);
   forEachLiveOne(gameState.particles, mapXY);
@@ -372,25 +379,27 @@ export function tick() {
   }
 
   requestAnimationFrame(tick);
-  FPSCounter++
+  FPSCounter++;
 }
 
-let FPSCounter=0
-let FPSDisplay=document.getElementById('FPSDisplay') as HTMLDivElement
-setInterval(()=>{
-  if(isOptionOn('show_fps')){
-    FPSDisplay.innerText=FPSCounter+' FPS '+
-        liveCount(gameState.coins)+' COINS '+
-        (
-            liveCount(gameState.particles)+
-            liveCount(gameState.texts)+
-            liveCount(gameState.lights)
-        ) + ' PARTICLES '
-  }else{
-    FPSDisplay.innerText=''
+let FPSCounter = 0;
+let FPSDisplay = document.getElementById("FPSDisplay") as HTMLDivElement;
+setInterval(() => {
+  if (isOptionOn("show_fps")) {
+    FPSDisplay.innerText =
+      FPSCounter +
+      " FPS " +
+      liveCount(gameState.coins) +
+      " COINS " +
+      (liveCount(gameState.particles) +
+        liveCount(gameState.texts) +
+        liveCount(gameState.lights)) +
+      " PARTICLES ";
+  } else {
+    FPSDisplay.innerText = "";
   }
-  FPSCounter=0
-},1000)
+  FPSCounter = 0;
+}, 1000);
 
 window.addEventListener("visibilitychange", () => {
   if (document.hidden) {
@@ -424,7 +433,7 @@ async function openScorePanel() {
             <p>${t("score_panel.upgrades_picked")}</p>
             <p>${pickedUpgradesHTMl(gameState)}</p>
         `,
-    allowClose: true
+    allowClose: true,
   });
 }
 
@@ -438,92 +447,90 @@ async function openScorePanel() {
   },
 );
 
-
 async function openMainMenu() {
   pause(true);
 
-
   const creativeModeThreshold = Math.max(...upgrades.map((u) => u.threshold));
-  const actions:AsyncAlertAction<()=>void>[]=[{
-
-    text: t("main_menu.settings_title"),
-    help: t("main_menu.settings_help"),
-    icon:icons['icon:settings'],
-    value() {
-      openSettingsMenu()
-    },
-  },{
-    icon:icons['icon:unlocks'],
-    text: t("main_menu.unlocks"),
-    help: t("main_menu.unlocks_help"),
-    value() {
-      openUnlocksList();
-    },
-  },{
-          icon:icons['icon:sandbox'],
-    text: t("sandbox.title"),
-    help:
-      getTotalScore() < creativeModeThreshold
-        ? t("sandbox.unlocks_at", { score: creativeModeThreshold })
-        : t("sandbox.help"),
-    disabled: getTotalScore() < creativeModeThreshold,
-    async value() {
-
-      let creativeModePerks: Partial<{ [id in PerkId]: number }> =
-          getSettingValue("creativeModePerks", {}),
-        choice: "start" | Upgrade | void;
-
-      while (
-        (choice = await asyncAlert<"start" | Upgrade>({
-          title: t("sandbox.title"),
-          text: t("sandbox.instructions"),
-          actionsAsGrid: true,
-          actions: [
-            ...upgrades.map((u) => ({
-              icon: u.icon,
-              text: u.name,
-              help: (creativeModePerks[u.id] || 0) + "/" + u.max,
-              value: u,
-              className: creativeModePerks[u.id]
-                ? ""
-                : "grey-out-unless-hovered",
-            })),
-            {
-              text: t("sandbox.start"),
-              value: "start",
-        icon:icons['icon:continue'],
-            },
-          ],
-        }))
-      ) {
-        if (choice === "start") {
-          restart({ perks: creativeModePerks });
-          break
-        } else if (choice) {
-          creativeModePerks[choice.id] =
-            ((creativeModePerks[choice.id] || 0) + 1) % (choice.max + 1);
-          setSettingValue("creativeModePerks", creativeModePerks);
-        }
-      }
-    },
-  },
-
-      {
-        icon:icons['icon:restart'],
-        text: t("score_panel.restart"),
-        help: t("score_panel.restart_help"),
-        value: () => {
-          restart({ levelToAvoid: currentLevelInfo(gameState).name });
-        },
-      },
+  const actions: AsyncAlertAction<() => void>[] = [
     {
-        icon:icons['icon:continue'],
-    text: t("main_menu.resume"),
-    help: t("main_menu.resume_help"),
-    value() {},
-  },
-  ] ;
+      text: t("main_menu.settings_title"),
+      help: t("main_menu.settings_help"),
+      icon: icons["icon:settings"],
+      value() {
+        openSettingsMenu();
+      },
+    },
+    {
+      icon: icons["icon:unlocks"],
+      text: t("main_menu.unlocks"),
+      help: t("main_menu.unlocks_help"),
+      value() {
+        openUnlocksList();
+      },
+    },
+    {
+      icon: icons["icon:sandbox"],
+      text: t("sandbox.title"),
+      help:
+        getTotalScore() < creativeModeThreshold
+          ? t("sandbox.unlocks_at", { score: creativeModeThreshold })
+          : t("sandbox.help"),
+      disabled: getTotalScore() < creativeModeThreshold,
+      async value() {
+        let creativeModePerks: Partial<{ [id in PerkId]: number }> =
+            getSettingValue("creativeModePerks", {}),
+          choice: "start" | Upgrade | void;
 
+        while (
+          (choice = await asyncAlert<"start" | Upgrade>({
+            title: t("sandbox.title"),
+            text: t("sandbox.instructions"),
+            actionsAsGrid: true,
+            actions: [
+              ...upgrades.map((u) => ({
+                icon: u.icon,
+                text: u.name,
+                help: (creativeModePerks[u.id] || 0) + "/" + u.max,
+                value: u,
+                className: creativeModePerks[u.id]
+                  ? ""
+                  : "grey-out-unless-hovered",
+              })),
+              {
+                text: t("sandbox.start"),
+                value: "start",
+                icon: icons["icon:continue"],
+              },
+            ],
+          }))
+        ) {
+          if (choice === "start") {
+            restart({ perks: creativeModePerks });
+            break;
+          } else if (choice) {
+            creativeModePerks[choice.id] =
+              ((creativeModePerks[choice.id] || 0) + 1) % (choice.max + 1);
+            setSettingValue("creativeModePerks", creativeModePerks);
+          }
+        }
+      },
+    },
+
+    {
+      icon: icons["icon:restart"],
+      text: t("score_panel.restart"),
+      help: t("score_panel.restart_help"),
+      value: () => {
+        restart({ levelToAvoid: currentLevelInfo(gameState).name });
+      },
+    },
+    {
+      icon: icons["icon:continue"],
+      text: t("main_menu.resume"),
+      help: t("main_menu.resume_help"),
+      value() {},
+    },
+  ];
 
   const cb = await asyncAlert<() => void>({
     title: t("main_menu.title"),
@@ -764,21 +771,20 @@ async function openSettingsMenu() {
     },
   });
 
-
   actions.push({
-    text: t("main_menu.max_coins",{max:getCurrentMaxCoins()}),
+    text: t("main_menu.max_coins", { max: getCurrentMaxCoins() }),
     help: t("main_menu.max_coins_help"),
     async value() {
-      cycleMaxCoins()
-     await openSettingsMenu()
+      cycleMaxCoins();
+      await openSettingsMenu();
     },
   });
   actions.push({
-    text: t("main_menu.max_particles",{max:getCurrentMaxParticles()}),
+    text: t("main_menu.max_particles", { max: getCurrentMaxParticles() }),
     help: t("main_menu.max_particles_help"),
     async value() {
-      cycleMaxParticles()
-     await openSettingsMenu()
+      cycleMaxParticles();
+      await openSettingsMenu();
     },
   });
 
@@ -789,9 +795,9 @@ async function openSettingsMenu() {
   });
   const cb = await asyncAlert<() => void>({
     title: t("main_menu.settings_title"),
-    text:  t("main_menu.settings_help"),
+    text: t("main_menu.settings_help"),
     allowClose: true,
-    actions
+    actions,
   });
   if (cb) {
     cb();
