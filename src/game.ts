@@ -972,6 +972,20 @@ export function restart(params: RunParams) {
   setLevel(gameState, 0);
 }
 
-restart({});
+restart(window.location.search.includes('stressTest') ? {
+      level:'Bird',
+  perks:{
+        sapper:10,
+    bigger_explosions:1,
+        unbounded:1,
+    pierce_color:1,
+    pierce:20,
+    multiball:6,
+    base_combo:100,
+    telekinesis:2,
+    yoyo:2,
+    metamorphosis:1
+  }
+}:{});
 fitSize();
 tick();
