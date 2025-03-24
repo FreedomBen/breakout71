@@ -1368,7 +1368,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29046079\"");
+module.exports = JSON.parse("\"29046822\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -3551,7 +3551,7 @@ function render(gameState) {
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     gameState.balls.forEach((ball)=>{
-        const drawingColor = gameState.lastPuckMove && gameState.perks.passive_income && gameState.combo > (0, _gameStateMutators.baseCombo)(gameState) && gameState.lastPuckMove > gameState.levelTime - 500 * gameState.perks.passive_income && 'red' || gameState.ballsColor;
+        const drawingColor = gameState.lastPuckMove && gameState.perks.passive_income && gameState.combo > (0, _gameStateMutators.baseCombo)(gameState) && gameState.lastPuckMove > gameState.levelTime - 500 * gameState.perks.passive_income && "red" || gameState.ballsColor;
         // The white border around is to distinguish colored balls from coins/bg
         drawBall(ctx, drawingColor, gameState.ballSize, ball.x, ball.y, gameState.puckColor);
         if ((0, _gameUtils.isTelekinesisActive)(gameState, ball) || (0, _gameUtils.isYoyoActive)(gameState, ball)) {

@@ -53,10 +53,8 @@ import { use } from "react";
 
 export function setMousePos(gameState: GameState, x: number) {
   // Sets the puck position, and updates the ball position if they are supposed to follow it
-  if (
-    Math.abs(x - gameState.puckPosition) > 1
-  ) {
-    gameState.lastPuckMove=gameState.levelTime
+  if (Math.abs(x - gameState.puckPosition) > 1) {
+    gameState.lastPuckMove = gameState.levelTime;
   }
   gameState.puckPosition = x;
   gameState.needsRender = true;
@@ -71,7 +69,7 @@ function getBallDefaultVx(gameState: GameState) {
 
 export function resetBalls(gameState: GameState) {
   // Always compute speed first
-  normalizeGameState(gameState)
+  normalizeGameState(gameState);
   const count = 1 + (gameState.perks?.multiball || 0);
   const perBall = gameState.puckWidth / (count + 1);
   gameState.balls = [];
@@ -429,8 +427,13 @@ export function explodeBrick(
       }
     }
 
-    if(gameState.lastPuckMove && gameState.perks.passive_income && gameState.lastPuckMove>gameState.levelTime-500*gameState.perks.passive_income){
-        resetCombo(gameState, x, y);
+    if (
+      gameState.lastPuckMove &&
+      gameState.perks.passive_income &&
+      gameState.lastPuckMove >
+        gameState.levelTime - 500 * gameState.perks.passive_income
+    ) {
+      resetCombo(gameState, x, y);
     }
 
     if (!isExplosion) {
@@ -961,7 +964,7 @@ export function gameStateTick(
         }
       }
 
-      const speed =( Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
+      const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
       const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
 
       if (

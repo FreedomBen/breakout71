@@ -572,7 +572,8 @@ export const rawUpgrades = [
     id: "passive_income",
     max: 4,
     name: t("upgrades.passive_income.name"),
-    help: (lvl: number) => t("upgrades.passive_income.help",{time:lvl/2,lvl}),
+    help: (lvl: number) =>
+      t("upgrades.passive_income.help", { time: lvl / 2, lvl }),
     fullHelp: t("upgrades.passive_income.fullHelp"),
   },
   {
