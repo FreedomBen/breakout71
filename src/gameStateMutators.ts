@@ -54,12 +54,9 @@ import { use } from "react";
 export function setMousePos(gameState: GameState, x: number) {
   // Sets the puck position, and updates the ball position if they are supposed to follow it
   if (
-    gameState.running &&
-    gameState.levelTime > 500 &&
-    gameState.perks.passive_income &&
-    Math.abs(x - gameState.puckPosition) > 3
+    Math.abs(x - gameState.puckPosition) > 1
   ) {
-    resetCombo(gameState, x, gameState.gameZoneHeight - gameState.puckHeight);
+    gameState.lastPuckMove=gameState.levelTime
   }
   gameState.puckPosition = x;
   gameState.needsRender = true;
@@ -73,6 +70,7 @@ function getBallDefaultVx(gameState: GameState) {
 }
 
 export function resetBalls(gameState: GameState) {
+  console.log('resetBalls',gameState)
   const count = 1 + (gameState.perks?.multiball || 0);
   const perBall = gameState.puckWidth / (count + 1);
   gameState.balls = [];
@@ -112,7 +110,7 @@ export function putBallsAtPuck(gameState: GameState) {
   // This reset could be abused to cheat quite easily
   const count = gameState.balls.length;
   const perBall = gameState.puckWidth / (count + 1);
-  const vx = getBallDefaultVx(gameState);
+  // const vx = getBallDefaultVx(gameState);
   gameState.balls.forEach((ball, i) => {
     const x =
       gameState.puckPosition - gameState.puckWidth / 2 + perBall * (i + 1);
@@ -121,10 +119,10 @@ export function putBallsAtPuck(gameState: GameState) {
     ball.previousX = x;
     ball.y = gameState.gameZoneHeight - 1.5 * gameState.ballSize;
     ball.previousY = ball.y;
-    ball.vx = vx;
-    ball.previousVX = ball.vx;
-    ball.vy = -gameState.baseSpeed;
-    ball.previousVY = ball.vy;
+    // ball.vx = vx;
+    // ball.previousVX = ball.vx;
+    // ball.vy = -gameState.baseSpeed;
+    // ball.previousVY = ball.vy;
     ball.sx = 0;
     ball.sy = 0;
     ball.hitItem = [];
@@ -428,6 +426,10 @@ export function explodeBrick(
       } else {
         gameState.combo += gameState.perks.reach;
       }
+    }
+
+    if(gameState.lastPuckMove && gameState.perks.passive_income && gameState.lastPuckMove>gameState.levelTime-500*gameState.perks.passive_income){
+        resetCombo(gameState, x, y);
     }
 
     if (!isExplosion) {

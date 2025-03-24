@@ -227,11 +227,15 @@ export function render(gameState: GameState) {
 
   ctx.globalAlpha = 1;
   ctx.globalCompositeOperation = "source-over";
+
   gameState.balls.forEach((ball) => {
+
+    const drawingColor = (gameState.lastPuckMove&& gameState.perks.passive_income && gameState.combo>baseCombo(gameState)  && gameState.lastPuckMove>gameState.levelTime-500*gameState.perks.passive_income && 'red')||gameState.ballsColor
+
     // The white border around is to distinguish colored balls from coins/bg
     drawBall(
       ctx,
-      gameState.ballsColor,
+      drawingColor,
       gameState.ballSize,
       ball.x,
       ball.y,
@@ -252,6 +256,17 @@ export function render(gameState: GameState) {
       );
       ctx.stroke();
     }
+    if(gameState.perks.clairvoyant && gameState.ballStickToPuck){
+      ctx.strokeStyle = gameState.ballsColor;
+      ctx.beginPath();
+      ctx.moveTo(ball.x,ball.y);
+      ctx.lineTo(
+      ball.x+ball.vx*10,
+          ball.y+ball.vy*10
+      );
+      ctx.stroke();
+    }
+
   });
   // The puck
   ctx.globalAlpha = 1;

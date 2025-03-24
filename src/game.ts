@@ -973,6 +973,7 @@ document.addEventListener("keyup", async (e) => {
 export const gameState = newGameState({});
 
 export function restart(params: RunParams) {
+  fitSize();
   Object.assign(gameState, newGameState(params));
   pauseRecording();
   setLevel(gameState, 0);
@@ -998,5 +999,4 @@ restart(
       }
     : {},
 );
-fitSize();
 tick();

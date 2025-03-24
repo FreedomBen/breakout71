@@ -570,9 +570,9 @@ export const rawUpgrades = [
     threshold: 140000,
     giftable: false,
     id: "passive_income",
-    max: 1,
+    max: 4,
     name: t("upgrades.passive_income.name"),
-    help: (lvl: number) => t("upgrades.passive_income.help"),
+    help: (lvl: number) => t("upgrades.passive_income.help",{time:lvl/2,lvl}),
     fullHelp: t("upgrades.passive_income.fullHelp"),
   },
   {

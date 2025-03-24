@@ -132,8 +132,6 @@ interface LightFlash extends BaseFlash {
   // type: "ball";
 }
 
-export type Flash = ParticleFlash | TextFlash | LightFlash;
-
 export type RunStats = {
   started: number;
   levelsPlayed: number;
@@ -253,6 +251,7 @@ export type GameState = {
   runStatistics: RunStats;
   lastOffered: Partial<{ [k in PerkId]: number }>;
   levelTime: number;
+  lastPuckMove: number;
   winAt: number;
   levelWallBounces: number;
   autoCleanUses: number;

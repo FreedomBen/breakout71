@@ -8,7 +8,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [Post your comments on itch.io](https://renanlecaro.itch.io/breakout71)   
 - [Help and tips about the game](./Help.md)
 - [Credits](./Credits.md) 
-- [Open source android version on F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
+- [F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 - [HackerNews thread](https://news.ycombinator.com/item?id=43183131)  
@@ -22,12 +22,13 @@ If the app stutters, turn on "fast mode" in the settings to render a simplified 
 There's also an easy mode for kids (slower ball).
  
 # Next
-  
-# bugs
-
-* [colin] parfois je dois appuyer plusieurs fois sur "Start a new run" pour vraiment commencer une nouvelle partie. dans ce cas, lhécran de jeu derrière se "désassombrit" comme si le jeu avait démarré plusieurs parties en même temps.
-* [colin] le niveau bug parfois et ne peux pas démarrer. dans ce cas, la balle apparait comme démarrant sans être attachée au puck, comme si la partie avait déjà commencée. il faut redémarrer B71 pour que ça fonctionne
  
+
+-  passive income : your combo is only lost when you're moving the same moment a ball hits a brick and/or a side
+
+# bugs
+- uses with popups not scrollable
+
 # UX
 - instead of the free perk at level one, offer to skip lvl 1 and directly pick 4 perks, but only if you manage to clear lvl 1 with 4 upgrades. 
 - the onboarding feels weird, missing a tutorial
@@ -93,10 +94,8 @@ There's also an easy mode for kids (slower ball).
 - wind (puck positions adds force to coins and balls)
 - balls repulse coins
 - n% of coins missed respawn at the top
-- lightning : missing triggers and explosive lighting strike around ball path
 - coins repulse coins (could get really laggy)
 - balls repulse coins
-- balls attract coins
 - twice as many coins after a wall bounce, twice as little otherwise ?
 - missile goes when you catch coin
 - missile goes when you break a brick
