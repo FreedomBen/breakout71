@@ -70,7 +70,8 @@ function getBallDefaultVx(gameState: GameState) {
 }
 
 export function resetBalls(gameState: GameState) {
-  console.log('resetBalls',gameState)
+  // Always compute speed first
+  normalizeGameState(gameState)
   const count = 1 + (gameState.perks?.multiball || 0);
   const perBall = gameState.puckWidth / (count + 1);
   gameState.balls = [];
@@ -94,8 +95,8 @@ export function resetBalls(gameState: GameState) {
       vy: -gameState.baseSpeed,
       previousVY: -gameState.baseSpeed,
 
-      sx: 0,
-      sy: 0,
+      // sx: 0,
+      // sy: 0,
       piercePoints: gameState.perks.pierce * 3,
       hitSinceBounce: 0,
       brokenSinceBounce: 0,
@@ -123,8 +124,8 @@ export function putBallsAtPuck(gameState: GameState) {
     // ball.previousVX = ball.vx;
     // ball.vy = -gameState.baseSpeed;
     // ball.previousVY = ball.vy;
-    ball.sx = 0;
-    ball.sy = 0;
+    // ball.sx = 0;
+    // ball.sy = 0;
     ball.hitItem = [];
     ball.hitSinceBounce = 0;
     ball.brokenSinceBounce = 0;
@@ -772,12 +773,12 @@ export function bordersHitCheck(
   coin.previousY = coin.y;
   coin.x += coin.vx * delta;
   coin.y += coin.vy * delta;
-  coin.sx ||= 0;
-  coin.sy ||= 0;
-  coin.sx += coin.previousX - coin.x;
-  coin.sy += coin.previousY - coin.y;
-  coin.sx *= 0.9;
-  coin.sy *= 0.9;
+  // coin.sx ||= 0;
+  // coin.sy ||= 0;
+  // coin.sx += coin.previousX - coin.x;
+  // coin.sy += coin.previousY - coin.y;
+  // coin.sx *= 0.9;
+  // coin.sy *= 0.9;
 
   if (gameState.perks.wind) {
     coin.vx +=
@@ -952,7 +953,7 @@ export function gameStateTick(
             coin.y,
             0,
             gameState.baseSpeed,
-            rainbowColor(),
+            coin.color,
             true,
             5,
             250,
@@ -960,7 +961,7 @@ export function gameStateTick(
         }
       }
 
-      const speed = Math.abs(coin.sx) + Math.abs(coin.sx);
+      const speed =( Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
       const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
 
       if (
@@ -1229,7 +1230,6 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     ball.vx +=
       ((gameState.puckPosition - ball.x) / 1000) * delta * gameState.perks.yoyo;
   }
-
   if (
     ball.vx * ball.vx + ball.vy * ball.vy <
     gameState.baseSpeed * gameState.baseSpeed * 2
@@ -1393,8 +1393,8 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
               copy.previousY = source.previousY;
               copy.vx = -source.vx;
               copy.vy = -source.vy;
-              copy.sx = source.sx;
-              copy.sy = source.sy;
+              // copy.sx = source.sx;
+              // copy.sy = source.sy;
               copy.a = source.a;
               copy.sa = -source.sa;
               copy.weight = source.weight;
@@ -1613,8 +1613,8 @@ function makeCoin(
     p.previousY = y;
     p.vx = vx;
     p.vy = vy;
-    p.sx = 0;
-    p.sy = 0;
+    // p.sx = 0;
+    // p.sy = 0;
     p.color = color;
     p.a = Math.random() * Math.PI * 2;
     p.sa = Math.random() - 0.5;

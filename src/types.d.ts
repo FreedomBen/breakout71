@@ -75,8 +75,8 @@ export type Coin = {
   previousY: number;
   vx: number;
   vy: number;
-  sx: number;
-  sy: number;
+  // sx: number;
+  // sy: number;
   a: number;
   sa: number;
   weight: number;
@@ -92,8 +92,8 @@ export type Ball = {
   vy: number;
   previousVX: number;
   previousVY: number;
-  sx: number;
-  sy: number;
+  // sx: number;
+  // sy: number;
   // Ability to pierce N HP
   piercePoints: number;
   // Any bounce counts, even if brick resisted the hit

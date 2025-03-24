@@ -2578,7 +2578,8 @@ function getBallDefaultVx(gameState) {
     return (gameState.perks.concave_puck ? 0 : 1) * (Math.random() > 0.5 ? gameState.baseSpeed : -gameState.baseSpeed);
 }
 function resetBalls(gameState) {
-    console.log('resetBalls', gameState);
+    // Always compute speed first
+    normalizeGameState(gameState);
     const count = 1 + (gameState.perks?.multiball || 0);
     const perBall = gameState.puckWidth / (count + 1);
     gameState.balls = [];
@@ -2596,8 +2597,8 @@ function resetBalls(gameState) {
             previousVX: vx,
             vy: -gameState.baseSpeed,
             previousVY: -gameState.baseSpeed,
-            sx: 0,
-            sy: 0,
+            // sx: 0,
+            // sy: 0,
             piercePoints: gameState.perks.pierce * 3,
             hitSinceBounce: 0,
             brokenSinceBounce: 0,
@@ -2622,8 +2623,8 @@ function putBallsAtPuck(gameState) {
         // ball.previousVX = ball.vx;
         // ball.vy = -gameState.baseSpeed;
         // ball.previousVY = ball.vy;
-        ball.sx = 0;
-        ball.sy = 0;
+        // ball.sx = 0;
+        // ball.sy = 0;
         ball.hitItem = [];
         ball.hitSinceBounce = 0;
         ball.brokenSinceBounce = 0;
@@ -2940,12 +2941,12 @@ function bordersHitCheck(gameState, coin, radius, delta) {
     coin.previousY = coin.y;
     coin.x += coin.vx * delta;
     coin.y += coin.vy * delta;
-    coin.sx ||= 0;
-    coin.sy ||= 0;
-    coin.sx += coin.previousX - coin.x;
-    coin.sy += coin.previousY - coin.y;
-    coin.sx *= 0.9;
-    coin.sy *= 0.9;
+    // coin.sx ||= 0;
+    // coin.sy ||= 0;
+    // coin.sx += coin.previousX - coin.x;
+    // coin.sy += coin.previousY - coin.y;
+    // coin.sx *= 0.9;
+    // coin.sy *= 0.9;
     if (gameState.perks.wind) coin.vx += (gameState.puckPosition - (gameState.offsetX + gameState.gameZoneWidth / 2)) / gameState.gameZoneWidth * gameState.perks.wind * 0.5;
     let vhit = 0, hhit = 0;
     if (coin.x < gameState.offsetXRoundedDown + radius && !gameState.perks.unbounded) {
@@ -3019,9 +3020,9 @@ frames = 1) {
             if (!gameState.perks.etherealcoins) {
                 const flip = gameState.perks.helium > 0 && Math.abs(coin.x - gameState.puckPosition) * 2 > gameState.puckWidth + coin.size;
                 coin.vy += frames * coin.weight * 0.8 * (flip ? -1 : 1);
-                if (flip && !(0, _options.isOptionOn)("basic") && Math.random() < 0.1) makeParticle(gameState, coin.x, coin.y, 0, gameState.baseSpeed, rainbowColor(), true, 5, 250);
+                if (flip && !(0, _options.isOptionOn)("basic") && Math.random() < 0.1) makeParticle(gameState, coin.x, coin.y, 0, gameState.baseSpeed, coin.color, true, 5, 250);
             }
-            const speed = Math.abs(coin.sx) + Math.abs(coin.sx);
+            const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
             const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
             if (coin.y > gameState.gameZoneHeight - coinRadius - gameState.puckHeight && coin.y < gameState.gameZoneHeight + gameState.puckHeight + coin.vy && Math.abs(coin.x - gameState.puckPosition) < coinRadius + gameState.puckWidth / 2 + // a bit of margin to be nice
             gameState.puckHeight) {
@@ -3193,8 +3194,8 @@ function ballTick(gameState, ball, delta) {
                             copy.previousY = source.previousY;
                             copy.vx = -source.vx;
                             copy.vy = -source.vy;
-                            copy.sx = source.sx;
-                            copy.sy = source.sy;
+                            // copy.sx = source.sx;
+                            // copy.sy = source.sy;
                             copy.a = source.a;
                             copy.sa = -source.sa;
                             copy.weight = source.weight;
@@ -3302,8 +3303,8 @@ function makeCoin(gameState, x, y, vx, vy, color = "gold", points = 1) {
         p.previousY = y;
         p.vx = vx;
         p.vy = vy;
-        p.sx = 0;
-        p.sy = 0;
+        // p.sx = 0;
+        // p.sy = 0;
         p.color = color;
         p.a = Math.random() * Math.PI * 2;
         p.sa = Math.random() - 0.5;
