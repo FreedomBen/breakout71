@@ -2754,6 +2754,7 @@ function explodeBrick(gameState, index, ball, isExplosion) {
             else gameState.combo += gameState.perks.reach;
         }
         if (gameState.lastPuckMove && gameState.perks.passive_income && gameState.lastPuckMove > gameState.levelTime - 500 * gameState.perks.passive_income) resetCombo(gameState, x, y);
+        if (gameState.perks.nbricks && ball.brokenSinceBounce == gameState.perks.nbricks + 1) resetCombo(gameState, ball.x, ball.y);
         if (!isExplosion) {
             // color change
             if ((gameState.perks.picky_eater || gameState.perks.pierce_color) && color !== gameState.ballsColor && color) {
@@ -3212,7 +3213,7 @@ function ballTick(gameState, ball, delta) {
         }
         if (gameState.perks.streak_shots) resetCombo(gameState, ball.x, ball.y);
         if (gameState.perks.trampoline) gameState.combo += gameState.perks.trampoline;
-        if (gameState.perks.nbricks && gameState.perks.nbricks !== ball.brokenSinceBounce) resetCombo(gameState, ball.x, ball.y);
+        if (gameState.perks.nbricks && ball.brokenSinceBounce < gameState.perks.nbricks) resetCombo(gameState, ball.x, ball.y);
         if (gameState.perks.respawn) ball.hitItem.slice(0, -1).slice(0, gameState.perks.respawn).forEach(({ index, color })=>{
             if (!gameState.bricks[index] && color !== "black") // respawns with full hp
             setBrick(gameState, index, color);
