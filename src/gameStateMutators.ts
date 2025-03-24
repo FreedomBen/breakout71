@@ -438,11 +438,10 @@ export function explodeBrick(
 
     if (
       gameState.perks.nbricks &&
-      ball.brokenSinceBounce == gameState.perks.nbricks+1
+      ball.brokenSinceBounce == gameState.perks.nbricks + 1
     ) {
       resetCombo(gameState, ball.x, ball.y);
     }
-
 
     if (!isExplosion) {
       // color change
@@ -1445,7 +1444,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     }
     if (
       gameState.perks.nbricks &&
-      ball.brokenSinceBounce< gameState.perks.nbricks
+      ball.brokenSinceBounce < gameState.perks.nbricks
     ) {
       resetCombo(gameState, ball.x, ball.y);
     }
@@ -1560,7 +1559,6 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     if (!gameState.brickHP[hitBrick]) {
       const initialBrickColor = gameState.bricks[hitBrick];
       ball.brokenSinceBounce++;
-
 
       explodeBrick(gameState, hitBrick, ball, false);
       if (
