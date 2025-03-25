@@ -22,16 +22,13 @@ If the app stutters, turn on "fast mode" in the settings to render a simplified 
 There's also an easy mode for kids (slower ball).
  
 # Todo 
-- strict sample size red borders ? 
-- zen : red border on bombs
-- add marching ants effect + disable animation toggle
-- explosion doesn't break nearby bricks on level 2, with compound interest, hot start, concave puck
-- popups not scrollable sometimes
-- sacrifice : clear all level
+
+- popups not scrollable sometimes 
 - fdroid build
 
 # UX
 
+- strict sample size red borders ? 
 - add some tutorial-like hints
 - It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game. Offer instead to skip lvl 1 and directly pick 4 perks, but only if you manage to clear lvl 1 with 4 upgrades. 
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
