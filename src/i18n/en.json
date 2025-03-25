@@ -261,7 +261,7 @@
   "upgrades.trampoline.help": "+{{lvl}} combo per puck bounce,-{{lvl}} combo per ceiling bounce",
   "upgrades.trampoline.name": "Trampoline",
   "upgrades.unbounded.fullHelp": "I hope you've found a way to keep your ball on screen",
-  "upgrades.unbounded.help": "+1 combo per brick, no more sides",
+  "upgrades.unbounded.help": "+1 combo per brick, no more sides to keep the ball in game, danger",
   "upgrades.unbounded.name": "Unbounded",
   "upgrades.viscosity.fullHelp": "Coins normally accelerate with gravity and explosions to pretty high speeds. \n\nThis perk constantly makes them slow down, as if they were in some sort of viscous liquid. \n\nThis makes catching them easier, and combines nicely with perks that influence the coin's movement.",
   "upgrades.viscosity.help": "Slower coin fall",

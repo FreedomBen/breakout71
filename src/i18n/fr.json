@@ -261,7 +261,7 @@
   "upgrades.trampoline.help": "+{{lvl}} combo à chaque rebond d'une balle sur le palet,-{{lvl}} combo à chaque rebond au plafond",
   "upgrades.trampoline.name": "Trampoline",
   "upgrades.unbounded.fullHelp": "J'espère que vous avez prévu un moyen de récupérer vos balles",
-  "upgrades.unbounded.help": "+1 combo par brique, plus de cotés",
+  "upgrades.unbounded.help": "+1 combo par brique, plus de cotés pour garder la balle en jeu, danger",
   "upgrades.unbounded.name": "Libérée, délivrée",
   "upgrades.viscosity.fullHelp": "Les pièces accélèrent normalement avec la gravité et les explosions pour atteindre des vitesses assez élevées. \n\nCette compétence les ralentit constamment, comme si elles se trouvaient dans une sorte de liquide visqueux.\n\nCela permet de les attraper plus facilement et se combine bien avec les améliorations qui influencent le mouvement de la pièce.",
   "upgrades.viscosity.help": "Chute plus lente des pièces",
