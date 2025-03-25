@@ -61,7 +61,7 @@ export function pickedUpgradesHTMl(gameState: GameState) {
   let list = "";
   for (let u of upgrades) {
     for (let i = 0; i < gameState.perks[u.id]; i++)
-    list += `<span  title="${u.name}">${icons["icon:" + u.id]}</span>`;
+      list += `<span  title="${u.name}">${icons["icon:" + u.id]}</span>`;
   }
   return list;
 }

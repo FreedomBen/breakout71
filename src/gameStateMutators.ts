@@ -163,10 +163,13 @@ export function normalizeGameState(gameState: GameState) {
     putBallsAtPuck(gameState);
   }
 
-  if (Math.abs(gameState.lastPuckPosition - gameState.puckPosition) > 1 && gameState.running) {
+  if (
+    Math.abs(gameState.lastPuckPosition - gameState.puckPosition) > 1 &&
+    gameState.running
+  ) {
     gameState.lastPuckMove = gameState.levelTime;
   }
-  gameState.lastPuckPosition = gameState.puckPosition
+  gameState.lastPuckPosition = gameState.puckPosition;
 }
 
 export function baseCombo(gameState: GameState) {
@@ -846,7 +849,6 @@ export function gameStateTick(
     gameState.runStatistics.max_combo,
     gameState.combo,
   );
-
 
   gameState.balls = gameState.balls.filter((ball) => !ball.destroyed);
 
