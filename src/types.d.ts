@@ -206,6 +206,7 @@ export type GameState = {
   needsRender: boolean;
   // Position of the center of the puck on the canvas in pixels, from the left of the canvas.
   puckPosition: number;
+  lastPuckPosition: number;
   // Will be set if the game is about to be paused. Game pause is delayed by a few milliseconds if you pause a few times in a run,
   // to avoid abuse of the "release to pause" feature on mobile.
   pauseTimeout: NodeJS.Timeout | null;

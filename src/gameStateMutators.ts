@@ -53,9 +53,6 @@ import { use } from "react";
 
 export function setMousePos(gameState: GameState, x: number) {
   // Sets the puck position, and updates the ball position if they are supposed to follow it
-  if (Math.abs(x - gameState.puckPosition) > 1) {
-    gameState.lastPuckMove = gameState.levelTime;
-  }
   gameState.puckPosition = x;
   gameState.needsRender = true;
 }
@@ -165,6 +162,11 @@ export function normalizeGameState(gameState: GameState) {
   if (gameState.ballStickToPuck) {
     putBallsAtPuck(gameState);
   }
+
+  if (Math.abs(gameState.lastPuckPosition - gameState.puckPosition) > 1 && gameState.running) {
+    gameState.lastPuckMove = gameState.levelTime;
+  }
+  gameState.lastPuckPosition = gameState.puckPosition
 }
 
 export function baseCombo(gameState: GameState) {
@@ -431,7 +433,7 @@ export function explodeBrick(
       gameState.lastPuckMove &&
       gameState.perks.passive_income &&
       gameState.lastPuckMove >
-        gameState.levelTime - 500 * gameState.perks.passive_income
+        gameState.levelTime - 250 * gameState.perks.passive_income
     ) {
       resetCombo(gameState, x, y);
     }
@@ -844,6 +846,7 @@ export function gameStateTick(
     gameState.runStatistics.max_combo,
     gameState.combo,
   );
+
 
   gameState.balls = gameState.balls.filter((ball) => !ball.destroyed);
 

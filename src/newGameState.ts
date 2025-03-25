@@ -41,6 +41,7 @@ export function newGameState(params: RunParams): GameState {
     isGameOver: false,
     ballStickToPuck: true,
     puckPosition: 400,
+    lastPuckPosition: 400,
     pauseTimeout: null,
     canvasWidth: 0,
     canvasHeight: 0,

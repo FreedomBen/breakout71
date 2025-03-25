@@ -7,7 +7,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [Discord](https://discord.gg/DZSPqyJkwP)
 - [Post your comments on itch.io](https://renanlecaro.itch.io/breakout71)   
 - [Help and tips about the game](./Help.md)
-- [Credits](./Credits.md) 
+
 - [F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
@@ -21,22 +21,22 @@ It's very lean and does not take much storage space (Roughly 0.1MB).
 If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
 There's also an easy mode for kids (slower ball).
  
-# Next
- 
-
--  passive income : your combo is only lost when you're moving the same moment a ball hits a brick and/or a side
-
-# bugs
-- uses with popups not scrollable
+# Todo
+- ascetism red coins
+- strict sample size red borders ? 
+- zen : red border on bombs
+- add marching ants effect + disable animation toggle
+- explosion doesn't break nearby bricks on level 2, with compound interest, hot start, concave puck
+- popups not scrollable sometimes
+- sacrifice : clear all level
+- fdroid build
 
 # UX
-- instead of the free perk at level one, offer to skip lvl 1 and directly pick 4 perks, but only if you manage to clear lvl 1 with 4 upgrades. 
-- the onboarding feels weird, missing a tutorial
-- It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game
+
+- add some tutorial-like hints
+- It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game. Offer instead to skip lvl 1 and directly pick 4 perks, but only if you manage to clear lvl 1 with 4 upgrades. 
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
 - add a clickable button to allow sound to play in chrome android
-- add pwe manifest 
-- offline mode with service worker
 - see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
 - translation
 - when game resumes near bottom, be unvulnerable for .5s ? , once per level
@@ -65,78 +65,50 @@ There's also an easy mode for kids (slower ball).
 
 # graphics
 
-- lights shadows with background gradient light map ? 
-- webgl rendering
-- shinier coins by applying glow to them
+- webgl rendering:  background gradient light map, shinier coins
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
-- the white outline on bricks associated with picky eater kinda works but i feel it's more distracting than anything. maybe try something different ? put a cross on matching coloured bricks, or the contrary, grey out other bricks.
 
-# New perks ideas 
+# Easy perks ideas 
 
-- [colin] Side-kick - briser un bloc par le côté génère plus de coins que par le dessus ou le dessous.
-- [colin] Corner shot - the puck can go beyond the screen limits so as to make corner shots easier.
-- [colin] Mental charge - the puck is divided into two smaller pucks, then 3 smaller ones at lvl 2
-- [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). 
-- lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran
-- [colin] Combos extrêmes: lvl2 pour tous les combos, qui fait que le combo rapporte doubl ou triple, mais si sur un niveau la condition n'est pas respectée alors le perk ne donne plus de combo bonus pour ce niveau.
-- [colin] Mytosis - les blocs bombe n'explosent pas mais relâchent une nouvelle balle à la place
-- [colin] Juggle - au début du niveau, chaque balle est lancée l'une après au lieu de toutes à la fois
 - [colin] Capital - les vies non perdues à la fin du niveau rapportent un bonus de points
-- bricks are invisible, but ..
-- second puck (symmetric to the first one)
-- offer next level choice after upgrade pick
-- ban 3 random perks from pool, doesn't tell you which ones, gain 2 upgrades 
-- 3 random perks immediately, or maybe "all level get twice as many upgrades, but they are applied randomly, and you aren't told which ones you have."
-- wrap left / right
-- pause and cheat again 
-- wrap top / bottom : coins fall back from top of screen, ball flies to the top and comes back from the screen bottom ? 
+- ban 3 random perks from pool, gain 2 upgrades 
 - faster coins, double value 
-- wind (puck positions adds force to coins and balls)
 - balls repulse coins
-- n% of coins missed respawn at the top
-- coins repulse coins (could get really laggy)
-- balls repulse coins
-- twice as many coins after a wall bounce, twice as little otherwise ?
-- missile goes when you catch coin
-- missile goes when you break a brick
-- puck bounce +1 combo, hit nothing resets
-- multiple hits on the same brick (show remaining resistance as number) 
-- bricks attract ball
-- replay last level (remove score, restores lives if any, and rebuild )
-- accelerometer controls coins and balls
-- bricks attract coins
-- breaking bricks stains neighbours
-- extra kick after bouncing on puck
-- transparents coins
-- coins of different colors repulse
-- bricks follow game of life pattern with one update every second 
-- 2x coins when ball goes downward / upward, half that amount otherwise ?
-- new ball spawns when reaching combo X
-- missing with combo triggers explosive lightning strike
-- correction : pick one past upgrade to remove and replace by something else 
-- puck bounce predictions rendered with particles or lines (requires big refactor)
-- the more balls are close to a brick, the more coins she spawns when breaking
-- combo resets when puck moves
-- [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
-- [colin] side pucks - same as above but with two side pucks.
-- [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks
-- [colin] bigger ball - self-explanatory
-- [colin] smaller ball - yes.
-- [colin] sturdy ball - does more damage to bricks, to conter sturdy bricks
-- [colin] plot - plot the ball's trajectory as you position your puck
+- n% of coins missed respawn at the ball 
+- +1 combo per brick broken after a wall bounce, reset otherwise 
+- combo climbs by 1 every 2 second, unless no coin was caught, then it resets
 - [colin] golden corners - catch coins at the sides of the puck to double their value
-- [colin] varied diet - your combo grows if you keep hitting different coloured bricks each time
-- [colin] earthquake - when the puck hits any side of the screen with velocity, the screen shakes and a brick explodes/falls from the level. alternatively, any brick you catch with the puck gives you the coins at the current combo rate. each level lowers the amount of hits before a brick falls
-- [colin] statue - stand still to make the combo grow. move for too long and thi combo will quickly drop
-- [colin] piggy bank - bricks absorb coins that fall onto it, and release them back as they are broken, with added value
-- [colin] trickle up - if you first hit is the lowest brick of a column, all bricks above get +1 coin inside
-- [colin] wormhole - the puck sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect
+- [colin] varied diet - your combo grows by 2 when your ball changes color, but decreses by one when a brick is broken ?  
+- [colin] trickle up - inverse of reach more or less 
+
+
+# Medium difficulty perks ideas 
+- offer next level choice after upgrade pick
+- [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
+- [colin] Combos extrêmes: lvl2 pour tous les combos, qui fait que le combo rapporte double ou triple, mais si sur un niveau la condition n'est pas respectée alors le perk ne donne plus de combo bonus pour ce niveau.
+- [colin] Mytosis - les blocs bombe n'explosent pas mais relâchent une nouvelle balle à la place (clashes with "shocks" and "sapper")
+- [colin] Juggle - au début du niveau, chaque balle est lancée l'une après au lieu de toutes à la fois (needs some work)
+- SUPER HOT
+- bricks attract ball
+- bricks attract coins
+- wrap left / right
+- correction : pick one past upgrade to remove and replace by something else 
+- +1 combo when ball goes downward, reset if upward
+- 2x speed after bouncing on puck
+- the more balls are close to a brick, the more combo is gained when breaking it. If only one ball, loose one point or reset
+- ball avoids brick of wrong color
+
+# Hard perk ideas
+- accelerometer controls coins and balls
+ - [colin] side pucks - same as above but with two side pucks : hard to know where to put them 
+
+
+
 - [colin] hitman - hit the marked brick for +5 combo. each level increases the combo you get for it.
 - [colin] sweet spot - place your puck directly below a moving spot at the top of the level to increase your combo
 - ball attracted by bricks of the color of the ball
-- ball avoids brick of wrong color
-- coins avoid ball of different color
-- colored coins only (coins should be of the color of the ball to count )
+
+
 - level flips horizontally every time a ball bounces on puck
 - coins that hit the puck disappear, missed ones are scored 
 - [colin] close quarters - balle attirée par tous les blocs/par un bloc aléatoire, actif à portée de bloc (+1bloc au lvlup)/proportionnel à une force (+puissance au lvlup)…
@@ -145,15 +117,36 @@ There's also an easy mode for kids (slower ball).
 - [colin] perk: analyzer - permet de voir les caractéristiques cachées des blocs (sturdy…)
 - [colin] perk: roulette - gagne instantanément 2 perks aléatoires
 - combo climbs every time a ball bounces on puck (but bounce is random?) 
-- combo climbs by 1 every 2 second, unless no coin was caught, then it resets
+
+# Probably not
+- colored coins only (coins should be of the color of the ball to count, otherwise what ? i'd rather avoid negative points)
+- coins avoid ball of different color (pointless)
+- [colin] wormhole - the puck sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect (not sure how that to word that in 1 setence)
+- [colin] Mental charge - the puck is divided into two smaller pucks, then 3 smaller ones at lvl 2 : what's the point ? 
+- [colin] sturdy ball - does more damage to bricks, to conter sturdy bricks :that's pierce now
+- [colin] plot - plot the ball's trajectory as you position your puck : too hard when you add other perks
+- [colin] piggy bank - bricks absorb coins that fall onto it, and release them back as they are broken, with added value : equivalent to Asceticism
+- [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks : really hard to balance with speeds and all
+- non brick-shaped bricks, tilted bricks,moving blocks : very difficult because of engine optimisations
+- transparents coins, why ?
+- 3 random perks immediately, or maybe "all level get twice as many upgrades, but they are applied randomly, and you aren't told which ones you have."
+- coins repulse coins, could get really laggy ?
+- russian roulette: 5/6 chances to get a free upgrade, 1/6 chance of game over. Not really fun 
+- [colin] bigger ball - self-explanatory, or is it ? what's the point ? physics would break now if ball bigger than bricks
+- [colin] smaller ball - doable, but why
+- [colin] earthquake - when the puck hits any side of the screen with velocity, the screen shakes and a brick explodes/falls from the level. alternatively, any brick you catch with the puck gives you the coins at the current combo rate. each level lowers the amount of hits before a brick falls. Problem : no limit on how often you can slam the puck around
+- missile goes when you catch coin
+- missile goes when you break a brick 
+- [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran : i'll probably just let the second puck replace this
+
 
 # extra levels
 
-- famous games
-- letters
+- Good games : FTL, Nova drift, Noita, Enter the gungeon, Zero Sivert, Factorio, Swarm 
+- letters and an associated word or name
 - fruits
 - animals
-- countries flags and shapes, with name as background
+- countries flags and shapes
 
 # extra settings
 
@@ -171,15 +164,18 @@ The score is your "fuel", and lets you pick the next level from a list. Each lev
 Each downgrade acts as a score multiplier. 
 Your goal is no longer to score higher, but to go farther
 
+# Challenges 
+
 Possible challenges : 
     - Add negative coins that make the coin magnet less usage
-    - add negative bricks that clear coins and reset combo
-    - add a brick eating enemy that forces you to play fast
-    - add a force field for 10s that negates hots start
-    - other perks can be randomly turned off
-    - ball keeps accelerating until unplayable
-    - graphical effects like trail, contrast, blur to make it harder to see what's going on
-    - ball creates a draft behind itself that blows coins in odd patterns
+  - add negative bricks that clear coins and reset combo
+  - add a brick eating enemy that forces you to play fast
+  - add a force field for 10s that negates hots start
+  - other perks can be randomly turned off
+  - ball keeps accelerating until unplayable
+  - graphical effects like trail, contrast, blur to make it harder to see what's going on
+  - ball creates a draft behind itself that blows coins in odd patterns
+  - bricks are invisible
 
 - add red anti-coins that apply downgrades
   - destroy your combo
@@ -190,7 +186,7 @@ Possible challenges :
   - destroy all coins on screen 
   - lowers your combo 
   - reduce your choice for your next perk 
-   
+  
 
 # extend re-playability
 - hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..
@@ -211,8 +207,7 @@ I could unlock the "pro stand" at $999 that just holds the play area higher.
 
 - final bosses (large vertical level that scrolls down faster and faster)
 - when the player reaches the last level, allow them to loop the run, unlocking a permanent bonus for this run. For example: +5 combo, +1 life per loop… the counterpart would be hazards that slowly populate the levels.
- 
-
+  
 
 # Colin's feedback (cwpute/obigre)
  
@@ -220,7 +215,22 @@ I could unlock the "pro stand" at $999 that just holds the play area higher.
 * inspired by Balatro's score system : have some perks add to the multiplicator, and some others to the amount of coins in a brick (or the raw value of coins inside), so that you users want to improve both for maximized profit ! maybe tie one of the to perks that help you, and the other to perks that are bad to you, so that gambling players are forced to make their life harder
 
 
-# other
+# Credits
 
-- balls have gravity : quite hard to balance the strenght of flying off the puck
-- non brick-shaped bricks, tilted bricks,moving blocks : not yet
+I pulled many background patterns from https://pattern.monster/
+They are displayed in [patterns.html](editor/patterns.html) for easy inclusion.
+
+Some of the sound generating code was written by ChatGPT, and heavily
+adapted to my usage over time.
+
+Some of the pixel art is taken from google image search results, I hope to replace it by my own over time : 
+[Heart](https://www.youtube.com/watch?v=gdWiTfzXb1g)  
+[Mushroom](https://pixelartmaker.com/art/cce4295a92035ea)
+https://prohama.com/whale-2-pattern/
+https://prohama.com/shark-2-pattern/
+https://prohama.com/bird-1-size-13x12/
+https://prohama.com/pingwin-4-pattern/
+https://prohama.com/dog-21-pattern/
+
+I wanted an APK to start in fullscreen and be able to list it on fdroid and the play store. I started with an empty view and went to work trimming it down, with the help of that tutorial 
+https://github.com/fractalwrench/ApkGolf/blob/master/blog/BLOG_POST.md

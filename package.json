@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A roguelite take on the breakout genre, optimised for short runs and replayability.",
   "scripts": {
-    "start": "rm -rf .parcel-cache && run-p dev:*",
+    "start": "bash start.sh",
     "dev:game-fe": "parcel src/*.html --lazy --no-hmr",
     "dev:editor-be": "nodemon editserver.js  --watch editserver.js",
     "test": "jest --watch"

@@ -61,7 +61,7 @@ export function pickedUpgradesHTMl(gameState: GameState) {
   let list = "";
   for (let u of upgrades) {
     for (let i = 0; i < gameState.perks[u.id]; i++)
-      list += icons["icon:" + u.id] + " ";
+    list += `<span  title="${u.name}">${icons["icon:" + u.id]}</span>`;
   }
   return list;
 }
@@ -69,7 +69,7 @@ export function levelsListHTMl(gameState: GameState) {
   if (!gameState.perks.clairvoyant) return "";
   let list = "";
   for (let i = 0; i < max_levels(gameState); i++) {
-    list += `<span style="opacity: ${i >= gameState.currentLevel ? 1 : 0.2}">${icons[gameState.runLevels[i].name]}</span>`;
+    list += `<span style="opacity: ${i >= gameState.currentLevel ? 1 : 0.2}" title="${gameState.runLevels[i].name}">${icons[gameState.runLevels[i].name]}</span>`;
   }
   return `<p>${t("score_panel.upcoming_levels")}</p><p>${list}</p>`;
 }
