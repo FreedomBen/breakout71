@@ -30,6 +30,8 @@ export const backgroundCanvas = document.createElement("canvas");
 
 export function render(gameState: GameState) {
     const level = currentLevelInfo(gameState);
+
+    const hasCombo = gameState.combo > baseCombo(gameState);
     const {width, height} = gameCanvas;
     if (!width || !height) return;
 
@@ -168,9 +170,10 @@ export function render(gameState: GameState) {
             coin.size,
             coin.x,
             coin.y,
-            level.color || "black",
+            (hasCombo && gameState.perks.asceticism && 'red') || level.color || "black",
             coin.a,
         );
+
     });
 
     // Black shadow around balls
@@ -274,7 +277,7 @@ export function render(gameState: GameState) {
         gameState.puckHeight,
         0,
         !!gameState.perks.concave_puck,
-        gameState.perks.streak_shots && gameState.combo > baseCombo(gameState) ? getDashOffset(gameState) : -1
+        gameState.perks.streak_shots && hasCombo ? getDashOffset(gameState) : -1
     );
 
     if (gameState.combo > 1) {
@@ -317,7 +320,6 @@ export function render(gameState: GameState) {
         }
     }
     //  Borders
-    const hasCombo = gameState.combo > baseCombo(gameState);
 
     ctx.globalCompositeOperation = "source-over";
     ctx.globalAlpha = gameState.perks.unbounded ? 0.1 : 1;
@@ -637,10 +639,17 @@ export function drawCoin(
         canctx.fillStyle = color;
         canctx.fill();
 
-        if (color === "gold") {
-            canctx.strokeStyle = borderColor;
+        if(color==='gold' || borderColor==='red'){
+           canctx.strokeStyle = borderColor;
+            if(borderColor=='red'){
+                canctx.lineWidth=2
+                canctx.setLineDash(redBorderDash)
+            }
             canctx.stroke();
+        }
 
+        if (color === "gold") {
+            // Fill in
             canctx.beginPath();
             canctx.arc(size / 2, size / 2, (size / 2) * 0.6, 0, 2 * Math.PI);
             canctx.fillStyle = "rgba(255,255,255,0.5)";
