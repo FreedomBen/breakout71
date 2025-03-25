@@ -21,8 +21,7 @@ It's very lean and does not take much storage space (Roughly 0.1MB).
 If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
 There's also an easy mode for kids (slower ball).
  
-# Todo
-- ascetism red coins
+# Todo 
 - strict sample size red borders ? 
 - zen : red border on bombs
 - add marching ants effect + disable animation toggle

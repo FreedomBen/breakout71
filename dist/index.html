@@ -2689,7 +2689,7 @@ function explosionAt(gameState, index, x, y, ball) {
             if (gameState.bricks[i] && i !== -1) {
                 // Study bricks resist explosions too
                 gameState.brickHP[i]--;
-                if (gameState.brickHP <= 0) explodeBrick(gameState, i, ball, true);
+                if (gameState.brickHP[i] <= 0) explodeBrick(gameState, i, ball, true);
             }
         }
     }
@@ -3629,10 +3629,11 @@ let cachedBricksRender = document.createElement("canvas");
 let cachedBricksRenderKey = "";
 function renderAllBricks() {
     ctx.globalAlpha = 1;
-    const redBorderOnBricksWithWrongColor = (0, _game.gameState).combo > (0, _gameStateMutators.baseCombo)((0, _game.gameState)) && (0, _game.gameState).perks.picky_eater && !(0, _options.isOptionOn)("basic");
-    const redColorOnAllBricks = !!((0, _game.gameState).lastPuckMove && (0, _game.gameState).perks.passive_income && (0, _game.gameState).combo > (0, _gameStateMutators.baseCombo)((0, _game.gameState)) && (0, _game.gameState).lastPuckMove > (0, _game.gameState).levelTime - 250 * (0, _game.gameState).perks.passive_income);
+    const hasCombo = (0, _game.gameState).combo > (0, _gameStateMutators.baseCombo)((0, _game.gameState));
+    const redBorderOnBricksWithWrongColor = hasCombo && (0, _game.gameState).perks.picky_eater && !(0, _options.isOptionOn)("basic");
+    const redColorOnAllBricks = !!((0, _game.gameState).lastPuckMove && (0, _game.gameState).perks.passive_income && hasCombo && (0, _game.gameState).lastPuckMove > (0, _game.gameState).levelTime - 250 * (0, _game.gameState).perks.passive_income);
     let offset = getDashOffset((0, _game.gameState));
-    if (!(redBorderOnBricksWithWrongColor || redColorOnAllBricks || (0, _game.gameState).perks.reach)) offset = 0;
+    if (!(redBorderOnBricksWithWrongColor || redColorOnAllBricks || (0, _game.gameState).perks.reach || (0, _game.gameState).perks.zen)) offset = 0;
     const clairVoyance = (0, _game.gameState).perks.clairvoyant && (0, _game.gameState).brickHP.reduce((a, b)=>a + b, 0);
     const newKey = (0, _game.gameState).gameZoneWidth + "_" + (0, _game.gameState).bricks.join("_") + bombSVG.complete + "_" + redBorderOnBricksWithWrongColor + "_" + redColorOnAllBricks + "_" + (0, _game.gameState).ballsColor + "_" + (0, _game.gameState).perks.pierce_color + "_" + clairVoyance + '_' + offset;
     if (newKey !== cachedBricksRenderKey) {
@@ -3648,7 +3649,7 @@ function renderAllBricks() {
             const x = (0, _gameUtils.brickCenterX)((0, _game.gameState), index), y = (0, _gameUtils.brickCenterY)((0, _game.gameState), index);
             if (!color) return;
             let redBecauseOfReach = (0, _game.gameState).perks.reach && (0, _gameUtils.countBricksAbove)((0, _game.gameState), index) && !(0, _gameUtils.countBricksBelow)((0, _game.gameState), index);
-            let redBorder = (0, _game.gameState).ballsColor !== color && color !== "black" && redBorderOnBricksWithWrongColor || redBecauseOfReach || redColorOnAllBricks;
+            let redBorder = (0, _game.gameState).ballsColor !== color && color !== "black" && redBorderOnBricksWithWrongColor || hasCombo && (0, _game.gameState).perks.zen && color === 'black' || redBecauseOfReach || redColorOnAllBricks;
             canctx.globalCompositeOperation = "source-over";
             drawBrick(canctx, color, x, y, redBorder ? offset : -1);
             if ((0, _game.gameState).brickHP[index] > 1 && (0, _game.gameState).perks.clairvoyant) {

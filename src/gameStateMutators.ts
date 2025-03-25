@@ -284,7 +284,7 @@ export function explosionAt(
         if (gameState.bricks[i] && i !== -1) {
           // Study bricks resist explosions too
           gameState.brickHP[i]--;
-          if (gameState.brickHP <= 0) {
+          if (gameState.brickHP[i] <= 0) {
             explodeBrick(gameState, i, ball, true);
           }
         }

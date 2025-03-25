@@ -406,19 +406,20 @@ let cachedBricksRenderKey = "";
 export function renderAllBricks() {
     ctx.globalAlpha = 1;
 
+    const hasCombo=gameState.combo > baseCombo(gameState)
     const redBorderOnBricksWithWrongColor =
-        gameState.combo > baseCombo(gameState) &&
+        hasCombo &&
         gameState.perks.picky_eater &&
         !isOptionOn("basic");
 
     const redColorOnAllBricks = !!(gameState.lastPuckMove &&
         gameState.perks.passive_income &&
-        gameState.combo > baseCombo(gameState) &&
+        hasCombo &&
         gameState.lastPuckMove >
         gameState.levelTime - 250 * gameState.perks.passive_income)
 
     let offset = getDashOffset(gameState)
-    if (!(redBorderOnBricksWithWrongColor || redColorOnAllBricks || gameState.perks.reach)) {
+    if (!(redBorderOnBricksWithWrongColor || redColorOnAllBricks || gameState.perks.reach || gameState.perks.zen)) {
         offset = 0
     }
 
@@ -442,7 +443,7 @@ export function renderAllBricks() {
         "_" +
         clairVoyance + '_' + offset;
 
-    if (newKey !== cachedBricksRenderKey) {
+    if (newKey !== cachedBricksRenderKey ) {
         cachedBricksRenderKey = newKey;
 
         cachedBricksRender.width = gameState.gameZoneWidth;
@@ -468,7 +469,7 @@ export function renderAllBricks() {
             let redBorder =
                 (gameState.ballsColor !== color &&
                     color !== "black" &&
-                    redBorderOnBricksWithWrongColor) ||
+                    redBorderOnBricksWithWrongColor) || (hasCombo && gameState.perks.zen && color==='black')||
                 redBecauseOfReach || redColorOnAllBricks;
 
             canctx.globalCompositeOperation = "source-over";
