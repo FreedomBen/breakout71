@@ -1,4 +1,4 @@
-import {allLevels, appVersion, icons, upgrades} from "./loadGameData";
+import { allLevels, appVersion, icons, upgrades } from "./loadGameData";
 import {
   Ball,
   Coin,
@@ -11,11 +11,17 @@ import {
   TextFlash,
   Upgrade,
 } from "./types";
-import {getAudioContext, playPendingSounds} from "./sounds";
-import {currentLevelInfo, getRowColIndex, levelsListHTMl, max_levels, pickedUpgradesHTMl,} from "./game_utils";
+import { getAudioContext, playPendingSounds } from "./sounds";
+import {
+  currentLevelInfo,
+  getRowColIndex,
+  levelsListHTMl,
+  max_levels,
+  pickedUpgradesHTMl,
+} from "./game_utils";
 
 import "./PWA/sw_loader";
-import {getCurrentLang, t} from "./i18n/i18n";
+import { getCurrentLang, t } from "./i18n/i18n";
 import {
   cycleMaxCoins,
   cycleMaxParticles,
@@ -34,13 +40,29 @@ import {
   setLevel,
   setMousePos,
 } from "./gameStateMutators";
-import {backgroundCanvas, ctx, gameCanvas, render, scoreDisplay,} from "./render";
-import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} from "./recording";
-import {newGameState} from "./newGameState";
-import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal,} from "./asyncAlert";
-import {isOptionOn, options, toggleOption} from "./options";
-import {hashCode} from "./getLevelBackground";
-import {premiumMenuEntry} from "./premium";
+import {
+  backgroundCanvas,
+  ctx,
+  gameCanvas,
+  render,
+  scoreDisplay,
+} from "./render";
+import {
+  pauseRecording,
+  recordOneFrame,
+  resumeRecording,
+  startRecordingGame,
+} from "./recording";
+import { newGameState } from "./newGameState";
+import {
+  alertsOpen,
+  asyncAlert,
+  AsyncAlertAction,
+  closeModal,
+} from "./asyncAlert";
+import { isOptionOn, options, toggleOption } from "./options";
+import { hashCode } from "./getLevelBackground";
+import { premiumMenuEntry } from "./premium";
 
 export function play() {
   if (gameState.running) return;
@@ -174,52 +196,50 @@ export async function openShortRunUpgradesPicker(gameState: GameState) {
 
   if (gameState.levelWallBounces == 0) {
     repeats++;
-    gameState.rerolls++
+    gameState.rerolls++;
     wallHitsGain = t("level_up.plus_one_upgrade");
   } else if (gameState.levelWallBounces < 5) {
-    gameState.rerolls++
+    gameState.rerolls++;
     wallHitsGain = t("level_up.plus_one_choice");
   }
   if (gameState.levelTime < 30 * 1000) {
     repeats++;
-    gameState.rerolls++
+    gameState.rerolls++;
     timeGain = t("level_up.plus_one_upgrade");
   } else if (gameState.levelTime < 60 * 1000) {
-    gameState.rerolls++
+    gameState.rerolls++;
     timeGain = t("level_up.plus_one_choice");
   }
   if (catchRate === 1) {
     repeats++;
-    gameState.rerolls++
+    gameState.rerolls++;
     catchGain = t("level_up.plus_one_upgrade");
   } else if (catchRate > 0.9) {
-    gameState.rerolls++
+    gameState.rerolls++;
     catchGain = t("level_up.plus_one_choice");
   }
   if (gameState.levelMisses === 0) {
     repeats++;
-    gameState.rerolls++
+    gameState.rerolls++;
     missesGain = t("level_up.plus_one_upgrade");
   } else if (gameState.levelMisses <= 3) {
-    gameState.rerolls++
+    gameState.rerolls++;
     missesGain = t("level_up.plus_one_choice");
   }
 
   while (repeats--) {
     const actions = pickRandomUpgrades(
       gameState,
-     3 +
-        gameState.perks.one_more_choice -
-        gameState.perks.instant_upgrade,
+      3 + gameState.perks.one_more_choice - gameState.perks.instant_upgrade,
     );
 
-    if(gameState.rerolls){
+    if (gameState.rerolls) {
       actions.push({
-        text: t("level_up.reroll",{count:gameState.rerolls}),
+        text: t("level_up.reroll", { count: gameState.rerolls }),
         help: t("level_up.reroll_help"),
-        value: 'reroll',
-        icon: icons['icon:reroll']
-      })
+        value: "reroll",
+        icon: icons["icon:reroll"],
+      });
     }
     if (!actions.length) break;
     let textAfterButtons = `
@@ -242,7 +262,7 @@ export async function openShortRunUpgradesPicker(gameState: GameState) {
         t("level_up.compliment_good")) ||
       t("level_up.compliment_advice");
 
-    const upgradeId = (await asyncAlert<PerkId|'reroll'>({
+    const upgradeId = (await asyncAlert<PerkId | "reroll">({
       title:
         t("level_up.pick_upgrade_title") +
         (repeats ? " (" + (repeats + 1) + ")" : ""),
@@ -267,10 +287,10 @@ export async function openShortRunUpgradesPicker(gameState: GameState) {
       textAfterButtons,
     })) as PerkId;
 
-    if(upgradeId==='reroll'){
-      repeats++
-      gameState.rerolls--
-    }else{
+    if (upgradeId === "reroll") {
+      repeats++;
+      gameState.rerolls--;
+    } else {
       gameState.perks[upgradeId]++;
       if (upgradeId === "instant_upgrade") {
         repeats += 2;
@@ -279,7 +299,6 @@ export async function openShortRunUpgradesPicker(gameState: GameState) {
     }
   }
 }
-
 
 gameCanvas.addEventListener("mouseup", (e) => {
   if (e.button !== 0) return;
@@ -450,7 +469,7 @@ export async function openMainMenu() {
 
   const creativeModeThreshold = Math.max(...upgrades.map((u) => u.threshold));
   const actions: AsyncAlertAction<() => void>[] = [
-  {
+    {
       icon: icons["icon:7_levels_run"],
       text: t("main_menu.normal"),
       help: t("main_menu.normal_help"),
@@ -514,15 +533,7 @@ export async function openMainMenu() {
       },
     },
 
-      premiumMenuEntry(gameState)
-    ,
-    //
-    // {
-    //   icon: icons["icon:continue"],
-    //   text: t("main_menu.resume"),
-    //   help: t("main_menu.resume_help"),
-    //   value() {},
-    // },
+    // premiumMenuEntry(gameState),
     {
       text: t("main_menu.settings_title"),
       help: t("main_menu.settings_help"),
@@ -765,7 +776,11 @@ async function openSettingsMenu() {
         ],
         allowClose: true,
       });
-      if (pick && pick !== getCurrentLang() && (await confirmRestart(gameState))) {
+      if (
+        pick &&
+        pick !== getCurrentLang() &&
+        (await confirmRestart(gameState))
+      ) {
         setSettingValue("lang", pick);
         window.location.reload();
       }
@@ -852,7 +867,7 @@ Click an item above to start a run with it.
                 </p>`,
     actions,
     allowClose: true,
-    actionsAsGrid:true
+    actionsAsGrid: true,
   });
   if (tryOn) {
     if (await confirmRestart(gameState)) {

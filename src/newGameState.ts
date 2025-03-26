@@ -28,7 +28,7 @@ export function newGameState(params: RunParams): GameState {
 
   const perks = { ...makeEmptyPerksMap(upgrades), ...(params?.perks || {}) };
 
-  const gameState: GameState= {
+  const gameState: GameState = {
     runLevels,
     currentLevel: 0,
     upgradesOfferedFor: -1,
@@ -101,10 +101,10 @@ export function newGameState(params: RunParams): GameState {
     autoCleanUses: 0,
     ...defaultSounds(),
 
-    isAdventureMode:!!params?.adventure,
-    adventurePath:'',
-    seed:'Seed'+Math.random(),
-    rerolls:0
+    isAdventureMode: !!params?.adventure,
+    adventurePath: "",
+    seed: "Seed" + Math.random(),
+    rerolls: 0,
   };
   resetBalls(gameState);
 

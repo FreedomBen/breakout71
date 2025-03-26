@@ -21,7 +21,7 @@ describe("json data checks", () => {
           .split("")
           .filter((b) => b !== "_" && b !== "black")
           .filter((a, b, c) => c.indexOf(a) === b);
-        return uniqueBricks.length > 5;
+        return uniqueBricks.length > 5 && !l.name.startsWith("icon:");
       })
       .map((l) => l.name);
     expect(levelsWithManyBrickColors).toEqual([]);

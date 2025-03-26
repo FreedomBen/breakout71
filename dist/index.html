@@ -631,7 +631,6 @@ var _newGameState = require("./newGameState");
 var _asyncAlert = require("./asyncAlert");
 var _options = require("./options");
 var _getLevelBackground = require("./getLevelBackground");
-var _premium = require("./premium");
 function play() {
     if (gameState.running) return;
     gameState.running = true;
@@ -754,8 +753,8 @@ async function openShortRunUpgradesPicker(gameState) {
                 count: gameState.rerolls
             }),
             help: (0, _i18N.t)("level_up.reroll_help"),
-            value: 'reroll',
-            icon: (0, _loadGameData.icons)['icon:reroll']
+            value: "reroll",
+            icon: (0, _loadGameData.icons)["icon:reroll"]
         });
         if (!actions.length) break;
         let textAfterButtons = `
@@ -790,7 +789,7 @@ async function openShortRunUpgradesPicker(gameState) {
             allowClose: false,
             textAfterButtons
         });
-        if (upgradeId === 'reroll') {
+        if (upgradeId === "reroll") {
             repeats++;
             gameState.rerolls--;
         } else {
@@ -962,14 +961,7 @@ async function openMainMenu() {
                 }
             }
         },
-        (0, _premium.premiumMenuEntry)(gameState),
-        //
-        // {
-        //   icon: icons["icon:continue"],
-        //   text: t("main_menu.resume"),
-        //   help: t("main_menu.resume_help"),
-        //   value() {},
-        // },
+        // premiumMenuEntry(gameState),
         {
             text: (0, _i18N.t)("main_menu.settings_title"),
             help: (0, _i18N.t)("main_menu.settings_help"),
@@ -1343,7 +1335,7 @@ restart(window.location.search.includes("stressTest") ? {
 } : {});
 tick();
 
-},{"./loadGameData":"l1B4x","./sounds":"dQKPV","./game_utils":"cEeac","./PWA/sw_loader":"2n0gK","./i18n/i18n":"eNPRm","./settings":"5blfu","./gameStateMutators":"9ZeQl","./render":"9AS2t","./recording":"godmD","./newGameState":"aQN6X","./asyncAlert":"rSqLY","./options":"d5NoS","./getLevelBackground":"7OIPf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./premium":"4GEPs"}],"l1B4x":[function(require,module,exports,__globalThis) {
+},{"./loadGameData":"l1B4x","./sounds":"dQKPV","./game_utils":"cEeac","./PWA/sw_loader":"2n0gK","./i18n/i18n":"eNPRm","./settings":"5blfu","./gameStateMutators":"9ZeQl","./render":"9AS2t","./recording":"godmD","./newGameState":"aQN6X","./asyncAlert":"rSqLY","./options":"d5NoS","./getLevelBackground":"7OIPf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l1B4x":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "appVersion", ()=>appVersion);
@@ -1384,7 +1376,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29048147\"");
+module.exports = JSON.parse("\"29049575\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -4385,8 +4377,8 @@ function newGameState(params) {
         autoCleanUses: 0,
         ...(0, _gameUtils.defaultSounds)(),
         isAdventureMode: !!params?.adventure,
-        adventurePath: '',
-        seed: 'Seed' + Math.random(),
+        adventurePath: "",
+        seed: "Seed" + Math.random(),
         rerolls: 0
     };
     (0, _gameStateMutators.resetBalls)(gameState);
@@ -4400,130 +4392,7 @@ function newGameState(params) {
     return gameState;
 }
 
-},{"./settings":"5blfu","./loadGameData":"l1B4x","./game_utils":"cEeac","./gameStateMutators":"9ZeQl","./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4GEPs":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "isPremium", ()=>isPremium);
-parcelHelpers.export(exports, "premiumMenuEntry", ()=>premiumMenuEntry);
-var _loadGameData = require("./loadGameData");
-var _i18N = require("./i18n/i18n");
-var _settings = require("./settings");
-var _asyncAlert = require("./asyncAlert");
-var _game = require("./game");
-const publicKeyString = `-----BEGIN PUBLIC KEY-----
-MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAyGQJgs6gxa0Fd86TuZ2q
-rGQ5ArSn8ug4VIKezru1QhIEkXeOT1lYXOLEryWaVUwXfOa9sVlKAGJY5y0TarAY
-NF2m67ME8yzNPIoZWbKXutJ3CSCXNTjAqAxHgz7H+qxbNGZXAXw+ta8+PuZDzcCI
-LbXT1u3/i0ahhA2Erdpv9XQBazKZt5AKzU31XhEEFh1jXZyk9D4XbatYXtvEwaJx
-eSWmjSxJ6SJb6oH2mwm8V4E0PxYVIa0yX3cPgGuR0pZPMleOTc6o0T24I2AUQb0d
-FckdFrr5U8bFIf/nwncMYVVNgt1vh88EuzWLjpc52nLrdOkVQNpiCN2uMgBBXQB7
-iseIfdkGF0A4DBn8qdieDvaSY8zeRW/nAce4FNBidU1SebNRnIU9f/XpA493lJW+
-Y/zXQBbmX/uSmeZDP4fjhKZv0Qa0ZeGzZiTdBKKb0BlIg/VYFFsqPytUVVyesO4J
-RCASTIjXW61E7PQKir5qIXwkQDlzJ+bpZ3PHyAvspRrBaDxIYvEEw14evpuqOgS+
-v/IlgPe+CWSvZa9xxnQl/aWZrOrD7syu6KKCbgUyXEm+Alp0YT3e6nwjn0qiM/cj
-dZpWPx3O+rZbRQb0gHcvN4+n2Y7fWAeC9mxVZtADqvVr/GTumMbLj7DdhWtt1Ogu
-4EcvkQ5SKCL0JC93DyctjOMCAwEAAQ==
------END PUBLIC KEY-----`;
-function pemToArrayBuffer(pem) {
-    const b64 = pem.replace(/-----BEGIN PUBLIC KEY-----/, '').replace(/-----END PUBLIC KEY-----/, '').replace(/\s+/g, '');
-    const binaryDerString = atob(b64);
-    const binaryDer = new Uint8Array(binaryDerString.length);
-    for(let i = 0; i < binaryDerString.length; i++)binaryDer[i] = binaryDerString.charCodeAt(i);
-    return binaryDer.buffer;
-}
-async function getPriceId(key, pem) {
-    // Split the key into its components
-    const [priceId, timestamp, signature] = key.split(':');
-    const data = `${priceId}:${timestamp}`;
-    const publicKeyBuffer = pemToArrayBuffer(pem);
-    const publicKey = await crypto.subtle.importKey('spki', publicKeyBuffer, {
-        name: 'RSA-PSS',
-        hash: 'SHA-256'
-    }, true, [
-        'verify'
-    ]);
-    // Verify the signature using ECDSA
-    const isValid = await crypto.subtle.verify({
-        name: 'RSA-PSS',
-        saltLength: 32
-    }, publicKey, new Uint8Array(Array.from(atob(signature), (c)=>c.charCodeAt(0))), new TextEncoder().encode(data));
-    if (!isValid) throw new Error("Invalid key signature");
-    return priceId;
-}
-let premium = false;
-const gamePriceId = 'price_1R6YaEGRf74lr2EkSo2GPvuO';
-checkKey((0, _settings.getSettingValue)('license', '')).then();
-async function checkKey(key) {
-    if (!key) return 'No key';
-    try {
-        if (gamePriceId !== await getPriceId(key, publicKeyString)) return 'Wrong product';
-        premium = true;
-        return '';
-    } catch (e) {
-        return 'Could not upgrade : ' + e.message;
-    }
-}
-function isPremium() {
-    return premium;
-}
-function premiumMenuEntry(gameState) {
-    if (isPremium()) return {
-        icon: (0, _loadGameData.icons)["icon:adventure_mode"],
-        text: (0, _i18N.t)("premium.adventure_mode"),
-        help: (0, _i18N.t)("premium.adventure_mode_help"),
-        value: async ()=>{
-            if (await (0, _game.confirmRestart)(gameState)) (0, _game.restart)({
-                adventure: true
-            });
-        }
-    };
-    return {
-        icon: (0, _loadGameData.icons)["icon:premium"],
-        text: (0, _i18N.t)("premium.title"),
-        help: (0, _i18N.t)("premium.short_help"),
-        value: ()=>openPremiumMenu('')
-    };
-}
-async function openPremiumMenu(text) {
-    const isGooglePlayInstall = new URLSearchParams(location.search).get('source') === 'com.android.vending';
-    const cb = await (0, _asyncAlert.asyncAlert)({
-        title: (0, _i18N.t)("premium.title"),
-        text: text || isGooglePlayInstall && (0, _i18N.t)("premium.help_google") || (0, _i18N.t)("premium.help"),
-        actions: [
-            {
-                text: (0, _i18N.t)("premium.buy"),
-                disabled: isGooglePlayInstall,
-                help: isGooglePlayInstall ? (0, _i18N.t)("premium.buy_disabled_help") : (0, _i18N.t)("premium.buy_help"),
-                value () {
-                    window.open('https://licenses.lecaro.me/buy/price_1R6YaEGRf74lr2EkSo2GPvuO', '_blank');
-                }
-            },
-            {
-                text: (0, _i18N.t)("premium.enter"),
-                help: (0, _i18N.t)("premium.enter_help"),
-                async value () {
-                    const value = (prompt('Please paste your license key') || '').replace(/\s+/g, '');
-                    const problem = await checkKey(value);
-                    if (problem) openPremiumMenu(problem).then();
-                    else {
-                        (0, _settings.setSettingValue)('license', value);
-                        (0, _game.openMainMenu)().then();
-                    }
-                }
-            },
-            {
-                text: (0, _i18N.t)("premium.back"),
-                help: (0, _i18N.t)("premium.back_help"),
-                value () {
-                    (0, _game.openMainMenu)().then();
-                }
-            }
-        ]
-    });
-    if (cb) cb();
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","./settings":"5blfu","./asyncAlert":"rSqLY","./game":"edeGs"}]},["gVqJ6","67XFf"], "67XFf", "parcelRequire94c2")
+},{"./settings":"5blfu","./loadGameData":"l1B4x","./game_utils":"cEeac","./gameStateMutators":"9ZeQl","./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gVqJ6","67XFf"], "67XFf", "parcelRequire94c2")
 
 </script>
   </body>

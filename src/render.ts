@@ -538,7 +538,7 @@ export function renderAllBricks() {
       let redBecauseOfReach =
         gameState.perks.reach &&
         countBricksAbove(gameState, index) &&
-        !countBricksBelow(gameState, index) ;
+        !countBricksBelow(gameState, index);
 
       let redBorder =
         (gameState.ballsColor !== color &&

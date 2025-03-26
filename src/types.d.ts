@@ -266,17 +266,17 @@ export type GameState = {
     coinCatch: { vol: number; x: number };
     colorChange: { vol: number; x: number };
   };
-  isAdventureMode:boolean;
-  adventurePath:string;
-  seed:string;
-  rerolls:number;
+  isAdventureMode: boolean;
+  adventurePath: string;
+  seed: string;
+  rerolls: number;
 };
 
 export type RunParams = {
   level?: string;
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
-  adventure?:boolean;
+  adventure?: boolean;
 };
 export type OptionDef = {
   default: boolean;
