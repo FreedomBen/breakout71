@@ -972,7 +972,7 @@
   {
     "name": "icon:unlocks",
     "size": 7,
-    "bricks": "eeee___e__e___e__e______llll___llll___llll___llll",
+    "bricks": "eeee___e__e___e__e______ctCb___Gbsc___tOGO___OCbs",
     "svg": null,
     "color": ""
   },
@@ -1015,6 +1015,34 @@
     "name": "icon:corner_shot",
     "size": 9,
     "bricks": "___W____y___W_y______W___y____W_y______W___y____W______W_W_WWW_WW_W_WWWWWW_W_WWWW",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:premium",
+    "size": 11,
+    "bricks": "________________y_________yey_________y______yy_yey_yy_yeeyeeeyeeyyeeyeeeyeey_yeyeeeyey___yyyyyyy____yyyyyyy_____________",
+    "svg": 11,
+    "color": ""
+  },
+  {
+    "name": "icon:premium_active",
+    "size": 11,
+    "bricks": "__y____y___y____y____y_y__yby__y______y______yy_yty_yy_ybbytttybbyybbytttybby_ybytttyby___yyyyyyy____yyyyyyy_____________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:adventure_mode",
+    "size": 17,
+    "bricks": "________aaaaaaaaa_______a_____________aaaabbbbbbbbb___a___t___________a_____ttttttttt__a________________a_____sssssssss__a____s_________WWWsssssrrrrrrrrr__c____R___________c_____RRRRRRRRR__c________________c_____kkkkkkkkk___c___k_____________ccccGGGGGGGGG_______c_________________ccccccccc",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:7_levels_run",
+    "size": 7,
+    "bricks": "___a______at__cGCa_b_c_____ycGCa_b____at_____a___",
     "svg": null,
     "color": ""
   }

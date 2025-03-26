@@ -26,7 +26,6 @@ import java.util.Date
 import java.util.jar.Manifest
 
 const val CHOOSE_FILE_REQUEST_CODE = 548459
-const val PERM_REQUEST_CODE = 66622635
 
 class MainActivity : android.app.Activity() {
 
@@ -127,7 +126,10 @@ class MainActivity : android.app.Activity() {
         webView.settings.domStorageEnabled = true
         webView.settings.setSupportZoom(false)
 
-        webView.loadUrl("file:///android_asset/index.html?isInWebView=true")
+        val installerPackageName = packageManager.getInstallerPackageName(packageName)
+
+
+        webView.loadUrl("file:///android_asset/index.html?isInWebView=true&source=$installerPackageName")
         val activity = this;
 
         webView.webChromeClient = object : WebChromeClient() {

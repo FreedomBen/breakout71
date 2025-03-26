@@ -12,7 +12,7 @@ export function levelIconHTML(
   levelSize: number,
   color: string,
 ) {
-  const size = 40;
+  const size = 46;
   const c = levelIconHTMLCanvas;
   const ctx = levelIconHTMLCanvasCtx;
 

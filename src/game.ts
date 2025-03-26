@@ -62,6 +62,8 @@ import {
 } from "./asyncAlert";
 import { isOptionOn, options, toggleOption } from "./options";
 import { hashCode } from "./getLevelBackground";
+import {hasUncaughtExceptionCaptureCallback} from "process";
+import {premiumMenuEntry} from "./premium";
 
 export function play() {
   if (gameState.running) return;
@@ -453,17 +455,17 @@ async function openScorePanel() {
   },
 );
 
-async function openMainMenu() {
+export async function openMainMenu() {
   pause(true);
 
   const creativeModeThreshold = Math.max(...upgrades.map((u) => u.threshold));
   const actions: AsyncAlertAction<() => void>[] = [
-    {
-      text: t("main_menu.settings_title"),
-      help: t("main_menu.settings_help"),
-      icon: icons["icon:settings"],
-      value() {
-        openSettingsMenu();
+  {
+      icon: icons["icon:7_levels_run"],
+      text: t("main_menu.normal"),
+      help: t("main_menu.normal_help"),
+      value: () => {
+        restart({ levelToAvoid: currentLevelInfo(gameState).name });
       },
     },
     {
@@ -522,19 +524,22 @@ async function openMainMenu() {
       },
     },
 
+      premiumMenuEntry(gameState)
+    ,
+    //
+    // {
+    //   icon: icons["icon:continue"],
+    //   text: t("main_menu.resume"),
+    //   help: t("main_menu.resume_help"),
+    //   value() {},
+    // },
     {
-      icon: icons["icon:restart"],
-      text: t("score_panel.restart"),
-      help: t("score_panel.restart_help"),
-      value: () => {
-        restart({ levelToAvoid: currentLevelInfo(gameState).name });
+      text: t("main_menu.settings_title"),
+      help: t("main_menu.settings_help"),
+      icon: icons["icon:settings"],
+      value() {
+        openSettingsMenu();
       },
-    },
-    {
-      icon: icons["icon:continue"],
-      text: t("main_menu.resume"),
-      help: t("main_menu.resume_help"),
-      value() {},
     },
   ];
 
@@ -770,7 +775,7 @@ async function openSettingsMenu() {
         ],
         allowClose: true,
       });
-      if (pick && pick !== getCurrentLang() && (await confirmRestart())) {
+      if (pick && pick !== getCurrentLang() && (await confirmRestart(gameState))) {
         setSettingValue("lang", pick);
         window.location.reload();
       }
@@ -794,11 +799,11 @@ async function openSettingsMenu() {
     },
   });
 
-  actions.push({
-    text: t("main_menu.resume"),
-    help: t("main_menu.resume_help"),
-    value() {},
-  });
+  // actions.push({
+  //   text: t("main_menu.resume"),
+  //   help: t("main_menu.resume_help"),
+  //   value() {},
+  // });
   const cb = await asyncAlert<() => void>({
     title: t("main_menu.settings_title"),
     text: t("main_menu.settings_help"),
@@ -816,10 +821,10 @@ async function openUnlocksList() {
   const actions = [
     ...upgrades
       .sort((a, b) => a.threshold - b.threshold)
-      .map(({ name, id, threshold, icon, fullHelp }) => ({
+      .map(({ name, id, threshold, icon, help }) => ({
         text: name,
-        help:
-          ts >= threshold ? fullHelp : t("unlocks.unlocks_at", { threshold }),
+        // help:
+        //   ts >= threshold ? help(1) : t("unlocks.unlocks_at", { threshold }),
         disabled: ts < threshold,
         value: { perks: { [id]: 1 } } as RunParams,
         icon,
@@ -830,12 +835,12 @@ async function openUnlocksList() {
         const available = ts >= l.threshold;
         return {
           text: l.name,
-          help: available
-            ? t("unlocks.level_description", {
-                size: l.size,
-                bricks: l.bricks.filter((i) => i).length,
-              })
-            : t("unlocks.unlocks_at", { threshold: l.threshold }),
+          // help: available
+          //   ? t("unlocks.level_description", {
+          //       size: l.size,
+          //       bricks: l.bricks.filter((i) => i).length,
+          //     })
+          //   : t("unlocks.unlocks_at", { threshold: l.threshold }),
           disabled: !available,
           value: { level: l.name } as RunParams,
           icon: icons[l.name],
@@ -857,15 +862,16 @@ Click an item above to start a run with it.
                 </p>`,
     actions,
     allowClose: true,
+    actionsAsGrid:true
   });
   if (tryOn) {
-    if (await confirmRestart()) {
+    if (await confirmRestart(gameState)) {
       restart(tryOn);
     }
   }
 }
 
-export async function confirmRestart() {
+export async function confirmRestart(gameState) {
   if (!gameState.currentLevel) return true;
 
   return asyncAlert({
@@ -961,7 +967,7 @@ document.addEventListener("keyup", async (e) => {
   } else if (e.key.toLowerCase() === "s" && !alertsOpen) {
     openScorePanel().then();
   } else if (e.key.toLowerCase() === "r" && !alertsOpen) {
-    if (await confirmRestart()) {
+    if (await confirmRestart(gameState)) {
       restart({ levelToAvoid: currentLevelInfo(gameState).name });
     }
   } else {

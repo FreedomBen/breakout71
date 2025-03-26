@@ -28,7 +28,7 @@ export function newGameState(params: RunParams): GameState {
 
   const perks = { ...makeEmptyPerksMap(upgrades), ...(params?.perks || {}) };
 
-  const gameState: GameState = {
+  const gameState: GameState= {
     runLevels,
     currentLevel: 0,
     upgradesOfferedFor: -1,
@@ -42,6 +42,7 @@ export function newGameState(params: RunParams): GameState {
     ballStickToPuck: true,
     puckPosition: 400,
     lastPuckPosition: 400,
+    lastPuckMove: 0,
     pauseTimeout: null,
     canvasWidth: 0,
     canvasHeight: 0,
@@ -99,6 +100,11 @@ export function newGameState(params: RunParams): GameState {
     needsRender: true,
     autoCleanUses: 0,
     ...defaultSounds(),
+
+    isAdventureMode:!!params?.adventure,
+    adventurePath:'',
+    seed:'Seed'+Math.random()
+
   };
   resetBalls(gameState);
 
