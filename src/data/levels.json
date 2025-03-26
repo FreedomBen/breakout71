@@ -979,7 +979,7 @@
   {
     "name": "icon:sandbox",
     "size": 8,
-    "bricks": "________________________y_ttt__yyyttt_yyyytttyyyytttttyyyyyyyyyy",
+    "bricks": "__W__W__ccc__ttt_________W___W__GGG__bbb________W______WCCC__aaa",
     "svg": null,
     "color": ""
   },
@@ -1043,6 +1043,13 @@
     "name": "icon:7_levels_run",
     "size": 7,
     "bricks": "___a______at__cGCa_b_c_____ycGCa_b____at_____a___",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:reroll",
+    "size": 8,
+    "bricks": "__llllll_llBlBlelllllleBWWWWWeeeWBWBWeBeWWWWWeeeWBWBWBe_WWWWWe__",
     "svg": null,
     "color": ""
   }

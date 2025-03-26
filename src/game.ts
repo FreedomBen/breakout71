@@ -1,4 +1,4 @@
-import { allLevels, appVersion, icons, upgrades } from "./loadGameData";
+import {allLevels, appVersion, icons, upgrades} from "./loadGameData";
 import {
   Ball,
   Coin,
@@ -11,17 +11,11 @@ import {
   TextFlash,
   Upgrade,
 } from "./types";
-import { getAudioContext, playPendingSounds } from "./sounds";
-import {
-  currentLevelInfo,
-  getRowColIndex,
-  levelsListHTMl,
-  max_levels,
-  pickedUpgradesHTMl,
-} from "./game_utils";
+import {getAudioContext, playPendingSounds} from "./sounds";
+import {currentLevelInfo, getRowColIndex, levelsListHTMl, max_levels, pickedUpgradesHTMl,} from "./game_utils";
 
 import "./PWA/sw_loader";
-import { getCurrentLang, t } from "./i18n/i18n";
+import {getCurrentLang, t} from "./i18n/i18n";
 import {
   cycleMaxCoins,
   cycleMaxParticles,
@@ -40,29 +34,12 @@ import {
   setLevel,
   setMousePos,
 } from "./gameStateMutators";
-import {
-  backgroundCanvas,
-  ctx,
-  gameCanvas,
-  render,
-  scoreDisplay,
-} from "./render";
-import {
-  pauseRecording,
-  recordOneFrame,
-  resumeRecording,
-  startRecordingGame,
-} from "./recording";
-import { newGameState } from "./newGameState";
-import {
-  alertsOpen,
-  asyncAlert,
-  AsyncAlertAction,
-  closeModal,
-} from "./asyncAlert";
-import { isOptionOn, options, toggleOption } from "./options";
-import { hashCode } from "./getLevelBackground";
-import {hasUncaughtExceptionCaptureCallback} from "process";
+import {backgroundCanvas, ctx, gameCanvas, render, scoreDisplay,} from "./render";
+import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} from "./recording";
+import {newGameState} from "./newGameState";
+import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal,} from "./asyncAlert";
+import {isOptionOn, options, toggleOption} from "./options";
+import {hashCode} from "./getLevelBackground";
 import {premiumMenuEntry} from "./premium";
 
 export function play() {
@@ -183,13 +160,12 @@ setInterval(() => {
     fitSize();
 }, 1000);
 
-export async function openUpgradesPicker(gameState: GameState) {
+export async function openShortRunUpgradesPicker(gameState: GameState) {
   const catchRate =
     (gameState.score - gameState.levelStartScore) /
     (gameState.levelSpawnedCoins || 1);
 
   let repeats = 1;
-  let choices = 3;
 
   let timeGain = "",
     catchGain = "",
@@ -198,44 +174,53 @@ export async function openUpgradesPicker(gameState: GameState) {
 
   if (gameState.levelWallBounces == 0) {
     repeats++;
-    choices++;
+    gameState.rerolls++
     wallHitsGain = t("level_up.plus_one_upgrade");
   } else if (gameState.levelWallBounces < 5) {
-    choices++;
+    gameState.rerolls++
     wallHitsGain = t("level_up.plus_one_choice");
   }
   if (gameState.levelTime < 30 * 1000) {
     repeats++;
-    choices++;
+    gameState.rerolls++
     timeGain = t("level_up.plus_one_upgrade");
   } else if (gameState.levelTime < 60 * 1000) {
-    choices++;
+    gameState.rerolls++
     timeGain = t("level_up.plus_one_choice");
   }
   if (catchRate === 1) {
     repeats++;
-    choices++;
+    gameState.rerolls++
     catchGain = t("level_up.plus_one_upgrade");
   } else if (catchRate > 0.9) {
-    choices++;
+    gameState.rerolls++
     catchGain = t("level_up.plus_one_choice");
   }
   if (gameState.levelMisses === 0) {
     repeats++;
-    choices++;
+    gameState.rerolls++
     missesGain = t("level_up.plus_one_upgrade");
   } else if (gameState.levelMisses <= 3) {
-    choices++;
+    gameState.rerolls++
     missesGain = t("level_up.plus_one_choice");
   }
 
   while (repeats--) {
     const actions = pickRandomUpgrades(
       gameState,
-      choices +
+     3 +
         gameState.perks.one_more_choice -
         gameState.perks.instant_upgrade,
     );
+
+    if(gameState.rerolls){
+      actions.push({
+        text: t("level_up.reroll",{count:gameState.rerolls}),
+        help: t("level_up.reroll_help"),
+        value: 'reroll',
+        icon: icons['icon:reroll']
+      })
+    }
     if (!actions.length) break;
     let textAfterButtons = `
         <p>${t("level_up.after_buttons", {
@@ -257,7 +242,7 @@ export async function openUpgradesPicker(gameState: GameState) {
         t("level_up.compliment_good")) ||
       t("level_up.compliment_advice");
 
-    const upgradeId = (await asyncAlert<PerkId>({
+    const upgradeId = (await asyncAlert<PerkId|'reroll'>({
       title:
         t("level_up.pick_upgrade_title") +
         (repeats ? " (" + (repeats + 1) + ")" : ""),
@@ -282,14 +267,19 @@ export async function openUpgradesPicker(gameState: GameState) {
       textAfterButtons,
     })) as PerkId;
 
-    gameState.perks[upgradeId]++;
-    if (upgradeId === "instant_upgrade") {
-      repeats += 2;
+    if(upgradeId==='reroll'){
+      repeats++
+      gameState.rerolls--
+    }else{
+      gameState.perks[upgradeId]++;
+      if (upgradeId === "instant_upgrade") {
+        repeats += 2;
+      }
+      gameState.runStatistics.upgrades_picked++;
     }
-
-    gameState.runStatistics.upgrades_picked++;
   }
 }
+
 
 gameCanvas.addEventListener("mouseup", (e) => {
   if (e.button !== 0) return;

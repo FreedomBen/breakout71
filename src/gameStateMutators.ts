@@ -34,9 +34,10 @@ import {icons} from "./loadGameData";
 import {addToTotalScore, getCurrentMaxCoins, getCurrentMaxParticles,} from "./settings";
 import {background} from "./render";
 import {gameOver} from "./gameOver";
-import {brickIndex, fitSize, gameState, hasBrick, hitsSomething, openUpgradesPicker, pause,} from "./game";
+import {brickIndex, fitSize, gameState, hasBrick, hitsSomething, openShortRunUpgradesPicker, pause,} from "./game";
 import {stopRecording} from "./recording";
 import {isOptionOn} from "./options";
+import {openAdventureRunUpgradesPicker} from "./adventure";
 
 export function setMousePos(gameState: GameState, x: number) {
     // Sets the puck position, and updates the ball position if they are supposed to follow it
@@ -562,7 +563,12 @@ export async function setLevel(gameState: GameState, l: number) {
     pause(false);
     stopRecording();
     if (l > 0) {
-        await openUpgradesPicker(gameState);
+        if(gameState.isCreativeModeRun){
+        await openAdventureRunUpgradesPicker(gameState);
+        }else{
+
+        await openShortRunUpgradesPicker(gameState);
+        }
     }
     gameState.currentLevel = l;
     gameState.levelTime = 0;

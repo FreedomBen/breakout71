@@ -103,8 +103,8 @@ export function newGameState(params: RunParams): GameState {
 
     isAdventureMode:!!params?.adventure,
     adventurePath:'',
-    seed:'Seed'+Math.random()
-
+    seed:'Seed'+Math.random(),
+    rerolls:0
   };
   resetBalls(gameState);
 

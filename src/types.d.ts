@@ -266,9 +266,10 @@ export type GameState = {
     coinCatch: { vol: number; x: number };
     colorChange: { vol: number; x: number };
   };
-  isAdventureMode:boolean,
-  adventurePath:string,
-  seed:string
+  isAdventureMode:boolean;
+  adventurePath:string;
+  seed:string;
+  rerolls:number;
 };
 
 export type RunParams = {
