@@ -30,6 +30,8 @@
   "level_up.compliment_advice": "Essayez d'attraper toutes les pièces, de ne jamais rater les briques, de ne pas toucher les murs ou de terminer le niveau en moins de 30 secondes pour obtenir des choix supplémentaires et des améliorations.",
   "level_up.compliment_good": "Bravo !",
   "level_up.compliment_perfect": "Impressionnant, continuez comme ça !",
+  "level_up.downgrade": "",
+  "level_up.perk_loss": "",
   "level_up.pick_upgrade_title": "Choisir une amélioration",
   "level_up.plus_one_choice": "(+1 re-roll)",
   "level_up.plus_one_upgrade": "(+1 amélioration et +1  re-roll)",

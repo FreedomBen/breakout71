@@ -583,6 +583,7 @@ export const rawUpgrades = [
     giftable: false,
     id: "clairvoyant",
     max: 1,
+    // TODO update for adventure mode
     name: t("upgrades.clairvoyant.name"),
     help: (lvl: number) => t("upgrades.clairvoyant.help"),
     fullHelp: t("upgrades.clairvoyant.fullHelp"),

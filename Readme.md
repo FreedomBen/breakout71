@@ -13,6 +13,51 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 - [HackerNews thread](https://news.ycombinator.com/item?id=43183131)  
 
+# Todo  
+- bring back detailed help of perks as "intel"
+- people assume unbounded  allows for wrap around
+- coin magnet and viscosity : only one level ~2.5
+- Boost Ascetism : give +2 or even +3 combo per brick destroyed
+- wind : move coins based on puck movement not position
+- show -N points in red when combo resets
+- reach : this is too punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row 
+- respawn: N% of bricks respawn after N seconds
+
+
+# Premium: infinite mode
+
+Allow players to loop the game, adding one hasard per loop, making it harder and harder to exploit each strategy. 
+The high score are separated from the main mode. The scores are added for unlock. You no longer get upgrades after the first 7 levels.
+The score you make in each level is instead multiplied by the number of "upgrades" and "choices" you would have had.
+
+The score is your "fuel", and lets you pick the next level from a list. Each level has a cost, preview, and one or two downgrades. 
+Each downgrade acts as a score multiplier. 
+Your goal is no longer to score higher, but to go farther
+
+# Challenges 
+
+Possible challenges : 
+    - Add negative coins that make the coin magnet less usage
+  - add negative bricks that clear coins and reset combo
+  - add a brick eating enemy that forces you to play fast
+  - add a force field for 10s that negates hots start
+  - other perks can be randomly turned off
+  - ball keeps accelerating until unplayable
+  - graphical effects like trail, contrast, blur to make it harder to see what's going on
+  - ball creates a draft behind itself that blows coins in odd patterns
+  - bricks are invisible
+
+- add red anti-coins that apply downgrades
+  - destroy your combo
+  - hurt your score
+  - behave like heavier coins.  
+  - deactivate a perk for this level
+  - reduce your number of coins 
+  - destroy all coins on screen 
+  - lowers your combo 
+  - reduce your choice for your next perk 
+  
+
 
 # System requirements 
 
@@ -21,16 +66,6 @@ It's very lean and does not take much storage space (Roughly 0.1MB).
 If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
 There's also an easy mode for kids (slower ball).
  
-# Todo 
-- people assume unbounded  allows for wrap around
-- popups not scrollable sometimes 
-- fdroid build
-- coin magnet and viscosity : only one level ~2.5
-- Boost Ascetism : give +2 or even +3 combo per brick destroyed
-- wind : move coins based on puck movement not position
-- show -N points in red when combo resets
-- reach : this is too punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row 
-- respawn: N% of bricks respawn after N seconds
 
 # UX
 
@@ -166,39 +201,6 @@ There's also an easy mode for kids (slower ball).
 - on mobile, relative movement of the touch would be amplified and added to the puck 
 - option : don't pause on mobile when lifting finger
 
-# Premium: infinite mode
-
-Allow players to loop the game, adding one hasard per loop, making it harder and harder to exploit each strategy. 
-The high score are separated from the main mode. The scores are added for unlock. You no longer get upgrades after the first 7 levels.
-The score you make in each level is instead multiplied by the number of "upgrades" and "choices" you would have had.
-
-The score is your "fuel", and lets you pick the next level from a list. Each level has a cost, preview, and one or two downgrades. 
-Each downgrade acts as a score multiplier. 
-Your goal is no longer to score higher, but to go farther
-
-# Challenges 
-
-Possible challenges : 
-    - Add negative coins that make the coin magnet less usage
-  - add negative bricks that clear coins and reset combo
-  - add a brick eating enemy that forces you to play fast
-  - add a force field for 10s that negates hots start
-  - other perks can be randomly turned off
-  - ball keeps accelerating until unplayable
-  - graphical effects like trail, contrast, blur to make it harder to see what's going on
-  - ball creates a draft behind itself that blows coins in odd patterns
-  - bricks are invisible
-
-- add red anti-coins that apply downgrades
-  - destroy your combo
-  - hurt your score
-  - behave like heavier coins.  
-  - deactivate a perk for this level
-  - reduce your number of coins 
-  - destroy all coins on screen 
-  - lowers your combo 
-  - reduce your choice for your next perk 
-  
 
 # extend re-playability
 - hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..

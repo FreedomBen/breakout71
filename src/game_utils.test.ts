@@ -2,7 +2,7 @@ import {
   getMajorityValue,
   makeEmptyPerksMap,
   sample,
-  sumOfKeys,
+  sumOfValues,
 } from "./game_utils";
 
 describe("getMajorityValue", () => {
@@ -31,16 +31,16 @@ describe("sample", () => {
 });
 describe("sumOfKeys", () => {
   it("returns the sum of the keys of an array", () => {
-    expect(sumOfKeys({ a: 1, b: 2 })).toEqual(3);
+    expect(sumOfValues({ a: 1, b: 2 })).toEqual(3);
   });
   it("returns 0 for an empty object", () => {
-    expect(sumOfKeys({})).toEqual(0);
+    expect(sumOfValues({})).toEqual(0);
   });
   it("returns 0 for undefined", () => {
-    expect(sumOfKeys(undefined)).toEqual(0);
+    expect(sumOfValues(undefined)).toEqual(0);
   });
   it("returns 0 for null", () => {
-    expect(sumOfKeys(null)).toEqual(0);
+    expect(sumOfValues(null)).toEqual(0);
   });
 });
 describe("makeEmptyPerksMap", () => {

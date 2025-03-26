@@ -492,16 +492,16 @@ export function pickRandomUpgrades(gameState: GameState, count: number) {
   let list = getPossibleUpgrades(gameState)
     .map((u) => ({
       ...u,
-      score: Math.random() + (gameState.lastOffered[u.id] || 0),
+      score:  gameState.isAdventureMode ? 0:Math.random() + (gameState.lastOffered[u.id] || 0),
     }))
     .sort((a, b) => a.score - b.score)
     .filter((u) => gameState.perks[u.id] < u.max)
     .slice(0, count)
     .sort((a, b) => (a.id > b.id ? 1 : -1));
 
-  list.forEach((u) => {
-    dontOfferTooSoon(gameState, u.id);
-  });
+    list.forEach((u) => {
+      dontOfferTooSoon(gameState, u.id);
+    });
 
   return list.map((u) => ({
     text:
@@ -576,7 +576,16 @@ export async function setLevel(gameState: GameState, l: number) {
   stopRecording();
   if (l > 0) {
     if (gameState.isCreativeModeRun) {
-      await openAdventureRunUpgradesPicker(gameState);
+      const {  cost,
+        level,
+        perks,difficulty} = await openAdventureRunUpgradesPicker(gameState);
+
+      gameState.score-=cost
+      gameState.runLevels[l] = level
+      gameState.adventurePath += difficulty
+      Object.assign(gameState.perks, perks)
+
+
     } else {
       await openShortRunUpgradesPicker(gameState);
     }

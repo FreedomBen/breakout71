@@ -58,7 +58,7 @@ import {
   alertsOpen,
   asyncAlert,
   AsyncAlertAction,
-  closeModal,
+  closeModal, requiredAsyncAlert,
 } from "./asyncAlert";
 import { isOptionOn, options, toggleOption } from "./options";
 import { hashCode } from "./getLevelBackground";
@@ -262,7 +262,7 @@ export async function openShortRunUpgradesPicker(gameState: GameState) {
         t("level_up.compliment_good")) ||
       t("level_up.compliment_advice");
 
-    const upgradeId = (await asyncAlert<PerkId | "reroll">({
+    const upgradeId = await requiredAsyncAlert<PerkId | "reroll">({
       title:
         t("level_up.pick_upgrade_title") +
         (repeats ? " (" + (repeats + 1) + ")" : ""),
@@ -283,9 +283,8 @@ export async function openShortRunUpgradesPicker(gameState: GameState) {
 
         <p>${levelsListHTMl(gameState)}</p>
 `,
-      allowClose: false,
       textAfterButtons,
-    })) as PerkId;
+    })  ;
 
     if (upgradeId === "reroll") {
       repeats++;
@@ -533,7 +532,7 @@ export async function openMainMenu() {
       },
     },
 
-    // premiumMenuEntry(gameState),
+    premiumMenuEntry(gameState),
     {
       text: t("main_menu.settings_title"),
       help: t("main_menu.settings_help"),
@@ -991,8 +990,7 @@ export function restart(params: RunParams) {
 }
 
 restart(
-  window.location.search.includes("stressTest")
-    ? {
+  (window.location.search.includes("stressTest") &&  {
         level: "Bird",
         perks: {
           sapper: 10,
@@ -1001,13 +999,19 @@ restart(
           pierce_color: 1,
           pierce: 20,
           multiball: 6,
-          base_combo: 100,
+          base_combo: 7,
           telekinesis: 2,
           yoyo: 2,
           metamorphosis: 1,
           implosions: 1,
         },
-      }
-    : {},
+      }) ||(window.location.search.includes("adventure") &&  {
+        adventure:true,
+        perks: {
+          pierce:5
+        },
+      }) || {},
 );
+
+
 tick();

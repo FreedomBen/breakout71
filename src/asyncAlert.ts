@@ -25,6 +25,16 @@ closeModaleButton.title = t("play.close_modale_window_tooltip");
 
 let lastClickedItemIndex = -1;
 
+export function requiredAsyncAlert<t>(p: {
+  title?: string;
+  text?: string;
+  actions?: AsyncAlertAction<t>[];
+  textAfterButtons?: string;
+  actionsAsGrid?: boolean;
+}):Promise<t>{
+  return asyncAlert({...p, allowClose:false})
+}
+
 export async function asyncAlert<t>({
   title,
   text,

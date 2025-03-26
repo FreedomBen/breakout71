@@ -30,6 +30,8 @@
   "level_up.compliment_advice": "Try to catch all coins, never miss the bricks, never hit the walls/ceiling or clear the level under 30s to gain additional choices and upgrades.",
   "level_up.compliment_good": "Well done !",
   "level_up.compliment_perfect": "Impressive, keep it up !",
+  "level_up.downgrade": "Downgrade :",
+  "level_up.perk_loss": "Perk lost : ",
   "level_up.pick_upgrade_title": "Pick an upgrade",
   "level_up.plus_one_choice": "(+1  re-roll)",
   "level_up.plus_one_upgrade": "(+1 upgrade and  +1 re-roll)",

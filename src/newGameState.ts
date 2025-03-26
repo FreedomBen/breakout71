@@ -5,7 +5,7 @@ import {
   defaultSounds,
   getPossibleUpgrades,
   makeEmptyPerksMap,
-  sumOfKeys,
+  sumOfValues,
 } from "./game_utils";
 import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
 import { isOptionOn } from "./options";
@@ -73,7 +73,7 @@ export function newGameState(params: RunParams): GameState {
     coinSize: 14,
     puckHeight: 20,
     totalScoreAtRunStart,
-    isCreativeModeRun: sumOfKeys(perks) > 1,
+    isCreativeModeRun: sumOfValues(perks) > 1,
     pauseUsesDuringRun: 0,
     keyboardPuckSpeed: 0,
     lastTick: performance.now(),
@@ -108,7 +108,7 @@ export function newGameState(params: RunParams): GameState {
   };
   resetBalls(gameState);
 
-  if (!sumOfKeys(gameState.perks)) {
+  if (!sumOfValues(gameState.perks)) {
     const giftable = getPossibleUpgrades(gameState).filter((u) => u.giftable);
     const randomGift =
       (isOptionOn("easy") && "slow_down") ||

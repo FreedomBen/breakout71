@@ -14,7 +14,7 @@ export function sample<T>(arr: T[]): T {
   return arr[Math.floor(arr.length * Math.random())];
 }
 
-export function sumOfKeys(obj: { [key: string]: number } | undefined | null) {
+export function sumOfValues(obj: { [key: string]: number } | undefined | null) {
   if (!obj) return 0;
   return Object.values(obj)?.reduce((a, b) => a + b, 0) || 0;
 }
