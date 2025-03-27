@@ -27,26 +27,20 @@ let lastClickedItemIndex = -1;
 
 export function requiredAsyncAlert<t>(p: {
   title?: string;
-  text?: string;
-  actions?: AsyncAlertAction<t>[];
-  textAfterButtons?: string;
+  content: (string | AsyncAlertAction<t>)[];
   actionsAsGrid?: boolean;
-}):Promise<t>{
-  return asyncAlert({...p, allowClose:false})
+}): Promise<t> {
+  return asyncAlert({ ...p, allowClose: false });
 }
 
 export async function asyncAlert<t>({
   title,
-  text,
-  actions,
+  content = [],
   allowClose = true,
-  textAfterButtons = "",
   actionsAsGrid = false,
 }: {
   title?: string;
-  text?: string;
-  actions?: AsyncAlertAction<t>[];
-  textAfterButtons?: string;
+  content: (string | AsyncAlertAction<t>)[];
   allowClose?: boolean;
   actionsAsGrid?: boolean;
 }): Promise<t | void> {
@@ -57,6 +51,7 @@ export async function asyncAlert<t>({
 
     const popup = document.createElement("div");
     let closed = false;
+
     function closeWithResult(value: t | undefined) {
       if (closed) return;
       closed = true;
@@ -79,57 +74,65 @@ export async function asyncAlert<t>({
     }
 
     if (title) {
-      const p = document.createElement("h2");
-      p.innerHTML = title;
-      popup.appendChild(p);
+      const h2 = document.createElement("h2");
+      h2.innerHTML = title;
+      popup.appendChild(h2);
     }
 
-    if (text) {
-      const p = document.createElement("div");
-      p.innerHTML = text;
-      popup.appendChild(p);
-    }
-
-    const buttons = document.createElement("section");
-    buttons.className = "actions";
-    popup.appendChild(buttons);
-
-    actions
+    content
       ?.filter((i) => i)
-      .forEach(
-        ({ text, value, help, disabled, className = "", icon = "" }, index) => {
-          const button = document.createElement("button");
+      .forEach((entry, index) => {
+        if (typeof entry == "string") {
+          const p = document.createElement("div");
+          p.innerHTML = entry;
+          popup.appendChild(p);
+          return;
+        }
 
-          button.innerHTML = `
+        let addto: HTMLElement;
+        if (popup.lastChild?.nodeName == "SECTION") {
+          addto = popup.lastChild as HTMLElement;
+        } else {
+          addto = document.createElement("section");
+          addto.className = "actions";
+          popup.appendChild(addto);
+        }
+
+        const {
+          text,
+          value,
+          help,
+          disabled,
+          className = "",
+          icon = "",
+        } = entry;
+
+        const button = document.createElement("button");
+
+        button.innerHTML = `
 ${icon}
 <div>
                     <strong>${text}</strong>
                     <em>${help || ""}</em>
             </div>`;
 
-          if (disabled) {
-            button.setAttribute("disabled", "disabled");
-          } else {
-            button.addEventListener("click", (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              closeWithResult(value);
-              // Focus "same" button if it's still there
-              lastClickedItemIndex = index;
-            });
-          }
+        if (disabled) {
+          button.setAttribute("disabled", "disabled");
+        } else {
+          button.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            closeWithResult(value);
+            // Focus "same" button if it's still there
+            lastClickedItemIndex = index;
+          });
+        }
 
-          button.className =
-            className + (lastClickedItemIndex === index ? " needs-focus" : "");
-          buttons.appendChild(button);
-        },
-      );
-    if (textAfterButtons) {
-      const p = document.createElement("div");
-      p.className = "textAfterButtons";
-      p.innerHTML = textAfterButtons;
-      popup.appendChild(p);
-    }
+        button.className =
+          className + (lastClickedItemIndex === index ? " needs-focus" : "");
+
+        addto.appendChild(button);
+      });
 
     popupWrap.appendChild(popup);
     (

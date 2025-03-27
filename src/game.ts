@@ -58,7 +58,8 @@ import {
   alertsOpen,
   asyncAlert,
   AsyncAlertAction,
-  closeModal, requiredAsyncAlert,
+  closeModal,
+  requiredAsyncAlert,
 } from "./asyncAlert";
 import { isOptionOn, options, toggleOption } from "./options";
 import { hashCode } from "./getLevelBackground";
@@ -228,26 +229,32 @@ export async function openShortRunUpgradesPicker(gameState: GameState) {
   }
 
   while (repeats--) {
-    const actions = pickRandomUpgrades(
+    const actions: Array<{
+      text: string;
+      icon: string;
+      value: PerkId | "reroll";
+      help: string;
+    }> = pickRandomUpgrades(
       gameState,
       3 + gameState.perks.one_more_choice - gameState.perks.instant_upgrade,
     );
+    if (!actions.length) break;
 
-    if (gameState.rerolls) {
+    if (gameState.rerolls)
       actions.push({
         text: t("level_up.reroll", { count: gameState.rerolls }),
         help: t("level_up.reroll_help"),
-        value: "reroll",
+        value: "reroll" as const,
         icon: icons["icon:reroll"],
       });
-    }
-    if (!actions.length) break;
+
     let textAfterButtons = `
         <p>${t("level_up.after_buttons", {
           level: gameState.currentLevel + 1,
           max: max_levels(gameState),
         })} </p>
-        <p>${pickedUpgradesHTMl(gameState)}</p>
+       
+        ${pickedUpgradesHTMl(gameState)}
         <div id="level-recording-container"></div> 
         
         `;
@@ -266,25 +273,27 @@ export async function openShortRunUpgradesPicker(gameState: GameState) {
       title:
         t("level_up.pick_upgrade_title") +
         (repeats ? " (" + (repeats + 1) + ")" : ""),
-      actions,
-      text: `<p>${t("level_up.before_buttons", {
-        score: gameState.score - gameState.levelStartScore,
-        catchGain,
-        levelSpawnedCoins: gameState.levelSpawnedCoins,
-        time: Math.round(gameState.levelTime / 1000),
-        timeGain,
-        levelMisses: gameState.levelMisses,
-        missesGain,
-        levelWallBounces: gameState.levelWallBounces,
-        wallHitsGain,
-        compliment,
-      })}
+      content: [
+        `<p>${t("level_up.before_buttons", {
+          score: gameState.score - gameState.levelStartScore,
+          catchGain,
+          levelSpawnedCoins: gameState.levelSpawnedCoins,
+          time: Math.round(gameState.levelTime / 1000),
+          timeGain,
+          levelMisses: gameState.levelMisses,
+          missesGain,
+          levelWallBounces: gameState.levelWallBounces,
+          wallHitsGain,
+          compliment,
+        })}
         </p>
 
         <p>${levelsListHTMl(gameState)}</p>
 `,
-      textAfterButtons,
-    })  ;
+        ...actions,
+        textAfterButtons,
+      ],
+    });
 
     if (upgradeId === "reroll") {
       repeats++;
@@ -437,18 +446,26 @@ document.addEventListener("visibilitychange", () => {
 async function openScorePanel() {
   pause(true);
   const cb = await asyncAlert({
-    title: t("score_panel.title", {
-      score: gameState.score,
-      level: gameState.currentLevel + 1,
-      max: max_levels(gameState),
-    }),
-    text: `
+    title: gameState.isAdventureMode
+      ? t("score_panel.title_adventure", {
+          score: gameState.score,
+          level: gameState.currentLevel + 1,
+          max: max_levels(gameState),
+        })
+      : t("score_panel.title", {
+          score: gameState.score,
+          level: gameState.currentLevel + 1,
+          max: max_levels(gameState),
+        }),
+
+    content: [
+      `
             ${gameState.isCreativeModeRun ? `<p>${t("score_panel.test_run")}</p>` : ""}
-            <p>${t("score_panel.upgrades_picked")}</p>
-            <p>${pickedUpgradesHTMl(gameState)}</p>
+ ${pickedUpgradesHTMl(gameState)} 
             
         <p>${levelsListHTMl(gameState)}</p>
         `,
+    ],
     allowClose: true,
   });
 }
@@ -500,9 +517,9 @@ export async function openMainMenu() {
         while (
           (choice = await asyncAlert<"start" | Upgrade>({
             title: t("sandbox.title"),
-            text: t("sandbox.instructions"),
             actionsAsGrid: true,
-            actions: [
+            content: [
+              t("sandbox.instructions"),
               ...upgrades.map((u) => ({
                 icon: u.icon,
                 text: u.name,
@@ -545,10 +562,8 @@ export async function openMainMenu() {
 
   const cb = await asyncAlert<() => void>({
     title: t("main_menu.title"),
-    text: ``,
+    content: [...actions, t("main_menu.footer_html", { appVersion })],
     allowClose: true,
-    actions,
-    textAfterButtons: t("main_menu.footer_html", { appVersion }),
   });
   if (cb) {
     cb();
@@ -608,8 +623,8 @@ async function openSettingsMenu() {
       if (
         await asyncAlert({
           title: t("main_menu.reset"),
-          text: t("main_menu.reset_instruction"),
-          actions: [
+          content: [
+            t("main_menu.reset_instruction"),
             {
               text: t("main_menu.reset_confirm"),
               value: true,
@@ -736,16 +751,20 @@ async function openSettingsMenu() {
               }
               await asyncAlert({
                 title: t("main_menu.save_file_loaded"),
-                text: t("main_menu.save_file_loaded_help"),
-                actions: [{ text: t("main_menu.save_file_loaded_ok") }],
+                content: [
+                  t("main_menu.save_file_loaded_help"),
+                  { text: t("main_menu.save_file_loaded_ok") },
+                ],
               });
               window.location.reload();
             }
           } catch (e: any) {
             await asyncAlert({
               title: t("main_menu.save_file_error"),
-              text: e.message,
-              actions: [{ text: t("main_menu.save_file_loaded_ok") }],
+              content: [
+                e.message,
+                { text: t("main_menu.save_file_loaded_ok") },
+              ],
             });
           }
           input.value = "";
@@ -762,8 +781,8 @@ async function openSettingsMenu() {
     async value() {
       const pick = await asyncAlert({
         title: t("main_menu.language"),
-        text: t("main_menu.language_help"),
-        actions: [
+        content: [
+          t("main_menu.language_help"),
           {
             text: "English",
             value: "en",
@@ -803,16 +822,10 @@ async function openSettingsMenu() {
     },
   });
 
-  // actions.push({
-  //   text: t("main_menu.resume"),
-  //   help: t("main_menu.resume_help"),
-  //   value() {},
-  // });
   const cb = await asyncAlert<() => void>({
     title: t("main_menu.settings_title"),
-    text: t("main_menu.settings_help"),
+    content: [t("main_menu.settings_help"), ...actions],
     allowClose: true,
-    actions,
   });
   if (cb) {
     cb();
@@ -857,14 +870,15 @@ async function openUnlocksList() {
   );
   const tryOn = await asyncAlert<RunParams>({
     title: t("unlocks.title", { percentUnlock }),
-    text: `<p>${t("unlocks.intro", { ts })}
-   ${percentUnlock < 100 ? t("unlocks.greyed_out_help") : ""}</p> 
-                       `,
-    textAfterButtons: `<p> 
+    content: [
+      `<p>${t("unlocks.intro", { ts })}
+   ${percentUnlock < 100 ? t("unlocks.greyed_out_help") : ""}</p>  `,
+      ...actions,
+      `<p> 
 Your high score is ${gameState.highScore}. 
 Click an item above to start a run with it.
                 </p>`,
-    actions,
+    ],
     allowClose: true,
     actionsAsGrid: true,
   });
@@ -880,8 +894,8 @@ export async function confirmRestart(gameState) {
 
   return asyncAlert({
     title: t("confirmRestart.title"),
-    text: t("confirmRestart.text"),
-    actions: [
+    content: [
+      t("confirmRestart.text"),
       {
         value: true,
         text: t("confirmRestart.yes"),
@@ -990,28 +1004,36 @@ export function restart(params: RunParams) {
 }
 
 restart(
-  (window.location.search.includes("stressTest") &&  {
-        level: "Bird",
-        perks: {
-          sapper: 10,
-          bigger_explosions: 1,
-          unbounded: 1,
-          pierce_color: 1,
-          pierce: 20,
-          multiball: 6,
-          base_combo: 7,
-          telekinesis: 2,
-          yoyo: 2,
-          metamorphosis: 1,
-          implosions: 1,
-        },
-      }) ||(window.location.search.includes("adventure") &&  {
-        adventure:true,
-        perks: {
-          pierce:5
-        },
-      }) || {},
+  (window.location.search.includes("stressTest") && {
+    level: "Bird",
+    perks: {
+      sapper: 10,
+      bigger_explosions: 1,
+      unbounded: 1,
+      pierce_color: 1,
+      pierce: 20,
+      multiball: 6,
+      base_combo: 7,
+      telekinesis: 2,
+      yoyo: 2,
+      metamorphosis: 1,
+      implosions: 1,
+    },
+  }) ||
+    (window.location.search.includes("adventure") && {
+      adventure: true,
+      perks: {
+        // pierce:15
+      },
+      debuffs: {
+        // side_wind:20
+        // negative_bricks:3,
+        // negative_coins:5,
+        // void_coins_on_touch: 1,
+        // void_brick_on_touch: 1,
+      },
+    }) ||
+    {},
 );
-
 
 tick();

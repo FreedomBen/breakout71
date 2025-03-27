@@ -1,5 +1,6 @@
 import { rawUpgrades } from "./upgrades";
 import { options } from "./options";
+import { debuffs } from "./debuffs";
 
 export type colorString = string;
 
@@ -14,6 +15,7 @@ export type Level = {
   name: string;
   size: number;
   bricks: colorString[];
+  bricksCount: number;
   svg: string;
   color: string;
   threshold: number;
@@ -25,6 +27,10 @@ export type Palette = { [k: string]: string };
 export type Upgrade = {
   threshold: number;
   giftable: boolean;
+  // Offered in adventure mode
+  adventure: boolean;
+  // offered in normal mode
+  normal: boolean;
   id: PerkId;
   name: string;
   icon: string;
@@ -152,6 +158,12 @@ export type PerksMap = {
   [k in PerkId]: number;
 };
 
+export type DebuffId = (typeof debuffs)[number]["id"];
+
+export type DebuffsMap = {
+  [k in DebuffId]: number;
+};
+
 export type ReusableArray<T> = {
   // All items below that index should not be destroyed
   indexMin: number;
@@ -190,10 +202,13 @@ export type GameState = {
 
   // 10 levels selected randomly at start for the run
   runLevels: Level[];
+  // Current level displayed
+  level: Level;
   // Width of the puck in pixels, changed by some perks and resizes
   puckWidth: number;
   // perks the user currently has
   perks: PerksMap;
+  debuffs: DebuffsMap;
   // Base speed of the ball in pixels/tick
   baseSpeed: number;
   // Score multiplier
@@ -235,7 +250,6 @@ export type GameState = {
   levelStartScore: number;
   levelMisses: number;
   levelSpawnedCoins: number;
-  lastPlayedCoinGrab: number;
 
   // MAX_COINS: number;
   // MAX_PARTICLES: number;
@@ -265,10 +279,9 @@ export type GameState = {
     lifeLost: { vol: number; x: number };
     coinCatch: { vol: number; x: number };
     colorChange: { vol: number; x: number };
+    void: { vol: number; x: number };
   };
   isAdventureMode: boolean;
-  adventurePath: string;
-  seed: string;
   rerolls: number;
 };
 
@@ -277,6 +290,7 @@ export type RunParams = {
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
   adventure?: boolean;
+  debuffs?: boolean;
 };
 export type OptionDef = {
   default: boolean;

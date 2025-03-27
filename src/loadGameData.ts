@@ -20,11 +20,13 @@ export const allLevels = rawLevelsList
       .split("")
       .map((c) => palette[c])
       .slice(0, level.size * level.size);
+    const bricksCount = bricks.filter((i) => i).length;
     const icon = levelIconHTML(bricks, level.size, level.color);
     icons[level.name] = icon;
     return {
       ...level,
       bricks,
+      bricksCount,
       icon,
       svg: getLevelBackground(level),
     };
@@ -38,10 +40,12 @@ export const allLevels = rawLevelsList
         : Math.round(
             Math.min(Math.pow(10, 1 + (li + l.size) / 30) * 10, 5000) * li,
           ),
-    sortKey: ((Math.random() + 3) / 3.5) * l.bricks.filter((i) => i).length,
+    sortKey: ((Math.random() + 3) / 3.5) * l.bricksCount,
   })) as Level[];
 
 export const upgrades = rawUpgrades.map((u) => ({
   ...u,
   icon: icons["icon:" + u.id],
+  adventure: "adventure" in u ? u.adventure : true,
+  normal: "normal" in u ? u.normal : true,
 })) as Upgrade[];

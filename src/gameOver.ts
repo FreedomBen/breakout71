@@ -117,29 +117,34 @@ export function gameOver(title: string, intro: string) {
   asyncAlert({
     allowClose: true,
     title,
-    text: `
+    content: [
+      `
         ${gameState.isCreativeModeRun ? `<p>${t("gameOver.test_run")}</p> ` : ""}
         <p>${intro}</p>
         <p>${t("gameOver.cumulative_total", { startTs, endTs })}</p>
         ${unlocksInfo}  
         `,
-    actions: [
       {
         value: null,
         text: t("gameOver.restart"),
         help: "",
       },
-    ],
-    textAfterButtons: `<div id="level-recording-container"></div>
-            <p>${t("gameOver.upgrades_picked")}</p>
-            <p>${pickedUpgradesHTMl(gameState)}</p>
+      `<div id="level-recording-container"></div> 
+           ${pickedUpgradesHTMl(gameState)}
         ${getHistograms()} 
         `,
-  }).then(() => restart({ levelToAvoid: currentLevelInfo(gameState).name }));
+    ],
+  }).then(() =>
+    restart({
+      levelToAvoid: currentLevelInfo(gameState).name,
+      adventure: gameState.isAdventureMode,
+    }),
+  );
 }
 
 export function getHistograms() {
   let runStats = "";
+  // TODO separate adventure and normal runs
   try {
     // Stores only top 100 runs
     let runsHistory = JSON.parse(

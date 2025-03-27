@@ -63,9 +63,12 @@ export function pickedUpgradesHTMl(gameState: GameState) {
     for (let i = 0; i < gameState.perks[u.id]; i++)
       list += `<span  title="${u.name}">${icons["icon:" + u.id]}</span>`;
   }
-  return list;
+
+  if (!list) return "";
+  return ` <p>${t("score_panel.upgrades_picked")}</p> <p>${list}</p>`;
 }
 export function levelsListHTMl(gameState: GameState) {
+  if (gameState.isAdventureMode) return "";
   if (!gameState.perks.clairvoyant) return "";
   let list = "";
   for (let i = 0; i < max_levels(gameState); i++) {
@@ -75,9 +78,7 @@ export function levelsListHTMl(gameState: GameState) {
 }
 
 export function currentLevelInfo(gameState: GameState) {
-  return gameState.runLevels[
-    gameState.currentLevel % gameState.runLevels.length
-  ];
+  return gameState.level;
 }
 
 export function isTelekinesisActive(gameState: GameState, ball: Ball) {
@@ -126,6 +127,7 @@ export function defaultSounds() {
       lifeLost: { vol: 0, x: 0 },
       coinCatch: { vol: 0, x: 0 },
       colorChange: { vol: 0, x: 0 },
+      void: { vol: 0, x: 0 },
     },
   };
 }

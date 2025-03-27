@@ -104,7 +104,7 @@ export function premiumMenuEntry(gameState: GameState) {
   }
   return {
     icon: icons["icon:premium"],
-    text: t("premium.title"),
+    text: t("premium.adventure_mode"),
     help: t("premium.short_help"),
     value: () => openPremiumMenu(""),
   };
@@ -116,12 +116,11 @@ async function openPremiumMenu(text) {
     "com.android.vending";
 
   const cb = await asyncAlert({
-    title: t("premium.title"),
-    text:
+    title: t("premium.adventure_mode"),
+    content: [
       text ||
-      (isGooglePlayInstall && t("premium.help_google")) ||
-      t("premium.help"),
-    actions: [
+        (isGooglePlayInstall && t("premium.help_google")) ||
+        t("premium.help"),
       {
         text: t("premium.buy"),
         disabled: isGooglePlayInstall,

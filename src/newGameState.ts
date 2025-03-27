@@ -1,4 +1,4 @@
-import { GameState, RunParams } from "./types";
+import { DebuffsMap, GameState, RunParams } from "./types";
 import { getTotalScore } from "./settings";
 import { allLevels, upgrades } from "./loadGameData";
 import {
@@ -9,6 +9,7 @@ import {
 } from "./game_utils";
 import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
 import { isOptionOn } from "./options";
+import { debuffs } from "./debuffs";
 
 export function newGameState(params: RunParams): GameState {
   const totalScoreAtRunStart = getTotalScore();
@@ -30,9 +31,11 @@ export function newGameState(params: RunParams): GameState {
 
   const gameState: GameState = {
     runLevels,
+    level: runLevels[0],
     currentLevel: 0,
     upgradesOfferedFor: -1,
     perks,
+    debuffs: { ...emptyDebuffsMap(), ...(params?.debuffs || {}) },
     puckWidth: 200,
     baseSpeed: 12,
     combo: 1,
@@ -67,7 +70,6 @@ export function newGameState(params: RunParams): GameState {
     levelStartScore: 0,
     levelMisses: 0,
     levelSpawnedCoins: 0,
-    lastPlayedCoinGrab: 0,
     puckColor: "#FFF",
     ballSize: 20,
     coinSize: 14,
@@ -102,13 +104,11 @@ export function newGameState(params: RunParams): GameState {
     ...defaultSounds(),
 
     isAdventureMode: !!params?.adventure,
-    adventurePath: "",
-    seed: "Seed" + Math.random(),
     rerolls: 0,
   };
   resetBalls(gameState);
 
-  if (!sumOfValues(gameState.perks)) {
+  if (!sumOfValues(gameState.perks) && !params?.adventure) {
     const giftable = getPossibleUpgrades(gameState).filter((u) => u.giftable);
     const randomGift =
       (isOptionOn("easy") && "slow_down") ||
@@ -122,4 +122,10 @@ export function newGameState(params: RunParams): GameState {
     }
   }
   return gameState;
+}
+
+export function emptyDebuffsMap(): DebuffsMap {
+  const map = {};
+  debuffs.forEach((d) => (map[d.id] = 0));
+  return map as DebuffsMap;
 }

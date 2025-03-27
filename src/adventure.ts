@@ -1,110 +1,159 @@
-import {GameState, PerksMap} from "./types";
-import {sample, sumOfValues} from "./game_utils";
-import {allLevels, icons, upgrades} from "./loadGameData";
-import {t} from "./i18n/i18n";
-import {hashCode} from "./getLevelBackground";
-import {requiredAsyncAlert} from "./asyncAlert";
+import { GameState, Level, PerkId } from "./types";
+import { pickedUpgradesHTMl, sample, sumOfValues } from "./game_utils";
+import { allLevels, icons, upgrades } from "./loadGameData";
+import { t } from "./i18n/i18n";
+import { requiredAsyncAlert } from "./asyncAlert";
+import { debuffs } from "./debuffs";
 
-const MAX_DIFFICULTY = 3+4
+type AdventureModeButton = {
+  text: string;
+  icon: string;
+  help?: string;
+  value: AdventureModeSelection;
+};
+type AdventureModeSelection = {
+  cost: number;
+  level?: Level;
+  perk?: PerkId;
+  discard?: PerkId;
+};
+const MAX_LVL = 3;
 export async function openAdventureRunUpgradesPicker(gameState: GameState) {
-    let maxDifficulty = 3;
+  // Just add random debuff for now
+  const debuffToApply = sample(
+    debuffs.filter((d) => gameState.debuffs[d.id] < d.max),
+  );
+  if (debuffToApply) {
+    gameState.debuffs[debuffToApply.id]++;
+  }
 
-    const catchRate =
-        (gameState.score - gameState.levelStartScore) /
-        (gameState.levelSpawnedCoins || 1);
+  let levelChoiceCount = 1;
 
-    if (gameState.levelWallBounces == 0) {
-        maxDifficulty++;
+  const catchRate =
+    (gameState.score - gameState.levelStartScore) /
+    (gameState.levelSpawnedCoins || 1);
+
+  if (gameState.levelWallBounces == 0) {
+    levelChoiceCount++;
+  }
+  if (gameState.levelTime < 30 * 1000) {
+    levelChoiceCount++;
+  }
+  if (catchRate === 1) {
+    levelChoiceCount++;
+  }
+  if (gameState.levelMisses === 0) {
+    levelChoiceCount++;
+  }
+
+  let perkChoices = 2 + gameState.perks.one_more_choice + levelChoiceCount;
+
+  const priceMultiplier =
+    1 +
+    Math.ceil(
+      gameState.currentLevel * Math.pow(1.05, gameState.currentLevel) * 10,
+    );
+
+  const levelChoices: AdventureModeButton[] = [...allLevels]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, MAX_LVL)
+    .sort((a, b) => a.bricksCount - b.bricksCount)
+    .slice(0, Math.min(MAX_LVL, levelChoiceCount))
+    .map((level, levelIndex) => ({
+      text: t("premium.pick_level", {
+        name: level.name,
+        cost: priceMultiplier * levelIndex,
+      }),
+      icon: icons[level.name],
+      help:
+        level.size +
+        "x" +
+        level.size +
+        " with " +
+        level.bricksCount +
+        " bricks",
+      value: {
+        level,
+        cost: priceMultiplier * levelIndex,
+      },
+    }));
+
+  const perksChoices = upgrades
+    .filter((u) => u.adventure)
+    .filter((u) => !u?.requires || gameState.perks[u?.requires])
+    .filter((u) => gameState.perks[u.id] < u.max)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, perkChoices);
+
+  const discardChoices: AdventureModeButton[] =
+    sumOfValues(gameState.perks) > 5
+      ? upgrades
+          .filter((u) => u.adventure)
+          .filter((u) => gameState.perks[u.id])
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3)
+          .map((u, ui) => {
+            return {
+              icon: `<span class="red-icon">${u.icon}</span>`,
+              text: t("premium.discard", { name: u.name }),
+              help: t("premium.discard_help"),
+              value: { discard: u.id, cost: 0 },
+            };
+          })
+      : [];
+
+  let used = new Set();
+  let choice: AdventureModeSelection | null = null;
+  while (
+    (choice = await requiredAsyncAlert({
+      title: t("premium.next_step_title"),
+      content: [
+        `
+    <p>${t("premium.choose_next_step", { score: gameState.score })}</p>
+    ${pickedUpgradesHTMl(gameState)} 
+            `,
+        ...perksChoices.map((u, ui) => {
+          const lvl = gameState.perks[u.id];
+          const cost =
+            (priceMultiplier + sumOfValues(gameState.perks) + lvl) * (ui + 1);
+          return {
+            icon: u.icon,
+            text:
+              lvl == 0
+                ? t("premium.pick_perk", { name: u.name, cost })
+                : t("premium.upgrade_perk_to_level", {
+                    name: u.name,
+                    cost,
+                    lvl: lvl + 1,
+                  }),
+            help: u.help(lvl + 1),
+            value: { perk: u.id, cost },
+            disabled: gameState.score < cost || used.has(u.id),
+          };
+        }),
+        discardChoices.length ? "You can discard some perks" : "",
+        ...discardChoices,
+        `Click a level below to continue`,
+        ...levelChoices.map((p) => ({
+          ...p,
+          disabled: gameState.score < p.value.cost,
+        })),
+      ],
+    }))
+  ) {
+    gameState.score -= choice.cost;
+    if (choice.perk) {
+      used.add(choice.perk);
+      gameState.perks[choice.perk]++;
     }
-    if (gameState.levelTime < 30 * 1000) {
-        maxDifficulty++;
+    if (choice.discard) {
+      used.add(choice.discard);
+      gameState.perks[choice.discard] = 0;
     }
-    if (catchRate === 1) {
-        maxDifficulty++;
+    if (choice.level) {
+      gameState.runLevels[gameState.currentLevel + 1] = choice.level;
+
+      return;
     }
-    if (gameState.levelMisses === 0) {
-        maxDifficulty++;
-    }
-
-    let actions = range(0, maxDifficulty).map(difficulty => getPerksForPath(gameState.score, gameState.currentLevel, gameState.seed, gameState.adventurePath, gameState.perks, difficulty))
-
-    return requiredAsyncAlert({
-        title: 'Choose your next step',
-        text: 'Click one of the options below to continue',
-        actions,
-    })
-}
-
-
-function getPerksForPath(score: number, currentLevel: number, seed: string, path: string, basePerks: PerksMap, difficulty: number) {
-    const hashSeed = seed + path
-    let cost = (1 + difficulty) * Math.pow(1.5, currentLevel) * 10
-    if (!difficulty && cost > score) {
-        cost = score
-    }
-
-    const levels = allLevels
-        .sort((a, b) => hashCode(hashSeed + a.name) - hashCode(hashSeed + b.name))
-        .slice(0, MAX_DIFFICULTY)
-        .sort((a,b)=>a.size-b.size)
-
-    let level = levels[difficulty]
-    let text = level.name + ' $' + cost, help = []
-
-    let perks = {}
-    // TODO exclude irrelevant perks
-
-
-    upgrades
-        .filter((u) => !u?.requires || basePerks[u?.requires])
-        .filter(u => basePerks[u.id] < u.max)
-        .sort((a, b) => hashCode(hashSeed + difficulty+a.id) - hashCode(hashSeed + difficulty+b.id))
-        .slice(0, difficulty+1)
-        .forEach(u => {
-            perks[u.id] = basePerks[u.id] + 1
-            help.push(u.name +
-                (basePerks[u.id]
-                    ? t("level_up.upgrade_perk_to_level", {
-                        level: basePerks[u.id] + 1,
-                    })
-                    : ""))
-        })
-
-    let totalPerksValue = sumOfValues({...basePerks, ...perks})
-    let targetPerks = 10 + difficulty * 3
-    let toRemove = Math.max(0, totalPerksValue - targetPerks)
-    while (toRemove) {
-        const possibleDowngrades = Object.keys(basePerks).filter(
-            k => !perks[k] && basePerks[k] > 0
-        )
-        if (!possibleDowngrades.length) {
-            break
-        }
-        const downGraded = sample(possibleDowngrades)
-
-        perks[downGraded] = basePerks[downGraded] - 1
-        if (!perks[downGraded]) {
-            help.push(t('level_up.perk_loss') + upgrades.find(u => u.id == downGraded)?.help(1))
-        } else {
-            help.push(t('level_up.downgrade') + upgrades.find(u => u.id == downGraded)?.help(perks[downGraded]))
-        }
-        toRemove--
-    }
-    return {
-        value: {
-            cost,
-            level,
-            perks,
-            difficulty
-        },
-        icon: icons[level.name],
-        disabled: cost > score,
-        text, help: help.join('/') || 'No change to perks',
-    }
-}
-
-function range(start: number, end: number): number[] {
-    const result = []
-    for (let i = start; i < end; i++) result.push(i)
-    return result
+  }
 }

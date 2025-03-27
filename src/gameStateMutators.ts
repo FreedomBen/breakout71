@@ -134,7 +134,7 @@ export function normalizeGameState(gameState: GameState) {
   gameState.baseSpeed = Math.max(
     3,
     gameState.gameZoneWidth / 12 / 10 +
-      gameState.currentLevel / 3 +
+      gameState.currentLevel / (gameState.isAdventureMode ? 30 : 3) +
       gameState.levelTime / (30 * 1000) -
       gameState.perks.slow_down * 2,
   );
@@ -342,9 +342,14 @@ export function explodeBrick(
   const color = gameState.bricks[index];
   if (!color) return;
 
-  if (color === "black") {
+  if (color === "black" || color === "transparent") {
     const x = brickCenterX(gameState, index),
       y = brickCenterY(gameState, index);
+
+    if (color === "transparent") {
+      schedulGameSound(gameState, "void", x, 1);
+      resetCombo(gameState, x, y);
+    }
     setBrick(gameState, index, "");
     explosionAt(gameState, index, x, y, ball);
   } else if (color) {
@@ -444,8 +449,9 @@ export function explodeBrick(
 
     if (
       gameState.perks.nbricks &&
-      ball.brokenSinceBounce == gameState.perks.nbricks + 1
+      ball.brokenSinceBounce > gameState.perks.nbricks
     ) {
+      // We need to reset at each hit, otherwise it's just an OP version of single puck hit streak
       resetCombo(gameState, ball.x, ball.y);
     }
 
@@ -492,16 +498,18 @@ export function pickRandomUpgrades(gameState: GameState, count: number) {
   let list = getPossibleUpgrades(gameState)
     .map((u) => ({
       ...u,
-      score:  gameState.isAdventureMode ? 0:Math.random() + (gameState.lastOffered[u.id] || 0),
+      score: gameState.isAdventureMode
+        ? 0
+        : Math.random() + (gameState.lastOffered[u.id] || 0),
     }))
     .sort((a, b) => a.score - b.score)
     .filter((u) => gameState.perks[u.id] < u.max)
     .slice(0, count)
     .sort((a, b) => (a.id > b.id ? 1 : -1));
 
-    list.forEach((u) => {
-      dontOfferTooSoon(gameState, u.id);
-    });
+  list.forEach((u) => {
+    dontOfferTooSoon(gameState, u.id);
+  });
 
   return list.map((u) => ({
     text:
@@ -536,7 +544,11 @@ export function addToScore(gameState: GameState, coin: Coin) {
   gameState.lastScoreIncrease = gameState.levelTime;
 
   addToTotalScore(gameState, coin.points);
-  if (gameState.score > gameState.highScore && !gameState.isCreativeModeRun) {
+  if (
+    gameState.score > gameState.highScore &&
+    !gameState.isCreativeModeRun &&
+    !gameState.isAdventureMode
+  ) {
     gameState.highScore = gameState.score;
     localStorage.setItem("breakout-3-hs", gameState.score.toString());
   }
@@ -554,10 +566,10 @@ export function addToScore(gameState: GameState, coin: Coin) {
     );
   }
 
-  if (Date.now() - gameState.lastPlayedCoinGrab > 16) {
-    gameState.lastPlayedCoinGrab = Date.now();
-
+  if (coin.points > 0) {
     schedulGameSound(gameState, "coinCatch", coin.x, 1);
+  } else {
+    resetCombo(gameState, coin.x, coin.y);
   }
   gameState.runStatistics.score += coin.points;
   if (gameState.perks.asceticism) {
@@ -575,22 +587,16 @@ export async function setLevel(gameState: GameState, l: number) {
   pause(false);
   stopRecording();
   if (l > 0) {
-    if (gameState.isCreativeModeRun) {
-      const {  cost,
-        level,
-        perks,difficulty} = await openAdventureRunUpgradesPicker(gameState);
-
-      gameState.score-=cost
-      gameState.runLevels[l] = level
-      gameState.adventurePath += difficulty
-      Object.assign(gameState.perks, perks)
-
-
+    if (gameState.isAdventureMode) {
+      await openAdventureRunUpgradesPicker(gameState);
     } else {
       await openShortRunUpgradesPicker(gameState);
     }
   }
   gameState.currentLevel = l;
+  // That list is populated just before if you're in adventure mode
+  gameState.level = gameState.runLevels[l];
+
   gameState.levelTime = 0;
   gameState.winAt = 0;
   gameState.levelWallBounces = 0;
@@ -628,6 +634,22 @@ export async function setLevel(gameState: GameState, l: number) {
     setBrick(gameState, i, lvl.bricks[i]);
   }
 
+  if (gameState.debuffs.negative_bricks) {
+    let attemps = 0;
+    let changed = 0;
+    while (attemps < 100 && changed < gameState.debuffs.negative_bricks) {
+      attemps++;
+      const index = Math.floor(Math.random() * gameState.bricks.length);
+      if (
+        gameState.bricks[index] &&
+        gameState.bricks[index] !== "transparent"
+      ) {
+        gameState.bricks[index] = "transparent";
+        gameState.brickHP[index] = 1;
+        changed++;
+      }
+    }
+  }
   // Balls color will depend on most common brick color sometimes
   resetBalls(gameState);
   gameState.needsRender = true;
@@ -640,6 +662,7 @@ function setBrick(gameState: GameState, index: number, color: string) {
   gameState.bricks[index] = color || "";
   gameState.brickHP[index] =
     (color === "black" && 1) ||
+    (color === "transparent" && 1) ||
     (color && 1 + gameState.perks.sturdy_bricks) ||
     0;
 }
@@ -915,7 +938,10 @@ export function gameStateTick(
       !remainingBricks &&
       !liveCount(gameState.coins))
   ) {
-    if (gameState.currentLevel + 1 < max_levels(gameState)) {
+    if (
+      gameState.isAdventureMode ||
+      gameState.currentLevel + 1 < max_levels(gameState)
+    ) {
       if (gameState.running) {
         setLevel(gameState, gameState.currentLevel + 1);
       }
@@ -998,8 +1024,9 @@ export function gameStateTick(
         coin.y < gameState.gameZoneHeight + gameState.puckHeight + coin.vy &&
         Math.abs(coin.x - gameState.puckPosition) <
           coinRadius +
-            gameState.puckWidth / 2 + // a bit of margin to be nice
-            gameState.puckHeight
+            gameState.puckWidth / 2 +
+            // a bit of margin to be nice , negative in case it's a negative coin
+            gameState.puckHeight * (coin.points ? 1 : -1)
       ) {
         addToScore(gameState, coin);
         destroy(gameState.coins, coinIndex);
@@ -1018,8 +1045,27 @@ export function gameStateTick(
       }
 
       const hitBrick = coinBrickHitCheck(gameState, coin);
-
-      if (gameState.perks.metamorphosis && typeof hitBrick !== "undefined") {
+      if (
+        gameState.debuffs.void_coins_on_touch &&
+        coin.points &&
+        typeof hitBrick !== "undefined" &&
+        gameState.bricks[hitBrick] == "transparent"
+      ) {
+        coin.points = 0;
+        coin.color = "transparent";
+        schedulGameSound(gameState, "void", coin.x, 1);
+      } else if (
+        gameState.debuffs.void_brick_on_touch &&
+        !coin.points &&
+        typeof hitBrick !== "undefined" &&
+        gameState.bricks[hitBrick] !== "transparent"
+      ) {
+        setBrick(gameState, hitBrick, "transparent");
+        schedulGameSound(gameState, "void", coin.x, 1);
+      } else if (
+        gameState.perks.metamorphosis &&
+        typeof hitBrick !== "undefined"
+      ) {
         if (
           gameState.bricks[hitBrick] &&
           coin.color !== gameState.bricks[hitBrick] &&
@@ -1052,6 +1098,49 @@ export function gameStateTick(
     });
 
     gameState.balls.forEach((ball) => ballTick(gameState, ball, frames));
+
+    if (
+      !isOptionOn("basic") &&
+      gameState.debuffs.downward_wind &&
+      gameState.levelTime / 1000 < gameState.debuffs.downward_wind
+    ) {
+      makeParticle(
+        gameState,
+        gameState.offsetXRoundedDown +
+          Math.random() * gameState.gameZoneWidthRoundedUp,
+        gameState.gameZoneHeight * Math.random(),
+        0,
+        gameState.baseSpeed,
+        "red",
+        true,
+        gameState.coinSize / 2,
+        150,
+      );
+    }
+
+    if (gameState.debuffs.side_wind) {
+      const dir =
+        (gameState.currentLevel % 2 ? -1 : 1) *
+        gameState.debuffs.side_wind *
+        gameState.baseSpeed;
+      gameState.balls.forEach((ball) => {
+        ball.vx += dir / 2000;
+      });
+      forEachLiveOne(gameState.coins, (c) => (c.vx += dir / 100));
+      if (!isOptionOn("basic"))
+        makeParticle(
+          gameState,
+          gameState.offsetXRoundedDown +
+            Math.random() * gameState.gameZoneWidthRoundedUp,
+          gameState.gameZoneHeight * Math.random(),
+          dir / 3,
+          0,
+          "red",
+          true,
+          gameState.coinSize / 2,
+          150,
+        );
+    }
 
     if (gameState.perks.shocks) {
       gameState.balls.forEach((a, ai) =>
@@ -1219,6 +1308,7 @@ export function gameStateTick(
     }
   }
 
+
   forEachLiveOne(gameState.particles, (p, pi) => {
     if (gameState.levelTime > p.time + p.duration) {
       destroy(gameState.particles, pi);
@@ -1247,6 +1337,13 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     gameState.perks.puck_repulse_ball +
     gameState.perks.ball_attract_ball;
 
+  if (
+    gameState.debuffs.downward_wind &&
+    gameState.levelTime / 1000 < gameState.debuffs.downward_wind
+  ) {
+    ball.vy += gameState.baseSpeed / 50;
+    speedLimitDampener += 10;
+  }
   if (isTelekinesisActive(gameState, ball)) {
     speedLimitDampener += 3;
     ball.vx +=
@@ -1606,6 +1703,10 @@ function makeCoin(
   color = "gold",
   points = 1,
 ) {
+  if (gameState.debuffs.negative_coins > Math.random() * 100) {
+    points = 0;
+    color = "transparent";
+  }
   append(gameState.coins, (p: Partial<Coin>) => {
     p.x = x;
     p.y = y;

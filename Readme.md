@@ -33,31 +33,7 @@ The score you make in each level is instead multiplied by the number of "upgrade
 The score is your "fuel", and lets you pick the next level from a list. Each level has a cost, preview, and one or two downgrades. 
 Each downgrade acts as a score multiplier. 
 Your goal is no longer to score higher, but to go farther
-
-# Challenges 
-
-Possible challenges : 
-    - Add negative coins that make the coin magnet less usage
-  - add negative bricks that clear coins and reset combo
-  - add a brick eating enemy that forces you to play fast
-  - add a force field for 10s that negates hots start
-  - other perks can be randomly turned off
-  - ball keeps accelerating until unplayable
-  - graphical effects like trail, contrast, blur to make it harder to see what's going on
-  - ball creates a draft behind itself that blows coins in odd patterns
-  - bricks are invisible
-
-- add red anti-coins that apply downgrades
-  - destroy your combo
-  - hurt your score
-  - behave like heavier coins.  
-  - deactivate a perk for this level
-  - reduce your number of coins 
-  - destroy all coins on screen 
-  - lowers your combo 
-  - reduce your choice for your next perk 
-  
-
+ 
 
 # System requirements 
 

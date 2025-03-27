@@ -36,10 +36,14 @@ export function render(gameState: GameState) {
   if (!width || !height) return;
 
   if (gameState.currentLevel || gameState.levelTime) {
-    menuLabel.innerText = t("play.current_lvl", {
-      level: gameState.currentLevel + 1,
-      max: max_levels(gameState),
-    });
+    menuLabel.innerText = gameState.isAdventureMode
+      ? t("play.current_lvl_adventure", {
+          level: gameState.currentLevel + 1,
+        })
+      : t("play.current_lvl", {
+          level: gameState.currentLevel + 1,
+          max: max_levels(gameState),
+        });
   } else {
     menuLabel.innerText = t("play.menu_label");
   }
@@ -171,6 +175,7 @@ export function render(gameState: GameState) {
       coin.x,
       coin.y,
       (hasCombo && gameState.perks.asceticism && "red") ||
+        (!coin.points && "red") ||
         level.color ||
         "black",
       coin.a,
@@ -490,7 +495,8 @@ export function renderAllBricks() {
       redBorderOnBricksWithWrongColor ||
       redColorOnAllBricks ||
       gameState.perks.reach ||
-      gameState.perks.zen
+      gameState.perks.zen ||
+      gameState.debuffs.negative_bricks
     )
   ) {
     offset = 0;
@@ -541,6 +547,7 @@ export function renderAllBricks() {
         !countBricksBelow(gameState, index);
 
       let redBorder =
+        color === "transparent" ||
         (gameState.ballsColor !== color &&
           color !== "black" &&
           redBorderOnBricksWithWrongColor) ||
