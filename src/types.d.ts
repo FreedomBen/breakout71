@@ -83,6 +83,7 @@ export type Coin = {
   sa: number;
   weight: number;
   destroyed?: boolean;
+  collidedLastFrame?: boolean;
   coloredABrick?: boolean;
 };
 export type Ball = {
@@ -155,12 +156,12 @@ export type PerksMap = {
   [k in PerkId]: number;
 };
 
-type Debuff={
+type Debuff = {
   id: DebuffId;
-  max:number;
-  name:(lvl: number,banned:string)=>string;
-  help:(lvl: number,perk:string)=>string;
-}
+  max: number;
+  name: (lvl: number, banned: string) => string;
+  help: (lvl: number, perk: string) => string;
+};
 export type DebuffId = (typeof debuffs)[number]["id"];
 
 export type DebuffsMap = {
@@ -287,6 +288,7 @@ export type GameState = {
   };
   rerolls: number;
   loop: number;
+  baseCombo: number;
 };
 
 export type RunParams = {

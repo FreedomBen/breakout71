@@ -52,9 +52,7 @@ export function drawMainCanvasOnSmallCanvas(gameState: GameState) {
 
   recordCanvasCtx.textAlign = "left";
   recordCanvasCtx.fillText(
-    "Level " +
-      (gameState.currentLevel + 1) +
-       "/" + max_levels(gameState),
+    "Level " + (gameState.currentLevel + 1) + "/" + max_levels(gameState),
     12,
     12,
   );

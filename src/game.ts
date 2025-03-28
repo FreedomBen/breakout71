@@ -14,7 +14,8 @@ import {
 import { getAudioContext, playPendingSounds } from "./sounds";
 import {
   bannedUpgradesHTMl,
-  currentLevelInfo, debuffsHTMl,
+  currentLevelInfo,
+  debuffsHTMl,
   getRowColIndex,
   levelsListHTMl,
   max_levels,
@@ -447,25 +448,24 @@ document.addEventListener("visibilitychange", () => {
 async function openScorePanel() {
   pause(true);
   const cb = await asyncAlert({
-    title:
-        gameState.loop ?
-        t("score_panel.title_looped", {
-          loop:gameState.loop,
+    title: gameState.loop
+      ? t("score_panel.title_looped", {
+          loop: gameState.loop,
           score: gameState.score,
           level: gameState.currentLevel + 1,
           max: max_levels(gameState),
-        }):
-        t("score_panel.title", {
+        })
+      : t("score_panel.title", {
           score: gameState.score,
           level: gameState.currentLevel + 1,
           max: max_levels(gameState),
         }),
 
     content: [
-        gameState.isCreativeModeRun ? `<p>${t("score_panel.test_run")}</p>` : "",
-        pickedUpgradesHTMl(gameState),
-        levelsListHTMl(gameState),
-        debuffsHTMl(gameState),
+      gameState.isCreativeModeRun ? `<p>${t("score_panel.test_run")}</p>` : "",
+      pickedUpgradesHTMl(gameState),
+      levelsListHTMl(gameState),
+      debuffsHTMl(gameState),
     ],
     allowClose: true,
   });
@@ -1013,22 +1013,23 @@ restart(
       // // unbounded: 1,
       // // pierce_color: 1,
       // pierce: 1,
-streak_shots:1,
+      // streak_shots: 1,
       // multiball: 6,
-      // base_combo: 7,
-      // telekinesis: 2,
-      // yoyo: 2,
-      pierce:10,
+      base_combo: 7,
+      telekinesis: 2,
+      yoyo: 2,
+      pierce: 10,
       // metamorphosis: 1,
       // implosions: 1,
       // sturdy_bricks:5
-      extra_life:3
+      coin_magnet:2,
+      extra_life: 3,
     },
-    debuffs:{
+    debuffs: {
       // fragility:3
-negative_coins:1
-//       interference:20,
-    }
+      negative_coins: 100,
+      //       interference:20,
+    },
   }) ||
     {},
 );

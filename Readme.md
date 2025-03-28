@@ -14,16 +14,33 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [HackerNews thread](https://news.ycombinator.com/item?id=43183131)  
 
 
+# Premium: allow looping
+
+Allow players to loop the game :
+- [x] keep your score 
+- [x] keep 1 perk
+- [x] add one hasard
+- [x] add one HP to all bricks - as a debuff
+- [ ] advertise looping in normal game over screen  
+- real time stats as the option says. 
+- [x] Noise of coins against side is annoying.
+- Change look of loop, to avoid picking randomly at loop end. 
+- make red coins scarier,
+- add blue coins that only freeze puck.
+- Make fullscreen an option and turn it back on when playing
+- +1 combo de base par rerolls
+- +1 combo de base par vie restantes (pas attrapable) 
+
 # Todo  
+- [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
  
 - people assume unbounded  allows for wrap around
 - coin magnet and viscosity : only one level ~2.5
 - Boost Ascetism : give +2 or even +3 combo per brick destroyed
 - wind : move coins based on puck movement not position
 - show -N points in red when combo resets
-- reach : this is too punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row 
+- reach  is too punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row 
 - respawn: N% of bricks respawn after N seconds
-- [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
 - [jaceys] Move the restart button out of the menu, so that it is more easily accessible
 - [jaceys] A visual indication of whether a ball has hit a brick this serve
 - [obigre] Offer to level ups perks separately
@@ -31,17 +48,6 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - https://weblate.org/fr/
 
 
-# Premium: allow looping
-
-Allow players to loop the game :
-- [x] keep your score 
-- [x] keep 1 perk
-- [x] add one hasard
-- [ ] add one HP to all bricks
-- [ ] advertise looping in normal game over screen
-- [ ] save score at the end of first loop, in addition to the final one ?
-- [ ] check that stats like max level are correct
- 
 
 # System requirements 
 

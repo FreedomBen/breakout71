@@ -45,5 +45,5 @@ export const allLevels = rawLevelsList
 
 export const upgrades = rawUpgrades.map((u) => ({
   ...u,
-  icon: icons["icon:" + u.id]
+  icon: icons["icon:" + u.id],
 })) as Upgrade[];

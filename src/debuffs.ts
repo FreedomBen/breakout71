@@ -1,11 +1,11 @@
 import { t } from "./i18n/i18n";
-import {Debuff} from "./types";
+import { Debuff } from "./types";
 
 export const debuffs = [
   {
     id: "negative_coins",
     max: 20,
-    name: (lvl: number) => t("debuffs.negative_coins.help",{lvl}),
+    name: (lvl: number) => t("debuffs.negative_coins.help", { lvl }),
     help: (lvl: number) => t("debuffs.negative_coins.help", { lvl }),
   },
   {
@@ -17,8 +17,10 @@ export const debuffs = [
   {
     id: "banned",
     max: 50,
-    name: (lvl: number,banned:string) => t("debuffs.banned.description",{lvl,banned}),
-    help: (lvl: number,perk:string) => t("debuffs.banned.help", { lvl,perk }),
+    name: (lvl: number, banned: string) =>
+      t("debuffs.banned.description", { lvl, banned }),
+    help: (lvl: number, perk: string) =>
+      t("debuffs.banned.help", { lvl, perk }),
   },
   {
     id: "interference",
@@ -30,8 +32,14 @@ export const debuffs = [
   {
     id: "fragility",
     max: 5,
-    name: (lvl: number) => t("debuffs.fragility.help", { percent:lvl*20 }),
-    help: (lvl: number) => t("debuffs.fragility.help", { percent:lvl*20 }),
+    name: (lvl: number) => t("debuffs.fragility.help", { percent: lvl * 20 }),
+    help: (lvl: number) => t("debuffs.fragility.help", { percent: lvl * 20 }),
+  },
+  {
+    id: "sturdiness",
+    max: 5,
+    name: (lvl: number) => t("debuffs.sturdiness.help", { lvl }),
+    help: (lvl: number) => t("debuffs.sturdiness.help", { lvl }),
   },
 ] as const as Debuff[];
 

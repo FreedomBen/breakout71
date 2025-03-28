@@ -136,7 +136,7 @@ export function gameOver(title: string, intro: string) {
     ],
   }).then(() =>
     restart({
-      levelToAvoid: currentLevelInfo(gameState).name
+      levelToAvoid: currentLevelInfo(gameState).name,
     }),
   );
 }
@@ -271,6 +271,7 @@ export function getHistograms() {
       (r) => r.max_combo,
       "",
     );
+    runStats += makeHistogram(t("gameOver.stats.loops"), (r) => r.loops, "");
 
     if (runStats) {
       runStats =

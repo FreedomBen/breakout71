@@ -11,10 +11,9 @@ import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
 import { isOptionOn } from "./options";
 import { debuffs } from "./debuffs";
 
-
-export function getRunLevels(totalScoreAtRunStart:number, params: RunParams){
-   const firstLevel =
-   params?.level ? allLevels.filter((l) => l.name === params?.level)
+export function getRunLevels(totalScoreAtRunStart: number, params: RunParams) {
+  const firstLevel = params?.level
+    ? allLevels.filter((l) => l.name === params?.level)
     : [];
 
   const restInRandomOrder = allLevels
@@ -23,7 +22,7 @@ export function getRunLevels(totalScoreAtRunStart:number, params: RunParams){
     .filter((l) => l.name !== params?.levelToAvoid)
     .sort(() => Math.random() - 0.5);
 
-return  firstLevel.concat(
+  return firstLevel.concat(
     restInRandomOrder.slice(0, 7 + 3).sort((a, b) => a.sortKey - b.sortKey),
   );
 }
@@ -31,7 +30,7 @@ return  firstLevel.concat(
 export function newGameState(params: RunParams): GameState {
   const totalScoreAtRunStart = getTotalScore();
 
-  const runLevels =getRunLevels(totalScoreAtRunStart, params)
+  const runLevels = getRunLevels(totalScoreAtRunStart, params);
 
   const perks = { ...makeEmptyPerksMap(upgrades), ...(params?.perks || {}) };
 
@@ -41,7 +40,7 @@ export function newGameState(params: RunParams): GameState {
     currentLevel: 0,
     upgradesOfferedFor: -1,
     perks,
-    bannedPerks:makeEmptyPerksMap(upgrades),
+    bannedPerks: makeEmptyPerksMap(upgrades),
     debuffs: { ...emptyDebuffsMap(), ...(params?.debuffs || {}) },
     puckWidth: 200,
     baseSpeed: 12,
@@ -110,7 +109,8 @@ export function newGameState(params: RunParams): GameState {
     autoCleanUses: 0,
     ...defaultSounds(),
     rerolls: 0,
-    loop:0
+    loop: 0,
+    baseCombo: 1,
   };
   resetBalls(gameState);
 
