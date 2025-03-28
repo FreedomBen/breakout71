@@ -27,19 +27,21 @@ export const debuffs = [
     help: (lvl: number) => t("debuffs.interference.help", { lvl }),
   },
 
+  {
+    id: "fragility",
+    max: 5,
+    name: (lvl: number) => t("debuffs.fragility.help", { percent:lvl*20 }),
+    help: (lvl: number) => t("debuffs.fragility.help", { percent:lvl*20 }),
+  },
 ] as const as Debuff[];
 
 /*
 Possible challenges :
 
-  - interference : telekinesis works backward for lvl/2 seconds every 5 seconds (show timer ?)
   - exclusion : one of your current perks (except the kept one) is banned
   - fireworks : some bricks are explosive, you're not told which ones
-  -
 
-  - graphical effects like trail, contrast, blur to make it harder to see what's going on
   - ball creates a draft behind itself that blows coins in odd patterns
-  - bricks are invisible
   - downward wind
   - side wind
 - add red anti-coins that apply downgrades

@@ -137,6 +137,7 @@ interface LightFlash extends BaseFlash {
 export type RunStats = {
   started: number;
   levelsPlayed: number;
+  loops: number;
   runTime: number;
   coins_spawned: number;
   score: number;
@@ -292,7 +293,7 @@ export type RunParams = {
   level?: string;
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
-  debuffs?: boolean;
+  debuffs?: Partial<DebuffsMap>;
 };
 export type OptionDef = {
   default: boolean;

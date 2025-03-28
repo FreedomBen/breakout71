@@ -143,12 +143,12 @@ export function gameOver(title: string, intro: string) {
 
 export function getHistograms() {
   let runStats = "";
-  // TODO separate adventure and normal runs
   try {
     // Stores only top 100 runs
     let runsHistory = JSON.parse(
       localStorage.getItem("breakout_71_runs_history") || "[]",
     ) as RunHistoryItem[];
+
     runsHistory.sort((a, b) => a.score - b.score).reverse();
     runsHistory = runsHistory.slice(0, 100);
 

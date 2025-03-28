@@ -1008,22 +1008,26 @@ restart(
   (window.location.search.includes("stressTest") && {
     level: "Bird",
     perks: {
-      // sapper: 1,
+      // sapper: 5,
       // bigger_explosions: 20,
       // // unbounded: 1,
       // // pierce_color: 1,
       // pierce: 1,
-
+streak_shots:1,
       // multiball: 6,
       // base_combo: 7,
-      telekinesis: 2,
-      yoyo: 2,
+      // telekinesis: 2,
+      // yoyo: 2,
+      pierce:10,
       // metamorphosis: 1,
       // implosions: 1,
       // sturdy_bricks:5
+      extra_life:3
     },
     debuffs:{
-
+      // fragility:3
+negative_coins:1
+//       interference:20,
     }
   }) ||
     {},

@@ -116,7 +116,27 @@
 											</translation>
 											<translation>
 												<language>fr-FR</language>
-												<approved>true</approved>
+												<approved>false</approved>
+											</translation>
+										</translations>
+									</concept_node>
+								</children>
+							</folder_node>
+							<folder_node>
+								<name>fragility</name>
+								<children>
+									<concept_node>
+										<name>help</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>fr-FR</language>
+												<approved>false</approved>
 											</translation>
 										</translations>
 									</concept_node>
@@ -176,7 +196,7 @@
 											</translation>
 											<translation>
 												<language>fr-FR</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 										</translations>
 									</concept_node>
@@ -187,6 +207,36 @@
 					<folder_node>
 						<name>gameOver</name>
 						<children>
+							<concept_node>
+								<name>because_cursed_coin</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>because_cursed_coin_intro</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
 							<concept_node>
 								<name>cumulative_total</name>
 								<description/>

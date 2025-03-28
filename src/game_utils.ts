@@ -55,8 +55,7 @@ export function getPossibleUpgrades(gameState: GameState) {
 }
 
 export function max_levels(gameState: GameState) {
-  // TODO
-  return 2
+
   return 7 + gameState.perks.extra_levels;
 }
 
@@ -74,12 +73,10 @@ export function pickedUpgradesHTMl(gameState: GameState) {
 
 export function debuffsHTMl(gameState: GameState):string {
   const banned = upgrades.filter(u=>gameState.bannedPerks[u.id]).map(u=>u.name).join(', ')
-
-
-  let list = debuffs.filter(d=>gameState.debuffs[d.id]).map(d=>d.name(gameState.debuffs[d.id], banned)).join(', ');
+  let list = debuffs.filter(d=>gameState.debuffs[d.id]).map(d=>d.name(gameState.debuffs[d.id], banned)).join(' ');
 
   if (!list) return "";
-  return `<p>${t("score_panel.bebuffs_list")} : ${list}</p>`;
+  return `<p>${t("score_panel.bebuffs_list")} ${list}</p>`;
 }
 
 export function levelsListHTMl(gameState: GameState) {

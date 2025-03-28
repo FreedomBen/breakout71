@@ -158,7 +158,6 @@ There's also an easy mode for kids (slower ball).
 - [colin] piggy bank - bricks absorb coins that fall onto it, and release them back as they are broken, with added value : equivalent to Asceticism
 - [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks : really hard to balance with speeds and all
 - non brick-shaped bricks, tilted bricks,moving blocks : very difficult because of engine optimisations
-- transparents coins, why ?
 - 3 random perks immediately, or maybe "all level get twice as many upgrades, but they are applied randomly, and you aren't told which ones you have."
 - coins repulse coins, could get really laggy ?
 - russian roulette: 5/6 chances to get a free upgrade, 1/6 chance of game over. Not really fun 

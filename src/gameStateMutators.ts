@@ -36,7 +36,16 @@ import {icons, upgrades} from "./loadGameData";
 import {addToTotalScore, getCurrentMaxCoins, getCurrentMaxParticles,} from "./settings";
 import {background} from "./render";
 import {gameOver} from "./gameOver";
-import {brickIndex, fitSize, gameState, hasBrick, hitsSomething, openShortRunUpgradesPicker, pause,} from "./game";
+import {
+    brickIndex,
+    fitSize,
+    gameState,
+    hasBrick,
+    hitsSomething,
+    openShortRunUpgradesPicker,
+    pause,
+    play,
+} from "./game";
 import {stopRecording} from "./recording";
 import {isOptionOn} from "./options";
 import {isPremium} from "./premium";
@@ -324,6 +333,16 @@ export function explosionAt(
     if (gameState.perks.zen) {
         resetCombo(gameState, x, y);
     }
+    if(gameState.debuffs.fragility){
+        resetCombo(gameState, x, y);
+        forEachLiveOne(gameState.coins, (coin, index)=>{
+        //     Also destroys cursed coins
+            if(Math.random()<gameState.debuffs.fragility/5){
+                destroy(gameState.coins, index)
+            }
+        })
+
+    }
 }
 
 export function explodeBrick(
@@ -335,14 +354,14 @@ export function explodeBrick(
     const color = gameState.bricks[index];
     if (!color) return;
 
-    if (color === "black" || color === "transparent") {
+    if (color === "black") {
         const x = brickCenterX(gameState, index),
             y = brickCenterY(gameState, index);
 
-        if (color === "transparent") {
-            schedulGameSound(gameState, "void", x, 1);
-            resetCombo(gameState, x, y);
-        }
+        // if (color === "transparent") {
+        //     schedulGameSound(gameState, "void", x, 1);
+        //     resetCombo(gameState, x, y);
+        // }
         setBrick(gameState, index, "");
         explosionAt(gameState, index, x, y, ball);
     } else if (color) {
@@ -534,7 +553,6 @@ export function schedulGameSound(
 export function addToScore(gameState: GameState, coin: Coin) {
     gameState.score += coin.points;
     gameState.lastScoreIncrease = gameState.levelTime;
-
     addToTotalScore(gameState, coin.points);
     if (
         gameState.score > gameState.highScore &&
@@ -543,7 +561,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
         gameState.highScore = gameState.score;
         localStorage.setItem("breakout-3-hs", gameState.score.toString());
     }
-    if (!isOptionOn("basic")) {
+    if (!isOptionOn("basic") ) {
         makeParticle(
             gameState,
             coin.previousX,
@@ -557,11 +575,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
         );
     }
 
-    if (coin.points > 0) {
-        schedulGameSound(gameState, "coinCatch", coin.x, 1);
-    } else {
-        resetCombo(gameState, coin.x, coin.y);
-    }
+    schedulGameSound(gameState, "coinCatch", coin.x, 1);
     gameState.runStatistics.score += coin.points;
     if (gameState.perks.asceticism) {
         resetCombo(gameState, coin.x, coin.y);
@@ -571,6 +585,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
 export async function gotoNextLoop(gameState: GameState) {
     pause(false)
     gameState.loop++
+    gameState.runStatistics.loops++
     gameState.runLevels = getRunLevels(gameState.totalScoreAtRunStart, {})
     gameState.upgradesOfferedFor = -1
     // Add random debuf
@@ -867,7 +882,7 @@ export function bordersHitCheck(
                     (gameState.offsetX + gameState.gameZoneWidth / 2)) /
                 gameState.gameZoneWidth) *
             gameState.perks.wind *
-            0.5;
+            0.5 ;
     }
 
     let vhit = 0,
@@ -1015,7 +1030,7 @@ export function gameStateTick(
                 });
             }
 
-            const ratio = 1 - (gameState.perks.viscosity * 0.03 + 0.005) * frames;
+            const ratio = 1 - ((coin.color==='crimson' ? 2:gameState.perks.viscosity)* 0.03 + 0.005) * frames;
 
             coin.vy *= ratio;
             coin.vx *= ratio;
@@ -1061,7 +1076,16 @@ export function gameStateTick(
                 // a bit of margin to be nice , negative in case it's a negative coin
                 gameState.puckHeight * (coin.points ? 1 : -1)
             ) {
-                addToScore(gameState, coin);
+                if(coin.points) {
+                    addToScore(gameState, coin);
+                }else if(gameState.perks.extra_life && gameState.balls.length){
+                    justLostALife(gameState, gameState.balls[0], coin.x,coin.y)
+                }else{
+                    gameOver(
+                        t('gameOver.because_cursed_coin'),
+                        t('gameOver.because_cursed_coin_intro')
+                    )
+                }
                 destroy(gameState.coins, coinIndex);
             } else if (coin.y > gameState.canvasHeight + coinRadius) {
                 destroy(gameState.coins, coinIndex);
@@ -1317,12 +1341,15 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
         ball.vx +=
             ((gameState.puckPosition - ball.x) / 1000) *
             delta *
-            gameState.perks.telekinesis;
+            gameState.perks.telekinesis
+            * interferenceFactor(gameState)
+        ;
     }
     if (isYoyoActive(gameState, ball)) {
         speedLimitDampener += 3;
         ball.vx +=
-            ((gameState.puckPosition - ball.x) / 1000) * delta * gameState.perks.yoyo;
+            ((gameState.puckPosition - ball.x) / 1000) * delta * gameState.perks.yoyo
+            * interferenceFactor(gameState);
     }
     if (
         ball.vx * ball.vx + ball.vy * ball.vy <
@@ -1466,31 +1493,8 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
             schedulGameSound(gameState, "wallBeep", ball.x, 1);
         } else {
             ball.vy *= -1;
+            justLostALife(gameState, ball, ball.x,ball.y)
 
-            gameState.perks.extra_life -= 1;
-            if (gameState.perks.extra_life < 0) {
-                gameState.perks.extra_life = 0;
-            } else if (gameState.perks.sacrifice) {
-                gameState.bricks.forEach(
-                    (color, index) => color && explodeBrick(gameState, index, ball, true),
-                );
-            }
-
-            schedulGameSound(gameState, "lifeLost", ball.x, 1);
-            if (!isOptionOn("basic")) {
-                for (let i = 0; i < 10; i++)
-                    makeParticle(
-                        gameState,
-                        ball.x,
-                        ball.y,
-                        Math.random() * gameState.baseSpeed * 3,
-                        gameState.baseSpeed * 3,
-                        "red",
-                        false,
-                        gameState.coinSize / 2,
-                        150,
-                    );
-            }
         }
         if (gameState.perks.streak_shots) {
             resetCombo(gameState, ball.x, ball.y);
@@ -1667,6 +1671,34 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     }
 }
 
+    function justLostALife(gameState:GameState, ball:Ball, x:number,y:number){
+        gameState.perks.extra_life -= 1;
+        if (gameState.perks.extra_life < 0) {
+            gameState.perks.extra_life = 0;
+        } else if (gameState.perks.sacrifice) {
+            gameState.bricks.forEach(
+                (color, index) => color && explodeBrick(gameState, index, ball, true),
+            );
+        }
+
+        schedulGameSound(gameState, "lifeLost", ball.x, 1);
+
+        if (!isOptionOn("basic")) {
+            for (let i = 0; i < 10; i++)
+                makeParticle(
+                    gameState,
+                    x,
+                    y,
+                    Math.random() * gameState.baseSpeed * 3,
+                    gameState.baseSpeed * 3,
+                    "red",
+                    false,
+                    gameState.coinSize / 2,
+                    150,
+                );
+        }
+    }
+
 function makeCoin(
     gameState: GameState,
     x: number,
@@ -1676,9 +1708,9 @@ function makeCoin(
     color = "gold",
     points = 1,
 ) {
-    if (gameState.debuffs.negative_coins > Math.random() * 100) {
+    if (gameState.debuffs.negative_coins *points> Math.random() * 10000) {
         points = 0;
-        color = "transparent";
+        color = "crimson";
     }
     append(gameState.coins, (p: Partial<Coin>) => {
         p.x = x;
@@ -1696,6 +1728,13 @@ function makeCoin(
         p.weight = 0.8 + Math.random() * 0.2 + Math.min(2, points * 0.01);
         p.points = points;
     });
+}
+
+export function interferenceFactor(gameState:GameState){
+    if(!gameState.debuffs.interference) return 1
+    const cycleLength = (7+gameState.debuffs.interference)*1000
+    const position = gameState.levelTime % cycleLength
+    return  position>7000 ? -1 :1
 }
 
 function makeParticle(
