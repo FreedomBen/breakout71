@@ -36,11 +36,11 @@ export function render(gameState: GameState) {
   if (!width || !height) return;
 
   if (gameState.currentLevel || gameState.levelTime) {
-    menuLabel.innerText = gameState.isAdventureMode
-      ? t("play.current_lvl_adventure", {
+    menuLabel.innerText = gameState.loop? t("play.current_lvl_loop", {
           level: gameState.currentLevel + 1,
-        })
-      : t("play.current_lvl", {
+          max: max_levels(gameState),
+      loop:gameState.loop
+        }) :  t("play.current_lvl", {
           level: gameState.currentLevel + 1,
           max: max_levels(gameState),
         });
@@ -88,12 +88,7 @@ export function render(gameState: GameState) {
       );
     });
     ctx.globalAlpha = 1;
-    forEachLiveOne(gameState.lights, (flash) => {
-      const { x, y, time, color, size, duration } = flash;
-      const elapsed = gameState.levelTime - time;
-      ctx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2);
-      drawFuzzyBall(ctx, color, size, x, y);
-    });
+
     forEachLiveOne(gameState.particles, (flash) => {
       const { x, y, time, color, size, duration } = flash;
       const elapsed = gameState.levelTime - time;
@@ -166,8 +161,10 @@ export function render(gameState: GameState) {
   // Coins
   ctx.globalAlpha = 1;
   forEachLiveOne(gameState.coins, (coin) => {
-    ctx.globalCompositeOperation =
-      coin.color === "gold" || level.color ? "source-over" : "screen";
+
+    ctx.globalCompositeOperation ='source-over'
+    // ctx.globalCompositeOperation =
+    //   coin.color === "gold" || level.color ? "source-over" : "screen";
     drawCoin(
       ctx,
       coin.color,
@@ -199,6 +196,15 @@ export function render(gameState: GameState) {
 
   ctx.globalCompositeOperation = "source-over";
   renderAllBricks();
+
+
+  ctx.globalCompositeOperation = "screen";
+ forEachLiveOne(gameState.lights, (flash) => {
+    const { x, y, time, color, size, duration } = flash;
+    const elapsed = gameState.levelTime - time;
+    ctx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2) * 0.5;
+    drawBrick(ctx, color, x,y, -1)
+  });
 
   ctx.globalCompositeOperation = "screen";
   forEachLiveOne(gameState.texts, (flash) => {
@@ -495,8 +501,7 @@ export function renderAllBricks() {
       redBorderOnBricksWithWrongColor ||
       redColorOnAllBricks ||
       gameState.perks.reach ||
-      gameState.perks.zen ||
-      gameState.debuffs.negative_bricks
+      gameState.perks.zen
     )
   ) {
     offset = 0;

@@ -13,7 +13,8 @@ import {
 } from "./types";
 import { getAudioContext, playPendingSounds } from "./sounds";
 import {
-  currentLevelInfo,
+  bannedUpgradesHTMl,
+  currentLevelInfo, debuffsHTMl,
   getRowColIndex,
   levelsListHTMl,
   max_levels,
@@ -446,25 +447,25 @@ document.addEventListener("visibilitychange", () => {
 async function openScorePanel() {
   pause(true);
   const cb = await asyncAlert({
-    title: gameState.isAdventureMode
-      ? t("score_panel.title_adventure", {
+    title:
+        gameState.loop ?
+        t("score_panel.title_looped", {
+          loop:gameState.loop,
           score: gameState.score,
           level: gameState.currentLevel + 1,
           max: max_levels(gameState),
-        })
-      : t("score_panel.title", {
+        }):
+        t("score_panel.title", {
           score: gameState.score,
           level: gameState.currentLevel + 1,
           max: max_levels(gameState),
         }),
 
     content: [
-      `
-            ${gameState.isCreativeModeRun ? `<p>${t("score_panel.test_run")}</p>` : ""}
- ${pickedUpgradesHTMl(gameState)} 
-            
-        <p>${levelsListHTMl(gameState)}</p>
-        `,
+        gameState.isCreativeModeRun ? `<p>${t("score_panel.test_run")}</p>` : "",
+        pickedUpgradesHTMl(gameState),
+        levelsListHTMl(gameState),
+        debuffsHTMl(gameState),
     ],
     allowClose: true,
   });
@@ -1007,32 +1008,24 @@ restart(
   (window.location.search.includes("stressTest") && {
     level: "Bird",
     perks: {
-      sapper: 10,
-      bigger_explosions: 1,
-      unbounded: 1,
-      pierce_color: 1,
-      pierce: 20,
-      multiball: 6,
-      base_combo: 7,
+      // sapper: 1,
+      // bigger_explosions: 20,
+      // // unbounded: 1,
+      // // pierce_color: 1,
+      // pierce: 1,
+
+      // multiball: 6,
+      // base_combo: 7,
       telekinesis: 2,
       yoyo: 2,
-      metamorphosis: 1,
-      implosions: 1,
+      // metamorphosis: 1,
+      // implosions: 1,
+      // sturdy_bricks:5
     },
+    debuffs:{
+
+    }
   }) ||
-    (window.location.search.includes("adventure") && {
-      adventure: true,
-      perks: {
-        // pierce:15
-      },
-      debuffs: {
-        // side_wind:20
-        // negative_bricks:3,
-        // negative_coins:5,
-        // void_coins_on_touch: 1,
-        // void_brick_on_touch: 1,
-      },
-    }) ||
     {},
 );
 

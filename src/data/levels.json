@@ -860,7 +860,7 @@
   {
     "name": "icon:unbounded",
     "size": 9,
-    "bricks": "y_WWWWW_y__________yttttt____ttttt__y____W__y______________y_y____________WWW___y",
+    "bricks": "rrWWWWWrrrr_____rrrrtttttrrrrttt__rrrr____yrrrr_____rrrr___y_yWrr_____rrrrWWW__ry",
     "svg": null,
     "color": ""
   },
@@ -1029,13 +1029,6 @@
     "name": "icon:premium_active",
     "size": 11,
     "bricks": "__y____y___y____y____y_y__yby__y______y______yy_yty_yy_ybbytttybbyybbytttybby_ybytttyby___yyyyyyy____yyyyyyy_____________",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "name": "icon:adventure_mode",
-    "size": 11,
-    "bricks": "__________________________________ttt___bbb_bttttbbbbbbbb__tbt__bbbbbbbbttttb_bbb___ttt__________________________________",
     "svg": null,
     "color": ""
   },

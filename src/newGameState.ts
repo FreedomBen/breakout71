@@ -11,10 +11,10 @@ import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
 import { isOptionOn } from "./options";
 import { debuffs } from "./debuffs";
 
-export function newGameState(params: RunParams): GameState {
-  const totalScoreAtRunStart = getTotalScore();
-  const firstLevel = params?.level
-    ? allLevels.filter((l) => l.name === params?.level)
+
+export function getRunLevels(totalScoreAtRunStart:number, params: RunParams){
+   const firstLevel =
+   params?.level ? allLevels.filter((l) => l.name === params?.level)
     : [];
 
   const restInRandomOrder = allLevels
@@ -23,9 +23,15 @@ export function newGameState(params: RunParams): GameState {
     .filter((l) => l.name !== params?.levelToAvoid)
     .sort(() => Math.random() - 0.5);
 
-  const runLevels = firstLevel.concat(
+return  firstLevel.concat(
     restInRandomOrder.slice(0, 7 + 3).sort((a, b) => a.sortKey - b.sortKey),
   );
+}
+
+export function newGameState(params: RunParams): GameState {
+  const totalScoreAtRunStart = getTotalScore();
+
+  const runLevels =getRunLevels(totalScoreAtRunStart, params)
 
   const perks = { ...makeEmptyPerksMap(upgrades), ...(params?.perks || {}) };
 
@@ -35,6 +41,7 @@ export function newGameState(params: RunParams): GameState {
     currentLevel: 0,
     upgradesOfferedFor: -1,
     perks,
+    bannedPerks:makeEmptyPerksMap(upgrades),
     debuffs: { ...emptyDebuffsMap(), ...(params?.debuffs || {}) },
     puckWidth: 200,
     baseSpeed: 12,
@@ -102,13 +109,12 @@ export function newGameState(params: RunParams): GameState {
     needsRender: true,
     autoCleanUses: 0,
     ...defaultSounds(),
-
-    isAdventureMode: !!params?.adventure,
     rerolls: 0,
+    loop:0
   };
   resetBalls(gameState);
 
-  if (!sumOfValues(gameState.perks) && !params?.adventure) {
+  if (!sumOfValues(gameState.perks)) {
     const giftable = getPossibleUpgrades(gameState).filter((u) => u.giftable);
     const randomGift =
       (isOptionOn("easy") && "slow_down") ||

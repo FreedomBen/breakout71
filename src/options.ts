@@ -19,10 +19,20 @@ export const options = {
     name: t("main_menu.basic"),
     help: t("main_menu.basic_help"),
   },
+  colorful_coins: {
+    default: false,
+    name: t("main_menu.colorful_coins"),
+    help: t("main_menu.colorful_coins_help"),
+  },
   show_fps: {
     default: false,
     name: t("main_menu.show_fps"),
     help: t("main_menu.show_fps_help"),
+  },
+  show_stats: {
+    default: false,
+    name: t("main_menu.show_stats"),
+    help: t("main_menu.show_stats_help"),
   },
   pointerLock: {
     default: false,

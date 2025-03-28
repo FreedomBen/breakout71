@@ -13,8 +13,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 - [HackerNews thread](https://news.ycombinator.com/item?id=43183131)  
 
+
 # Todo  
-- bring back detailed help of perks as "intel"
+ 
 - people assume unbounded  allows for wrap around
 - coin magnet and viscosity : only one level ~2.5
 - Boost Ascetism : give +2 or even +3 combo per brick destroyed
@@ -22,17 +23,24 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - show -N points in red when combo resets
 - reach : this is too punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row 
 - respawn: N% of bricks respawn after N seconds
+- [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
+- [jaceys] Move the restart button out of the menu, so that it is more easily accessible
+- [jaceys] A visual indication of whether a ball has hit a brick this serve
+- [obigre] Offer to level ups perks separately
+- bring back detailed help of perks as "intel"
+- https://weblate.org/fr/
 
 
-# Premium: infinite mode
+# Premium: allow looping
 
-Allow players to loop the game, adding one hasard per loop, making it harder and harder to exploit each strategy. 
-The high score are separated from the main mode. The scores are added for unlock. You no longer get upgrades after the first 7 levels.
-The score you make in each level is instead multiplied by the number of "upgrades" and "choices" you would have had.
-
-The score is your "fuel", and lets you pick the next level from a list. Each level has a cost, preview, and one or two downgrades. 
-Each downgrade acts as a score multiplier. 
-Your goal is no longer to score higher, but to go farther
+Allow players to loop the game :
+- [x] keep your score 
+- [x] keep 1 perk
+- [x] add one hasard
+- [ ] add one HP to all bricks
+- [ ] advertise looping in normal game over screen
+- [ ] save score at the end of first loop, in addition to the final one ?
+- [ ] check that stats like max level are correct
  
 
 # System requirements 
@@ -164,7 +172,18 @@ There's also an easy mode for kids (slower ball).
 
 # extra levels
 
-- Good games : FTL, Nova drift, Noita, Enter the gungeon, Zero Sivert, Factorio, Swarm 
+- Good games : 
+  - FTL
+  - Nova drift
+  - Noita
+  - Enter the gungeon
+  - Zero Sivert
+  - Factorio
+  - Swarm
+  - Nuclear throne
+  - Brigador
+
+
 - letters and an associated word or name
 - famous characters and movies
 - fruits
@@ -224,3 +243,13 @@ https://prohama.com/dog-21-pattern/
 
 I wanted an APK to start in fullscreen and be able to list it on fdroid and the play store. I started with an empty view and went to work trimming it down, with the help of that tutorial 
 https://github.com/fractalwrench/ApkGolf/blob/master/blog/BLOG_POST.md
+
+
+# Other noteworthy games in the breakout genre
+
+LBreakoutHD : https://sourceforge.net/p/lgames/code/HEAD/tree/trunk/lbreakouthd/
+
+Wizorb https://store.steampowered.com/app/207420/Wizorb/
+
+Rollers of the realm : narratif, chaque balle est un aventurier
+https://store.steampowered.com/app/262470/Rollers_of_the_Realm/

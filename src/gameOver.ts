@@ -136,8 +136,7 @@ export function gameOver(title: string, intro: string) {
     ],
   }).then(() =>
     restart({
-      levelToAvoid: currentLevelInfo(gameState).name,
-      adventure: gameState.isAdventureMode,
+      levelToAvoid: currentLevelInfo(gameState).name
     }),
   );
 }

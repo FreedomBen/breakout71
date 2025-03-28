@@ -1,56 +1,47 @@
 import { t } from "./i18n/i18n";
+import {Debuff} from "./types";
 
 export const debuffs = [
   {
     id: "negative_coins",
     max: 20,
-    name: t("debuffs.negative_coins.name"),
+    name: (lvl: number) => t("debuffs.negative_coins.help",{lvl}),
     help: (lvl: number) => t("debuffs.negative_coins.help", { lvl }),
   },
   {
-    id: "negative_bricks",
+    id: "more_bombs",
     max: 20,
-    name: t("debuffs.negative_bricks.name"),
-    help: (lvl: number) => t("debuffs.negative_bricks.help", { lvl }),
+    name: (lvl: number) => t("debuffs.more_bombs.help", { lvl }),
+    help: (lvl: number) => t("debuffs.more_bombs.help", { lvl }),
+  },
+  {
+    id: "banned",
+    max: 50,
+    name: (lvl: number,banned:string) => t("debuffs.banned.description",{lvl,banned}),
+    help: (lvl: number,perk:string) => t("debuffs.banned.help", { lvl,perk }),
+  },
+  {
+    id: "interference",
+    max: 20,
+    name: (lvl: number) => t("debuffs.interference.help", { lvl }),
+    help: (lvl: number) => t("debuffs.interference.help", { lvl }),
   },
 
-  {
-    id: "void_coins_on_touch",
-    max: 1,
-    name: t("debuffs.void_coins_on_touch.name"),
-    help: (lvl: number) => t("debuffs.void_coins_on_touch.help", { lvl }),
-  },
-  {
-    id: "void_brick_on_touch",
-    max: 1,
-    name: t("debuffs.void_brick_on_touch.name"),
-    help: (lvl: number) => t("debuffs.void_brick_on_touch.help", { lvl }),
-  },
-  {
-    id: "downward_wind",
-    max: 20,
-    name: t("debuffs.downward_wind.name"),
-    help: (lvl: number) => t("debuffs.downward_wind.help", { lvl }),
-  },
-
-  {
-    id: "side_wind",
-    max: 20,
-    name: t("debuffs.side_wind.name"),
-    help: (lvl: number) => t("debuffs.side_wind.help", { lvl }),
-  },
-] as const;
+] as const as Debuff[];
 
 /*
 Possible challenges :
 
-  - add a force field for 10s that negates hots start
-  - other perks can be randomly turned off
-  - ball keeps accelerating until unplayable
+  - interference : telekinesis works backward for lvl/2 seconds every 5 seconds (show timer ?)
+  - exclusion : one of your current perks (except the kept one) is banned
+  - fireworks : some bricks are explosive, you're not told which ones
+  -
+
   - graphical effects like trail, contrast, blur to make it harder to see what's going on
   - ball creates a draft behind itself that blows coins in odd patterns
   - bricks are invisible
-
+  - downward wind
+  - side wind
 - add red anti-coins that apply downgrades
   - destroy your combo
   - hurt your score

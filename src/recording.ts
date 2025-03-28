@@ -54,7 +54,7 @@ export function drawMainCanvasOnSmallCanvas(gameState: GameState) {
   recordCanvasCtx.fillText(
     "Level " +
       (gameState.currentLevel + 1) +
-      (gameState.isAdventureMode ? "" : "/" + max_levels(gameState)),
+       "/" + max_levels(gameState),
     12,
     12,
   );

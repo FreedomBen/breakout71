@@ -1,6 +1,7 @@
 import { Ball, GameState, PerkId, PerksMap } from "./types";
 import { icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
+import {debuffs} from "./debuffs";
 
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
@@ -54,6 +55,8 @@ export function getPossibleUpgrades(gameState: GameState) {
 }
 
 export function max_levels(gameState: GameState) {
+  // TODO
+  return 2
   return 7 + gameState.perks.extra_levels;
 }
 
@@ -61,14 +64,25 @@ export function pickedUpgradesHTMl(gameState: GameState) {
   let list = "";
   for (let u of upgrades) {
     for (let i = 0; i < gameState.perks[u.id]; i++)
-      list += `<span  title="${u.name}">${icons["icon:" + u.id]}</span>`;
+      list += `<span  title="${u.name} : ${u.help(gameState.perks[u.id])}">${icons["icon:" + u.id]}</span>`;
   }
 
   if (!list) return "";
   return ` <p>${t("score_panel.upgrades_picked")}</p> <p>${list}</p>`;
 }
+
+
+export function debuffsHTMl(gameState: GameState):string {
+  const banned = upgrades.filter(u=>gameState.bannedPerks[u.id]).map(u=>u.name).join(', ')
+
+
+  let list = debuffs.filter(d=>gameState.debuffs[d.id]).map(d=>d.name(gameState.debuffs[d.id], banned)).join(', ');
+
+  if (!list) return "";
+  return `<p>${t("score_panel.bebuffs_list")} : ${list}</p>`;
+}
+
 export function levelsListHTMl(gameState: GameState) {
-  if (gameState.isAdventureMode) return "";
   if (!gameState.perks.clairvoyant) return "";
   let list = "";
   for (let i = 0; i < max_levels(gameState); i++) {

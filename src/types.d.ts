@@ -27,10 +27,6 @@ export type Palette = { [k: string]: string };
 export type Upgrade = {
   threshold: number;
   giftable: boolean;
-  // Offered in adventure mode
-  adventure: boolean;
-  // offered in normal mode
-  normal: boolean;
   id: PerkId;
   name: string;
   icon: string;
@@ -158,6 +154,12 @@ export type PerksMap = {
   [k in PerkId]: number;
 };
 
+type Debuff={
+  id: DebuffId;
+  max:number;
+  name:(lvl: number,banned:string)=>string;
+  help:(lvl: number,perk:string)=>string;
+}
 export type DebuffId = (typeof debuffs)[number]["id"];
 
 export type DebuffsMap = {
@@ -208,6 +210,7 @@ export type GameState = {
   puckWidth: number;
   // perks the user currently has
   perks: PerksMap;
+  bannedPerks: PerksMap;
   debuffs: DebuffsMap;
   // Base speed of the ball in pixels/tick
   baseSpeed: number;
@@ -281,15 +284,14 @@ export type GameState = {
     colorChange: { vol: number; x: number };
     void: { vol: number; x: number };
   };
-  isAdventureMode: boolean;
   rerolls: number;
+  loop: number;
 };
 
 export type RunParams = {
   level?: string;
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
-  adventure?: boolean;
   debuffs?: boolean;
 };
 export type OptionDef = {
