@@ -11,7 +11,7 @@ import {
 } from "./game_utils";
 import {colorString, GameState} from "./types";
 import {t} from "./i18n/i18n";
-import {gameState} from "./game";
+import {gameState, lastMeasuredFPS} from "./game";
 import {isOptionOn} from "./options";
 
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
@@ -54,7 +54,17 @@ export function render(gameState: GameState) {
     const catchRate = gameState.levelSpawnedCoins ?
          (gameState.levelSpawnedCoins - gameState.levelLostCoins)/gameState.levelSpawnedCoins :1
 
-    scoreDisplay.innerHTML= (isOptionOn('show_stats') ? ` 
+    scoreDisplay.innerHTML=
+              (isOptionOn("show_fps") ? ` 
+               <span class="${(Math.abs(lastMeasuredFPS-60)<2  &&  ' ') || (Math.abs(lastMeasuredFPS-60)<10  && 'good')||'bad'}">
+            ${lastMeasuredFPS} FPS
+        </span><span> / </span>
+         
+            `:'')+
+
+
+
+        (isOptionOn('show_stats') ? ` 
         <span class="${(catchRate==1 && 'great') || (catchRate>0.9 && 'good')||''}">
             ${Math.floor(catchRate*100)}%
         </span><span> / </span>

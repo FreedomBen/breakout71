@@ -386,21 +386,10 @@ export function tick() {
 }
 
 let FPSCounter = 0;
-let FPSDisplay = document.getElementById("FPSDisplay") as HTMLDivElement;
+export let lastMeasuredFPS = 60;
+
 setInterval(() => {
-    if (isOptionOn("show_fps")) {
-        FPSDisplay.innerText =
-            FPSCounter +
-            " FPS " +
-            liveCount(gameState.coins) +
-            " COINS " +
-            (liveCount(gameState.particles) +
-                liveCount(gameState.texts) +
-                liveCount(gameState.lights)) +
-            " PARTICLES ";
-    } else {
-        FPSDisplay.innerText = "";
-    }
+    lastMeasuredFPS = FPSCounter
     FPSCounter = 0;
 }, 1000);
 

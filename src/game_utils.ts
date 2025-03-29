@@ -55,7 +55,7 @@ export function getRowColIndex(gameState: GameState, row: number, col: number) {
 
 export function getPossibleUpgrades(gameState: GameState) {
   return upgrades
-    .filter((u) => gameState.totalScoreAtRunStart >= u.threshold)
+    .filter((u) => gameState.totalScoreAtRunStart >= u.threshold || gameState.loop>0)
     .filter((u) => !u?.requires || gameState.perks[u?.requires]);
 }
 

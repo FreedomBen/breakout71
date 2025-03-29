@@ -35,13 +35,11 @@ already maxed out.
 - [jaceys] A visual indication of whether a ball has hit a brick this serve
 - Top down /reach: punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row
 
-
-
 # Todo before next release
-  
 
-# 29 march 2025
+# Next 
 
+- disabled auto-release on fdroid of every web version, as there's a big delay and bugs woudl stay for a long time
 - [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
 - added a white border around all coins, to make dark ones visible on dark bg
 - Removed all previous loop only hazards
@@ -66,12 +64,19 @@ already maxed out.
   - shocks lvl 2+ make bigger explosions
 - Make fullscreen an option and turn it back on when playing
 - Made the "combo lost" text last 500ms instead of the pointless 150ms 
-
-# 28 march 2025 
-
-- loop : added red/blue coins (red kill you, blue freeze puck) (removed later) 
-- added more hazard that were then removed
 - add a toggle to switch between the “coin” design and colored bubbles
+
+# 29049575
+
+- added rerolls
+- Sacrifice : clear screen instead of doubling coins
+
+# 29048147
+
+- Ascetism : render coins with red border if there's a combo
+- Warn about unbounded
+- Red border dashes
+
 
 # UX / gameplay
 

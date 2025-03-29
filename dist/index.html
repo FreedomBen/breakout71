@@ -76,28 +76,12 @@ body {
   color: #90ee90;
 }
 
-#score span.good {
+#score span.good, #score span.bad {
   color: #fff;
 }
 
 #menu {
   left: 0;
-}
-
-#FPSDisplay {
-  z-index: 1;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-  opacity: .8;
-  color: #fff;
-  transform-origin: 0 0;
-  padding: 0;
-  line-height: 20px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  transform: rotate(-90deg);
 }
 
 body.has-alert-open {
@@ -629,6 +613,7 @@ parcelHelpers.export(exports, "brickIndex", ()=>brickIndex);
 parcelHelpers.export(exports, "hasBrick", ()=>hasBrick);
 parcelHelpers.export(exports, "hitsSomething", ()=>hitsSomething);
 parcelHelpers.export(exports, "tick", ()=>tick);
+parcelHelpers.export(exports, "lastMeasuredFPS", ()=>lastMeasuredFPS);
 parcelHelpers.export(exports, "openMainMenu", ()=>openMainMenu);
 parcelHelpers.export(exports, "confirmRestart", ()=>confirmRestart);
 parcelHelpers.export(exports, "setKeyPressed", ()=>setKeyPressed);
@@ -881,10 +866,9 @@ function tick() {
     FPSCounter++;
 }
 let FPSCounter = 0;
-let FPSDisplay = document.getElementById("FPSDisplay");
+let lastMeasuredFPS = 60;
 setInterval(()=>{
-    if ((0, _options.isOptionOn)("show_fps")) FPSDisplay.innerText = FPSCounter + " FPS " + (0, _gameStateMutators.liveCount)(gameState.coins) + " COINS " + ((0, _gameStateMutators.liveCount)(gameState.particles) + (0, _gameStateMutators.liveCount)(gameState.texts) + (0, _gameStateMutators.liveCount)(gameState.lights)) + " PARTICLES ";
-    else FPSDisplay.innerText = "";
+    lastMeasuredFPS = FPSCounter;
     FPSCounter = 0;
 }, 1000);
 window.addEventListener("visibilitychange", ()=>{
@@ -2173,7 +2157,7 @@ function getRowColIndex(gameState, row, col) {
     return row * gameState.gridSize + col;
 }
 function getPossibleUpgrades(gameState) {
-    return (0, _loadGameData.upgrades).filter((u)=>gameState.totalScoreAtRunStart >= u.threshold).filter((u)=>!u?.requires || gameState.perks[u?.requires]);
+    return (0, _loadGameData.upgrades).filter((u)=>gameState.totalScoreAtRunStart >= u.threshold || gameState.loop > 0).filter((u)=>!u?.requires || gameState.perks[u?.requires]);
 }
 function max_levels(gameState) {
     return gameState.levelsPerLoop + gameState.perks.extra_levels;
@@ -3549,7 +3533,12 @@ function render(gameState) {
     });
     else menuLabel.innerText = (0, _i18N.t)("play.menu_label");
     const catchRate = gameState.levelSpawnedCoins ? (gameState.levelSpawnedCoins - gameState.levelLostCoins) / gameState.levelSpawnedCoins : 1;
-    scoreDisplay.innerHTML = ((0, _options.isOptionOn)('show_stats') ? ` 
+    scoreDisplay.innerHTML = ((0, _options.isOptionOn)("show_fps") ? ` 
+               <span class="${Math.abs((0, _game.lastMeasuredFPS) - 60) < 2 && ' ' || Math.abs((0, _game.lastMeasuredFPS) - 60) < 10 && 'good' || 'bad'}">
+            ${0, _game.lastMeasuredFPS} FPS
+        </span><span> / </span>
+         
+            ` : '') + ((0, _options.isOptionOn)('show_stats') ? ` 
         <span class="${catchRate == 1 && 'great' || catchRate > 0.9 && 'good' || ''}">
             ${Math.floor(catchRate * 100)}%
         </span><span> / </span>

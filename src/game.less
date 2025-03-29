@@ -1,10 +1,9 @@
 * {
-  font-family:
-    Courier New,
-    Courier,
-    Lucida Sans Typewriter,
-    Lucida Typewriter,
-    monospace;
+  font-family: Courier New,
+  Courier,
+  Lucida Sans Typewriter,
+  Lucida Typewriter,
+  monospace;
   box-sizing: border-box;
 }
 
@@ -45,11 +44,13 @@ body {
   min-width: 40px;
   min-height: 40px;
   line-height: 20px;
+
   &:hover,
   &:focus {
     background: rgba(0, 0, 0, 0.3);
     cursor: pointer;
   }
+
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
 }
 
@@ -57,20 +58,25 @@ body {
   right: 0;
   color: white;
   transition: color 0.3s;
+
   &.active {
     color: gold;
     transition: color 0.01s;
   }
 
-  span{
+  span {
     color: #333;
 
-  &.great{
-    color: lightgreen;
-  }
-  &.good{
-    color: white;
-  }
+    &.great {
+      color: lightgreen;
+    }
+
+    &.good {
+      color: white;
+    }
+    &.bad {
+      color: white;
+    }
   }
 }
 
@@ -78,32 +84,15 @@ body {
   left: 0;
 }
 
-#FPSDisplay {
-  z-index: 1;
-  white-space: nowrap;
-  padding: 10px;
-  line-height: 20px;
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.8;
-
-  color: white;
-  padding: 0;
-  position: fixed;
-
-  bottom: 0;
-  left: 0;
-  transform-origin: top left;
-  transform: rotate(-90deg);
-}
-
 body.has-alert-open {
   height: auto;
   overflow: visible;
 }
+
 body:not(.has-alert-open) #popup {
   display: none;
 }
+
 #popup {
   &::before {
     z-index: 10;
@@ -342,6 +331,7 @@ body:not(.has-alert-open) #popup {
       }
     }
   }
+
   & > span:not(:hover):not(.active) > span > span {
     opacity: 0;
   }
@@ -358,6 +348,7 @@ h2.histogram-title strong {
 
 .red-icon {
   background: red;
+
   img {
     filter: saturate(0);
     mix-blend-mode: luminosity;
