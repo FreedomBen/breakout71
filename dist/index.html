@@ -899,10 +899,10 @@ async function openScorePanel() {
             gameState.isCreativeModeRun ? `<p>${(0, _i18N.t)("score_panel.test_run")}</p>` : "",
             (0, _gameUtils.pickedUpgradesHTMl)(gameState),
             (0, _gameUtils.levelsListHTMl)(gameState),
-            gameState.rerolls ? (0, _i18N.t)('score_panel.rerolls_count', {
+            gameState.rerolls ? (0, _i18N.t)("score_panel.rerolls_count", {
                 rerolls: gameState.rerolls
-            }) : '',
-            banned && (0, _i18N.t)('score_panel.banned', {
+            }) : "",
+            banned && (0, _i18N.t)("score_panel.banned", {
                 banned
             })
         ],
@@ -1293,7 +1293,7 @@ function setKeyPressed(key, on) {
 }
 document.addEventListener("keydown", (e)=>{
     if (e.key.toLowerCase() === "f" && !e.ctrlKey && !e.metaKey) {
-        (0, _options.toggleOption)('fullscreen');
+        (0, _options.toggleOption)("fullscreen");
         applyFullScreenChoice();
     } else if (e.key in pressed) setKeyPressed(e.key, 1);
     if (e.key === " " && !(0, _asyncAlert.alertsOpen)) {
@@ -1385,7 +1385,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29053158\"");
+module.exports = JSON.parse("\"29054664\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2901,7 +2901,7 @@ async function gotoNextLoop(gameState) {
         content: [
             (0, _i18N.t)("loop.instructions"),
             comboText,
-            ...userPerks.filter((u)=>u.id !== 'instant_upgrade').map((u)=>{
+            ...userPerks.filter((u)=>u.id !== "instant_upgrade").map((u)=>{
                 return {
                     text: u.name + (0, _i18N.t)("level_up.upgrade_perk_to_level", {
                         level: gameState.perks[u.id] + 1
@@ -3538,24 +3538,24 @@ function render(gameState) {
     else menuLabel.innerText = (0, _i18N.t)("play.menu_label");
     const catchRate = gameState.levelSpawnedCoins ? (gameState.levelSpawnedCoins - gameState.levelLostCoins) / gameState.levelSpawnedCoins : 1;
     scoreDisplay.innerHTML = ((0, _options.isOptionOn)("show_fps") ? ` 
-               <span class="${Math.abs((0, _game.lastMeasuredFPS) - 60) < 2 && ' ' || Math.abs((0, _game.lastMeasuredFPS) - 60) < 10 && 'good' || 'bad'}">
+               <span class="${Math.abs((0, _game.lastMeasuredFPS) - 60) < 2 && " " || Math.abs((0, _game.lastMeasuredFPS) - 60) < 10 && "good" || "bad"}">
             ${0, _game.lastMeasuredFPS} FPS
         </span><span> / </span>
          
-            ` : '') + ((0, _options.isOptionOn)('show_stats') ? ` 
-        <span class="${catchRate == 1 && 'great' || catchRate > 0.9 && 'good' || ''}">
+            ` : "") + ((0, _options.isOptionOn)("show_stats") ? ` 
+        <span class="${catchRate == 1 && "great" || catchRate > 0.9 && "good" || ""}">
             ${Math.floor(catchRate * 100)}%
         </span><span> / </span>
-        <span class="${gameState.levelWallBounces == 0 && 'great' || gameState.levelWallBounces < 5 && 'good' || ''}">
+        <span class="${gameState.levelWallBounces == 0 && "great" || gameState.levelWallBounces < 5 && "good" || ""}">
         ${gameState.levelWallBounces} B 
         </span><span> / </span>  
-        <span class="${gameState.levelTime < 30000 && 'great' || gameState.levelTime < 60000 && 'good' || ''}">
+        <span class="${gameState.levelTime < 30000 && "great" || gameState.levelTime < 60000 && "good" || ""}">
         ${Math.ceil(gameState.levelTime / 1000)}s 
         </span><span> / </span>
-        <span class="${gameState.levelMisses == 0 && 'great' || gameState.levelMisses <= 3 && 'good' || ''}">
+        <span class="${gameState.levelMisses == 0 && "great" || gameState.levelMisses <= 3 && "good" || ""}">
         ${gameState.levelMisses} M
         </span><span> / </span>
-        ` : '') + `$${gameState.score}`;
+        ` : "") + `$${gameState.score}`;
     scoreDisplay.className = gameState.lastScoreIncrease > gameState.levelTime - 500 ? "active" : "";
     // Clear
     if (!(0, _options.isOptionOn)("basic") && !level.color && level.svg) {
@@ -3602,14 +3602,14 @@ function render(gameState) {
                 bgctx.fillStyle = level.color || "#000";
                 bgctx.fillRect(0, 0, gameState.canvasWidth, gameState.canvasHeight);
                 if (gameState.perks.clairvoyant >= 3) {
-                    const pageSource = document.body.innerHTML.replace(/\s+/gi, '');
+                    const pageSource = document.body.innerHTML.replace(/\s+/gi, "");
                     const lineWidth = Math.ceil(gameState.canvasWidth / 15);
                     const lines = Math.ceil(gameState.canvasHeight / 20);
                     const chars = lineWidth * lines;
                     let start = Math.ceil(Math.random() * (pageSource.length - chars));
                     for(let i = 0; i < lines; i++){
-                        bgctx.fillStyle = 'white';
-                        bgctx.font = '20px Courier';
+                        bgctx.fillStyle = "white";
+                        bgctx.font = "20px Courier";
                         bgctx.fillText(pageSource.slice(start + i * lineWidth, start + (i + 1) * lineWidth), 0, i * 20, gameState.canvasWidth);
                     }
                 } else {
@@ -3654,7 +3654,7 @@ function render(gameState) {
         ctx.globalCompositeOperation = "source-over";
         // ctx.globalCompositeOperation =
         //   coin.color === "gold" || level.color ? "source-over" : "screen";
-        drawCoin(ctx, coin.color, coin.size, coin.x, coin.y, hasCombo && gameState.perks.asceticism && "red" || coin.color === 'gold' && 'gold' || gameState.puckColor, coin.a);
+        drawCoin(ctx, coin.color, coin.size, coin.x, coin.y, hasCombo && gameState.perks.asceticism && "red" || coin.color === "gold" && "gold" || gameState.puckColor, coin.a);
     });
     // Black shadow around balls
     if (!(0, _options.isOptionOn)("basic")) {
@@ -3928,7 +3928,7 @@ function drawBrick(ctx, color, x, y, offset = 0, borderOnly) {
     const brx = Math.ceil(x + (0, _game.gameState).brickWidth / 2) - 1;
     const bry = Math.ceil(y + (0, _game.gameState).brickWidth / 2) - 1;
     const width = brx - tlx, height = bry - tly;
-    const key = "brick" + color + "_" + "_" + width + "_" + height + "_" + offset + '_' + borderOnly;
+    const key = "brick" + color + "_" + "_" + width + "_" + height + "_" + offset + "_" + borderOnly;
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
         can.width = width;

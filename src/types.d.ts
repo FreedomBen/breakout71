@@ -83,7 +83,7 @@ export type Coin = {
   weight: number;
   destroyed?: boolean;
   collidedLastFrame?: boolean;
-  metamorphosisPoints:number;
+  metamorphosisPoints: number;
 };
 export type Ball = {
   x: number;
@@ -238,8 +238,12 @@ export type GameState = {
   coins: ReusableArray<Coin>;
 
   // Bricks that should respawn destroyed
-  respawns: ReusableArray<{ index: number; color: string ; time:number;
-  destroyed?: boolean;}>;
+  respawns: ReusableArray<{
+    index: number;
+    color: string;
+    time: number;
+    destroyed?: boolean;
+  }>;
 
   levelStartScore: number;
   levelMisses: number;
@@ -280,14 +284,14 @@ export type GameState = {
   rerolls: number;
   loop: number;
   baseCombo: number;
-  levelsPerLoop:number;
+  levelsPerLoop: number;
 };
 
 export type RunParams = {
   level?: string;
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
-  levelsPerLoop?:number;
+  levelsPerLoop?: number;
 };
 export type OptionDef = {
   default: boolean;

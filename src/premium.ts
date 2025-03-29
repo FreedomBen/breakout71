@@ -115,7 +115,6 @@ export function premiumMenuEntry(gameState: GameState) {
         text = t("premium.per_hours", args);
         help = t("premium.per_hours_help", args);
       }
-
     }
   } catch (e) {
     console.warn(e);

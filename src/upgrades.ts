@@ -1,6 +1,6 @@
 import { t } from "./i18n/i18n";
 
-import {comboKeepingRate} from "./pure_functions";
+import { comboKeepingRate } from "./pure_functions";
 
 export const rawUpgrades = [
   {
@@ -49,7 +49,7 @@ export const rawUpgrades = [
     id: "slow_down",
     max: 2,
     name: t("upgrades.slow_down.name"),
-    help: (lvl:number) => t("upgrades.slow_down.help",{ lvl }),
+    help: (lvl: number) => t("upgrades.slow_down.help", { lvl }),
     fullHelp: t("upgrades.slow_down.fullHelp"),
   },
   {
@@ -84,7 +84,7 @@ export const rawUpgrades = [
     max: 1,
 
     name: t("upgrades.left_is_lava.name"),
-    help: (lvl:number) => t("upgrades.left_is_lava.help",{ lvl }),
+    help: (lvl: number) => t("upgrades.left_is_lava.help", { lvl }),
     fullHelp: t("upgrades.left_is_lava.fullHelp"),
   },
   {
@@ -95,7 +95,7 @@ export const rawUpgrades = [
     giftable: true,
     max: 1,
     name: t("upgrades.right_is_lava.name"),
-    help: (lvl:number) => t("upgrades.right_is_lava.help",{ lvl }),
+    help: (lvl: number) => t("upgrades.right_is_lava.help", { lvl }),
     fullHelp: t("upgrades.right_is_lava.fullHelp"),
   },
   {
@@ -106,7 +106,7 @@ export const rawUpgrades = [
     giftable: true,
     max: 1,
     name: t("upgrades.top_is_lava.name"),
-    help: (lvl:number) => t("upgrades.top_is_lava.help",{ lvl }),
+    help: (lvl: number) => t("upgrades.top_is_lava.help", { lvl }),
     fullHelp: t("upgrades.top_is_lava.fullHelp"),
   },
   {
@@ -195,7 +195,7 @@ export const rawUpgrades = [
     giftable: true,
     max: 1,
     name: t("upgrades.picky_eater.name"),
-    help: (lvl: number) => t("upgrades.picky_eater.help",{lvl}),
+    help: (lvl: number) => t("upgrades.picky_eater.help", { lvl }),
     fullHelp: t("upgrades.picky_eater.fullHelp"),
   },
   {
@@ -206,7 +206,7 @@ export const rawUpgrades = [
     id: "metamorphosis",
     max: 1,
     name: t("upgrades.metamorphosis.name"),
-    help: (lvl: number) => t("upgrades.metamorphosis.help",{lvl}),
+    help: (lvl: number) => t("upgrades.metamorphosis.help", { lvl }),
     fullHelp: t("upgrades.metamorphosis.fullHelp"),
   },
   {
@@ -217,7 +217,7 @@ export const rawUpgrades = [
     giftable: true,
     max: 1,
     name: t("upgrades.compound_interest.name"),
-    help: (lvl: number) => t("upgrades.compound_interest.help",{lvl}),
+    help: (lvl: number) => t("upgrades.compound_interest.help", { lvl }),
     fullHelp: t("upgrades.compound_interest.fullHelp"),
   },
   {
@@ -289,7 +289,10 @@ export const rawUpgrades = [
     id: "soft_reset",
     max: 3,
     name: t("upgrades.soft_reset.name"),
-    help: (lvl: number) => t("upgrades.soft_reset.help", { percent: Math.round(comboKeepingRate(lvl) * 100)}),
+    help: (lvl: number) =>
+      t("upgrades.soft_reset.help", {
+        percent: Math.round(comboKeepingRate(lvl) * 100),
+      }),
     fullHelp: t("upgrades.soft_reset.fullHelp"),
   },
   {
@@ -354,9 +357,9 @@ export const rawUpgrades = [
     name: t("upgrades.sturdy_bricks.name"),
     help: (lvl: number) =>
       // lvl == 1
-        t("upgrades.sturdy_bricks.help",{lvl, percent:lvl*10}),
-        // ?
-        // : t("upgrades.sturdy_bricks.help_plural"),
+      t("upgrades.sturdy_bricks.help", { lvl, percent: lvl * 10 }),
+    // ?
+    // : t("upgrades.sturdy_bricks.help_plural"),
     fullHelp: t("upgrades.sturdy_bricks.fullHelp"),
   },
   {
@@ -368,7 +371,10 @@ export const rawUpgrades = [
     max: 4,
     name: t("upgrades.respawn.name"),
     help: (lvl: number) =>
-      t("upgrades.respawn.help",{percent:Math.floor(100*comboKeepingRate(lvl)),delay:(3/lvl).toFixed(2)}),
+      t("upgrades.respawn.help", {
+        percent: Math.floor(100 * comboKeepingRate(lvl)),
+        delay: (3 / lvl).toFixed(2),
+      }),
     fullHelp: t("upgrades.respawn.fullHelp"),
   },
   {
@@ -378,7 +384,7 @@ export const rawUpgrades = [
     id: "one_more_choice",
     max: 3,
     name: t("upgrades.one_more_choice.name"),
-    help: (lvl: number) => t("upgrades.one_more_choice.help", {lvl}),
+    help: (lvl: number) => t("upgrades.one_more_choice.help", { lvl }),
     fullHelp: t("upgrades.one_more_choice.fullHelp"),
   },
   {
@@ -390,7 +396,7 @@ export const rawUpgrades = [
     max: 2,
     adventure: false,
     name: t("upgrades.instant_upgrade.name"),
-    help: (lvl: number) => t("upgrades.instant_upgrade.help",{lvl}),
+    help: (lvl: number) => t("upgrades.instant_upgrade.help", { lvl }),
     fullHelp: t("upgrades.instant_upgrade.fullHelp"),
   },
   {
@@ -422,7 +428,7 @@ export const rawUpgrades = [
     id: "asceticism",
     max: 1,
     name: t("upgrades.asceticism.name"),
-    help: (lvl: number) => t("upgrades.asceticism.help",{combo:lvl*3}),
+    help: (lvl: number) => t("upgrades.asceticism.help", { combo: lvl * 3 }),
     fullHelp: t("upgrades.asceticism.fullHelp"),
   },
   {
@@ -433,9 +439,10 @@ export const rawUpgrades = [
     id: "unbounded",
     max: 1,
     name: t("upgrades.unbounded.name"),
-    help: (lvl: number) => lvl > 1 ?
-        t("upgrades.unbounded.help_no_ceiling",{lvl}):
-        t("upgrades.unbounded.help",{lvl}),
+    help: (lvl: number) =>
+      lvl > 1
+        ? t("upgrades.unbounded.help_no_ceiling", { lvl })
+        : t("upgrades.unbounded.help", { lvl }),
     fullHelp: t("upgrades.unbounded.fullHelp"),
   },
   {
@@ -446,7 +453,10 @@ export const rawUpgrades = [
     id: "shunt",
     max: 3,
     name: t("upgrades.shunt.name"),
-    help: (lvl: number) => t("upgrades.shunt.help", { percent: Math.round(comboKeepingRate(lvl) * 100) }),
+    help: (lvl: number) =>
+      t("upgrades.shunt.help", {
+        percent: Math.round(comboKeepingRate(lvl) * 100),
+      }),
     fullHelp: t("upgrades.shunt.fullHelp"),
   },
   {
@@ -499,7 +509,7 @@ export const rawUpgrades = [
     id: "zen",
     max: 1,
     name: t("upgrades.zen.name"),
-    help: (lvl: number) => t("upgrades.zen.help",{lvl}),
+    help: (lvl: number) => t("upgrades.zen.help", { lvl }),
     fullHelp: t("upgrades.zen.fullHelp"),
   },
   {
@@ -510,9 +520,9 @@ export const rawUpgrades = [
     max: 1,
     name: t("upgrades.sacrifice.name"),
     help: (lvl: number) =>
-        lvl==1 ?
-            t("upgrades.sacrifice.help_l1"):
-            t("upgrades.sacrifice.help_over",{lvl}),
+      lvl == 1
+        ? t("upgrades.sacrifice.help_l1")
+        : t("upgrades.sacrifice.help_over", { lvl }),
     fullHelp: t("upgrades.sacrifice.fullHelp"),
   },
 

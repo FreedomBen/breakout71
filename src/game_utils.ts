@@ -1,6 +1,6 @@
-import {Ball, GameState, PerkId, PerksMap} from "./types";
-import {icons, upgrades} from "./loadGameData";
-import {t} from "./i18n/i18n";
+import { Ball, GameState, PerkId, PerksMap } from "./types";
+import { icons, upgrades } from "./loadGameData";
+import { t } from "./i18n/i18n";
 
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
@@ -14,10 +14,8 @@ export function sample<T>(arr: T[]): T {
   return arr[Math.floor(arr.length * Math.random())];
 }
 
-export function sampleN<T>(arr: T[],n:number): T[] {
-
-  return [...arr].sort(()=>Math.random()-0.5)
-      .slice(0,n)
+export function sampleN<T>(arr: T[], n: number): T[] {
+  return [...arr].sort(() => Math.random() - 0.5).slice(0, n);
 }
 
 export function sumOfValues(obj: { [key: string]: number } | undefined | null) {
@@ -55,7 +53,10 @@ export function getRowColIndex(gameState: GameState, row: number, col: number) {
 
 export function getPossibleUpgrades(gameState: GameState) {
   return upgrades
-    .filter((u) => gameState.totalScoreAtRunStart >= u.threshold || gameState.loop>0)
+    .filter(
+      (u) =>
+        gameState.totalScoreAtRunStart >= u.threshold || gameState.loop > 0,
+    )
     .filter((u) => !u?.requires || gameState.perks[u?.requires]);
 }
 
@@ -186,4 +187,3 @@ export function countBricksBelow(gameState: GameState, index: number) {
   }
   return count;
 }
-

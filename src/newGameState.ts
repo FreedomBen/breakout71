@@ -1,4 +1,4 @@
-import {  GameState, RunParams } from "./types";
+import { GameState, RunParams } from "./types";
 import { getTotalScore } from "./settings";
 import { allLevels, upgrades } from "./loadGameData";
 import {
@@ -129,5 +129,3 @@ export function newGameState(params: RunParams): GameState {
   }
   return gameState;
 }
-
-
