@@ -35,7 +35,7 @@ already maxed out.
 - [jaceys] A visual indication of whether a ball has hit a brick this serve
 - Top down /reach: punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row
 
-# Todo before next release
+# To do before next release
 
 # Next 
 

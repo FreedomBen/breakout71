@@ -2004,7 +2004,7 @@ const rawUpgrades = [
     }
 ];
 
-},{"./i18n/i18n":"eNPRm","./game_utils":"cEeac","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eNPRm":[function(require,module,exports,__globalThis) {
+},{"./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./game_utils":"cEeac"}],"eNPRm":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getCurrentLang", ()=>getCurrentLang);
@@ -2266,7 +2266,6 @@ function countBricksBelow(gameState, index) {
 function comboKeepingRate(level) {
     return clamp(1 - 1 / (1 + level) * 1.5, 0, 1);
 }
-for(let i = 0; i < 5; i++)console.log(Math.round(comboKeepingRate(i) * 100) + '%');
 
 },{"./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6rQoT":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -4512,9 +4511,6 @@ function premiumMenuEntry(gameState) {
                 text = (0, _i18N.t)("premium.per_hours", args);
                 help = (0, _i18N.t)("premium.per_hours_help", args);
             }
-            console.log({
-                args
-            });
         }
     } catch (e) {
         console.warn(e);
