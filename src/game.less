@@ -61,6 +61,17 @@ body {
     color: gold;
     transition: color 0.01s;
   }
+
+  span{
+    color: #333;
+
+  &.great{
+    color: lightgreen;
+  }
+  &.good{
+    color: white;
+  }
+  }
 }
 
 #menu {
@@ -352,3 +363,22 @@ h2.histogram-title strong {
     mix-blend-mode: luminosity;
   }
 }
+
+//#statsdisplay{
+//   z-index: 1;
+//  white-space: nowrap;
+//  line-height: 20px;
+//  pointer-events: none;
+//  user-select: none;
+//  color: white;
+//  position: fixed;
+//  padding: 0;
+//  bottom: -20px;
+//  right:  0;
+//  width: 20px;
+//  overflow: visible;
+//
+//  transform-origin: top left;
+//  transform: rotate(-90deg);
+//
+//}

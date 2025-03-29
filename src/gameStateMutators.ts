@@ -36,7 +36,7 @@ import {icons, upgrades} from "./loadGameData";
 import {addToTotalScore, getCurrentMaxCoins, getCurrentMaxParticles,} from "./settings";
 import {background} from "./render";
 import {gameOver} from "./gameOver";
-import {brickIndex, fitSize, gameState, hasBrick, hitsSomething, openShortRunUpgradesPicker, pause,} from "./game";
+import {brickIndex, fitSize, gameState, hasBrick, hitsSomething, openUpgradesPicker, pause,} from "./game";
 import {stopRecording} from "./recording";
 import {isOptionOn} from "./options";
 import {isPremium} from "./premium";
@@ -124,13 +124,13 @@ export function normalizeGameState(gameState: GameState) {
         (gameState.gameZoneWidth / 12) *
         Math.min(12, 3 - gameState.perks.smaller_puck + gameState.perks.bigger_puck));
 
-    const corner  = gameState.levelTime ? gameState.perks.corner_shot : 0
+    const corner = gameState.levelTime ? gameState.perks.corner_shot : 0
 
-    let minX =  gameState.offsetXRoundedDown + gameState.puckWidth / 2 - gameState.puckWidth * corner
+    let minX = gameState.offsetXRoundedDown + gameState.puckWidth / 2 - gameState.puckWidth * corner
 
-    let maxX =gameState.offsetXRoundedDown +
-            gameState.gameZoneWidthRoundedUp -
-            gameState.puckWidth / 2 + gameState.puckWidth * corner;
+    let maxX = gameState.offsetXRoundedDown +
+        gameState.gameZoneWidthRoundedUp -
+        gameState.puckWidth / 2 + gameState.puckWidth * corner;
 
 
     gameState.puckPosition = clamp(gameState.puckPosition, minX, maxX);
@@ -179,7 +179,7 @@ export function resetCombo(
         }
         if (typeof x !== "undefined" && typeof y !== "undefined") {
 
-            makeText(gameState, x, y, "red", "-" + lost, 20, 500+clamp(lost, 0,500));
+            makeText(gameState, x, y, "red", "-" + lost, 20, 500 + clamp(lost, 0, 500));
         }
     }
     return lost;
@@ -198,7 +198,7 @@ export function decreaseCombo(
     if (lost) {
         schedulGameSound(gameState, "comboDecrease", x, 1);
         if (typeof x !== "undefined" && typeof y !== "undefined") {
-            makeText(gameState, x, y, "red", "-" + lost, 20, 400+lost);
+            makeText(gameState, x, y, "red", "-" + lost, 20, 400 + lost);
         }
     }
 }
@@ -256,8 +256,11 @@ export function explosionAt(
     x: number,
     y: number,
     ball: Ball,
+    extraSize: number = 0
 ) {
-    const size = 1 + gameState.perks.bigger_explosions + Math.max(1,gameState.perks.implosions) - 1;
+    const size = 1 + gameState.perks.bigger_explosions +
+        Math.max(0, gameState.perks.implosions - 1) + extraSize
+    ;
     schedulGameSound(gameState, "explode", ball.x, 1);
     if (index !== -1) {
         const col = index % gameState.gridSize;
@@ -292,7 +295,7 @@ export function explosionAt(
     if (gameState.perks.implosions) {
         spawnImplosion(
             gameState,
-            7 *size ,
+            7 * size,
             x,
             y,
             "white",
@@ -300,7 +303,7 @@ export function explosionAt(
     } else {
         spawnExplosion(
             gameState,
-            7 *size,
+            7 * size,
             x,
             y,
             "white",
@@ -332,7 +335,7 @@ export function explodeBrick(
         //     resetCombo(gameState, x, y);
         // }
         setBrick(gameState, index, "");
-        explosionAt(gameState, index, x, y, ball);
+        explosionAt(gameState, index, x, y, ball, 0);
     } else if (color) {
         // Even if it bounces we don't want to count that as a miss
 
@@ -616,7 +619,7 @@ export async function setLevel(gameState: GameState, l: number) {
     pause(false);
     stopRecording();
     if (l > 0) {
-        await openShortRunUpgradesPicker(gameState);
+        await openUpgradesPicker(gameState);
     }
     gameState.currentLevel = l;
 
@@ -629,6 +632,7 @@ export async function setLevel(gameState: GameState, l: number) {
     gameState.lastTickDown = gameState.levelTime;
     gameState.levelStartScore = gameState.score;
     gameState.levelSpawnedCoins = 0;
+    gameState.levelLostCoins = 0;
     gameState.levelMisses = 0;
     gameState.runStatistics.levelsPlayed++;
 
@@ -650,7 +654,7 @@ export async function setLevel(gameState: GameState, l: number) {
         gameState.gridSize = lvl.size;
         fitSize();
     }
-    empty(gameState.coins);
+   gameState.levelLostCoins += empty(gameState.coins);
     empty(gameState.particles);
     empty(gameState.lights);
     empty(gameState.texts);
@@ -798,7 +802,16 @@ export function coinBrickHitCheck(gameState: GameState, coin: Coin) {
             typeof hhit == "undefined" &&
             hitsSomething(x, y, radius)) ||
         undefined;
-    if (!gameState.perks.ghost_coins) {
+
+    if (gameState.perks.ghost_coins) {
+        //     slow down
+        if (typeof (vhit ?? hhit ?? chit) !== "undefined") {
+
+            coin.vy *= 1 - 0.2 / gameState.perks.ghost_coins;
+            coin.vx *= 1 - 0.2 / gameState.perks.ghost_coins;
+        }
+
+    } else {
         if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
             coin.y = coin.previousY;
             coin.vy *= -1;
@@ -988,7 +1001,7 @@ export function gameStateTick(
                 (gameState.perks.viscosity *
                     0.03 +
                     0.005) *
-                frames;
+                frames / (1 + gameState.perks.etherealcoins);
 
             coin.vy *= ratio;
             coin.vx *= ratio;
@@ -1040,6 +1053,7 @@ export function gameStateTick(
 
                 destroy(gameState.coins, coinIndex);
             } else if (coin.y > gameState.canvasHeight + coinRadius) {
+                gameState.levelLostCoins+=coin.points
                 destroy(gameState.coins, coinIndex);
                 if (gameState.perks.compound_interest) {
                     resetCombo(gameState, coin.x, coin.y);
@@ -1052,6 +1066,7 @@ export function gameStateTick(
                 )
             ) {
                 // Out of bound on sides
+                gameState.levelLostCoins+=coin.points
                 destroy(gameState.coins, coinIndex);
             }
 
@@ -1126,7 +1141,7 @@ export function gameStateTick(
                             ((Math.random() - 0.5) * limit) / 3;
 
                         let index = brickIndex(x, y);
-                        explosionAt(gameState, index, x, y, a);
+                        explosionAt(gameState, index, x, y, a, Math.max(0, gameState.perks.shocks - 1));
                     }
                 }),
             );
@@ -1263,7 +1278,7 @@ export function gameStateTick(
     forEachLiveOne(gameState.respawns, (r, ri) => {
         if (gameState.bricks[r.index]) {
             destroy(gameState.respawns, ri)
-        } else if (gameState.levelTime>r.time) {
+        } else if (gameState.levelTime > r.time) {
             setBrick(gameState, r.index, r.color)
             destroy(gameState.respawns, ri)
         } else if (!isOptionOn("basic")) {
@@ -1435,7 +1450,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
             const angle = Math.atan2(
                 -gameState.puckWidth / 2,
                 (ball.x - gameState.puckPosition) *
-                (gameState.perks.concave_puck ? -0.5 : 1),
+                (gameState.perks.concave_puck ? -1 / (1 + gameState.perks.concave_puck) : 1),
             );
             ball.vx = speed * Math.cos(angle);
             ball.vy = speed * Math.sin(angle);
@@ -1657,7 +1672,8 @@ function makeCoin(
     color = "gold",
     points = 1,
 ) {
-    let weight = 0.8 + Math.random() * 0.2 + Math.min(2, points * 0.01);
+    let weight = 0.8 + Math.random() * 0.2 + Math.min(2, points * 0.01)
+    weight *= 5 / (5 + gameState.perks.etherealcoins)
 
     append(gameState.coins, (p: Partial<Coin>) => {
         p.x = x;
@@ -1718,7 +1734,7 @@ function makeText(
         p.y = y;
         p.color = color;
         p.size = size;
-        p.duration = clamp(duration,400,2000);
+        p.duration = clamp(duration, 400, 2000);
         p.text = text;
     });
 }
@@ -1776,9 +1792,16 @@ export function liveCount<T>(where: ReusableArray<T>) {
 }
 
 export function empty<T>(where: ReusableArray<T>) {
+    let destroyed=0
     where.total = 0;
     where.indexMin = 0;
-    where.list.forEach((i) => (i.destroyed = true));
+    where.list.forEach((i) => {
+        if(!i.destroyed) {
+            i.destroyed = true
+            destroyed++
+        }
+    });
+    return destroyed
 }
 
 export function forEachLiveOne<T>(

@@ -244,6 +244,7 @@ export type GameState = {
   levelStartScore: number;
   levelMisses: number;
   levelSpawnedCoins: number;
+  levelLostCoins: number;
 
   // MAX_COINS: number;
   // MAX_PARTICLES: number;

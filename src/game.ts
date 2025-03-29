@@ -160,10 +160,13 @@ setInterval(() => {
         fitSize();
 }, 1000);
 
-export async function openShortRunUpgradesPicker(gameState: GameState) {
+export async function openUpgradesPicker(gameState: GameState) {
+
     const catchRate =
         (gameState.score - gameState.levelStartScore) /
         (gameState.levelSpawnedCoins || 1);
+
+
 
     let repeats = 1;
 
@@ -983,10 +986,16 @@ restart(
     (window.location.search.includes("stressTest") && {
         level: "Bird",
         perks: {
-            pierce: 1,
-            sapper: 1,
-            implosions: 3,
-            streak_shots:1
+            shocks:10,
+            multiball:6,
+            telekinesis:2,
+            ghost_coins:1,
+            pierce:4,
+            clairvoyant:3,
+            bigger_explosions:2,
+            sapper:2,
+            unbounded:1
+
         },
         levelsPerLoop: 2,
     }) ||

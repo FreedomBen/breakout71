@@ -24,6 +24,7 @@ bombSVG.src =
     btoa(`<svg width="144" height="144" viewBox="0 0 38.101 38.099" xmlns="http://www.w3.org/2000/svg">
  <path d="m6.1528 26.516c-2.6992-3.4942-2.9332-8.281-.58305-11.981a10.454 10.454 0 017.3701-4.7582c1.962-.27726 4.1646.05953 5.8835.90027l.45013.22017.89782-.87417c.83748-.81464.91169-.87499 1.0992-.90271.40528-.058713.58876.03425 1.1971.6116l.55451.52679 1.0821-1.0821c1.1963-1.1963 1.383-1.3357 2.1039-1.5877.57898-.20223 1.5681-.19816 2.1691.00897 1.4613.50314 2.3673 1.7622 2.3567 3.2773-.0058.95654-.24464 1.5795-.90924 2.3746-.40936.48928-.55533.81057-.57898 1.2737-.02039.41018.1109.77714.42322 1.1792.30172.38816.3694.61323.2797.93044-.12803.45666-.56674.71598-1.0242.60507-.601-.14597-1.3031-1.3088-1.3969-2.3126-.09459-1.0161.19245-1.8682.92392-2.7432.42567-.50885.5643-.82851.5643-1.3031 0-.50151-.14026-.83177-.51211-1.2028-.50966-.50966-1.0968-.64829-1.781-.41996l-.37348.12477-2.1006 2.1006.52597.55696c.45421.48194.5325.58876.57898.78855.09622.41588.07502.45014-.88396 1.4548l-.87173.9125.26339.57979a10.193 10.193 0 01.9231 4.1001c.03996 2.046-.41996 3.8082-1.4442 5.537-.55044.928-1.0185 1.5013-1.8968 2.3241-.83503.78284-1.5526 1.2827-2.4904 1.7361-3.4266 1.657-7.4721 1.3422-10.549-.82035-.73473-.51782-1.7312-1.4621-2.2515-2.1357zm21.869-4.5584c-.0579-.19734-.05871-2.2662 0-2.4545.11906-.39142.57898-.63361 1.0038-.53005.23812.05708.54147.32455.6116.5382.06279.19163.06769 2.1805.0065 2.3811-.12558.40773-.61649.67602-1.0462.57164-.234-.05708-.51615-.30498-.57568-.50722m3.0417-2.6013c-.12313-.6222.37837-1.1049 1.0479-1.0079.18348.0261.25279.08399 1.0071.83911.75838.75838.81301.82362.84074 1.0112.10193.68499-.40365 1.1938-1.034 1.0405-.1949-.0473-.28786-.12558-1.0144-.85216-.7649-.76409-.80241-.81057-.84645-1.0316m.61323-3.0629a.85623.85623 0 01.59284-.99975c.28949-.09214 2.1814-.08318 2.3917.01141.38734.17369.6279.61078.53984.98181-.06035.25606-.35391.57327-.60181.64992-.25279.07747-2.2278.053-2.4097-.03017-.26013-.11906-.46318-.36125-.51374-.61323" fill="#fff" opacity="0.3"/>
 </svg>`);
+bombSVG.onload = () => gameState.needsRender = true
 
 export const background = document.createElement("img");
 export const backgroundCanvas = document.createElement("canvas");
@@ -49,7 +50,25 @@ export function render(gameState: GameState) {
     } else {
         menuLabel.innerText = t("play.menu_label");
     }
-    scoreDisplay.innerText = `$${gameState.score}`;
+
+    const catchRate = gameState.levelSpawnedCoins ?
+         (gameState.levelSpawnedCoins - gameState.levelLostCoins)/gameState.levelSpawnedCoins :1
+
+    scoreDisplay.innerHTML= (isOptionOn('show_stats') ? ` 
+        <span class="${(catchRate==1 && 'great') || (catchRate>0.9 && 'good')||''}">
+            ${Math.floor(catchRate*100)}%
+        </span><span> / </span>
+        <span class="${(gameState.levelWallBounces==0 && 'great') || (gameState.levelWallBounces<5 && 'good')||''}">
+        ${gameState.levelWallBounces} B 
+        </span><span> / </span>  
+        <span class="${(gameState.levelTime<30000 && 'great') || (gameState.levelTime<60000 && 'good')||''}">
+        ${Math.ceil(gameState.levelTime/1000)}s 
+        </span><span> / </span>
+        <span class="${(gameState.levelMisses==0 && 'great') || (gameState.levelMisses<=3 && 'good')||''}">
+        ${gameState.levelMisses} M
+        </span><span> / </span>
+        `: '' )+ `$${gameState.score}`;
+
 
     scoreDisplay.className =
         gameState.lastScoreIncrease > gameState.levelTime - 500 ? "active" : "";
@@ -117,10 +136,30 @@ export function render(gameState: GameState) {
                 ) as CanvasRenderingContext2D;
                 bgctx.fillStyle = level.color || "#000";
                 bgctx.fillRect(0, 0, gameState.canvasWidth, gameState.canvasHeight);
-                const pattern = ctx.createPattern(background, "repeat");
-                if (pattern) {
-                    bgctx.fillStyle = pattern;
-                    bgctx.fillRect(0, 0, width, height);
+                if (gameState.perks.clairvoyant >= 3) {
+                    const pageSource = document.body.innerHTML.replace(/\s+/gi, '')
+                    const lineWidth = Math.ceil(gameState.canvasWidth / 15)
+                    const lines = Math.ceil(gameState.canvasHeight / 20)
+                    const chars = lineWidth * lines
+                    let start = Math.ceil(Math.random() * (pageSource.length - chars))
+                    for (let i = 0; i < lines; i++) {
+                        bgctx.fillStyle = 'white'
+                        bgctx.font = '20px Courier'
+                        bgctx.fillText(pageSource.slice(
+                                start + i * lineWidth,
+                                start + (i + 1) * lineWidth),
+                            0,
+                            i * 20,
+                            gameState.canvasWidth
+                        )
+                    }
+                } else {
+
+                    const pattern = ctx.createPattern(background, "repeat");
+                    if (pattern) {
+                        bgctx.fillStyle = pattern;
+                        bgctx.fillRect(0, 0, width, height);
+                    }
                 }
             }
 
@@ -174,9 +213,8 @@ export function render(gameState: GameState) {
             coin.x,
             coin.y,
             (hasCombo && gameState.perks.asceticism && "red") ||
-            (!coin.points && "red") ||
-            level.color ||
-            "black",
+            (coin.color==='gold' && 'gold')||
+            gameState.puckColor,
             coin.a,
         );
     });
@@ -205,7 +243,7 @@ export function render(gameState: GameState) {
         const {x, y, time, color, size, duration} = flash;
         const elapsed = gameState.levelTime - time;
         ctx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2) * 0.5;
-        drawBrick(ctx, color, x, y, -1);
+        drawBrick(ctx, color, x, y, -1, gameState.perks.clairvoyant >= 2);
     });
 
     ctx.globalCompositeOperation = "screen";
@@ -290,11 +328,11 @@ export function render(gameState: GameState) {
 
     drawPuck(
         ctx,
-         gameState.puckColor,
+        gameState.puckColor,
         gameState.puckWidth,
         gameState.puckHeight,
         0,
-        !!gameState.perks.concave_puck,
+        gameState.perks.concave_puck,
         gameState.perks.streak_shots && hasCombo ? getDashOffset(gameState) : -1,
     );
 
@@ -410,7 +448,7 @@ export function render(gameState: GameState) {
         );
     }
 
-    ctx.globalAlpha= gameState.perks.unbounded >1 ? 0.1 : 1
+    ctx.globalAlpha = gameState.perks.unbounded > 1 ? 0.1 : 1
     drawStraightLine(
         ctx,
         gameState,
@@ -422,7 +460,7 @@ export function render(gameState: GameState) {
         1,
     );
 
-    ctx.globalAlpha=1
+    ctx.globalAlpha = 1
     drawStraightLine(
         ctx,
         gameState,
@@ -447,6 +485,7 @@ export function render(gameState: GameState) {
             (gameState.canvasHeight - gameState.gameZoneHeight) / 2,
         );
     }
+
 
     if (shaked) {
         ctx.resetTransform();
@@ -559,7 +598,7 @@ export function renderAllBricks() {
                 countBricksAbove(gameState, index) &&
                 !countBricksBelow(gameState, index);
 
-            let redBorder =  (gameState.ballsColor !== color &&
+            let redBorder = (gameState.ballsColor !== color &&
                     color !== "black" &&
                     redBorderOnBricksWithWrongColor) ||
                 (hasCombo && gameState.perks.zen && color === "black") ||
@@ -567,7 +606,8 @@ export function renderAllBricks() {
                 redColorOnAllBricks;
 
             canctx.globalCompositeOperation = "source-over";
-            drawBrick(canctx, color, x, y, redBorder ? offset : -1);
+            drawBrick(canctx,
+                color, x, y, redBorder ? offset : -1, gameState.perks.clairvoyant >= 2);
             if (gameState.brickHP[index] > 1 && gameState.perks.clairvoyant) {
                 canctx.globalCompositeOperation = "destination-out";
                 drawText(
@@ -598,7 +638,7 @@ export function drawPuck(
     puckWidth: number,
     puckHeight: number,
     yOffset = 0,
-    flipped: boolean,
+    concave_puck: number,
     redBorderOffset: number,
 ) {
     const key =
@@ -609,7 +649,7 @@ export function drawPuck(
         "_" +
         puckHeight +
         "_" +
-        flipped +
+        concave_puck +
         "_" +
         redBorderOffset;
 
@@ -623,13 +663,13 @@ export function drawPuck(
         canctx.beginPath();
         canctx.moveTo(0, puckHeight * 2);
 
-        if (flipped) {
+        if (concave_puck) {
             canctx.lineTo(0, puckHeight * 0.75);
             canctx.bezierCurveTo(
                 puckWidth / 2,
-                puckHeight,
+                puckHeight * (2 + concave_puck) / 3,
                 puckWidth / 2,
-                puckHeight * 1,
+                puckHeight * (2 + concave_puck) / 3,
                 puckWidth,
                 puckHeight * 0.75,
             );
@@ -741,14 +781,12 @@ export function drawCoin(
         canctx.fillStyle = color;
         canctx.fill();
 
-        if (color === "gold" || borderColor === "red") {
-            canctx.strokeStyle = borderColor;
-            if (borderColor == "red") {
-                canctx.lineWidth = 2;
-                canctx.setLineDash(redBorderDash);
-            }
-            canctx.stroke();
+        canctx.strokeStyle = borderColor;
+        if (borderColor == "red") {
+            canctx.lineWidth = 2;
+            canctx.setLineDash(redBorderDash);
         }
+        canctx.stroke();
 
         if (color === "gold") {
             // Fill in
@@ -817,6 +855,7 @@ export function drawBrick(
     x: number,
     y: number,
     offset: number = 0,
+    borderOnly: boolean
 ) {
     const tlx = Math.ceil(x - gameState.brickWidth / 2);
     const tly = Math.ceil(y - gameState.brickWidth / 2);
@@ -825,7 +864,7 @@ export function drawBrick(
 
     const width = brx - tlx,
         height = bry - tly;
-    const key = "brick" + color + "_" + "_" + width + "_" + height + "_" + offset;
+    const key = "brick" + color + "_" + "_" + width + "_" + height + "_" + offset + '_' + borderOnly;
 
     if (!cachedGraphics[key]) {
         const can = document.createElement("canvas");
@@ -850,7 +889,9 @@ export function drawBrick(
             height - bord,
             cornerRadius,
         );
-        canctx.fill();
+        if (!borderOnly) {
+            canctx.fill();
+        }
         canctx.stroke();
 
         cachedGraphics[key] = can;

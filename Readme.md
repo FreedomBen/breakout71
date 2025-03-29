@@ -27,27 +27,23 @@ At the end of the last level of each run, they can start a new loop. They'll be 
 to level 1, with only one of their perks, leveled up. All the other perks they used in the run
 will be banned from the pool. The perk they decide to keep will gain one level, even if it was
 already maxed out. 
- 
-# Todo before next release
- - b71 white border around dark coins 
- 
-- [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
+
+# next
+
 - wind : move coins based on puck movement not position
-- show -N points in red when combo resets
-- Top down /read: punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row
 - [jaceys] Move the restart button out of the menu, so that it is more easily accessible
 - [jaceys] A visual indication of whether a ball has hit a brick this serve
+- Top down /reach: punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row
 
-- scale concave_puck
-- scale instant_upgrade
-- scale etherealcoins (0 grav, maybe then start floting like helium ? maybe less viscosity)
-- scale shocks (maybe spawn balls during the explosion ? maybe bigger explosions for this)
-- scale ghost_coins : pass through bricks will less friction ?
-- scale clairvoyant
+
+
+# Todo before next release
+  
 
 # 29 march 2025
 
-
+- [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
+- added a white border around all coins, to make dark ones visible on dark bg
 - Removed all previous loop only hazards
 - Looping now bans all your perks except one. That one can level up beyond the normal max. 
 - Adjusted many perks to work beyond the max 
@@ -66,6 +62,8 @@ already maxed out.
   - soft reset : same math as shunt  
   - smaller puck : now the puck can get as small as a ball 
   - Unbounded : at level 2+, the top of the level is gone too
+  - concave_puck : ball bounces straighter and straighter, to the point where you can't move it without another perk
+  - shocks lvl 2+ make bigger explosions
 - Make fullscreen an option and turn it back on when playing
 - Made the "combo lost" text last 500ms instead of the pointless 150ms 
 
