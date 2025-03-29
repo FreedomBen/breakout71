@@ -1,6 +1,5 @@
 import { rawUpgrades } from "./upgrades";
 import { options } from "./options";
-import { debuffs } from "./debuffs";
 
 export type colorString = string;
 
@@ -84,7 +83,7 @@ export type Coin = {
   weight: number;
   destroyed?: boolean;
   collidedLastFrame?: boolean;
-  coloredABrick?: boolean;
+  metamorphosisPoints:number;
 };
 export type Ball = {
   x: number;
@@ -156,18 +155,6 @@ export type PerksMap = {
   [k in PerkId]: number;
 };
 
-type Debuff = {
-  id: DebuffId;
-  max: number;
-  name: (lvl: number, banned: string) => string;
-  help: (lvl: number, perk: string) => string;
-};
-export type DebuffId = (typeof debuffs)[number]["id"];
-
-export type DebuffsMap = {
-  [k in DebuffId]: number;
-};
-
 export type ReusableArray<T> = {
   // All items below that index should not be destroyed
   indexMin: number;
@@ -213,7 +200,6 @@ export type GameState = {
   // perks the user currently has
   perks: PerksMap;
   bannedPerks: PerksMap;
-  debuffs: DebuffsMap;
   // Base speed of the ball in pixels/tick
   baseSpeed: number;
   // Score multiplier
@@ -290,8 +276,6 @@ export type GameState = {
   rerolls: number;
   loop: number;
   baseCombo: number;
-  puckFrozenUntil: number;
-  desiredPuckPosition: number;
   levelsPerLoop:number;
 };
 
@@ -299,7 +283,6 @@ export type RunParams = {
   level?: string;
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
-  debuffs?: Partial<DebuffsMap>;
   levelsPerLoop?:number;
 };
 export type OptionDef = {

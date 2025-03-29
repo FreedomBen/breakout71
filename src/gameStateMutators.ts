@@ -3,9 +3,6 @@ import {
   BallLike,
   Coin,
   colorString,
-  Debuff,
-  DebuffId,
-  Debuffs,
   GameState,
   LightFlash,
   ParticleFlash,
@@ -17,7 +14,7 @@ import {
 import {
   brickCenterX,
   brickCenterY,
-  clamp,
+  clamp, comboKeepingRate,
   countBricksAbove,
   countBricksBelow,
   currentLevelInfo,
@@ -57,11 +54,10 @@ import { stopRecording } from "./recording";
 import { isOptionOn } from "./options";
 import { isPremium } from "./premium";
 import { getRunLevels } from "./newGameState";
-import { debuffs } from "./debuffs";
 import { requiredAsyncAlert } from "./asyncAlert";
 
 export function setMousePos(gameState: GameState, x: number) {
-  gameState.desiredPuckPosition = x;
+  gameState.puckPosition = x;
   // Sets the puck position, and updates the ball position if they are supposed to follow it
   gameState.needsRender = true;
 }
@@ -148,9 +144,9 @@ export function normalizeGameState(gameState: GameState) {
       gameState.perks.slow_down * 2,
   );
 
-  gameState.puckWidth =
+  gameState.puckWidth =Math.max(gameState.ballSize,
     (gameState.gameZoneWidth / 12) *
-    (3 - gameState.perks.smaller_puck + gameState.perks.bigger_puck);
+    Math.min(12,3 - gameState.perks.smaller_puck + gameState.perks.bigger_puck));
 
   let minX =
     gameState.perks.corner_shot && gameState.levelTime
@@ -166,10 +162,6 @@ export function normalizeGameState(gameState: GameState) {
         gameState.gameZoneWidthRoundedUp -
         gameState.puckWidth / 2;
 
-  if (gameState.puckFrozenUntil < gameState.levelTime || !gameState.levelTime) {
-    //   Frozen, ignore
-    gameState.puckPosition = gameState.desiredPuckPosition;
-  }
 
   gameState.puckPosition = clamp(gameState.puckPosition, minX, maxX);
 
@@ -204,7 +196,7 @@ export function resetCombo(
 
   if (prev > gameState.combo && gameState.perks.soft_reset) {
     gameState.combo += Math.floor(
-      ((prev - gameState.combo) * (gameState.perks.soft_reset * 10)) / 100,
+      (prev - gameState.combo) * comboKeepingRate(gameState.perks.soft_reset)
     );
   }
   const lost = Math.max(0, prev - gameState.combo);
@@ -349,15 +341,6 @@ export function explosionAt(
   if (gameState.perks.zen) {
     resetCombo(gameState, x, y);
   }
-  if (gameState.debuffs.fragility) {
-    resetCombo(gameState, x, y);
-    forEachLiveOne(gameState.coins, (coin, index) => {
-      //     Also destroys cursed coins
-      if (Math.random() < gameState.debuffs.fragility / 5) {
-        destroy(gameState.coins, index);
-      }
-    });
-  }
 }
 
 export function explodeBrick(
@@ -442,7 +425,7 @@ export function explodeBrick(
       gameState.perks.right_is_lava +
       gameState.perks.top_is_lava +
       gameState.perks.picky_eater +
-      gameState.perks.asceticism +
+      gameState.perks.asceticism*3 +
       gameState.perks.zen +
       gameState.perks.passive_income +
       gameState.perks.nbricks +
@@ -613,49 +596,38 @@ export async function gotoNextLoop(gameState: GameState) {
   }
 
   const userPerks = upgrades.filter((u) => gameState.perks[u.id]);
-  const { keep, debuff, targetPerk } = await requiredAsyncAlert<{
-    keep: PerkId;
-    debuff: DebuffId;
-    targetPerk: PerkId;
-  }>({
+
+  const keep = await requiredAsyncAlert<PerkId>({
     title: t("loop.title", { loop: gameState.loop }),
     content: [
       t("loop.instructions"),
       comboText,
-
-      ...userPerks.map((u) => {
-        const randomDebuff =
-          sample(debuffs.filter((d) => gameState.debuffs[d.id] < d.max)) ||
-          sample(debuffs);
-        const targetPerk = sample(userPerks.filter((tp) => tp.id !== u.id));
+      ...userPerks
+          .filter(u=>u.id!=='instant_upgrade')
+          .map((u) => {
         return {
           text:
             u.name +
             t("level_up.upgrade_perk_to_level", {
-              level: gameState.perks[u.id],
+              level: gameState.perks[u.id]+1,
             }),
-          help: randomDebuff.help(
-            gameState.debuffs[randomDebuff.id] + 1,
-            targetPerk.name,
-          ),
           icon: u.icon,
-          value: {
-            keep: u.id,
-            debuff: randomDebuff.id,
-            targetPerk: targetPerk.id,
-          },
+          value: u.id,
+          help: u.help(gameState.perks[u.id]+1),
         };
       }),
     ],
   });
 
+  userPerks.forEach(u=>{
+    if(u.id!==keep){
+      gameState.bannedPerks[u.id]=1
+    }
+  })
+
   Object.assign(gameState.perks, makeEmptyPerksMap(upgrades), {
     [keep]: gameState.perks[keep],
   });
-  gameState.debuffs[debuff]++;
-  if (debuff == "banned") {
-    gameState.bannedPerks[targetPerk]++;
-  }
 
   await setLevel(gameState, 0);
 }
@@ -684,7 +656,6 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.levelStartScore = gameState.score;
   gameState.levelSpawnedCoins = 0;
   gameState.levelMisses = 0;
-  gameState.puckFrozenUntil = 0;
   gameState.runStatistics.levelsPlayed++;
 
   // Reset combo silently
@@ -694,7 +665,7 @@ export async function setLevel(gameState: GameState, l: number) {
     gameState.combo += Math.round(
       Math.max(
         0,
-        ((finalCombo - gameState.combo) * 20 * gameState.perks.shunt) / 100,
+        (finalCombo - gameState.combo) * comboKeepingRate(gameState.perks.shunt) ,
       ),
     );
   }
@@ -714,19 +685,6 @@ export async function setLevel(gameState: GameState, l: number) {
     setBrick(gameState, i, lvl.bricks[i]);
   }
 
-  if (gameState.debuffs.more_bombs) {
-    let attemps = 0;
-    let changed = 0;
-    while (attemps < 100 && changed < gameState.debuffs.more_bombs) {
-      attemps++;
-      const index = Math.floor(Math.random() * gameState.bricks.length);
-      if (gameState.bricks[index] && gameState.bricks[index] !== "black") {
-        gameState.bricks[index] = "black";
-        gameState.brickHP[index] = 1;
-        changed++;
-      }
-    }
-  }
   // Balls color will depend on most common brick color sometimes
   resetBalls(gameState);
   gameState.needsRender = true;
@@ -740,7 +698,7 @@ function setBrick(gameState: GameState, index: number, color: string) {
   gameState.brickHP[index] =
     (color === "black" && 1) ||
     (color &&
-      1 + gameState.perks.sturdy_bricks + gameState.debuffs.sturdiness) ||
+      1 + gameState.perks.sturdy_bricks ) ||
     0;
 }
 
@@ -902,12 +860,6 @@ export function bordersHitCheck(
   coin.previousY = coin.y;
   coin.x += coin.vx * delta;
   coin.y += coin.vy * delta;
-  // coin.sx ||= 0;
-  // coin.sy ||= 0;
-  // coin.sx += coin.previousX - coin.x;
-  // coin.sy += coin.previousY - coin.y;
-  // coin.sx *= 0.9;
-  // coin.sy *= 0.9;
 
   if (gameState.perks.wind) {
     coin.vx +=
@@ -932,7 +884,7 @@ export function bordersHitCheck(
     coin.vx *= -1;
     hhit = 1;
   }
-  if (coin.y < radius) {
+  if (coin.y < radius && gameState.perks.unbounded<2) {
     coin.y = radius + (radius - coin.y);
     coin.vy *= -1;
     vhit = 1;
@@ -1059,9 +1011,7 @@ export function gameStateTick(
 
       const ratio =
         1 -
-        ((coin.color === "crimson" || coin.color === "LightSkyBlue"
-          ? 3
-          : gameState.perks.viscosity) *
+        ( gameState.perks.viscosity *
           0.03 +
           0.005) *
           frames;
@@ -1082,7 +1032,7 @@ export function gameStateTick(
           gameState.perks.helium > 0 &&
           Math.abs(coin.x - gameState.puckPosition) * 2 >
             gameState.puckWidth + coin.size;
-        coin.vy += frames * coin.weight * 0.8 * (flip ? -1 : 1);
+        coin.vy += frames * coin.weight * 0.8 * (flip ? -gameState.perks.helium : 1);
         if (flip && !isOptionOn("basic") && Math.random() < 0.1) {
           makeParticle(
             gameState,
@@ -1098,20 +1048,6 @@ export function gameStateTick(
         }
       }
 
-      if (coin.color === "crimson" && !isOptionOn("basic")) {
-        const angle = Math.random() * Math.PI * 2;
-        makeParticle(
-          gameState,
-          coin.x,
-          coin.y,
-          Math.cos(angle) * gameState.baseSpeed * 2,
-          Math.sin(angle) * gameState.baseSpeed * 2,
-          "red",
-          true,
-          5,
-          250,
-        );
-      }
 
       const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
       const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
@@ -1125,20 +1061,7 @@ export function gameStateTick(
             // a bit of margin to be nice , negative in case it's a negative coin
             gameState.puckHeight * (coin.points ? 1 : -1)
       ) {
-        if (coin.color === "crimson") {
-          if (gameState.perks.extra_life && gameState.balls.length) {
-            justLostALife(gameState, gameState.balls[0], coin.x, coin.y);
-          } else {
-            gameOver(
-              t("gameOver.because_cursed_coin"),
-              t("gameOver.because_cursed_coin_intro"),
-            );
-          }
-        }
-        if (coin.color === "LightSkyBlue") {
-          gameState.puckFrozenUntil = gameState.levelTime + 500;
-          schedulGameSound(gameState, "freeze", coin.x, 1);
-        }
+
         addToScore(gameState, coin);
 
         destroy(gameState.coins, coinIndex);
@@ -1150,7 +1073,9 @@ export function gameStateTick(
       } else if (
         gameState.perks.unbounded &&
         (coin.x < -gameState.gameZoneWidth / 2 ||
-          coin.x > gameState.canvasWidth + gameState.gameZoneWidth / 2)
+          coin.x > gameState.canvasWidth + gameState.gameZoneWidth / 2
+        || coin.y < -gameState.gameZoneWidth
+        )
       ) {
         // Out of bound on sides
         destroy(gameState.coins, coinIndex);
@@ -1162,11 +1087,11 @@ export function gameStateTick(
           gameState.bricks[hitBrick] &&
           coin.color !== gameState.bricks[hitBrick] &&
           gameState.bricks[hitBrick] !== "black" &&
-          !coin.coloredABrick
+          coin.metamorphosisPoints
         ) {
           // Not using setbrick because we don't want to reset HP
           gameState.bricks[hitBrick] = coin.color;
-          coin.coloredABrick = true;
+          coin.metamorphosisPoints --;
 
           schedulGameSound(gameState, "colorChange", coin.x, 0.3);
         }
@@ -1393,16 +1318,14 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     ball.vx +=
       ((gameState.puckPosition - ball.x) / 1000) *
       delta *
-      gameState.perks.telekinesis *
-      interferenceFactor(gameState);
+      gameState.perks.telekinesis
   }
   if (isYoyoActive(gameState, ball)) {
     speedLimitDampener += 3;
     ball.vx +=
       ((gameState.puckPosition - ball.x) / 1000) *
       delta *
-      gameState.perks.yoyo *
-      interferenceFactor(gameState);
+      gameState.perks.yoyo
   }
   if (
     ball.vx * ball.vx + ball.vy * ball.vy <
@@ -1606,9 +1529,16 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   const lostOnSides =
     (gameState.perks.unbounded && ball.x < -gameState.gameZoneWidth / 2) ||
     ball.x > gameState.canvasWidth + gameState.gameZoneWidth / 2;
+
+  const lostInTheSky = (gameState.perks.unbounded>1 &&
+  ball.y < -gameState.gameZoneWidth / 2
+  )
+
   if (
     gameState.running &&
-    (ball.y > gameState.gameZoneHeight + gameState.ballSize / 2 || lostOnSides)
+    (ball.y > gameState.gameZoneHeight + gameState.ballSize / 2 || lostOnSides
+    ||lostInTheSky
+    )
   ) {
     ball.destroyed = true;
     gameState.runStatistics.balls_lost++;
@@ -1766,21 +1696,7 @@ function makeCoin(
   points = 1,
 ) {
   let weight = 0.8 + Math.random() * 0.2 + Math.min(2, points * 0.01);
-  if (
-    y < (gameState.gameZoneWidth * 2) / 3 &&
-    gameState.debuffs.deadly_coins * points > Math.random() * 10000
-  ) {
-    points = 0;
-    color = "crimson";
-    vx = 0;
-    vy = 0;
-    schedulGameSound(gameState, "void", x, 0.5);
-    weight = 1;
-  } else if (gameState.debuffs.frozen_coins * points > Math.random() * 10000) {
-    color = "LightSkyBlue";
-    schedulGameSound(gameState, "freeze", x, 0.5);
-    weight = 1;
-  }
+
   append(gameState.coins, (p: Partial<Coin>) => {
     p.x = x;
     p.y = y;
@@ -1797,14 +1713,8 @@ function makeCoin(
     p.sa = Math.random() - 0.5;
     p.points = points;
     p.weight = weight;
+    p.metamorphosisPoints=gameState.perks.metamorphosis
   });
-}
-
-export function interferenceFactor(gameState: GameState) {
-  if (!gameState.debuffs.interference) return 1;
-  const cycleLength = (7 + gameState.debuffs.interference) * 1000;
-  const position = gameState.levelTime % cycleLength;
-  return position > 7000 ? -1 : 1;
 }
 
 function makeParticle(

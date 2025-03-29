@@ -85,198 +85,8 @@
 						</children>
 					</folder_node>
 					<folder_node>
-						<name>debuffs</name>
-						<children>
-							<folder_node>
-								<name>banned</name>
-								<children>
-									<concept_node>
-										<name>description</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>help</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-								</children>
-							</folder_node>
-							<folder_node>
-								<name>deadly_coins</name>
-								<children>
-									<concept_node>
-										<name>help</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-								</children>
-							</folder_node>
-							<folder_node>
-								<name>fragility</name>
-								<children>
-									<concept_node>
-										<name>help</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-								</children>
-							</folder_node>
-							<folder_node>
-								<name>frozen_coins</name>
-								<children>
-									<concept_node>
-										<name>help</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-								</children>
-							</folder_node>
-							<folder_node>
-								<name>interference</name>
-								<children>
-									<concept_node>
-										<name>help</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-								</children>
-							</folder_node>
-							<folder_node>
-								<name>more_bombs</name>
-								<children>
-									<concept_node>
-										<name>help</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-								</children>
-							</folder_node>
-							<folder_node>
-								<name>sturdiness</name>
-								<children>
-									<concept_node>
-										<name>help</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-								</children>
-							</folder_node>
-						</children>
-					</folder_node>
-					<folder_node>
 						<name>gameOver</name>
 						<children>
-							<concept_node>
-								<name>because_cursed_coin</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>false</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>because_cursed_coin_intro</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>false</approved>
-									</translation>
-								</translations>
-							</concept_node>
 							<concept_node>
 								<name>cumulative_total</name>
 								<description/>
@@ -2083,7 +1893,7 @@
 						<name>score_panel</name>
 						<children>
 							<concept_node>
-								<name>bebuffs_list</name>
+								<name>banned</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -3981,21 +3791,6 @@
 										</translations>
 									</concept_node>
 									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
 										<name>name</name>
 										<description/>
 										<comment/>
@@ -4641,21 +4436,6 @@
 										</translations>
 									</concept_node>
 									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
 										<name>name</name>
 										<description/>
 										<comment/>
@@ -4857,6 +4637,21 @@
 									</concept_node>
 									<concept_node>
 										<name>help</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>true</approved>
+											</translation>
+											<translation>
+												<language>fr-FR</language>
+												<approved>true</approved>
+											</translation>
+										</translations>
+									</concept_node>
+									<concept_node>
+										<name>help_no_ceiling</name>
 										<description/>
 										<comment/>
 										<translations>

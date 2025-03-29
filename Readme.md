@@ -17,21 +17,20 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Premium: allow looping
 
 Allow players to loop the game :
-- [x] keep your score 
-- [x] keep 1 perk
-- [x] add one hasard
-- [x] add one HP to all bricks - as a debuff
-- [ ] advertise looping in normal game over screen  
-- real time stats as the option says. 
-- [x] Noise of coins against side is annoying.
-- Change look of loop, to avoid picking randomly at loop end. 
-- [x] make red coins scarier,
-- [x] add blue coins that only freeze puck.
-- Make fullscreen an option and turn it back on when playing
-- [x] +1 combo de base par rerolls
-- +1 combo de base par vie restantes (pas attrapable) 
+- keep your score 
+- keep 1 perk, level it up beyond the max
+- ban all other perks 
+- unlock all upgrades in loop 1+
+
+Hard to scale : 
+- 
+
 
 # Todo  
+- Make fullscreen an option and turn it back on when playing
+- real time stats as the option says. 
+- weee sound when ball lost to side or sky
+
 - [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
  
 - people assume unbounded  allows for wrap around

@@ -1,7 +1,6 @@
 import { Ball, GameState, PerkId, PerksMap } from "./types";
 import { icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
-import { debuffs } from "./debuffs";
 
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
@@ -73,20 +72,6 @@ export function pickedUpgradesHTMl(gameState: GameState) {
 
   if (!list) return "";
   return ` <p>${t("score_panel.upgrades_picked")}</p> <p>${list}</p>`;
-}
-
-export function debuffsHTMl(gameState: GameState): string {
-  const banned = upgrades
-    .filter((u) => gameState.bannedPerks[u.id])
-    .map((u) => u.name)
-    .join(", ");
-  let list = debuffs
-    .filter((d) => gameState.debuffs[d.id])
-    .map((d) => d.name(gameState.debuffs[d.id], banned))
-    .join(" ");
-
-  if (!list) return "";
-  return `<p>${t("score_panel.bebuffs_list")} ${list}</p>`;
 }
 
 export function levelsListHTMl(gameState: GameState) {
@@ -203,4 +188,9 @@ export function countBricksBelow(gameState: GameState, index: number) {
     }
   }
   return count;
+}
+
+export function comboKeepingRate(level:number){
+  if(level<=0) return  0
+  return 1-1/(1+level)*1.5
 }

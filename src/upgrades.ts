@@ -1,4 +1,5 @@
 import { t } from "./i18n/i18n";
+import {comboKeepingRate} from "./game_utils";
 
 export const rawUpgrades = [
   {
@@ -47,7 +48,7 @@ export const rawUpgrades = [
     id: "slow_down",
     max: 2,
     name: t("upgrades.slow_down.name"),
-    help: () => t("upgrades.slow_down.help"),
+    help: (lvl:number) => t("upgrades.slow_down.help",{ lvl }),
     fullHelp: t("upgrades.slow_down.fullHelp"),
   },
   {
@@ -82,7 +83,7 @@ export const rawUpgrades = [
     max: 1,
 
     name: t("upgrades.left_is_lava.name"),
-    help: () => t("upgrades.left_is_lava.help"),
+    help: (lvl:number) => t("upgrades.left_is_lava.help",{ lvl }),
     fullHelp: t("upgrades.left_is_lava.fullHelp"),
   },
   {
@@ -93,7 +94,7 @@ export const rawUpgrades = [
     giftable: true,
     max: 1,
     name: t("upgrades.right_is_lava.name"),
-    help: () => t("upgrades.right_is_lava.help"),
+    help: (lvl:number) => t("upgrades.right_is_lava.help",{ lvl }),
     fullHelp: t("upgrades.right_is_lava.fullHelp"),
   },
   {
@@ -104,7 +105,7 @@ export const rawUpgrades = [
     giftable: true,
     max: 1,
     name: t("upgrades.top_is_lava.name"),
-    help: () => t("upgrades.top_is_lava.help"),
+    help: (lvl:number) => t("upgrades.top_is_lava.help",{ lvl }),
     fullHelp: t("upgrades.top_is_lava.fullHelp"),
   },
   {
@@ -193,7 +194,7 @@ export const rawUpgrades = [
     giftable: true,
     max: 1,
     name: t("upgrades.picky_eater.name"),
-    help: (lvl: number) => t("upgrades.picky_eater.help"),
+    help: (lvl: number) => t("upgrades.picky_eater.help",{lvl}),
     fullHelp: t("upgrades.picky_eater.fullHelp"),
   },
   {
@@ -204,7 +205,7 @@ export const rawUpgrades = [
     id: "metamorphosis",
     max: 1,
     name: t("upgrades.metamorphosis.name"),
-    help: (lvl: number) => t("upgrades.metamorphosis.help"),
+    help: (lvl: number) => t("upgrades.metamorphosis.help",{lvl}),
     fullHelp: t("upgrades.metamorphosis.fullHelp"),
   },
   {
@@ -215,12 +216,11 @@ export const rawUpgrades = [
     giftable: true,
     max: 1,
     name: t("upgrades.compound_interest.name"),
-    help: (lvl: number) => t("upgrades.compound_interest.help"),
+    help: (lvl: number) => t("upgrades.compound_interest.help",{lvl}),
     fullHelp: t("upgrades.compound_interest.fullHelp"),
   },
   {
     requires: "",
-
     threshold: 7000,
     id: "hot_start",
     giftable: true,
@@ -283,13 +283,12 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-
     threshold: 18000,
     giftable: false,
     id: "soft_reset",
-    max: 9,
+    max: 3,
     name: t("upgrades.soft_reset.name"),
-    help: (lvl: number) => t("upgrades.soft_reset.help", { percent: 10 * lvl }),
+    help: (lvl: number) => t("upgrades.soft_reset.help", { percent: Math.round(comboKeepingRate(lvl) * 100)}),
     fullHelp: t("upgrades.soft_reset.fullHelp"),
   },
   {
@@ -353,9 +352,10 @@ export const rawUpgrades = [
     max: 4,
     name: t("upgrades.sturdy_bricks.name"),
     help: (lvl: number) =>
-      lvl == 1
-        ? t("upgrades.sturdy_bricks.help")
-        : t("upgrades.sturdy_bricks.help_plural"),
+      // lvl == 1
+        t("upgrades.sturdy_bricks.help",{lvl, percent:lvl*10}),
+        // ?
+        // : t("upgrades.sturdy_bricks.help_plural"),
     fullHelp: t("upgrades.sturdy_bricks.fullHelp"),
   },
   {
@@ -367,12 +367,11 @@ export const rawUpgrades = [
     max: 4,
     name: t("upgrades.respawn.name"),
     help: (lvl: number) =>
-      lvl == 1 ? t("upgrades.respawn.help") : t("upgrades.respawn.help_plural"),
+      t("upgrades.respawn.help",{percent:Math.floor(100*comboKeepingRate(lvl)),lvl}),
     fullHelp: t("upgrades.respawn.fullHelp"),
   },
   {
     requires: "",
-
     threshold: 50000,
     giftable: false,
     id: "one_more_choice",
@@ -423,7 +422,7 @@ export const rawUpgrades = [
     id: "asceticism",
     max: 1,
     name: t("upgrades.asceticism.name"),
-    help: (lvl: number) => t("upgrades.asceticism.help"),
+    help: (lvl: number) => t("upgrades.asceticism.help",{combo:lvl*3}),
     fullHelp: t("upgrades.asceticism.fullHelp"),
   },
   {
@@ -434,7 +433,9 @@ export const rawUpgrades = [
     id: "unbounded",
     max: 1,
     name: t("upgrades.unbounded.name"),
-    help: (lvl: number) => t("upgrades.unbounded.help"),
+    help: (lvl: number) => lvl > 1 ?
+        t("upgrades.unbounded.help_no_ceiling",{lvl}):
+        t("upgrades.unbounded.help",{lvl}),
     fullHelp: t("upgrades.unbounded.fullHelp"),
   },
   {
@@ -445,7 +446,7 @@ export const rawUpgrades = [
     id: "shunt",
     max: 3,
     name: t("upgrades.shunt.name"),
-    help: (lvl: number) => t("upgrades.shunt.help", { percent: lvl * 20 }),
+    help: (lvl: number) => t("upgrades.shunt.help", { percent: Math.round(comboKeepingRate(lvl) * 100) }),
     fullHelp: t("upgrades.shunt.fullHelp"),
   },
   {

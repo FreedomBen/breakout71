@@ -1,4 +1,4 @@
-import { DebuffsMap, GameState, RunParams } from "./types";
+import {  GameState, RunParams } from "./types";
 import { getTotalScore } from "./settings";
 import { allLevels, upgrades } from "./loadGameData";
 import {
@@ -9,7 +9,6 @@ import {
 } from "./game_utils";
 import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
 import { isOptionOn } from "./options";
-import { debuffs } from "./debuffs";
 
 export function getRunLevels(totalScoreAtRunStart: number, params: RunParams) {
   const firstLevel = params?.level
@@ -41,7 +40,6 @@ export function newGameState(params: RunParams): GameState {
     upgradesOfferedFor: -1,
     perks,
     bannedPerks: makeEmptyPerksMap(upgrades),
-    debuffs: { ...emptyDebuffsMap(), ...(params?.debuffs || {}) },
     puckWidth: 200,
     baseSpeed: 12,
     combo: 1,
@@ -51,7 +49,6 @@ export function newGameState(params: RunParams): GameState {
     ballStickToPuck: true,
     puckPosition: 400,
     lastPuckPosition: 400,
-    desiredPuckPosition: 400,
     lastPuckMove: 0,
     pauseTimeout: null,
     canvasWidth: 0,
@@ -112,7 +109,6 @@ export function newGameState(params: RunParams): GameState {
     rerolls: 0,
     loop: 0,
     baseCombo: 1,
-    puckFrozenUntil: 0,
     levelsPerLoop: params?.levelsPerLoop ?? 7,
   };
   resetBalls(gameState);
@@ -133,8 +129,4 @@ export function newGameState(params: RunParams): GameState {
   return gameState;
 }
 
-export function emptyDebuffsMap(): DebuffsMap {
-  const map = {};
-  debuffs.forEach((d) => (map[d.id] = 0));
-  return map as DebuffsMap;
-}
+

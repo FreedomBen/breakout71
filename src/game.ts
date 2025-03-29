@@ -15,7 +15,6 @@ import { getAudioContext, playPendingSounds } from "./sounds";
 import {
   bannedUpgradesHTMl,
   currentLevelInfo,
-  debuffsHTMl,
   getRowColIndex,
   levelsListHTMl,
   max_levels,
@@ -447,6 +446,13 @@ document.addEventListener("visibilitychange", () => {
 
 async function openScorePanel() {
   pause(true);
+
+  const banned = upgrades
+    .filter((u) => gameState.bannedPerks[u.id])
+    .map((u) => u.name)
+    .join(", ");
+
+
   const cb = await asyncAlert({
     title: gameState.loop
       ? t("score_panel.title_looped", {
@@ -465,9 +471,9 @@ async function openScorePanel() {
       gameState.isCreativeModeRun ? `<p>${t("score_panel.test_run")}</p>` : "",
       pickedUpgradesHTMl(gameState),
       levelsListHTMl(gameState),
-      debuffsHTMl(gameState),
        gameState.rerolls?
-           t('score_panel.rerolls_count', {rerolls:gameState.rerolls}):''
+           t('score_panel.rerolls_count', {rerolls:gameState.rerolls}):'',
+        banned  && t('score_panel.banned',{banned})
     ],
     allowClose: true,
   });
@@ -1010,31 +1016,12 @@ restart(
   (window.location.search.includes("stressTest") && {
     level: "Bird",
     perks: {
-      sapper: 5,
-      bigger_explosions: 20,
-      // // unbounded: 1,
-      // // pierce_color: 1,
-      // pierce: 1,
-      // streak_shots: 1,
-      // multiball: 6,
-      base_combo: 7,
-      telekinesis: 2,
-      yoyo: 2,
-      pierce: 10,
-      // metamorphosis: 1,
-      // implosions: 1,
-      // sturdy_bricks:5
-      coin_magnet: 2,
-      extra_life: 3,
+      pierce:1,
+      sapper:1,
+    bigger_explosions:6,
+      telekinesis:2
     },
     levelsPerLoop:2,
-
-    debuffs: {
-      // fragility:3
-      // deadly_coins: 20,
-      // frozen_coins: 20,
-      //       interference:20,
-    },
   }) ||
     {},
 );
