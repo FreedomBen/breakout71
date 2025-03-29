@@ -14,8 +14,6 @@ import {
 import {
     brickCenterX,
     brickCenterY,
-    clamp,
-    comboKeepingRate,
     countBricksAbove,
     countBricksBelow,
     currentLevelInfo,
@@ -42,6 +40,7 @@ import {isOptionOn} from "./options";
 import {isPremium} from "./premium";
 import {getRunLevels} from "./newGameState";
 import {requiredAsyncAlert} from "./asyncAlert";
+import {clamp, comboKeepingRate} from "./pure_functions";
 
 export function setMousePos(gameState: GameState, x: number) {
     gameState.puckPosition = x;

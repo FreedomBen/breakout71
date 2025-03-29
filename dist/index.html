@@ -1392,7 +1392,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "rawUpgrades", ()=>rawUpgrades);
 var _i18N = require("./i18n/i18n");
-var _gameUtils = require("./game_utils");
+var _pureFunctions = require("./pure_functions");
 const rawUpgrades = [
     {
         requires: "",
@@ -1668,7 +1668,7 @@ const rawUpgrades = [
         max: 3,
         name: (0, _i18N.t)("upgrades.soft_reset.name"),
         help: (lvl)=>(0, _i18N.t)("upgrades.soft_reset.help", {
-                percent: Math.round((0, _gameUtils.comboKeepingRate)(lvl) * 100)
+                percent: Math.round((0, _pureFunctions.comboKeepingRate)(lvl) * 100)
             }),
         fullHelp: (0, _i18N.t)("upgrades.soft_reset.fullHelp")
     },
@@ -1736,7 +1736,7 @@ const rawUpgrades = [
         max: 4,
         name: (0, _i18N.t)("upgrades.respawn.name"),
         help: (lvl)=>(0, _i18N.t)("upgrades.respawn.help", {
-                percent: Math.floor(100 * (0, _gameUtils.comboKeepingRate)(lvl)),
+                percent: Math.floor(100 * (0, _pureFunctions.comboKeepingRate)(lvl)),
                 delay: (3 / lvl).toFixed(2)
             }),
         fullHelp: (0, _i18N.t)("upgrades.respawn.fullHelp")
@@ -1820,7 +1820,7 @@ const rawUpgrades = [
         max: 3,
         name: (0, _i18N.t)("upgrades.shunt.name"),
         help: (lvl)=>(0, _i18N.t)("upgrades.shunt.help", {
-                percent: Math.round((0, _gameUtils.comboKeepingRate)(lvl) * 100)
+                percent: Math.round((0, _pureFunctions.comboKeepingRate)(lvl) * 100)
             }),
         fullHelp: (0, _i18N.t)("upgrades.shunt.fullHelp")
     },
@@ -2004,7 +2004,7 @@ const rawUpgrades = [
     }
 ];
 
-},{"./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./game_utils":"cEeac"}],"eNPRm":[function(require,module,exports,__globalThis) {
+},{"./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./pure_functions":"6pQh7"}],"eNPRm":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getCurrentLang", ()=>getCurrentLang);
@@ -2093,181 +2093,19 @@ function cycleMaxParticles() {
     setSettingValue("max_particles", (getSettingValue("max_particles", 1) + 1) % 6);
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cEeac":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6pQh7":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "getMajorityValue", ()=>getMajorityValue);
-parcelHelpers.export(exports, "sample", ()=>sample);
-parcelHelpers.export(exports, "sampleN", ()=>sampleN);
-parcelHelpers.export(exports, "sumOfValues", ()=>sumOfValues);
-parcelHelpers.export(exports, "makeEmptyPerksMap", ()=>makeEmptyPerksMap);
-parcelHelpers.export(exports, "brickCenterX", ()=>brickCenterX);
-parcelHelpers.export(exports, "brickCenterY", ()=>brickCenterY);
-parcelHelpers.export(exports, "getRowColIndex", ()=>getRowColIndex);
-parcelHelpers.export(exports, "getPossibleUpgrades", ()=>getPossibleUpgrades);
-parcelHelpers.export(exports, "max_levels", ()=>max_levels);
-parcelHelpers.export(exports, "pickedUpgradesHTMl", ()=>pickedUpgradesHTMl);
-parcelHelpers.export(exports, "levelsListHTMl", ()=>levelsListHTMl);
-parcelHelpers.export(exports, "currentLevelInfo", ()=>currentLevelInfo);
-parcelHelpers.export(exports, "isTelekinesisActive", ()=>isTelekinesisActive);
-parcelHelpers.export(exports, "isYoyoActive", ()=>isYoyoActive);
-parcelHelpers.export(exports, "findLast", ()=>findLast);
-parcelHelpers.export(exports, "distance2", ()=>distance2);
-parcelHelpers.export(exports, "distanceBetween", ()=>distanceBetween);
 parcelHelpers.export(exports, "clamp", ()=>clamp);
-parcelHelpers.export(exports, "defaultSounds", ()=>defaultSounds);
-parcelHelpers.export(exports, "shouldPierceByColor", ()=>shouldPierceByColor);
-parcelHelpers.export(exports, "countBricksAbove", ()=>countBricksAbove);
-parcelHelpers.export(exports, "countBricksBelow", ()=>countBricksBelow);
 parcelHelpers.export(exports, "comboKeepingRate", ()=>comboKeepingRate);
-var _loadGameData = require("./loadGameData");
-var _i18N = require("./i18n/i18n");
-function getMajorityValue(arr) {
-    const count = {};
-    arr.forEach((v)=>count[v] = (count[v] || 0) + 1);
-    // Object.values inline polyfill
-    const max = Math.max(...Object.keys(count).map((k)=>count[k]));
-    return sample(Object.keys(count).filter((k)=>count[k] == max));
-}
-function sample(arr) {
-    return arr[Math.floor(arr.length * Math.random())];
-}
-function sampleN(arr, n) {
-    return [
-        ...arr
-    ].sort(()=>Math.random() - 0.5).slice(0, n);
-}
-function sumOfValues(obj) {
-    if (!obj) return 0;
-    return Object.values(obj)?.reduce((a, b)=>a + b, 0) || 0;
-}
-const makeEmptyPerksMap = (upgrades)=>{
-    const p = {};
-    upgrades.forEach((u)=>p[u.id] = 0);
-    return p;
-};
-function brickCenterX(gameState, index) {
-    return gameState.offsetX + (index % gameState.gridSize + 0.5) * gameState.brickWidth;
-}
-function brickCenterY(gameState, index) {
-    return (Math.floor(index / gameState.gridSize) + 0.5) * gameState.brickWidth;
-}
-function getRowColIndex(gameState, row, col) {
-    if (row < 0 || col < 0 || row >= gameState.gridSize || col >= gameState.gridSize) return -1;
-    return row * gameState.gridSize + col;
-}
-function getPossibleUpgrades(gameState) {
-    return (0, _loadGameData.upgrades).filter((u)=>gameState.totalScoreAtRunStart >= u.threshold || gameState.loop > 0).filter((u)=>!u?.requires || gameState.perks[u?.requires]);
-}
-function max_levels(gameState) {
-    return gameState.levelsPerLoop + gameState.perks.extra_levels;
-}
-function pickedUpgradesHTMl(gameState) {
-    let list = "";
-    for (let u of (0, _loadGameData.upgrades))for(let i = 0; i < gameState.perks[u.id]; i++)list += `<span  title="${u.name} : ${u.help(gameState.perks[u.id])}">${(0, _loadGameData.icons)["icon:" + u.id]}</span>`;
-    if (!list) return "";
-    return ` <p>${(0, _i18N.t)("score_panel.upgrades_picked")}</p> <p>${list}</p>`;
-}
-function levelsListHTMl(gameState) {
-    if (!gameState.perks.clairvoyant) return "";
-    let list = "";
-    for(let i = 0; i < max_levels(gameState); i++)list += `<span style="opacity: ${i >= gameState.currentLevel ? 1 : 0.2}" title="${gameState.runLevels[i].name}">${(0, _loadGameData.icons)[gameState.runLevels[i].name]}</span>`;
-    return `<p>${(0, _i18N.t)("score_panel.upcoming_levels")}</p><p>${list}</p>`;
-}
-function currentLevelInfo(gameState) {
-    return gameState.level;
-}
-function isTelekinesisActive(gameState, ball) {
-    return gameState.perks.telekinesis && ball.vy < 0;
-}
-function isYoyoActive(gameState, ball) {
-    return gameState.perks.yoyo && ball.vy > 0;
-}
-function findLast(arr, predicate) {
-    let i = arr.length;
-    while(--i)if (predicate(arr[i], i, arr)) return arr[i];
-}
-function distance2(a, b) {
-    return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2);
-}
-function distanceBetween(a, b) {
-    return Math.sqrt(distance2(a, b));
-}
 function clamp(value, min, max) {
     return Math.max(min, Math.min(value, max));
-}
-function defaultSounds() {
-    return {
-        aboutToPlaySound: {
-            wallBeep: {
-                vol: 0,
-                x: 0
-            },
-            comboIncreaseMaybe: {
-                vol: 0,
-                x: 0
-            },
-            comboDecrease: {
-                vol: 0,
-                x: 0
-            },
-            coinBounce: {
-                vol: 0,
-                x: 0
-            },
-            explode: {
-                vol: 0,
-                x: 0
-            },
-            lifeLost: {
-                vol: 0,
-                x: 0
-            },
-            coinCatch: {
-                vol: 0,
-                x: 0
-            },
-            colorChange: {
-                vol: 0,
-                x: 0
-            },
-            void: {
-                vol: 0,
-                x: 0
-            },
-            freeze: {
-                vol: 0,
-                x: 0
-            }
-        }
-    };
-}
-function shouldPierceByColor(gameState, vhit, hhit, chit) {
-    if (!gameState.perks.pierce_color) return false;
-    if (typeof vhit !== "undefined" && gameState.bricks[vhit] !== gameState.ballsColor) return false;
-    if (typeof hhit !== "undefined" && gameState.bricks[hhit] !== gameState.ballsColor) return false;
-    if (typeof chit !== "undefined" && gameState.bricks[chit] !== gameState.ballsColor) return false;
-    return true;
-}
-function countBricksAbove(gameState, index) {
-    const col = index % gameState.gridSize;
-    const row = Math.floor(index / gameState.gridSize);
-    let count = 0;
-    for(let y = 0; y < row; y++)if (gameState.bricks[col + y * gameState.gridSize]) count++;
-    return count;
-}
-function countBricksBelow(gameState, index) {
-    const col = index % gameState.gridSize;
-    const row = Math.floor(index / gameState.gridSize);
-    let count = 0;
-    for(let y = row + 1; y < gameState.gridSize; y++)if (gameState.bricks[col + y * gameState.gridSize]) count++;
-    return count;
 }
 function comboKeepingRate(level) {
     return clamp(1 - 1 / (1 + level) * 1.5, 0, 1);
 }
 
-},{"./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6rQoT":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6rQoT":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "levelIconHTML", ()=>levelIconHTML);
@@ -2571,7 +2409,173 @@ function toggleOption(key) {
     (0, _settings.setSettingValue)("breakout-settings-enable-" + key, !isOptionOn(key));
 }
 
-},{"./i18n/i18n":"eNPRm","./settings":"5blfu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2n0gK":[function(require,module,exports,__globalThis) {
+},{"./i18n/i18n":"eNPRm","./settings":"5blfu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cEeac":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getMajorityValue", ()=>getMajorityValue);
+parcelHelpers.export(exports, "sample", ()=>sample);
+parcelHelpers.export(exports, "sampleN", ()=>sampleN);
+parcelHelpers.export(exports, "sumOfValues", ()=>sumOfValues);
+parcelHelpers.export(exports, "makeEmptyPerksMap", ()=>makeEmptyPerksMap);
+parcelHelpers.export(exports, "brickCenterX", ()=>brickCenterX);
+parcelHelpers.export(exports, "brickCenterY", ()=>brickCenterY);
+parcelHelpers.export(exports, "getRowColIndex", ()=>getRowColIndex);
+parcelHelpers.export(exports, "getPossibleUpgrades", ()=>getPossibleUpgrades);
+parcelHelpers.export(exports, "max_levels", ()=>max_levels);
+parcelHelpers.export(exports, "pickedUpgradesHTMl", ()=>pickedUpgradesHTMl);
+parcelHelpers.export(exports, "levelsListHTMl", ()=>levelsListHTMl);
+parcelHelpers.export(exports, "currentLevelInfo", ()=>currentLevelInfo);
+parcelHelpers.export(exports, "isTelekinesisActive", ()=>isTelekinesisActive);
+parcelHelpers.export(exports, "isYoyoActive", ()=>isYoyoActive);
+parcelHelpers.export(exports, "findLast", ()=>findLast);
+parcelHelpers.export(exports, "distance2", ()=>distance2);
+parcelHelpers.export(exports, "distanceBetween", ()=>distanceBetween);
+parcelHelpers.export(exports, "defaultSounds", ()=>defaultSounds);
+parcelHelpers.export(exports, "shouldPierceByColor", ()=>shouldPierceByColor);
+parcelHelpers.export(exports, "countBricksAbove", ()=>countBricksAbove);
+parcelHelpers.export(exports, "countBricksBelow", ()=>countBricksBelow);
+var _loadGameData = require("./loadGameData");
+var _i18N = require("./i18n/i18n");
+function getMajorityValue(arr) {
+    const count = {};
+    arr.forEach((v)=>count[v] = (count[v] || 0) + 1);
+    // Object.values inline polyfill
+    const max = Math.max(...Object.keys(count).map((k)=>count[k]));
+    return sample(Object.keys(count).filter((k)=>count[k] == max));
+}
+function sample(arr) {
+    return arr[Math.floor(arr.length * Math.random())];
+}
+function sampleN(arr, n) {
+    return [
+        ...arr
+    ].sort(()=>Math.random() - 0.5).slice(0, n);
+}
+function sumOfValues(obj) {
+    if (!obj) return 0;
+    return Object.values(obj)?.reduce((a, b)=>a + b, 0) || 0;
+}
+const makeEmptyPerksMap = (upgrades)=>{
+    const p = {};
+    upgrades.forEach((u)=>p[u.id] = 0);
+    return p;
+};
+function brickCenterX(gameState, index) {
+    return gameState.offsetX + (index % gameState.gridSize + 0.5) * gameState.brickWidth;
+}
+function brickCenterY(gameState, index) {
+    return (Math.floor(index / gameState.gridSize) + 0.5) * gameState.brickWidth;
+}
+function getRowColIndex(gameState, row, col) {
+    if (row < 0 || col < 0 || row >= gameState.gridSize || col >= gameState.gridSize) return -1;
+    return row * gameState.gridSize + col;
+}
+function getPossibleUpgrades(gameState) {
+    return (0, _loadGameData.upgrades).filter((u)=>gameState.totalScoreAtRunStart >= u.threshold || gameState.loop > 0).filter((u)=>!u?.requires || gameState.perks[u?.requires]);
+}
+function max_levels(gameState) {
+    return gameState.levelsPerLoop + gameState.perks.extra_levels;
+}
+function pickedUpgradesHTMl(gameState) {
+    let list = "";
+    for (let u of (0, _loadGameData.upgrades))for(let i = 0; i < gameState.perks[u.id]; i++)list += `<span  title="${u.name} : ${u.help(gameState.perks[u.id])}">${(0, _loadGameData.icons)["icon:" + u.id]}</span>`;
+    if (!list) return "";
+    return ` <p>${(0, _i18N.t)("score_panel.upgrades_picked")}</p> <p>${list}</p>`;
+}
+function levelsListHTMl(gameState) {
+    if (!gameState.perks.clairvoyant) return "";
+    let list = "";
+    for(let i = 0; i < max_levels(gameState); i++)list += `<span style="opacity: ${i >= gameState.currentLevel ? 1 : 0.2}" title="${gameState.runLevels[i].name}">${(0, _loadGameData.icons)[gameState.runLevels[i].name]}</span>`;
+    return `<p>${(0, _i18N.t)("score_panel.upcoming_levels")}</p><p>${list}</p>`;
+}
+function currentLevelInfo(gameState) {
+    return gameState.level;
+}
+function isTelekinesisActive(gameState, ball) {
+    return gameState.perks.telekinesis && ball.vy < 0;
+}
+function isYoyoActive(gameState, ball) {
+    return gameState.perks.yoyo && ball.vy > 0;
+}
+function findLast(arr, predicate) {
+    let i = arr.length;
+    while(--i)if (predicate(arr[i], i, arr)) return arr[i];
+}
+function distance2(a, b) {
+    return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2);
+}
+function distanceBetween(a, b) {
+    return Math.sqrt(distance2(a, b));
+}
+function defaultSounds() {
+    return {
+        aboutToPlaySound: {
+            wallBeep: {
+                vol: 0,
+                x: 0
+            },
+            comboIncreaseMaybe: {
+                vol: 0,
+                x: 0
+            },
+            comboDecrease: {
+                vol: 0,
+                x: 0
+            },
+            coinBounce: {
+                vol: 0,
+                x: 0
+            },
+            explode: {
+                vol: 0,
+                x: 0
+            },
+            lifeLost: {
+                vol: 0,
+                x: 0
+            },
+            coinCatch: {
+                vol: 0,
+                x: 0
+            },
+            colorChange: {
+                vol: 0,
+                x: 0
+            },
+            void: {
+                vol: 0,
+                x: 0
+            },
+            freeze: {
+                vol: 0,
+                x: 0
+            }
+        }
+    };
+}
+function shouldPierceByColor(gameState, vhit, hhit, chit) {
+    if (!gameState.perks.pierce_color) return false;
+    if (typeof vhit !== "undefined" && gameState.bricks[vhit] !== gameState.ballsColor) return false;
+    if (typeof hhit !== "undefined" && gameState.bricks[hhit] !== gameState.ballsColor) return false;
+    if (typeof chit !== "undefined" && gameState.bricks[chit] !== gameState.ballsColor) return false;
+    return true;
+}
+function countBricksAbove(gameState, index) {
+    const col = index % gameState.gridSize;
+    const row = Math.floor(index / gameState.gridSize);
+    let count = 0;
+    for(let y = 0; y < row; y++)if (gameState.bricks[col + y * gameState.gridSize]) count++;
+    return count;
+}
+function countBricksBelow(gameState, index) {
+    const col = index % gameState.gridSize;
+    const row = Math.floor(index / gameState.gridSize);
+    let count = 0;
+    for(let y = row + 1; y < gameState.gridSize; y++)if (gameState.bricks[col + y * gameState.gridSize]) count++;
+    return count;
+}
+
+},{"./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2n0gK":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 if ("serviceWorker" in navigator && window.location.href.endsWith("/index.html?isPWA=true")) {
@@ -2627,6 +2631,7 @@ var _options = require("./options");
 var _premium = require("./premium");
 var _newGameState = require("./newGameState");
 var _asyncAlert = require("./asyncAlert");
+var _pureFunctions = require("./pure_functions");
 function setMousePos(gameState, x) {
     gameState.puckPosition = x;
     // Sets the puck position, and updates the ball position if they are supposed to follow it
@@ -2686,7 +2691,7 @@ function normalizeGameState(gameState) {
     const corner = gameState.levelTime ? gameState.perks.corner_shot : 0;
     let minX = gameState.offsetXRoundedDown + gameState.puckWidth / 2 - gameState.puckWidth * corner;
     let maxX = gameState.offsetXRoundedDown + gameState.gameZoneWidthRoundedUp - gameState.puckWidth / 2 + gameState.puckWidth * corner;
-    gameState.puckPosition = (0, _gameUtils.clamp)(gameState.puckPosition, minX, maxX);
+    gameState.puckPosition = (0, _pureFunctions.clamp)(gameState.puckPosition, minX, maxX);
     if (gameState.ballStickToPuck) putBallsAtPuck(gameState);
     if (Math.abs(gameState.lastPuckPosition - gameState.puckPosition) > 1 && gameState.running) gameState.lastPuckMove = gameState.levelTime;
     gameState.lastPuckPosition = gameState.puckPosition;
@@ -2697,11 +2702,11 @@ function baseCombo(gameState) {
 function resetCombo(gameState, x, y) {
     const prev = gameState.combo;
     gameState.combo = baseCombo(gameState);
-    if (prev > gameState.combo && gameState.perks.soft_reset) gameState.combo += Math.floor((prev - gameState.combo) * (0, _gameUtils.comboKeepingRate)(gameState.perks.soft_reset));
+    if (prev > gameState.combo && gameState.perks.soft_reset) gameState.combo += Math.floor((prev - gameState.combo) * (0, _pureFunctions.comboKeepingRate)(gameState.perks.soft_reset));
     const lost = Math.max(0, prev - gameState.combo);
     if (lost) {
         for(let i = 0; i < lost && i < 8; i++)setTimeout(()=>schedulGameSound(gameState, "comboDecrease", x, 1), i * 100);
-        if (typeof x !== "undefined" && typeof y !== "undefined") makeText(gameState, x, y, "red", "-" + lost, 20, 500 + (0, _gameUtils.clamp)(lost, 0, 500));
+        if (typeof x !== "undefined" && typeof y !== "undefined") makeText(gameState, x, y, "red", "-" + lost, 20, 500 + (0, _pureFunctions.clamp)(lost, 0, 500));
     }
     return lost;
 }
@@ -2827,7 +2832,7 @@ function explodeBrick(gameState, index, ball, isExplosion) {
         spawnExplosion(gameState, 5 + Math.min(gameState.combo, 30), x, y, color);
     }
     if (gameState.perks.respawn && color !== "black" && !gameState.bricks[index]) {
-        if (Math.random() < (0, _gameUtils.comboKeepingRate)(gameState.perks.respawn)) append(gameState.respawns, (b)=>{
+        if (Math.random() < (0, _pureFunctions.comboKeepingRate)(gameState.perks.respawn)) append(gameState.respawns, (b)=>{
             b.color = color;
             b.index = index;
             b.time = gameState.levelTime + 3000 / gameState.perks.respawn;
@@ -2941,7 +2946,7 @@ async function setLevel(gameState, l) {
     // Reset combo silently
     const finalCombo = gameState.combo;
     gameState.combo = baseCombo(gameState);
-    if (gameState.perks.shunt) gameState.combo += Math.round(Math.max(0, (finalCombo - gameState.combo) * (0, _gameUtils.comboKeepingRate)(gameState.perks.shunt)));
+    if (gameState.perks.shunt) gameState.combo += Math.round(Math.max(0, (finalCombo - gameState.combo) * (0, _pureFunctions.comboKeepingRate)(gameState.perks.shunt)));
     gameState.combo += gameState.perks.hot_start * 15;
     const lvl = (0, _gameUtils.currentLevelInfo)(gameState);
     if (lvl.size !== gameState.gridSize) {
@@ -3169,10 +3174,10 @@ frames = 1) {
                     let x = (a.x + b.x) / 2;
                     let y = (a.y + b.y) / 2;
                     const limit = gameState.baseSpeed;
-                    a.vx += (0, _gameUtils.clamp)(a.x - x, -limit, limit) + (Math.random() - 0.5) * limit / 3;
-                    a.vy += (0, _gameUtils.clamp)(a.y - y, -limit, limit) + (Math.random() - 0.5) * limit / 3;
-                    b.vx += (0, _gameUtils.clamp)(b.x - x, -limit, limit) + (Math.random() - 0.5) * limit / 3;
-                    b.vy += (0, _gameUtils.clamp)(b.y - y, -limit, limit) + (Math.random() - 0.5) * limit / 3;
+                    a.vx += (0, _pureFunctions.clamp)(a.x - x, -limit, limit) + (Math.random() - 0.5) * limit / 3;
+                    a.vy += (0, _pureFunctions.clamp)(a.y - y, -limit, limit) + (Math.random() - 0.5) * limit / 3;
+                    b.vx += (0, _pureFunctions.clamp)(b.x - x, -limit, limit) + (Math.random() - 0.5) * limit / 3;
+                    b.vy += (0, _pureFunctions.clamp)(b.y - y, -limit, limit) + (Math.random() - 0.5) * limit / 3;
                     let index = (0, _game.brickIndex)(x, y);
                     explosionAt(gameState, index, x, y, a, Math.max(0, gameState.perks.shocks - 1));
                 }
@@ -3425,7 +3430,7 @@ function makeText(gameState, x, y, color, text, size = 20, duration = 500) {
         p.y = y;
         p.color = color;
         p.size = size;
-        p.duration = (0, _gameUtils.clamp)(duration, 400, 2000);
+        p.duration = (0, _pureFunctions.clamp)(duration, 400, 2000);
         p.text = text;
     });
 }
@@ -3481,7 +3486,7 @@ function forEachLiveOne(where, cb) {
     });
 }
 
-},{"./game_utils":"cEeac","./i18n/i18n":"eNPRm","./loadGameData":"l1B4x","./settings":"5blfu","./render":"9AS2t","./gameOver":"caCAf","./game":"edeGs","./recording":"godmD","./options":"d5NoS","./premium":"4GEPs","./newGameState":"aQN6X","./asyncAlert":"rSqLY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9AS2t":[function(require,module,exports,__globalThis) {
+},{"./game_utils":"cEeac","./i18n/i18n":"eNPRm","./loadGameData":"l1B4x","./settings":"5blfu","./render":"9AS2t","./gameOver":"caCAf","./game":"edeGs","./recording":"godmD","./options":"d5NoS","./premium":"4GEPs","./newGameState":"aQN6X","./asyncAlert":"rSqLY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./pure_functions":"6pQh7"}],"9AS2t":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "gameCanvas", ()=>gameCanvas);

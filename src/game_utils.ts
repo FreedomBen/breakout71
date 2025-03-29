@@ -1,6 +1,6 @@
-import { Ball, GameState, PerkId, PerksMap } from "./types";
-import { icons, upgrades } from "./loadGameData";
-import { t } from "./i18n/i18n";
+import {Ball, GameState, PerkId, PerksMap} from "./types";
+import {icons, upgrades} from "./loadGameData";
+import {t} from "./i18n/i18n";
 
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
@@ -119,9 +119,6 @@ export function distanceBetween(
   return Math.sqrt(distance2(a, b));
 }
 
-export function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(value, max));
-}
 export function defaultSounds() {
   return {
     aboutToPlaySound: {
@@ -190,6 +187,3 @@ export function countBricksBelow(gameState: GameState, index: number) {
   return count;
 }
 
-export function comboKeepingRate(level:number){
-  return clamp(1-1/(1+level)*1.5,0,1)
-}

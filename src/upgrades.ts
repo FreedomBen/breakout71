@@ -1,5 +1,6 @@
 import { t } from "./i18n/i18n";
-import {comboKeepingRate} from "./game_utils";
+
+import {comboKeepingRate} from "./pure_functions";
 
 export const rawUpgrades = [
   {
