@@ -367,7 +367,7 @@ export const rawUpgrades = [
     max: 4,
     name: t("upgrades.respawn.name"),
     help: (lvl: number) =>
-      t("upgrades.respawn.help",{percent:Math.floor(100*comboKeepingRate(lvl)),lvl}),
+      t("upgrades.respawn.help",{percent:Math.floor(100*comboKeepingRate(lvl)),delay:(3/lvl).toFixed(2)}),
     fullHelp: t("upgrades.respawn.fullHelp"),
   },
   {
@@ -377,7 +377,7 @@ export const rawUpgrades = [
     id: "one_more_choice",
     max: 3,
     name: t("upgrades.one_more_choice.name"),
-    help: (lvl: number) => t("upgrades.one_more_choice.help"),
+    help: (lvl: number) => t("upgrades.one_more_choice.help", {lvl}),
     fullHelp: t("upgrades.one_more_choice.fullHelp"),
   },
   {
@@ -389,12 +389,11 @@ export const rawUpgrades = [
     max: 2,
     adventure: false,
     name: t("upgrades.instant_upgrade.name"),
-    help: (lvl: number) => t("upgrades.instant_upgrade.help"),
+    help: (lvl: number) => t("upgrades.instant_upgrade.help",{lvl}),
     fullHelp: t("upgrades.instant_upgrade.fullHelp"),
   },
   {
     requires: "",
-
     threshold: 60000,
     giftable: false,
     id: "concave_puck",
@@ -494,13 +493,12 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-
     threshold: 105000,
     giftable: true,
     id: "zen",
     max: 1,
     name: t("upgrades.zen.name"),
-    help: (lvl: number) => t("upgrades.zen.help"),
+    help: (lvl: number) => t("upgrades.zen.help",{lvl}),
     fullHelp: t("upgrades.zen.fullHelp"),
   },
   {
@@ -510,7 +508,10 @@ export const rawUpgrades = [
     id: "sacrifice",
     max: 1,
     name: t("upgrades.sacrifice.name"),
-    help: (lvl: number) => t("upgrades.sacrifice.help"),
+    help: (lvl: number) =>
+        lvl==1 ?
+            t("upgrades.sacrifice.help_l1"):
+            t("upgrades.sacrifice.help_over",{lvl}),
     fullHelp: t("upgrades.sacrifice.fullHelp"),
   },
 
@@ -558,7 +559,6 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-
     threshold: 135000,
     // a bit too hard when starting up
     giftable: false,
@@ -582,12 +582,10 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-
     threshold: 145000,
     giftable: false,
     id: "clairvoyant",
     max: 1,
-    // TODO update for adventure mode
     name: t("upgrades.clairvoyant.name"),
     help: (lvl: number) => t("upgrades.clairvoyant.help"),
     fullHelp: t("upgrades.clairvoyant.fullHelp"),
@@ -605,7 +603,6 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-
     threshold: 155000,
     giftable: false,
     id: "implosions",

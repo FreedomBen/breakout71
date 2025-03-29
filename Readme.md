@@ -23,7 +23,12 @@ Allow players to loop the game :
 - unlock all upgrades in loop 1+
 
 Hard to scale : 
-- 
+- concave_puck
+- instant_upgrade
+- etherealcoins (0 grav, maybe then start floting like helium ? maybe less viscosity)
+- shocks (maybe spawn balls during the explosion ? maybe bigger explosions for this)
+- ghost_coins : pass through bricks will less friction ?
+- clairvoyant
 
 
 # Todo  
@@ -96,6 +101,7 @@ There's also an easy mode for kids (slower ball).
 
 # Easy perks ideas 
 
+- fast pause : pause delay divided by {{lvl}} (helps with teleport)
 - [colin] Capital - les vies non perdues à la fin du niveau rapportent un bonus de points
 - ban 3 random perks from pool, gain 2 upgrades 
 - faster coins, double value 

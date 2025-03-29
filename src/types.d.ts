@@ -102,8 +102,6 @@ export type Ball = {
   hitSinceBounce: number;
   // Brick was really broken ,but could have been respawned as a bomb
   brokenSinceBounce: number;
-  // Bricks that have been destroyed (and not replaced by something else)
-  hitItem: { index: number; color: string }[];
   sapperUses: number;
   destroyed?: boolean;
 };
@@ -238,6 +236,11 @@ export type GameState = {
   texts: ReusableArray<TextFlash>;
   lights: ReusableArray<LightFlash>;
   coins: ReusableArray<Coin>;
+
+  // Bricks that should respawn destroyed
+  respawns: ReusableArray<{ index: number; color: string ; time:number;
+  destroyed?: boolean;}>;
+
   levelStartScore: number;
   levelMisses: number;
   levelSpawnedCoins: number;
