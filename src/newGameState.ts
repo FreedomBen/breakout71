@@ -51,6 +51,7 @@ export function newGameState(params: RunParams): GameState {
     ballStickToPuck: true,
     puckPosition: 400,
     lastPuckPosition: 400,
+    desiredPuckPosition: 400,
     lastPuckMove: 0,
     pauseTimeout: null,
     canvasWidth: 0,
@@ -111,6 +112,8 @@ export function newGameState(params: RunParams): GameState {
     rerolls: 0,
     loop: 0,
     baseCombo: 1,
+    puckFrozenUntil: 0,
+    levelsPerLoop: params?.levelsPerLoop ?? 7,
   };
   resetBalls(gameState);
 

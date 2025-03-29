@@ -466,6 +466,8 @@ async function openScorePanel() {
       pickedUpgradesHTMl(gameState),
       levelsListHTMl(gameState),
       debuffsHTMl(gameState),
+       gameState.rerolls?
+           t('score_panel.rerolls_count', {rerolls:gameState.rerolls}):''
     ],
     allowClose: true,
   });
@@ -1008,8 +1010,8 @@ restart(
   (window.location.search.includes("stressTest") && {
     level: "Bird",
     perks: {
-      // sapper: 5,
-      // bigger_explosions: 20,
+      sapper: 5,
+      bigger_explosions: 20,
       // // unbounded: 1,
       // // pierce_color: 1,
       // pierce: 1,
@@ -1022,12 +1024,15 @@ restart(
       // metamorphosis: 1,
       // implosions: 1,
       // sturdy_bricks:5
-      coin_magnet:2,
+      coin_magnet: 2,
       extra_life: 3,
     },
+    levelsPerLoop:2,
+
     debuffs: {
       // fragility:3
-      negative_coins: 100,
+      // deadly_coins: 20,
+      // frozen_coins: 20,
       //       interference:20,
     },
   }) ||

@@ -285,10 +285,14 @@ export type GameState = {
     coinCatch: { vol: number; x: number };
     colorChange: { vol: number; x: number };
     void: { vol: number; x: number };
+    freeze: { vol: number; x: number };
   };
   rerolls: number;
   loop: number;
   baseCombo: number;
+  puckFrozenUntil: number;
+  desiredPuckPosition: number;
+  levelsPerLoop:number;
 };
 
 export type RunParams = {
@@ -296,6 +300,7 @@ export type RunParams = {
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
   debuffs?: Partial<DebuffsMap>;
+  levelsPerLoop?:number;
 };
 export type OptionDef = {
   default: boolean;

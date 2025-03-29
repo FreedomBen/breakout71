@@ -200,27 +200,49 @@ export function render(gameState: GameState) {
       );
     });
 
-    if (gameState.debuffs.negative_coins) {
+    if (gameState.debuffs.deadly_coins || gameState.debuffs.frozen_coins) {
       // Render crimson coins very bright
       ctx.globalCompositeOperation = "source-over";
       ctx.globalAlpha = 0.8;
       const red = Math.floor(gameState.levelTime / 100) % 2 > 0;
       forEachLiveOne(gameState.coins, (coin) => {
-        if (coin.color !== "crimson") return;
-        drawBall(ctx, red ? "red" : "black", coin.size * 3, coin.x, coin.y);
+        if (coin.color == "crimson") {
+          drawBall(ctx, red ? "red" : "black", coin.size * 3, coin.x, coin.y);
+        }
+        if (coin.color == "LightSkyBlue") {
+          drawBall(
+            ctx,
+            red ? "LightSkyBlue" : "black",
+            coin.size * 3,
+            coin.x,
+            coin.y,
+          );
+        }
       });
       ctx.globalAlpha = 1;
       forEachLiveOne(gameState.coins, (coin) => {
-        if (coin.color !== "crimson") return;
-        drawCoin(
-          ctx,
-          !red ? "red" : "black",
-          coin.size,
-          coin.x,
-          coin.y,
-          "red",
-          coin.a,
-        );
+        if (coin.color == "crimson") {
+          drawCoin(
+            ctx,
+            !red ? "red" : "black",
+            coin.size,
+            coin.x,
+            coin.y,
+            "red",
+            coin.a,
+          );
+        }
+        if (coin.color == "LightSkyBlue") {
+          drawCoin(
+            ctx,
+            !red ? "LightSkyBlue" : "black",
+            coin.size,
+            coin.x,
+            coin.y,
+            "LightSkyBlue",
+            coin.a,
+          );
+        }
       });
     }
   }
@@ -324,7 +346,9 @@ export function render(gameState: GameState) {
 
   drawPuck(
     ctx,
-    gameState.puckColor,
+    gameState.puckFrozenUntil > gameState.levelTime
+      ? "LightSkyBlue"
+      : gameState.puckColor,
     gameState.puckWidth,
     gameState.puckHeight,
     0,

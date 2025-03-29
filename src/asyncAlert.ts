@@ -82,6 +82,7 @@ export async function asyncAlert<t>({
     content
       ?.filter((i) => i)
       .forEach((entry, index) => {
+          if(!entry) return;
         if (typeof entry == "string") {
           const p = document.createElement("div");
           p.innerHTML = entry;

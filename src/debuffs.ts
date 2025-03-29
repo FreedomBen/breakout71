@@ -3,10 +3,16 @@ import { Debuff } from "./types";
 
 export const debuffs = [
   {
-    id: "negative_coins",
+    id: "deadly_coins",
     max: 20,
-    name: (lvl: number) => t("debuffs.negative_coins.help", { lvl }),
-    help: (lvl: number) => t("debuffs.negative_coins.help", { lvl }),
+    name: (lvl: number) => t("debuffs.deadly_coins.help", { lvl }),
+    help: (lvl: number) => t("debuffs.deadly_coins.help", { lvl }),
+  },
+  {
+    id: "frozen_coins",
+    max: 20,
+    name: (lvl: number) => t("debuffs.frozen_coins.help", { lvl }),
+    help: (lvl: number) => t("debuffs.frozen_coins.help", { lvl }),
   },
   {
     id: "more_bombs",

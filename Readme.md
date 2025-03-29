@@ -25,10 +25,10 @@ Allow players to loop the game :
 - real time stats as the option says. 
 - [x] Noise of coins against side is annoying.
 - Change look of loop, to avoid picking randomly at loop end. 
-- make red coins scarier,
-- add blue coins that only freeze puck.
+- [x] make red coins scarier,
+- [x] add blue coins that only freeze puck.
 - Make fullscreen an option and turn it back on when playing
-- +1 combo de base par rerolls
+- [x] +1 combo de base par rerolls
 - +1 combo de base par vie restantes (pas attrapable) 
 
 # Todo  
@@ -132,6 +132,7 @@ There's also an easy mode for kids (slower ball).
  - [colin] side pucks - same as above but with two side pucks : hard to know where to put them 
 
 # to sort
+- double coin value when they hit the sides
 - [colin]Brambles — coins that touch the walls and ceiling get stuck and are thrown back when the last brick is destroyed
 - [colin]Ball of Greed — the ball can collect coins (might be worth dividing into levels: lvl 1, can collect coins only after two bounces on bricks or walls. lvl 2, can collect after 1 bounce. lvl 3, can collect coins anytime)(or change the ball collection radius as the level grows) 
 - [colin]Fountain toss — each coin lost has a 1 in 10 chance to give +1 combo (until combo 50)

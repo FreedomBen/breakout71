@@ -61,8 +61,8 @@ import { debuffs } from "./debuffs";
 import { requiredAsyncAlert } from "./asyncAlert";
 
 export function setMousePos(gameState: GameState, x: number) {
+  gameState.desiredPuckPosition = x;
   // Sets the puck position, and updates the ball position if they are supposed to follow it
-  gameState.puckPosition = x;
   gameState.needsRender = true;
 }
 
@@ -166,6 +166,11 @@ export function normalizeGameState(gameState: GameState) {
         gameState.gameZoneWidthRoundedUp -
         gameState.puckWidth / 2;
 
+  if (gameState.puckFrozenUntil < gameState.levelTime || !gameState.levelTime) {
+    //   Frozen, ignore
+    gameState.puckPosition = gameState.desiredPuckPosition;
+  }
+
   gameState.puckPosition = clamp(gameState.puckPosition, minX, maxX);
 
   if (gameState.ballStickToPuck) {
@@ -182,7 +187,11 @@ export function normalizeGameState(gameState: GameState) {
 }
 
 export function baseCombo(gameState: GameState) {
-  return gameState.baseCombo + gameState.perks.base_combo * 3 + gameState.perks.smaller_puck * 5;
+  return (
+    gameState.baseCombo +
+    gameState.perks.base_combo * 3 +
+    gameState.perks.smaller_puck * 5
+  );
 }
 
 export function resetCombo(
@@ -594,13 +603,13 @@ export async function gotoNextLoop(gameState: GameState) {
   gameState.runLevels = getRunLevels(gameState.totalScoreAtRunStart, {});
   gameState.upgradesOfferedFor = -1;
 
-  let comboText=''
-  if(gameState.rerolls) {
-    comboText=t('loop.converted_rerolls',{n:gameState.rerolls})
-    gameState.baseCombo += gameState.rerolls
-    gameState.rerolls=0
-  }else{
-    comboText=t('loop.no_rerolls')
+  let comboText = "";
+  if (gameState.rerolls) {
+    comboText = t("loop.converted_rerolls", { n: gameState.rerolls });
+    gameState.baseCombo += gameState.rerolls;
+    gameState.rerolls = 0;
+  } else {
+    comboText = t("loop.no_rerolls");
   }
 
   const userPerks = upgrades.filter((u) => gameState.perks[u.id]);
@@ -612,7 +621,7 @@ export async function gotoNextLoop(gameState: GameState) {
     title: t("loop.title", { loop: gameState.loop }),
     content: [
       t("loop.instructions"),
-comboText,
+      comboText,
 
       ...userPerks.map((u) => {
         const randomDebuff =
@@ -675,6 +684,7 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.levelStartScore = gameState.score;
   gameState.levelSpawnedCoins = 0;
   gameState.levelMisses = 0;
+  gameState.puckFrozenUntil = 0;
   gameState.runStatistics.levelsPlayed++;
 
   // Reset combo silently
@@ -1049,7 +1059,10 @@ export function gameStateTick(
 
       const ratio =
         1 -
-        ((coin.color === "crimson" ? 3 : gameState.perks.viscosity) * 0.03 +
+        ((coin.color === "crimson" || coin.color === "LightSkyBlue"
+          ? 3
+          : gameState.perks.viscosity) *
+          0.03 +
           0.005) *
           frames;
 
@@ -1085,19 +1098,19 @@ export function gameStateTick(
         }
       }
 
-      if(coin.color === "crimson" && !isOptionOn('basic')){
-        const angle=Math.random()*Math.PI*2
-           makeParticle(
-            gameState,
-            coin.x,
-            coin.y,
-            Math.cos(angle)*gameState.baseSpeed*2,
-            Math.sin(angle)*gameState.baseSpeed*2,
-            'red',
-            true,
-            5,
-            250,
-          );
+      if (coin.color === "crimson" && !isOptionOn("basic")) {
+        const angle = Math.random() * Math.PI * 2;
+        makeParticle(
+          gameState,
+          coin.x,
+          coin.y,
+          Math.cos(angle) * gameState.baseSpeed * 2,
+          Math.sin(angle) * gameState.baseSpeed * 2,
+          "red",
+          true,
+          5,
+          250,
+        );
       }
 
       const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
@@ -1112,16 +1125,22 @@ export function gameStateTick(
             // a bit of margin to be nice , negative in case it's a negative coin
             gameState.puckHeight * (coin.points ? 1 : -1)
       ) {
-        if (coin.points) {
-          addToScore(gameState, coin);
-        } else if (gameState.perks.extra_life && gameState.balls.length) {
-          justLostALife(gameState, gameState.balls[0], coin.x, coin.y);
-        } else {
-          gameOver(
-            t("gameOver.because_cursed_coin"),
-            t("gameOver.because_cursed_coin_intro"),
-          );
+        if (coin.color === "crimson") {
+          if (gameState.perks.extra_life && gameState.balls.length) {
+            justLostALife(gameState, gameState.balls[0], coin.x, coin.y);
+          } else {
+            gameOver(
+              t("gameOver.because_cursed_coin"),
+              t("gameOver.because_cursed_coin_intro"),
+            );
+          }
         }
+        if (coin.color === "LightSkyBlue") {
+          gameState.puckFrozenUntil = gameState.levelTime + 500;
+          schedulGameSound(gameState, "freeze", coin.x, 1);
+        }
+        addToScore(gameState, coin);
+
         destroy(gameState.coins, coinIndex);
       } else if (coin.y > gameState.canvasHeight + coinRadius) {
         destroy(gameState.coins, coinIndex);
@@ -1746,12 +1765,21 @@ function makeCoin(
   color = "gold",
   points = 1,
 ) {
-  if (y<gameState.gameZoneWidth*2/3 &&
-      gameState.debuffs.negative_coins * points > Math.random() * 10000) {
+  let weight = 0.8 + Math.random() * 0.2 + Math.min(2, points * 0.01);
+  if (
+    y < (gameState.gameZoneWidth * 2) / 3 &&
+    gameState.debuffs.deadly_coins * points > Math.random() * 10000
+  ) {
     points = 0;
     color = "crimson";
-    vx=0
-    vy=0
+    vx = 0;
+    vy = 0;
+    schedulGameSound(gameState, "void", x, 0.5);
+    weight = 1;
+  } else if (gameState.debuffs.frozen_coins * points > Math.random() * 10000) {
+    color = "LightSkyBlue";
+    schedulGameSound(gameState, "freeze", x, 0.5);
+    weight = 1;
   }
   append(gameState.coins, (p: Partial<Coin>) => {
     p.x = x;
@@ -1767,8 +1795,8 @@ function makeCoin(
     p.color = color;
     p.a = Math.random() * Math.PI * 2;
     p.sa = Math.random() - 0.5;
-    p.weight = 0.8 + Math.random() * 0.2 + Math.min(2, points * 0.01);
     p.points = points;
+    p.weight = weight;
   });
 }
 

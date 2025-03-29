@@ -15,6 +15,12 @@ export function sample<T>(arr: T[]): T {
   return arr[Math.floor(arr.length * Math.random())];
 }
 
+export function sampleN<T>(arr: T[],n:number): T[] {
+
+  return [...arr].sort(()=>Math.random()-0.5)
+      .slice(0,n)
+}
+
 export function sumOfValues(obj: { [key: string]: number } | undefined | null) {
   if (!obj) return 0;
   return Object.values(obj)?.reduce((a, b) => a + b, 0) || 0;
@@ -55,7 +61,7 @@ export function getPossibleUpgrades(gameState: GameState) {
 }
 
 export function max_levels(gameState: GameState) {
-  return 7 + gameState.perks.extra_levels;
+  return gameState.levelsPerLoop + gameState.perks.extra_levels;
 }
 
 export function pickedUpgradesHTMl(gameState: GameState) {
@@ -143,6 +149,7 @@ export function defaultSounds() {
       coinCatch: { vol: 0, x: 0 },
       colorChange: { vol: 0, x: 0 },
       void: { vol: 0, x: 0 },
+      freeze: { vol: 0, x: 0 },
     },
   };
 }
