@@ -13,56 +13,75 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 - [HackerNews thread](https://news.ycombinator.com/item?id=43183131)  
 
-
-# Premium: allow looping
-
-Allow players to loop the game :
-- keep your score 
-- keep 1 perk, level it up beyond the max
-- ban all other perks 
-- unlock all upgrades in loop 1+
-
-Hard to scale : 
-- concave_puck
-- instant_upgrade
-- etherealcoins (0 grav, maybe then start floting like helium ? maybe less viscosity)
-- shocks (maybe spawn balls during the explosion ? maybe bigger explosions for this)
-- ghost_coins : pass through bricks will less friction ?
-- clairvoyant
-
-
-# Todo  
-- Make fullscreen an option and turn it back on when playing
-- real time stats as the option says. 
-- weee sound when ball lost to side or sky
-
-- [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
- 
-- people assume unbounded  allows for wrap around
-- coin magnet and viscosity : only one level ~2.5
-- Boost Ascetism : give +2 or even +3 combo per brick destroyed
-- wind : move coins based on puck movement not position
-- show -N points in red when combo resets
-- reach  is too punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row 
-- respawn: N% of bricks respawn after N seconds
-- [jaceys] Move the restart button out of the menu, so that it is more easily accessible
-- [jaceys] A visual indication of whether a ball has hit a brick this serve
-- [obigre] Offer to level ups perks separately
-- bring back detailed help of perks as "intel"
-- https://weblate.org/fr/
-
-
-
 # System requirements 
 
 Breakout 71 can work offline (add it to home screen) and perform well even on low-end devices. 
 It's very lean and does not take much storage space (Roughly 0.1MB).
 If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
 There's also an easy mode for kids (slower ball).
+
+# Looping
+
+Premium users can loop the game to continue player a harder and harder version of the game. 
+At the end of the last level of each run, they can start a new loop. They'll be taken back 
+to level 1, with only one of their perks, leveled up. All the other perks they used in the run
+will be banned from the pool. The perk they decide to keep will gain one level, even if it was
+already maxed out. 
  
+# Todo before next release
+ - b71 white border around dark coins 
+ 
+- [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
+- wind : move coins based on puck movement not position
+- show -N points in red when combo resets
+- Top down /read: punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row
+- [jaceys] Move the restart button out of the menu, so that it is more easily accessible
+- [jaceys] A visual indication of whether a ball has hit a brick this serve
 
-# UX
+- scale concave_puck
+- scale instant_upgrade
+- scale etherealcoins (0 grav, maybe then start floting like helium ? maybe less viscosity)
+- scale shocks (maybe spawn balls during the explosion ? maybe bigger explosions for this)
+- scale ghost_coins : pass through bricks will less friction ?
+- scale clairvoyant
 
+# 29 march 2025
+
+
+- Removed all previous loop only hazards
+- Looping now bans all your perks except one. That one can level up beyond the normal max. 
+- Adjusted many perks to work beyond the max 
+  - Split list of perks and levels in unlocks
+  - Asceticism now gives +3 combo per lvl
+  - Fortunate ball has a stronger effect
+  - Bigger puck : puck can now cover the whole screen at higher levels, but not more
+  - Corner shot : higher levels let you move further away from the play area
+  - Forgiving : level 2 halves the penalty, level 3 is a third .. 
+  - Helium : stronger anti gravity at higher levels
+  - Implosions : works like bigger-explosions at higher levels
+  - Metamorphosis : coins can stain more bricks at higher levels
+  - Re-spawn : now delay based and probabilistic, to scale more easily with higher levels. no need to hit the puck
+  - sacrifice : at level 2+ the combo is doubles/tripled just before clearing the screen of any bricks
+  - shunt : changed the math keep 25% of combo at level 1,50% at level 2,63% at level 3,70% at level 4..
+  - soft reset : same math as shunt  
+  - smaller puck : now the puck can get as small as a ball 
+  - Unbounded : at level 2+, the top of the level is gone too
+- Make fullscreen an option and turn it back on when playing
+- Made the "combo lost" text last 500ms instead of the pointless 150ms 
+
+# 28 march 2025 
+
+- loop : added red/blue coins (red kill you, blue freeze puck) (removed later) 
+- added more hazard that were then removed
+- add a toggle to switch between the “coin” design and colored bubbles
+
+# UX / gameplay
+
+- on mobile, relative movement of the touch would be amplified and added to the puck 
+- option : don't pause on mobile when lifting finger
+- [obigre] Offer to level ups perks separately
+- bring back detailed help of perks as "intel"
+- https://weblate.org/fr/
 - strict sample size red borders ? 
 - add some tutorial-like hints
 - It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game. Offer instead to skip lvl 1 and directly pick 4 perks, but only if you manage to clear lvl 1 with 4 upgrades. 
@@ -95,7 +114,7 @@ There's also an easy mode for kids (slower ball).
 - Overgrowth — when the ball touches a bomb brick it turns into a regular green brick and spawns 1 more bricks near it (additional levels spawn 2 additional bricks)
 
 # graphics
-
+- Waterline under the puck, coins slow down a lot, reflections
 - webgl rendering:  background gradient light map, shinier coins
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
 
@@ -200,12 +219,6 @@ There's also an easy mode for kids (slower ball).
 - fruits
 - animals
 - countries flags and shapes
-
-# extra settings
-
-- add a toggle to switch between the “coin” design and colored bubbles
-- on mobile, relative movement of the touch would be amplified and added to the puck 
-- option : don't pause on mobile when lifting finger
 
 
 # extend re-playability

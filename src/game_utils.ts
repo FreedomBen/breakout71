@@ -191,6 +191,8 @@ export function countBricksBelow(gameState: GameState, index: number) {
 }
 
 export function comboKeepingRate(level:number){
-  if(level<=0) return  0
-  return 1-1/(1+level)*1.5
+  return clamp(1-1/(1+level)*1.5,0,1)
+}
+for(let i = 0;i<5;i++){
+  console.log(Math.round(comboKeepingRate(i)*100)+'%')
 }

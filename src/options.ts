@@ -50,6 +50,11 @@ export const options = {
     name: t("main_menu.record"),
     help: t("main_menu.record_help"),
   },
+  fullscreen: {
+    default: false,
+    name: t("main_menu.fullscreen"),
+    help: t("main_menu.fullscreen_help"),
+  },
 } as const satisfies { [k: string]: OptionDef };
 
 export function isOptionOn(key: OptionId) {

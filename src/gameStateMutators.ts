@@ -178,7 +178,8 @@ export function resetCombo(
             );
         }
         if (typeof x !== "undefined" && typeof y !== "undefined") {
-            makeText(gameState, x, y, "red", "-" + lost, 20, 150);
+
+            makeText(gameState, x, y, "red", "-" + lost, 20, 500+clamp(lost, 0,500));
         }
     }
     return lost;
@@ -197,7 +198,7 @@ export function decreaseCombo(
     if (lost) {
         schedulGameSound(gameState, "comboDecrease", x, 1);
         if (typeof x !== "undefined" && typeof y !== "undefined") {
-            makeText(gameState, x, y, "red", "-" + lost, 20, 300);
+            makeText(gameState, x, y, "red", "-" + lost, 20, 400+lost);
         }
     }
 }
@@ -1709,7 +1710,7 @@ function makeText(
     color: colorString,
     text: string,
     size = 20,
-    duration = 150,
+    duration = 500,
 ) {
     append(gameState.texts, (p: Partial<TextFlash>) => {
         p.time = gameState.levelTime;
@@ -1717,7 +1718,7 @@ function makeText(
         p.y = y;
         p.color = color;
         p.size = size;
-        p.duration = duration;
+        p.duration = clamp(duration,400,2000);
         p.text = text;
     });
 }

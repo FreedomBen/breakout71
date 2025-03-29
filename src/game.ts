@@ -43,6 +43,7 @@ import {hashCode} from "./getLevelBackground";
 import {premiumMenuEntry} from "./premium";
 
 export function play() {
+    if (applyFullScreenChoice()) return;
     if (gameState.running) return;
     gameState.running = true;
     gameState.ballStickToPuck = false;
@@ -50,7 +51,6 @@ export function play() {
     startRecordingGame(gameState);
     getAudioContext()?.resume();
     resumeRecording();
-
     // document.body.classList[gameState.running ? 'add' : 'remove']('running')
 }
 
@@ -571,35 +571,11 @@ async function openSettingsMenu() {
                 help: options[key].help,
                 value: () => {
                     toggleOption(key);
-                    if (key === "mobile-mode") fitSize();
-
+                    fitSize();
+                    applyFullScreenChoice()
                     openSettingsMenu();
                 },
             });
-    }
-    if (document.fullscreenEnabled || document.webkitFullscreenEnabled) {
-        if (document.fullscreenElement !== null) {
-            actions.push({
-                text: t("main_menu.fullscreen_exit"),
-                help: t("main_menu.fullscreen_exit_help"),
-                icon: icons["icon:exit_fullscreen"],
-                value() {
-                    toggleFullScreen();
-                    openSettingsMenu();
-                },
-            });
-        } else {
-            actions.push({
-                text: t("main_menu.fullscreen"),
-                help: t("main_menu.fullscreen_help"),
-
-                icon: icons["icon:fullscreen"],
-                value() {
-                    toggleFullScreen();
-                    openSettingsMenu();
-                },
-            });
-        }
     }
     actions.push({
         text: t("main_menu.reset"),
@@ -818,51 +794,84 @@ async function openSettingsMenu() {
     }
 }
 
+
+function applyFullScreenChoice(): boolean {
+
+    try {
+        if (!(document.fullscreenEnabled || document.webkitFullscreenEnabled)) {
+            return false
+        }
+
+        if (document.fullscreenElement !== null && !isOptionOn("fullscreen")) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+                return true
+            } else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+                return true
+            }
+        } else if (isOptionOn("fullscreen") && !document.fullscreenElement) {
+            const docel = document.documentElement;
+            if (docel.requestFullscreen) {
+                docel.requestFullscreen();
+                return true
+            } else if (docel.webkitRequestFullscreen) {
+                docel.webkitRequestFullscreen();
+                return true
+            }
+        }
+    } catch (e) {
+        console.warn(e);
+
+    }
+    return false
+}
+
+
 async function openUnlocksList() {
     const ts = getTotalScore();
-    const actions = [
-        ...upgrades
-            .sort((a, b) => a.threshold - b.threshold)
-            .map(({name, id, threshold, icon, help}) => ({
-                text: name,
-                // help:
-                //   ts >= threshold ? help(1) : t("unlocks.unlocks_at", { threshold }),
-                disabled: ts < threshold,
-                value: {perks: {[id]: 1}} as RunParams,
-                icon,
-            })),
-        ...allLevels
-            .sort((a, b) => a.threshold - b.threshold)
-            .map((l) => {
-                const available = ts >= l.threshold;
-                return {
-                    text: l.name,
-                    // help: available
-                    //   ? t("unlocks.level_description", {
-                    //       size: l.size,
-                    //       bricks: l.bricks.filter((i) => i).length,
-                    //     })
-                    //   : t("unlocks.unlocks_at", { threshold: l.threshold }),
-                    disabled: !available,
-                    value: {level: l.name} as RunParams,
-                    icon: icons[l.name],
-                };
-            }),
-    ];
+    const upgradeActions = upgrades
+        .sort((a, b) => a.threshold - b.threshold)
+        .map(({name, id, threshold, icon, help}) => ({
+            text: name,
+            // help:
+            //   ts >= threshold ? help(1) : t("unlocks.unlocks_at", { threshold }),
+            disabled: ts < threshold,
+            value: {perks: {[id]: 1}} as RunParams,
+            icon,
+        }))
+
+    const levelActions = allLevels
+        .sort((a, b) => a.threshold - b.threshold)
+        .map((l) => {
+            const available = ts >= l.threshold;
+            return {
+                text: l.name,
+                // help: available
+                //   ? t("unlocks.level_description", {
+                //       size: l.size,
+                //       bricks: l.bricks.filter((i) => i).length,
+                //     })
+                //   : t("unlocks.unlocks_at", { threshold: l.threshold }),
+                disabled: !available,
+                value: {level: l.name} as RunParams,
+                icon: icons[l.name],
+            };
+        })
 
     const percentUnlock = Math.round(
-        (actions.filter((a) => !a.disabled).length / actions.length) * 100,
+        ([...upgradeActions, ...levelActions].filter((a) => !a.disabled).length / (upgradeActions.length +
+            levelActions.length)) * 100,
     );
     const tryOn = await asyncAlert<RunParams>({
         title: t("unlocks.title", {percentUnlock}),
         content: [
-            `<p>${t("unlocks.intro", {ts})}
+            `<p>${t("unlocks.intro", {ts, highScore: gameState.highScore})}
    ${percentUnlock < 100 ? t("unlocks.greyed_out_help") : ""}</p>  `,
-            ...actions,
-            `<p> 
-Your high score is ${gameState.highScore}. 
-Click an item above to start a run with it.
-                </p>`,
+            ...upgradeActions,
+            t("unlocks.level"),
+            ...levelActions,
+
         ],
         allowClose: true,
         actionsAsGrid: true,
@@ -893,26 +902,6 @@ export async function confirmRestart(gameState) {
     });
 }
 
-export function toggleFullScreen() {
-    try {
-        if (document.fullscreenElement !== null) {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.webkitCancelFullScreen) {
-                document.webkitCancelFullScreen();
-            }
-        } else {
-            const docel = document.documentElement;
-            if (docel.requestFullscreen) {
-                docel.requestFullscreen();
-            } else if (docel.webkitRequestFullscreen) {
-                docel.webkitRequestFullscreen();
-            }
-        }
-    } catch (e) {
-        console.warn(e);
-    }
-}
 
 const pressed: { [k: string]: number } = {
     ArrowLeft: 0,
@@ -931,7 +920,8 @@ export function setKeyPressed(key: string, on: 0 | 1) {
 
 document.addEventListener("keydown", (e) => {
     if (e.key.toLowerCase() === "f" && !e.ctrlKey && !e.metaKey) {
-        toggleFullScreen();
+        toggleOption('fullscreen');
+        applyFullScreenChoice()
     } else if (e.key in pressed) {
         setKeyPressed(e.key, 1);
     }
@@ -988,13 +978,15 @@ export function restart(params: RunParams) {
     setLevel(gameState, 0);
 }
 
+
 restart(
     (window.location.search.includes("stressTest") && {
         level: "Bird",
         perks: {
-            pierce:1,
-            sapper:1,
-            implosions: 3
+            pierce: 1,
+            sapper: 1,
+            implosions: 3,
+            streak_shots:1
         },
         levelsPerLoop: 2,
     }) ||
