@@ -11,6 +11,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
+- [Translation with weblate](https://hosted.weblate.org/engage/breakout-71/-/en/)
+
+
 
 # System requirements 
 
