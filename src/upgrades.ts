@@ -128,8 +128,8 @@ export const rawUpgrades = [
 
     threshold: 500,
     id: "telekinesis",
-    giftable: false,
-    max: 2,
+    giftable: true,
+    max: 1,
     name: t("upgrades.telekinesis.name"),
     help: (lvl: number) =>
       lvl == 1
@@ -156,7 +156,7 @@ export const rawUpgrades = [
 
     threshold: 1500,
     id: "multiball",
-    giftable: false,
+    giftable: true,
     max: 6,
     name: t("upgrades.multiball.name"),
     help: (lvl: number) => t("upgrades.multiball.help", { count: lvl + 1 }),
@@ -229,8 +229,8 @@ export const rawUpgrades = [
     name: t("upgrades.hot_start.name"),
     help: (lvl: number) =>
       t("upgrades.hot_start.help", {
-        start: lvl * 15 + 1,
-        lvl,
+        start: lvl * 30 + 1,
+        loss: lvl,
       }),
     fullHelp: t("upgrades.hot_start.fullHelp"),
   },
@@ -357,7 +357,7 @@ export const rawUpgrades = [
     name: t("upgrades.sturdy_bricks.name"),
     help: (lvl: number) =>
       // lvl == 1
-      t("upgrades.sturdy_bricks.help", { lvl, percent: lvl * 10 }),
+      t("upgrades.sturdy_bricks.help", { lvl, percent: lvl * 50 }),
     // ?
     // : t("upgrades.sturdy_bricks.help_plural"),
     fullHelp: t("upgrades.sturdy_bricks.fullHelp"),
@@ -465,7 +465,7 @@ export const rawUpgrades = [
     threshold: 85000,
     giftable: false,
     id: "yoyo",
-    max: 2,
+    max: 1,
     name: t("upgrades.yoyo.name"),
     help: (lvl: number) => t("upgrades.yoyo.help"),
     fullHelp: t("upgrades.yoyo.fullHelp"),
@@ -596,7 +596,7 @@ export const rawUpgrades = [
     threshold: 145000,
     giftable: false,
     id: "clairvoyant",
-    max: 1,
+    max: 3,
     name: t("upgrades.clairvoyant.name"),
     help: (lvl: number) => t("upgrades.clairvoyant.help"),
     fullHelp: t("upgrades.clairvoyant.fullHelp"),
@@ -631,5 +631,16 @@ export const rawUpgrades = [
     name: t("upgrades.corner_shot.name"),
     help: (lvl: number) => t("upgrades.corner_shot.help"),
     fullHelp: t("upgrades.corner_shot.fullHelp"),
+  },
+  {
+    requires: "",
+    threshold: 165000,
+    giftable: false,
+    id: "addiction",
+    max: 10,
+    name: t("upgrades.addiction.name"),
+    help: (lvl: number) =>
+      t("upgrades.addiction.help", { lvl, delay: (5 / lvl).toFixed(2) }),
+    fullHelp: t("upgrades.addiction.fullHelp"),
   },
 ] as const;

@@ -62,6 +62,7 @@ export function newGameState(params: RunParams): GameState {
     score: 0,
     lastScoreIncrease: -1000,
     lastExplosion: -1000,
+    lastBrickBroken: 0,
     highScore: parseFloat(localStorage.getItem("breakout-3-hs") || "0"),
     balls: [],
     ballsColor: "white",
@@ -111,6 +112,7 @@ export function newGameState(params: RunParams): GameState {
     loop: 0,
     baseCombo: 1,
     levelsPerLoop: params?.levelsPerLoop ?? 7,
+    maxLoop: params?.maxLoop ?? 0,
   };
   resetBalls(gameState);
 

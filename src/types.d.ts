@@ -221,6 +221,7 @@ export type GameState = {
   lastScoreIncrease: number;
   // levelTime of the last explosion, for screen shake
   lastExplosion: number;
+  lastBrickBroken: number;
   // High score at the beginning of the run
   highScore: number;
   // Balls currently in game, game over if it's empty
@@ -278,13 +279,12 @@ export type GameState = {
     lifeLost: { vol: number; x: number };
     coinCatch: { vol: number; x: number };
     colorChange: { vol: number; x: number };
-    void: { vol: number; x: number };
-    freeze: { vol: number; x: number };
   };
   rerolls: number;
   loop: number;
   baseCombo: number;
   levelsPerLoop: number;
+  maxLoop: number;
 };
 
 export type RunParams = {
@@ -292,6 +292,7 @@ export type RunParams = {
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
   levelsPerLoop?: number;
+  maxLoop?: number;
 };
 export type OptionDef = {
   default: boolean;

@@ -4,41 +4,50 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 - [Play now](https://breakout.lecaro.me/)  
 - [Donate](https://paypal.me/renanlecaro)
+- Bitcoin : bc1qlh8kywy3ttsuqqa08yx2rdc8dqhdvyt43wlxmr
 - [Discord](https://discord.gg/DZSPqyJkwP)
 - [Post your comments on itch.io](https://renanlecaro.itch.io/breakout71)   
 - [Help and tips about the game](./Help.md)
-
 - [F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
-- [HackerNews thread](https://news.ycombinator.com/item?id=43183131)  
 
 # System requirements 
 
 Breakout 71 can work offline (add it to home screen) and perform well even on low-end devices. 
 It's very lean and does not take much storage space (Roughly 0.1MB).
-If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
-There's also an easy mode for kids (slower ball).
+If the app stutters, turn on "fast mode" in the settings to render a simplified 
+view that should be faster. There's also an easy mode for kids (slower ball).
 
 # Looping
 
-Premium users can loop the game to continue player a harder and harder version of the game. 
-At the end of the last level of each run, they can start a new loop. They'll be taken back 
-to level 1, with only one of their perks, leveled up. All the other perks they used in the run
-will be banned from the pool. The perk they decide to keep will gain one level, even if it was
-already maxed out. 
+Once you have unlocked all upgrades, you'll get an option to play a longer game. 
+In the mode, you can "loop" the game up to 7 times after your initial run. 
 
-# next
+Each loop is shorter, and you can't use the perk levels you used in past levels, except 
+for one perk that you can keep improving. If you completely exhaust a perk, it won't be
+offered at all in later loops. The perk you keep improving instantly gains +1 level and +2 max levels 
+Each loop is one level shorter. The ball starts slightly faster.
+The game is over when you run loose the ball or finish the 7th loop.
 
+# next goals
+
+- Chain reaction : +lvl*lvl combo per brick broken by an explosion, combo resets after explosion is over
+  
+- [vikingerik] : reward multiballs with combo
 - wind : move coins based on puck movement not position
 - [jaceys] Move the restart button out of the menu, so that it is more easily accessible
 - [jaceys] A visual indication of whether a ball has hit a brick this serve
 - Top down /reach: punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row
 
-# To do before next release
-
-# Next 
-
+# Release candidate
+- New perk : addiction, reward faster gameplay
+- Balancing : hot start effect doubled
+- Balancing : you earn an extra perk when playing well, and a reroll when playing perfectly
+- Balancing : telekinesis limited to level 1
+- Limit levels to 7-loop+extra_levels.
+- Limit max by used levels on loop. 
+- forget about "premium" but added a prominent "donate" link after 5h of playing, and setting to hide it permanently 
 - disabled auto-release on fdroid of every web version, as there's a big delay and bugs woudl stay for a long time
 - [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
 - added a white border around all coins, to make dark ones visible on dark bg
@@ -137,7 +146,7 @@ already maxed out.
 
 
 # Medium difficulty perks ideas 
-
+- balls collision split them into 4 smaller balls, lvl times (requires rework)
 - offer next level choice after upgrade pick
 - Dividends — +1 combo per 10 coins lost (band-aid for players who struggle, useful addition when choosing Ascetism)
 - [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
@@ -181,6 +190,8 @@ already maxed out.
 - [colin] perk: analyzer - permet de voir les caractéristiques cachées des blocs (sturdy…)
 - [colin] perk: roulette - gagne instantanément 2 perks aléatoires
 - combo climbs every time a ball bounces on puck (but bounce is random?) 
+- [colin] reward the player with more choices/perks for breaking a brick while having reached an increasing combo thresholds. 5 combo, then 10, then 20, then 40 etc… once a threshold is reached you aren't rewarded for that threshold again until you start a rew run
+- [colin] inspired by Balatro's score system : have some perks add to the multiplicator, and some others to the amount of coins in a brick (or the raw value of coins inside), so that you users want to improve both for maximized profit ! maybe tie one of the to perks that help you, and the other to perks that are bad to you, so that gambling players are forced to make their life harder
 
 # Probably not
 - colored coins only (coins should be of the color of the ball to count, otherwise what ? i'd rather avoid negative points)
@@ -234,22 +245,10 @@ Instead of automatically unlocking things at the end of each run, add the coins 
 and let them spend those coins on upgrades. The upgrades would then be explained. They could have a condition like
 "reach high score of 1000" or 'reach high score of 99999 without using "hot start"'. 
 This requires recording a bit more info about each run. 
-I could unlock the "pro stand" at $999 that just holds the play area higher. 
-
-# increase skill ceiling
-
-- reroll mechanic, rerolls are reward for better play
-- make puck smaller as combo increases ?
 
 - final bosses (large vertical level that scrolls down faster and faster)
-- when the player reaches the last level, allow them to loop the run, unlocking a permanent bonus for this run. For example: +5 combo, +1 life per loop… the counterpart would be hazards that slowly populate the levels.
-  
 
-# Colin's feedback (cwpute/obigre)
  
-* reward the player with more choices/perks for breaking a brick while having reached an increasing combo thresholds. 5 combo, then 10, then 20, then 40 etc… once a threshold is reached you aren't rewarded for that threshold again until you start a rew run
-* inspired by Balatro's score system : have some perks add to the multiplicator, and some others to the amount of coins in a brick (or the raw value of coins inside), so that you users want to improve both for maximized profit ! maybe tie one of the to perks that help you, and the other to perks that are bad to you, so that gambling players are forced to make their life harder
-
 
 # Credits
 
@@ -271,12 +270,21 @@ https://prohama.com/dog-21-pattern/
 I wanted an APK to start in fullscreen and be able to list it on fdroid and the play store. I started with an empty view and went to work trimming it down, with the help of that tutorial 
 https://github.com/fractalwrench/ApkGolf/blob/master/blog/BLOG_POST.md
 
+Colin (obigre) brought a lot of fantastic ideas to the game, here's his website (in French) : https://colin-crapahute.bearblog.dev/
 
 # Other noteworthy games in the breakout genre
 
-LBreakoutHD : https://sourceforge.net/p/lgames/code/HEAD/tree/trunk/lbreakouthd/
+LBreakoutHD : nice and open source remake
+https://sourceforge.net/p/lgames/code/HEAD/tree/trunk/lbreakouthd/
 
-Wizorb https://store.steampowered.com/app/207420/Wizorb/
+Wizorb 
+https://store.steampowered.com/app/207420/Wizorb/
 
 Rollers of the realm : narratif, chaque balle est un aventurier
 https://store.steampowered.com/app/262470/Rollers_of_the_Realm/
+
+Breakout multiplayer : pvp with air console style multiplayer
+https://casmo.itch.io/breakout-multiplayer 
+
+Breakout Hero (made as part of a PICO-8 tutorial )
+https://krystman.itch.io/breakout-hero

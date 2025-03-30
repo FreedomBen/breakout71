@@ -27,6 +27,7 @@ bombSVG.src =
 bombSVG.onload = () => (gameState.needsRender = true);
 
 export const background = document.createElement("img");
+background.onload = () => (gameState.needsRender = true);
 export const backgroundCanvas = document.createElement("canvas");
 
 export function render(gameState: GameState) {
@@ -67,16 +68,16 @@ export function render(gameState: GameState) {
       : "") +
     (isOptionOn("show_stats")
       ? ` 
-        <span class="${(catchRate == 1 && "great") || (catchRate > 0.9 && "good") || ""}">
+        <span class="${(catchRate > 0.95 && "great") || (catchRate > 0.9 && "good") || ""}">
             ${Math.floor(catchRate * 100)}%
         </span><span> / </span>
-        <span class="${(gameState.levelWallBounces == 0 && "great") || (gameState.levelWallBounces < 5 && "good") || ""}">
-        ${gameState.levelWallBounces} B 
-        </span><span> / </span>  
         <span class="${(gameState.levelTime < 30000 && "great") || (gameState.levelTime < 60000 && "good") || ""}">
         ${Math.ceil(gameState.levelTime / 1000)}s 
         </span><span> / </span>
-        <span class="${(gameState.levelMisses == 0 && "great") || (gameState.levelMisses <= 3 && "good") || ""}">
+        <span class="${(gameState.levelWallBounces < 3 && "great") || (gameState.levelWallBounces < 10 && "good") || ""}">
+        ${gameState.levelWallBounces} B 
+        </span><span> / </span>  
+        <span class="${(gameState.levelMisses < 3 && "great") || (gameState.levelMisses < 6 && "good") || ""}">
         ${gameState.levelMisses} M
         </span><span> / </span>
         `
@@ -628,11 +629,12 @@ export function renderAllBricks() {
         gameState.perks.clairvoyant >= 2,
       );
       if (gameState.brickHP[index] > 1 && gameState.perks.clairvoyant) {
-        canctx.globalCompositeOperation = "destination-out";
+        canctx.globalCompositeOperation =
+          gameState.perks.clairvoyant >= 2 ? "source-over" : "destination-out";
         drawText(
           canctx,
           gameState.brickHP[index].toString(),
-          "white",
+          color,
           gameState.puckHeight,
           x,
           y,

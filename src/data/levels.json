@@ -1021,13 +1021,6 @@
   {
     "name": "icon:premium",
     "size": 11,
-    "bricks": "________________y_________yey_________y______yy_yey_yy_yeeyeeeyeeyyeeyeeeyeey_yeyeeeyey___yyyyyyy____yyyyyyy_____________",
-    "svg": 11,
-    "color": ""
-  },
-  {
-    "name": "icon:premium_active",
-    "size": 11,
     "bricks": "__y____y___y____y____y_y__yby__y______y______yy_yty_yy_ybbytttybbyybbytttybby_ybytttyby___yyyyyyy____yyyyyyy_____________",
     "svg": null,
     "color": ""
@@ -1043,6 +1036,20 @@
     "name": "icon:reroll",
     "size": 8,
     "bricks": "__llllll_llBlBlelllllleBWWWWWeeeWBWBWeBeWWWWWeeeWBWBWBe_WWWWWe__",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:loop",
+    "size": 10,
+    "bricks": "____yyyy_____yy__yy_________yy__a______y_aaa_____yccccc____y__c_____GG__cc___GG____GGGGG____________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:addiction",
+    "size": 9,
+    "bricks": "__________________________l__WWWWW_lWWWyylllly_WWWWW_ly_______l__________________",
     "svg": null,
     "color": ""
   }

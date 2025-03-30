@@ -34,7 +34,6 @@ import {
 import {
   forEachLiveOne,
   gameStateTick,
-  liveCount,
   normalizeGameState,
   pickRandomUpgrades,
   setLevel,
@@ -63,7 +62,7 @@ import {
 } from "./asyncAlert";
 import { isOptionOn, options, toggleOption } from "./options";
 import { hashCode } from "./getLevelBackground";
-import { premiumMenuEntry } from "./premium";
+import { hoursSpentPlaying } from "./pure_functions";
 
 export function play() {
   if (applyFullScreenChoice()) return;
@@ -195,37 +194,37 @@ export async function openUpgradesPicker(gameState: GameState) {
     wallHitsGain = "",
     missesGain = "";
 
-  if (gameState.levelWallBounces == 0) {
+  if (gameState.levelWallBounces < 3) {
     repeats++;
     gameState.rerolls++;
+    wallHitsGain = t("level_up.plus_one_upgrade_and_reroll");
+  } else if (gameState.levelWallBounces < 10) {
+    repeats++;
     wallHitsGain = t("level_up.plus_one_upgrade");
-  } else if (gameState.levelWallBounces < 5) {
-    gameState.rerolls++;
-    wallHitsGain = t("level_up.plus_one_choice");
   }
   if (gameState.levelTime < 30 * 1000) {
     repeats++;
     gameState.rerolls++;
-    timeGain = t("level_up.plus_one_upgrade");
+    timeGain = t("level_up.plus_one_upgrade_and_reroll");
   } else if (gameState.levelTime < 60 * 1000) {
-    gameState.rerolls++;
-    timeGain = t("level_up.plus_one_choice");
+    repeats++;
+    timeGain = t("level_up.plus_one_upgrade");
   }
-  if (catchRate === 1) {
+  if (catchRate > 0.95) {
     repeats++;
     gameState.rerolls++;
-    catchGain = t("level_up.plus_one_upgrade");
+    catchGain = t("level_up.plus_one_upgrade_and_reroll");
   } else if (catchRate > 0.9) {
-    gameState.rerolls++;
-    catchGain = t("level_up.plus_one_choice");
+    repeats++;
+    catchGain = t("level_up.plus_one_upgrade");
   }
-  if (gameState.levelMisses === 0) {
+  if (gameState.levelMisses < 3) {
     repeats++;
     gameState.rerolls++;
+    missesGain = t("level_up.plus_one_upgrade_and_reroll");
+  } else if (gameState.levelMisses < 6) {
+    repeats++;
     missesGain = t("level_up.plus_one_upgrade");
-  } else if (gameState.levelMisses <= 3) {
-    gameState.rerolls++;
-    missesGain = t("level_up.plus_one_choice");
   }
 
   while (repeats--) {
@@ -247,17 +246,6 @@ export async function openUpgradesPicker(gameState: GameState) {
         value: "reroll" as const,
         icon: icons["icon:reroll"],
       });
-
-    let textAfterButtons = `
-        <p>${t("level_up.after_buttons", {
-          level: gameState.currentLevel + 1,
-          max: max_levels(gameState),
-        })} </p>
-       
-        ${pickedUpgradesHTMl(gameState)}
-        <div id="level-recording-container"></div> 
-        
-        `;
 
     const compliment =
       (timeGain &&
@@ -287,11 +275,16 @@ export async function openUpgradesPicker(gameState: GameState) {
           compliment,
         })}
         </p>
-
+  <p>${t("level_up.after_buttons", {
+    level: gameState.currentLevel + 1,
+    max: max_levels(gameState),
+  })} </p>
         <p>${levelsListHTMl(gameState)}</p>
 `,
         ...actions,
-        textAfterButtons,
+        pickedUpgradesHTMl(gameState),
+
+        `<div id="level-recording-container"></div>`,
       ],
     });
 
@@ -435,11 +428,6 @@ document.addEventListener("visibilitychange", () => {
 async function openScorePanel() {
   pause(true);
 
-  const banned = upgrades
-    .filter((u) => gameState.bannedPerks[u.id])
-    .map((u) => u.name)
-    .join(", ");
-
   const cb = await asyncAlert({
     title: gameState.loop
       ? t("score_panel.title_looped", {
@@ -461,7 +449,6 @@ async function openScorePanel() {
       gameState.rerolls
         ? t("score_panel.rerolls_count", { rerolls: gameState.rerolls })
         : "",
-      banned && t("score_panel.banned", { banned }),
     ],
     allowClose: true,
   });
@@ -487,7 +474,7 @@ export async function openMainMenu() {
       text: t("main_menu.normal"),
       help: t("main_menu.normal_help"),
       value: () => {
-        restart({ levelToAvoid: currentLevelInfo(gameState).name });
+        restart({ levelToAvoid: currentLevelInfo(gameState).name, maxLoop: 0 });
       },
     },
     {
@@ -497,6 +484,19 @@ export async function openMainMenu() {
       value() {
         openUnlocksList();
       },
+    },
+    {
+      icon: icons["icon:loop"],
+      text: t("main_menu.loop_run"),
+      help:
+        getTotalScore() < creativeModeThreshold
+          ? t("sandbox.unlocks_at", { score: creativeModeThreshold })
+          : t("main_menu.loop_run_help"),
+
+      value: () => {
+        restart({ levelToAvoid: currentLevelInfo(gameState).name, maxLoop: 7 });
+      },
+      disabled: getTotalScore() < creativeModeThreshold,
     },
     {
       icon: icons["icon:sandbox"],
@@ -546,7 +546,7 @@ export async function openMainMenu() {
       },
     },
 
-    premiumMenuEntry(gameState),
+    ...donationNag(gameState),
     {
       text: t("main_menu.settings_title"),
       help: t("main_menu.settings_help"),
@@ -568,6 +568,22 @@ export async function openMainMenu() {
   }
 }
 
+function donationNag(gameState) {
+  if (!isOptionOn("donation_reminder")) return [];
+  const hours = hoursSpentPlaying();
+  return [
+    {
+      text: t("main_menu.donate", { hours }),
+      help: t("main_menu.donate_help", {
+        suggestion: Math.min(20, Math.max(1, 0.2 * hours)).toFixed(0),
+      }),
+      icon: icons["icon:premium"],
+      value() {
+        window.open("https://paypal.me/renanlecaro", "_blank");
+      },
+    },
+  ];
+}
 async function openSettingsMenu() {
   pause(true);
 
@@ -842,8 +858,6 @@ async function openUnlocksList() {
     .sort((a, b) => a.threshold - b.threshold)
     .map(({ name, id, threshold, icon, help }) => ({
       text: name,
-      // help:
-      //   ts >= threshold ? help(1) : t("unlocks.unlocks_at", { threshold }),
       disabled: ts < threshold,
       value: { perks: { [id]: 1 } } as RunParams,
       icon,
@@ -855,12 +869,6 @@ async function openUnlocksList() {
       const available = ts >= l.threshold;
       return {
         text: l.name,
-        // help: available
-        //   ? t("unlocks.level_description", {
-        //       size: l.size,
-        //       bricks: l.bricks.filter((i) => i).length,
-        //     })
-        //   : t("unlocks.unlocks_at", { threshold: l.threshold }),
         disabled: !available,
         value: { level: l.name } as RunParams,
         icon: icons[l.name],
@@ -886,13 +894,14 @@ async function openUnlocksList() {
   });
   if (tryOn) {
     if (await confirmRestart(gameState)) {
-      restart(tryOn);
+      restart({ ...tryOn, maxLoop: 0 });
     }
   }
 }
 
 export async function confirmRestart(gameState) {
   if (!gameState.currentLevel) return true;
+  if (alertsOpen) return true;
 
   return asyncAlert({
     title: t("confirmRestart.title"),
@@ -925,7 +934,7 @@ export function setKeyPressed(key: string, on: 0 | 1) {
     50;
 }
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", async (e) => {
   if (e.key.toLowerCase() === "f" && !e.ctrlKey && !e.metaKey) {
     toggleOption("fullscreen");
     applyFullScreenChoice();
@@ -944,6 +953,7 @@ document.addEventListener("keydown", (e) => {
   e.preventDefault();
 });
 
+let pageLoad = new Date();
 document.addEventListener("keyup", async (e) => {
   const focused = document.querySelector("button:focus");
   if (e.key in pressed) {
@@ -966,7 +976,12 @@ document.addEventListener("keyup", async (e) => {
     openMainMenu().then();
   } else if (e.key.toLowerCase() === "s" && !alertsOpen) {
     openScorePanel().then();
-  } else if (e.key.toLowerCase() === "r" && !alertsOpen) {
+  } else if (
+    e.key.toLowerCase() === "r" &&
+    !alertsOpen &&
+    pageLoad > Date.now() + 1000
+  ) {
+    // When doing ctrl + R in dev to refresh, i don't want to instantly restart a run
     if (await confirmRestart(gameState)) {
       restart({ levelToAvoid: currentLevelInfo(gameState).name });
     }
@@ -979,6 +994,7 @@ document.addEventListener("keyup", async (e) => {
 export const gameState = newGameState({});
 
 export function restart(params: RunParams) {
+  console.log("restart : ", params);
   fitSize();
   Object.assign(gameState, newGameState(params));
   pauseRecording();
@@ -987,18 +1003,20 @@ export function restart(params: RunParams) {
 
 restart(
   (window.location.search.includes("stressTest") && {
-    level: "Bird",
+    // level: "Bird",
     perks: {
-      shocks: 10,
-      multiball: 6,
-      telekinesis: 2,
-      ghost_coins: 1,
-      pierce: 4,
-      clairvoyant: 3,
-      bigger_explosions: 2,
-      sapper: 2,
-      unbounded: 1,
+      // shocks: 10,
+      // multiball: 6,
+      // telekinesis: 2,
+      // ghost_coins: 1,
+      pierce: 2,
+      // clairvoyant: 2,
+      // sturdy_bricks:2,
+      bigger_explosions: 10,
+      sapper: 3,
+      // unbounded: 1,
     },
+
     levelsPerLoop: 2,
   }) ||
     {},

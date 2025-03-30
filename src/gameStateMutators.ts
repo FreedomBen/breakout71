@@ -49,7 +49,6 @@ import {
 } from "./game";
 import { stopRecording } from "./recording";
 import { isOptionOn } from "./options";
-import { isPremium } from "./premium";
 import { getRunLevels } from "./newGameState";
 import { requiredAsyncAlert } from "./asyncAlert";
 import { clamp, comboKeepingRate } from "./pure_functions";
@@ -343,6 +342,8 @@ export function explodeBrick(
   const color = gameState.bricks[index];
   if (!color) return;
 
+  gameState.lastBrickBroken = gameState.levelTime;
+
   if (color === "black") {
     const x = brickCenterX(gameState, index),
       y = brickCenterY(gameState, index);
@@ -366,7 +367,7 @@ export function explodeBrick(
     if (gameState.perks.sturdy_bricks) {
       // +10% per level
       coinsToSpawn += Math.ceil(
-        ((10 + gameState.perks.sturdy_bricks) / 10) * coinsToSpawn,
+        ((2 + gameState.perks.sturdy_bricks) / 2) * coinsToSpawn,
       );
     }
 
@@ -420,6 +421,7 @@ export function explodeBrick(
       gameState.perks.zen +
       gameState.perks.passive_income +
       gameState.perks.nbricks +
+      gameState.perks.addiction +
       gameState.perks.unbounded;
 
     if (gameState.perks.side_kick) {
@@ -511,8 +513,7 @@ export function pickRandomUpgrades(gameState: GameState, count: number) {
       score: Math.random() + (gameState.lastOffered[u.id] || 0),
     }))
     .sort((a, b) => a.score - b.score)
-    .filter((u) => gameState.perks[u.id] < u.max)
-    .filter((u) => !gameState.bannedPerks[u.id])
+    .filter((u) => gameState.perks[u.id] < u.max - gameState.bannedPerks[u.id])
     .slice(0, count)
     .sort((a, b) => (a.id > b.id ? 1 : -1));
 
@@ -616,15 +617,19 @@ export async function gotoNextLoop(gameState: GameState) {
         }),
     ],
   });
-
+  // Decrease max level of all perks
   userPerks.forEach((u) => {
     if (u.id !== keep) {
-      gameState.bannedPerks[u.id] = 1;
+      gameState.bannedPerks[u.id] += gameState.perks[u.id];
     }
   });
 
+  // Increase max level of kept perk by 2
+  gameState.bannedPerks[keep] -= 2;
+
+  // Increase current level of kept perk by 1
   Object.assign(gameState.perks, makeEmptyPerksMap(upgrades), {
-    [keep]: gameState.perks[keep],
+    [keep]: gameState.perks[keep] + 1,
   });
 
   await setLevel(gameState, 0);
@@ -655,6 +660,7 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.levelSpawnedCoins = 0;
   gameState.levelLostCoins = 0;
   gameState.levelMisses = 0;
+  gameState.lastBrickBroken = 0;
   gameState.runStatistics.levelsPlayed++;
 
   // Reset combo silently
@@ -669,7 +675,8 @@ export async function setLevel(gameState: GameState, l: number) {
       ),
     );
   }
-  gameState.combo += gameState.perks.hot_start * 15;
+
+  gameState.combo += gameState.perks.hot_start * 30;
 
   const lvl = currentLevelInfo(gameState);
   if (lvl.size !== gameState.gridSize) {
@@ -923,6 +930,19 @@ export function gameStateTick(
     gameState.combo,
   );
 
+  if (
+    gameState.perks.addiction &&
+    gameState.lastBrickBroken &&
+    gameState.lastBrickBroken <
+      gameState.levelTime - 5000 / gameState.perks.addiction
+  ) {
+    resetCombo(
+      gameState,
+      gameState.puckPosition,
+      gameState.gameZoneHeight - gameState.puckHeight * 2,
+    );
+  }
+
   gameState.balls = gameState.balls.filter((ball) => !ball.destroyed);
 
   const remainingBricks = gameState.bricks.filter(
@@ -974,15 +994,13 @@ export function gameStateTick(
   ) {
     if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
+    } else if (gameState.loop < gameState.maxLoop) {
+      gotoNextLoop(gameState);
     } else {
-      if (isPremium()) {
-        gotoNextLoop(gameState);
-      } else {
-        gameOver(
-          t("gameOver.win.title"),
-          t("gameOver.win.summary", { score: gameState.score }),
-        );
-      }
+      gameOver(
+        t("gameOver.7_loop.title", { loop: gameState.loop }),
+        t("gameOver.7_loop.summary", { score: gameState.score }),
+      );
     }
   } else if (gameState.running || gameState.levelTime) {
     const coinRadius = Math.round(gameState.coinSize / 2);
@@ -1558,6 +1576,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   const hitBrick = vhit ?? hhit ?? chit;
 
   if (typeof hitBrick !== "undefined") {
+    const initialBrickColor = gameState.bricks[hitBrick];
     ball.hitSinceBounce++;
     let pierce = false;
     let damage =
@@ -1570,7 +1589,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
 
     const used = Math.min(
       ball.piercePoints,
-      Math.max(1, gameState.brickHP[hitBrick]),
+      Math.max(1, gameState.brickHP[hitBrick] + 1),
     );
     gameState.brickHP[hitBrick] -= used;
     ball.piercePoints -= used;
@@ -1592,8 +1611,13 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
       }
     }
 
+    console.log("After bounce", {
+      pierce,
+      initialBrickColor,
+      hitBrick,
+      hp: gameState.brickHP[hitBrick],
+    });
     if (!gameState.brickHP[hitBrick]) {
-      const initialBrickColor = gameState.bricks[hitBrick];
       ball.brokenSinceBounce++;
 
       explodeBrick(gameState, hitBrick, ball, false);
@@ -1602,6 +1626,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
         initialBrickColor !== "black" && // don't replace a brick that bounced with sturdy_bricks
         !gameState.bricks[hitBrick]
       ) {
+        console.log("sapper use", hitBrick);
         setBrick(gameState, hitBrick, "black");
         ball.sapperUses++;
       }

@@ -53,26 +53,52 @@ export function getRowColIndex(gameState: GameState, row: number, col: number) {
 
 export function getPossibleUpgrades(gameState: GameState) {
   return upgrades
-    .filter(
-      (u) =>
-        gameState.totalScoreAtRunStart >= u.threshold || gameState.loop > 0,
-    )
+    .filter((u) => gameState.totalScoreAtRunStart >= u.threshold)
     .filter((u) => !u?.requires || gameState.perks[u?.requires]);
 }
 
 export function max_levels(gameState: GameState) {
-  return gameState.levelsPerLoop + gameState.perks.extra_levels;
+  return Math.max(
+    gameState.levelsPerLoop + gameState.perks.extra_levels - gameState.loop,
+    1,
+  );
 }
 
 export function pickedUpgradesHTMl(gameState: GameState) {
-  let list = "";
-  for (let u of upgrades) {
-    for (let i = 0; i < gameState.perks[u.id]; i++)
-      list += `<span  title="${u.name} : ${u.help(gameState.perks[u.id])}">${icons["icon:" + u.id]}</span>`;
-  }
+  const upgradesList = getPossibleUpgrades(gameState)
+    .map((u) => {
+      const newMax = Math.max(0, u.max - gameState.bannedPerks[u.id]);
 
-  if (!list) return "";
-  return ` <p>${t("score_panel.upgrades_picked")}</p> <p>${list}</p>`;
+      let bars = "";
+      for (let i = 0; i < Math.max(u.max, newMax, gameState.perks[u.id]); i++) {
+        if (i < gameState.perks[u.id]) {
+          bars += '<span class="used"></span>';
+        } else if (i < newMax) {
+          bars += '<span class="free"></span>';
+        } else {
+          bars += '<span class="banned"></span>';
+        }
+      }
+
+      const state = (!newMax && 2) || (!gameState.perks[u.id] && 1) || 0;
+      return {
+        state,
+        html: `
+        <div class="upgrade ${["used", "free", "banned"][state]}">
+            ${u.icon}
+            <p>
+            <strong>${u.name}</strong>
+          ${u.help(Math.max(1, gameState.perks[u.id]))}
+          </p> 
+            ${bars}
+        </div>
+        `,
+      };
+    })
+    .sort((a, b) => a.state - b.state)
+    .map((a) => a.html);
+
+  return ` <p>${t("score_panel.upgrades_picked")}</p>` + upgradesList.join("");
 }
 
 export function levelsListHTMl(gameState: GameState) {
@@ -131,8 +157,6 @@ export function defaultSounds() {
       lifeLost: { vol: 0, x: 0 },
       coinCatch: { vol: 0, x: 0 },
       colorChange: { vol: 0, x: 0 },
-      void: { vol: 0, x: 0 },
-      freeze: { vol: 0, x: 0 },
     },
   };
 }

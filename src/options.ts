@@ -2,6 +2,7 @@ import { t } from "./i18n/i18n";
 
 import { OptionDef, OptionId } from "./types";
 import { getSettingValue, setSettingValue } from "./settings";
+import { hoursSpentPlaying } from "./pure_functions";
 
 export const options = {
   sound: {
@@ -54,6 +55,11 @@ export const options = {
     default: false,
     name: t("main_menu.fullscreen"),
     help: t("main_menu.fullscreen_help"),
+  },
+  donation_reminder: {
+    default: hoursSpentPlaying() > 5,
+    name: t("main_menu.donation_reminder"),
+    help: t("main_menu.donation_reminder_help"),
   },
 } as const satisfies { [k: string]: OptionDef };
 
