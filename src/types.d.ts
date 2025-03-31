@@ -9,6 +9,7 @@ export type RawLevel = {
   bricks: string;
   svg: number | null;
   color: string;
+  credit?: string;
 };
 export type Level = {
   name: string;
@@ -19,6 +20,7 @@ export type Level = {
   color: string;
   threshold: number;
   sortKey: number;
+  credit?: string;
 };
 
 export type Palette = { [k: string]: string };

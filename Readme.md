@@ -6,30 +6,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [Donate](https://paypal.me/renanlecaro)
 - Bitcoin : bc1qlh8kywy3ttsuqqa08yx2rdc8dqhdvyt43wlxmr
 - [Discord](https://discord.gg/DZSPqyJkwP)
-- [Post your comments on itch.io](https://renanlecaro.itch.io/breakout71)   
-- [Help and tips about the game](./Help.md)
+- [Post your comments on itch.io](https://renanlecaro.itch.io/breakout71)    
 - [F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 - [Translation with weblate](https://hosted.weblate.org/engage/breakout-71/-/en/)
 
-# System requirements 
-
-Breakout 71 can work offline (add it to home screen) and perform well even on low-end devices. 
-It's very lean and does not take much storage space (Roughly 0.1MB).
-If the app stutters, turn on "fast mode" in the settings to render a simplified 
-view that should be faster. There's also an easy mode for kids (slower ball).
-
-# Looping
-
-Once you have unlocked all upgrades, you'll get an option to play a longer game. 
-In the mode, you can "loop" the game up to 7 times after your initial run. 
-
-Each loop is shorter, and you can't use the perk levels you used in past levels, except 
-for one perk that you can keep improving. If you completely exhaust a perk, it won't be
-offered at all in later loops. The perk you keep improving instantly gains +1 level and +2 max levels 
-Each loop is one level shorter. The ball starts slightly faster.
-The game is over when you run loose the ball or finish the 7th loop.
 
 # changelog
 
@@ -220,8 +202,14 @@ The game is over when you run loose the ball or finish the 7th loop.
 - countries flags and shapes
 
 
+
 ## extend re-playability
 - hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..
+- architect mode : 
+  - play 7 levels, each with a different build. 
+  - Perk levels can only be used once, so if you take one for level 1, you won't have it to level 2-7. 
+  - Your final score is your worst score times your best score  
+  - You'll see the levels in advance
 
 - stats by lack of perk, like "best score without using hot start". 
 - split screen multiplayer
@@ -253,44 +241,4 @@ This requires recording a bit more info about each run.
 - missile goes when you catch coin
 - missile goes when you break a brick 
 - [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran : i'll probably just let the second puck replace this
-
-
-# Credits
-
-I pulled many background patterns from https://pattern.monster/
-They are displayed in [patterns.html](editor/patterns.html) for easy inclusion.
-
-Some of the sound generating code was written by ChatGPT, and heavily
-adapted to my usage over time.
-
-Some of the pixel art is taken from google image search results, I hope to replace it by my own over time : 
-[Heart](https://www.youtube.com/watch?v=gdWiTfzXb1g)  
-[Mushroom](https://pixelartmaker.com/art/cce4295a92035ea)
-https://prohama.com/whale-2-pattern/
-https://prohama.com/shark-2-pattern/
-https://prohama.com/bird-1-size-13x12/
-https://prohama.com/pingwin-4-pattern/
-https://prohama.com/dog-21-pattern/
-
-I wanted an APK to start in fullscreen and be able to list it on fdroid and the play store. I started with an empty view and went to work trimming it down, with the help of that tutorial 
-https://github.com/fractalwrench/ApkGolf/blob/master/blog/BLOG_POST.md
-
-Colin (obigre) brought a lot of fantastic ideas to the game, here's his website (in French) : https://colin-crapahute.bearblog.dev/
-
-# Other noteworthy games in the breakout genre
-
-LBreakoutHD : nice and open source remake
-https://sourceforge.net/p/lgames/code/HEAD/tree/trunk/lbreakouthd/
-
-Wizorb 
-https://store.steampowered.com/app/207420/Wizorb/
-
-Rollers of the realm : narratif, chaque balle est un aventurier
-https://store.steampowered.com/app/262470/Rollers_of_the_Realm/
-
-Breakout multiplayer : pvp with air console style multiplayer
-https://casmo.itch.io/breakout-multiplayer 
-
-Breakout Hero (made as part of a PICO-8 tutorial )
-https://krystman.itch.io/breakout-hero
 

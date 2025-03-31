@@ -53,7 +53,7 @@ function App() {
     >
       <div id={"levels"}>
         {levels.map((level, li) => {
-          const { name, bricks, size, svg, color } = level;
+          const { name,credit, bricks, size, svg, color } = level;
 
           const brickButtons = [];
           for (let x = 0; x < size; x++) {
@@ -97,11 +97,23 @@ function App() {
           return (
             <div key={li}>
               <input
+                  className={"name"}
                 type="text"
                 value={name}
                 onChange={(e) => updateLevel(li, { name: e.target.value })}
               />
-              <div>
+              <input
+                  className={"credit"}
+                type="text"
+                value={credit||''}
+                onChange={(e) => updateLevel(li, { credit: e.target.value })}
+              />
+
+
+
+              <div
+                  className={"buttons"}
+              >
                 <button onClick={() => deleteLevel(li)}>Delete</button>
                 <button onClick={() => updateLevel(li, resizeLevel(level, -1))}>
                   -

@@ -24,13 +24,15 @@
     "size": 9,
     "bricks": "ttttttt__tWWWWWWW_tWrrWttW_tWWWWWWW_ttttttt_____t______ttttt____ttttt_____t_t",
     "svg": null,
-    "color": ""
+    "color": "",
+    "credit": "https://steamcommunity.com/sharedfiles/filedetails/?id=487035876"
   },
   {
     "name": "Creeper",
     "size": 10,
     "bricks": "___________ccGGccGG__cGccGcGc__GBBccBBc__cBBGcBBc__GccBBGGc__ccBBBBcG__GGBBBBcG__cGBccBGc___________",
-    "svg": 22
+    "svg": 22,
+    "credit": "https://en.wikipedia.org/wiki/Creeper_(Minecraft)"
   },
   {
     "name": "Stairs",
@@ -57,7 +59,8 @@
     "size": 15,
     "bricks": "__________________RRR___RRR_____RSSSR_RSSSR___RSWWSSRSSSSSR__RSWSSSSSSSSSR__RSSSSSSSSSSSR__RSWSSSSSSSSSR___RSSSSSSSSSR_____RSSSSSSSR_______RSSSSSR_________RSSSR___________RSR_____________R____________________________________",
     "svg": 17,
-    "color": ""
+    "color": "",
+    "credit": "https://www.youtube.com/watch?v=gdWiTfzXb1g"
   },
   {
     "name": "Swiss",
@@ -105,7 +108,8 @@
     "size": 12,
     "bricks": "____yyyy______yyyyyyyy___yyyyByyyyy__yyyyyyyyy__yyyyyyyy____yyyyyy______yyyyyy___S_Syyyyyyyy_____yyyyyyyyy___yyyyyyyyyy___yyyyyyyy______yyyy",
     "svg": 7,
-    "color": ""
+    "color": "",
+    "credit": "https://en.wikipedia.org/wiki/Pacman"
   },
   {
     "name": "Ship",
@@ -118,21 +122,24 @@
     "size": 13,
     "bricks": "________________a_____a_______a___a_______aaaaaaa_____aaBaaaBaa___aaaaaaaaaaa__aaaaaaaaaaa__a_aaaaaaa_a__a_a_____a_a_____aa_aa_____________________________",
     "svg": 29,
-    "color": ""
+    "color": "",
+    "credit": "https://en.wikipedia.org/wiki/Space_invaders"
   },
   {
     "name": "Space mushroom",
     "size": 10,
     "bricks": "______________WW_______WWWW_____WWWWWW___WWBWWBWW__WWWWWWWW____W__W_____W_WW_W___W_W__W_W",
     "svg": 6,
-    "color": ""
+    "color": "",
+    "credit": "https://en.wikipedia.org/wiki/Space_invaders"
   },
   {
     "name": "Wololo",
     "size": 9,
     "bricks": "____WW_OOW___WW__OWW__W___OWWWbbbW_WWW_WbW_WOW__WWb__OW__bbb__O___W_W__O___W_W__O",
     "svg": null,
-    "color": ""
+    "color": "",
+    "credit": "https://aoe.heavengames.com/theacademy/unitsboatsandbuildings/priest/"
   },
   {
     "name": "Small heart",
@@ -153,14 +160,16 @@
     "size": 10,
     "bricks": "___________gggggggg__gggggggg__gggggggg__gggggggg__vvvggvvv__gggggggg__gggggggg__gggggggg_____________________",
     "svg": null,
-    "color": "#154b07"
+    "color": "#154b07",
+    "credit": "https://minecraft.wiki/w/Enderman"
   },
   {
     "name": "Mushroom",
     "size": 16,
     "bricks": "_____________________rrrrWW________WWrrrrWWWW_____WWrrrrrrWWWW____WrrWWWWrrWWW___rrrWWWWWWrrrrr__rrrWWWWWWrrWWr__WrrWWWWWWrWWWW__WWrrWWWWrrWWWW__WWrrrrrrrrrWWr__WrrWWWWWWWWrrr_____WWBWWBWW_______WWWBWWBWWW______WWWWWWWWWW_______WWWWWWWW____________________",
     "svg": null,
-    "color": ""
+    "color": "",
+    "credit": "https://pixelartmaker.com/art/cce4295a92035ea"
   },
   {
     "name": "Tulip",
@@ -275,7 +284,8 @@
     "bricks": "___sssss_______sssssss______WWsWWsss_____WBsBWsss_____WBsBWsss_____WWsWWsss_____sssssss_______ssssss_____WWWWWWss_______WssWs__s_____ssss__sss___sssssssssss__sssssssss_ss",
     "svg": null,
     "color": "",
-    "squared": false
+    "squared": false,
+    "credit": "https://en.wikipedia.org/wiki/Worms_(series)"
   },
   {
     "name": "Ocean Sunrise",
@@ -412,7 +422,8 @@
     "name": "Cute dog",
     "size": 9,
     "bricks": "__________O_____O_OOOWWWOOOOOWWWWWOOOOeWWWWOO_eBeWWBW__eBeWWBW___eWBWW_____WRW____________",
-    "svg": null
+    "svg": null,
+    "credit": "https://prohama.com/dog-21-pattern/"
   },
   {
     "name": "icon:extra_life",
@@ -630,35 +641,40 @@
     "size": 18,
     "bricks": "_________________________llll_________lll_llllll_lll___lsssllllllllsssl__lsssllllllllsssl__lsssllBllBllsssl__lssllWllllWllssl___ll__llllll__ll_________llll_______________ll______________llll______________ll________________________________________________________________________________________________________________________________________",
     "svg": 25,
-    "color": ""
+    "color": "",
+    "credit": "https://prohama.com/elephant-5-pattern/"
   },
   {
     "name": "Orca",
     "size": 20,
     "bricks": "____________________________________________________________________________________________BBBBB____BBB_BBB___BBBBBBB____BBBBB___BBBBBBBBB____BBB___BBBBWBBWWW_____BBBBBBBBBBBWWWW_____BBBBBBBBBBWWWWW_____BBBBBBBBBWWWWW_______BBBBBBBWWWWW___________WWBBWWW______________BBB_BB______________BB__B______________________________________________________________________________________________________________________________",
     "svg": null,
-    "color": "#1c71d8"
+    "color": "#1c71d8",
+    "credit": "https://prohama.com/whale-2-pattern/"
   },
   {
     "name": "Shark",
     "size": 17,
     "bricks": "__________________________________________g_______________ggg____________ggggggg_________ggggggggg_______ggggggggggg_____gggggWWWggggg____gBgWWWWWWWgBg___ggWWWWrWrWWWWgg__ggWWWrrrrrWWWgg_ggWWWrrrrrrrWWWggggWWrrrrrrrrrWWgggWWWrWrWrWrWrWWWggWWrrWWWWWWWrrWWggWWWWWWWWWWWWWWWg_________________",
     "svg": null,
-    "color": "#3584e4"
+    "color": "#3584e4",
+    "credit": "https://prohama.com/shark-2-pattern/"
   },
   {
     "name": "Bird",
     "size": 13,
     "bricks": "_______RRR____R____RSSSR___RR__RSSWWWR__RSR_RSWWBWR__RSSRRSWWWWyy_RSSSRSWWWR___RSSSSSSRR_____RRSSyyyy______RSyyyyy___RRRRSyyyy____RSSSRyyy_____RRRR______________________",
     "svg": null,
-    "color": ""
+    "color": "",
+    "credit": "https://prohama.com/bird-1-size-13x12/"
   },
   {
     "name": "Tux",
     "size": 14,
     "bricks": "_____gggg________gggggggg_____gggggggggg____gggggggggg___gggggggggggg__gggWBggWBggg__gggBBggBBggg__ggggyyyygggg_ggggggyyggggggggggWWWWWWggggg_gWWWWWWWWg_g__WWWWWWWWWW____WWWWWWWWWW____yyy____yyy__",
     "svg": null,
-    "color": "#62a0ea"
+    "color": "#62a0ea",
+    "credit": "https://prohama.com/pingwin-4-pattern/"
   },
   {
     "name": "Armenia",
@@ -1052,5 +1068,44 @@
     "bricks": "__________________________l__WWWWW_lWWWyylllly_WWWWW_ly_______l__________________",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:help",
+    "size": 8,
+    "bricks": "___tt_____tttt___tt__tt__tt__tt_____tt_____tt______________tt___",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "Pingwin",
+    "size": 13,
+    "bricks": "______gggg________ggWWgg_______gWWgWgy______ggWWWg_______ggggg_______gggWWW______gggggWWW___gggggggWWW____ggggggWWW_____ggggWWWW____gggWWWWW______ggWWWW________gWWyyy___",
+    "svg": null,
+    "color": "#3584e4",
+    "credit": "https://prohama.com/pingwin-2-pattern/"
+  },
+  {
+    "name": "Dog",
+    "size": 16,
+    "bricks": "__gg_ggggg_gg___ggWWgWWWWWgWWgg_gWWgWWWWWWWgWWg_gWWgWWWWWWWgWWg_gggWWWWWWWWWggg__gWggWWWWWggWg___gWggWWWWWggWg___gWWWWgggWWWWg____gWgWWgWWgWg_____gWWggsggWWg______gWgsssgWg________ggsssgg___________ggg_______________________________________________________",
+    "svg": null,
+    "color": "#62a0ea",
+    "credit": "https://prohama.com/dog-8-pattern/"
+  },
+  {
+    "name": "sunglasses",
+    "size": 24,
+    "bricks": "____________________________________________________ggggg______ggggg_______gg___g______g___gg_____gg________________gg___gg__________________gg_gggggggggg____gggggggggggggtttttggggggggbbbbbgggggtWWWttttggggbbbbWWWbgg_gtWttttttggggbbbbWbbbg__gtttttttgg__ggbbbbbbbg__gtttttttg____gbbbbbbbg__ggtttttgg____ggbbbbbgg___ggtttgg______ggbbbgg_____ggggg________ggggg___________________________________________________________________________________________________________________________________________________________________________________________________________________________",
+    "svg": null,
+    "color": "#1a5fb4",
+    "credit": "https://prohama.com/sunglasses-pattern-1/"
+  },
+  {
+    "name": "Balloon",
+    "size": 21,
+    "bricks": "_____bbbWbbbWbbb_________PWbWPWbWPWbWP_______bWbbbWbbbWbbbWb_____WbbbWbbbWbbbWbbbW___WPWbWPWbWPWbWPWbWPW__bWbbbWbbbWbbbWbbbWb__bbbPbbbPbbbPbbbPbbb__bbPPPbPPPbPPPbPPPbb___PPWPPPWPPPWPPPWPP____PWbWPWbWPWbWPWbWP_____PWPPPWPPPWPPPWP_______PPWPPPWPPPWPP_________WbWPWbWPWbW___________bbbbbbbbb_____________b_____b______________b_____b______________b_____b______________WWWWWWW_______________PPPPP________________PPPPP________________PPPPP________",
+    "svg": null,
+    "color": "",
+    "credit": "https://prohama.com/balloon-1/"
   }
 ]
