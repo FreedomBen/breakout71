@@ -63,7 +63,7 @@ import {
 import { isOptionOn, options, toggleOption } from "./options";
 import { hashCode } from "./getLevelBackground";
 import { hoursSpentPlaying } from "./pure_functions";
-import {helpMenuEntry} from "./help";
+import { helpMenuEntry } from "./help";
 
 export function play() {
   if (applyFullScreenChoice()) return;
@@ -556,7 +556,7 @@ export async function openMainMenu() {
         openSettingsMenu();
       },
     },
-      helpMenuEntry()
+    helpMenuEntry(),
   ];
 
   const cb = await asyncAlert<() => void>({

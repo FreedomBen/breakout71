@@ -192,7 +192,7 @@ body:not(.has-alert-open) #popup {
   border: none;
   width: 60px;
   height: 60px;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   overflow: hidden;
@@ -1462,7 +1462,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29056849\"");
+module.exports = JSON.parse("\"29057409\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2207,39 +2207,39 @@ function hoursSpentPlaying() {
 function miniMarkDown(md) {
     let html = [];
     let lastNode = null;
-    md.split('\n').forEach((line)=>{
+    md.split("\n").forEach((line)=>{
         const titlePrefix = line.match(/^#+ /)?.[0];
         if (titlePrefix) {
             if (lastNode) html.push(lastNode);
             lastNode = {
-                tagName: 'h' + (titlePrefix.length - 1),
+                tagName: "h" + (titlePrefix.length - 1),
                 text: line.slice(titlePrefix.length)
             };
-        } else if (line.startsWith('- ')) {
-            if (lastNode?.tagName !== 'ul') {
+        } else if (line.startsWith("- ")) {
+            if (lastNode?.tagName !== "ul") {
                 if (lastNode) html.push(lastNode);
                 lastNode = {
-                    tagName: 'ul',
-                    text: ''
+                    tagName: "ul",
+                    text: ""
                 };
             }
-            lastNode.text += '<li>' + line.slice(2) + '</li>';
+            lastNode.text += "<li>" + line.slice(2) + "</li>";
         } else if (!line.trim()) {
             if (lastNode) html.push(lastNode);
             lastNode = null;
         } else {
-            if (lastNode?.tagName !== 'p') {
+            if (lastNode?.tagName !== "p") {
                 if (lastNode) html.push(lastNode);
                 lastNode = {
-                    tagName: 'p',
-                    text: ''
+                    tagName: "p",
+                    text: ""
                 };
             }
-            lastNode.text += line + ' ';
+            lastNode.text += line + " ";
         }
     });
     if (lastNode) html.push(lastNode);
-    return html.map((h)=>'<' + h.tagName + '>' + h.text.replace(/\bhttps?:\/\/[^\s<>]+/gi, (a)=>`<a href="${a}">${a}</a>`) + '</' + h.tagName + '>').join('\n');
+    return html.map((h)=>"<" + h.tagName + ">" + h.text.replace(/\bhttps?:\/\/[^\s<>]+/gi, (a)=>`<a href="${a}">${a}</a>`) + "</" + h.tagName + ">").join("\n");
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6rQoT":[function(require,module,exports,__globalThis) {
@@ -4747,19 +4747,17 @@ var _asyncAlert = require("./asyncAlert");
 var _pureFunctions = require("./pure_functions");
 function helpMenuEntry() {
     return {
-        icon: (0, _loadGameData.icons)['icon:help'],
-        text: (0, _i18N.t)('main_menu.help_title'),
-        help: (0, _i18N.t)('main_menu.help_help'),
+        icon: (0, _loadGameData.icons)["icon:help"],
+        text: (0, _i18N.t)("main_menu.help_title"),
+        help: (0, _i18N.t)("main_menu.help_help"),
         async value () {
             await (0, _asyncAlert.asyncAlert)({
-                title: (0, _i18N.t)('main_menu.help_title'),
+                title: (0, _i18N.t)("main_menu.help_title"),
                 allowClose: true,
                 content: [
-                    (0, _pureFunctions.miniMarkDown)((0, _i18N.t)('main_menu.help_content')),
-                    (0, _i18N.t)('main_menu.help_upgrades'),
+                    (0, _pureFunctions.miniMarkDown)((0, _i18N.t)("main_menu.help_content")),
+                    (0, _i18N.t)("main_menu.help_upgrades"),
                     ...(0, _loadGameData.upgrades).map((u)=>`
-
-
 <div class="upgrade used">
             ${u.icon}
             <p>
@@ -4770,9 +4768,9 @@ function helpMenuEntry() {
         
           ${(0, _pureFunctions.miniMarkDown)(u.fullHelp)}
 `),
-                    (0, _pureFunctions.miniMarkDown)((0, _i18N.t)('main_menu.credits')),
-                    (0, _i18N.t)('main_menu.credit_levels'),
-                    ...(0, _loadGameData.allLevels).filter((l)=>l.credit?.startsWith('http')).map((l)=>`
+                    (0, _pureFunctions.miniMarkDown)((0, _i18N.t)("main_menu.credits")),
+                    (0, _i18N.t)("main_menu.credit_levels"),
+                    ...(0, _loadGameData.allLevels).filter((l)=>l.credit?.startsWith("http")).map((l)=>`
 <div class="upgrade used">
             ${(0, _loadGameData.icons)[l.name]}
             <p>
