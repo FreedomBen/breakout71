@@ -637,7 +637,7 @@ export const rawUpgrades = [
     threshold: 165000,
     giftable: false,
     id: "addiction",
-    max: 10,
+    max: 7,
     name: t("upgrades.addiction.name"),
     help: (lvl: number) =>
       t("upgrades.addiction.help", { lvl, delay: (5 / lvl).toFixed(2) }),

@@ -699,6 +699,8 @@ export async function setLevel(gameState: GameState, l: number) {
   // This caused problems with accented characters like the ô of côte d'ivoire for odd reasons
   // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
   background.src = "data:image/svg+xml;UTF8," + lvl.svg;
+
+  document.body.style.setProperty("--level-background", lvl.color || "#000");
 }
 
 function setBrick(gameState: GameState, index: number, color: string) {
@@ -948,6 +950,11 @@ export function gameStateTick(
   const remainingBricks = gameState.bricks.filter(
     (b) => b && b !== "black",
   ).length;
+
+  if (!remainingBricks && gameState.lastBrickBroken) {
+    // Avoid a combo reset just because we're waiting for coins
+    gameState.lastBrickBroken = 0;
+  }
 
   if (
     gameState.levelTime > gameState.lastTickDown + 1000 &&

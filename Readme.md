@@ -13,8 +13,6 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 - [Translation with weblate](https://hosted.weblate.org/engage/breakout-71/-/en/)
 
-
-
 # System requirements 
 
 Breakout 71 can work offline (add it to home screen) and perform well even on low-end devices. 
@@ -33,17 +31,17 @@ offered at all in later loops. The perk you keep improving instantly gains +1 le
 Each loop is one level shorter. The ball starts slightly faster.
 The game is over when you run loose the ball or finish the 7th loop.
 
-# next goals
+# changelog
 
-- Chain reaction : +lvl*lvl combo per brick broken by an explosion, combo resets after explosion is over
-  
-- [vikingerik] : reward multiballs with combo
-- wind : move coins based on puck movement not position
+## next goals
 - [jaceys] Move the restart button out of the menu, so that it is more easily accessible
 - [jaceys] A visual indication of whether a ball has hit a brick this serve
+- choose starting perks
+- wind : move coins based on puck movement not position
 - Top down /reach: punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row
 
-# Release candidate
+## Release candidate
+- addiction : reset timout if 0 bricks
 - New perk : addiction, reward faster gameplay
 - Balancing : hot start effect doubled
 - Balancing : you earn an extra perk when playing well, and a reroll when playing perfectly
@@ -78,19 +76,20 @@ The game is over when you run loose the ball or finish the 7th loop.
 - Made the "combo lost" text last 500ms instead of the pointless 150ms 
 - add a toggle to switch between the “coin” design and colored bubbles
 
-# 29049575
+## 29049575
 
 - added rerolls
 - Sacrifice : clear screen instead of doubling coins
 
-# 29048147
+## 29048147
 
 - Ascetism : render coins with red border if there's a combo
 - Warn about unbounded
 - Red border dashes
 
+# ideas 
 
-# UX / gameplay
+## UX / gameplay
 
 - on mobile, relative movement of the touch would be amplified and added to the puck 
 - option : don't pause on mobile when lifting finger
@@ -107,7 +106,7 @@ The game is over when you run loose the ball or finish the 7th loop.
 - when game resumes near bottom, be unvulnerable for .5s ? , once per level
 
 
-# Game engine features  
+## Game engine features ideas
 - save state in localstorage for easy resume of a game in progress
 - ask for permanent storage
 - more help somewhere accessible
@@ -128,13 +127,17 @@ The game is over when you run loose the ball or finish the 7th loop.
 - when missing, redo particle trail, but give speed to particle that matches ball direction
 - Overgrowth — when the ball touches a bomb brick it turns into a regular green brick and spawns 1 more bricks near it (additional levels spawn 2 additional bricks)
 
-# graphics
+## graphics ideas
 - Waterline under the puck, coins slow down a lot, reflections
 - webgl rendering:  background gradient light map, shinier coins
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
 
-# Easy perks ideas 
-
+## Easy perks ideas  
+- snowball :  Combo resets every 0.1s . +1 combo for each combo gained Since last reset.
+- Chain reaction : +lvl*lvl combo per brick broken by an explosion, combo resets after explosion is over
+- coins doubled when touched by ball, lvl times, looks smaller and lighter
+- coins stained by balls
+- [vikingerik] : reward multiballs with combo somehow
 - fast pause : pause delay divided by {{lvl}} (helps with teleport)
 - [colin] Capital - les vies non perdues à la fin du niveau rapportent un bonus de points
 - ban 3 random perks from pool, gain 2 upgrades 
@@ -146,17 +149,17 @@ The game is over when you run loose the ball or finish the 7th loop.
 - [colin] golden corners - catch coins at the sides of the puck to double their value
 - [colin] varied diet - your combo grows by 2 when your ball changes color, but decreses by one when a brick is broken ?  
 - [colin] trickle up - inverse of reach more or less 
+- Dividends — +1 combo per 10 coins lost (band-aid for players who struggle, useful addition when choosing Ascetism)
 
 
-# Medium difficulty perks ideas 
+## Medium difficulty perks ideas 
 - balls collision split them into 4 smaller balls, lvl times (requires rework)
 - offer next level choice after upgrade pick
-- Dividends — +1 combo per 10 coins lost (band-aid for players who struggle, useful addition when choosing Ascetism)
 - [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
 - [colin] Combos extrêmes: lvl2 pour tous les combos, qui fait que le combo rapporte double ou triple, mais si sur un niveau la condition n'est pas respectée alors le perk ne donne plus de combo bonus pour ce niveau.
 - [colin] Mytosis - les blocs bombe n'explosent pas mais relâchent une nouvelle balle à la place (clashes with "shocks" and "sapper")
 - [colin] Juggle - au début du niveau, chaque balle est lancée l'une après au lieu de toutes à la fois (needs some work)
-- SUPER HOT
+- SUPER HOT (time moves when puck moves)
 - bricks attract ball
 - bricks attract coins
 - wrap left / right
@@ -166,11 +169,13 @@ The game is over when you run loose the ball or finish the 7th loop.
 - the more balls are close to a brick, the more combo is gained when breaking it. If only one ball, loose one point or reset
 - ball avoids brick of wrong color
 
-# Hard perk ideas
+## Hard perk ideas
 - accelerometer controls coins and balls
  - [colin] side pucks - same as above but with two side pucks : hard to know where to put them 
 
-# to sort
+## ideas to sort
+- loop only when 7 rerolls have been acumulated. 
+- store much more details about run (level by level) as numbers only (instead of json that gets big false)
 - double coin value when they hit the sides
 - [colin]Brambles — coins that touch the walls and ceiling get stuck and are thrown back when the last brick is destroyed
 - [colin]Ball of Greed — the ball can collect coins (might be worth dividing into levels: lvl 1, can collect coins only after two bounces on bricks or walls. lvl 2, can collect after 1 bounce. lvl 3, can collect coins anytime)(or change the ball collection radius as the level grows) 
@@ -180,11 +185,9 @@ The game is over when you run loose the ball or finish the 7th loop.
 - [colin]Cryptomoney — coins that should be generated by bricks are instantly collected, but count for half their value
 - [colin]Relative time — ball speed depends on its position: if it's high up on thi screen it's fast, if it's lower it's slower
 - [colin] turn ball gravity on after a top bar hit, and until bouncing on puck
-
 - [colin] hitman - hit the marked brick for +5 combo. each level increases the combo you get for it.
 - [colin] sweet spot - place your puck directly below a moving spot at the top of the level to increase your combo
 - ball attracted by bricks of the color of the ball
-
 - level flips horizontally every time a ball bounces on puck
 - coins that hit the puck disappear, missed ones are scored 
 - [colin] close quarters - balle attirée par tous les blocs/par un bloc aléatoire, actif à portée de bloc (+1bloc au lvlup)/proportionnel à une force (+puissance au lvlup)…
@@ -196,28 +199,7 @@ The game is over when you run loose the ball or finish the 7th loop.
 - [colin] reward the player with more choices/perks for breaking a brick while having reached an increasing combo thresholds. 5 combo, then 10, then 20, then 40 etc… once a threshold is reached you aren't rewarded for that threshold again until you start a rew run
 - [colin] inspired by Balatro's score system : have some perks add to the multiplicator, and some others to the amount of coins in a brick (or the raw value of coins inside), so that you users want to improve both for maximized profit ! maybe tie one of the to perks that help you, and the other to perks that are bad to you, so that gambling players are forced to make their life harder
 
-# Probably not
-- colored coins only (coins should be of the color of the ball to count, otherwise what ? i'd rather avoid negative points)
-- coins avoid ball of different color (pointless)
-- [colin] wormhole - the puck sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect (not sure how that to word that in 1 setence)
-- [colin] Mental charge - the puck is divided into two smaller pucks, then 3 smaller ones at lvl 2 : what's the point ? 
-- [colin] sturdy ball - does more damage to bricks, to conter sturdy bricks :that's pierce now
-- [colin] plot - plot the ball's trajectory as you position your puck : too hard when you add other perks
-- [colin] piggy bank - bricks absorb coins that fall onto it, and release them back as they are broken, with added value : equivalent to Asceticism
-- [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks : really hard to balance with speeds and all
-- non brick-shaped bricks, tilted bricks,moving blocks : very difficult because of engine optimisations
-- 3 random perks immediately, or maybe "all level get twice as many upgrades, but they are applied randomly, and you aren't told which ones you have."
-- coins repulse coins, could get really laggy ?
-- russian roulette: 5/6 chances to get a free upgrade, 1/6 chance of game over. Not really fun 
-- [colin] bigger ball - self-explanatory, or is it ? what's the point ? physics would break now if ball bigger than bricks
-- [colin] smaller ball - doable, but why
-- [colin] earthquake - when the puck hits any side of the screen with velocity, the screen shakes and a brick explodes/falls from the level. alternatively, any brick you catch with the puck gives you the coins at the current combo rate. each level lowers the amount of hits before a brick falls. Problem : no limit on how often you can slam the puck around
-- missile goes when you catch coin
-- missile goes when you break a brick 
-- [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran : i'll probably just let the second puck replace this
-
-
-# extra levels
+## extra levels
 
 - Good games : 
   - FTL
@@ -238,8 +220,9 @@ The game is over when you run loose the ball or finish the 7th loop.
 - countries flags and shapes
 
 
-# extend re-playability
+## extend re-playability
 - hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..
+
 - stats by lack of perk, like "best score without using hot start". 
 - split screen multiplayer
 - Add color schemes into the game (ex : Catppuccin, Dracula, Terminal, etc)
@@ -251,7 +234,26 @@ This requires recording a bit more info about each run.
 
 - final bosses (large vertical level that scrolls down faster and faster)
 
- 
+## Rejected ideas
+- colored coins only (coins should be of the color of the ball to count, otherwise what ? i'd rather avoid negative points)
+- coins avoid ball of different color (pointless)
+- [colin] wormhole - the puck sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect (not sure how that to word that in 1 setence)
+- [colin] Mental charge - the puck is divided into two smaller pucks, then 3 smaller ones at lvl 2 : what's the point ? 
+- [colin] sturdy ball - does more damage to bricks, to conter sturdy bricks :that's pierce now
+- [colin] plot - plot the ball's trajectory as you position your puck : too hard when you add other perks
+- [colin] piggy bank - bricks absorb coins that fall onto it, and release them back as they are broken, with added value : equivalent to Asceticism
+- [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks : really hard to balance with speeds and all
+- non brick-shaped bricks, tilted bricks,moving blocks : very difficult because of engine optimisations
+- 3 random perks immediately, or maybe "all level get twice as many upgrades, but they are applied randomly, and you aren't told which ones you have."
+- coins repulse coins, could get really laggy ?
+- russian roulette: 5/6 chances to get a free upgrade, 1/6 chance of game over. Not really fun 
+- [colin] bigger ball - self-explanatory, or is it ? what's the point ? physics would break now if ball bigger than bricks
+- [colin] smaller ball - doable, but why
+- [colin] earthquake - when the puck hits any side of the screen with velocity, the screen shakes and a brick explodes/falls from the level. alternatively, any brick you catch with the puck gives you the coins at the current combo rate. each level lowers the amount of hits before a brick falls. Problem : no limit on how often you can slam the puck around
+- missile goes when you catch coin
+- missile goes when you break a brick 
+- [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran : i'll probably just let the second puck replace this
+
 
 # Credits
 
@@ -291,3 +293,4 @@ https://casmo.itch.io/breakout-multiplayer
 
 Breakout Hero (made as part of a PICO-8 tutorial )
 https://krystman.itch.io/breakout-hero
+
