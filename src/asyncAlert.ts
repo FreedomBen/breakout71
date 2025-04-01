@@ -105,7 +105,7 @@ export async function asyncAlert<t>({
           help,
           disabled,
           className = "",
-          icon = "",
+          icon = "",tooltip,
         } = entry;
 
         const button = document.createElement("button");
@@ -117,6 +117,9 @@ ${icon}
                     <em>${help || ""}</em>
             </div>`;
 
+        if(tooltip){
+               button.setAttribute('data-tooltip',tooltip)
+        }
         if (disabled) {
           button.setAttribute("disabled", "disabled");
         } else {
@@ -162,3 +165,4 @@ function updateAlertsOpen(delta: number) {
   }
   document.body.classList[alertsOpen ? "add" : "remove"]("has-alert-open");
 }
+

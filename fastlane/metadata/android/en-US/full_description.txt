@@ -1,44 +1,22 @@
-<!-- Break colourful bricks, catch bouncing coins and select powerful upgrades ! -->
-
 <p>
-This is a roguelite twist on the original Breakout/Arkanoid formula.
+This is a roguelite twist on the original Breakout/Arkanoid formula:
 The goal is to catch as many coins as possible during 7 levels.
 Coins appear when you break bricks.
 They fly around, bounce and roll, and you need to catch them with your puck.
-Your "combo" is the number of coins spawned when a brick breaks, it is displayed on your puck.
-Your score is displayed in the top right corner of the screen.
-</p>
-
-<p>
-At the end of each level, you get to pick an upgrade from a random selection, vampire-survivor style.
-Many upgrades impact your "combo". Upgrades apply to the whole run and can synergize.
-For example, "hot start" increases your combo greatly at the start of each level, but makes it tick down rapidly.
-If you combine it with "+1 ball", "piercing" and "bricks become bombs", you'll clear levels so fast that the combo
-will still be high when the fireworks are over and your puck will be showered by coins.
-</p>
-
-<p>What decides how the ball flies away is only the position of the puck hit.
-The puck speed and incoming angle have no impact.
-You must delete all bricks to progress to the next level, and never drop the ball.
-</p>
-
-<p>
-After clearing a level, you'll be able to pick upgrades among a small selection presented to you.
-They'll apply until the end of the run.
-A normal run lasts 7 levels, after which your score is recorded, and you can start again.
-</p>
-
-<p>
-Each run is different, the levels and upgrades you see will change every time, and new ones get added to the pool
-when you progress in the game.
+At the end of the level, you get to pick upgrades.
+There are 50+ different upgrades that impact the gameplay in various ways.
+Many upgrade will impact your combo,that's the number of coins spawned for each brick broken.
+Your "combo" is displayed on your puck. Your score is displayed in the top right corner of the screen.
+Oh and don't miss the ball, you don't have extra lives.
 </p>
 
 <p>
 The app should work offline and perform well even on low-end devices.
 It's very lean and does not take much storage space (Roughly 0.1MB).
-If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster.
+If the app stutters, turn on "fast mode" in the settings.
+If the game is too fast, enable "kid mode" in the settings.
 </p>
 
 <p>
-There's also an easy mode for kids (slower ball) and a color-blind mode (no color related game mechanics).
+The in-game help will tell you more about how to play. Now go have some fun, and come share your best runs on our Discord.
 </p>

@@ -173,6 +173,9 @@ body:not(.has-alert-open) #popup {
               filter: saturate(0);
             }
           }
+          &[disabled] {
+            opacity: 0.2;
+          }
         }
       }
     }
@@ -181,6 +184,13 @@ body:not(.has-alert-open) #popup {
   &.actionsAsGrid > div {
     max-width: none;
 
+    &>div,&>p,&>h1,&>h2{
+      width: 100%;
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+
+    }
     section {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -409,4 +419,22 @@ h2.histogram-title strong {
   &.banned {
     opacity: 0.8;
   }
+}
+
+#tooltip {
+  display: block;
+  position:fixed;
+  left: 0;
+  top:0;
+  background:black;
+  color:white;
+  padding:10px;
+  z-index:11;
+
+  border-radius: 2px;
+  pointer-events: none;
+  user-select: none;
+  opacity: 1;
+  border: 1px solid white;
+  max-width: 300px;
 }

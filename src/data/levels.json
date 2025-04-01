@@ -419,7 +419,7 @@
     "svg": null
   },
   {
-    "name": "Cute dog",
+    "name": "dog 21",
     "size": 9,
     "bricks": "__________O_____O_OOOWWWOOOOOWWWWWOOOOeWWWWOO_eBeWWBW__eBeWWBW___eWBWW_____WRW____________",
     "svg": null,
@@ -647,7 +647,7 @@
   {
     "name": "Orca",
     "size": 20,
-    "bricks": "____________________________________________________________________________________________BBBBB____BBB_BBB___BBBBBBB____BBBBB___BBBBBBBBB____BBB___BBBBWBBWWW_____BBBBBBBBBBBWWWW_____BBBBBBBBBBWWWWW_____BBBBBBBBBWWWWW_______BBBBBBBWWWWW___________WWBBWWW______________BBB_BB______________BB__B______________________________________________________________________________________________________________________________",
+    "bricks": "____________________________________________________________________________________________ggggg____ggg_ggg___ggggggg____ggggg___ggggggggg____ggg___ggggWggWWW_____gggggggggggWWWW_____ggggggggggWWWWW_____gggggggggWWWWW_______gggggggWWWWW___________WWggWWW______________ggg_gg______________gg__g__________________________________________________________________________________________________________",
     "svg": null,
     "color": "#1c71d8",
     "credit": "https://prohama.com/whale-2-pattern/"
@@ -981,7 +981,7 @@
   {
     "name": "icon:settings",
     "size": 8,
-    "bricks": "__l__l___llllll_llllllll_ll__ll__ll__ll_llllllll_llllll___l__l__",
+    "bricks": "_l_l_l_llllllll__llllllllll__ll__ll__llllllllll__llllllll_l_l_l_",
     "svg": null,
     "color": ""
   },
@@ -994,8 +994,8 @@
   },
   {
     "name": "icon:sandbox",
-    "size": 8,
-    "bricks": "__W__W__ccc__ttt_________W___W__GGG__bbb________W______WCCC__aaa",
+    "size": 11,
+    "bricks": "Ggg_GgS_aSS___________GGg_gSS_aSS___________ggg_CCC_SSS___________Ggg_CgS_aSS___________ggg_CCg_aSS___________ggg_Cgg_aaS",
     "svg": null,
     "color": ""
   },
@@ -1057,8 +1057,8 @@
   },
   {
     "name": "icon:loop",
-    "size": 10,
-    "bricks": "____yyyy_____yy__yy_________yy__a______y_aaa_____yccccc____y__c_____GG__cc___GG____GGGGG____________",
+    "size": 7,
+    "bricks": "bbbbbbbtttttt_aaaaa__cccc___CCC____GG_____y______",
     "svg": null,
     "color": ""
   },
@@ -1085,7 +1085,7 @@
     "credit": "https://prohama.com/pingwin-2-pattern/"
   },
   {
-    "name": "Dog",
+    "name": "Dog 8",
     "size": 16,
     "bricks": "__gg_ggggg_gg___ggWWgWWWWWgWWgg_gWWgWWWWWWWgWWg_gWWgWWWWWWWgWWg_gggWWWWWWWWWggg__gWggWWWWWggWg___gWggWWWWWggWg___gWWWWgggWWWWg____gWgWWgWWgWg_____gWWggsggWWg______gWgsssgWg________ggsssgg___________ggg_______________________________________________________",
     "svg": null,
@@ -1093,7 +1093,7 @@
     "credit": "https://prohama.com/dog-8-pattern/"
   },
   {
-    "name": "sunglasses",
+    "name": "Sunglasses",
     "size": 24,
     "bricks": "____________________________________________________ggggg______ggggg_______gg___g______g___gg_____gg________________gg___gg__________________gg_gggggggggg____gggggggggggggtttttggggggggbbbbbgggggtWWWttttggggbbbbWWWbgg_gtWttttttggggbbbbWbbbg__gtttttttgg__ggbbbbbbbg__gtttttttg____gbbbbbbbg__ggtttttgg____ggbbbbbgg___ggtttgg______ggbbbgg_____ggggg________ggggg___________________________________________________________________________________________________________________________________________________________________________________________________________________________",
     "svg": null,

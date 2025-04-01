@@ -149,6 +149,9 @@ export type RunStats = {
   upgrades_picked: number;
   max_combo: number;
   max_level: number;
+
+  best_level_score: number;
+  worst_level_score: number;
 };
 
 export type PerksMap = {
@@ -164,6 +167,7 @@ export type ReusableArray<T> = {
 
 export type RunHistoryItem = RunStats & {
   perks?: PerksMap;
+  mode: GameState["mode"];
   appVersion?: string;
 };
 export type GameState = {
@@ -285,16 +289,15 @@ export type GameState = {
   rerolls: number;
   loop: number;
   baseCombo: number;
-  levelsPerLoop: number;
-  maxLoop: number;
+  mode: "short" | "long" | "creative";
+  readyToRender: boolean;
 };
 
 export type RunParams = {
   level?: string;
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
-  levelsPerLoop?: number;
-  maxLoop?: number;
+  mode: "short" | "long" | "creative";
 };
 export type OptionDef = {
   default: boolean;

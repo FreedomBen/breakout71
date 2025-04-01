@@ -5,7 +5,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [Play now](https://breakout.lecaro.me/)  
 - [Donate](https://paypal.me/renanlecaro)
 - Bitcoin : bc1qlh8kywy3ttsuqqa08yx2rdc8dqhdvyt43wlxmr
-- [Discord](https://discord.gg/DZSPqyJkwP)
+- [Discord](https://discord.gg/bbcQw4x5zA)
 - [Post your comments on itch.io](https://renanlecaro.itch.io/breakout71)    
 - [F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
@@ -21,23 +21,34 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - choose starting perks
 - wind : move coins based on puck movement not position
 - Top down /reach: punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row
+- main menu : show high score
 
 ## Release candidate
-- addiction : reset timout if 0 bricks
-- New perk : addiction, reward faster gameplay
-- Balancing : hot start effect doubled
-- Balancing : you earn an extra perk when playing well, and a reroll when playing perfectly
-- Balancing : telekinesis limited to level 1
-- Limit levels to 7-loop+extra_levels.
-- Limit max by used levels on loop. 
-- forget about "premium" but added a prominent "donate" link after 5h of playing, and setting to hide it permanently 
-- disabled auto-release on fdroid of every web version, as there's a big delay and bugs woudl stay for a long time
-- [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
-- added a white border around all coins, to make dark ones visible on dark bg
-- Removed all previous loop only hazards
-- Looping now bans all your perks except one. That one can level up beyond the normal max. 
-- Adjusted many perks to work beyond the max 
-  - Split list of perks and levels in unlocks
+
+- New game mode : loop / long game
+  - the goal is to build many different build centered on one perk
+  - At the end of level 7, you get to restart at level 1 for 6 levels.
+  - all your perks are banned except one
+  - The perk you keep is leveled up, and can be leveled up a second time during the next loop
+  - the perks you don't keep are "banned", meaning their max level is reduced by as many levels as you had picked
+  - unlocked after unlocking all perks
+- New game mode : lab / creative
+  - the goal is to come up with 3 completely different but powerful play styles 
+  - you freely create 3 builds from all the perks level avaliable
+  - you play them against the levels of your choice
+  - try to make as much score as possible in total
+  - unlocked after unlocking all perks
+- New levels : 
+  - Pingwin
+  - Sunglasses
+  - Balloon
+- Adjusted levels : 
+  - orca is no longer made of bombs, but grey block
+- New perks
+  - addiction : reward faster gameplay
+- Adjusted perks
+  - Hot start : 30 combo per level instead of 15
+  - Telekinesis: limited to level 1  
   - Asceticism now gives +3 combo per lvl
   - Fortunate ball has a stronger effect
   - Bigger puck : puck can now cover the whole screen at higher levels, but not more
@@ -54,9 +65,20 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
   - Unbounded : at level 2+, the top of the level is gone too
   - concave_puck : ball bounces straighter and straighter, to the point where you can't move it without another perk
   - shocks lvl 2+ make bigger explosions
-- Make fullscreen an option and turn it back on when playing
-- Made the "combo lost" text last 500ms instead of the pointless 150ms 
-- add a toggle to switch between the “coin” design and colored bubbles
+  - trampoline: nerfed a little bit, now all sides and top hit reduce combo 
+  
+- Quality of life 
+  - udated discord invite link that had expired 
+  - Fullscreen is now a persistent option, when it's on the game will switch to fullscreen before starting
+  - Added an option to always get colored coins
+  - Made the "combo lost" text last 500ms instead of the pointless 150ms 
+  - Added in-game help and credits, witch can be translated 
+  - Balancing : you earn an extra perk when playing well, and a reroll when playing perfectly
+  - added a prominent "donate" link after 5h of playing, and setting to hide it permanently
+  - disabled auto-release to fdroid, i'll use the web version as the testing ground first
+  - added a white border around all coins, to make dark ones visible on dark bg
+  - [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
+  - Unlocked list : split perk and levels, added tooltips
 
 ## 29049575
 

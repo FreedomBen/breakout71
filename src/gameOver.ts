@@ -1,6 +1,6 @@
 import { allLevels, appVersion, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
-import { RunHistoryItem } from "./types";
+import { GameState, RunHistoryItem } from "./types";
 import { gameState, pause, restart } from "./game";
 import { currentLevelInfo, findLast, pickedUpgradesHTMl } from "./game_utils";
 import { getTotalScore } from "./settings";
@@ -131,7 +131,7 @@ export function gameOver(title: string, intro: string) {
       },
       `<div id="level-recording-container"></div> 
            ${pickedUpgradesHTMl(gameState)}
-        ${getHistograms()} 
+        ${getHistograms(gameState)} 
         `,
     ],
   }).then(() =>
@@ -141,7 +141,7 @@ export function gameOver(title: string, intro: string) {
   );
 }
 
-export function getHistograms() {
+export function getHistograms(gameState: GameState) {
   let runStats = "";
   try {
     // Stores only top 100 runs
@@ -155,6 +155,7 @@ export function getHistograms() {
     runsHistory.push({
       ...gameState.runStatistics,
       perks: gameState.perks,
+      mode: gameState.mode,
       appVersion,
     });
 
@@ -170,7 +171,9 @@ export function getHistograms() {
       getter: (hi: RunHistoryItem) => number,
       unit: string,
     ) => {
-      let values = runsHistory.map((h) => getter(h) || 0);
+      let values = runsHistory
+        .filter((h) => (h.mode || "short") === gameState.mode)
+        .map((h) => getter(h) || 0);
       let min = Math.min(...values);
       let max = Math.max(...values);
       // No point

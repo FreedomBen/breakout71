@@ -485,6 +485,101 @@
 						</children>
 					</folder_node>
 					<folder_node>
+						<name>lab</name>
+						<children>
+							<concept_node>
+								<name>help</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>true</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>instructions</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>true</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>menu_entry</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>select_level</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>title</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>true</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>unlocks_at</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>true</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>true</approved>
+									</translation>
+								</translations>
+							</concept_node>
+						</children>
+					</folder_node>
+					<folder_node>
 						<name>level_up</name>
 						<children>
 							<concept_node>
@@ -1024,6 +1119,21 @@
 							</concept_node>
 							<concept_node>
 								<name>help_upgrades</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>high_score</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -1748,6 +1858,21 @@
 								</translations>
 							</concept_node>
 							<concept_node>
+								<name>menu_tooltip</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
 								<name>missed_ball</name>
 								<description/>
 								<comment/>
@@ -1777,83 +1902,18 @@
 									</translation>
 								</translations>
 							</concept_node>
-						</children>
-					</folder_node>
-					<folder_node>
-						<name>sandbox</name>
-						<children>
 							<concept_node>
-								<name>help</name>
+								<name>score_tooltip</name>
 								<description/>
 								<comment/>
 								<translations>
 									<translation>
 										<language>en-US</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>instructions</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>start</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>title</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>unlocks_at</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 								</translations>
 							</concept_node>
@@ -4627,7 +4687,7 @@
 										<translations>
 											<translation>
 												<language>en-US</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 											<translation>
 												<language>fr-FR</language>

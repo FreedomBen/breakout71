@@ -13,8 +13,8 @@ import {
 } from "./types";
 import { getAudioContext, playPendingSounds } from "./sounds";
 import {
-  currentLevelInfo,
-  getRowColIndex,
+  currentLevelInfo, describeLevel,
+  getRowColIndex, highScoreForMode,
   levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,
@@ -64,6 +64,8 @@ import { isOptionOn, options, toggleOption } from "./options";
 import { hashCode } from "./getLevelBackground";
 import { hoursSpentPlaying } from "./pure_functions";
 import { helpMenuEntry } from "./help";
+import { creativeMode } from "./creative";
+import {setupTooltips} from "./tooltip";
 
 export function play() {
   if (applyFullScreenChoice()) return;
@@ -465,85 +467,51 @@ async function openScorePanel() {
   },
 );
 
+export const creativeModeThreshold = Math.max(
+  ...upgrades.map((u) => u.threshold),
+);
+
+
 export async function openMainMenu() {
   pause(true);
 
-  const creativeModeThreshold = Math.max(...upgrades.map((u) => u.threshold));
+
   const actions: AsyncAlertAction<() => void>[] = [
     {
       icon: icons["icon:7_levels_run"],
       text: t("main_menu.normal"),
-      help: t("main_menu.normal_help"),
+      help: highScoreForMode('short')||t("main_menu.normal_help"),
       value: () => {
-        restart({ levelToAvoid: currentLevelInfo(gameState).name, maxLoop: 0 });
+        restart({
+          levelToAvoid: currentLevelInfo(gameState).name,
+          mode: "short",
+        });
       },
     },
+    {
+      icon: icons["icon:loop"],
+      text:  t("main_menu.loop_run"),
+      help:highScoreForMode('long')||
+
+        (getTotalScore() < creativeModeThreshold && t("lab.unlocks_at", { score: creativeModeThreshold })) ||
+
+           t("main_menu.loop_run_help"),
+
+      value: () => {
+        restart({
+          levelToAvoid: currentLevelInfo(gameState).name,
+          mode: "long",
+        });
+      },
+      disabled: getTotalScore() < creativeModeThreshold,
+    },
+    creativeMode(gameState),
     {
       icon: icons["icon:unlocks"],
       text: t("main_menu.unlocks"),
       help: t("main_menu.unlocks_help"),
       value() {
         openUnlocksList();
-      },
-    },
-    {
-      icon: icons["icon:loop"],
-      text: t("main_menu.loop_run"),
-      help:
-        getTotalScore() < creativeModeThreshold
-          ? t("sandbox.unlocks_at", { score: creativeModeThreshold })
-          : t("main_menu.loop_run_help"),
-
-      value: () => {
-        restart({ levelToAvoid: currentLevelInfo(gameState).name, maxLoop: 7 });
-      },
-      disabled: getTotalScore() < creativeModeThreshold,
-    },
-    {
-      icon: icons["icon:sandbox"],
-      text: t("sandbox.title"),
-      help:
-        getTotalScore() < creativeModeThreshold
-          ? t("sandbox.unlocks_at", { score: creativeModeThreshold })
-          : t("sandbox.help"),
-      disabled: getTotalScore() < creativeModeThreshold,
-      async value() {
-        let creativeModePerks: Partial<{ [id in PerkId]: number }> =
-            getSettingValue("creativeModePerks", {}),
-          choice: "start" | Upgrade | void;
-
-        while (
-          (choice = await asyncAlert<"start" | Upgrade>({
-            title: t("sandbox.title"),
-            actionsAsGrid: true,
-            content: [
-              t("sandbox.instructions"),
-              ...upgrades.map((u) => ({
-                icon: u.icon,
-                text: u.name,
-                help: (creativeModePerks[u.id] || 0) + "/" + u.max,
-                value: u,
-                className: creativeModePerks[u.id]
-                  ? ""
-                  : "grey-out-unless-hovered",
-              })),
-              {
-                text: t("sandbox.start"),
-                value: "start",
-                icon: icons["icon:continue"],
-              },
-            ],
-          }))
-        ) {
-          if (choice === "start") {
-            restart({ perks: creativeModePerks });
-            break;
-          } else if (choice) {
-            creativeModePerks[choice.id] =
-              ((creativeModePerks[choice.id] || 0) + 1) % (choice.max + 1);
-            setSettingValue("creativeModePerks", creativeModePerks);
-          }
-        }
       },
     },
 
@@ -863,6 +831,8 @@ async function openUnlocksList() {
       disabled: ts < threshold,
       value: { perks: { [id]: 1 } } as RunParams,
       icon,
+            tooltip:help(1)
+
     }));
 
   const levelActions = allLevels
@@ -874,6 +844,7 @@ async function openUnlocksList() {
         disabled: !available,
         value: { level: l.name } as RunParams,
         icon: icons[l.name],
+          tooltip:describeLevel(l)
       };
     });
 
@@ -885,7 +856,7 @@ async function openUnlocksList() {
   const tryOn = await asyncAlert<RunParams>({
     title: t("unlocks.title", { percentUnlock }),
     content: [
-      `<p>${t("unlocks.intro", { ts, highScore: gameState.highScore })}
+      `<p>${t("unlocks.intro", { ts })}
    ${percentUnlock < 100 ? t("unlocks.greyed_out_help") : ""}</p>  `,
       ...upgradeActions,
       t("unlocks.level"),
@@ -896,7 +867,7 @@ async function openUnlocksList() {
   });
   if (tryOn) {
     if (await confirmRestart(gameState)) {
-      restart({ ...tryOn, maxLoop: 0 });
+      restart({ ...tryOn, mode: "short" });
     }
   }
 }
@@ -985,7 +956,10 @@ document.addEventListener("keyup", async (e) => {
   ) {
     // When doing ctrl + R in dev to refresh, i don't want to instantly restart a run
     if (await confirmRestart(gameState)) {
-      restart({ levelToAvoid: currentLevelInfo(gameState).name });
+      restart({
+        levelToAvoid: currentLevelInfo(gameState).name,
+        mode: gameState.mode,
+      });
     }
   } else {
     return;
@@ -993,10 +967,9 @@ document.addEventListener("keyup", async (e) => {
   e.preventDefault();
 });
 
-export const gameState = newGameState({});
+export const gameState = newGameState({ mode: "short" });
 
 export function restart(params: RunParams) {
-  console.log("restart : ", params);
   fitSize();
   Object.assign(gameState, newGameState(params));
   pauseRecording();
@@ -1018,10 +991,13 @@ restart(
       sapper: 3,
       // unbounded: 1,
     },
-
-    levelsPerLoop: 2,
-  }) ||
-    {},
+    mode: "short",
+  }) || {
+    mode: "short",
+  },
 );
 
 tick();
+setupTooltips()
+    document.getElementById('menu')?.setAttribute('data-tooltip', t('play.menu_tooltip'))
+    document.getElementById('score')?.setAttribute('data-tooltip', t('play.score_tooltip'))

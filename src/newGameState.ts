@@ -63,7 +63,9 @@ export function newGameState(params: RunParams): GameState {
     lastScoreIncrease: -1000,
     lastExplosion: -1000,
     lastBrickBroken: 0,
-    highScore: parseFloat(localStorage.getItem("breakout-3-hs") || "0"),
+    highScore: parseFloat(
+      localStorage.getItem("breakout-3-hs-" + params?.mode || "short") || "0",
+    ),
     balls: [],
     ballsColor: "white",
     bricks: [],
@@ -92,6 +94,8 @@ export function newGameState(params: RunParams): GameState {
       runTime: 0,
       coins_spawned: 0,
       score: 0,
+      best_level_score: -1,
+      worst_level_score: -1,
       bricks_broken: 0,
       misses: 0,
       balls_lost: 0,
@@ -111,8 +115,8 @@ export function newGameState(params: RunParams): GameState {
     rerolls: 0,
     loop: 0,
     baseCombo: 1,
-    levelsPerLoop: params?.levelsPerLoop ?? 7,
-    maxLoop: params?.maxLoop ?? 0,
+    mode: params?.mode || "short",
+    readyToRender: true,
   };
   resetBalls(gameState);
 

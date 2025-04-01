@@ -1,6 +1,27 @@
-import { Ball, GameState, PerkId, PerksMap } from "./types";
+import {Ball, GameState, Level, PerkId, PerksMap} from "./types";
 import { icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
+
+export function describeLevel(level:Level){
+  let bricks=0, colors=new Set(), bombs=0;
+  level.bricks.forEach(color=>{
+  if(!color) return
+    if(color==='black') {
+      bombs++
+      return;
+    }
+    else {
+      colors.add(color)
+      bricks++
+    }
+  })
+  return t('unlocks.level_description',{
+    size:level.size,
+    bricks,
+    colors:colors.size,
+    bombs
+  })
+}
 
 export function getMajorityValue(arr: string[]): string {
   const count: { [k: string]: number } = {};
@@ -12,10 +33,6 @@ export function getMajorityValue(arr: string[]): string {
 
 export function sample<T>(arr: T[]): T {
   return arr[Math.floor(arr.length * Math.random())];
-}
-
-export function sampleN<T>(arr: T[], n: number): T[] {
-  return [...arr].sort(() => Math.random() - 0.5).slice(0, n);
 }
 
 export function sumOfValues(obj: { [key: string]: number } | undefined | null) {
@@ -58,10 +75,8 @@ export function getPossibleUpgrades(gameState: GameState) {
 }
 
 export function max_levels(gameState: GameState) {
-  return Math.max(
-    gameState.levelsPerLoop + gameState.perks.extra_levels - gameState.loop,
-    1,
-  );
+  if (gameState.mode === "creative") return 3;
+  return Math.max(7 + gameState.perks.extra_levels - gameState.loop, 1);
 }
 
 export function pickedUpgradesHTMl(gameState: GameState) {
@@ -80,11 +95,11 @@ export function pickedUpgradesHTMl(gameState: GameState) {
         }
       }
 
-      const state = (!newMax && 2) || (!gameState.perks[u.id] && 1) || 0;
+      const state = (gameState.perks[u.id] && 1) || (!newMax && 2) || 3;
       return {
         state,
         html: `
-        <div class="upgrade ${["used", "free", "banned"][state]}">
+        <div class="upgrade ${["??", "used", "banned", "free"][state]}">
             ${u.icon}
             <p>
             <strong>${u.name}</strong>
@@ -103,6 +118,7 @@ export function pickedUpgradesHTMl(gameState: GameState) {
 
 export function levelsListHTMl(gameState: GameState) {
   if (!gameState.perks.clairvoyant) return "";
+  if (gameState.mode === "creative") return "";
   let list = "";
   for (let i = 0; i < max_levels(gameState); i++) {
     list += `<span style="opacity: ${i >= gameState.currentLevel ? 1 : 0.2}" title="${gameState.runLevels[i].name}">${icons[gameState.runLevels[i].name]}</span>`;
@@ -210,4 +226,18 @@ export function countBricksBelow(gameState: GameState, index: number) {
     }
   }
   return count;
+}
+export function highScoreForMode(mode:GameState['mode']){
+  try{
+    const score = parseInt(localStorage.getItem(
+        "breakout-3-hs-" + mode,
+
+      )||"0")
+    if(score){
+      return t('main_menu.high_score',{score})
+    }
+  }catch (e){
+  }
+
+    return''
 }

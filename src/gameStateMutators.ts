@@ -52,6 +52,7 @@ import { isOptionOn } from "./options";
 import { getRunLevels } from "./newGameState";
 import { requiredAsyncAlert } from "./asyncAlert";
 import { clamp, comboKeepingRate } from "./pure_functions";
+import { openCreativeModePerksPicker } from "./creative";
 
 export function setMousePos(gameState: GameState, x: number) {
   gameState.puckPosition = x;
@@ -127,7 +128,8 @@ export function normalizeGameState(gameState: GameState) {
     gameState.gameZoneWidth / 12 / 10 +
       gameState.currentLevel / 3 +
       gameState.levelTime / (30 * 1000) -
-      gameState.perks.slow_down * 2,
+      gameState.perks.slow_down * 2 +
+      gameState.loop,
   );
 
   gameState.puckWidth = Math.max(
@@ -549,13 +551,17 @@ export function schedulGameSound(
   ex.vol += vol;
 }
 
+
 export function addToScore(gameState: GameState, coin: Coin) {
   gameState.score += coin.points;
   gameState.lastScoreIncrease = gameState.levelTime;
   addToTotalScore(gameState, coin.points);
   if (gameState.score > gameState.highScore && !gameState.isCreativeModeRun) {
     gameState.highScore = gameState.score;
-    localStorage.setItem("breakout-3-hs", gameState.score.toString());
+    localStorage.setItem(
+      "breakout-3-hs-" + gameState.mode,
+      gameState.score.toString(),
+    );
   }
   if (!isOptionOn("basic")) {
     makeParticle(
@@ -634,6 +640,22 @@ export async function gotoNextLoop(gameState: GameState) {
 
   await setLevel(gameState, 0);
 }
+function recordBestWorstLevelScore(gameState: GameState) {
+  const levelScore = gameState.score - gameState.levelStartScore;
+  const { runStatistics } = gameState;
+  if (
+    runStatistics.best_level_score === -1 ||
+    runStatistics.best_level_score < levelScore
+  ) {
+    runStatistics.best_level_score = levelScore;
+  }
+  if (
+    runStatistics.worst_level_score === -1 ||
+    runStatistics.worst_level_score > levelScore
+  ) {
+    runStatistics.worst_level_score = levelScore;
+  }
+}
 
 export async function setLevel(gameState: GameState, l: number) {
   // Here to alleviate double upgrades issues
@@ -644,7 +666,11 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.upgradesOfferedFor = l;
   pause(false);
   stopRecording();
-  if (l > 0) {
+  recordBestWorstLevelScore(gameState);
+
+  if (gameState.mode === "creative") {
+    await openCreativeModePerksPicker(gameState, l);
+  } else if (l > 0) {
     await openUpgradesPicker(gameState);
   }
   gameState.currentLevel = l;
@@ -701,6 +727,7 @@ export async function setLevel(gameState: GameState, l: number) {
   background.src = "data:image/svg+xml;UTF8," + lvl.svg;
 
   document.body.style.setProperty("--level-background", lvl.color || "#000");
+  gameState.readyToRender = true;
 }
 
 function setBrick(gameState: GameState, index: number, color: string) {
@@ -1001,7 +1028,7 @@ export function gameStateTick(
   ) {
     if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
-    } else if (gameState.loop < gameState.maxLoop) {
+    } else if (gameState.loop < gameState.mode === "long" ? 7 : 0) {
       gotoNextLoop(gameState);
     } else {
       gameOver(
@@ -1461,7 +1488,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     if (gameState.perks.top_is_lava && borderHitCode >= 2) {
       resetCombo(gameState, ball.x, ball.y + gameState.ballSize);
     }
-    if (gameState.perks.trampoline && borderHitCode >= 2) {
+    if (gameState.perks.trampoline  ) {
       decreaseCombo(
         gameState,
         gameState.perks.trampoline,
@@ -1617,13 +1644,6 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
         ball.vx *= -1;
       }
     }
-
-    console.log("After bounce", {
-      pierce,
-      initialBrickColor,
-      hitBrick,
-      hp: gameState.brickHP[hitBrick],
-    });
     if (!gameState.brickHP[hitBrick]) {
       ball.brokenSinceBounce++;
 
@@ -1633,7 +1653,6 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
         initialBrickColor !== "black" && // don't replace a brick that bounced with sturdy_bricks
         !gameState.bricks[hitBrick]
       ) {
-        console.log("sapper use", hitBrick);
         setBrick(gameState, hitBrick, "black");
         ball.sapperUses++;
       }

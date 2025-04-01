@@ -31,6 +31,7 @@ background.onload = () => (gameState.needsRender = true);
 export const backgroundCanvas = document.createElement("canvas");
 
 export function render(gameState: GameState) {
+  if (!gameState.readyToRender) return;
   const level = currentLevelInfo(gameState);
 
   const hasCombo = gameState.combo > baseCombo(gameState);
