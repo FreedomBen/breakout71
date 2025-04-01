@@ -16,18 +16,20 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # changelog
 
 ## next goals
-- [jaceys] Move the restart button out of the menu, so that it is more easily accessible
 - [jaceys] A visual indication of whether a ball has hit a brick this serve
 - choose starting perks
 - wind : move coins based on puck movement not position
-- Top down /reach: punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row
-- main menu : show high score
 
 ## next release
 
+- Top down /reach: now only the lowest level of N bricks resets combo, and all other bricks do +N combo 
+- picky eater: don't reset if no brick of ball color
+- main menu : show high score
 - keep high score of past runs
 - tooltip on stats
 - fixed : looping didn't work
+- two abstract levels, stripes and openings
+- added reset button for perks in lab mode
 
 ## 29058469
 
@@ -157,7 +159,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [colin] varied diet - your combo grows by 2 when your ball changes color, but decreses by one when a brick is broken ?  
 - [colin] trickle up - inverse of reach more or less 
 - Dividends — +1 combo per 10 coins lost (band-aid for players who struggle, useful addition when choosing Ascetism)
-
+- +1 combo per bricks / resets after 5/lvl seconds without explosion 
+- +1 combo per bricks / resets after 5/lvl seconds without coin catch 
+- +1 combo per bricks / resets after 5/lvl seconds without coin puck bounce 
 
 ## Medium difficulty perks ideas 
 - balls collision split them into 4 smaller balls, lvl times (requires rework)
@@ -248,6 +252,7 @@ This requires recording a bit more info about each run.
 - final bosses (large vertical level that scrolls down faster and faster)
 
 ## Rejected ideas
+- [jaceys] Move the restart button out of the menu, so that it is more easily accessible (will allow user to choose starting perk instead)
 - colored coins only (coins should be of the color of the ball to count, otherwise what ? i'd rather avoid negative points)
 - coins avoid ball of different color (pointless)
 - [colin] wormhole - the puck sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect (not sure how that to word that in 1 setence)

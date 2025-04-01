@@ -14,18 +14,18 @@ import {
 import {
   brickCenterX,
   brickCenterY,
-  countBricksAbove,
-  countBricksBelow,
+  // countBricksAbove,
+  // countBricksBelow,
   currentLevelInfo,
   distance2,
   distanceBetween,
   getMajorityValue,
   getPossibleUpgrades,
-  getRowColIndex,
+  getRowColIndex, isPickyEatingPossible,
   isTelekinesisActive,
   isYoyoActive,
   makeEmptyPerksMap,
-  max_levels,
+  max_levels, reachRedRowIndex,
   shouldPierceByColor,
 } from "./game_utils";
 import { t } from "./i18n/i18n";
@@ -344,6 +344,9 @@ export function explodeBrick(
   const color = gameState.bricks[index];
   if (!color) return;
 
+  const wasPickyEaterPossible = gameState.perks.picky_eater&& isPickyEatingPossible(gameState)
+    const redRowReach=reachRedRowIndex(gameState)
+
   gameState.lastBrickBroken = gameState.levelTime;
 
   if (color === "black") {
@@ -434,16 +437,17 @@ export function explodeBrick(
       }
     }
 
-    if (gameState.perks.reach) {
-      if (
-        countBricksAbove(gameState, index) &&
-        !countBricksBelow(gameState, index)
-      ) {
+    if(redRowReach!==-1){
+      if(Math.floor(index/gameState.level.size)===redRowReach ) {
         resetCombo(gameState, x, y);
-      } else {
-        gameState.combo += gameState.perks.reach;
+      }else{
+
+        for(let x=0;x<gameState.level.size;x++){
+          if(gameState.bricks[redRowReach * gameState.level.size+ x])gameState.combo++
+        }
       }
     }
+
 
     if (
       gameState.lastPuckMove &&
@@ -469,7 +473,7 @@ export function explodeBrick(
         color !== gameState.ballsColor &&
         color
       ) {
-        if (gameState.perks.picky_eater) {
+        if (   wasPickyEaterPossible) {
           resetCombo(gameState, ball.x, ball.y);
         }
         schedulGameSound(gameState, "colorChange", ball.x, 0.8);

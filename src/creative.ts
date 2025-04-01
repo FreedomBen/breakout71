@@ -4,7 +4,7 @@ import { t } from "./i18n/i18n";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { confirmRestart, creativeModeThreshold, restart } from "./game";
 import { requiredAsyncAlert } from "./asyncAlert";
-import { describeLevel, highScoreForMode } from "./game_utils";
+import {describeLevel, highScoreForMode, sumOfValues} from "./game_utils";
 
 export function creativeMode(gameState: GameState) {
   return {
@@ -34,7 +34,7 @@ export async function openCreativeModePerksPicker(
       "creativeModePerks_" + currentLevel,
       {},
     ),
-    choice: Upgrade | Level | void;
+    choice: Upgrade | Level | 'reset'| void;
 
   upgrades.forEach((u) => {
     creativeModePerks[u.id] = Math.min(
@@ -51,11 +51,16 @@ export async function openCreativeModePerksPicker(
   ];
 
   while (
-    (choice = await requiredAsyncAlert<Upgrade | Level>({
+    (choice = await requiredAsyncAlert<Upgrade | Level|'reset'>({
       title: t("lab.title", { lvl: currentLevel + 1 }),
       actionsAsGrid: true,
       content: [
         t("lab.instructions"),
+        {
+          value:'reset',
+          text:t('lab.reset'),
+          disabled: !sumOfValues(creativeModePerks)
+        },
         ...upgrades
           .filter((u) => !noCreative.includes(u.id))
           .map((u) => ({
@@ -82,7 +87,11 @@ export async function openCreativeModePerksPicker(
       ],
     }))
   ) {
-    if ("bricks" in choice) {
+    if(choice==='reset'){
+upgrades.forEach((u) => {
+  creativeModePerks[u.id]=0
+      });
+    }else if ("bricks" in choice) {
       setSettingValue("creativeModePerks_" + currentLevel, creativeModePerks);
       upgrades.forEach((u) => {
         gameState.perks[u.id] = creativeModePerks[u.id];

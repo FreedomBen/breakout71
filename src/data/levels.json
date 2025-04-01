@@ -960,7 +960,7 @@
   {
     "name": "icon:reach",
     "size": 8,
-    "bricks": "_________yyyyyy__yyyyyy__yyyyyy__rrrrrr_______W____________WWW__",
+    "bricks": "________ttt__tttttt_Wttt__t__t____r__r___________________WWW____",
     "svg": null,
     "color": ""
   },
@@ -1107,5 +1107,19 @@
     "svg": null,
     "color": "",
     "credit": "https://prohama.com/balloon-1/"
+  },
+  {
+    "name": "Opening",
+    "size": 14,
+    "bricks": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbyyyyyyyyyyyybbyB___BB___Bybby__________ybbyyy______yyybbbbyyB__Byybbbbbbbyy__yybbbbbbbbby__ybbbbbyyyyby__ybyyyy___yby__yby______yby__yby______yBy__yBy______yyy__yyy___",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "Stripes",
+    "size": 17,
+    "bricks": "bbb______tttttt________tttttt________tttttt______bbtttttt______bbbbbttt______bbbbbb________bbbbbb________bbbbbb______ttbbbbbb______tttttbbb______tttttt________tttttt________tttttt______bbtttttt______bbbbbttt______bbbbbb________bbbbbb________bbbbbb________bbbbbb___________bbb______________",
+    "svg": null,
+    "color": ""
   }
 ]
