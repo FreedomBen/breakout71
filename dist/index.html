@@ -1461,7 +1461,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29058459\"");
+module.exports = JSON.parse("\"29058469\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -4301,7 +4301,7 @@ function gameOver(title, intro) {
         });
     }
     let unlockedItems = list.filter((u)=>u.threshold > startTs && u.threshold < endTs);
-    if (unlockedItems.length) unlocksInfo += `<p>${(0, _i18N.t)('gameOver.unlocked_count', {
+    if (unlockedItems.length) unlocksInfo += `<p>${(0, _i18N.t)("gameOver.unlocked_count", {
         count: unlockedItems.length
     })} ${unlockedItems.map((u)=>u.title).join(", ")}</p>`;
     // Avoid the sad sound right as we restart a new games

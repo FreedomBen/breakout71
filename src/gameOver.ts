@@ -108,7 +108,7 @@ export function gameOver(title: string, intro: string) {
     (u) => u.threshold > startTs && u.threshold < endTs,
   );
   if (unlockedItems.length) {
-    unlocksInfo += `<p>${t('gameOver.unlocked_count', { count: unlockedItems.length })} ${unlockedItems.map((u) => u.title).join(", ")}</p>`;
+    unlocksInfo += `<p>${t("gameOver.unlocked_count", { count: unlockedItems.length })} ${unlockedItems.map((u) => u.title).join(", ")}</p>`;
   }
 
   // Avoid the sad sound right as we restart a new games
