@@ -1461,7 +1461,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29058469\"");
+module.exports = JSON.parse("\"29058637\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2758,6 +2758,13 @@ function highScoreForMode(mode) {
     } catch (e) {}
     return "";
 }
+try {
+    const old = localStorage.getItem("breakout-3-hs");
+    if (old) {
+        localStorage.setItem("breakout-3-hs-short", old);
+        localStorage.removeItem("breakout-3-hs");
+    }
+} catch (e) {}
 
 },{"./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2n0gK":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -4687,7 +4694,7 @@ function newGameState(params) {
         lastScoreIncrease: -1000,
         lastExplosion: -1000,
         lastBrickBroken: 0,
-        highScore: parseFloat(localStorage.getItem("breakout-3-hs-" + params?.mode) || "0"),
+        highScore: parseFloat(localStorage.getItem("breakout-3-hsbreakout-3-hs-" + params?.mode) || "0"),
         balls: [],
         ballsColor: "white",
         bricks: [],

@@ -64,7 +64,9 @@ export function newGameState(params: RunParams): GameState {
     lastExplosion: -1000,
     lastBrickBroken: 0,
     highScore: parseFloat(
-      localStorage.getItem("breakout-3-hs-" + params?.mode || "short") || "0",
+      localStorage.getItem(
+        "breakout-3-hsbreakout-3-hs-" + params?.mode || "short",
+      ) || "0",
     ),
     balls: [],
     ballsColor: "white",

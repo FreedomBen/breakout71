@@ -126,10 +126,8 @@ class MainActivity : android.app.Activity() {
         webView.settings.domStorageEnabled = true
         webView.settings.setSupportZoom(false)
 
-        val installerPackageName = packageManager.getInstallerPackageName(packageName)
 
-
-        webView.loadUrl("file:///android_asset/index.html?isInWebView=true&source=$installerPackageName")
+        webView.loadUrl("file:///android_asset/index.html?isInWebView=true")
         val activity = this;
 
         webView.webChromeClient = object : WebChromeClient() {

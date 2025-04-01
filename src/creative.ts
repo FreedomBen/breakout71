@@ -3,7 +3,7 @@ import { allLevels, icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { confirmRestart, creativeModeThreshold, restart } from "./game";
-import { asyncAlert, requiredAsyncAlert } from "./asyncAlert";
+import { requiredAsyncAlert } from "./asyncAlert";
 import { describeLevel, highScoreForMode } from "./game_utils";
 
 export function creativeMode(gameState: GameState) {

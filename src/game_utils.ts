@@ -240,3 +240,11 @@ export function highScoreForMode(mode: GameState["mode"]) {
 
   return "";
 }
+
+try {
+  const old = localStorage.getItem("breakout-3-hs");
+  if (old) {
+    localStorage.setItem("breakout-3-hs-short", old);
+    localStorage.removeItem("breakout-3-hs");
+  }
+} catch (e) {}

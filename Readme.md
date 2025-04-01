@@ -23,7 +23,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - Top down /reach: punishing now, maybe only reset if you hit the lowest populate row of the level, if it's not a full width row
 - main menu : show high score
 
-## Release candidate
+## next release
+
+- keep high score of past runs
+
+## 29058469
+
 
 - New game mode : loop / long game
   - the goal is to build many different build centered on one perk
@@ -34,7 +39,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
   - unlocked after unlocking all perks
 - New game mode : lab / creative
   - the goal is to come up with 3 completely different but powerful play styles 
-  - you freely create 3 builds from all the perks level avaliable
+  - you freely create 3 builds from all the perks level available
   - you play them against the levels of your choice
   - try to make as much score as possible in total
   - unlocked after unlocking all perks
@@ -43,7 +48,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
   - Sunglasses
   - Balloon
 - Adjusted levels : 
-  - orca is no longer made of bombs, but grey block
+  - orca is no longer made of bombs, but gray block
 - New perks
   - addiction : reward faster gameplay
 - Adjusted perks
@@ -68,16 +73,16 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
   - trampoline: nerfed a little bit, now all sides and top hit reduce combo 
   
 - Quality of life 
-  - Udated discord invite link that had expired 
-  - Fullscreen is now a persistent option, when it's on the game will switch to fullscreen before starting
+  - Updated discord invite link that had expired 
+  - Full screen is now a persistent option, when it's on the game will switch to full screen before starting
   - Added an option to always get colored coins
   - Made the "combo lost" text last 500ms instead of the pointless 150ms 
-  - Added in-game help and credits, witch can be translated 
+  - Added in-game help and credits, which can be translated 
   - Balancing : you earn an extra perk when playing well, and a reroll when playing perfectly
   - added a prominent "donate" link after 5h of playing, and setting to hide it permanently
-  - disabled auto-release to fdroid, i'll use the web version as the testing ground first
+  - disabled auto-release to F-Droid, i'll use the web version as the testing ground first
   - added a white border around all coins, to make dark ones visible on dark bg
-  - [jaceys] Counters for coins lost, misses, and boundary bounces, as well as a timer.
+  - [jaceys] counters for coins lost, misses, and boundary bounces, as well as a timer.
   - Unlocked list : split perk and levels, added tooltips
 
 ## 29049575
