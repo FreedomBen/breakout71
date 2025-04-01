@@ -1409,7 +1409,7 @@ restart(window.location.search.includes("stressTest") && {
         bigger_explosions: 10,
         sapper: 3
     },
-    mode: "short"
+    mode: "long"
 } || {
     mode: "short"
 });
@@ -1460,7 +1460,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29058637\"");
+module.exports = JSON.parse("\"29058753\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2656,7 +2656,7 @@ function pickedUpgradesHTMl(gameState) {
             <strong>${u.name}</strong>
           ${u.help(Math.max(1, gameState.perks[u.id]))}
           </p> 
-            ${bars.reverse().join('')}
+            ${bars.reverse().join("")}
         </div>
         `
         };
@@ -3305,14 +3305,12 @@ frames = 1) {
     gameState.winAt && gameState.levelTime > gameState.winAt || //   instant win condition
     gameState.levelTime && !remainingBricks && !liveCount(gameState.coins)) {
         if (gameState.currentLevel + 1 < (0, _gameUtils.max_levels)(gameState)) setLevel(gameState, gameState.currentLevel + 1);
-        else {
-            gameState.loop, gameState.mode;
-            (0, _gameOver.gameOver)((0, _i18N.t)("gameOver.7_loop.title", {
-                loop: gameState.loop
-            }), (0, _i18N.t)("gameOver.7_loop.summary", {
-                score: gameState.score
-            }));
-        }
+        else if (gameState.loop < (gameState.mode === "long" ? 7 : 0)) gotoNextLoop(gameState);
+        else (0, _gameOver.gameOver)((0, _i18N.t)("gameOver.7_loop.title", {
+            loop: gameState.loop
+        }), (0, _i18N.t)("gameOver.7_loop.summary", {
+            score: gameState.score
+        }));
     } else if (gameState.running || gameState.levelTime) {
         const coinRadius = Math.round(gameState.coinSize / 2);
         forEachLiveOne(gameState.coins, (coin, coinIndex)=>{
@@ -3758,16 +3756,16 @@ function render(gameState) {
         </span><span> / </span>
          
             ` : "") + ((0, _options.isOptionOn)("show_stats") ? ` 
-        <span class="${catchRate > 0.95 && "great" || catchRate > 0.9 && "good" || ""}" data-tooltip="${(0, _i18N.t)('play.stats.coins_catch_rate')}">
+        <span class="${catchRate > 0.95 && "great" || catchRate > 0.9 && "good" || ""}" data-tooltip="${(0, _i18N.t)("play.stats.coins_catch_rate")}">
             ${Math.floor(catchRate * 100)}%
         </span><span> / </span>
-        <span class="${gameState.levelTime < 30000 && "great" || gameState.levelTime < 60000 && "good" || ""}" data-tooltip="${(0, _i18N.t)('play.stats.levelTime')}">
+        <span class="${gameState.levelTime < 30000 && "great" || gameState.levelTime < 60000 && "good" || ""}" data-tooltip="${(0, _i18N.t)("play.stats.levelTime")}">
         ${Math.ceil(gameState.levelTime / 1000)}s 
         </span><span> / </span>
-        <span class="${gameState.levelWallBounces < 3 && "great" || gameState.levelWallBounces < 10 && "good" || ""}" data-tooltip="${(0, _i18N.t)('play.stats.levelWallBounces')}">
+        <span class="${gameState.levelWallBounces < 3 && "great" || gameState.levelWallBounces < 10 && "good" || ""}" data-tooltip="${(0, _i18N.t)("play.stats.levelWallBounces")}">
         ${gameState.levelWallBounces} B 
         </span><span> / </span>  
-        <span class="${gameState.levelMisses < 3 && "great" || gameState.levelMisses < 6 && "good" || ""}" data-tooltip="${(0, _i18N.t)('play.stats.levelMisses')}">
+        <span class="${gameState.levelMisses < 3 && "great" || gameState.levelMisses < 6 && "good" || ""}" data-tooltip="${(0, _i18N.t)("play.stats.levelMisses")}">
         ${gameState.levelMisses} M
         </span><span> / </span>
         ` : "") + `<span class="score" data-tooltip="${(0, _i18N.t)("play.score_tooltip")}">$${gameState.score}</span>`;

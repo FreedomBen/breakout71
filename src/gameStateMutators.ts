@@ -1027,7 +1027,7 @@ export function gameStateTick(
   ) {
     if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
-    } else if (gameState.loop < gameState.mode === "long" ? 7 : 0) {
+    } else if (gameState.loop < (gameState.mode === "long" ? 7 : 0)) {
       gotoNextLoop(gameState);
     } else {
       gameOver(

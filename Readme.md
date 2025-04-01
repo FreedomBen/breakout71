@@ -27,6 +27,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 - keep high score of past runs
 - tooltip on stats
+- fixed : looping didn't work
 
 ## 29058469
 
