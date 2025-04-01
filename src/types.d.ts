@@ -264,7 +264,6 @@ export type GameState = {
   coinSize: number;
   puckHeight: number;
   totalScoreAtRunStart: number;
-  isCreativeModeRun: boolean;
   pauseUsesDuringRun: number;
   keyboardPuckSpeed: number;
   lastTick: number;

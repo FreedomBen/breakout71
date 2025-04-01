@@ -108,7 +108,7 @@ export function gameOver(title: string, intro: string) {
     (u) => u.threshold > startTs && u.threshold < endTs,
   );
   if (unlockedItems.length) {
-    unlocksInfo += `<p>${t("gameOver.unlocked_count", { count: unlockedItems.length })} ${unlockedItems.map((u) => u.title).join(", ")}</p>`;
+    unlocksInfo += `<p>${t('gameOver.unlocked_count', { count: unlockedItems.length })} ${unlockedItems.map((u) => u.title).join(", ")}</p>`;
   }
 
   // Avoid the sad sound right as we restart a new games
@@ -119,7 +119,6 @@ export function gameOver(title: string, intro: string) {
     title,
     content: [
       `
-        ${gameState.isCreativeModeRun ? `<p>${t("gameOver.test_run")}</p> ` : ""}
         <p>${intro}</p>
         <p>${t("gameOver.cumulative_total", { startTs, endTs })}</p>
         ${unlocksInfo}  
@@ -160,11 +159,11 @@ export function getHistograms(gameState: GameState) {
     });
 
     // Generate some histogram
-    if (!gameState.isCreativeModeRun)
-      localStorage.setItem(
-        "breakout_71_runs_history",
-        JSON.stringify(runsHistory, null, 2),
-      );
+
+    localStorage.setItem(
+      "breakout_71_runs_history",
+      JSON.stringify(runsHistory, null, 2),
+    );
 
     const makeHistogram = (
       title: string,

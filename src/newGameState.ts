@@ -83,7 +83,6 @@ export function newGameState(params: RunParams): GameState {
     coinSize: 14,
     puckHeight: 20,
     totalScoreAtRunStart,
-    isCreativeModeRun: sumOfValues(perks) > 1,
     pauseUsesDuringRun: 0,
     keyboardPuckSpeed: 0,
     lastTick: performance.now(),

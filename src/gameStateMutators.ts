@@ -555,7 +555,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
   gameState.score += coin.points;
   gameState.lastScoreIncrease = gameState.levelTime;
   addToTotalScore(gameState, coin.points);
-  if (gameState.score > gameState.highScore && !gameState.isCreativeModeRun) {
+  if (gameState.score > gameState.highScore ) {
     gameState.highScore = gameState.score;
     localStorage.setItem(
       "breakout-3-hs-" + gameState.mode,

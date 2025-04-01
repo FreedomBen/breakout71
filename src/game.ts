@@ -448,7 +448,6 @@ async function openScorePanel() {
         }),
 
     content: [
-      gameState.isCreativeModeRun ? `<p>${t("score_panel.test_run")}</p>` : "",
       pickedUpgradesHTMl(gameState),
       levelsListHTMl(gameState),
       gameState.rerolls

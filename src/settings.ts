@@ -30,7 +30,6 @@ export function getTotalScore() {
 }
 
 export function addToTotalScore(gameState: GameState, points: number) {
-  if (gameState.isCreativeModeRun) return;
   setSettingValue("breakout_71_total_score", getTotalScore() + points);
 }
 
