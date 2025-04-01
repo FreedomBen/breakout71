@@ -1,26 +1,27 @@
-import {Ball, GameState, Level, PerkId, PerksMap} from "./types";
+import { Ball, GameState, Level, PerkId, PerksMap } from "./types";
 import { icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 
-export function describeLevel(level:Level){
-  let bricks=0, colors=new Set(), bombs=0;
-  level.bricks.forEach(color=>{
-  if(!color) return
-    if(color==='black') {
-      bombs++
+export function describeLevel(level: Level) {
+  let bricks = 0,
+    colors = new Set(),
+    bombs = 0;
+  level.bricks.forEach((color) => {
+    if (!color) return;
+    if (color === "black") {
+      bombs++;
       return;
+    } else {
+      colors.add(color);
+      bricks++;
     }
-    else {
-      colors.add(color)
-      bricks++
-    }
-  })
-  return t('unlocks.level_description',{
-    size:level.size,
+  });
+  return t("unlocks.level_description", {
+    size: level.size,
     bricks,
-    colors:colors.size,
-    bombs
-  })
+    colors: colors.size,
+    bombs,
+  });
 }
 
 export function getMajorityValue(arr: string[]): string {
@@ -227,17 +228,15 @@ export function countBricksBelow(gameState: GameState, index: number) {
   }
   return count;
 }
-export function highScoreForMode(mode:GameState['mode']){
-  try{
-    const score = parseInt(localStorage.getItem(
-        "breakout-3-hs-" + mode,
-
-      )||"0")
-    if(score){
-      return t('main_menu.high_score',{score})
+export function highScoreForMode(mode: GameState["mode"]) {
+  try {
+    const score = parseInt(
+      localStorage.getItem("breakout-3-hs-" + mode) || "0",
+    );
+    if (score) {
+      return t("main_menu.high_score", { score });
     }
-  }catch (e){
-  }
+  } catch (e) {}
 
-    return''
+  return "";
 }

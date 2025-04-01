@@ -68,7 +68,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
   - trampoline: nerfed a little bit, now all sides and top hit reduce combo 
   
 - Quality of life 
-  - udated discord invite link that had expired 
+  - Udated discord invite link that had expired 
   - Fullscreen is now a persistent option, when it's on the game will switch to fullscreen before starting
   - Added an option to always get colored coins
   - Made the "combo lost" text last 500ms instead of the pointless 150ms 

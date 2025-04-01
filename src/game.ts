@@ -13,8 +13,10 @@ import {
 } from "./types";
 import { getAudioContext, playPendingSounds } from "./sounds";
 import {
-  currentLevelInfo, describeLevel,
-  getRowColIndex, highScoreForMode,
+  currentLevelInfo,
+  describeLevel,
+  getRowColIndex,
+  highScoreForMode,
   levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,
@@ -65,7 +67,7 @@ import { hashCode } from "./getLevelBackground";
 import { hoursSpentPlaying } from "./pure_functions";
 import { helpMenuEntry } from "./help";
 import { creativeMode } from "./creative";
-import {setupTooltips} from "./tooltip";
+import { setupTooltips } from "./tooltip";
 
 export function play() {
   if (applyFullScreenChoice()) return;
@@ -471,16 +473,14 @@ export const creativeModeThreshold = Math.max(
   ...upgrades.map((u) => u.threshold),
 );
 
-
 export async function openMainMenu() {
   pause(true);
-
 
   const actions: AsyncAlertAction<() => void>[] = [
     {
       icon: icons["icon:7_levels_run"],
       text: t("main_menu.normal"),
-      help: highScoreForMode('short')||t("main_menu.normal_help"),
+      help: highScoreForMode("short") || t("main_menu.normal_help"),
       value: () => {
         restart({
           levelToAvoid: currentLevelInfo(gameState).name,
@@ -490,12 +490,12 @@ export async function openMainMenu() {
     },
     {
       icon: icons["icon:loop"],
-      text:  t("main_menu.loop_run"),
-      help:highScoreForMode('long')||
-
-        (getTotalScore() < creativeModeThreshold && t("lab.unlocks_at", { score: creativeModeThreshold })) ||
-
-           t("main_menu.loop_run_help"),
+      text: t("main_menu.loop_run"),
+      help:
+        highScoreForMode("long") ||
+        (getTotalScore() < creativeModeThreshold &&
+          t("lab.unlocks_at", { score: creativeModeThreshold })) ||
+        t("main_menu.loop_run_help"),
 
       value: () => {
         restart({
@@ -831,8 +831,7 @@ async function openUnlocksList() {
       disabled: ts < threshold,
       value: { perks: { [id]: 1 } } as RunParams,
       icon,
-            tooltip:help(1)
-
+      tooltip: help(1),
     }));
 
   const levelActions = allLevels
@@ -844,7 +843,7 @@ async function openUnlocksList() {
         disabled: !available,
         value: { level: l.name } as RunParams,
         icon: icons[l.name],
-          tooltip:describeLevel(l)
+        tooltip: describeLevel(l),
       };
     });
 
@@ -998,6 +997,10 @@ restart(
 );
 
 tick();
-setupTooltips()
-    document.getElementById('menu')?.setAttribute('data-tooltip', t('play.menu_tooltip'))
-    document.getElementById('score')?.setAttribute('data-tooltip', t('play.score_tooltip'))
+setupTooltips();
+document
+  .getElementById("menu")
+  ?.setAttribute("data-tooltip", t("play.menu_tooltip"));
+document
+  .getElementById("score")
+  ?.setAttribute("data-tooltip", t("play.score_tooltip"));

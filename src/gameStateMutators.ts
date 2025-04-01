@@ -551,7 +551,6 @@ export function schedulGameSound(
   ex.vol += vol;
 }
 
-
 export function addToScore(gameState: GameState, coin: Coin) {
   gameState.score += coin.points;
   gameState.lastScoreIncrease = gameState.levelTime;
@@ -1488,7 +1487,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     if (gameState.perks.top_is_lava && borderHitCode >= 2) {
       resetCombo(gameState, ball.x, ball.y + gameState.ballSize);
     }
-    if (gameState.perks.trampoline  ) {
+    if (gameState.perks.trampoline) {
       decreaseCombo(
         gameState,
         gameState.perks.trampoline,

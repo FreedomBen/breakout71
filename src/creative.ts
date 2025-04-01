@@ -4,15 +4,17 @@ import { t } from "./i18n/i18n";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { confirmRestart, creativeModeThreshold, restart } from "./game";
 import { asyncAlert, requiredAsyncAlert } from "./asyncAlert";
-import {describeLevel, highScoreForMode} from "./game_utils";
+import { describeLevel, highScoreForMode } from "./game_utils";
 
 export function creativeMode(gameState: GameState) {
   return {
     icon: icons["icon:sandbox"],
     text: t("lab.menu_entry"),
-    help: highScoreForMode('creative')||(
-      getTotalScore() < creativeModeThreshold &&  t("lab.unlocks_at", { score: creativeModeThreshold })) ||
-         t("lab.help"),
+    help:
+      highScoreForMode("creative") ||
+      (getTotalScore() < creativeModeThreshold &&
+        t("lab.unlocks_at", { score: creativeModeThreshold })) ||
+      t("lab.help"),
     disabled: getTotalScore() < creativeModeThreshold,
     async value() {
       if (await confirmRestart(gameState)) {
@@ -68,14 +70,14 @@ export async function openCreativeModePerksPicker(
             className: creativeModePerks[u.id]
               ? "sandbox"
               : "sandbox grey-out-unless-hovered",
-            tooltip: u.help(creativeModePerks[u.id]||1)
+            tooltip: u.help(creativeModePerks[u.id] || 1),
           })),
         t("lab.select_level"),
         ...allLevels.map((l) => ({
           icon: icons[l.name],
           text: l.name,
           value: l,
-          tooltip:describeLevel(l)
+          tooltip: describeLevel(l),
         })),
       ],
     }))
@@ -95,5 +97,3 @@ export async function openCreativeModePerksPicker(
     }
   }
 }
-
-

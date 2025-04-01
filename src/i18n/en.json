@@ -86,7 +86,7 @@
   "main_menu.mobile": "Mobile mode",
   "main_menu.mobile_help": "Leaves space under the puck.",
   "main_menu.normal": "New short game",
-  "main_menu.normal_help": "Start a quick game with random starting perk",
+  "main_menu.normal_help": "Play 7 levels with a random starting perk",
   "main_menu.pointer_lock": "Mouse pointer lock",
   "main_menu.pointer_lock_help": "Locks and hides the mouse cursor.",
   "main_menu.record": "Record gameplay videos",
