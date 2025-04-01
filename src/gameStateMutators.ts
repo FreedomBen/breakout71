@@ -21,11 +21,13 @@ import {
   distanceBetween,
   getMajorityValue,
   getPossibleUpgrades,
-  getRowColIndex, isPickyEatingPossible,
+  getRowColIndex,
+  isPickyEatingPossible,
   isTelekinesisActive,
   isYoyoActive,
   makeEmptyPerksMap,
-  max_levels, reachRedRowIndex,
+  max_levels,
+  reachRedRowIndex,
   shouldPierceByColor,
 } from "./game_utils";
 import { t } from "./i18n/i18n";
@@ -344,8 +346,9 @@ export function explodeBrick(
   const color = gameState.bricks[index];
   if (!color) return;
 
-  const wasPickyEaterPossible = gameState.perks.picky_eater&& isPickyEatingPossible(gameState)
-    const redRowReach=reachRedRowIndex(gameState)
+  const wasPickyEaterPossible =
+    gameState.perks.picky_eater && isPickyEatingPossible(gameState);
+  const redRowReach = reachRedRowIndex(gameState);
 
   gameState.lastBrickBroken = gameState.levelTime;
 
@@ -437,17 +440,16 @@ export function explodeBrick(
       }
     }
 
-    if(redRowReach!==-1){
-      if(Math.floor(index/gameState.level.size)===redRowReach ) {
+    if (redRowReach !== -1) {
+      if (Math.floor(index / gameState.level.size) === redRowReach) {
         resetCombo(gameState, x, y);
-      }else{
-
-        for(let x=0;x<gameState.level.size;x++){
-          if(gameState.bricks[redRowReach * gameState.level.size+ x])gameState.combo++
+      } else {
+        for (let x = 0; x < gameState.level.size; x++) {
+          if (gameState.bricks[redRowReach * gameState.level.size + x])
+            gameState.combo++;
         }
       }
     }
-
 
     if (
       gameState.lastPuckMove &&
@@ -473,7 +475,7 @@ export function explodeBrick(
         color !== gameState.ballsColor &&
         color
       ) {
-        if (   wasPickyEaterPossible) {
+        if (wasPickyEaterPossible) {
           resetCombo(gameState, ball.x, ball.y);
         }
         schedulGameSound(gameState, "colorChange", ball.x, 0.8);
@@ -1675,17 +1677,19 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   if (!isOptionOn("basic")) {
     const remainingPierce = ball.piercePoints;
     const remainingSapper = ball.sapperUses < gameState.perks.sapper;
+    const willMiss =
+      isOptionOn("red_miss") && ball.vy > 0 && !ball.hitSinceBounce;
     const extraCombo = gameState.combo - 1;
     if (
+      willMiss ||
       (extraCombo && Math.random() > 0.1 / (1 + extraCombo)) ||
       (remainingSapper && Math.random() > 0.1 / (1 + remainingSapper)) ||
       (extraCombo && Math.random() > 0.1 / (1 + extraCombo))
     ) {
-      const color = remainingSapper
-        ? Math.random() > 0.5
-          ? "orange"
-          : "red"
-        : gameState.ballsColor;
+      const color =
+        (remainingSapper && (Math.random() > 0.5 ? "orange" : "red")) ||
+        (willMiss && "red") ||
+        gameState.ballsColor;
 
       makeParticle(
         gameState,

@@ -91,6 +91,8 @@
   "main_menu.record": "Record gameplay videos",
   "main_menu.record_download": "Download video ({{size}} MB)",
   "main_menu.record_help": "Get a video of each level.",
+  "main_menu.red_miss": "Miss warning",
+  "main_menu.red_miss_help": "Show red particles around balls going down without a hit.",
   "main_menu.reset": "Reset Game",
   "main_menu.reset_cancel": "No",
   "main_menu.reset_confirm": "Yes",

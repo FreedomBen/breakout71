@@ -16,12 +16,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # changelog
 
 ## next goals
-- [jaceys] A visual indication of whether a ball has hit a brick this serve
 - choose starting perks
 - wind : move coins based on puck movement not position
 
 ## next release
 
+- [jaceys] A visual indication of whether a ball has hit a brick this serve (as an option)
 - Top down /reach: now only the lowest level of N bricks resets combo, and all other bricks do +N combo 
 - picky eater: don't reset if no brick of ball color
 - main menu : show high score

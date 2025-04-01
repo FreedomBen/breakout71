@@ -61,6 +61,11 @@ export const options = {
     name: t("main_menu.donation_reminder"),
     help: t("main_menu.donation_reminder_help"),
   },
+  red_miss: {
+    default: false,
+    name: t("main_menu.red_miss"),
+    help: t("main_menu.red_miss_help"),
+  },
 } as const satisfies { [k: string]: OptionDef };
 
 export function isOptionOn(key: OptionId) {

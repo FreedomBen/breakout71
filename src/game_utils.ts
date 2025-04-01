@@ -1,7 +1,7 @@
 import { Ball, GameState, Level, PerkId, PerksMap } from "./types";
 import { icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
-import {brickAt} from "./level_editor/levels_editor_util";
+import { brickAt } from "./level_editor/levels_editor_util";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -132,29 +132,31 @@ export function currentLevelInfo(gameState: GameState) {
   return gameState.level;
 }
 
-export function isPickyEatingPossible(gameState: GameState){
-  return gameState.bricks.indexOf(gameState.ballsColor)!==-1
+export function isPickyEatingPossible(gameState: GameState) {
+  return gameState.bricks.indexOf(gameState.ballsColor) !== -1;
 }
 
-export function reachRedRowIndex(gameState: GameState){
-  if(!gameState.perks.reach) return -1
-  const {size}=gameState.level
-  let minY=-1, maxY=-1, maxYCount=-1;
-  for(let y=0;y<size;y++)
-  for(let x=0;x<size;x++)
-    if(gameState.bricks[x+y*size]){
-      if(minY==-1) minY=y
-      if(maxY<y) {
-        maxY = y
-        maxYCount = 0
+export function reachRedRowIndex(gameState: GameState) {
+  if (!gameState.perks.reach) return -1;
+  const { size } = gameState.level;
+  let minY = -1,
+    maxY = -1,
+    maxYCount = -1;
+  for (let y = 0; y < size; y++)
+    for (let x = 0; x < size; x++)
+      if (gameState.bricks[x + y * size]) {
+        if (minY == -1) minY = y;
+        if (maxY < y) {
+          maxY = y;
+          maxYCount = 0;
+        }
+        if (maxY == y) maxYCount++;
       }
-      if(maxY==y) maxYCount++
-    }
 
-  if(maxY<1) return -1
-  if(maxY==minY) return -1
-  if(maxYCount===size) return -1
-  return maxY
+  if (maxY < 1) return -1;
+  if (maxY == minY) return -1;
+  if (maxYCount === size) return -1;
+  return maxY;
 }
 
 export function isTelekinesisActive(gameState: GameState, ball: Ball) {

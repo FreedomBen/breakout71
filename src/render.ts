@@ -4,10 +4,12 @@ import {
   brickCenterY,
   // countBricksAbove,
   // countBricksBelow,
-  currentLevelInfo, isPickyEatingPossible,
+  currentLevelInfo,
+  isPickyEatingPossible,
   isTelekinesisActive,
   isYoyoActive,
-  max_levels, reachRedRowIndex,
+  max_levels,
+  reachRedRowIndex,
 } from "./game_utils";
 import { colorString, GameState } from "./types";
 import { t } from "./i18n/i18n";
@@ -547,9 +549,8 @@ export function renderAllBricks() {
   const hasCombo = gameState.combo > baseCombo(gameState);
 
   const redBorderOnBricksWithWrongColor =
-    hasCombo && gameState.perks.picky_eater  && isPickyEatingPossible(gameState);
+    hasCombo && gameState.perks.picky_eater && isPickyEatingPossible(gameState);
 
-  console.log('redBorderOnBricksWithWrongColor '+redBorderOnBricksWithWrongColor)
   const redColorOnAllBricks = !!(
     gameState.lastPuckMove &&
     gameState.perks.passive_income &&
@@ -558,14 +559,14 @@ export function renderAllBricks() {
       gameState.levelTime - 250 * gameState.perks.passive_income
   );
 
-  const redRowReach= reachRedRowIndex(gameState)
+  const redRowReach = reachRedRowIndex(gameState);
 
   let offset = getDashOffset(gameState);
   if (
     !(
       redBorderOnBricksWithWrongColor ||
       redColorOnAllBricks ||
-      redRowReach!==-1 ||
+      redRowReach !== -1 ||
       gameState.perks.zen
     )
   ) {
@@ -575,14 +576,13 @@ export function renderAllBricks() {
   const clairVoyance =
     gameState.perks.clairvoyant && gameState.brickHP.reduce((a, b) => a + b, 0);
 
-
   const newKey =
     gameState.gameZoneWidth +
     "_" +
     gameState.bricks.join("_") +
     bombSVG.complete +
     "_" +
-      redRowReach+
+    redRowReach +
     "_" +
     redBorderOnBricksWithWrongColor +
     "_" +
@@ -614,7 +614,8 @@ export function renderAllBricks() {
 
       if (!color) return;
 
-      let redBecauseOfReach = redRowReach===Math.floor(index/gameState.level.size) ;
+      let redBecauseOfReach =
+        redRowReach === Math.floor(index / gameState.level.size);
 
       let redBorder =
         (gameState.ballsColor !== color &&

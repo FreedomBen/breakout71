@@ -91,6 +91,8 @@
   "main_menu.record": "Enregistrer des vidéos de jeu",
   "main_menu.record_download": "Télécharger la vidéo ({{size}} MB)",
   "main_menu.record_help": "Obtenez une vidéo de chaque niveau.",
+  "main_menu.red_miss": "Balles ratées",
+  "main_menu.red_miss_help": "Afficher des particules rouges autours des balles qui redescendent sans avoir touché une brique.",
   "main_menu.reset": "Réinitialiser le jeu",
   "main_menu.reset_cancel": "Non",
   "main_menu.reset_confirm": "Oui",
