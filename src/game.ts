@@ -1000,6 +1000,3 @@ setupTooltips();
 document
   .getElementById("menu")
   ?.setAttribute("data-tooltip", t("play.menu_tooltip"));
-document
-  .getElementById("score")
-  ?.setAttribute("data-tooltip", t("play.score_tooltip"));

@@ -26,6 +26,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 ## next release
 
 - keep high score of past runs
+- tooltip on stats
 
 ## 29058469
 
@@ -102,16 +103,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 - on mobile, relative movement of the touch would be amplified and added to the puck 
 - option : don't pause on mobile when lifting finger
-- [obigre] Offer to level ups perks separately
-- bring back detailed help of perks as "intel"
+- [obigre] Offer to level ups perks separately 
 - https://weblate.org/fr/
-- strict sample size red borders ? 
-- add some tutorial-like hints
-- It's a bit confusing at first to grasp that one upgrade is applied randomly at the start of the game. Offer instead to skip lvl 1 and directly pick 4 perks, but only if you manage to clear lvl 1 with 4 upgrades. 
+- strict sample size red borders ?
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
 - add a clickable button to allow sound to play in chrome android
 - see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
-- translation
 - when game resumes near bottom, be unvulnerable for .5s ? , once per level
 
 
