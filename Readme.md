@@ -17,6 +17,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## next goals
 
+- high score issues
  
 ## 29059721.
 
