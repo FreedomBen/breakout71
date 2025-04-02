@@ -1,10 +1,9 @@
 * {
-  font-family:
-    Courier New,
-    Courier,
-    Lucida Sans Typewriter,
-    Lucida Typewriter,
-    monospace;
+  font-family: Courier New,
+  Courier,
+  Lucida Sans Typewriter,
+  Lucida Typewriter,
+  monospace;
   box-sizing: border-box;
 }
 
@@ -47,6 +46,7 @@ body {
   line-height: 20px;
   max-width: calc(100vw - 80px);
   overflow: hidden;
+
   &:hover,
   &:focus {
     background: rgba(0, 0, 0, 0.3);
@@ -173,10 +173,12 @@ body:not(.has-alert-open) #popup {
               filter: saturate(0);
             }
           }
+
           &[disabled] {
             opacity: 0.2;
           }
         }
+
       }
     }
   }
@@ -193,6 +195,7 @@ body:not(.has-alert-open) #popup {
       margin-left: auto;
       margin-right: auto;
     }
+
     section {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -379,15 +382,18 @@ h2.histogram-title strong {
     width: 32px;
     height: 32px;
   }
+
   p {
     flex-grow: 1;
     color: rgba(255, 255, 255, 0.6);
 
     margin: 0 20px;
   }
+
   &.used p strong {
     color: white;
   }
+
   & > span {
     flex-grow: 0;
 
@@ -410,6 +416,7 @@ h2.histogram-title strong {
       background: red;
     }
   }
+
   &.used {
     opacity: 1;
   }

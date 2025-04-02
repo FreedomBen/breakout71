@@ -16,10 +16,19 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # changelog
 
 ## next goals
-- choose starting perks
-- wind : move coins based on puck movement not position
 
-## next release
+- wind : move coins based on puck movement not position  
+ 
+## next release.
+
+- choose starting perks
+- fixed issue with reloading with [R] key
+- gameover screen restarts in the same game mode
+- Trampoline render sides in red. 
+- tooltips stuck on mobile
+- Check in fullscreen worked, otherwise resume playing
+
+## 29058981
 
 - [jaceys] A visual indication of whether a ball has hit a brick this serve (as an option)
 - Top down /reach: now only the lowest level of N bricks resets combo, and all other bricks do +N combo 
@@ -106,13 +115,13 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 - on mobile, relative movement of the touch would be amplified and added to the puck 
 - option : don't pause on mobile when lifting finger
-- [obigre] Offer to level ups perks separately 
-- https://weblate.org/fr/
+- [obigre] Offer to level ups perks separately from picking new ones 
 - strict sample size red borders ?
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
 - add a clickable button to allow sound to play in chrome android
 - see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
 - when game resumes near bottom, be unvulnerable for .5s ? , once per level
+- https://weblate.org/fr/ quite annoying actually
 
 
 ## Game engine features ideas
@@ -159,9 +168,10 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [colin] varied diet - your combo grows by 2 when your ball changes color, but decreses by one when a brick is broken ?  
 - [colin] trickle up - inverse of reach more or less 
 - Dividends — +1 combo per 10 coins lost (band-aid for players who struggle, useful addition when choosing Ascetism)
-- +1 combo per bricks / resets after 5/lvl seconds without explosion 
-- +1 combo per bricks / resets after 5/lvl seconds without coin catch 
-- +1 combo per bricks / resets after 5/lvl seconds without coin puck bounce 
+- +lvl combo per bricks / resets after 5/lvl seconds without explosion ?
+- +lvl combo per bricks / resets after 5/lvl seconds without coin catch  ?
+- +lvl combo per bricks / resets after 5/lvl seconds without ball color change   ?
+- +lvl combo per bricks / resets after 5/lvl seconds without sides hit ?  
 
 ## Medium difficulty perks ideas 
 - balls collision split them into 4 smaller balls, lvl times (requires rework)

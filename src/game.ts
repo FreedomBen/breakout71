@@ -68,9 +68,11 @@ import { hoursSpentPlaying } from "./pure_functions";
 import { helpMenuEntry } from "./help";
 import { creativeMode } from "./creative";
 import { setupTooltips } from "./tooltip";
+import {startingPerkMenuButton} from "./startingPerks";
 
-export function play() {
-  if (applyFullScreenChoice()) return;
+export async function play() {
+
+  if (await applyFullScreenChoice()) return;
   if (gameState.running) return;
   gameState.running = true;
   gameState.ballStickToPuck = false;
@@ -556,8 +558,45 @@ function donationNag(gameState) {
 async function openSettingsMenu() {
   pause(true);
 
-  const actions: AsyncAlertAction<() => void>[] = [];
+  const actions: AsyncAlertAction<() => void>[] = [
+      startingPerkMenuButton()
+  ];
 
+  const languages= [
+      {
+            text: "English",
+            value: "en",
+            icon: icons['UK']
+          },
+          {
+            text: "Français",
+            value: "fr",
+            icon: icons['France']
+          }
+  ]
+  actions.push({
+    icon:languages.find(l=>l.value===getCurrentLang())?.icon,
+    text: t("main_menu.language"),
+    help: t("main_menu.language_help"),
+    async value() {
+      const pick = await asyncAlert({
+        title: t("main_menu.language"),
+        content: [
+          t("main_menu.language_help"),
+            ...languages
+        ],
+        allowClose: true,
+      });
+      if (
+        pick &&
+        pick !== getCurrentLang() &&
+        (await confirmRestart(gameState))
+      ) {
+        setSettingValue("lang", pick);
+        window.location.reload();
+      }
+    },
+  });
   for (const key of Object.keys(options) as OptionId[]) {
     if (options[key])
       actions.push({
@@ -575,33 +614,7 @@ async function openSettingsMenu() {
       });
   }
   actions.push({
-    text: t("main_menu.reset"),
-    help: t("main_menu.reset_help"),
-    async value() {
-      if (
-        await asyncAlert({
-          title: t("main_menu.reset"),
-          content: [
-            t("main_menu.reset_instruction"),
-            {
-              text: t("main_menu.reset_confirm"),
-              value: true,
-            },
-            {
-              text: t("main_menu.reset_cancel"),
-              value: false,
-            },
-          ],
-          allowClose: true,
-        })
-      ) {
-        localStorage.clear();
-        window.location.reload();
-      }
-    },
-  });
-
-  actions.push({
+    icon:icons['icon:download'],
     text: t("main_menu.download_save_file"),
     help: t("main_menu.download_save_file_help"),
     async value() {
@@ -650,6 +663,7 @@ async function openSettingsMenu() {
   });
 
   actions.push({
+    icon:icons['icon:upload'],
     text: t("main_menu.load_save_file"),
     help: t("main_menu.load_save_file_help"),
     async value() {
@@ -733,37 +747,9 @@ async function openSettingsMenu() {
     },
   });
 
-  actions.push({
-    text: t("main_menu.language"),
-    help: t("main_menu.language_help"),
-    async value() {
-      const pick = await asyncAlert({
-        title: t("main_menu.language"),
-        content: [
-          t("main_menu.language_help"),
-          {
-            text: "English",
-            value: "en",
-          },
-          {
-            text: "Français",
-            value: "fr",
-          },
-        ],
-        allowClose: true,
-      });
-      if (
-        pick &&
-        pick !== getCurrentLang() &&
-        (await confirmRestart(gameState))
-      ) {
-        setSettingValue("lang", pick);
-        window.location.reload();
-      }
-    },
-  });
 
   actions.push({
+    icon:icons['icon:coins'],
     text: t("main_menu.max_coins", { max: getCurrentMaxCoins() }),
     help: t("main_menu.max_coins_help"),
     async value() {
@@ -772,11 +758,40 @@ async function openSettingsMenu() {
     },
   });
   actions.push({
+    icon:icons['icon:particles'],
     text: t("main_menu.max_particles", { max: getCurrentMaxParticles() }),
     help: t("main_menu.max_particles_help"),
     async value() {
       cycleMaxParticles();
       await openSettingsMenu();
+    },
+  });
+
+  actions.push({
+    icon:icons['icon:reset'],
+    text: t("main_menu.reset"),
+    help: t("main_menu.reset_help"),
+    async value() {
+      if (
+        await asyncAlert({
+          title: t("main_menu.reset"),
+          content: [
+            t("main_menu.reset_instruction"),
+            {
+              text: t("main_menu.reset_confirm"),
+              value: true,
+            },
+            {
+              text: t("main_menu.reset_cancel"),
+              value: false,
+            },
+          ],
+          allowClose: true,
+        })
+      ) {
+        localStorage.clear();
+        window.location.reload();
+      }
     },
   });
 
@@ -791,7 +806,7 @@ async function openSettingsMenu() {
   }
 }
 
-function applyFullScreenChoice(): boolean {
+async function applyFullScreenChoice() {
   try {
     if (!(document.fullscreenEnabled || document.webkitFullscreenEnabled)) {
       return false;
@@ -799,19 +814,19 @@ function applyFullScreenChoice(): boolean {
 
     if (document.fullscreenElement !== null && !isOptionOn("fullscreen")) {
       if (document.exitFullscreen) {
-        document.exitFullscreen();
+        await document.exitFullscreen();
         return true;
       } else if (document.webkitCancelFullScreen) {
-        document.webkitCancelFullScreen();
+       await document.webkitCancelFullScreen();
         return true;
       }
     } else if (isOptionOn("fullscreen") && !document.fullscreenElement) {
       const docel = document.documentElement;
       if (docel.requestFullscreen) {
-        docel.requestFullscreen();
+        await docel.requestFullscreen()
         return true;
       } else if (docel.webkitRequestFullscreen) {
-        docel.webkitRequestFullscreen();
+        await docel.webkitRequestFullscreen();
         return true;
       }
     }
@@ -926,6 +941,9 @@ document.addEventListener("keydown", async (e) => {
 
 let pageLoad = new Date();
 document.addEventListener("keyup", async (e) => {
+
+
+
   const focused = document.querySelector("button:focus");
   if (e.key in pressed) {
     setKeyPressed(e.key, 0);
@@ -950,7 +968,7 @@ document.addEventListener("keyup", async (e) => {
   } else if (
     e.key.toLowerCase() === "r" &&
     !alertsOpen &&
-    pageLoad > Date.now() + 1000
+    pageLoad < Date.now() - 500
   ) {
     // When doing ctrl + R in dev to refresh, i don't want to instantly restart a run
     if (await confirmRestart(gameState)) {

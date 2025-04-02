@@ -397,18 +397,16 @@ export function render(gameState: GameState) {
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = gameState.perks.unbounded ? 0.1 : 1;
 
+  let redLeftSide =  hasCombo &&!gameState.perks.unbounded&& (gameState.perks.left_is_lava || gameState.perks.trampoline)
+  let redRightSide =  hasCombo &&!gameState.perks.unbounded&& (gameState.perks.right_is_lava || gameState.perks.trampoline)
+  let redTop =  hasCombo && gameState.perks.unbounded<=2 && (gameState.perks.top_is_lava || gameState.perks.trampoline)
+
   if (gameState.offsetXRoundedDown) {
     // draw outside of gaming area to avoid capturing borders in recordings
-    ctx.fillStyle =
-      hasCombo && gameState.perks.left_is_lava ? "red" : gameState.puckColor;
-
     drawStraightLine(
       ctx,
       gameState,
-      (hasCombo &&
-        gameState.perks.left_is_lava &&
-        !gameState.perks.unbounded &&
-        "red") ||
+      (redLeftSide &&     "red") ||
         "white",
       gameState.offsetX - 1,
       0,
@@ -420,10 +418,7 @@ export function render(gameState: GameState) {
     drawStraightLine(
       ctx,
       gameState,
-      (hasCombo &&
-        gameState.perks.right_is_lava &&
-        !gameState.perks.unbounded &&
-        "red") ||
+      (redRightSide && "red") ||
         "white",
       width - gameState.offsetX + 1,
       0,
@@ -432,15 +427,11 @@ export function render(gameState: GameState) {
       gameState.perks.unbounded ? 0.1 : 1,
     );
   } else {
-    ctx.fillStyle = "red";
 
     drawStraightLine(
       ctx,
       gameState,
-      (hasCombo &&
-        gameState.perks.left_is_lava &&
-        !gameState.perks.unbounded &&
-        "red") ||
+      (redLeftSide &&  "red") ||
         "",
       0,
       0,
@@ -452,10 +443,7 @@ export function render(gameState: GameState) {
     drawStraightLine(
       ctx,
       gameState,
-      (hasCombo &&
-        gameState.perks.right_is_lava &&
-        !gameState.perks.unbounded &&
-        "red") ||
+      (redRightSide &&    "red") ||
         "",
       width - 1,
       0,
@@ -464,15 +452,14 @@ export function render(gameState: GameState) {
       1,
     );
   }
-
-  ctx.globalAlpha = gameState.perks.unbounded > 1 ? 0.1 : 1;
+  if(redTop)
   drawStraightLine(
     ctx,
     gameState,
-    (hasCombo && gameState.perks.top_is_lava && "red") || "",
-    gameState.offsetXRoundedDown,
+    "red",
+    gameState.perks.unbounded ? 0 : gameState.offsetXRoundedDown,
     1,
-    width - gameState.offsetXRoundedDown,
+    gameState.perks.unbounded ? width :  width - gameState.offsetXRoundedDown,
     1,
     1,
   );

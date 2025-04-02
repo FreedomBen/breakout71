@@ -136,6 +136,7 @@ export function gameOver(title: string, intro: string) {
   }).then(() =>
     restart({
       levelToAvoid: currentLevelInfo(gameState).name,
+      mode:gameState.mode
     }),
   );
 }
