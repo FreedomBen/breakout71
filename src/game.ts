@@ -69,6 +69,7 @@ import { helpMenuEntry } from "./help";
 import { creativeMode } from "./creative";
 import { setupTooltips } from "./tooltip";
 import { startingPerkMenuButton } from "./startingPerks";
+import "./migrations";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
