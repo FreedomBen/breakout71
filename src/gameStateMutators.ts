@@ -216,6 +216,23 @@ export function resetCombo(
   return lost;
 }
 
+export function increaseCombo(
+  gameState: GameState,
+  by: number,
+  x: number,
+  y: number,
+) {
+  if (by > 0) {
+    gameState.combo += by;
+  }
+  if (
+    isOptionOn("comboIncreaseTexts") &&
+    typeof x !== "undefined" &&
+    typeof y !== "undefined"
+  ) {
+    makeText(gameState, x, y, "gold", "+" + by, 25, 400 + by);
+  }
+}
 export function decreaseCombo(
   gameState: GameState,
   by: number,
@@ -419,23 +436,26 @@ export function explodeBrick(
       );
     }
 
-    gameState.combo +=
+    increaseCombo(
+      gameState,
       gameState.perks.streak_shots +
-      gameState.perks.compound_interest +
-      gameState.perks.left_is_lava +
-      gameState.perks.right_is_lava +
-      gameState.perks.top_is_lava +
-      gameState.perks.picky_eater +
-      gameState.perks.asceticism * 3 +
-      gameState.perks.zen +
-      gameState.perks.passive_income +
-      gameState.perks.nbricks +
-      gameState.perks.addiction +
-      gameState.perks.unbounded;
+        gameState.perks.compound_interest +
+        gameState.perks.left_is_lava +
+        gameState.perks.right_is_lava +
+        gameState.perks.top_is_lava +
+        gameState.perks.picky_eater +
+        gameState.perks.asceticism * 3 +
+        gameState.perks.zen +
+        gameState.perks.passive_income +
+        gameState.perks.addiction +
+        gameState.perks.unbounded,
+      ball.x,
+      ball.y,
+    );
 
     if (gameState.perks.side_kick) {
       if (Math.abs(ball.vx) > Math.abs(ball.vy)) {
-        gameState.combo += gameState.perks.side_kick;
+        increaseCombo(gameState, gameState.perks.side_kick, ball.x, ball.y);
       } else {
         decreaseCombo(gameState, gameState.perks.side_kick, ball.x, ball.y);
       }
@@ -454,14 +474,6 @@ export function explodeBrick(
 
     if (isMovingWhilePassiveIncome(gameState)) {
       resetCombo(gameState, x, y);
-    }
-
-    if (
-      gameState.perks.nbricks &&
-      ball.hitSinceBounce > gameState.perks.nbricks
-    ) {
-      // We need to reset at each hit, otherwise it's just an OP version of single puck hit streak
-      resetCombo(gameState, ball.x, ball.y);
     }
 
     if (!isExplosion) {
@@ -1537,7 +1549,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
       resetCombo(gameState, ball.x, ball.y);
     }
     if (gameState.perks.trampoline) {
-      gameState.combo += gameState.perks.trampoline;
+      increaseCombo(gameState, gameState.perks.trampoline, ball.x, ball.y);
     }
     if (
       gameState.perks.nbricks &&
@@ -1614,6 +1626,16 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
   if (typeof hitBrick !== "undefined") {
     const initialBrickColor = gameState.bricks[hitBrick];
     ball.hitSinceBounce++;
+
+    if (gameState.perks.nbricks) {
+      if (ball.hitSinceBounce > gameState.perks.nbricks) {
+        resetCombo(gameState, ball.x, ball.y);
+      } else {
+        increaseCombo(gameState, gameState.perks.nbricks, ball.x, ball.y);
+      }
+      // We need to reset at each hit, otherwise it's just an OP version of single puck hit streak
+    }
+
     let pierce = false;
     let damage =
       1 +
@@ -1646,6 +1668,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
         ball.vx *= -1;
       }
     }
+
     if (!gameState.brickHP[hitBrick]) {
       ball.brokenSinceBounce++;
 
