@@ -19,6 +19,8 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Next release
 
+- Fixed : display gained combo was showing +0 sometimes
+
 ## 29060272
 
 - Fixed: Strict sample size was counting destroyed bricks, now count hits as explained in the help
