@@ -1079,12 +1079,12 @@ async function openSettingsMenu() {
         {
             text: "English",
             value: "en",
-            icon: (0, _loadGameData.icons)['UK']
+            icon: (0, _loadGameData.icons)["UK"]
         },
         {
             text: "Fran\xe7ais",
             value: "fr",
-            icon: (0, _loadGameData.icons)['France']
+            icon: (0, _loadGameData.icons)["France"]
         }
     ];
     actions.push({
@@ -1118,7 +1118,7 @@ async function openSettingsMenu() {
         }
     });
     actions.push({
-        icon: (0, _loadGameData.icons)['icon:download'],
+        icon: (0, _loadGameData.icons)["icon:download"],
         text: (0, _i18N.t)("main_menu.download_save_file"),
         help: (0, _i18N.t)("main_menu.download_save_file_help"),
         async value () {
@@ -1144,7 +1144,7 @@ async function openSettingsMenu() {
         }
     });
     actions.push({
-        icon: (0, _loadGameData.icons)['icon:upload'],
+        icon: (0, _loadGameData.icons)["icon:upload"],
         text: (0, _i18N.t)("main_menu.load_save_file"),
         help: (0, _i18N.t)("main_menu.load_save_file_help"),
         async value () {
@@ -1207,7 +1207,7 @@ async function openSettingsMenu() {
         }
     });
     actions.push({
-        icon: (0, _loadGameData.icons)['icon:coins'],
+        icon: (0, _loadGameData.icons)["icon:coins"],
         text: (0, _i18N.t)("main_menu.max_coins", {
             max: (0, _settings.getCurrentMaxCoins)()
         }),
@@ -1218,7 +1218,7 @@ async function openSettingsMenu() {
         }
     });
     actions.push({
-        icon: (0, _loadGameData.icons)['icon:particles'],
+        icon: (0, _loadGameData.icons)["icon:particles"],
         text: (0, _i18N.t)("main_menu.max_particles", {
             max: (0, _settings.getCurrentMaxParticles)()
         }),
@@ -1229,7 +1229,7 @@ async function openSettingsMenu() {
         }
     });
     actions.push({
-        icon: (0, _loadGameData.icons)['icon:reset'],
+        icon: (0, _loadGameData.icons)["icon:reset"],
         text: (0, _i18N.t)("main_menu.reset"),
         help: (0, _i18N.t)("main_menu.reset_help"),
         async value () {
@@ -1474,7 +1474,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29058981\"");
+module.exports = JSON.parse("\"29059721\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -4982,7 +4982,7 @@ function setupTooltips() {
         while(parent && !parent.hasAttribute("data-tooltip"))parent = parent.parentElement;
         if (parent?.hasAttribute("data-tooltip")) {
             hovering = parent;
-            tooltip.innerHTML = hovering.getAttribute("data-tooltip") || '';
+            tooltip.innerHTML = hovering.getAttribute("data-tooltip") || "";
             tooltip.style.display = "";
             updateTooltipPosition(e);
         } else closeToolTip();
@@ -5011,21 +5011,21 @@ var _loadGameData = require("./loadGameData");
 var _settings = require("./settings");
 function startingPerkMenuButton() {
     return {
-        icon: (0, _loadGameData.icons)['icon:starting_perks'],
-        text: (0, _i18N.t)('main_menu.starting_perks'),
-        help: (0, _i18N.t)('main_menu.starting_perks_help'),
+        icon: (0, _loadGameData.icons)["icon:starting_perks"],
+        text: (0, _i18N.t)("main_menu.starting_perks"),
+        help: (0, _i18N.t)("main_menu.starting_perks_help"),
         async value () {
             await openStartingPerksEditor();
         }
     };
 }
 function isChecked(u) {
-    return (0, _settings.getSettingValue)('start_with_' + u.id, u.giftable);
+    return (0, _settings.getSettingValue)("start_with_" + u.id, u.giftable);
 }
 async function openStartingPerksEditor() {
     const ts = (0, _settings.getTotalScore)();
     const avaliable = (0, _loadGameData.upgrades).filter((u)=>!u.requires && ![
-            'instant_upgrade'
+            "instant_upgrade"
         ].includes(u.id) && u.threshold <= ts);
     const starting = avaliable.filter((u)=>isChecked(u));
     const buttons = avaliable.map((u)=>{
@@ -5040,17 +5040,17 @@ async function openStartingPerksEditor() {
         };
     });
     const perk = await (0, _asyncAlert.asyncAlert)({
-        title: (0, _i18N.t)('main_menu.starting_perks'),
+        title: (0, _i18N.t)("main_menu.starting_perks"),
         actionsAsGrid: true,
         content: [
-            (0, _i18N.t)('main_menu.starting_perks_checked'),
+            (0, _i18N.t)("main_menu.starting_perks_checked"),
             ...buttons.filter((b)=>b.checked),
-            (0, _i18N.t)('main_menu.starting_perks_unchecked'),
+            (0, _i18N.t)("main_menu.starting_perks_unchecked"),
             ...buttons.filter((b)=>!b.checked)
         ]
     });
     if (perk) {
-        (0, _settings.setSettingValue)('start_with_' + perk.id, !isChecked(perk));
+        (0, _settings.setSettingValue)("start_with_" + perk.id, !isChecked(perk));
         openStartingPerksEditor();
     }
 }

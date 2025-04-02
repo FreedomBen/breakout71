@@ -68,10 +68,9 @@ import { hoursSpentPlaying } from "./pure_functions";
 import { helpMenuEntry } from "./help";
 import { creativeMode } from "./creative";
 import { setupTooltips } from "./tooltip";
-import {startingPerkMenuButton} from "./startingPerks";
+import { startingPerkMenuButton } from "./startingPerks";
 
 export async function play() {
-
   if (await applyFullScreenChoice()) return;
   if (gameState.running) return;
   gameState.running = true;
@@ -558,33 +557,28 @@ function donationNag(gameState) {
 async function openSettingsMenu() {
   pause(true);
 
-  const actions: AsyncAlertAction<() => void>[] = [
-      startingPerkMenuButton()
-  ];
+  const actions: AsyncAlertAction<() => void>[] = [startingPerkMenuButton()];
 
-  const languages= [
-      {
-            text: "English",
-            value: "en",
-            icon: icons['UK']
-          },
-          {
-            text: "Français",
-            value: "fr",
-            icon: icons['France']
-          }
-  ]
+  const languages = [
+    {
+      text: "English",
+      value: "en",
+      icon: icons["UK"],
+    },
+    {
+      text: "Français",
+      value: "fr",
+      icon: icons["France"],
+    },
+  ];
   actions.push({
-    icon:languages.find(l=>l.value===getCurrentLang())?.icon,
+    icon: languages.find((l) => l.value === getCurrentLang())?.icon,
     text: t("main_menu.language"),
     help: t("main_menu.language_help"),
     async value() {
       const pick = await asyncAlert({
         title: t("main_menu.language"),
-        content: [
-          t("main_menu.language_help"),
-            ...languages
-        ],
+        content: [t("main_menu.language_help"), ...languages],
         allowClose: true,
       });
       if (
@@ -614,7 +608,7 @@ async function openSettingsMenu() {
       });
   }
   actions.push({
-    icon:icons['icon:download'],
+    icon: icons["icon:download"],
     text: t("main_menu.download_save_file"),
     help: t("main_menu.download_save_file_help"),
     async value() {
@@ -663,7 +657,7 @@ async function openSettingsMenu() {
   });
 
   actions.push({
-    icon:icons['icon:upload'],
+    icon: icons["icon:upload"],
     text: t("main_menu.load_save_file"),
     help: t("main_menu.load_save_file_help"),
     async value() {
@@ -747,9 +741,8 @@ async function openSettingsMenu() {
     },
   });
 
-
   actions.push({
-    icon:icons['icon:coins'],
+    icon: icons["icon:coins"],
     text: t("main_menu.max_coins", { max: getCurrentMaxCoins() }),
     help: t("main_menu.max_coins_help"),
     async value() {
@@ -758,7 +751,7 @@ async function openSettingsMenu() {
     },
   });
   actions.push({
-    icon:icons['icon:particles'],
+    icon: icons["icon:particles"],
     text: t("main_menu.max_particles", { max: getCurrentMaxParticles() }),
     help: t("main_menu.max_particles_help"),
     async value() {
@@ -768,7 +761,7 @@ async function openSettingsMenu() {
   });
 
   actions.push({
-    icon:icons['icon:reset'],
+    icon: icons["icon:reset"],
     text: t("main_menu.reset"),
     help: t("main_menu.reset_help"),
     async value() {
@@ -817,13 +810,13 @@ async function applyFullScreenChoice() {
         await document.exitFullscreen();
         return true;
       } else if (document.webkitCancelFullScreen) {
-       await document.webkitCancelFullScreen();
+        await document.webkitCancelFullScreen();
         return true;
       }
     } else if (isOptionOn("fullscreen") && !document.fullscreenElement) {
       const docel = document.documentElement;
       if (docel.requestFullscreen) {
-        await docel.requestFullscreen()
+        await docel.requestFullscreen();
         return true;
       } else if (docel.webkitRequestFullscreen) {
         await docel.webkitRequestFullscreen();
@@ -941,9 +934,6 @@ document.addEventListener("keydown", async (e) => {
 
 let pageLoad = new Date();
 document.addEventListener("keyup", async (e) => {
-
-
-
   const focused = document.querySelector("button:focus");
   if (e.key in pressed) {
     setKeyPressed(e.key, 0);

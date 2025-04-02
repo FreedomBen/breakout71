@@ -7,18 +7,17 @@ export function setupTooltips() {
     return;
   }
 
-
   function updateTooltipPosition(e: MouseEvent) {
     tooltip.style.transform =
       `translate(${e.clientX}px,${e.clientY + 20}px) ` +
       (e.clientX > window.innerWidth / 2 ? " translate(-100%,0)" : "");
   }
 
-  function closeToolTip(){
-        tooltip.style.display = "none";
-        hovering=null
+  function closeToolTip() {
+    tooltip.style.display = "none";
+    hovering = null;
   }
-    let hovering:HTMLElement|null=null
+  let hovering: HTMLElement | null = null;
   document.body.addEventListener(
     "mouseenter",
     (e: MouseEvent) => {
@@ -27,24 +26,24 @@ export function setupTooltips() {
         parent = parent.parentElement;
       }
       if (parent?.hasAttribute("data-tooltip")) {
-          hovering=parent as HTMLElement
-        tooltip.innerHTML = hovering.getAttribute("data-tooltip") || '';
+        hovering = parent as HTMLElement;
+        tooltip.innerHTML = hovering.getAttribute("data-tooltip") || "";
         tooltip.style.display = "";
         updateTooltipPosition(e);
       } else {
-      closeToolTip()
+        closeToolTip();
       }
     },
     true,
   );
 
-  setInterval(()=>{
-      if(hovering){
-          if(!document.body.contains(hovering)){
-             closeToolTip()
-          }
+  setInterval(() => {
+    if (hovering) {
+      if (!document.body.contains(hovering)) {
+        closeToolTip();
       }
-  },200)
+    }
+  }, 200);
   document.body.addEventListener(
     "mousemove",
     (e) => {
@@ -54,10 +53,7 @@ export function setupTooltips() {
     },
     true,
   );
-  document.body.addEventListener(
-    "mouseleave",
-    (e) => {
-        closeToolTip()
-    }
-  );
+  document.body.addEventListener("mouseleave", (e) => {
+    closeToolTip();
+  });
 }

@@ -397,17 +397,25 @@ export function render(gameState: GameState) {
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = gameState.perks.unbounded ? 0.1 : 1;
 
-  let redLeftSide =  hasCombo &&!gameState.perks.unbounded&& (gameState.perks.left_is_lava || gameState.perks.trampoline)
-  let redRightSide =  hasCombo &&!gameState.perks.unbounded&& (gameState.perks.right_is_lava || gameState.perks.trampoline)
-  let redTop =  hasCombo && gameState.perks.unbounded<=2 && (gameState.perks.top_is_lava || gameState.perks.trampoline)
+  let redLeftSide =
+    hasCombo &&
+    !gameState.perks.unbounded &&
+    (gameState.perks.left_is_lava || gameState.perks.trampoline);
+  let redRightSide =
+    hasCombo &&
+    !gameState.perks.unbounded &&
+    (gameState.perks.right_is_lava || gameState.perks.trampoline);
+  let redTop =
+    hasCombo &&
+    gameState.perks.unbounded <= 2 &&
+    (gameState.perks.top_is_lava || gameState.perks.trampoline);
 
   if (gameState.offsetXRoundedDown) {
     // draw outside of gaming area to avoid capturing borders in recordings
     drawStraightLine(
       ctx,
       gameState,
-      (redLeftSide &&     "red") ||
-        "white",
+      (redLeftSide && "red") || "white",
       gameState.offsetX - 1,
       0,
       gameState.offsetX - 1,
@@ -418,8 +426,7 @@ export function render(gameState: GameState) {
     drawStraightLine(
       ctx,
       gameState,
-      (redRightSide && "red") ||
-        "white",
+      (redRightSide && "red") || "white",
       width - gameState.offsetX + 1,
       0,
       width - gameState.offsetX + 1,
@@ -427,12 +434,10 @@ export function render(gameState: GameState) {
       gameState.perks.unbounded ? 0.1 : 1,
     );
   } else {
-
     drawStraightLine(
       ctx,
       gameState,
-      (redLeftSide &&  "red") ||
-        "",
+      (redLeftSide && "red") || "",
       0,
       0,
       0,
@@ -443,8 +448,7 @@ export function render(gameState: GameState) {
     drawStraightLine(
       ctx,
       gameState,
-      (redRightSide &&    "red") ||
-        "",
+      (redRightSide && "red") || "",
       width - 1,
       0,
       width - 1,
@@ -452,17 +456,17 @@ export function render(gameState: GameState) {
       1,
     );
   }
-  if(redTop)
-  drawStraightLine(
-    ctx,
-    gameState,
-    "red",
-    gameState.perks.unbounded ? 0 : gameState.offsetXRoundedDown,
-    1,
-    gameState.perks.unbounded ? width :  width - gameState.offsetXRoundedDown,
-    1,
-    1,
-  );
+  if (redTop)
+    drawStraightLine(
+      ctx,
+      gameState,
+      "red",
+      gameState.perks.unbounded ? 0 : gameState.offsetXRoundedDown,
+      1,
+      gameState.perks.unbounded ? width : width - gameState.offsetXRoundedDown,
+      1,
+      1,
+    );
 
   ctx.globalAlpha = 1;
   drawStraightLine(

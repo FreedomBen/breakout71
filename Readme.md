@@ -21,6 +21,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
  
 ## next release.
 
+- icons in settings menu
 - choose starting perks
 - fixed issue with reloading with [R] key
 - gameover screen restarts in the same game mode
