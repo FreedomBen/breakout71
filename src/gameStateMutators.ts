@@ -222,9 +222,10 @@ export function increaseCombo(
   x: number,
   y: number,
 ) {
-  if (by > 0) {
-    gameState.combo += by;
+  if (by <= 0) {
+    return;
   }
+  gameState.combo += by;
   if (
     isOptionOn("comboIncreaseTexts") &&
     typeof x !== "undefined" &&
