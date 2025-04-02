@@ -17,11 +17,11 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Todo
 
-- build an apk every time  
-  - ./gradlew tasks
-
 ## Next release
 
+- publish an apk to itch.io with every build 
+- Strict sample size : count hits, not destroyed bricks
+- passive_income : lastPuckMove was not cleared between levels 
 - simple game data migration system 
 - high score issues
  

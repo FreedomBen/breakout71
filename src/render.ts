@@ -5,6 +5,7 @@ import {
   // countBricksAbove,
   // countBricksBelow,
   currentLevelInfo,
+  isMovingWhilePassiveIncome,
   isPickyEatingPossible,
   isTelekinesisActive,
   isYoyoActive,
@@ -542,13 +543,7 @@ export function renderAllBricks() {
   const redBorderOnBricksWithWrongColor =
     hasCombo && gameState.perks.picky_eater && isPickyEatingPossible(gameState);
 
-  const redColorOnAllBricks = !!(
-    gameState.lastPuckMove &&
-    gameState.perks.passive_income &&
-    hasCombo &&
-    gameState.lastPuckMove >
-      gameState.levelTime - 250 * gameState.perks.passive_income
-  );
+  const redColorOnAllBricks = hasCombo && isMovingWhilePassiveIncome(gameState);
 
   const redRowReach = reachRedRowIndex(gameState);
 

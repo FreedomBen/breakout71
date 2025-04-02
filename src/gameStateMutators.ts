@@ -22,6 +22,7 @@ import {
   getMajorityValue,
   getPossibleUpgrades,
   getRowColIndex,
+  isMovingWhilePassiveIncome,
   isPickyEatingPossible,
   isTelekinesisActive,
   isYoyoActive,
@@ -451,18 +452,13 @@ export function explodeBrick(
       }
     }
 
-    if (
-      gameState.lastPuckMove &&
-      gameState.perks.passive_income &&
-      gameState.lastPuckMove >
-        gameState.levelTime - 250 * gameState.perks.passive_income
-    ) {
+    if (isMovingWhilePassiveIncome(gameState)) {
       resetCombo(gameState, x, y);
     }
 
     if (
       gameState.perks.nbricks &&
-      ball.brokenSinceBounce > gameState.perks.nbricks
+      ball.hitSinceBounce > gameState.perks.nbricks
     ) {
       // We need to reset at each hit, otherwise it's just an OP version of single puck hit streak
       resetCombo(gameState, ball.x, ball.y);
@@ -685,6 +681,7 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.levelTime = 0;
   gameState.winAt = 0;
   gameState.levelWallBounces = 0;
+  gameState.lastPuckMove = 0;
   gameState.autoCleanUses = 0;
   gameState.lastTickDown = gameState.levelTime;
   gameState.levelStartScore = gameState.score;
@@ -1544,7 +1541,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     }
     if (
       gameState.perks.nbricks &&
-      ball.brokenSinceBounce < gameState.perks.nbricks
+      ball.hitSinceBounce < gameState.perks.nbricks
     ) {
       resetCombo(gameState, ball.x, ball.y);
     }

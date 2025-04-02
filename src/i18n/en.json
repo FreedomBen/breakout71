@@ -219,7 +219,7 @@
   "upgrades.multiball.help": "Start every levels with {{count}} balls.",
   "upgrades.multiball.name": "+1 ball",
   "upgrades.nbricks.fullHelp": "You don't necessarily need to destroy those bricks, but you need to hit them. Bricks destroyed by explosions don't count",
-  "upgrades.nbricks.help": "Destroy exactly {{lvl}} bricks per puck bounce for +{{lvl}} combo, otherwise it resets",
+  "upgrades.nbricks.help": "Hit exactly {{lvl}} bricks per puck bounce for +{{lvl}} combo, otherwise it resets",
   "upgrades.nbricks.name": "Strict sample size",
   "upgrades.one_more_choice.fullHelp": "Every upgrade menu will have one more option.  Doesn't increase the number of upgrades you can pick.",
   "upgrades.one_more_choice.help": "Further level ups will offer {{lvl}} more option(s) in the list",

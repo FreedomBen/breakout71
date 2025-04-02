@@ -219,7 +219,7 @@
   "upgrades.multiball.help": "Chaque niveau commence avec {{count}} balles.",
   "upgrades.multiball.name": "+1 balle",
   "upgrades.nbricks.fullHelp": "Si votre balle rebondis sans casser une brique, ça compte quand même comme une frappe.  Les briques détruites par des explosions ne comptent pas.",
-  "upgrades.nbricks.help": "Détruisez exactement {{lvl}} briques par rebond pour +{{lvl}} combo, sinon RAZ",
+  "upgrades.nbricks.help": "Frappez exactement {{lvl}} briques par rebond pour +{{lvl}} combo, sinon RAZ",
   "upgrades.nbricks.name": "Prélèvement",
   "upgrades.one_more_choice.fullHelp": "Chaque menu d'amélioration comportera une option supplémentaire.  Cela n'augmente pas le nombre d'améliorations que vous pouvez choisir, mais vous aide à créer le profile idéal. ",
   "upgrades.one_more_choice.help": "Les niveaux suivants offriront  {{lvl}} option(s) supplémentaire(s) dans la liste d'améliorations.",
