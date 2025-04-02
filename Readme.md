@@ -13,11 +13,10 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 
 
-# changelog
+# Changelog
 
 ## next goals
 
-- wind : move coins based on puck movement not position  
  
 ## 29059721.
 
@@ -110,12 +109,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - Warn about unbounded
 - Red border dashes
 
-# ideas 
+# Ideas and features 
 
 ## UX / gameplay
 
-- on mobile, relative movement of the touch would be amplified and added to the puck 
-- option : don't pause on mobile when lifting finger
+- mobile option: relative movement of the touch would be amplified and added to the puck 
+- mobile option: don't pause on mobile when lifting finger
 - [obigre] Offer to level ups perks separately from picking new ones 
 - strict sample size red borders ?
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
@@ -195,6 +194,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
  - [colin] side pucks - same as above but with two side pucks : hard to know where to put them 
 
 ## ideas to sort
+- wind : move coins based on puck movement not position  
 - loop only when 7 rerolls have been acumulated. 
 - store much more details about run (level by level) as numbers only (instead of json that gets big false)
 - double coin value when they hit the sides
