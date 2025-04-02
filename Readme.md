@@ -15,8 +15,14 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 # Changelog
 
-## next goals
+## Todo
 
+- build an apk every time  
+  - ./gradlew tasks
+
+## Next release
+
+- simple game data migration system 
 - high score issues
  
 ## 29059721.
