@@ -10,7 +10,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
-- [Translation with weblate](https://hosted.weblate.org/engage/breakout-71/-/en/)
+
 
 
 # changelog
@@ -19,7 +19,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 - wind : move coins based on puck movement not position  
  
-## next release.
+## 29059721.
 
 - icons in settings menu
 - choose starting perks
@@ -122,7 +122,6 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - add a clickable button to allow sound to play in chrome android
 - see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
 - when game resumes near bottom, be unvulnerable for .5s ? , once per level
-- https://weblate.org/fr/ quite annoying actually
 
 
 ## Game engine features ideas
@@ -263,6 +262,7 @@ This requires recording a bit more info about each run.
 - final bosses (large vertical level that scrolls down faster and faster)
 
 ## Rejected ideas
+- https://weblate.org/fr/ quite annoying to have merge conflicts while pushing, i'll enable it later. 
 - [jaceys] Move the restart button out of the menu, so that it is more easily accessible (will allow user to choose starting perk instead)
 - colored coins only (coins should be of the color of the ball to count, otherwise what ? i'd rather avoid negative points)
 - coins avoid ball of different color (pointless)
