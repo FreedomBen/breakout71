@@ -19,22 +19,24 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Next release
 
-- option to display gained combo as onscreen text
-- publish an apk to itch.io with every build 
-- Strict sample size : count hits, not destroyed bricks
-- passive_income : lastPuckMove was not cleared between levels 
-- simple game data migration system 
-- high score issues
+## 29060272
+
+- Fixed: Strict sample size was counting destroyed bricks, now count hits as explained in the help
+- Fixed: passive_income was resetting your combo if you moved around the end of the last level 
+- Fixed: a high score issues was systematically erasing the high score in the web version, i added a migration to load the best score for your top games to recover the high score.
+- QOL: option to display gained combo as onscreen text
+- QOL: publish an apk to itch.io with every build 
+- Internal: added a simple game data migration system 
  
 ## 29059721.
 
-- icons in settings menu
-- choose starting perks
-- fixed issue with reloading with [R] key
-- gameover screen restarts in the same game mode
-- Trampoline render sides in red. 
-- tooltips stuck on mobile
-- Check in fullscreen worked, otherwise resume playing
+- QOL: icons in settings menu
+- QOL: choose starting perks
+- QOL: fixed issue with reloading with [R] key
+- QOL: gameover screen restarts in the same game mode
+- Fixed: Trampoline render sides in red. 
+- Fixed: tooltips stuck on mobile
+- Fixed: issues with restarting a game with fullscreen on
 
 ## 29058981
 
