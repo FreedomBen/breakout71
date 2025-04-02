@@ -1138,7 +1138,7 @@ export function gameStateTick(
         gameState.levelLostCoins += coin.points;
         destroy(gameState.coins, coinIndex);
         if (gameState.perks.compound_interest) {
-          resetCombo(gameState, coin.x, coin.y);
+          resetCombo(gameState, coin.x, gameState.gameZoneHeight - 20);
         }
       } else if (
         gameState.perks.unbounded &&

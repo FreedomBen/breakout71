@@ -19,6 +19,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Next release
 
+- option to display gained combo as onscreen text
 - publish an apk to itch.io with every build 
 - Strict sample size : count hits, not destroyed bricks
 - passive_income : lastPuckMove was not cleared between levels 
