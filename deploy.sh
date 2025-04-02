@@ -30,4 +30,5 @@ rsync -avz --delete --delete-excluded --exclude="*.sh" --exclude="node_modules" 
 # upload to itch.io , upload the index file directly
 butler push "./build/index.html" renanlecaro/breakout71:latest --userversion $versionCode
 butler push  "./build/index.html" renanlecaro/breakout71:offline --userversion $versionCode
+butler push app/build/outputs/apk/release/app-release.apk renanlecaro/breakout71:apk --userversion $versionCode
 

@@ -46,3 +46,6 @@ rm -rf ./app/src/main/assets/*
 cp public/* build
 rm -rf ./app/src/main/assets/*
 cp build/index.html ./app/src/main/assets/
+
+# generate signed apk 
+./gradlew assembleRelease
