@@ -28,6 +28,7 @@ export const allLevels = rawLevelsList
       bricks,
       bricksCount,
       icon,
+      color: level.color || "#000000",
       svg: getLevelBackground(level),
     };
   })

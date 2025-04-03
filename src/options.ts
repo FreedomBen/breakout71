@@ -26,9 +26,14 @@ export const options = {
     help: t("main_menu.colorful_coins_help"),
   },
   opaque_coins: {
-    default: false,
+    default: true,
     name: t("main_menu.opaque_coins"),
     help: t("main_menu.opaque_coins_help"),
+  },
+  extra_bright: {
+    default: true,
+    name: t("main_menu.extra_bright"),
+    help: t("main_menu.extra_bright_help"),
   },
   show_fps: {
     default: false,

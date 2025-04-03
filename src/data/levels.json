@@ -1108,7 +1108,7 @@
     "size": 21,
     "bricks": "_____bbbWbbbWbbb_________PWbWPWbWPWbWP_______bWbbbWbbbWbbbWb_____WbbbWbbbWbbbWbbbW___WPWbWPWbWPWbWPWbWPW__bWbbbWbbbWbbbWbbbWb__bbbPbbbPbbbPbbbPbbb__bbPPPbPPPbPPPbPPPbb___PPWPPPWPPPWPPPWPP____PWbWPWbWPWbWPWbWP_____PWPPPWPPPWPPPWP_______PPWPPPWPPPWPP_________WbWPWbWPWbW___________bbbbbbbbb_____________b_____b______________b_____b______________b_____b______________WWWWWWW_______________PPPPP________________PPPPP________________PPPPP________",
     "svg": null,
-    "color": "",
+    "color": "#240a8b",
     "credit": "https://prohama.com/balloon-1/"
   },
   {
@@ -1116,7 +1116,7 @@
     "size": 14,
     "bricks": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbyyyyyyyyyyyybbyB___BB___Bybby__________ybbyyy______yyybbbbyyB__Byybbbbbbbyy__yybbbbbbbbby__ybbbbbyyyyby__ybyyyy___yby__yby______yby__yby______yBy__yBy______yyy__yyy___",
     "svg": null,
-    "color": ""
+    "color": "#000000"
   },
   {
     "name": "Stripes",
