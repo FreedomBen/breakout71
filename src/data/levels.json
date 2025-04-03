@@ -3,27 +3,28 @@
     "name": "71 mini",
     "size": 5,
     "bricks": "bbb____bt__btt__b_t___ttt",
-    "svg": 23,
+    "svg": 1,
     "color": ""
   },
   {
     "name": "Butterfly",
     "bricks": "_________bb_t_t_bbbbb_t_bbbbbbbtbbbb_bbbtbbb____btb____bbbtbbb__bb_t_bb__________",
     "size": 9,
-    "svg": 20,
+    "svg": 2,
     "color": ""
   },
   {
     "name": "Castle",
     "size": 7,
     "bricks": "s_s_s_ssssssssssBBBssssBBBssttbbbttttbbbtttbtbtbt",
-    "svg": 16
+    "svg": 3,
+    "color": ""
   },
   {
     "name": "Eyes",
     "size": 9,
     "bricks": "ttttttt__tWWWWWWW_tWrrWttW_tWWWWWWW_ttttttt_____t______ttttt____ttttt_____t_t",
-    "svg": null,
+    "svg": 4,
     "color": "",
     "credit": "https://steamcommunity.com/sharedfiles/filedetails/?id=487035876"
   },
@@ -31,21 +32,23 @@
     "name": "Creeper",
     "size": 10,
     "bricks": "___________ccGGccGG__cGccGcGc__GBBccBBc__cBBGcBBc__GccBBGGc__ccBBBBcG__GGBBBBcG__cGBccBGc___________",
-    "svg": 22,
-    "credit": "https://en.wikipedia.org/wiki/Creeper_(Minecraft)"
+    "svg": 5,
+    "credit": "https://en.wikipedia.org/wiki/Creeper_(Minecraft)",
+    "color": ""
   },
   {
     "name": "Stairs",
     "size": 8,
     "bricks": "tt______tt______bbtt____bbtt____vvbbtt__vvbbtt__ppvvbbttppvvbbtt",
-    "svg": 18,
+    "svg": 6,
     "color": ""
   },
   {
     "name": "Dots",
     "size": 9,
     "bricks": "b_t_a_c_c__________b_t_a_c__________P_b_t_a_c__________P_b_t_a__________P_P_b_t_a",
-    "svg": null
+    "svg": 7,
+    "color": ""
   },
   {
     "name": "Lines",
@@ -260,7 +263,7 @@
     "name": "Rose",
     "size": 9,
     "bricks": "__SS______SSSS_____SSSS_____SSSS______SS_k______k_kk_____kk_k______kk________k",
-    "svg": 4,
+    "svg": 17,
     "color": ""
   },
   {
@@ -1086,8 +1089,8 @@
   },
   {
     "name": "Dog 8",
-    "size": 16,
-    "bricks": "__gg_ggggg_gg___ggWWgWWWWWgWWgg_gWWgWWWWWWWgWWg_gWWgWWWWWWWgWWg_gggWWWWWWWWWggg__gWggWWWWWggWg___gWggWWWWWggWg___gWWWWgggWWWWg____gWgWWgWWgWg_____gWWggsggWWg______gWgsssgWg________ggsssgg___________ggg_______________________________________________________",
+    "size": 17,
+    "bricks": "_____________________________________gg_ggggg_gg____ggWWgWWWWWgWWgg__gWWgWWWWWWWgWWg__gWWgWWWWWWWgWWg__gggWWWWWWWWWggg___gWggWWWWWggWg____gWggWWWWWggWg____gWWWWgggWWWWg_____gWgWWgWWgWg______gWWggsggWWg_______gWgsssgWg_________ggsssgg____________ggg_________________________________________",
     "svg": null,
     "color": "#62a0ea",
     "credit": "https://prohama.com/dog-8-pattern/"

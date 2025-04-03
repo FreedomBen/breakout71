@@ -88,6 +88,8 @@
   "main_menu.mobile_help": "Laisse un espace sous le palet.",
   "main_menu.normal": "Nouvelle partie rapide",
   "main_menu.normal_help": "Avec un avantage de départ aléatoire",
+  "main_menu.opaque_coins": "",
+  "main_menu.opaque_coins_help": "",
   "main_menu.pointer_lock": "Verrouillage du pointeur",
   "main_menu.pointer_lock_help": "Cache aussi le curseur de la souris.",
   "main_menu.record": "Enregistrer des vidéos de jeu",

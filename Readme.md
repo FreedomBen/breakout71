@@ -19,6 +19,11 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Next release
 
+- Abandoned : WebGl rendering of the lights in the background is too complex, first results unconvincing
+- Graphics : option to make coins pretty vs readable
+- Graphics : much more light thanks to faster computations
+- Graphics : background effects are not computed on a much smaller resolution, and then stretched out to the full res
+- Graphics : all levels background have been checked (4 buggy ones removed) and will be asigned randomly
 - Fixed : display gained combo was showing +0 sometimes
 
 ## 29060272

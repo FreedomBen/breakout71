@@ -15,7 +15,7 @@ export const appVersion = _appVersion as string;
 export const icons = {} as { [k: string]: string };
 
 export const allLevels = rawLevelsList
-  .map((level) => {
+  .map((level, i) => {
     const bricks = level.bricks
       .split("")
       .map((c) => palette[c])

@@ -21,6 +21,7 @@ export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
 export const ctx = gameCanvas.getContext("2d", {
   alpha: false,
 }) as CanvasRenderingContext2D;
+
 export const bombSVG = document.createElement("img");
 bombSVG.src =
   "data:image/svg+xml;base64," +
@@ -32,6 +33,13 @@ bombSVG.onload = () => (gameState.needsRender = true);
 export const background = document.createElement("img");
 background.onload = () => (gameState.needsRender = true);
 export const backgroundCanvas = document.createElement("canvas");
+
+export const haloCanvas = document.createElement("canvas");
+const haloCanvasCtx = haloCanvas.getContext("2d", {
+  alpha: false,
+}) as CanvasRenderingContext2D;
+
+export const haloScale = 4;
 
 export function render(gameState: GameState) {
   if (!gameState.readyToRender) return;
@@ -94,55 +102,98 @@ export function render(gameState: GameState) {
   // Clear
   if (!isOptionOn("basic") && !level.color && level.svg) {
     // Without this the light trails everything
-    ctx.globalCompositeOperation = "source-over";
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, width, height);
+    // ctx.globalCompositeOperation = "source-over";
+    // ctx.globalAlpha = 1;
+    // ctx.fillStyle = "#000";
+    // ctx.fillRect(0, 0, width, height);
 
-    ctx.globalCompositeOperation = "screen";
-    ctx.globalAlpha = 0.6;
+    haloCanvasCtx.globalCompositeOperation = "source-over";
+    haloCanvasCtx.globalAlpha = 1;
+    haloCanvasCtx.fillStyle = "#000";
+    haloCanvasCtx.fillRect(0, 0, width / haloScale, height / haloScale);
+
+    haloCanvasCtx.globalCompositeOperation = "screen";
+    haloCanvasCtx.globalAlpha = 0.6;
 
     forEachLiveOne(gameState.coins, (coin) => {
-      drawFuzzyBall(ctx, coin.color, gameState.coinSize * 2, coin.x, coin.y);
+      haloCanvasCtx.globalAlpha = 0.9;
+      drawFuzzyBall(
+        haloCanvasCtx,
+        coin.color,
+        (gameState.coinSize * 1.5) / haloScale,
+        coin.x / haloScale,
+        coin.y / haloScale,
+      );
+
+      haloCanvasCtx.globalAlpha = 0.4;
+      drawFuzzyBall(
+        haloCanvasCtx,
+        coin.color,
+        (gameState.coinSize * 6) / haloScale,
+        coin.x / haloScale,
+        coin.y / haloScale,
+      );
     });
     gameState.balls.forEach((ball) => {
       drawFuzzyBall(
-        ctx,
+        haloCanvasCtx,
         gameState.ballsColor,
-        gameState.ballSize * 2,
-        ball.x,
-        ball.y,
+        (gameState.ballSize * 2) / haloScale,
+        ball.x / haloScale,
+        ball.y / haloScale,
+      );
+      drawFuzzyBall(
+        haloCanvasCtx,
+        gameState.ballsColor,
+        (gameState.ballSize * 4) / haloScale,
+        ball.x / haloScale,
+        ball.y / haloScale,
       );
     });
-    ctx.globalAlpha = 0.5;
+    haloCanvasCtx.globalAlpha = 0.6;
     gameState.bricks.forEach((color, index) => {
       if (!color) return;
       const x = brickCenterX(gameState, index),
         y = brickCenterY(gameState, index);
       drawFuzzyBall(
-        ctx,
+        haloCanvasCtx,
         color == "black" ? "#666" : color,
-        gameState.brickWidth,
-        x,
-        y,
+        (gameState.brickWidth * 2) / haloScale,
+        x / haloScale,
+        y / haloScale,
       );
     });
-    ctx.globalAlpha = 1;
 
     forEachLiveOne(gameState.particles, (flash) => {
       const { x, y, time, color, size, duration } = flash;
       const elapsed = gameState.levelTime - time;
-      ctx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2);
-      drawFuzzyBall(ctx, color, size * 3, x, y);
+      haloCanvasCtx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2);
+      drawFuzzyBall(
+        haloCanvasCtx,
+        color,
+        size / haloScale,
+        x / haloScale,
+        y / haloScale,
+      );
+      drawFuzzyBall(
+        haloCanvasCtx,
+        color,
+        (size * 4) / haloScale,
+        x / haloScale,
+        y / haloScale,
+      );
     });
 
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+    ctx.drawImage(haloCanvas, 0, 0, width, height);
     // Decides how brights the bg black parts can get
-    ctx.globalAlpha = 0.2;
-    ctx.globalCompositeOperation = "multiply";
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, width, height);
+    // ctx.globalAlpha = 0.2;
+    // ctx.globalCompositeOperation = "multiply";
+    // ctx.fillStyle = "black";
+    // ctx.fillRect(0, 0, width, height);
     // Decides how dark the background black parts are when lit (1=black)
-    ctx.globalAlpha = 0.8;
+    ctx.globalAlpha = 0.9;
     ctx.globalCompositeOperation = "multiply";
     if (level.svg && background.width && background.complete) {
       if (backgroundCanvas.title !== level.name) {
@@ -222,7 +273,10 @@ export function render(gameState: GameState) {
   // Coins
   ctx.globalAlpha = 1;
   forEachLiveOne(gameState.coins, (coin) => {
-    ctx.globalCompositeOperation = "source-over";
+    // ctx.globalCompositeOperation = "source-over";
+    ctx.globalCompositeOperation = isOptionOn("opaque_coins")
+      ? "source-over"
+      : "screen";
     // ctx.globalCompositeOperation =
     //   coin.color === "gold" || level.color ? "source-over" : "screen";
     drawCoin(
@@ -233,7 +287,9 @@ export function render(gameState: GameState) {
       coin.y,
       (hasCombo && gameState.perks.asceticism && "red") ||
         (coin.color === "gold" && "gold") ||
-        gameState.puckColor,
+        isOptionOn("opaque_coins")
+        ? gameState.puckColor
+        : coin.color,
       coin.a,
     );
   });
@@ -279,9 +335,7 @@ export function render(gameState: GameState) {
     ctx.globalAlpha = Math.max(0, Math.min(1, 2 - (elapsed / duration) * 2));
     ctx.globalCompositeOperation = "screen";
     drawBall(ctx, color, size, x, y);
-    drawFuzzyBall(ctx, color, size, x, y);
   });
-
   if (gameState.perks.extra_life) {
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";

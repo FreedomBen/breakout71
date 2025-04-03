@@ -45,6 +45,8 @@ import {
   backgroundCanvas,
   ctx,
   gameCanvas,
+  haloCanvas,
+  haloScale,
   render,
   scoreDisplay,
 } from "./render";
@@ -127,11 +129,14 @@ export const fitSize = () => {
   gameState.canvasHeight = height;
   gameCanvas.width = width;
   gameCanvas.height = height;
-  ctx.fillStyle = currentLevelInfo(gameState)?.color || "black";
-  ctx.globalAlpha = 1;
-  ctx.fillRect(0, 0, width, height);
+  // ctx.fillStyle = currentLevelInfo(gameState)?.color || "black";
+  // ctx.globalAlpha = 1;
+  // ctx.fillRect(0, 0, width, height);
   backgroundCanvas.width = width;
   backgroundCanvas.height = height;
+
+  haloCanvas.width = width / haloScale;
+  haloCanvas.height = height / haloScale;
 
   gameState.gameZoneHeight = isOptionOn("mobile-mode")
     ? (height * 80) / 100

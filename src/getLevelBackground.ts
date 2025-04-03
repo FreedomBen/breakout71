@@ -2,14 +2,8 @@ import { RawLevel } from "./types";
 
 import _backgrounds from "./data/backgrounds.json";
 const backgrounds = _backgrounds as string[];
-
 export function getLevelBackground(level: RawLevel) {
-  let svg = level.svg !== null && backgrounds[level.svg % backgrounds.length];
-
-  if (!level.color && !svg) {
-    svg = backgrounds[hashCode(level.name) % backgrounds.length];
-  }
-  return svg;
+  return backgrounds[hashCode(level.name) % backgrounds.length];
 }
 
 export function hashCode(string: string) {
