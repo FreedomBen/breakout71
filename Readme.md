@@ -18,11 +18,13 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 ## Todo
 
 ## Next release
+
+## 29061490
  
-- Graphics : option to make coins more readable (on by default)
 - Graphics : option to add more light (on by default)
-- Graphics : background effects are not computed on a much smaller resolution, and then stretched out to the full res
-- Graphics : all levels background have been checked (4 buggy ones removed) and will be asigned randomly
+- Graphics : option to make coins more readable (on by default)
+- Graphics : background light effects optimization 
+- Graphics : all levels background have been checked (4 buggy ones removed) and will be assigned randomly
 - Fixed : display gained combo was showing +0 sometimes
 
 ## 29060272

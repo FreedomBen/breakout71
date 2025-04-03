@@ -102,7 +102,7 @@ export function render(gameState: GameState) {
   // Clear
   if (!isOptionOn("basic") && level.svg && level.color === "#000000") {
     haloCanvasCtx.globalCompositeOperation = "source-over";
-    haloCanvasCtx.globalAlpha = 0.8;
+    haloCanvasCtx.globalAlpha = 0.9;
     haloCanvasCtx.fillStyle = level.color;
     haloCanvasCtx.fillRect(0, 0, width / haloScale, height / haloScale);
 
@@ -114,17 +114,17 @@ export function render(gameState: GameState) {
       drawFuzzyBall(
         haloCanvasCtx,
         coin.color,
-        (gameState.coinSize * 1.5) / haloScale,
+        (gameState.coinSize * 2) / haloScale,
         coin.x / haloScale,
         coin.y / haloScale,
       );
 
       if (isOptionOn("extra_bright")) {
-        haloCanvasCtx.globalAlpha = 0.4;
+        haloCanvasCtx.globalAlpha = 0.5;
         drawFuzzyBall(
           haloCanvasCtx,
           coin.color,
-          (gameState.coinSize * 6) / haloScale,
+          (gameState.coinSize * 10) / haloScale,
           coin.x / haloScale,
           coin.y / haloScale,
         );
@@ -134,7 +134,7 @@ export function render(gameState: GameState) {
       drawFuzzyBall(
         haloCanvasCtx,
         gameState.ballsColor,
-        gameState.ballSize / haloScale,
+        (gameState.ballSize * 3) / haloScale,
         ball.x / haloScale,
         ball.y / haloScale,
       );
@@ -142,12 +142,12 @@ export function render(gameState: GameState) {
         drawFuzzyBall(
           haloCanvasCtx,
           gameState.ballsColor,
-          (gameState.ballSize * 4) / haloScale,
+          (gameState.ballSize * 6) / haloScale,
           ball.x / haloScale,
           ball.y / haloScale,
         );
     });
-    haloCanvasCtx.globalAlpha = 0.6;
+    haloCanvasCtx.globalAlpha = isOptionOn("extra_bright") ? 0.2 : 0.05;
     gameState.bricks.forEach((color, index) => {
       if (!color) return;
       const x = brickCenterX(gameState, index),
@@ -155,8 +155,7 @@ export function render(gameState: GameState) {
       drawFuzzyBall(
         haloCanvasCtx,
         color == "black" ? "#666" : color,
-        (gameState.brickWidth * (isOptionOn("extra_bright") ? 2 : 1)) /
-          haloScale,
+        (gameState.brickWidth * 2) / haloScale,
         x / haloScale,
         y / haloScale,
       );
@@ -169,7 +168,7 @@ export function render(gameState: GameState) {
       drawFuzzyBall(
         haloCanvasCtx,
         color,
-        size / haloScale,
+        (size * 3) / haloScale,
         x / haloScale,
         y / haloScale,
       );
@@ -177,7 +176,7 @@ export function render(gameState: GameState) {
         drawFuzzyBall(
           haloCanvasCtx,
           color,
-          (size * 4) / haloScale,
+          (size * 6) / haloScale,
           x / haloScale,
           y / haloScale,
         );
@@ -187,7 +186,7 @@ export function render(gameState: GameState) {
     ctx.globalCompositeOperation = "source-over";
     ctx.drawImage(haloCanvas, 0, 0, width, height);
 
-    ctx.globalAlpha = 0.9;
+    ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "multiply";
     if (level.svg && background.width && background.complete) {
       if (backgroundCanvas.title !== level.name) {
@@ -262,12 +261,7 @@ export function render(gameState: GameState) {
       Math.sin(Date.now() + 36) * amplitude,
     );
   }
-  // if (gameState.perks.bigger_explosions && !isOptionOn("basic") && shaked) {
-  //   gameCanvas.style.filter =
-  //     "brightness(" + (1 + 100 / (1 + lastExplosionDelay)) + ")";
-  // } else {
-  //   gameCanvas.style.filter = "";
-  // }
+
   // Coins
   ctx.globalAlpha = 1;
   forEachLiveOne(gameState.coins, (coin) => {

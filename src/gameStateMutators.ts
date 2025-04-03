@@ -1370,7 +1370,7 @@ export function gameStateTick(
     } else if (gameState.levelTime > r.time) {
       setBrick(gameState, r.index, r.color);
       destroy(gameState.respawns, ri);
-    } else if (!isOptionOn("basic")) {
+    } else {
       const { index, color } = r;
       const vertical = Math.random() > 0.5;
       const dx = Math.random() > 0.5 ? 1 : -1;
