@@ -594,7 +594,12 @@ export function addToScore(gameState: GameState, coin: Coin) {
   schedulGameSound(gameState, "coinCatch", coin.x, 1);
   gameState.runStatistics.score += coin.points;
   if (gameState.perks.asceticism) {
-    resetCombo(gameState, coin.x, coin.y);
+    decreaseCombo(
+      gameState,
+      gameState.perks.asceticism * 3 * coin.points,
+      coin.x,
+      coin.y,
+    );
   }
 }
 
@@ -1133,13 +1138,18 @@ export function gameStateTick(
             gameState.puckHeight * (coin.points ? 1 : -1)
       ) {
         addToScore(gameState, coin);
-
         destroy(gameState.coins, coinIndex);
-      } else if (coin.y > gameState.canvasHeight + coinRadius) {
+      } else if (coin.y > gameState.canvasHeight + coinRadius * 10) {
         gameState.levelLostCoins += coin.points;
         destroy(gameState.coins, coinIndex);
         if (gameState.perks.compound_interest) {
           resetCombo(gameState, coin.x, gameState.gameZoneHeight - 20);
+        }
+        if (
+          gameState.combo < gameState.perks.fountain_toss * 30 &&
+          Math.random() < (1 / gameState.combo) * gameState.perks.fountain_toss
+        ) {
+          increaseCombo(gameState, 1, coin.x, gameState.gameZoneHeight - 20);
         }
       } else if (
         gameState.perks.unbounded &&

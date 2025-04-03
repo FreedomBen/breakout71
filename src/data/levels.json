@@ -1166,5 +1166,12 @@
     "bricks": "__rrrr___r____r_r_r__r_rr__rr__rr__rr__rr_r__r_r_r____r___rrrr__",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:fountain_toss",
+    "size": 12,
+    "bricks": "________________tttt______tttggttt____tggggggt____t__gg__t____tllggllt___ltbyggbbtl_lbtttggtytblgyttybbtttyggggttbbtyggg_gggggggggg____gggggg___",
+    "svg": null,
+    "color": ""
   }
 ]

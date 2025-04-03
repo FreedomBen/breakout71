@@ -643,4 +643,15 @@ export const rawUpgrades = [
       t("upgrades.addiction.help", { lvl, delay: (5 / lvl).toFixed(2) }),
     fullHelp: t("upgrades.addiction.fullHelp"),
   },
+  {
+    requires: "",
+    threshold: 170000,
+    giftable: false,
+    id: "fountain_toss",
+    max: 7,
+    name: t("upgrades.fountain_toss.name"),
+    help: (lvl: number) =>
+      t("upgrades.fountain_toss.help", { lvl, max: lvl * 30 }),
+    fullHelp: t("upgrades.fountain_toss.fullHelp"),
+  },
 ] as const;
