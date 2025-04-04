@@ -19,6 +19,9 @@ fi
 set -e
 set -x
 
+# clear output folders first, so that they are empty for failed builds
+rm -rf ./build/*
+rm -rf ./app/src/main/assets/*
 
 
 
@@ -40,12 +43,18 @@ find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all= -overwrite_original
 npx prettier --write src/
 
 npx jest
-rm -rf build/*
+
+# Actual js app build
 npx parcel build src/index.html --dist-dir build
-rm -rf ./app/src/main/assets/*
+
+# Add public files to the web version, but not to the apk
 cp public/* build
-rm -rf ./app/src/main/assets/*
+
+# Add only index.html file to the apk, it should be enough
 cp build/index.html ./app/src/main/assets/
 
-# generate signed apk 
+# generate signed apk for itch.io
 ./gradlew assembleRelease
+
+# generate signed bundle for play store
+./gradlew bundleRelease
