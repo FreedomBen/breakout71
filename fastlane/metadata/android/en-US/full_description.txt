@@ -1,13 +1,13 @@
 <p>
-This is a roguelite twist on the original Breakout/Arkanoid formula:
+This is a roguelike twist on the original Breakout formula:
 The goal is to catch as many coins as possible during 7 levels.
 Coins appear when you break bricks.
 They fly around, bounce and roll, and you need to catch them with your puck.
 At the end of the level, you get to pick upgrades.
 There are 50+ different upgrades that impact the gameplay in various ways.
-Many upgrade will impact your combo,that's the number of coins spawned for each brick broken.
+Many upgrades will impact your combo, that's the number of coins spawned for each brick broken.
 Your "combo" is displayed on your puck. Your score is displayed in the top right corner of the screen.
-Oh and don't miss the ball, you don't have extra lives.
+Oh, and don't miss the ball, you don't have extra lives.
 </p>
 
 <p>

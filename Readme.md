@@ -15,7 +15,15 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 # Changelog
 
-## Next
+## To do
+- redo video
+- review fastlane text
+- translate presentation texts to french
+- use fastlane for play store
+
+## Done
+
+## 29062687
 
 - "Miss warning" option is now on by default (ball's particles are red if catching it would be a "miss")
 - "Show +X in gold"  option is now on by default (show a +X when combo increases)
