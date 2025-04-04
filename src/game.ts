@@ -291,7 +291,7 @@ export async function openUpgradesPicker(gameState: GameState) {
     level: gameState.currentLevel + 1,
     max: max_levels(gameState),
   })} </p>
-        <p>${levelsListHTMl(gameState)}</p>
+        <p>${levelsListHTMl(gameState, gameState.currentLevel + 1)}</p>
 `,
         ...actions,
         pickedUpgradesHTMl(gameState),
@@ -456,7 +456,7 @@ async function openScorePanel() {
 
     content: [
       pickedUpgradesHTMl(gameState),
-      levelsListHTMl(gameState),
+      levelsListHTMl(gameState, gameState.currentLevel),
       gameState.rerolls
         ? t("score_panel.rerolls_count", { rerolls: gameState.rerolls })
         : "",

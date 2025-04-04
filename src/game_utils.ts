@@ -2,6 +2,7 @@ import { Ball, GameState, Level, PerkId, PerksMap } from "./types";
 import { icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { brickAt } from "./level_editor/levels_editor_util";
+import { clamp } from "./pure_functions";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -83,6 +84,7 @@ export function max_levels(gameState: GameState) {
 
 export function pickedUpgradesHTMl(gameState: GameState) {
   const upgradesList = getPossibleUpgrades(gameState)
+    .filter((u) => gameState.bannedPerks[u.id] || gameState.perks[u.id])
     .map((u) => {
       const newMax = Math.max(0, u.max - gameState.bannedPerks[u.id]);
 
@@ -118,12 +120,12 @@ export function pickedUpgradesHTMl(gameState: GameState) {
   return ` <p>${t("score_panel.upgrades_picked")}</p>` + upgradesList.join("");
 }
 
-export function levelsListHTMl(gameState: GameState) {
+export function levelsListHTMl(gameState: GameState, level: number) {
   if (!gameState.perks.clairvoyant) return "";
   if (gameState.mode === "creative") return "";
   let list = "";
   for (let i = 0; i < max_levels(gameState); i++) {
-    list += `<span style="opacity: ${i >= gameState.currentLevel ? 1 : 0.2}" title="${gameState.runLevels[i].name}">${icons[gameState.runLevels[i].name]}</span>`;
+    list += `<span style="opacity: ${i >= level ? 1 : 0.2}" title="${gameState.runLevels[i].name}">${icons[gameState.runLevels[i].name]}</span>`;
   }
   return `<p>${t("score_panel.upcoming_levels")}</p><p>${list}</p>`;
 }
@@ -159,11 +161,21 @@ export function reachRedRowIndex(gameState: GameState) {
   return maxY;
 }
 
-export function isTelekinesisActive(gameState: GameState, ball: Ball) {
-  return gameState.perks.telekinesis && ball.vy < 0;
+export function telekinesisEffectRate(gameState: GameState, ball: Ball) {
+  return (
+    (gameState.perks.telekinesis &&
+      ball.vy < 0 &&
+      clamp((ball.y / gameState.gameZoneHeight) * 1.1 + 0.1, 0, 1)) ||
+    0
+  );
 }
-export function isYoyoActive(gameState: GameState, ball: Ball) {
-  return gameState.perks.yoyo && ball.vy > 0;
+export function yoyoEffectRate(gameState: GameState, ball: Ball) {
+  return (
+    (gameState.perks.yoyo &&
+      ball.vy > 0 &&
+      clamp(1 - (ball.y / gameState.gameZoneHeight) * 1.1 + 0.1, 0, 1)) ||
+    0
+  );
 }
 
 export function findLast<T>(

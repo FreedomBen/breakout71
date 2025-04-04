@@ -874,7 +874,7 @@ async function openUpgradesPicker(gameState) {
                     level: gameState.currentLevel + 1,
                     max: (0, _gameUtils.max_levels)(gameState)
                 })} </p>
-        <p>${(0, _gameUtils.levelsListHTMl)(gameState)}</p>
+        <p>${(0, _gameUtils.levelsListHTMl)(gameState, gameState.currentLevel + 1)}</p>
 `,
                 ...actions,
                 (0, _gameUtils.pickedUpgradesHTMl)(gameState),
@@ -983,7 +983,7 @@ async function openScorePanel() {
         }),
         content: [
             (0, _gameUtils.pickedUpgradesHTMl)(gameState),
-            (0, _gameUtils.levelsListHTMl)(gameState),
+            (0, _gameUtils.levelsListHTMl)(gameState, gameState.currentLevel),
             gameState.rerolls ? (0, _i18N.t)("score_panel.rerolls_count", {
                 rerolls: gameState.rerolls
             }) : ""
@@ -1482,7 +1482,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29061838\"");
+module.exports = JSON.parse("\"29062545\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2062,7 +2062,7 @@ const rawUpgrades = [
         threshold: 145000,
         giftable: false,
         id: "clairvoyant",
-        max: 3,
+        max: 1,
         name: (0, _i18N.t)("upgrades.clairvoyant.name"),
         help: (lvl)=>(0, _i18N.t)("upgrades.clairvoyant.help"),
         fullHelp: (0, _i18N.t)("upgrades.clairvoyant.fullHelp")
@@ -2622,8 +2622,8 @@ parcelHelpers.export(exports, "levelsListHTMl", ()=>levelsListHTMl);
 parcelHelpers.export(exports, "currentLevelInfo", ()=>currentLevelInfo);
 parcelHelpers.export(exports, "isPickyEatingPossible", ()=>isPickyEatingPossible);
 parcelHelpers.export(exports, "reachRedRowIndex", ()=>reachRedRowIndex);
-parcelHelpers.export(exports, "isTelekinesisActive", ()=>isTelekinesisActive);
-parcelHelpers.export(exports, "isYoyoActive", ()=>isYoyoActive);
+parcelHelpers.export(exports, "telekinesisEffectRate", ()=>telekinesisEffectRate);
+parcelHelpers.export(exports, "yoyoEffectRate", ()=>yoyoEffectRate);
 parcelHelpers.export(exports, "findLast", ()=>findLast);
 parcelHelpers.export(exports, "distance2", ()=>distance2);
 parcelHelpers.export(exports, "distanceBetween", ()=>distanceBetween);
@@ -2633,6 +2633,7 @@ parcelHelpers.export(exports, "isMovingWhilePassiveIncome", ()=>isMovingWhilePas
 parcelHelpers.export(exports, "highScoreForMode", ()=>highScoreForMode);
 var _loadGameData = require("./loadGameData");
 var _i18N = require("./i18n/i18n");
+var _pureFunctions = require("./pure_functions");
 function describeLevel(level) {
     let bricks = 0, colors = new Set(), bombs = 0;
     level.bricks.forEach((color)=>{
@@ -2689,7 +2690,7 @@ function max_levels(gameState) {
     return Math.max(7 + gameState.perks.extra_levels - gameState.loop, 1);
 }
 function pickedUpgradesHTMl(gameState) {
-    const upgradesList = getPossibleUpgrades(gameState).map((u)=>{
+    const upgradesList = getPossibleUpgrades(gameState).filter((u)=>gameState.bannedPerks[u.id] || gameState.perks[u.id]).map((u)=>{
         const newMax = Math.max(0, u.max - gameState.bannedPerks[u.id]);
         let bars = [];
         for(let i = 0; i < Math.max(u.max, newMax, gameState.perks[u.id]); i++){
@@ -2719,11 +2720,11 @@ function pickedUpgradesHTMl(gameState) {
     }).sort((a, b)=>a.state - b.state).map((a)=>a.html);
     return ` <p>${(0, _i18N.t)("score_panel.upgrades_picked")}</p>` + upgradesList.join("");
 }
-function levelsListHTMl(gameState) {
+function levelsListHTMl(gameState, level) {
     if (!gameState.perks.clairvoyant) return "";
     if (gameState.mode === "creative") return "";
     let list = "";
-    for(let i = 0; i < max_levels(gameState); i++)list += `<span style="opacity: ${i >= gameState.currentLevel ? 1 : 0.2}" title="${gameState.runLevels[i].name}">${(0, _loadGameData.icons)[gameState.runLevels[i].name]}</span>`;
+    for(let i = 0; i < max_levels(gameState); i++)list += `<span style="opacity: ${i >= level ? 1 : 0.2}" title="${gameState.runLevels[i].name}">${(0, _loadGameData.icons)[gameState.runLevels[i].name]}</span>`;
     return `<p>${(0, _i18N.t)("score_panel.upcoming_levels")}</p><p>${list}</p>`;
 }
 function currentLevelInfo(gameState) {
@@ -2749,11 +2750,11 @@ function reachRedRowIndex(gameState) {
     if (maxYCount === size) return -1;
     return maxY;
 }
-function isTelekinesisActive(gameState, ball) {
-    return gameState.perks.telekinesis && ball.vy < 0;
+function telekinesisEffectRate(gameState, ball) {
+    return gameState.perks.telekinesis && ball.vy < 0 && (0, _pureFunctions.clamp)(ball.y / gameState.gameZoneHeight * 1.1 + 0.1, 0, 1) || 0;
 }
-function isYoyoActive(gameState, ball) {
-    return gameState.perks.yoyo && ball.vy > 0;
+function yoyoEffectRate(gameState, ball) {
+    return gameState.perks.yoyo && ball.vy > 0 && (0, _pureFunctions.clamp)(1 - ball.y / gameState.gameZoneHeight * 1.1 + 0.1, 0, 1) || 0;
 }
 function findLast(arr, predicate) {
     let i = arr.length;
@@ -2823,7 +2824,7 @@ function highScoreForMode(mode) {
     return "";
 }
 
-},{"./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2n0gK":[function(require,module,exports,__globalThis) {
+},{"./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./pure_functions":"6pQh7"}],"2n0gK":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 if ("serviceWorker" in navigator && window.location.href.endsWith("/index.html?isPWA=true")) {
@@ -3520,13 +3521,13 @@ function ballTick(gameState, ball, delta) {
     ball.previousVX = ball.vx;
     ball.previousVY = ball.vy;
     let speedLimitDampener = 1 + gameState.perks.telekinesis + gameState.perks.ball_repulse_ball + gameState.perks.puck_repulse_ball + gameState.perks.ball_attract_ball;
-    if ((0, _gameUtils.isTelekinesisActive)(gameState, ball)) {
+    if ((0, _gameUtils.telekinesisEffectRate)(gameState, ball) > 0) {
         speedLimitDampener += 3;
-        ball.vx += (gameState.puckPosition - ball.x) / 1000 * delta * gameState.perks.telekinesis;
+        ball.vx += (gameState.puckPosition - ball.x) / 1000 * delta * gameState.perks.telekinesis * (0, _gameUtils.telekinesisEffectRate)(gameState, ball);
     }
-    if ((0, _gameUtils.isYoyoActive)(gameState, ball)) {
+    if ((0, _gameUtils.yoyoEffectRate)(gameState, ball) > 0) {
         speedLimitDampener += 3;
-        ball.vx += (gameState.puckPosition - ball.x) / 1000 * delta * gameState.perks.yoyo;
+        ball.vx += (gameState.puckPosition - ball.x) / 1000 * delta * gameState.perks.yoyo * (0, _gameUtils.yoyoEffectRate)(gameState, ball);
     }
     if (ball.vx * ball.vx + ball.vy * ball.vy < gameState.baseSpeed * gameState.baseSpeed * 2) {
         ball.vx *= 1 + 0.02 / speedLimitDampener;
@@ -3555,7 +3556,7 @@ function ballTick(gameState, ball, delta) {
     if (borderHitCode) {
         if (gameState.perks.left_is_lava && borderHitCode % 2 && ball.x < gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(gameState, ball.x, ball.y);
         if (gameState.perks.right_is_lava && borderHitCode % 2 && ball.x > gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(gameState, ball.x, ball.y);
-        if (gameState.perks.top_is_lava && borderHitCode >= 2) resetCombo(gameState, ball.x, ball.y + gameState.ballSize);
+        if (gameState.perks.top_is_lava && borderHitCode >= 2) resetCombo(gameState, ball.x, ball.y + gameState.ballSize * 3);
         if (gameState.perks.trampoline) decreaseCombo(gameState, gameState.perks.trampoline, ball.x, ball.y + gameState.ballSize);
         schedulGameSound(gameState, "wallBeep", ball.x, 1);
         gameState.levelWallBounces++;
@@ -3997,15 +3998,17 @@ function render(gameState) {
         const drawingColor = gameState.ballsColor;
         // The white border around is to distinguish colored balls from coins/bg
         drawBall(ctx, drawingColor, gameState.ballSize, ball.x, ball.y, gameState.puckColor);
-        if ((0, _gameUtils.isTelekinesisActive)(gameState, ball) || (0, _gameUtils.isYoyoActive)(gameState, ball)) {
+        if ((0, _gameUtils.telekinesisEffectRate)(gameState, ball) || (0, _gameUtils.yoyoEffectRate)(gameState, ball)) {
             ctx.beginPath();
             ctx.moveTo(gameState.puckPosition, gameState.gameZoneHeight);
+            ctx.globalAlpha = Math.max((0, _gameUtils.telekinesisEffectRate)(gameState, ball), (0, _gameUtils.yoyoEffectRate)(gameState, ball));
             ctx.strokeStyle = gameState.puckColor;
             ctx.bezierCurveTo(gameState.puckPosition, gameState.gameZoneHeight, gameState.puckPosition, ball.y, ball.x, ball.y);
             ctx.stroke();
             ctx.lineWidth = 2;
             ctx.setLineDash(emptyArray);
         }
+        ctx.globalAlpha = 1;
         if (gameState.perks.clairvoyant && gameState.ballStickToPuck) {
             ctx.strokeStyle = gameState.ballsColor;
             ctx.beginPath();

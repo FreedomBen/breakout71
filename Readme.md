@@ -17,14 +17,18 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Todo
 
-## Next release
+- Perks list now only lists upgrades that have been picked, or have banned levels 
+- After clearing a level, that level is dimmed in the clairvoyant level list [Bearded-Axe]
+- limited clairvoyant to level one outside looped runs [obigre]
+- yoyo now has more effect when the ball is at the top of the screen [obigre]
+- telekinesis now has more effect when the ball is at the bottom of the screen 
+- "Top is lava" combo lost text is now spawned a bit lower to be more visible [obigre]
+
+## 29061838
 
 - New perk : Fountain toss [colin] - loosing coins makes your combo grow  
 - Boosted : Asceticism now decreases combo instead of resetting it
-
-## 29061801
-
-- Graphics : show respawn particles even in basic mode
+- Graphics : show respawn particles even in basic mode [obigre]
 - Graphics : adjusted the brightness of the game a bit more
 
 ## 29061490

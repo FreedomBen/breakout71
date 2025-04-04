@@ -24,8 +24,8 @@ import {
   getRowColIndex,
   isMovingWhilePassiveIncome,
   isPickyEatingPossible,
-  isTelekinesisActive,
-  isYoyoActive,
+  telekinesisEffectRate,
+  yoyoEffectRate,
   makeEmptyPerksMap,
   max_levels,
   reachRedRowIndex,
@@ -1428,17 +1428,22 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     gameState.perks.puck_repulse_ball +
     gameState.perks.ball_attract_ball;
 
-  if (isTelekinesisActive(gameState, ball)) {
+  if (telekinesisEffectRate(gameState, ball) > 0) {
     speedLimitDampener += 3;
     ball.vx +=
       ((gameState.puckPosition - ball.x) / 1000) *
       delta *
-      gameState.perks.telekinesis;
+      gameState.perks.telekinesis *
+      telekinesisEffectRate(gameState, ball);
   }
-  if (isYoyoActive(gameState, ball)) {
+  if (yoyoEffectRate(gameState, ball) > 0) {
     speedLimitDampener += 3;
+
     ball.vx +=
-      ((gameState.puckPosition - ball.x) / 1000) * delta * gameState.perks.yoyo;
+      ((gameState.puckPosition - ball.x) / 1000) *
+      delta *
+      gameState.perks.yoyo *
+      yoyoEffectRate(gameState, ball);
   }
   if (
     ball.vx * ball.vx + ball.vy * ball.vy <
@@ -1511,7 +1516,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     }
 
     if (gameState.perks.top_is_lava && borderHitCode >= 2) {
-      resetCombo(gameState, ball.x, ball.y + gameState.ballSize);
+      resetCombo(gameState, ball.x, ball.y + gameState.ballSize * 3);
     }
     if (gameState.perks.trampoline) {
       decreaseCombo(

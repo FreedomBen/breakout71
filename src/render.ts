@@ -7,8 +7,8 @@ import {
   currentLevelInfo,
   isMovingWhilePassiveIncome,
   isPickyEatingPossible,
-  isTelekinesisActive,
-  isYoyoActive,
+  telekinesisEffectRate,
+  yoyoEffectRate,
   max_levels,
   reachRedRowIndex,
 } from "./game_utils";
@@ -363,10 +363,16 @@ export function render(gameState: GameState) {
       gameState.puckColor,
     );
 
-    if (isTelekinesisActive(gameState, ball) || isYoyoActive(gameState, ball)) {
+    if (
+      telekinesisEffectRate(gameState, ball) ||
+      yoyoEffectRate(gameState, ball)
+    ) {
       ctx.beginPath();
       ctx.moveTo(gameState.puckPosition, gameState.gameZoneHeight);
-
+      ctx.globalAlpha = Math.max(
+        telekinesisEffectRate(gameState, ball),
+        yoyoEffectRate(gameState, ball),
+      );
       ctx.strokeStyle = gameState.puckColor;
       ctx.bezierCurveTo(
         gameState.puckPosition,
@@ -381,6 +387,7 @@ export function render(gameState: GameState) {
       ctx.lineWidth = 2;
       ctx.setLineDash(emptyArray);
     }
+    ctx.globalAlpha = 1;
     if (gameState.perks.clairvoyant && gameState.ballStickToPuck) {
       ctx.strokeStyle = gameState.ballsColor;
       ctx.beginPath();
