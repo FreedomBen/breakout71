@@ -22,6 +22,8 @@ set -x
 # clear output folders first, so that they are empty for failed builds
 rm -rf ./build/*
 rm -rf ./app/src/main/assets/*
+rm -rf  ./app/build/outputs/apk/release/
+rm -rf  ./app/build/outputs/bundle/release/
 
 
 

@@ -16,12 +16,15 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 
 ## To do
-- redo video
-- review fastlane text
 - translate presentation texts to french
 - use fastlane for play store
+- tauri
 
 ## Done
+
+- publish 29062687 on play store
+- redo video
+- review fastlane text
 
 ## 29062687
 
