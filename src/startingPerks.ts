@@ -38,7 +38,8 @@ export async function openStartingPerksEditor() {
   });
 
   const perk: Upgrade | null | void = await asyncAlert({
-    title: t("main_menu.starting_perks"),className:'actionsAsGrid',
+    title: t("main_menu.starting_perks"),
+    className: "actionsAsGrid",
     content: [
       t("main_menu.starting_perks_checked"),
       ...buttons.filter((b) => b.checked),

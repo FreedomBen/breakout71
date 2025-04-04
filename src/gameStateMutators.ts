@@ -430,7 +430,7 @@ export function explodeBrick(
         cy,
         ball.previousVX * (0.5 + Math.random()),
         ball.previousVY * (0.5 + Math.random()),
-         color,
+        color,
 
         points,
       );
@@ -583,7 +583,9 @@ export function addToScore(gameState: GameState, coin: Coin) {
       coin.previousY,
       (gameState.canvasWidth - coin.x) / 100,
       -coin.y / 100,
-  gameState.perks.metamorphosis || isOptionOn("colorful_coins") ? coin.color : 'gold',
+      gameState.perks.metamorphosis || isOptionOn("colorful_coins")
+        ? coin.color
+        : "gold",
 
       true,
       gameState.coinSize / 2,
@@ -1116,7 +1118,10 @@ export function gameStateTick(
             coin.x,
             coin.y,
             0,
-            gameState.baseSpeed, gameState.perks.metamorphosis || isOptionOn("colorful_coins") ? coin.color : 'gold',
+            gameState.baseSpeed,
+            gameState.perks.metamorphosis || isOptionOn("colorful_coins")
+              ? coin.color
+              : "gold",
             true,
             5,
             250,

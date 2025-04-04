@@ -53,7 +53,7 @@ export async function openCreativeModePerksPicker(
   while (
     (choice = await requiredAsyncAlert<Upgrade | Level | "reset">({
       title: t("lab.title", { lvl: currentLevel + 1 }),
-      className:'actionsAsGrid',
+      className: "actionsAsGrid",
       content: [
         t("lab.instructions"),
         {

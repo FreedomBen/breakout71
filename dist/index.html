@@ -1278,7 +1278,7 @@ async function openSettingsMenu() {
             ...actions
         ],
         allowClose: true,
-        className: 'settings'
+        className: "settings"
     });
     if (cb) {
         cb();
@@ -1354,7 +1354,7 @@ async function openUnlocksList() {
             ...levelActions
         ],
         allowClose: true,
-        className: 'actionsAsGrid'
+        className: "actionsAsGrid"
     });
     if (tryOn) {
         if (await confirmRestart(gameState)) restart({
@@ -1494,7 +1494,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29062545\"");
+module.exports = JSON.parse("\"29062687\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -3149,7 +3149,7 @@ function addToScore(gameState, coin) {
         gameState.highScore = gameState.score;
         localStorage.setItem("breakout-3-hs-" + gameState.mode, gameState.score.toString());
     }
-    if (!(0, _options.isOptionOn)("basic")) makeParticle(gameState, coin.previousX, coin.previousY, (gameState.canvasWidth - coin.x) / 100, -coin.y / 100, gameState.perks.metamorphosis || (0, _options.isOptionOn)("colorful_coins") ? coin.color : 'gold', true, gameState.coinSize / 2, 100 + Math.random() * 50);
+    if (!(0, _options.isOptionOn)("basic")) makeParticle(gameState, coin.previousX, coin.previousY, (gameState.canvasWidth - coin.x) / 100, -coin.y / 100, gameState.perks.metamorphosis || (0, _options.isOptionOn)("colorful_coins") ? coin.color : "gold", true, gameState.coinSize / 2, 100 + Math.random() * 50);
     schedulGameSound(gameState, "coinCatch", coin.x, 1);
     gameState.runStatistics.score += coin.points;
     if (gameState.perks.asceticism) decreaseCombo(gameState, gameState.perks.asceticism * 3 * coin.points, coin.x, coin.y);
@@ -3423,7 +3423,7 @@ frames = 1) {
             if (!gameState.perks.etherealcoins) {
                 const flip = gameState.perks.helium > 0 && Math.abs(coin.x - gameState.puckPosition) * 2 > gameState.puckWidth + coin.size;
                 coin.vy += frames * coin.weight * 0.8 * (flip ? -gameState.perks.helium : 1);
-                if (flip && !(0, _options.isOptionOn)("basic") && Math.random() < 0.1) makeParticle(gameState, coin.x, coin.y, 0, gameState.baseSpeed, gameState.perks.metamorphosis || (0, _options.isOptionOn)("colorful_coins") ? coin.color : 'gold', true, 5, 250);
+                if (flip && !(0, _options.isOptionOn)("basic") && Math.random() < 0.1) makeParticle(gameState, coin.x, coin.y, 0, gameState.baseSpeed, gameState.perks.metamorphosis || (0, _options.isOptionOn)("colorful_coins") ? coin.color : "gold", true, 5, 250);
             }
             const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
             const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
@@ -3876,7 +3876,7 @@ function render(gameState) {
         haloCanvasCtx.fillRect(0, 0, width / haloScale, height / haloScale);
         haloCanvasCtx.globalCompositeOperation = "screen";
         (0, _gameStateMutators.forEachLiveOne)(gameState.coins, (coin)=>{
-            const color = gameState.perks.metamorphosis || (0, _options.isOptionOn)("colorful_coins") ? coin.color : 'gold';
+            const color = gameState.perks.metamorphosis || (0, _options.isOptionOn)("colorful_coins") ? coin.color : "gold";
             haloCanvasCtx.globalAlpha = 0.5;
             drawFuzzyBall(haloCanvasCtx, color, gameState.coinSize * 2 / haloScale, coin.x / haloScale, coin.y / haloScale);
             if ((0, _options.isOptionOn)("extra_bright")) {
@@ -3972,7 +3972,7 @@ function render(gameState) {
     // Coins
     ctx.globalAlpha = 1;
     (0, _gameStateMutators.forEachLiveOne)(gameState.coins, (coin)=>{
-        const color = gameState.perks.metamorphosis || (0, _options.isOptionOn)("colorful_coins") ? coin.color : 'gold';
+        const color = gameState.perks.metamorphosis || (0, _options.isOptionOn)("colorful_coins") ? coin.color : "gold";
         // ctx.globalCompositeOperation = "source-over";
         ctx.globalCompositeOperation = color === "gold" || level.color !== "#000000" || (0, _options.isOptionOn)("opaque_coins") ? "source-over" : "screen";
         drawCoin(ctx, color, coin.size, coin.x, coin.y, hasCombo && gameState.perks.asceticism && "red" || color === "gold" && "gold" || (0, _options.isOptionOn)("opaque_coins") ? gameState.puckColor : color, coin.a);
@@ -4075,15 +4075,15 @@ function render(gameState) {
     if (!(0, _options.isOptionOn)("basic") && (0, _options.isOptionOn)("contrast") && level.svg && level.color === "#000000") {
         // haloCanvasCtx.globalCompositeOperation = 'multiply';
         // haloCanvasCtx.fillRect(0,0,haloCanvas.width,haloCanvas.height)
-        haloCanvasCtx.fillStyle = 'white';
+        haloCanvasCtx.fillStyle = "white";
         haloCanvasCtx.globalAlpha = 0.25;
-        haloCanvasCtx.globalCompositeOperation = 'screen';
+        haloCanvasCtx.globalCompositeOperation = "screen";
         haloCanvasCtx.fillRect(0, 0, haloCanvas.width, haloCanvas.height);
         ctx.globalAlpha = 1;
         ctx.globalCompositeOperation = "soft-light";
         ctx.drawImage(haloCanvas, 0, 0, width, height);
     }
-    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalCompositeOperation = "source-over";
     ctx.globalAlpha = 1;
     if ((0, _options.isOptionOn)("mobile-mode") && !gameState.running) drawText(ctx, (0, _i18N.t)("play.mobile_press_to_play"), gameState.puckColor, gameState.puckHeight, gameState.canvasWidth / 2, gameState.gameZoneHeight + (gameState.canvasHeight - gameState.gameZoneHeight) / 2);
     if (shaked) ctx.resetTransform();
@@ -4685,7 +4685,7 @@ function requiredAsyncAlert(p) {
         allowClose: false
     });
 }
-async function asyncAlert({ title, content = [], allowClose = true, className = '' }) {
+async function asyncAlert({ title, content = [], allowClose = true, className = "" }) {
     updateAlertsOpen(1);
     return new Promise((resolve)=>{
         popupWrap.className = className;
@@ -4940,7 +4940,7 @@ async function openCreativeModePerksPicker(gameState, currentLevel) {
         title: (0, _i18N.t)("lab.title", {
             lvl: currentLevel + 1
         }),
-        className: 'actionsAsGrid',
+        className: "actionsAsGrid",
         content: [
             (0, _i18N.t)("lab.instructions"),
             {
@@ -5111,7 +5111,7 @@ async function openStartingPerksEditor() {
     });
     const perk = await (0, _asyncAlert.asyncAlert)({
         title: (0, _i18N.t)("main_menu.starting_perks"),
-        className: 'actionsAsGrid',
+        className: "actionsAsGrid",
         content: [
             (0, _i18N.t)("main_menu.starting_perks_checked"),
             ...buttons.filter((b)=>b.checked),

@@ -99,10 +99,6 @@ export function render(gameState: GameState) {
   scoreDisplay.className =
     gameState.lastScoreIncrease > gameState.levelTime - 500 ? "active" : "";
 
-
-
-
-
   // Clear
   if (!isOptionOn("basic") && level.svg && level.color === "#000000") {
     haloCanvasCtx.globalCompositeOperation = "source-over";
@@ -113,8 +109,10 @@ export function render(gameState: GameState) {
     haloCanvasCtx.globalCompositeOperation = "screen";
 
     forEachLiveOne(gameState.coins, (coin) => {
-        const color= gameState.perks.metamorphosis || isOptionOn("colorful_coins") ?
-      coin.color : 'gold';
+      const color =
+        gameState.perks.metamorphosis || isOptionOn("colorful_coins")
+          ? coin.color
+          : "gold";
       haloCanvasCtx.globalAlpha = 0.5;
       drawFuzzyBall(
         haloCanvasCtx,
@@ -136,7 +134,7 @@ export function render(gameState: GameState) {
       }
     });
     gameState.balls.forEach((ball) => {
-        haloCanvasCtx.globalAlpha = 0.5;
+      haloCanvasCtx.globalAlpha = 0.5;
       drawFuzzyBall(
         haloCanvasCtx,
         gameState.ballsColor,
@@ -145,14 +143,13 @@ export function render(gameState: GameState) {
         ball.y / haloScale,
       );
       if (isOptionOn("extra_bright")) {
-
         haloCanvasCtx.globalAlpha = 0.2;
         drawFuzzyBall(
-            haloCanvasCtx,
-            gameState.ballsColor,
-            (gameState.ballSize * 6) / haloScale,
-            ball.x / haloScale,
-            ball.y / haloScale,
+          haloCanvasCtx,
+          gameState.ballsColor,
+          (gameState.ballSize * 6) / haloScale,
+          ball.x / haloScale,
+          ball.y / haloScale,
         );
       }
     });
@@ -182,13 +179,13 @@ export function render(gameState: GameState) {
         y / haloScale,
       );
       if (isOptionOn("extra_bright")) {
-        haloCanvasCtx.globalAlpha *= 0.5
+        haloCanvasCtx.globalAlpha *= 0.5;
         drawFuzzyBall(
-            haloCanvasCtx,
-            color,
-            (size * 6) / haloScale,
-            x / haloScale,
-            y / haloScale,
+          haloCanvasCtx,
+          color,
+          (size * 6) / haloScale,
+          x / haloScale,
+          y / haloScale,
         );
       }
     });
@@ -276,8 +273,10 @@ export function render(gameState: GameState) {
   // Coins
   ctx.globalAlpha = 1;
   forEachLiveOne(gameState.coins, (coin) => {
-    const color= gameState.perks.metamorphosis || isOptionOn("colorful_coins") ?
-      coin.color : 'gold'
+    const color =
+      gameState.perks.metamorphosis || isOptionOn("colorful_coins")
+        ? coin.color
+        : "gold";
     // ctx.globalCompositeOperation = "source-over";
     ctx.globalCompositeOperation =
       color === "gold" ||
@@ -550,22 +549,25 @@ export function render(gameState: GameState) {
     1,
   );
 
-
-  if (!isOptionOn("basic") && isOptionOn("contrast") && level.svg && level.color === "#000000") {
-
+  if (
+    !isOptionOn("basic") &&
+    isOptionOn("contrast") &&
+    level.svg &&
+    level.color === "#000000"
+  ) {
     // haloCanvasCtx.globalCompositeOperation = 'multiply';
     // haloCanvasCtx.fillRect(0,0,haloCanvas.width,haloCanvas.height)
-    haloCanvasCtx.fillStyle = 'white'
+    haloCanvasCtx.fillStyle = "white";
     haloCanvasCtx.globalAlpha = 0.25;
-    haloCanvasCtx.globalCompositeOperation = 'screen';
-    haloCanvasCtx.fillRect(0,0,haloCanvas.width,haloCanvas.height)
+    haloCanvasCtx.globalCompositeOperation = "screen";
+    haloCanvasCtx.fillRect(0, 0, haloCanvas.width, haloCanvas.height);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "soft-light";
     ctx.drawImage(haloCanvas, 0, 0, width, height);
   }
 
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = "source-over";
+  ctx.globalAlpha = 1;
   if (isOptionOn("mobile-mode") && !gameState.running) {
     drawText(
       ctx,
@@ -577,7 +579,6 @@ export function render(gameState: GameState) {
         (gameState.canvasHeight - gameState.gameZoneHeight) / 2,
     );
   }
-
 
   if (shaked) {
     ctx.resetTransform();
