@@ -15,7 +15,15 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 # Changelog
 
-## Todo
+## Next
+
+- "Miss warning" option is now on by default (ball's particles are red if catching it would be a "miss")
+- "Show +X in gold"  option is now on by default (show a +X when combo increases)
+- "High contrast" option added, off by default (applies lights layer again as "soft light" at the end of the render)
+- "Colorful coins" option now applied at render time instead of coin spawn time, to make preview easier
+- when settings are opened on pc, they show up on the side and the overlay is transparent to let you preview the changes
+
+## 29062545
 
 - Perks list now only lists upgrades that have been picked, or have banned levels 
 - After clearing a level, that level is dimmed in the clairvoyant level list [Bearded-Axe]
@@ -48,7 +56,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - QOL: publish an apk to itch.io with every build 
 - Internal: added a simple game data migration system 
  
-## 29059721.
+## 29059721
 
 - QOL: icons in settings menu
 - QOL: choose starting perks
@@ -71,7 +79,6 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - added reset button for perks in lab mode
 
 ## 29058469
-
 
 - New game mode : loop / long game
   - the goal is to build many different build centered on one perk

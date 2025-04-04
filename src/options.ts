@@ -35,6 +35,11 @@ export const options = {
     name: t("main_menu.extra_bright"),
     help: t("main_menu.extra_bright_help"),
   },
+  contrast: {
+    default: false,
+    name: t("main_menu.contrast"),
+    help: t("main_menu.contrast_help"),
+  },
   show_fps: {
     default: false,
     name: t("main_menu.show_fps"),
@@ -72,12 +77,12 @@ export const options = {
     help: t("main_menu.donation_reminder_help"),
   },
   red_miss: {
-    default: false,
+    default: true,
     name: t("main_menu.red_miss"),
     help: t("main_menu.red_miss_help"),
   },
   comboIncreaseTexts: {
-    default: false,
+    default: true,
     name: t("main_menu.comboIncreaseTexts"),
     help: t("main_menu.comboIncreaseTexts_help"),
   },

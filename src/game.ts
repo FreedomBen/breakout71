@@ -798,6 +798,7 @@ async function openSettingsMenu() {
     title: t("main_menu.settings_title"),
     content: [t("main_menu.settings_help"), ...actions],
     allowClose: true,
+    className:'settings',
   });
   if (cb) {
     cb();
@@ -874,8 +875,7 @@ async function openUnlocksList() {
       t("unlocks.level"),
       ...levelActions,
     ],
-    allowClose: true,
-    actionsAsGrid: true,
+    allowClose: true,className:'actionsAsGrid',
   });
   if (tryOn) {
     if (await confirmRestart(gameState)) {

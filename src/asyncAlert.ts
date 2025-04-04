@@ -28,7 +28,7 @@ let lastClickedItemIndex = -1;
 export function requiredAsyncAlert<t>(p: {
   title?: string;
   content: (string | AsyncAlertAction<t>)[];
-  actionsAsGrid?: boolean;
+  className?:string;
 }): Promise<t> {
   return asyncAlert({ ...p, allowClose: false });
 }
@@ -37,16 +37,16 @@ export async function asyncAlert<t>({
   title,
   content = [],
   allowClose = true,
-  actionsAsGrid = false,
+  className = '',
 }: {
   title?: string;
   content: (string | AsyncAlertAction<t>)[];
   allowClose?: boolean;
-  actionsAsGrid?: boolean;
+  className?:string;
 }): Promise<t | void> {
   updateAlertsOpen(+1);
   return new Promise((resolve) => {
-    popupWrap.className = actionsAsGrid ? " actionsAsGrid" : "";
+    popupWrap.className = className ;
     closeModaleButton.style.display = allowClose ? "" : "none";
 
     const popup = document.createElement("div");

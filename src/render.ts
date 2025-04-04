@@ -39,7 +39,7 @@ const haloCanvasCtx = haloCanvas.getContext("2d", {
   alpha: false,
 }) as CanvasRenderingContext2D;
 
-export const haloScale = 4;
+export const haloScale = 8;
 
 export function render(gameState: GameState) {
   if (!gameState.readyToRender) return;
@@ -99,6 +99,10 @@ export function render(gameState: GameState) {
   scoreDisplay.className =
     gameState.lastScoreIncrease > gameState.levelTime - 500 ? "active" : "";
 
+
+
+
+
   // Clear
   if (!isOptionOn("basic") && level.svg && level.color === "#000000") {
     haloCanvasCtx.globalCompositeOperation = "source-over";
@@ -107,23 +111,24 @@ export function render(gameState: GameState) {
     haloCanvasCtx.fillRect(0, 0, width / haloScale, height / haloScale);
 
     haloCanvasCtx.globalCompositeOperation = "screen";
-    haloCanvasCtx.globalAlpha = 0.6;
 
     forEachLiveOne(gameState.coins, (coin) => {
-      haloCanvasCtx.globalAlpha = 0.9;
+        const color= gameState.perks.metamorphosis || isOptionOn("colorful_coins") ?
+      coin.color : 'gold';
+      haloCanvasCtx.globalAlpha = 0.5;
       drawFuzzyBall(
         haloCanvasCtx,
-        coin.color,
+        color,
         (gameState.coinSize * 2) / haloScale,
         coin.x / haloScale,
         coin.y / haloScale,
       );
 
       if (isOptionOn("extra_bright")) {
-        haloCanvasCtx.globalAlpha = 0.5;
+        haloCanvasCtx.globalAlpha = 0.2;
         drawFuzzyBall(
           haloCanvasCtx,
-          coin.color,
+          color,
           (gameState.coinSize * 10) / haloScale,
           coin.x / haloScale,
           coin.y / haloScale,
@@ -131,6 +136,7 @@ export function render(gameState: GameState) {
       }
     });
     gameState.balls.forEach((ball) => {
+        haloCanvasCtx.globalAlpha = 0.5;
       drawFuzzyBall(
         haloCanvasCtx,
         gameState.ballsColor,
@@ -138,14 +144,17 @@ export function render(gameState: GameState) {
         ball.x / haloScale,
         ball.y / haloScale,
       );
-      if (isOptionOn("extra_bright"))
+      if (isOptionOn("extra_bright")) {
+
+        haloCanvasCtx.globalAlpha = 0.2;
         drawFuzzyBall(
-          haloCanvasCtx,
-          gameState.ballsColor,
-          (gameState.ballSize * 6) / haloScale,
-          ball.x / haloScale,
-          ball.y / haloScale,
+            haloCanvasCtx,
+            gameState.ballsColor,
+            (gameState.ballSize * 6) / haloScale,
+            ball.x / haloScale,
+            ball.y / haloScale,
         );
+      }
     });
     haloCanvasCtx.globalAlpha = isOptionOn("extra_bright") ? 0.2 : 0.05;
     gameState.bricks.forEach((color, index) => {
@@ -172,14 +181,16 @@ export function render(gameState: GameState) {
         x / haloScale,
         y / haloScale,
       );
-      if (isOptionOn("extra_bright"))
+      if (isOptionOn("extra_bright")) {
+        haloCanvasCtx.globalAlpha *= 0.5
         drawFuzzyBall(
-          haloCanvasCtx,
-          color,
-          (size * 6) / haloScale,
-          x / haloScale,
-          y / haloScale,
+            haloCanvasCtx,
+            color,
+            (size * 6) / haloScale,
+            x / haloScale,
+            y / haloScale,
         );
+      }
     });
 
     ctx.globalAlpha = 1;
@@ -265,26 +276,26 @@ export function render(gameState: GameState) {
   // Coins
   ctx.globalAlpha = 1;
   forEachLiveOne(gameState.coins, (coin) => {
+    const color= gameState.perks.metamorphosis || isOptionOn("colorful_coins") ?
+      coin.color : 'gold'
     // ctx.globalCompositeOperation = "source-over";
     ctx.globalCompositeOperation =
-      coin.color === "gold" ||
+      color === "gold" ||
       level.color !== "#000000" ||
       isOptionOn("opaque_coins")
         ? "source-over"
         : "screen";
-    // ctx.globalCompositeOperation =
-    //   coin.color === "gold" || level.color ? "source-over" : "screen";
     drawCoin(
       ctx,
-      coin.color,
+      color,
       coin.size,
       coin.x,
       coin.y,
       (hasCombo && gameState.perks.asceticism && "red") ||
-        (coin.color === "gold" && "gold") ||
+        (color === "gold" && "gold") ||
         isOptionOn("opaque_coins")
         ? gameState.puckColor
-        : coin.color,
+        : color,
       coin.a,
     );
   });
@@ -539,6 +550,22 @@ export function render(gameState: GameState) {
     1,
   );
 
+
+  if (!isOptionOn("basic") && isOptionOn("contrast") && level.svg && level.color === "#000000") {
+
+    // haloCanvasCtx.globalCompositeOperation = 'multiply';
+    // haloCanvasCtx.fillRect(0,0,haloCanvas.width,haloCanvas.height)
+    haloCanvasCtx.fillStyle = 'white'
+    haloCanvasCtx.globalAlpha = 0.25;
+    haloCanvasCtx.globalCompositeOperation = 'screen';
+    haloCanvasCtx.fillRect(0,0,haloCanvas.width,haloCanvas.height)
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "soft-light";
+    ctx.drawImage(haloCanvas, 0, 0, width, height);
+  }
+
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 1;
   if (isOptionOn("mobile-mode") && !gameState.running) {
     drawText(
       ctx,
@@ -550,6 +577,7 @@ export function render(gameState: GameState) {
         (gameState.canvasHeight - gameState.gameZoneHeight) / 2,
     );
   }
+
 
   if (shaked) {
     ctx.resetTransform();
