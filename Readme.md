@@ -16,18 +16,33 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 
 ## To do
-- translate presentation texts to french
-- use fastlane for play store
-- tauri
+
+- remove the slow mode
+- ignore scores in creative mode
+- add unlock conditions for levels in the form "reach high score X with perk A,B,C but without perk B,C,D"
+- archive each version as an html file and apk
+
 
 ## Done
 
+- tried and cancelled native desktop app build with tauri because : 
+  - there's no cross compilation, so no exe build on linux
+  - you need to sign executable differently for each platform
+  - the .deb and .rmp files were 3.8M for a 0.1M app 
+  - the appimage was crazy big (100M)
+  - I'd need a mac to make a mac version that probably wouldn't run without doing the app store dance with apple
 - publish 29062687 on play store
 - redo video
 - review fastlane text
 
 ## 29062687
 
+- tried and cancelled webgl rendering
+  - it's a lot of code
+  - i'm not great at it
+  - it requires a significant rewrite
+  - for most things, no perf difference
+  - the main goal of having more colorful backgrounds can be achieved by running the lights layer at lower res
 - "Miss warning" option is now on by default (ball's particles are red if catching it would be a "miss")
 - "Show +X in gold"  option is now on by default (show a +X when combo increases)
 - "High contrast" option added, off by default (applies lights layer again as "soft light" at the end of the render)
@@ -161,6 +176,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## UX / gameplay
 
+- translate fastlane presentation texts to french
 - mobile option: relative movement of the touch would be amplified and added to the puck 
 - mobile option: don't pause on mobile when lifting finger
 - [obigre] Offer to level ups perks separately from picking new ones 
@@ -329,4 +345,4 @@ This requires recording a bit more info about each run.
 - missile goes when you catch coin
 - missile goes when you break a brick 
 - [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran : i'll probably just let the second puck replace this
-
+ 

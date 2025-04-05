@@ -22,8 +22,8 @@ set -x
 # clear output folders first, so that they are empty for failed builds
 rm -rf ./build/*
 rm -rf ./app/src/main/assets/*
-rm -rf  ./app/build/outputs/apk/release/
-rm -rf  ./app/build/outputs/bundle/release/
+rm -rf  ./app/build/outputs/apk/release/*
+rm -rf  ./app/build/outputs/bundle/release/*
 
 
 
@@ -36,8 +36,6 @@ echo "\"$versionCode\"" > src/data/version.json
 
 # Update service worker
 sed -i -e "s/VERSION = .*/ VERSION = '$versionCode'/"  ./src/PWA/sw-b71.js
-
-
 
 # remove all exif metadata from pictures, because i think fdroid doesn't like that. odd
 find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all= -overwrite_original
@@ -60,3 +58,5 @@ cp build/index.html ./app/src/main/assets/
 
 # generate signed bundle for play store
 ./gradlew bundleRelease
+
+

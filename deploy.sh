@@ -32,3 +32,10 @@ butler push "./build/index.html" renanlecaro/breakout71:latest --userversion $ve
 butler push  "./build/index.html" renanlecaro/breakout71:offline --userversion $versionCode
 butler push app/build/outputs/apk/release/app-release.apk renanlecaro/breakout71:apk --userversion $versionCode
 
+# archive the output files
+FOLDER="/opt/mup-nginx-proxy/config/html/static_sites/archive.lecaro.me/public-files/b71/$versionCode"
+ssh staging "mkdir -p $FOLDER"
+rsync -vz "./build/index.html" staging:$DOMAIN/b71-$versionCode.html
+rsync -vz "./app/build/outputs/apk/release/app-release.apk" staging:$DOMAIN/b71-$versionCode.apk
+
+
