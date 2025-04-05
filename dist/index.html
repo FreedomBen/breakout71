@@ -1124,20 +1124,17 @@ async function openSettingsMenu() {
             }
         }
     });
-    for (const key of Object.keys((0, _options.options))){
-        if (key == "record" && "__TAURI__" in window) continue;
-        if ((0, _options.options)[key]) actions.push({
-            icon: (0, _options.isOptionOn)(key) ? (0, _loadGameData.icons)["icon:checkmark_checked"] : (0, _loadGameData.icons)["icon:checkmark_unchecked"],
-            text: (0, _options.options)[key].name,
-            help: (0, _options.options)[key].help,
-            value: ()=>{
-                (0, _options.toggleOption)(key);
-                fitSize();
-                applyFullScreenChoice();
-                openSettingsMenu();
-            }
-        });
-    }
+    for (const key of Object.keys((0, _options.options)))if ((0, _options.options)[key]) actions.push({
+        icon: (0, _options.isOptionOn)(key) ? (0, _loadGameData.icons)["icon:checkmark_checked"] : (0, _loadGameData.icons)["icon:checkmark_unchecked"],
+        text: (0, _options.options)[key].name,
+        help: (0, _options.options)[key].help,
+        value: ()=>{
+            (0, _options.toggleOption)(key);
+            fitSize();
+            applyFullScreenChoice();
+            openSettingsMenu();
+        }
+    });
     actions.push({
         icon: (0, _loadGameData.icons)["icon:download"],
         text: (0, _i18N.t)("main_menu.download_save_file"),
@@ -1497,7 +1494,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
     }));
 
 },{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iyP6E":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("\"29062946\"");
+module.exports = JSON.parse("\"29064068\"");
 
 },{}],"1u3Dx":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");

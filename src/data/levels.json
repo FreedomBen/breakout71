@@ -1198,7 +1198,7 @@
   {
     "name": "City",
     "size": 18,
-    "bricks": "_____________________OO_______________OOOO_____________OOOOOO____________bbbbbb____________byybyb____________byybyb____________bbbbbb__OO________bybyyb_OOOO__kkk__bybyybOOOOOO_kkk__bbbbbbtttttt_kkk__byybybtyyyyt_kkk__byybybtyyyyt_kkk__bbbbbbtttttt__O___bybyybtytyyt__O___bybyybtttttt__O__llllllllllllllllllllllllllllllllllll",
+    "bricks": "_______yyy___bbbbb________yyy__ybyyb________yyy__ybyyb__tt___yyy_b_ybbbb_tttt______bbbbbbbtttttt_______ybyybbbbbbb_______ybyybbyybyb_____b_ybbbbbyybyb_____bbbbbbbbbbbbb__bb___bbbbbbybyyb_bbbb__ybyybbybyybbbbbbb_ybyybbbbbbbtttttt_ybbbbbyybybtyyyyt_bbbbbbyybybtyyyyt_bbbbbbbbbbbtttttt_byybybybyybtytyyt_byybybybyybtttttt_byybb",
     "svg": null,
     "color": ""
   },
