@@ -8,7 +8,7 @@ import { describeLevel, highScoreText, sumOfValues } from "./game_utils";
 
 export function creativeMode(gameState: GameState) {
   return {
-    icon: icons["icon:sandbox"],
+    icon: icons["icon:creative"],
     text: t("lab.menu_entry"),
     help:
       // highScoreForMode("creative") ||

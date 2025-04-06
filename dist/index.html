@@ -4871,7 +4871,7 @@ var _asyncAlert = require("./asyncAlert");
 var _gameUtils = require("./game_utils");
 function creativeMode(gameState) {
     return {
-        icon: (0, _loadGameData.icons)["icon:sandbox"],
+        icon: (0, _loadGameData.icons)["icon:creative"],
         text: (0, _i18N.t)("lab.menu_entry"),
         help: // highScoreForMode("creative") ||
         (0, _settings.getTotalScore)() < (0, _game.creativeModeThreshold) && (0, _i18N.t)("lab.unlocks_at", {
