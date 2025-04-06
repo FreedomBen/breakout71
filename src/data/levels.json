@@ -2,7 +2,7 @@
   {
     "name": "71 mini",
     "size": 5,
-    "bricks": "bbb____bt__btt__b_t___ttt",
+    "bricks": "bbb____tt__btt__b_t___ttt",
     "svg": 1,
     "color": ""
   },
@@ -972,14 +972,14 @@
   {
     "name": "icon:settings",
     "size": 8,
-    "bricks": "_g_g_g_gggggggg__gbbbbggggb__bg__gb__bggggbbbbg__gggggggg_g_g_g_",
+    "bricks": "_l_l_l_llllllll__lbbbbllllb__bl__lb__bllllbbbbl__llllllll_l_l_l_",
     "svg": null,
     "color": ""
   },
   {
     "name": "icon:unlocks",
     "size": 7,
-    "bricks": "gggg___g__g___g__g______bbbb___bbbb___bbbb___bbbb",
+    "bricks": "eeee___e__e___e__e______ctCb___Gbsc___tOGO___OCbs",
     "svg": null,
     "color": ""
   },
@@ -1264,13 +1264,6 @@
     "name": "Abstract 6",
     "size": 13,
     "bricks": "_vvvvv_vvvvv__v___v_v___v__v_bbbbbbb_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_vvv_b_v__v_b_____b_v__vvvvvvvvvvv_bbbb_____bbbb",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "name": "icon:new_run",
-    "size": 8,
-    "bricks": "____b_______bb__ggggbbb_ggggbbbbggggbbb_____bb______b___________",
     "svg": null,
     "color": ""
   }
