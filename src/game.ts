@@ -480,7 +480,7 @@ export async function openMainMenu() {
 
   const actions: AsyncAlertAction<() => void>[] = [
     {
-      icon: icons["icon:7_levels_run"],
+      icon: icons["icon:new_run"],
       text: t("main_menu.normal"),
       help: highScoreText() || t("main_menu.normal_help"),
       value: () => {

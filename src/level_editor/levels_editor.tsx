@@ -1,4 +1,4 @@
-import { Palette, RawLevel } from "../types";
+import {Level, Palette, RawLevel} from "../types";
 import _backgrounds from "../data/backgrounds.json";
 import _palette from "../data/palette.json";
 import _allLevels from "../data/levels.json";
@@ -26,11 +26,11 @@ function App() {
     [],
   );
 
-  const deleteLevel = useCallback((li: number) => {
+  const deleteLevel = useCallback((level: RawLevel) => {
     if (confirm("Delete level")) {
-      setLevels(levels.filter((l, i) => i !== li));
+      setLevels(levels.filter((l, i) => l!==level));
     }
-  }, []);
+  }, [levels]);
 
   useEffect(() => {
     const timoutId = setTimeout(() => {
@@ -110,7 +110,7 @@ function App() {
               />
 
               <div className={"buttons"}>
-                <button onClick={() => deleteLevel(li)}>Delete</button>
+                <button onClick={() => deleteLevel(level)}>Delete</button>
                 <button onClick={() => updateLevel(li, resizeLevel(level, -1))}>
                   -
                 </button>
