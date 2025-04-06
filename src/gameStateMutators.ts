@@ -76,10 +76,10 @@ export function resetBalls(gameState: GameState) {
   const count = 1 + (gameState.perks?.multiball || 0);
   const perBall = gameState.puckWidth / (count + 1);
   gameState.balls = [];
-  gameState.ballsColor = "#FFF";
+  gameState.ballsColor = "#FFFFFF";
   if (gameState.perks.picky_eater || gameState.perks.pierce_color) {
     gameState.ballsColor =
-      getMajorityValue(gameState.bricks.filter((i) => i)) || "#FFF";
+      getMajorityValue(gameState.bricks.filter((i) => i)) || "#FFFFFF";
   }
   for (let i = 0; i < count; i++) {
     const x =
@@ -131,8 +131,7 @@ export function normalizeGameState(gameState: GameState) {
     gameState.gameZoneWidth / 12 / 10 +
       gameState.currentLevel / 3 +
       gameState.levelTime / (30 * 1000) -
-      gameState.perks.slow_down * 2 +
-      gameState.loop,
+      gameState.perks.slow_down * 2
   );
 
   gameState.puckWidth = Math.max(
@@ -174,7 +173,7 @@ export function normalizeGameState(gameState: GameState) {
 
 export function baseCombo(gameState: GameState) {
   return (
-    gameState.baseCombo +
+    1 +
     gameState.perks.base_combo * 3 +
     gameState.perks.smaller_puck * 5
   );
@@ -206,7 +205,7 @@ export function resetCombo(
         gameState,
         x,
         y,
-        "red",
+        "#FF0000",
         "-" + lost,
         20,
         500 + clamp(lost, 0, 500),
@@ -231,7 +230,7 @@ export function increaseCombo(
     typeof x !== "undefined" &&
     typeof y !== "undefined"
   ) {
-    makeText(gameState, x, y, "gold", "+" + by, 25, 400 + by);
+    makeText(gameState, x, y, "#ffd300", "+" + by, 25, 400 + by);
   }
 }
 export function decreaseCombo(
@@ -247,7 +246,7 @@ export function decreaseCombo(
   if (lost) {
     schedulGameSound(gameState, "comboDecrease", x, 1);
     if (typeof x !== "undefined" && typeof y !== "undefined") {
-      makeText(gameState, x, y, "red", "-" + lost, 20, 400 + lost);
+      makeText(gameState, x, y, "#FF0000", "-" + lost, 20, 400 + lost);
     }
   }
 }
@@ -342,11 +341,10 @@ export function explosionAt(
   });
   gameState.lastExplosion = Date.now();
 
-  // makeLight(gameState, x, y, "white", gameState.brickWidth * 2, 150);
   if (gameState.perks.implosions) {
-    spawnImplosion(gameState, 7 * size, x, y, "white");
+    spawnImplosion(gameState, 7 * size, x, y, "#FFFFFF");
   } else {
-    spawnExplosion(gameState, 7 * size, x, y, "white");
+    spawnExplosion(gameState, 7 * size, x, y, "#FFFFFF");
   }
 
   gameState.runStatistics.bricks_broken++;
@@ -566,13 +564,14 @@ export function schedulGameSound(
 }
 
 export function addToScore(gameState: GameState, coin: Coin) {
+
   gameState.score += coin.points;
   gameState.lastScoreIncrease = gameState.levelTime;
   addToTotalScore(gameState, coin.points);
-  if (gameState.score > gameState.highScore) {
+  if (gameState.score > gameState.highScore && !gameState.creative) {
     gameState.highScore = gameState.score;
     localStorage.setItem(
-      "breakout-3-hs-" + gameState.mode,
+      "breakout-3-hs-short" ,
       gameState.score.toString(),
     );
   }
@@ -585,7 +584,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
       -coin.y / 100,
       gameState.perks.metamorphosis || isOptionOn("colorful_coins")
         ? coin.color
-        : "gold",
+        : "#ffd300",
 
       true,
       gameState.coinSize / 2,
@@ -605,62 +604,6 @@ export function addToScore(gameState: GameState, coin: Coin) {
   }
 }
 
-export async function gotoNextLoop(gameState: GameState) {
-  pause(false);
-  gameState.loop++;
-  gameState.runStatistics.loops++;
-  gameState.runLevels = getRunLevels(gameState.totalScoreAtRunStart, {});
-  gameState.upgradesOfferedFor = -1;
-
-  let comboText = "";
-  if (gameState.rerolls) {
-    comboText = t("loop.converted_rerolls", { n: gameState.rerolls });
-    gameState.baseCombo += gameState.rerolls;
-    gameState.rerolls = 0;
-  } else {
-    comboText = t("loop.no_rerolls");
-  }
-
-  const userPerks = upgrades.filter((u) => gameState.perks[u.id]);
-
-  const keep = await requiredAsyncAlert<PerkId>({
-    title: t("loop.title", { loop: gameState.loop }),
-    content: [
-      t("loop.instructions"),
-      comboText,
-      ...userPerks
-        .filter((u) => u.id !== "instant_upgrade")
-        .map((u) => {
-          return {
-            text:
-              u.name +
-              t("level_up.upgrade_perk_to_level", {
-                level: gameState.perks[u.id] + 1,
-              }),
-            icon: u.icon,
-            value: u.id,
-            help: u.help(gameState.perks[u.id] + 1),
-          };
-        }),
-    ],
-  });
-  // Decrease max level of all perks
-  userPerks.forEach((u) => {
-    if (u.id !== keep) {
-      gameState.bannedPerks[u.id] += gameState.perks[u.id];
-    }
-  });
-
-  // Increase max level of kept perk by 2
-  gameState.bannedPerks[keep] -= 2;
-
-  // Increase current level of kept perk by 1
-  Object.assign(gameState.perks, makeEmptyPerksMap(upgrades), {
-    [keep]: gameState.perks[keep] + 1,
-  });
-
-  await setLevel(gameState, 0);
-}
 function recordBestWorstLevelScore(gameState: GameState) {
   const levelScore = gameState.score - gameState.levelStartScore;
   const { runStatistics } = gameState;
@@ -689,9 +632,7 @@ export async function setLevel(gameState: GameState, l: number) {
   stopRecording();
   recordBestWorstLevelScore(gameState);
 
-  if (gameState.mode === "creative") {
-    await openCreativeModePerksPicker(gameState, l);
-  } else if (l > 0) {
+    if (l > 0) {
     await openUpgradesPicker(gameState);
   }
   gameState.currentLevel = l;
@@ -749,7 +690,6 @@ export async function setLevel(gameState: GameState, l: number) {
   background.src = "data:image/svg+xml;UTF8," + lvl.svg;
 
   document.body.style.setProperty("--level-background", lvl.color || "#000");
-  gameState.readyToRender = true;
 }
 
 function setBrick(gameState: GameState, index: number, color: string) {
@@ -760,8 +700,17 @@ function setBrick(gameState: GameState, index: number, color: string) {
     0;
 }
 
+const rainbow=[
+    '#ff2e2e',
+    '#ffe02e',
+    '#70ff33',
+    '#33ffa7',
+    '#38acff',
+    '#7038ff',
+    '#ff3de5',
+]
 export function rainbowColor(): colorString {
-  return `hsl(${(Math.round(gameState.levelTime / 4) * 2) % 360},100%,70%)`;
+  return  rainbow[Math.floor(gameState.levelTime / 50) %rainbow.length ]
 }
 
 export function repulse(
@@ -1050,12 +999,10 @@ export function gameStateTick(
   ) {
     if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
-    } else if (gameState.loop < (gameState.mode === "long" ? 7 : 0)) {
-      gotoNextLoop(gameState);
-    } else {
+    }  else {
       gameOver(
-        t("gameOver.7_loop.title", { loop: gameState.loop }),
-        t("gameOver.7_loop.summary", { score: gameState.score }),
+        t("gameOver.win.title" ),
+        t("gameOver.win.summary", { score: gameState.score }),
       );
     }
   } else if (gameState.running || gameState.levelTime) {
@@ -1091,7 +1038,7 @@ export function gameStateTick(
 
       const ratio =
         1 -
-        ((gameState.perks.viscosity * 0.03 + 0.005) * frames) /
+        ((gameState.perks.viscosity * 0.03 + 0.002) * frames) /
           (1 + gameState.perks.etherealcoins);
 
       coin.vy *= ratio;
@@ -1121,7 +1068,7 @@ export function gameStateTick(
             gameState.baseSpeed,
             gameState.perks.metamorphosis || isOptionOn("colorful_coins")
               ? coin.color
-              : "gold",
+              : "#ffd300",
             true,
             5,
             250,
@@ -1300,7 +1247,7 @@ export function gameStateTick(
         0,
         (Math.random() - 0.5) * 10,
         5,
-        "red",
+        "#FF0000",
         true,
         gameState.coinSize / 2,
         100 * (Math.random() + 1),
@@ -1314,7 +1261,7 @@ export function gameStateTick(
         Math.random() * gameState.gameZoneHeight,
         5,
         (Math.random() - 0.5) * 10,
-        "red",
+        "#FF0000",
         true,
         gameState.coinSize / 2,
         100 * (Math.random() + 1),
@@ -1328,7 +1275,7 @@ export function gameStateTick(
         Math.random() * gameState.gameZoneHeight,
         -5,
         (Math.random() - 0.5) * 10,
-        "red",
+        "#FF0000",
         true,
         gameState.coinSize / 2,
         100 * (Math.random() + 1),
@@ -1354,7 +1301,7 @@ export function gameStateTick(
         gameState.gameZoneHeight,
         (Math.random() - 0.5) * 10,
         -5,
-        "red",
+        "#FF0000",
         true,
         gameState.coinSize / 2,
         100 * (Math.random() + 1),
@@ -1368,7 +1315,7 @@ export function gameStateTick(
         gameState.gameZoneHeight - gameState.puckHeight,
         pos * 10,
         -5,
-        "red",
+        "#FF0000",
         true,
         gameState.coinSize / 2,
         100 * (Math.random() + 1),
@@ -1593,7 +1540,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
         gameState,
         gameState.puckPosition,
         gameState.gameZoneHeight - gameState.puckHeight * 2,
-        "red",
+        "#FF0000",
         t("play.missed_ball"),
         gameState.puckHeight,
         500,
@@ -1706,7 +1653,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
         gameState,
         brickCenterX(gameState, hitBrick),
         brickCenterY(gameState, hitBrick),
-        "white",
+        "#FFFFFF",
         gameState.brickWidth + 2,
         50 * gameState.brickHP[hitBrick],
       );
@@ -1726,8 +1673,8 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
       (extraCombo && Math.random() > 0.1 / (1 + extraCombo))
     ) {
       const color =
-        (remainingSapper && (Math.random() > 0.5 ? "orange" : "red")) ||
-        (willMiss && "red") ||
+        (remainingSapper && (Math.random() > 0.5 ? "#ffb92a" : "#FF0000")) ||
+        (willMiss && "#FF0000") ||
         gameState.ballsColor;
 
       makeParticle(
@@ -1770,7 +1717,7 @@ function justLostALife(gameState: GameState, ball: Ball, x: number, y: number) {
         y,
         Math.random() * gameState.baseSpeed * 3,
         gameState.baseSpeed * 3,
-        "red",
+        "#FF0000",
         false,
         gameState.coinSize / 2,
         150,
@@ -1784,7 +1731,7 @@ function makeCoin(
   y: number,
   vx: number,
   vy: number,
-  color = "gold",
+  color = "#ffd300",
   points = 1,
 ) {
   let weight = 0.8 + Math.random() * 0.2 + Math.min(2, points * 0.01);

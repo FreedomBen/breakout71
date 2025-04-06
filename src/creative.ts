@@ -2,46 +2,35 @@ import { GameState, Level, PerkId, Upgrade } from "./types";
 import { allLevels, icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
-import { confirmRestart, creativeModeThreshold, restart } from "./game";
-import { requiredAsyncAlert } from "./asyncAlert";
-import { describeLevel, highScoreForMode, sumOfValues } from "./game_utils";
+import {confirmRestart, creativeModeThreshold, gameState, restart} from "./game";
+import {asyncAlert, requiredAsyncAlert} from "./asyncAlert";
+import { describeLevel, highScoreText, sumOfValues } from "./game_utils";
 
 export function creativeMode(gameState: GameState) {
   return {
     icon: icons["icon:sandbox"],
     text: t("lab.menu_entry"),
     help:
-      highScoreForMode("creative") ||
+      // highScoreForMode("creative") ||
       (getTotalScore() < creativeModeThreshold &&
         t("lab.unlocks_at", { score: creativeModeThreshold })) ||
       t("lab.help"),
     disabled: getTotalScore() < creativeModeThreshold,
     async value() {
-      if (await confirmRestart(gameState)) {
-        restart({ mode: "creative" });
-      }
+        openCreativeModePerksPicker()
+
     },
   };
 }
 
-export async function openCreativeModePerksPicker(
-  gameState,
-  currentLevel: number,
-) {
-  gameState.readyToRender = false;
+export async function openCreativeModePerksPicker() {
+
 
   let creativeModePerks: Partial<{ [id in PerkId]: number }> = getSettingValue(
-      "creativeModePerks_" + currentLevel,
+      "creativeModePerks" ,
       {},
     ),
     choice: Upgrade | Level | "reset" | void;
-
-  upgrades.forEach((u) => {
-    creativeModePerks[u.id] = Math.min(
-      creativeModePerks[u.id] || 0,
-      u.max - gameState.bannedPerks[u.id],
-    );
-  });
 
   let noCreative: PerkId[] = [
     "extra_levels",
@@ -51,8 +40,8 @@ export async function openCreativeModePerksPicker(
   ];
 
   while (
-    (choice = await requiredAsyncAlert<Upgrade | Level | "reset">({
-      title: t("lab.title", { lvl: currentLevel + 1 }),
+    (choice = await asyncAlert<Upgrade | Level | "reset">({
+      title: t("lab.menu_entry"),
       className: "actionsAsGrid",
       content: [
         t("lab.instructions"),
@@ -69,9 +58,8 @@ export async function openCreativeModePerksPicker(
             help:
               (creativeModePerks[u.id] || 0) +
               "/" +
-              (u.max - gameState.bannedPerks[u.id]),
+              u.max,
             value: u,
-            disabled: u.max - gameState.bannedPerks[u.id] <= 0,
             className: creativeModePerks[u.id]
               ? "sandbox"
               : "sandbox grey-out-unless-hovered",
@@ -92,17 +80,18 @@ export async function openCreativeModePerksPicker(
         creativeModePerks[u.id] = 0;
       });
     } else if ("bricks" in choice) {
-      setSettingValue("creativeModePerks_" + currentLevel, creativeModePerks);
-      upgrades.forEach((u) => {
-        gameState.perks[u.id] = creativeModePerks[u.id];
-        gameState.bannedPerks[u.id] += creativeModePerks[u.id];
-      });
-      gameState.runLevels[currentLevel] = choice;
-      break;
+      setSettingValue("creativeModePerks" , creativeModePerks);
+       if (await confirmRestart(gameState)) {
+        restart({  perks:creativeModePerks, level:choice.name});
+      }
+       return
     } else if (choice) {
       creativeModePerks[choice.id] =
         ((creativeModePerks[choice.id] || 0) + 1) %
-        (choice.max - gameState.bannedPerks[choice.id] + 1);
+        (choice.max +1);
+    }else{
+        return
     }
   }
+
 }

@@ -40,7 +40,7 @@ export function drawMainCanvasOnSmallCanvas(gameState: GameState) {
   );
 
   // Here we don't use drawText as we don't want to cache a picture for each distinct value of score
-  recordCanvasCtx.fillStyle = "#FFF";
+  recordCanvasCtx.fillStyle = "#FFFFFF";
   recordCanvasCtx.textBaseline = "top";
   recordCanvasCtx.font = "12px monospace";
   recordCanvasCtx.textAlign = "right";

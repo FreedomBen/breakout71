@@ -1,8 +1,9 @@
-import { Ball, GameState, Level, PerkId, PerksMap } from "./types";
+import {Ball, Coin, GameState, Level, PerkId, PerksMap} from "./types";
 import { icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { brickAt } from "./level_editor/levels_editor_util";
 import { clamp } from "./pure_functions";
+import {isOptionOn} from "./options";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -78,8 +79,8 @@ export function getPossibleUpgrades(gameState: GameState) {
 }
 
 export function max_levels(gameState: GameState) {
-  if (gameState.mode === "creative") return 3;
-  return Math.max(7 + gameState.perks.extra_levels - gameState.loop, 1);
+  if (gameState.creative ) return 1;
+  return 7 + gameState.perks.extra_levels
 }
 
 export function pickedUpgradesHTMl(gameState: GameState) {
@@ -122,7 +123,7 @@ export function pickedUpgradesHTMl(gameState: GameState) {
 
 export function levelsListHTMl(gameState: GameState, level: number) {
   if (!gameState.perks.clairvoyant) return "";
-  if (gameState.mode === "creative") return "";
+  if (gameState.creative) return "";
   let list = "";
   for (let i = 0; i < max_levels(gameState); i++) {
     list += `<span style="opacity: ${i >= level ? 1 : 0.2}" title="${gameState.runLevels[i].name}">${icons[gameState.runLevels[i].name]}</span>`;
@@ -255,15 +256,19 @@ export function isMovingWhilePassiveIncome(gameState: GameState) {
   );
 }
 
-export function highScoreForMode(mode: GameState["mode"]) {
-  try {
-    const score = parseInt(
-      localStorage.getItem("breakout-3-hs-" + mode) || "0",
+export function getHighScore(){
+   try {
+    return parseInt(
+      localStorage.getItem("breakout-3-hs-short" ) || "0",
     );
-    if (score) {
-      return t("main_menu.high_score", { score });
-    }
   } catch (e) {}
+  return 0
+}
 
+export function highScoreText( ) {
+
+    if (getHighScore()) {
+      return t("main_menu.high_score", { score:getHighScore() });
+    }
   return "";
 }

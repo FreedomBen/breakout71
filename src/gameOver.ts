@@ -118,11 +118,12 @@ export function gameOver(title: string, intro: string) {
     allowClose: true,
     title,
     content: [
+        getCreativeModeWarning(gameState),
       `
         <p>${intro}</p>
-        <p>${t("gameOver.cumulative_total", { startTs, endTs })}</p>
-        ${unlocksInfo}  
+        <p>${t("gameOver.cumulative_total", { startTs, endTs })}</p> 
         `,
+      unlocksInfo,
       {
         value: null,
         text: t("gameOver.restart"),
@@ -135,13 +136,19 @@ export function gameOver(title: string, intro: string) {
     ],
   }).then(() =>
     restart({
-      levelToAvoid: currentLevelInfo(gameState).name,
-      mode: gameState.mode,
+      levelToAvoid: currentLevelInfo(gameState).name
     }),
   );
 }
 
+export function getCreativeModeWarning(gameState: GameState){
+  if(gameState.creative){
+    return  '<p>'+t('gameOver.creative')+'</p>'
+  }
+  return ''
+}
 export function getHistograms(gameState: GameState) {
+  if(gameState.creative) return ''
   let runStats = "";
   try {
     // Stores only top 100 runs
@@ -155,7 +162,6 @@ export function getHistograms(gameState: GameState) {
     runsHistory.push({
       ...gameState.runStatistics,
       perks: gameState.perks,
-      mode: gameState.mode,
       appVersion,
     });
 
@@ -172,7 +178,6 @@ export function getHistograms(gameState: GameState) {
       unit: string,
     ) => {
       let values = runsHistory
-        .filter((h) => (h.mode || "short") === gameState.mode)
         .map((h) => getter(h) || 0);
       let min = Math.min(...values);
       let max = Math.max(...values);

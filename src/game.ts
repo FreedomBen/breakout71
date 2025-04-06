@@ -16,7 +16,7 @@ import {
   currentLevelInfo,
   describeLevel,
   getRowColIndex,
-  highScoreForMode,
+  highScoreText,
   levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,
@@ -72,6 +72,7 @@ import { creativeMode } from "./creative";
 import { setupTooltips } from "./tooltip";
 import { startingPerkMenuButton } from "./startingPerks";
 import "./migrations";
+import {getCreativeModeWarning} from "./gameOver";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -441,20 +442,15 @@ async function openScorePanel() {
   pause(true);
 
   const cb = await asyncAlert({
-    title: gameState.loop
-      ? t("score_panel.title_looped", {
-          loop: gameState.loop,
-          score: gameState.score,
-          level: gameState.currentLevel + 1,
-          max: max_levels(gameState),
-        })
-      : t("score_panel.title", {
+    title:   t("score_panel.title", {
           score: gameState.score,
           level: gameState.currentLevel + 1,
           max: max_levels(gameState),
         }),
 
     content: [
+
+        getCreativeModeWarning(gameState),
       pickedUpgradesHTMl(gameState),
       levelsListHTMl(gameState, gameState.currentLevel),
       gameState.rerolls
@@ -486,30 +482,12 @@ export async function openMainMenu() {
     {
       icon: icons["icon:7_levels_run"],
       text: t("main_menu.normal"),
-      help: highScoreForMode("short") || t("main_menu.normal_help"),
+      help: highScoreText() || t("main_menu.normal_help"),
       value: () => {
         restart({
-          levelToAvoid: currentLevelInfo(gameState).name,
-          mode: "short",
+          levelToAvoid: currentLevelInfo(gameState).name
         });
       },
-    },
-    {
-      icon: icons["icon:loop"],
-      text: t("main_menu.loop_run"),
-      help:
-        highScoreForMode("long") ||
-        (getTotalScore() < creativeModeThreshold &&
-          t("lab.unlocks_at", { score: creativeModeThreshold })) ||
-        t("main_menu.loop_run_help"),
-
-      value: () => {
-        restart({
-          levelToAvoid: currentLevelInfo(gameState).name,
-          mode: "long",
-        });
-      },
-      disabled: getTotalScore() < creativeModeThreshold,
     },
     creativeMode(gameState),
     {
@@ -880,15 +858,16 @@ async function openUnlocksList() {
   });
   if (tryOn) {
     if (await confirmRestart(gameState)) {
-      restart({ ...tryOn, mode: "short" });
+      restart({ ...tryOn });
     }
   }
 }
 
 export async function confirmRestart(gameState) {
+
   if (!gameState.currentLevel) return true;
   if (alertsOpen) return true;
-
+  pause(true)
   return asyncAlert({
     title: t("confirmRestart.title"),
     content: [
@@ -970,8 +949,7 @@ document.addEventListener("keyup", async (e) => {
     // When doing ctrl + R in dev to refresh, i don't want to instantly restart a run
     if (await confirmRestart(gameState)) {
       restart({
-        levelToAvoid: currentLevelInfo(gameState).name,
-        mode: gameState.mode,
+        levelToAvoid: currentLevelInfo(gameState).name
       });
     }
   } else {
@@ -980,7 +958,7 @@ document.addEventListener("keyup", async (e) => {
   e.preventDefault();
 });
 
-export const gameState = newGameState({ mode: "short" });
+export const gameState = newGameState({});
 
 export function restart(params: RunParams) {
   fitSize();
@@ -989,26 +967,7 @@ export function restart(params: RunParams) {
   setLevel(gameState, 0);
 }
 
-restart(
-  (window.location.search.includes("stressTest") && {
-    // level: "Bird",
-    perks: {
-      // shocks: 10,
-      // multiball: 6,
-      // telekinesis: 2,
-      // ghost_coins: 1,
-      pierce: 2,
-      // clairvoyant: 2,
-      // sturdy_bricks:2,
-      bigger_explosions: 10,
-      sapper: 3,
-      // unbounded: 1,
-    },
-    mode: "long",
-  }) || {
-    mode: "short",
-  },
-);
+restart({ });
 
 tick();
 setupTooltips();

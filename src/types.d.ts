@@ -167,7 +167,6 @@ export type ReusableArray<T> = {
 
 export type RunHistoryItem = RunStats & {
   perks?: PerksMap;
-  mode: GameState["mode"];
   appVersion?: string;
 };
 export type GameState = {
@@ -286,17 +285,13 @@ export type GameState = {
     colorChange: { vol: number; x: number };
   };
   rerolls: number;
-  loop: number;
-  baseCombo: number;
-  mode: "short" | "long" | "creative";
-  readyToRender: boolean;
+  creative:boolean;
 };
 
 export type RunParams = {
   level?: string;
   levelToAvoid?: string;
   perks?: Partial<PerksMap>;
-  mode: "short" | "long" | "creative";
 };
 export type OptionDef = {
   default: boolean;

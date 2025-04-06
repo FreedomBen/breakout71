@@ -17,13 +17,25 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## To do
 
-- remove the slow mode
-- ignore scores in creative mode
+- avoid showing a +1 and -1 at the same time when a combo increase is reset 
 - add unlock conditions for levels in the form "reach high score X with perk A,B,C but without perk B,C,D"
-- archive each version as an html file and apk
 
 
 ## Done
+
+- remove loop mode :
+  - remove basecombo
+  - remove mode
+  - clear old runs in other mode
+- ignore scores in creative mode
+- remove the slow mode
+- adjusted the light effects
+- added white border around dark grey bricks
+- remove the opaque coin options, all coins are opaque, but dark grey ones have white border
+- archive each version as an html file and apk
+- publish 29062687 on play store
+- redo video
+- review fastlane text
 
 - tried and cancelled native desktop app build with tauri because : 
   - there's no cross compilation, so no exe build on linux
@@ -31,9 +43,6 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
   - the .deb and .rmp files were 3.8M for a 0.1M app 
   - the appimage was crazy big (100M)
   - I'd need a mac to make a mac version that probably wouldn't run without doing the app store dance with apple
-- publish 29062687 on play store
-- redo video
-- review fastlane text
 
 ## 29062687
 

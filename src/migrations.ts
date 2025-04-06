@@ -35,3 +35,23 @@ migrate("recover_high_scores", () => {
     }
   });
 });
+
+migrate("remove_long_and_creative_mode_data", () => {
+  let runsHistory = JSON.parse(
+    localStorage.getItem("breakout_71_runs_history") || "[]",
+  ) as RunHistoryItem[];
+
+  let cleaned=runsHistory.filter(r=> {
+    if('mode' in r){
+      if(r.mode !== 'short'){
+        return false
+      }
+    }
+    return  true
+  })
+  if(cleaned.length!==runsHistory.length)
+  localStorage.setItem(
+    "breakout_71_runs_history",
+    JSON.stringify(cleaned),
+  );
+});

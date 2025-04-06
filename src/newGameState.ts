@@ -2,8 +2,8 @@ import { GameState, RunParams } from "./types";
 import { getTotalScore } from "./settings";
 import { allLevels, upgrades } from "./loadGameData";
 import {
-  defaultSounds,
-  getPossibleUpgrades,
+  defaultSounds, getHighScore,
+  getPossibleUpgrades, highScoreText,
   makeEmptyPerksMap,
   sumOfValues,
 } from "./game_utils";
@@ -63,11 +63,9 @@ export function newGameState(params: RunParams): GameState {
     lastScoreIncrease: -1000,
     lastExplosion: -1000,
     lastBrickBroken: 0,
-    highScore: parseFloat(
-      localStorage.getItem("breakout-3-hs-" + params?.mode || "short") || "0",
-    ),
+    highScore: getHighScore(),
     balls: [],
-    ballsColor: "white",
+    ballsColor: "#FFFFFF",
     bricks: [],
     brickHP: [],
     lights: { indexMin: 0, total: 0, list: [] },
@@ -78,7 +76,7 @@ export function newGameState(params: RunParams): GameState {
     levelStartScore: 0,
     levelMisses: 0,
     levelSpawnedCoins: 0,
-    puckColor: "#FFF",
+    puckColor: "#FFFFFF",
     ballSize: 20,
     coinSize: 14,
     puckHeight: 20,
@@ -112,10 +110,7 @@ export function newGameState(params: RunParams): GameState {
     autoCleanUses: 0,
     ...defaultSounds(),
     rerolls: 0,
-    loop: 0,
-    baseCombo: 1,
-    mode: params?.mode || "short",
-    readyToRender: true,
+    creative: sumOfValues(params.perks)>1
   };
   resetBalls(gameState);
 
