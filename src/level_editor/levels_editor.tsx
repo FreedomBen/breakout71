@@ -28,7 +28,7 @@ function App() {
 
   const deleteLevel = useCallback((li: number) => {
     if (confirm("Delete level")) {
-      setLevels(allLevels.filter((l, i) => i !== li));
+      setLevels(levels.filter((l, i) => i !== li));
     }
   }, []);
 

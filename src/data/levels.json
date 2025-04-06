@@ -844,18 +844,6 @@
     "svg": null
   },
   {
-    "name": "icon:fullscreen",
-    "size": 6,
-    "bricks": "WW__WWW____W____________W____WWW__WW",
-    "svg": null
-  },
-  {
-    "name": "icon:exit_fullscreen",
-    "size": 6,
-    "bricks": "_W__W_WW__WW____________WW__WW_W__W_",
-    "svg": null
-  },
-  {
     "name": "icon:concave_puck",
     "size": 8,
     "bricks": "___________W_______________W____________W__W__W_WW___WW_WWWWWWW_",
@@ -984,14 +972,14 @@
   {
     "name": "icon:settings",
     "size": 8,
-    "bricks": "_b_b_b_bbbbbbbb__bbggbbbbbg__gb__bg__gbbbbbggbb__bbbbbbbb_b_b_b_",
+    "bricks": "_l_l_l_llllllll__llllllllll__ll__ll__llllllllll__llllllll_l_l_l_",
     "svg": null,
     "color": ""
   },
   {
     "name": "icon:unlocks",
     "size": 7,
-    "bricks": "bbbb___b__b___b__b______gbgb___bgbg___gbgb___bgbg",
+    "bricks": "eeee___e__e___e__e______ctCb___Gbsc___tOGO___OCbs",
     "svg": null,
     "color": ""
   },
@@ -1276,13 +1264,6 @@
     "name": "Abstract 6",
     "size": 13,
     "bricks": "_vvvvv_vvvvv__v___v_v___v__v_bbbbbbb_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_vvv_b_v__v_b_____b_v__vvvvvvvvvvv_bbbb_____bbbb",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "name": "icon:creative",
-    "size": 11,
-    "bricks": "bgg_bgg_bbg___________ggg_bgg_ggg___________bbg_bbb_bgg___________ggg_bgg_ggg___________bgg_ggg_bgg___________bbb_bbg_bgg",
     "svg": null,
     "color": ""
   }
