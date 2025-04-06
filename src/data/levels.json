@@ -970,20 +970,6 @@
     "color": ""
   },
   {
-    "name": "icon:settings",
-    "size": 8,
-    "bricks": "_l_l_l_llllllll__lbbbbllllb__bl__lb__bllllbbbbl__llllllll_l_l_l_",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "name": "icon:unlocks",
-    "size": 7,
-    "bricks": "eeee___e__e___e__e______ctCb___Gbsc___tOGO___OCbs",
-    "svg": null,
-    "color": ""
-  },
-  {
     "name": "icon:clairvoyant",
     "size": 9,
     "bricks": "__y___y__y__y_y__y_y__t__y____ttt_____tWWWt___tWWgWWt_tttWWWttt__________________",
@@ -1014,14 +1000,7 @@
   {
     "name": "icon:premium",
     "size": 11,
-    "bricks": "__y____y___y____y____y_y__yby__y______y______yy_yty_yy_ybbytttybbyybbytttybby_ybytttyby___yyyyyyy____yyyyyyy_____________",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "name": "icon:7_levels_run",
-    "size": 7,
-    "bricks": "___a______at__cGCa_b_c_____ycGCa_b____at_____a___",
+    "bricks": "__g____g___g____g____g_g__gbg__g______g______gg_gbg_gg_gbbgbbbgbbggbbgbbbgbbg_gbgbbbgbg___ggggggg____ggggggg_____________",
     "svg": null,
     "color": ""
   },
@@ -1271,6 +1250,20 @@
     "name": "icon:new_run",
     "size": 7,
     "bricks": "_ggg____gbgg___gbbgg__gbbbg__gbbgg__gbgg___ggg___",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:unlocks",
+    "size": 6,
+    "bricks": "_bbbb__b__b__b__b_gggggggggggggggggg",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:settings",
+    "size": 9,
+    "bricks": "___g_g____g_ggg_g___ggggg__gggbbbggg_ggb_bgg_gggbbbggg__ggggg___g_ggg_g____g_g___",
     "svg": null,
     "color": ""
   }
