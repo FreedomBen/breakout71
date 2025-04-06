@@ -41,17 +41,14 @@ migrate("remove_long_and_creative_mode_data", () => {
     localStorage.getItem("breakout_71_runs_history") || "[]",
   ) as RunHistoryItem[];
 
-  let cleaned=runsHistory.filter(r=> {
-    if('mode' in r){
-      if(r.mode !== 'short'){
-        return false
+  let cleaned = runsHistory.filter((r) => {
+    if ("mode" in r) {
+      if (r.mode !== "short") {
+        return false;
       }
     }
-    return  true
-  })
-  if(cleaned.length!==runsHistory.length)
-  localStorage.setItem(
-    "breakout_71_runs_history",
-    JSON.stringify(cleaned),
-  );
+    return true;
+  });
+  if (cleaned.length !== runsHistory.length)
+    localStorage.setItem("breakout_71_runs_history", JSON.stringify(cleaned));
 });

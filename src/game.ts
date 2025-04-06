@@ -17,6 +17,7 @@ import {
   describeLevel,
   getRowColIndex,
   highScoreText,
+  reasonLevelIsLocked,
   levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,
@@ -72,7 +73,7 @@ import { creativeMode } from "./creative";
 import { setupTooltips } from "./tooltip";
 import { startingPerkMenuButton } from "./startingPerks";
 import "./migrations";
-import {getCreativeModeWarning} from "./gameOver";
+import { getCreativeModeWarning, getHistory } from "./gameOver";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -441,16 +442,16 @@ document.addEventListener("visibilitychange", () => {
 async function openScorePanel() {
   pause(true);
 
-  const cb = await asyncAlert({
-    title:   t("score_panel.title", {
-          score: gameState.score,
-          level: gameState.currentLevel + 1,
-          max: max_levels(gameState),
-        }),
+
+   await asyncAlert({
+    title: t("score_panel.title", {
+      score: gameState.score,
+      level: gameState.currentLevel + 1,
+      max: max_levels(gameState),
+    }),
 
     content: [
-
-        getCreativeModeWarning(gameState),
+      getCreativeModeWarning(gameState),
       pickedUpgradesHTMl(gameState),
       levelsListHTMl(gameState, gameState.currentLevel),
       gameState.rerolls
@@ -485,7 +486,7 @@ export async function openMainMenu() {
       help: highScoreText() || t("main_menu.normal_help"),
       value: () => {
         restart({
-          levelToAvoid: currentLevelInfo(gameState).name
+          levelToAvoid: currentLevelInfo(gameState).name,
         });
       },
     },
@@ -816,6 +817,8 @@ async function applyFullScreenChoice() {
 
 async function openUnlocksList() {
   const ts = getTotalScore();
+  const hintField = isOptionOn("mobile-mode") ? "help" : "tooltip";
+
   const upgradeActions = upgrades
     .sort((a, b) => a.threshold - b.threshold)
     .map(({ name, id, threshold, icon, help }) => ({
@@ -823,39 +826,40 @@ async function openUnlocksList() {
       disabled: ts < threshold,
       value: { perks: { [id]: 1 } } as RunParams,
       icon,
-      tooltip: help(1),
+      [hintField]:
+        ts < threshold
+          ? t("unlocks.minTotalScore", { score: threshold })
+          : help(1),
     }));
 
-  const levelActions = allLevels
-    .sort((a, b) => a.threshold - b.threshold)
-    .map((l) => {
-      const available = ts >= l.threshold;
-      return {
-        text: l.name,
-        disabled: !available,
-        value: { level: l.name } as RunParams,
-        icon: icons[l.name],
-        tooltip: describeLevel(l),
-      };
-    });
+  const levelActions = allLevels.map((l, li) => {
+    const problem = reasonLevelIsLocked(li, getHistory());
+    return {
+      text: l.name,
+      disabled: !!problem,
+      value: { level: l.name } as RunParams,
+      icon: icons[l.name],
+      [hintField]: problem || describeLevel(l),
+    };
+  });
 
   const tryOn = await asyncAlert<RunParams>({
     title: t("unlocks.title_upgrades", {
-      unlocked:upgradeActions.filter((a) => !a.disabled).length,
-      out_of:upgradeActions.length
+      unlocked: upgradeActions.filter((a) => !a.disabled).length,
+      out_of: upgradeActions.length,
     }),
     content: [
       `<p>${t("unlocks.intro", { ts })}
-   ${upgradeActions.find(u=>u.disabled)? t("unlocks.greyed_out_help") : ""}</p>  `,
+   ${upgradeActions.find((u) => u.disabled) ? t("unlocks.greyed_out_help") : ""}</p>  `,
       ...upgradeActions,
-      t("unlocks.level",{
-      unlocked:levelActions.filter((a) => !a.disabled).length,
-      out_of:levelActions.length
-    }),
+      t("unlocks.level", {
+        unlocked: levelActions.filter((a) => !a.disabled).length,
+        out_of: levelActions.length,
+      }),
       ...levelActions,
     ],
     allowClose: true,
-    className: "actionsAsGrid",
+    className: isOptionOn("mobile-mode") ? "" : "actionsAsGrid",
   });
   if (tryOn) {
     if (await confirmRestart(gameState)) {
@@ -865,10 +869,9 @@ async function openUnlocksList() {
 }
 
 export async function confirmRestart(gameState) {
-
   if (!gameState.currentLevel) return true;
   if (alertsOpen) return true;
-  pause(true)
+  pause(true);
   return asyncAlert({
     title: t("confirmRestart.title"),
     content: [
@@ -950,7 +953,7 @@ document.addEventListener("keyup", async (e) => {
     // When doing ctrl + R in dev to refresh, i don't want to instantly restart a run
     if (await confirmRestart(gameState)) {
       restart({
-        levelToAvoid: currentLevelInfo(gameState).name
+        levelToAvoid: currentLevelInfo(gameState).name,
       });
     }
   } else {
@@ -968,7 +971,7 @@ export function restart(params: RunParams) {
   setLevel(gameState, 0);
 }
 
-restart({ });
+restart({});
 
 tick();
 setupTooltips();

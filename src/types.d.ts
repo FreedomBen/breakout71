@@ -18,7 +18,6 @@ export type Level = {
   bricksCount: number;
   svg: string;
   color: string;
-  threshold: number;
   sortKey: number;
   credit?: string;
 };
@@ -202,7 +201,6 @@ export type GameState = {
   puckWidth: number;
   // perks the user currently has
   perks: PerksMap;
-  bannedPerks: PerksMap;
   // Base speed of the ball in pixels/tick
   baseSpeed: number;
   // Score multiplier
@@ -285,7 +283,7 @@ export type GameState = {
     colorChange: { vol: number; x: number };
   };
   rerolls: number;
-  creative:boolean;
+  creative: boolean;
 };
 
 export type RunParams = {

@@ -2,8 +2,13 @@ import { GameState, Level, PerkId, Upgrade } from "./types";
 import { allLevels, icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
-import {confirmRestart, creativeModeThreshold, gameState, restart} from "./game";
-import {asyncAlert, requiredAsyncAlert} from "./asyncAlert";
+import {
+  confirmRestart,
+  creativeModeThreshold,
+  gameState,
+  restart,
+} from "./game";
+import { asyncAlert, requiredAsyncAlert } from "./asyncAlert";
 import { describeLevel, highScoreText, sumOfValues } from "./game_utils";
 
 export function creativeMode(gameState: GameState) {
@@ -17,17 +22,14 @@ export function creativeMode(gameState: GameState) {
       t("lab.help"),
     disabled: getTotalScore() < creativeModeThreshold,
     async value() {
-        openCreativeModePerksPicker()
-
+      openCreativeModePerksPicker();
     },
   };
 }
 
 export async function openCreativeModePerksPicker() {
-
-
   let creativeModePerks: Partial<{ [id in PerkId]: number }> = getSettingValue(
-      "creativeModePerks" ,
+      "creativeModePerks",
       {},
     ),
     choice: Upgrade | Level | "reset" | void;
@@ -55,10 +57,7 @@ export async function openCreativeModePerksPicker() {
           .map((u) => ({
             icon: u.icon,
             text: u.name,
-            help:
-              (creativeModePerks[u.id] || 0) +
-              "/" +
-              u.max,
+            help: (creativeModePerks[u.id] || 0) + "/" + (u.max+creativeModePerks.limitless),
             value: u,
             className: creativeModePerks[u.id]
               ? "sandbox"
@@ -80,18 +79,16 @@ export async function openCreativeModePerksPicker() {
         creativeModePerks[u.id] = 0;
       });
     } else if ("bricks" in choice) {
-      setSettingValue("creativeModePerks" , creativeModePerks);
-       if (await confirmRestart(gameState)) {
-        restart({  perks:creativeModePerks, level:choice.name});
+      setSettingValue("creativeModePerks", creativeModePerks);
+      if (await confirmRestart(gameState)) {
+        restart({ perks: creativeModePerks, level: choice.name });
       }
-       return
+      return;
     } else if (choice) {
       creativeModePerks[choice.id] =
-        ((creativeModePerks[choice.id] || 0) + 1) %
-        (choice.max +1);
-    }else{
-        return
+        ((creativeModePerks[choice.id] || 0) + 1) % (choice.max + 1 + creativeModePerks.limitless);
+    } else {
+      return;
     }
   }
-
 }

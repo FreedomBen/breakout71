@@ -1,10 +1,16 @@
-import {Ball, Coin, GameState, Level, PerkId, PerksMap} from "./types";
+import {
+  Ball,
+  GameState,
+  Level,
+  PerkId,
+  PerksMap,
+  RunHistoryItem,
+} from "./types";
 import { icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
-import { brickAt } from "./level_editor/levels_editor_util";
 import { clamp } from "./pure_functions";
-import {isOptionOn} from "./options";
-import {rawUpgrades} from "./upgrades";
+import { rawUpgrades } from "./upgrades";
+import { hashCode } from "./getLevelBackground";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -80,15 +86,15 @@ export function getPossibleUpgrades(gameState: GameState) {
 }
 
 export function max_levels(gameState: GameState) {
-  if (gameState.creative ) return 1;
-  return 7 + gameState.perks.extra_levels
+  if (gameState.creative) return 1;
+  return 7 + gameState.perks.extra_levels;
 }
 
 export function pickedUpgradesHTMl(gameState: GameState) {
   const upgradesList = getPossibleUpgrades(gameState)
-    .filter((u) => gameState.bannedPerks[u.id] || gameState.perks[u.id])
+    .filter((u) =>   gameState.perks[u.id])
     .map((u) => {
-      const newMax = Math.max(0, u.max - gameState.bannedPerks[u.id]);
+      const newMax = Math.max(0, u.max +gameState.perks.limitless);
 
       let bars = [];
       for (let i = 0; i < Math.max(u.max, newMax, gameState.perks[u.id]); i++) {
@@ -171,6 +177,7 @@ export function telekinesisEffectRate(gameState: GameState, ball: Ball) {
     0
   );
 }
+
 export function yoyoEffectRate(gameState: GameState, ball: Ball) {
   return (
     (gameState.perks.yoyo &&
@@ -257,49 +264,65 @@ export function isMovingWhilePassiveIncome(gameState: GameState) {
   );
 }
 
-export function getHighScore(){
-   try {
-    return parseInt(
-      localStorage.getItem("breakout-3-hs-short" ) || "0",
-    );
+export function getHighScore() {
+  try {
+    return parseInt(localStorage.getItem("breakout-3-hs-short") || "0");
   } catch (e) {}
-  return 0
+  return 0;
 }
 
-export function highScoreText( ) {
-
-    if (getHighScore()) {
-      return t("main_menu.high_score", { score:getHighScore() });
-    }
+export function highScoreText() {
+  if (getHighScore()) {
+    return t("main_menu.high_score", { score: getHighScore() });
+  }
   return "";
 }
 
-
-export function unlockCondition(levelIndex:number){
-  if(levelIndex<7){
-    return {}
+export function reasonLevelIsLocked(
+  levelIndex: number,
+  history: RunHistoryItem[],
+) {
+  // Returns "" if level is unlocked, otherwise a string explaining how to unlock it
+  if (levelIndex <= 10) {
+    return "";
   }
-  if(levelIndex<20){
-    return {
-      minScore:100*levelIndex
-    }
+  if (levelIndex < 20) {
+    const minScore = 100 * levelIndex;
+    return history.find((r) => r.score >= minScore)
+      ? ""
+      : t("unlocks.minScore", { minScore });
   }
-  const excluded:PerkId[]=[
-        'extra_levels','extra_life', "one_more_choice", "instant_upgrade"
-    ]
+  const excluded: PerkId[] = [
+    "extra_levels",
+    "extra_life",
+    "one_more_choice",
+    "instant_upgrade",
+  ];
 
-  const possibletargets = rawUpgrades.slice(0,Math.floor(levelIndex/2))
-      .map(u=>u.id)
-      .filter(u=>!excluded.includes(u))
-      .sort((a,b)=>Math.random()-0.5)
+  const possibletargets = rawUpgrades
+    .slice(0, Math.floor(levelIndex / 2))
+    .map((u) => u)
+    .filter((u) => !excluded.includes(u.id))
+    .sort((a, b) => hashCode(levelIndex + a.id) - hashCode(levelIndex + b.id));
 
-  const length=Math.ceil(levelIndex/30)
-
-  return {
-    minScore:100*levelIndex*Math.pow(1.02,levelIndex),
-    withUpgrades : possibletargets.slice(0,length),
-    withoutUpgrades : possibletargets.slice(length,length+length),
+  const length = Math.ceil(levelIndex / 30);
+  const required = possibletargets.slice(0, length);
+  const forbidden = possibletargets.slice(length, length + length);
+  const minScore = 100 * levelIndex * Math.floor(Math.pow(1.01, levelIndex));
+  if (
+    history.find(
+      (r) =>
+        r.score >= minScore &&
+        !required.find((u) => !r?.perks?.[u.id]) &&
+        !forbidden.find((u) => r?.perks?.[u.id]),
+    )
+  ) {
+    return "";
+  } else {
+    return t("unlocks.minScoreWithPerks", {
+      minScore,
+      required: required.map((u) => u.name).join(", "),
+      forbidden: forbidden.map((u) => u.name).join(", "),
+    });
   }
-
-
 }

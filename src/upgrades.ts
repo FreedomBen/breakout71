@@ -654,4 +654,15 @@ export const rawUpgrades = [
       t("upgrades.fountain_toss.help", { lvl, max: lvl * 30 }),
     fullHelp: t("upgrades.fountain_toss.fullHelp"),
   },
+  {
+    requires: "",
+    threshold: 175000,
+    giftable: false,
+    id: "limitless",
+    max: 1,
+    name: t("upgrades.limitless.name"),
+    help: (lvl: number) =>
+      t("upgrades.limitless.help", { lvl }),
+    fullHelp: t("upgrades.limitless.fullHelp"),
+  },
 ] as const;

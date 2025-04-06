@@ -1,4 +1,4 @@
-import {Level, Palette, RawLevel} from "../types";
+import { Level, Palette, RawLevel } from "../types";
 import _backgrounds from "../data/backgrounds.json";
 import _palette from "../data/palette.json";
 // import _allLevels from "../data/levels.json";
@@ -12,34 +12,35 @@ const backgrounds = _backgrounds as string[];
 const palette = _palette as Palette;
 
 // let allLevels = _allLevels ;
-let allLevels=null
+let allLevels = null;
 
 function App() {
   const [selected, setSelected] = useState("W");
   const [applying, setApplying] = useState("");
   const [levels, setLevels] = useState([]);
-  useEffect(()=>{
-    fetch('http://localhost:4400/src/data/levels.json')
-        .then(r=>r.json())
-        .then(list=>{
-          setLevels(list as RawLevel[])
-          allLevels=list
-        })
-  },[])
+  useEffect(() => {
+    fetch("http://localhost:4400/src/data/levels.json")
+      .then((r) => r.json())
+      .then((list) => {
+        setLevels(list as RawLevel[]);
+        allLevels = list;
+      });
+  }, []);
 
-  const updateLevel =   (index: number, change: Partial<RawLevel>) => {
-      setLevels((list) =>
-        list.map((l, li) => (li === index ? { ...l, ...change } : l)),
-      );
-  }
+  const updateLevel = (index: number, change: Partial<RawLevel>) => {
+    setLevels((list) =>
+      list.map((l, li) => (li === index ? { ...l, ...change } : l)),
+    );
+  };
 
   const deleteLevel = (index: number) => {
     if (confirm("Delete level")) {
-      setLevels(levels.filter((l, i) => i!==index));
+      setLevels(levels.filter((l, i) => i !== index));
     }
-  }
+  };
   useEffect(() => {
-    if(!allLevels||JSON.stringify(allLevels) === JSON.stringify(levels)) return
+    if (!allLevels || JSON.stringify(allLevels) === JSON.stringify(levels))
+      return;
     const timoutId = setTimeout(() => {
       return fetch("http://localhost:4400/src/data/levels.json", {
         method: "POST",

@@ -18,11 +18,13 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 ## To do
 
 - avoid showing a +1 and -1 at the same time when a combo increase is reset 
-- add unlock conditions for levels in the form "reach high score X with perk A,B,C but without perk B,C,D"
-
+- mention unlock conditions in help
+- show unlock condition in unlocks menu for perks as tooltip
+- fallback for mobile user to see unlock conditions
 
 ## Done
 
+- add unlock conditions for levels in the form "reach high score X with perk A,B,C but without perk B,C,D"
 - remove loop mode :
   - remove basecombo
   - remove mode
@@ -243,7 +245,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - +lvl combo per bricks / resets after 5/lvl seconds without explosion ?
 - +lvl combo per bricks / resets after 5/lvl seconds without coin catch  ?
 - +lvl combo per bricks / resets after 5/lvl seconds without ball color change   ?
-- +lvl combo per bricks / resets after 5/lvl seconds without sides hit ?  
+- +lvl combo per bricks / resets after 5/lvl seconds without sides hit ?
+- + lvl x n combo when destroying a brick after bouncing on a side/top n times ?
+- make stats a clairvoyant thing
 
 ## Medium difficulty perks ideas 
 - balls collision split them into 4 smaller balls, lvl times (requires rework)
@@ -261,10 +265,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - 2x speed after bouncing on puck
 - the more balls are close to a brick, the more combo is gained when breaking it. If only one ball, loose one point or reset
 - ball avoids brick of wrong color
+- puck slowly follows desired  position, but +1 combo
 
 ## Hard perk ideas
 - accelerometer controls coins and balls
- - [colin] side pucks - same as above but with two side pucks : hard to know where to put them 
+- [colin] side pucks - same as above but with two side pucks : hard to know where to put them 
+- [colin] Perk: second puck in the middle of the screen
 
 ## ideas to sort
 - wind : move coins based on puck movement not position  

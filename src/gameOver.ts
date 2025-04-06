@@ -1,35 +1,18 @@
-import {allLevels, appVersion, icons, upgrades} from "./loadGameData";
+import { allLevels, appVersion, icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { GameState, RunHistoryItem } from "./types";
 import { gameState, pause, restart } from "./game";
-import { currentLevelInfo, findLast, pickedUpgradesHTMl } from "./game_utils";
+import {
+  currentLevelInfo,
+  describeLevel,
+  findLast,
+  pickedUpgradesHTMl,
+  reasonLevelIsLocked,
+} from "./game_utils";
 import { getTotalScore } from "./settings";
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
-
-export function getUpgraderUnlockPoints() {
-  let list = [] as { threshold: number; title: string }[];
-
-  upgrades.forEach((u) => {
-    if (u.threshold) {
-      list.push({
-        threshold: u.threshold,
-        title: u.name + " " + t("level_up.unlocked_perk"),
-      });
-    }
-  });
-
-  allLevels.forEach((l) => {
-    list.push({
-      threshold: l.threshold,
-      title: l.name + " " + t("level_up.unlocked_level"),
-    });
-  });
-
-  return list
-    .filter((o) => o.threshold)
-    .sort((a, b) => a.threshold - b.threshold);
-}
+import { rawUpgrades } from "./upgrades";
 
 export function addToTotalPlayTime(ms: number) {
   try {
@@ -58,58 +41,33 @@ export function gameOver(title: string, intro: string) {
     return "animation-delay:" + animationDelay + "ms;";
   };
   // unlocks
-  let unlocksInfo = "";
+
   const endTs = getTotalScore();
   const startTs = endTs - gameState.score;
-  const list = getUpgraderUnlockPoints();
-  list
-    .filter((u) => u.threshold > startTs && u.threshold < endTs)
-    .forEach((u) => {
-      unlocksInfo += `
-<p class="progress"  >
-   <span>${u.title}</span>
-    <span class="progress_bar_part" style="${getDelay()}"></span>
-</p>
-`;
-    });
-  const previousUnlockAt =
-    findLast(list, (u) => u.threshold <= endTs)?.threshold || 0;
-  const nextUnlock = list.find((u) => u.threshold > endTs);
-
-  if (nextUnlock) {
-    const total = nextUnlock?.threshold - previousUnlockAt;
-    const done = endTs - previousUnlockAt;
-
-    intro += t("gameOver.next_unlock", {
-      points: nextUnlock.threshold - endTs,
-    });
-
-    const scaleX = (done / total).toFixed(2);
-    unlocksInfo += `
-            <p class="progress"   >
-           <span>${nextUnlock.title}</span>
-        <span style="transform: scale(${scaleX},1);${getDelay()}" class="progress_bar_part"></span>
-        </p>
-
-`;
-    list
-      .slice(list.indexOf(nextUnlock) + 1)
-      .slice(0, 3)
-      .forEach((u) => {
-        unlocksInfo += `
-        <p class="progress"  >
-           <span>${u.title}</span> 
-        </p> 
-`;
-      });
-  }
-
-  let unlockedItems = list.filter(
-    (u) => u.threshold > startTs && u.threshold < endTs,
+  const unlockedPerks = rawUpgrades.filter(
+    (o) => o.threshold > startTs && o.threshold < endTs,
   );
-  if (unlockedItems.length) {
-    unlocksInfo += `<p>${t("gameOver.unlocked_count", { count: unlockedItems.length })} ${unlockedItems.map((u) => u.title).join(", ")}</p>`;
-  }
+
+  let unlocksInfo = unlockedPerks.length
+    ? `
+
+    <h2>${unlockedPerks.length === 1 ? t("gameOver.unlocked_perk") : t("gameOver.unlocked_perk_plural", { count: unlockedPerks.length })}</h2>
+    
+      ${unlockedPerks
+        .map(
+          (u) => ` 
+       <div class="upgrade used">
+          ${icons["icon:" + u.id]}
+          <p>
+          <strong>${u.name}</strong>
+           ${u.help(1)}
+        </p>  
+      </div>
+      `,
+        )
+        .join("\n")}       
+    `
+    : "";
 
   // Avoid the sad sound right as we restart a new games
   gameState.combo = 1;
@@ -118,53 +76,89 @@ export function gameOver(title: string, intro: string) {
     allowClose: true,
     title,
     content: [
-        getCreativeModeWarning(gameState),
+      getCreativeModeWarning(gameState),
       `
         <p>${intro}</p>
         <p>${t("gameOver.cumulative_total", { startTs, endTs })}</p> 
         `,
-      unlocksInfo,
       {
-        icon:icons["icon:new_run"],
+        icon: icons["icon:new_run"],
         value: null,
         text: t("gameOver.restart"),
         help: "",
       },
-      `<div id="level-recording-container"></div> 
-           ${pickedUpgradesHTMl(gameState)}
-        ${getHistograms(gameState)} 
-        `,
+      `<div id="level-recording-container"></div>`,
+      // pickedUpgradesHTMl(gameState),
+      unlocksInfo,
+      getHistograms(gameState),
     ],
   }).then(() =>
     restart({
-      levelToAvoid: currentLevelInfo(gameState).name
+      levelToAvoid: currentLevelInfo(gameState).name,
     }),
   );
 }
 
-export function getCreativeModeWarning(gameState: GameState){
-  if(gameState.creative){
-    return  '<p>'+t('gameOver.creative')+'</p>'
+export function getCreativeModeWarning(gameState: GameState) {
+  if (gameState.creative) {
+    return "<p>" + t("gameOver.creative") + "</p>";
   }
-  return ''
+  return "";
 }
+
+let runsHistory = [];
+
+try {
+  runsHistory = JSON.parse(
+    localStorage.getItem("breakout_71_runs_history") || "[]",
+  ) as RunHistoryItem[];
+} catch (e) {}
+export function getHistory() {
+  return runsHistory;
+}
+
 export function getHistograms(gameState: GameState) {
-  if(gameState.creative) return ''
+  if (gameState.creative) return "";
+  let unlockedLevels = "";
   let runStats = "";
   try {
-    // Stores only top 100 runs
-    let runsHistory = JSON.parse(
-      localStorage.getItem("breakout_71_runs_history") || "[]",
-    ) as RunHistoryItem[];
-
-    runsHistory.sort((a, b) => a.score - b.score).reverse();
-    runsHistory = runsHistory.slice(0, 100);
+    const locked = allLevels
+      .map((l, li) => ({
+        li,
+        l,
+        r: reasonLevelIsLocked(li, runsHistory),
+      }))
+      .filter((l) => l.r);
 
     runsHistory.push({
       ...gameState.runStatistics,
       perks: gameState.perks,
       appVersion,
     });
+
+    const unlocked = locked.filter(
+      ({ li }) => !reasonLevelIsLocked(li, runsHistory),
+    );
+    if (unlocked.length) {
+      unlockedLevels = `
+
+      <h2>${unlocked.length === 1 ? t("unlocks.just_unlocked") : t("unlocks.just_unlocked_plural", { count: unlocked.length })}</h2>
+      
+        ${unlocked
+          .map(
+            ({ l, r }) => ` 
+         <div class="upgrade used">
+            ${icons[l.name]}
+            <p>
+            <strong>${l.name}</strong>
+          ${describeLevel(l)}
+          </p>  
+        </div>
+        `,
+          )
+          .join("\n")}       
+      `;
+    }
 
     // Generate some histogram
 
@@ -178,8 +172,7 @@ export function getHistograms(gameState: GameState) {
       getter: (hi: RunHistoryItem) => number,
       unit: string,
     ) => {
-      let values = runsHistory
-        .map((h) => getter(h) || 0);
+      let values = runsHistory.map((h) => getter(h) || 0);
       let min = Math.min(...values);
       let max = Math.max(...values);
       // No point
@@ -290,5 +283,5 @@ export function getHistograms(gameState: GameState) {
   } catch (e) {
     console.warn(e);
   }
-  return runStats;
+  return runStats + unlockedLevels;
 }

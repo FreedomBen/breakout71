@@ -1,22 +1,30 @@
 import { GameState, RunParams } from "./types";
-import { getTotalScore } from "./settings";
 import { allLevels, upgrades } from "./loadGameData";
 import {
-  defaultSounds, getHighScore,
-  getPossibleUpgrades, highScoreText,
+  defaultSounds,
+  getHighScore,
+  getPossibleUpgrades,
+  highScoreText,
+  reasonLevelIsLocked,
   makeEmptyPerksMap,
   sumOfValues,
 } from "./game_utils";
 import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
 import { isOptionOn } from "./options";
+import { getHistory } from "./gameOver";
+import { getTotalScore } from "./settings";
 
-export function getRunLevels(totalScoreAtRunStart: number, params: RunParams) {
+export function getRunLevels(params: RunParams) {
+  const history = getHistory();
+  const unlocked = allLevels.filter(
+    (l, li) => !reasonLevelIsLocked(li, history),
+  );
+
   const firstLevel = params?.level
-    ? allLevels.filter((l) => l.name === params?.level)
+    ? unlocked.filter((l) => l.name === params?.level)
     : [];
 
-  const restInRandomOrder = allLevels
-    .filter((l) => totalScoreAtRunStart >= l.threshold)
+  const restInRandomOrder = unlocked
     .filter((l) => l.name !== params?.level)
     .filter((l) => l.name !== params?.levelToAvoid)
     .sort(() => Math.random() - 0.5);
@@ -27,9 +35,7 @@ export function getRunLevels(totalScoreAtRunStart: number, params: RunParams) {
 }
 
 export function newGameState(params: RunParams): GameState {
-  const totalScoreAtRunStart = getTotalScore();
-
-  const runLevels = getRunLevels(totalScoreAtRunStart, params);
+  const runLevels = getRunLevels(params);
 
   const perks = { ...makeEmptyPerksMap(upgrades), ...(params?.perks || {}) };
 
@@ -39,7 +45,6 @@ export function newGameState(params: RunParams): GameState {
     currentLevel: 0,
     upgradesOfferedFor: -1,
     perks,
-    bannedPerks: makeEmptyPerksMap(upgrades),
     puckWidth: 200,
     baseSpeed: 12,
     combo: 1,
@@ -80,7 +85,7 @@ export function newGameState(params: RunParams): GameState {
     ballSize: 20,
     coinSize: 14,
     puckHeight: 20,
-    totalScoreAtRunStart,
+    totalScoreAtRunStart: getTotalScore(),
     pauseUsesDuringRun: 0,
     keyboardPuckSpeed: 0,
     lastTick: performance.now(),
@@ -110,7 +115,7 @@ export function newGameState(params: RunParams): GameState {
     autoCleanUses: 0,
     ...defaultSounds(),
     rerolls: 0,
-    creative: sumOfValues(params.perks)>1
+    creative: sumOfValues(params.perks) > 1,
   };
   resetBalls(gameState);
 

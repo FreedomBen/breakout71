@@ -35,12 +35,6 @@ export const allLevels = rawLevelsList
   .filter((l) => !l.name.startsWith("icon:"))
   .map((l, li) => ({
     ...l,
-    threshold:
-      li < 8
-        ? 0
-        : Math.round(
-            Math.min(Math.pow(10, 1 + (li + l.size) / 30) * 10, 5000) * li,
-          ),
     sortKey: ((Math.random() + 3) / 3.5) * l.bricksCount,
   })) as Level[];
 

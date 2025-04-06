@@ -131,7 +131,7 @@ export function normalizeGameState(gameState: GameState) {
     gameState.gameZoneWidth / 12 / 10 +
       gameState.currentLevel / 3 +
       gameState.levelTime / (30 * 1000) -
-      gameState.perks.slow_down * 2
+      gameState.perks.slow_down * 2,
   );
 
   gameState.puckWidth = Math.max(
@@ -172,11 +172,7 @@ export function normalizeGameState(gameState: GameState) {
 }
 
 export function baseCombo(gameState: GameState) {
-  return (
-    1 +
-    gameState.perks.base_combo * 3 +
-    gameState.perks.smaller_puck * 5
-  );
+  return 1 + gameState.perks.base_combo * 3 + gameState.perks.smaller_puck * 5;
 }
 
 export function resetCombo(
@@ -527,7 +523,7 @@ export function pickRandomUpgrades(gameState: GameState, count: number) {
       score: Math.random() + (gameState.lastOffered[u.id] || 0),
     }))
     .sort((a, b) => a.score - b.score)
-    .filter((u) => gameState.perks[u.id] < u.max - gameState.bannedPerks[u.id])
+    .filter((u) => gameState.perks[u.id] < u.max + gameState.perks.limitless)
     .slice(0, count)
     .sort((a, b) => (a.id > b.id ? 1 : -1));
 
@@ -564,16 +560,12 @@ export function schedulGameSound(
 }
 
 export function addToScore(gameState: GameState, coin: Coin) {
-
   gameState.score += coin.points;
   gameState.lastScoreIncrease = gameState.levelTime;
   addToTotalScore(gameState, coin.points);
   if (gameState.score > gameState.highScore && !gameState.creative) {
     gameState.highScore = gameState.score;
-    localStorage.setItem(
-      "breakout-3-hs-short" ,
-      gameState.score.toString(),
-    );
+    localStorage.setItem("breakout-3-hs-short", gameState.score.toString());
   }
   if (!isOptionOn("basic")) {
     makeParticle(
@@ -632,7 +624,7 @@ export async function setLevel(gameState: GameState, l: number) {
   stopRecording();
   recordBestWorstLevelScore(gameState);
 
-    if (l > 0) {
+  if (l > 0) {
     await openUpgradesPicker(gameState);
   }
   gameState.currentLevel = l;
@@ -700,17 +692,17 @@ function setBrick(gameState: GameState, index: number, color: string) {
     0;
 }
 
-const rainbow=[
-    '#ff2e2e',
-    '#ffe02e',
-    '#70ff33',
-    '#33ffa7',
-    '#38acff',
-    '#7038ff',
-    '#ff3de5',
-]
+const rainbow = [
+  "#ff2e2e",
+  "#ffe02e",
+  "#70ff33",
+  "#33ffa7",
+  "#38acff",
+  "#7038ff",
+  "#ff3de5",
+];
 export function rainbowColor(): colorString {
-  return  rainbow[Math.floor(gameState.levelTime / 50) %rainbow.length ]
+  return rainbow[Math.floor(gameState.levelTime / 50) % rainbow.length];
 }
 
 export function repulse(
@@ -999,9 +991,9 @@ export function gameStateTick(
   ) {
     if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
-    }  else {
+    } else {
       gameOver(
-        t("gameOver.win.title" ),
+        t("gameOver.win.title"),
         t("gameOver.win.summary", { score: gameState.score }),
       );
     }
