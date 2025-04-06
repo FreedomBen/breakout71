@@ -21,7 +21,7 @@ function App() {
   useEffect(()=>{
     fetch('http://localhost:4400/src/data/levels.json')
         .then(r=>r.json())
-        .then(list=>{ 
+        .then(list=>{
           setLevels(list as RawLevel[])
           allLevels=list
         })

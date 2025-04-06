@@ -1,4 +1,4 @@
-import { allLevels, appVersion, upgrades } from "./loadGameData";
+import {allLevels, appVersion, icons, upgrades} from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { GameState, RunHistoryItem } from "./types";
 import { gameState, pause, restart } from "./game";
@@ -125,6 +125,7 @@ export function gameOver(title: string, intro: string) {
         `,
       unlocksInfo,
       {
+        icon:icons["icon:new_run"],
         value: null,
         text: t("gameOver.restart"),
         help: "",
