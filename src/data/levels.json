@@ -972,14 +972,14 @@
   {
     "name": "icon:settings",
     "size": 8,
-    "bricks": "_l_l_l_llllllll__llllllllll__ll__ll__llllllllll__llllllll_l_l_l_",
+    "bricks": "_g_g_g_gggggggg__gbbbbggggb__bg__gb__bggggbbbbg__gggggggg_g_g_g_",
     "svg": null,
     "color": ""
   },
   {
     "name": "icon:unlocks",
     "size": 7,
-    "bricks": "eeee___e__e___e__e______ctCb___Gbsc___tOGO___OCbs",
+    "bricks": "gggg___g__g___g__g______bbbb___bbbb___bbbb___bbbb",
     "svg": null,
     "color": ""
   },
@@ -1014,7 +1014,14 @@
   {
     "name": "icon:premium",
     "size": 11,
-    "bricks": "__y____y___y____y____y_y__yby__y______y______yy_yby_yy_ybbybbbybbyybbybbbybby_ybybbbyby___yyyyyyy____yyyyyyy_____________",
+    "bricks": "__y____y___y____y____y_y__yby__y______y______yy_yty_yy_ybbytttybbyybbytttybby_ybytttyby___yyyyyyy____yyyyyyy_____________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:7_levels_run",
+    "size": 7,
+    "bricks": "___a______at__cGCa_b_c_____ycGCa_b____at_____a___",
     "svg": null,
     "color": ""
   },
@@ -1022,6 +1029,13 @@
     "name": "icon:reroll",
     "size": 8,
     "bricks": "__llllll_llBlBlelllllleBWWWWWeeeWBWBWeBeWWWWWeeeWBWBWBe_WWWWWe__",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:loop",
+    "size": 7,
+    "bricks": "bbbbbbbtttttt_aaaaa__cccc___CCC____GG_____y______",
     "svg": null,
     "color": ""
   },
@@ -1035,7 +1049,7 @@
   {
     "name": "icon:help",
     "size": 8,
-    "bricks": "___bb_____bbbb___bb__bb__bb__bb_____bb_____bb______________bb___",
+    "bricks": "___tt_____tttt___tt__tt__tt__tt_____tt_____tt______________tt___",
     "svg": null,
     "color": ""
   },
@@ -1088,42 +1102,42 @@
   {
     "name": "icon:starting_perks",
     "size": 8,
-    "bricks": "_________b_b_b___________g_g_g_g_________g_g_g_g_________g_g_g_g",
+    "bricks": "_________y_y_y___________l_l_l_l_________l_l_l_l_________l_l_l_l",
     "svg": null,
     "color": ""
   },
   {
     "name": "icon:download",
     "size": 8,
-    "bricks": "___bb______bb______bb______bb______bb____bbbbbb___bbbb__gggbbggg",
+    "bricks": "___yy______yy______yy______yy______yy____yyyyyy___yyyy__gggyyggg",
     "svg": null,
     "color": ""
   },
   {
     "name": "icon:upload",
     "size": 8,
-    "bricks": "gggbbggg__bbbb___bbbbbb____bb______bb______bb______bb______bb___",
+    "bricks": "gggyyggg__yyyy___yyyyyy____yy______yy______yy______yy______yy___",
     "svg": null,
     "color": ""
   },
   {
     "name": "icon:coins",
     "size": 8,
-    "bricks": "__bbbb___bbggbb_bbggggbbbggggggbbggggggbbbggggbb_bbggbb___bbbb__",
+    "bricks": "__yyyy___yyOOyy_yyOOOOyyyOOOOOOyyOOOOOOyyyOOOOyy_yyOOyy___yyyy__",
     "svg": null,
     "color": ""
   },
   {
     "name": "icon:particles",
     "size": 8,
-    "bricks": "_b_b_b__________b_bbb_b___bbb___b_bbb__b_____b___b_b__b________b",
+    "bricks": "_y_y_y__________y_yyy_y___yyy___y_yyy__y_____y___y_y__y________y",
     "svg": null,
     "color": ""
   },
   {
     "name": "icon:reset",
     "size": 8,
-    "bricks": "bb____bbbbb__bbb_bbbbbb___bbbb____bbbb___bbbbbb_bbb__bbbbb____bb",
+    "bricks": "__rrrr___r____r_r_r__r_rr__rr__rr__rr__rr_r__r_r_r____r___rrrr__",
     "svg": null,
     "color": ""
   },
@@ -1250,6 +1264,13 @@
     "name": "Abstract 6",
     "size": 13,
     "bricks": "_vvvvv_vvvvv__v___v_v___v__v_bbbbbbb_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_vvv_b_v__v_b_____b_v__vvvvvvvvvvv_bbbb_____bbbb",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:new_run",
+    "size": 8,
+    "bricks": "____b_______bb__ggggbbb_ggggbbbbggggbbb_____bb______b___________",
     "svg": null,
     "color": ""
   }
