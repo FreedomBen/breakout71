@@ -1,16 +1,27 @@
 import { RunHistoryItem } from "./types";
 
+import _appVersion from "./data/version.json";
+import {generateSaveFileContent} from "./generateSaveFileContent";
+
+// The page will be reloaded if any migrations were run
+let migrationsRun=0
 function migrate(name: string, cb: () => void) {
   if (!localStorage.getItem(name)) {
     try {
       cb();
       console.debug("Ran migration : " + name);
       localStorage.setItem(name, "" + Date.now());
+      migrationsRun++
     } catch (e) {
       console.warn("Migration " + name + " failed : ", e);
     }
   }
 }
+
+migrate("save_data_before_upgrade_to_"+_appVersion, () => {
+  localStorage.setItem("recovery_data",JSON.stringify(generateSaveFileContent()));
+});
+
 
 migrate("migrate_high_scores", () => {
   const old = localStorage.getItem("breakout-3-hs");
@@ -42,6 +53,7 @@ migrate("remove_long_and_creative_mode_data", () => {
   ) as RunHistoryItem[];
 
   let cleaned = runsHistory.filter((r) => {
+    if(!r.perks) return
     if ("mode" in r) {
       if (r.mode !== "short") {
         return false;
@@ -52,3 +64,28 @@ migrate("remove_long_and_creative_mode_data", () => {
   if (cleaned.length !== runsHistory.length)
     localStorage.setItem("breakout_71_runs_history", JSON.stringify(cleaned));
 });
+
+
+migrate("compact_runs_data", () => {
+  let runsHistory = JSON.parse(
+    localStorage.getItem("breakout_71_runs_history") || "[]",
+  ) as RunHistoryItem[];
+
+  runsHistory.forEach((r) => {
+    r.runTime=Math.round(r.runTime)
+    for(let key in r.perks){
+      if(r.perks && !r.perks[key]){
+        delete r.perks[key]
+      }
+    }
+  });
+  localStorage.setItem("breakout_71_runs_history", JSON.stringify(runsHistory));
+});
+
+
+// Avoid a boot loop by setting the hash before reloading
+// We can't set the query string as it is used for other things
+if(migrationsRun && !window.location.hash){
+  window.location.hash='#reloadAfterMigration'
+  window.location.reload()
+}

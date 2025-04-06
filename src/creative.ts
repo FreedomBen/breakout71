@@ -9,7 +9,13 @@ import {
   restart,
 } from "./game";
 import { asyncAlert, requiredAsyncAlert } from "./asyncAlert";
-import { describeLevel, highScoreText, sumOfValues } from "./game_utils";
+import {
+  describeLevel,
+  highScoreText,
+  reasonLevelIsLocked,
+  sumOfValues,
+} from "./game_utils";
+import { getHistory } from "./gameOver";
 
 export function creativeMode(gameState: GameState) {
   return {
@@ -57,7 +63,10 @@ export async function openCreativeModePerksPicker() {
           .map((u) => ({
             icon: u.icon,
             text: u.name,
-            help: (creativeModePerks[u.id] || 0) + "/" + (u.max+creativeModePerks.limitless),
+            help:
+              (creativeModePerks[u.id] || 0) +
+              "/" +
+              (u.max + (creativeModePerks.limitless || 0)),
             value: u,
             className: creativeModePerks[u.id]
               ? "sandbox"
@@ -65,12 +74,16 @@ export async function openCreativeModePerksPicker() {
             tooltip: u.help(creativeModePerks[u.id] || 1),
           })),
         t("lab.select_level"),
-        ...allLevels.map((l) => ({
-          icon: icons[l.name],
-          text: l.name,
-          value: l,
-          tooltip: describeLevel(l),
-        })),
+        ...allLevels.map((l, li) => {
+          const problem = reasonLevelIsLocked(li, getHistory());
+          return {
+            icon: icons[l.name],
+            text: l.name,
+            value: l,
+            disabled: !!problem,
+            tooltip: problem || describeLevel(l),
+          };
+        }),
       ],
     }))
   ) {
@@ -86,7 +99,8 @@ export async function openCreativeModePerksPicker() {
       return;
     } else if (choice) {
       creativeModePerks[choice.id] =
-        ((creativeModePerks[choice.id] || 0) + 1) % (choice.max + 1 + creativeModePerks.limitless);
+        ((creativeModePerks[choice.id] || 0) + 1) %
+        (choice.max + 1 + (creativeModePerks.limitless || 0));
     } else {
       return;
     }

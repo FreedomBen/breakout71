@@ -148,7 +148,6 @@ export type RunStats = {
   upgrades_picked: number;
   max_combo: number;
   max_level: number;
-
   best_level_score: number;
   worst_level_score: number;
 };
@@ -165,7 +164,7 @@ export type ReusableArray<T> = {
 };
 
 export type RunHistoryItem = RunStats & {
-  perks?: PerksMap;
+  perks?: Partial<PerksMap>;
   appVersion?: string;
 };
 export type GameState = {

@@ -12,18 +12,20 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 
 
-
 # Changelog
 
 ## To do
 
 - avoid showing a +1 and -1 at the same time when a combo increase is reset 
-- mention unlock conditions in help
-- show unlock condition in unlocks menu for perks as tooltip
-- fallback for mobile user to see unlock conditions
 
 ## Done
 
+- migration to save past content to localStorage.recovery_data right before starting a new version
+- mention unlock conditions in help
+- show unlock condition in unlocks menu for perks as tooltip
+- fallback for mobile user to see unlock conditions
+- New perk : "limitless" raises the max of all perks by 1 
+- Boosted perk : side kick, now you just need to hit bricks from the left side to gain +lvl combo, hitting from the right side does -2xlvl combo
 - add unlock conditions for levels in the form "reach high score X with perk A,B,C but without perk B,C,D"
 - remove loop mode :
   - remove basecombo

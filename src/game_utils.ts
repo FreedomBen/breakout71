@@ -92,9 +92,9 @@ export function max_levels(gameState: GameState) {
 
 export function pickedUpgradesHTMl(gameState: GameState) {
   const upgradesList = getPossibleUpgrades(gameState)
-    .filter((u) =>   gameState.perks[u.id])
+    .filter((u) => gameState.perks[u.id])
     .map((u) => {
-      const newMax = Math.max(0, u.max +gameState.perks.limitless);
+      const newMax = Math.max(0, u.max + gameState.perks.limitless);
 
       let bars = [];
       for (let i = 0; i < Math.max(u.max, newMax, gameState.perks[u.id]); i++) {

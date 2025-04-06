@@ -978,8 +978,8 @@
   },
   {
     "name": "icon:side_kick",
-    "size": 8,
-    "bricks": "_WW__y_yWWWWy_y_WWWW_y_y_WW_y_y_r_r______r_r____r_r______r_r____",
+    "size": 4,
+    "bricks": "yyrryttryttryyrr",
     "svg": null,
     "color": ""
   },
@@ -1271,6 +1271,13 @@
     "name": "icon:creative",
     "size": 7,
     "bricks": "bbg_bgg_______bbb_bgg_______bgg_bbg_______bbg_bbb",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:limitless",
+    "size": 12,
+    "bricks": "_________________________bbb____ttb_bbbbb__tttbbbb_bbbttt_bbbb__bbbt__bbbb_ttbbb__bbttttttbbbbbb_ttt___bbbb_____________________________________",
     "svg": null,
     "color": ""
   }

@@ -3566,7 +3566,7 @@
 											</translation>
 											<translation>
 												<language>fr-FR</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 										</translations>
 									</concept_node>
@@ -3581,7 +3581,7 @@
 											</translation>
 											<translation>
 												<language>fr-FR</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 										</translations>
 									</concept_node>

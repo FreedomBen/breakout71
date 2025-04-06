@@ -19,7 +19,6 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-
     threshold: 0,
     id: "streak_shots",
     giftable: true,
@@ -609,7 +608,7 @@ export const rawUpgrades = [
     id: "side_kick",
     max: 3,
     name: t("upgrades.side_kick.name"),
-    help: (lvl: number) => t("upgrades.side_kick.help", { lvl }),
+    help: (lvl: number) => t("upgrades.side_kick.help", { lvl, loss: lvl * 2 }),
     fullHelp: t("upgrades.side_kick.fullHelp"),
   },
   {
@@ -661,8 +660,7 @@ export const rawUpgrades = [
     id: "limitless",
     max: 1,
     name: t("upgrades.limitless.name"),
-    help: (lvl: number) =>
-      t("upgrades.limitless.help", { lvl }),
+    help: (lvl: number) => t("upgrades.limitless.help", { lvl }),
     fullHelp: t("upgrades.limitless.fullHelp"),
-  },
+  }
 ] as const;

@@ -1,36 +1,24 @@
-import { allLevels, appVersion, icons, upgrades } from "./loadGameData";
-import {
-  Ball,
-  Coin,
-  GameState,
-  LightFlash,
-  OptionId,
-  ParticleFlash,
-  PerkId,
-  RunParams,
-  TextFlash,
-  Upgrade,
-} from "./types";
-import { getAudioContext, playPendingSounds } from "./sounds";
+import {allLevels, appVersion, icons, upgrades} from "./loadGameData";
+import {Ball, Coin, GameState, LightFlash, OptionId, ParticleFlash, PerkId, RunParams, TextFlash,} from "./types";
+import {getAudioContext, playPendingSounds} from "./sounds";
 import {
   currentLevelInfo,
   describeLevel,
   getRowColIndex,
   highScoreText,
-  reasonLevelIsLocked,
   levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,
+  reasonLevelIsLocked,
 } from "./game_utils";
 
 import "./PWA/sw_loader";
-import { getCurrentLang, t } from "./i18n/i18n";
+import {getCurrentLang, t} from "./i18n/i18n";
 import {
   cycleMaxCoins,
   cycleMaxParticles,
   getCurrentMaxCoins,
   getCurrentMaxParticles,
-  getSettingValue,
   getTotalScore,
   setSettingValue,
 } from "./settings";
@@ -42,38 +30,20 @@ import {
   setLevel,
   setMousePos,
 } from "./gameStateMutators";
-import {
-  backgroundCanvas,
-  ctx,
-  gameCanvas,
-  haloCanvas,
-  haloScale,
-  render,
-  scoreDisplay,
-} from "./render";
-import {
-  pauseRecording,
-  recordOneFrame,
-  resumeRecording,
-  startRecordingGame,
-} from "./recording";
-import { newGameState } from "./newGameState";
-import {
-  alertsOpen,
-  asyncAlert,
-  AsyncAlertAction,
-  closeModal,
-  requiredAsyncAlert,
-} from "./asyncAlert";
-import { isOptionOn, options, toggleOption } from "./options";
-import { hashCode } from "./getLevelBackground";
-import { hoursSpentPlaying } from "./pure_functions";
-import { helpMenuEntry } from "./help";
-import { creativeMode } from "./creative";
-import { setupTooltips } from "./tooltip";
-import { startingPerkMenuButton } from "./startingPerks";
+import {backgroundCanvas, gameCanvas, haloCanvas, haloScale, render, scoreDisplay,} from "./render";
+import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} from "./recording";
+import {newGameState} from "./newGameState";
+import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal, requiredAsyncAlert,} from "./asyncAlert";
+import {isOptionOn, options, toggleOption} from "./options";
+import {hashCode} from "./getLevelBackground";
+import {hoursSpentPlaying} from "./pure_functions";
+import {helpMenuEntry} from "./help";
+import {creativeMode} from "./creative";
+import {setupTooltips} from "./tooltip";
+import {startingPerkMenuButton} from "./startingPerks";
 import "./migrations";
-import { getCreativeModeWarning, getHistory } from "./gameOver";
+import {getCreativeModeWarning, getHistory} from "./gameOver";
+import {generateSaveFileContent} from "./generateSaveFileContent";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -442,8 +412,7 @@ document.addEventListener("visibilitychange", () => {
 async function openScorePanel() {
   pause(true);
 
-
-   await asyncAlert({
+  await asyncAlert({
     title: t("score_panel.title", {
       score: gameState.score,
       level: gameState.currentLevel + 1,
@@ -597,17 +566,9 @@ async function openSettingsMenu() {
     text: t("main_menu.download_save_file"),
     help: t("main_menu.download_save_file_help"),
     async value() {
-      const localStorageContent: Record<string, string> = {};
 
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i) as string;
-        const value = localStorage.getItem(key) as string;
+      const signedPayload =generateSaveFileContent()
 
-        // Store the key-value pair in the object
-        localStorageContent[key] = value;
-      }
-
-      const signedPayload = JSON.stringify(localStorageContent);
       const dlLink = document.createElement("a");
 
       dlLink.setAttribute(

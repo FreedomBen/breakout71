@@ -29,6 +29,13 @@ export function getRunLevels(params: RunParams) {
     .filter((l) => l.name !== params?.levelToAvoid)
     .sort(() => Math.random() - 0.5);
 
+  console.log("getRunLevels", {
+    params,
+    history,
+    unlocked,
+    firstLevel,
+    restInRandomOrder,
+  });
   return firstLevel.concat(
     restInRandomOrder.slice(0, 7 + 3).sort((a, b) => a.sortKey - b.sortKey),
   );

@@ -88,7 +88,6 @@ export function gameOver(title: string, intro: string) {
         help: "",
       },
       `<div id="level-recording-container"></div>`,
-      // pickedUpgradesHTMl(gameState),
       unlocksInfo,
       getHistograms(gameState),
     ],
@@ -130,9 +129,17 @@ export function getHistograms(gameState: GameState) {
       }))
       .filter((l) => l.r);
 
+
+    gameState.runStatistics.runTime=Math.round(gameState.runStatistics.runTime)
+    const perks={...gameState.perks}
+    for(let id in perks){
+      if(!perks[id]){
+        delete perks[id]
+      }
+    }
     runsHistory.push({
       ...gameState.runStatistics,
-      perks: gameState.perks,
+      perks,
       appVersion,
     });
 

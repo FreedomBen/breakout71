@@ -448,10 +448,10 @@ export function explodeBrick(
     );
 
     if (gameState.perks.side_kick) {
-      if (Math.abs(ball.vx) > Math.abs(ball.vy)) {
+      if (ball.previousVX > 0) {
         increaseCombo(gameState, gameState.perks.side_kick, ball.x, ball.y);
       } else {
-        decreaseCombo(gameState, gameState.perks.side_kick, ball.x, ball.y);
+        decreaseCombo(gameState, gameState.perks.side_kick * 2, ball.x, ball.y);
       }
     }
 
