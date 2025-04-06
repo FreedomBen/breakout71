@@ -839,18 +839,19 @@ async function openUnlocksList() {
       };
     });
 
-  const percentUnlock = Math.round(
-    ([...upgradeActions, ...levelActions].filter((a) => !a.disabled).length /
-      (upgradeActions.length + levelActions.length)) *
-      100,
-  );
   const tryOn = await asyncAlert<RunParams>({
-    title: t("unlocks.title", { percentUnlock }),
+    title: t("unlocks.title_upgrades", {
+      unlocked:upgradeActions.filter((a) => !a.disabled).length,
+      out_of:upgradeActions.length
+    }),
     content: [
       `<p>${t("unlocks.intro", { ts })}
-   ${percentUnlock < 100 ? t("unlocks.greyed_out_help") : ""}</p>  `,
+   ${upgradeActions.find(u=>u.disabled)? t("unlocks.greyed_out_help") : ""}</p>  `,
       ...upgradeActions,
-      t("unlocks.level"),
+      t("unlocks.level",{
+      unlocked:levelActions.filter((a) => !a.disabled).length,
+      out_of:levelActions.length
+    }),
       ...levelActions,
     ],
     allowClose: true,

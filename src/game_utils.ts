@@ -4,6 +4,7 @@ import { t } from "./i18n/i18n";
 import { brickAt } from "./level_editor/levels_editor_util";
 import { clamp } from "./pure_functions";
 import {isOptionOn} from "./options";
+import {rawUpgrades} from "./upgrades";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -271,4 +272,34 @@ export function highScoreText( ) {
       return t("main_menu.high_score", { score:getHighScore() });
     }
   return "";
+}
+
+
+export function unlockCondition(levelIndex:number){
+  if(levelIndex<7){
+    return {}
+  }
+  if(levelIndex<20){
+    return {
+      minScore:100*levelIndex
+    }
+  }
+  const excluded:PerkId[]=[
+        'extra_levels','extra_life', "one_more_choice", "instant_upgrade"
+    ]
+
+  const possibletargets = rawUpgrades.slice(0,Math.floor(levelIndex/2))
+      .map(u=>u.id)
+      .filter(u=>!excluded.includes(u))
+      .sort((a,b)=>Math.random()-0.5)
+
+  const length=Math.ceil(levelIndex/30)
+
+  return {
+    minScore:100*levelIndex*Math.pow(1.02,levelIndex),
+    withUpgrades : possibletargets.slice(0,length),
+    withoutUpgrades : possibletargets.slice(length,length+length),
+  }
+
+
 }
