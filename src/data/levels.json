@@ -2,7 +2,7 @@
   {
     "name": "71 mini",
     "size": 5,
-    "bricks": "bbb____tt__btt__b_t___ttt",
+    "bricks": "bbb____bt__btt__b_t___ttt",
     "svg": 1,
     "color": ""
   },
@@ -1264,6 +1264,13 @@
     "name": "Abstract 6",
     "size": 13,
     "bricks": "_vvvvv_vvvvv__v___v_v___v__v_bbbbbbb_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_vvv_b_v__v_b_____b_v__vvvvvvvvvvv_bbbb_____bbbb",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:new_run",
+    "size": 7,
+    "bricks": "_ggg____gbgg___gbbgg__gbbbg__gbbgg__gbgg___ggg___",
     "svg": null,
     "color": ""
   }
