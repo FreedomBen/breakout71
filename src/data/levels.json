@@ -834,13 +834,13 @@
   {
     "name": "icon:checkmark_checked",
     "size": 6,
-    "bricks": "_WWWWGWBBBGGGGBGGWWGGGBWWBGBBW_WWWW_",
+    "bricks": "_ggggbgBBBbbbbBbbggbbbBggBbBBg_gggg_",
     "svg": null
   },
   {
     "name": "icon:checkmark_unchecked",
     "size": 6,
-    "bricks": "_WWWW_WBBBBWWBBBBWWBBBBWWBBBBW_WWWW_",
+    "bricks": "_gggg_gBBBBggBBBBggBBBBggBBBBg_gggg_",
     "svg": null
   },
   {
@@ -1264,6 +1264,13 @@
     "name": "icon:settings",
     "size": 9,
     "bricks": "___g_g____g_ggg_g___ggggg__gggbbbggg_ggb_bgg_gggbbbggg__ggggg___g_ggg_g____g_g___",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:creative",
+    "size": 7,
+    "bricks": "bbg_bgg_______bbb_bgg_______bgg_bbg_______bbg_bbb",
     "svg": null,
     "color": ""
   }
