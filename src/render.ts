@@ -111,12 +111,12 @@ export function render(gameState: GameState) {
         coin.y / haloScale,
       );
     });
-    haloCanvasCtx.globalAlpha = 0.1;
+    haloCanvasCtx.globalAlpha = 0.3;
     gameState.balls.forEach((ball) => {
       drawFuzzyBall(
         haloCanvasCtx,
         gameState.ballsColor,
-        (gameState.ballSize * 3 * brightness) / haloScale,
+        (gameState.ballSize * 2 * brightness) / haloScale,
         ball.x / haloScale,
         ball.y / haloScale,
       );
@@ -523,7 +523,7 @@ export function render(gameState: GameState) {
     haloCanvasCtx.globalCompositeOperation = "screen";
     haloCanvasCtx.fillRect(0, 0, haloCanvas.width, haloCanvas.height);
     ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation = "soft-light";
+    ctx.globalCompositeOperation = "overlay";
     ctx.drawImage(haloCanvas, 0, 0, width, height);
   }
 

@@ -75,7 +75,8 @@ export function gameOver(title: string, intro: string) {
     allowClose: true,
     title,
     content: [
-      getCreativeModeWarning(gameState) || `
+      getCreativeModeWarning(gameState) ||
+        `
         <p>${intro}</p>
         <p>${t("gameOver.cumulative_total", { startTs, endTs })}</p> 
         `,

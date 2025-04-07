@@ -1287,5 +1287,34 @@
     "bricks": "__gggg___ggbggg_gggbgggggggbggggggggbbgggggggggg_gggggg___gggg__",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "Hemiola",
+    "size": 11,
+    "bricks": "___gggg_____gggrrgg_____ggrrg_______gggg_____gggyygg_____ggyyg_______gggg_____gggCCgg_____ggCCg_______gggg________gg_____",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "Obigre",
+    "size": 13,
+    "bricks": "_______________________________________OOOORgRgRgOOOOWOORgRgRgOOOOOWORgRgRgOWOOWOORgRgRgOOWOOWORgRgRgOWOOWOORgRgRgOOOOOOORgRgRgOOO_______________________________________",
+    "svg": null,
+    "color": "",
+    "credit": "https://colin-crapahute.bearblog.dev/"
+  },
+  {
+    "name": "Noodlemire",
+    "size": 15,
+    "bricks": "_________________________________ggggggggg_____g_________g___g___________g_g_____________gg_____________gg_____yyy_____ggg__yyyyyyy__ggggtyyyyyyyyytggggtttttttttttgggg_ttttttttt_gg_____ttttt___________________________________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "Bearded axe",
+    "size": 12,
+    "bricks": "______________WyyyOOy_____WyyyOOy_____Wyy_OO______Wyy_OO______Wyy_OO__________OO__________OO__________OO__________OO__________OO__________OO____",
+    "svg": null,
+    "color": ""
   }
 ]

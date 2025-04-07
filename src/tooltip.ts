@@ -8,9 +8,7 @@ export function setupTooltips() {
   }
 
   function updateTooltipPosition(e: MouseEvent) {
-    tooltip.style.transform =
-      `translate(${e.clientX}px,${e.clientY + 20}px) ` +
-      (e.clientX > window.innerWidth / 2 ? " translate(-100%,0)" : "");
+    tooltip.style.transform = `translate(${e.clientX}px,${e.clientY}px) translate(${e.clientX > window.innerWidth / 2 ? "-100%" : "0"},${e.clientY > (window.innerHeight * 2) / 3 ? "-100%" : "20px"})`;
   }
 
   function closeToolTip() {
@@ -53,7 +51,11 @@ export function setupTooltips() {
     },
     true,
   );
-  document.body.addEventListener("mouseleave", (e) => {
-    closeToolTip();
-  });
+  document.body.addEventListener(
+    "mouseleave",
+    (e) => {
+      closeToolTip();
+    },
+    true,
+  );
 }

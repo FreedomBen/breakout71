@@ -58,7 +58,6 @@ export function newGameState(params: RunParams): GameState {
     perks[randomGift] = 1;
   }
   const runLevels = getRunLevels(params, randomGift);
-  console.log(randomGift, params, runLevels);
 
   const gameState: GameState = {
     runLevels,

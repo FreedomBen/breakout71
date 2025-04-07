@@ -37,6 +37,8 @@ Some upgrades currently are not really useful
 
 ## Done
 
+- tooltip isn't readable at bottom of screen
+- added levels as tributes to game players : Hemiola's red light, Obigre's accordeon
 - display closest unlock with current perks in score and gameover screens
 - initial perk icon = first level 
 - fix starting perk option not working

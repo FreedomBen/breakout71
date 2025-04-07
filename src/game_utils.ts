@@ -285,7 +285,7 @@ export function getLevelUnlockCondition(levelIndex: number) {
   // Returns "" if level is unlocked, otherwise a string explaining how to unlock it
   let required: UpgradeLike[] = [],
     forbidden: UpgradeLike[] = [],
-    minScore = Math.max(-1000 + 100 * levelIndex,0);
+    minScore = Math.max(-1000 + 100 * levelIndex, 0);
 
   if (levelIndex > 20) {
     const excluded: Set<PerkId> = new Set([

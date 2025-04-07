@@ -3,11 +3,11 @@ import { PerkId, Upgrade } from "./types";
 import { t } from "./i18n/i18n";
 import { icons, upgrades } from "./loadGameData";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
-import {isOptionOn} from "./options";
+import { isOptionOn } from "./options";
 
 export function startingPerkMenuButton() {
   return {
-    disabled:isOptionOn('easy'),
+    disabled: isOptionOn("easy"),
     icon: icons["icon:starting_perks"],
     text: t("main_menu.starting_perks"),
     help: t("main_menu.starting_perks_help"),

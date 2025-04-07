@@ -6,6 +6,13 @@ then
   exit 1
 fi
 
+if grep -rE "course|atout" src/i18n/fr.json
+then
+  echo "Bad automatic translations"
+  exit 1
+fi
+
+
 set -e
 set -x
 

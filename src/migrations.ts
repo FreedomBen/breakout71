@@ -98,5 +98,4 @@ if (migrationsRun && !window.location.hash) {
 }
 if (!migrationsRun) {
   window.location.hash = "";
-
 }
