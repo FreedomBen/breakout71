@@ -437,13 +437,13 @@
   {
     "name": "icon:streak_shots",
     "size": 8,
-    "bricks": "_W_W_W__W_W_W_W_tttttt_WttttttW_tttttt_W______W______W_____WWWW",
+    "bricks": "_W_W_W__W_W_W_W_tttttt_WttttttW________W______W______W_____WWWW_",
     "svg": null
   },
   {
     "name": "icon:base_combo",
-    "size": 8,
-    "bricks": "ttttttttttyyttttttyytyyttttttyyttyyttttttyytyyttttttyytttttttttt________",
+    "size": 5,
+    "bricks": "ttttttytytttttttytytttttt",
     "svg": null
   },
   {

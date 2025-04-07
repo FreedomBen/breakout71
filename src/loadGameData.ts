@@ -36,9 +36,9 @@ export const allLevelsAndIcons = rawLevelsList
     sortKey: ((Math.random() + 3) / 3.5) * l.bricksCount,
   })) as Level[];
 
-export const allLevels =
-  allLevelsAndIcons.filter((l) => !l.name.startsWith("icon:"))
-
+export const allLevels = allLevelsAndIcons.filter(
+  (l) => !l.name.startsWith("icon:"),
+);
 
 export const upgrades = rawUpgrades.map((u) => ({
   ...u,

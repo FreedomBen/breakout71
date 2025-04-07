@@ -1,5 +1,5 @@
-import {GameState, PerkId, RunParams} from "./types";
-import {allLevels, allLevelsAndIcons, upgrades} from "./loadGameData";
+import { GameState, PerkId, RunParams } from "./types";
+import { allLevels, allLevelsAndIcons, upgrades } from "./loadGameData";
 import {
   defaultSounds,
   getHighScore,
@@ -15,17 +15,20 @@ import { getHistory } from "./gameOver";
 import { getTotalScore } from "./settings";
 import { isStartingPerk } from "./startingPerks";
 
-export function getRunLevels(params: RunParams, randomGift:PerkId|undefined) {
+export function getRunLevels(
+  params: RunParams,
+  randomGift: PerkId | undefined,
+) {
   const history = getHistory();
   const unlocked = allLevels.filter(
     (l, li) => !reasonLevelIsLocked(li, history, false),
   );
 
-
-  const firstLevel = (params?.level  && unlocked.filter((l) => l.name === params?.level))
-  || (
-      randomGift && allLevelsAndIcons.filter(l=>l.name=='icon:'+randomGift)
-      ) || [];
+  const firstLevel =
+    (params?.level && unlocked.filter((l) => l.name === params?.level)) ||
+    (randomGift &&
+      allLevelsAndIcons.filter((l) => l.name == "icon:" + randomGift)) ||
+    [];
 
   const restInRandomOrder = unlocked
     .filter((l) => l.name !== params?.level)
@@ -38,23 +41,24 @@ export function getRunLevels(params: RunParams, randomGift:PerkId|undefined) {
 }
 
 export function newGameState(params: RunParams): GameState {
-  const highScore= getHighScore()
+  const highScore = getHighScore();
 
   const perks = { ...makeEmptyPerksMap(upgrades), ...(params?.perks || {}) };
 
-  let randomGift:PerkId|undefined =undefined
+  let randomGift: PerkId | undefined = undefined;
   if (!sumOfValues(perks)) {
+    const giftable = upgrades.filter(
+      (u) => highScore >= u.threshold && !u.requires && isStartingPerk(u),
+    );
 
-    const giftable = upgrades.filter((u) => highScore >= u.threshold && !u.requires && isStartingPerk(u));
-
-      randomGift =
+    randomGift =
       (isOptionOn("easy") && "slow_down") ||
       giftable[Math.floor(Math.random() * giftable.length)].id;
 
     perks[randomGift] = 1;
   }
-  const runLevels = getRunLevels(params,randomGift);
-  console.log(randomGift, params,runLevels)
+  const runLevels = getRunLevels(params, randomGift);
+  console.log(randomGift, params, runLevels);
 
   const gameState: GameState = {
     runLevels,
@@ -129,7 +133,7 @@ export function newGameState(params: RunParams): GameState {
     autoCleanUses: 0,
     ...defaultSounds(),
     rerolls: 0,
-    creative: sumOfValues(params.perks) > 1,
+    creative: sumOfValues(params.perks) > 1 || params.level,
   };
   resetBalls(gameState);
 

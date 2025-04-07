@@ -36,6 +36,7 @@ export async function openScorePanel(gameState: GameState) {
 }
 
 export function getNearestUnlockHTML(gameState: GameState) {
+    if(gameState.creative)return ''
   const unlockable = allLevels
     .map((l, li) => {
       const { minScore, forbidden, required } = getLevelUnlockCondition(li);

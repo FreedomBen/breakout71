@@ -96,3 +96,7 @@ if (migrationsRun && !window.location.hash) {
   window.location.hash = "#reloadAfterMigration";
   window.location.reload();
 }
+if (!migrationsRun) {
+  window.location.hash = "";
+
+}

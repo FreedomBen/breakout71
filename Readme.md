@@ -12,14 +12,13 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 
 # Game issues and potential solutions
-
-I should show what the starting perk is :
-- make the perk icon playable as the first level of the run
-- show it on screen for the first 5 seconds 
+ 
 
 When you have already a nice build and still get offered many perks, it gets tiring:
 - limit all build to N perks (maybe could be boosted with a perk)
-- add a "no more upgrade in the run, but double coins" perk
+- add a "no more upgrade in the run, but double coins" perk 
+- permanent "skip" option on the upgrades, for when you don't want any of them.
+- add a "double last level's coins" perk, then decreasing reward
 
 One play style is too OP, no reason to try other things
 - encourage varied play style with level unlock requirements (testing)
@@ -35,16 +34,12 @@ Some upgrades currently are not really useful
 
 ## To do
 
-- maybe just make the starting perk icon the first level ? kind of silly, kind of fun.
-- avoid showing a +1 and -1 at the same time when a combo increase is reset 
-- display closest unlock with current perks in score and gameover screens
-- show the initial perk when we start a new game.
-- "skip" option on the upgrades, for when you don't want any of them.
-- fix starting perk option not working
-
 
 ## Done
 
+- display closest unlock with current perks in score and gameover screens
+- initial perk icon = first level 
+- fix starting perk option not working
 - progress bar for unlock in unlocks menu  
 - display runs history
 - in the runs history, only save perks that were chosen by the user
@@ -217,6 +212,7 @@ Some upgrades currently are not really useful
 
 ## UX / gameplay
 
+- avoid showing a +1 and -1 at the same time when a combo increase is reset
 - translate fastlane presentation texts to french
 - mobile option: relative movement of the touch would be amplified and added to the puck 
 - mobile option: don't pause on mobile when lifting finger
