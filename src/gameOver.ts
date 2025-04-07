@@ -33,7 +33,6 @@ export function gameOver(title: string, intro: string) {
   pause(true);
   stopRecording();
   addToTotalPlayTime(gameState.runStatistics.runTime);
-  gameState.runStatistics.max_level = gameState.currentLevel + 1;
 
   let animationDelay = -300;
   const getDelay = () => {
@@ -112,6 +111,7 @@ try {
     localStorage.getItem("breakout_71_runs_history") || "[]",
   ) as RunHistoryItem[];
 } catch (e) {}
+
 export function getHistory() {
   return runsHistory;
 }

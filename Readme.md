@@ -17,9 +17,13 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 ## To do
 
 - avoid showing a +1 and -1 at the same time when a combo increase is reset 
+- display runs history
+- display closest unlock with current perks in score and gameover screens
+- progress of unlock 
 
 ## Done
 
+- in the runs history, only save perks that were chosen by the user
 - migration to save past content to localStorage.recovery_data right before starting a new version
 - mention unlock conditions in help
 - show unlock condition in unlocks menu for perks as tooltip

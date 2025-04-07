@@ -25,7 +25,7 @@ export function setupTooltips() {
       while (parent && !parent.hasAttribute("data-tooltip")) {
         parent = parent.parentElement;
       }
-      if (parent?.hasAttribute("data-tooltip")) {
+      if (parent?.getAttribute("data-tooltip")?.trim()) {
         hovering = parent as HTMLElement;
         tooltip.innerHTML = hovering.getAttribute("data-tooltip") || "";
         tooltip.style.display = "";

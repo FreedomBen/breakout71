@@ -1280,5 +1280,12 @@
     "bricks": "_________________________bbb____ttb_bbbbb__tttbbbb_bbbttt_bbbb__bbbt__bbbb_ttbbb__bbttttttbbbbbb_ttt___bbbb_____________________________________",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:history",
+    "size": 8,
+    "bricks": "__gggg___ggbggg_gggbgggggggbggggggggbbgggggggggg_gggggg___gggg__",
+    "svg": null,
+    "color": ""
   }
 ]

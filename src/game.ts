@@ -44,6 +44,7 @@ import {startingPerkMenuButton} from "./startingPerks";
 import "./migrations";
 import {getCreativeModeWarning, getHistory} from "./gameOver";
 import {generateSaveFileContent} from "./generateSaveFileContent";
+import {runHistoryViewerMenuEntry} from "./runHistoryViewer";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -460,6 +461,7 @@ export async function openMainMenu() {
       },
     },
     creativeMode(gameState),
+      runHistoryViewerMenuEntry(),
     {
       icon: icons["icon:unlocks"],
       text: t("main_menu.unlocks"),

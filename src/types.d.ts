@@ -147,9 +147,6 @@ export type RunStats = {
   wall_bounces: number;
   upgrades_picked: number;
   max_combo: number;
-  max_level: number;
-  best_level_score: number;
-  worst_level_score: number;
 };
 
 export type PerksMap = {

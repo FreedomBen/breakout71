@@ -596,23 +596,6 @@ export function addToScore(gameState: GameState, coin: Coin) {
   }
 }
 
-function recordBestWorstLevelScore(gameState: GameState) {
-  const levelScore = gameState.score - gameState.levelStartScore;
-  const { runStatistics } = gameState;
-  if (
-    runStatistics.best_level_score === -1 ||
-    runStatistics.best_level_score < levelScore
-  ) {
-    runStatistics.best_level_score = levelScore;
-  }
-  if (
-    runStatistics.worst_level_score === -1 ||
-    runStatistics.worst_level_score > levelScore
-  ) {
-    runStatistics.worst_level_score = levelScore;
-  }
-}
-
 export async function setLevel(gameState: GameState, l: number) {
   // Here to alleviate double upgrades issues
   if (gameState.upgradesOfferedFor >= l) {
@@ -622,7 +605,6 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.upgradesOfferedFor = l;
   pause(false);
   stopRecording();
-  recordBestWorstLevelScore(gameState);
 
   if (l > 0) {
     await openUpgradesPicker(gameState);

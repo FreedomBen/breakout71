@@ -1,10 +1,9 @@
 * {
-  font-family:
-    Courier New,
-    Courier,
-    Lucida Sans Typewriter,
-    Lucida Typewriter,
-    monospace;
+  font-family: Courier New,
+  Courier,
+  Lucida Sans Typewriter,
+  Lucida Typewriter,
+  monospace;
   box-sizing: border-box;
 }
 
@@ -465,3 +464,32 @@ h2.histogram-title strong {
   border: 1px solid white;
   max-width: 300px;
 }
+
+#popup.history > div {
+  max-width: none;
+
+  table {
+    th:hover{
+      cursor: pointer;
+      background: black;
+    }
+    td, th {
+      padding: 0 5px;
+      line-height: 20px;
+      text-align: right;
+    }
+
+    th:first-child, td:first-child {
+      text-align: left
+    }
+    img{
+      width: 20px;
+  height: auto;
+      pointer-events: none;
+    }
+  tr:nth-child(2n) {
+    background: rgba(0, 0, 0, 0.58);;
+  }
+  }
+}
+

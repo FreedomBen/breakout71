@@ -78,7 +78,15 @@ migrate("compact_runs_data", () => {
         delete r.perks[key]
       }
     }
+    if('best_level_score' in r) {
+      delete r.best_level_score
+    }
+    if('worst_level_score' in r) {
+      delete r.worst_level_score
+    }
+
   });
+
   localStorage.setItem("breakout_71_runs_history", JSON.stringify(runsHistory));
 });
 
