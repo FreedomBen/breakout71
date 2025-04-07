@@ -37,7 +37,7 @@ const haloCanvasCtx = haloCanvas.getContext("2d", {
   alpha: false,
 }) as CanvasRenderingContext2D;
 
-export const haloScale = 8;
+export const haloScale = 16;
 
 export function render(gameState: GameState) {
   const level = currentLevelInfo(gameState);
@@ -129,18 +129,19 @@ export function render(gameState: GameState) {
       drawFuzzyBall(
         haloCanvasCtx,
         color == "black" ? "#666666" : color,
-        (gameState.brickWidth * 2 * brightness) / haloScale,
+        // Perf could really go down there because of the size of the halo
+        Math.min(200, gameState.brickWidth * 1.5 * brightness) / haloScale,
         x / haloScale,
         y / haloScale,
       );
     });
 
     haloCanvasCtx.globalCompositeOperation = "screen";
-    haloCanvasCtx.globalAlpha = 0.3;
     forEachLiveOne(gameState.particles, (flash) => {
       const { x, y, time, color, size, duration } = flash;
       const elapsed = gameState.levelTime - time;
-      // haloCanvasCtx.globalAlpha = Math.min(1, 2 - (elapsed / duration) * 2);
+      haloCanvasCtx.globalAlpha =
+        0.1 * Math.min(1, 2 - (elapsed / duration) * 2);
       drawFuzzyBall(
         haloCanvasCtx,
         color,
@@ -152,7 +153,11 @@ export function render(gameState: GameState) {
 
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
+
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
     ctx.drawImage(haloCanvas, 0, 0, width, height);
+    ctx.imageSmoothingEnabled = false;
 
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "multiply";
@@ -516,6 +521,7 @@ export function render(gameState: GameState) {
     level.svg &&
     level.color === "#000000"
   ) {
+    ctx.imageSmoothingEnabled = true;
     // haloCanvasCtx.globalCompositeOperation = 'multiply';
     // haloCanvasCtx.fillRect(0,0,haloCanvas.width,haloCanvas.height)
     haloCanvasCtx.fillStyle = "#FFFFFF";
@@ -525,6 +531,8 @@ export function render(gameState: GameState) {
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "overlay";
     ctx.drawImage(haloCanvas, 0, 0, width, height);
+
+    ctx.imageSmoothingEnabled = false;
   }
 
   ctx.globalCompositeOperation = "source-over";

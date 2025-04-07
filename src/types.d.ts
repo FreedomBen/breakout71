@@ -285,6 +285,7 @@ export type GameState = {
 export type RunParams = {
   level?: string;
   levelToAvoid?: string;
+  perkToAvoid?: PerkId;
   perks?: Partial<PerksMap>;
 };
 export type OptionDef = {

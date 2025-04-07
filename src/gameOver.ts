@@ -291,5 +291,5 @@ export function getHistograms(gameState: GameState) {
   } catch (e) {
     console.warn(e);
   }
-  return runStats + unlockedLevels;
+  return unlockedLevels + runStats;
 }
