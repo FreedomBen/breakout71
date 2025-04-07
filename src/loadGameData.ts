@@ -13,8 +13,7 @@ const rawLevelsList = _rawLevelsList as RawLevel[];
 export const appVersion = _appVersion as string;
 
 export const icons = {} as { [k: string]: string };
-
-export const allLevels = rawLevelsList
+export const allLevelsAndIcons = rawLevelsList
   .map((level, i) => {
     const bricks = level.bricks
       .split("")
@@ -32,11 +31,14 @@ export const allLevels = rawLevelsList
       svg: getLevelBackground(level),
     };
   })
-  .filter((l) => !l.name.startsWith("icon:"))
   .map((l, li) => ({
     ...l,
     sortKey: ((Math.random() + 3) / 3.5) * l.bricksCount,
   })) as Level[];
+
+export const allLevels =
+  allLevelsAndIcons.filter((l) => !l.name.startsWith("icon:"))
+
 
 export const upgrades = rawUpgrades.map((u) => ({
   ...u,

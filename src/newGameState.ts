@@ -1,5 +1,5 @@
-import { GameState, RunParams } from "./types";
-import { allLevels, upgrades } from "./loadGameData";
+import {GameState, PerkId, RunParams} from "./types";
+import {allLevels, allLevelsAndIcons, upgrades} from "./loadGameData";
 import {
   defaultSounds,
   getHighScore,
@@ -15,15 +15,17 @@ import { getHistory } from "./gameOver";
 import { getTotalScore } from "./settings";
 import { isStartingPerk } from "./startingPerks";
 
-export function getRunLevels(params: RunParams) {
+export function getRunLevels(params: RunParams, randomGift:PerkId|undefined) {
   const history = getHistory();
   const unlocked = allLevels.filter(
     (l, li) => !reasonLevelIsLocked(li, history, false),
   );
 
-  const firstLevel = params?.level
-    ? unlocked.filter((l) => l.name === params?.level)
-    : [];
+
+  const firstLevel = (params?.level  && unlocked.filter((l) => l.name === params?.level))
+  || (
+      randomGift && allLevelsAndIcons.filter(l=>l.name=='icon:'+randomGift)
+      ) || [];
 
   const restInRandomOrder = unlocked
     .filter((l) => l.name !== params?.level)
@@ -36,9 +38,23 @@ export function getRunLevels(params: RunParams) {
 }
 
 export function newGameState(params: RunParams): GameState {
-  const runLevels = getRunLevels(params);
+  const highScore= getHighScore()
 
   const perks = { ...makeEmptyPerksMap(upgrades), ...(params?.perks || {}) };
+
+  let randomGift:PerkId|undefined =undefined
+  if (!sumOfValues(perks)) {
+
+    const giftable = upgrades.filter((u) => highScore >= u.threshold && !u.requires && isStartingPerk(u));
+
+      randomGift =
+      (isOptionOn("easy") && "slow_down") ||
+      giftable[Math.floor(Math.random() * giftable.length)].id;
+
+    perks[randomGift] = 1;
+  }
+  const runLevels = getRunLevels(params,randomGift);
+  console.log(randomGift, params,runLevels)
 
   const gameState: GameState = {
     runLevels,
@@ -69,7 +85,7 @@ export function newGameState(params: RunParams): GameState {
     lastScoreIncrease: -1000,
     lastExplosion: -1000,
     lastBrickBroken: 0,
-    highScore: getHighScore(),
+    highScore,
     balls: [],
     ballsColor: "#FFFFFF",
     bricks: [],
@@ -117,18 +133,8 @@ export function newGameState(params: RunParams): GameState {
   };
   resetBalls(gameState);
 
-  if (!sumOfValues(gameState.perks)) {
-    const giftable = getPossibleUpgrades(gameState).filter((u) =>
-      isStartingPerk(u),
-    );
-    const randomGift =
-      (isOptionOn("easy") && "slow_down") ||
-      giftable[Math.floor(Math.random() * giftable.length)].id;
-    perks[randomGift] = 1;
-    dontOfferTooSoon(gameState, randomGift);
-  }
   for (let perk of upgrades) {
-    if (gameState.perks[perk.id]) {
+    if (perks[perk.id]) {
       dontOfferTooSoon(gameState, perk.id);
     }
   }

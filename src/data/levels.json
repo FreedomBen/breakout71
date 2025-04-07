@@ -521,7 +521,7 @@
   {
     "name": "icon:picky_eater",
     "size": 8,
-    "bricks": "rtrtrtrttrtrtrtrrtrtrtrt____________________t_____________WWWW",
+    "bricks": "_rrr_______ry_____ryy_____r_y______yyy______________y_____WWWW__",
     "svg": null
   },
   {
@@ -594,7 +594,7 @@
   {
     "name": "A",
     "size": 7,
-    "bricks": "___t_____ttt___t___t__t___t_tttttttt_____tt_____t",
+    "bricks": "__ttt___ttttt_ttt_ttttt___ttttttttttt___tttt___tt",
     "svg": null
   },
   {
