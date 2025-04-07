@@ -13,11 +13,12 @@ import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
 import { isOptionOn } from "./options";
 import { getHistory } from "./gameOver";
 import { getTotalScore } from "./settings";
+import { isStartingPerk } from "./startingPerks";
 
 export function getRunLevels(params: RunParams) {
   const history = getHistory();
   const unlocked = allLevels.filter(
-    (l, li) => !reasonLevelIsLocked(li, history),
+    (l, li) => !reasonLevelIsLocked(li, history, false),
   );
 
   const firstLevel = params?.level
@@ -29,13 +30,6 @@ export function getRunLevels(params: RunParams) {
     .filter((l) => l.name !== params?.levelToAvoid)
     .sort(() => Math.random() - 0.5);
 
-  console.log("getRunLevels", {
-    params,
-    history,
-    unlocked,
-    firstLevel,
-    restInRandomOrder,
-  });
   return firstLevel.concat(
     restInRandomOrder.slice(0, 7 + 3).sort((a, b) => a.sortKey - b.sortKey),
   );
@@ -124,7 +118,9 @@ export function newGameState(params: RunParams): GameState {
   resetBalls(gameState);
 
   if (!sumOfValues(gameState.perks)) {
-    const giftable = getPossibleUpgrades(gameState).filter((u) => u.giftable);
+    const giftable = getPossibleUpgrades(gameState).filter((u) =>
+      isStartingPerk(u),
+    );
     const randomGift =
       (isOptionOn("easy") && "slow_down") ||
       giftable[Math.floor(Math.random() * giftable.length)].id;

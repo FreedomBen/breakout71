@@ -1,6 +1,16 @@
-import {allLevels, appVersion, icons, upgrades} from "./loadGameData";
-import {Ball, Coin, GameState, LightFlash, OptionId, ParticleFlash, PerkId, RunParams, TextFlash,} from "./types";
-import {getAudioContext, playPendingSounds} from "./sounds";
+import { allLevels, appVersion, icons, upgrades } from "./loadGameData";
+import {
+  Ball,
+  Coin,
+  GameState,
+  LightFlash,
+  OptionId,
+  ParticleFlash,
+  PerkId,
+  RunParams,
+  TextFlash,
+} from "./types";
+import { getAudioContext, playPendingSounds } from "./sounds";
 import {
   currentLevelInfo,
   describeLevel,
@@ -13,7 +23,7 @@ import {
 } from "./game_utils";
 
 import "./PWA/sw_loader";
-import {getCurrentLang, t} from "./i18n/i18n";
+import { getCurrentLang, t } from "./i18n/i18n";
 import {
   cycleMaxCoins,
   cycleMaxParticles,
@@ -30,21 +40,40 @@ import {
   setLevel,
   setMousePos,
 } from "./gameStateMutators";
-import {backgroundCanvas, gameCanvas, haloCanvas, haloScale, render, scoreDisplay,} from "./render";
-import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} from "./recording";
-import {newGameState} from "./newGameState";
-import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal, requiredAsyncAlert,} from "./asyncAlert";
-import {isOptionOn, options, toggleOption} from "./options";
-import {hashCode} from "./getLevelBackground";
-import {hoursSpentPlaying} from "./pure_functions";
-import {helpMenuEntry} from "./help";
-import {creativeMode} from "./creative";
-import {setupTooltips} from "./tooltip";
-import {startingPerkMenuButton} from "./startingPerks";
+import {
+  backgroundCanvas,
+  gameCanvas,
+  haloCanvas,
+  haloScale,
+  render,
+  scoreDisplay,
+} from "./render";
+import {
+  pauseRecording,
+  recordOneFrame,
+  resumeRecording,
+  startRecordingGame,
+} from "./recording";
+import { newGameState } from "./newGameState";
+import {
+  alertsOpen,
+  asyncAlert,
+  AsyncAlertAction,
+  closeModal,
+  requiredAsyncAlert,
+} from "./asyncAlert";
+import { isOptionOn, options, toggleOption } from "./options";
+import { hashCode } from "./getLevelBackground";
+import { hoursSpentPlaying } from "./pure_functions";
+import { helpMenuEntry } from "./help";
+import { creativeMode } from "./creative";
+import { setupTooltips } from "./tooltip";
+import { startingPerkMenuButton } from "./startingPerks";
 import "./migrations";
-import {getCreativeModeWarning, getHistory} from "./gameOver";
-import {generateSaveFileContent} from "./generateSaveFileContent";
-import {runHistoryViewerMenuEntry} from "./runHistoryViewer";
+import { getHistory } from "./gameOver";
+import { generateSaveFileContent } from "./generateSaveFileContent";
+import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
+import { getNearestUnlockHTML, openScorePanel } from "./openScorePanel";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -267,6 +296,8 @@ export async function openUpgradesPicker(gameState: GameState) {
         <p>${levelsListHTMl(gameState, gameState.currentLevel + 1)}</p>
 `,
         ...actions,
+
+        getNearestUnlockHTML(gameState),
         pickedUpgradesHTMl(gameState),
 
         `<div id="level-recording-container"></div>`,
@@ -400,7 +431,7 @@ window.addEventListener("visibilitychange", () => {
 scoreDisplay.addEventListener("click", (e) => {
   e.preventDefault();
   if (!alertsOpen) {
-    openScorePanel();
+    openScorePanel(gameState);
   }
 });
 
@@ -409,28 +440,6 @@ document.addEventListener("visibilitychange", () => {
     pause(true);
   }
 });
-
-async function openScorePanel() {
-  pause(true);
-
-  await asyncAlert({
-    title: t("score_panel.title", {
-      score: gameState.score,
-      level: gameState.currentLevel + 1,
-      max: max_levels(gameState),
-    }),
-
-    content: [
-      getCreativeModeWarning(gameState),
-      pickedUpgradesHTMl(gameState),
-      levelsListHTMl(gameState, gameState.currentLevel),
-      gameState.rerolls
-        ? t("score_panel.rerolls_count", { rerolls: gameState.rerolls })
-        : "",
-    ],
-    allowClose: true,
-  });
-}
 
 (document.getElementById("menu") as HTMLButtonElement).addEventListener(
   "click",
@@ -461,7 +470,7 @@ export async function openMainMenu() {
       },
     },
     creativeMode(gameState),
-      runHistoryViewerMenuEntry(),
+    runHistoryViewerMenuEntry(),
     {
       icon: icons["icon:unlocks"],
       text: t("main_menu.unlocks"),
@@ -568,8 +577,7 @@ async function openSettingsMenu() {
     text: t("main_menu.download_save_file"),
     help: t("main_menu.download_save_file_help"),
     async value() {
-
-      const signedPayload =generateSaveFileContent()
+      const signedPayload = generateSaveFileContent();
 
       const dlLink = document.createElement("a");
 
@@ -796,13 +804,17 @@ async function openUnlocksList() {
     }));
 
   const levelActions = allLevels.map((l, li) => {
-    const problem = reasonLevelIsLocked(li, getHistory());
+    const lockedBecause = reasonLevelIsLocked(li, getHistory(), true);
+    const percentUnlocked = lockedBecause?.reached
+      ? `<span class="progress-inline"><span style="transform: scale(${Math.floor((lockedBecause.reached / lockedBecause.minScore) * 100) / 100},1)"></span></span>`
+      : "";
+
     return {
-      text: l.name,
-      disabled: !!problem,
+      text: l.name + percentUnlocked,
+      disabled: !!lockedBecause,
       value: { level: l.name } as RunParams,
       icon: icons[l.name],
-      [hintField]: problem || describeLevel(l),
+      [hintField]: lockedBecause?.text || describeLevel(l),
     };
   });
 

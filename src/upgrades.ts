@@ -662,5 +662,5 @@ export const rawUpgrades = [
     name: t("upgrades.limitless.name"),
     help: (lvl: number) => t("upgrades.limitless.help", { lvl }),
     fullHelp: t("upgrades.limitless.fullHelp"),
-  }
+  },
 ] as const;

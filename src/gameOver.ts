@@ -125,16 +125,17 @@ export function getHistograms(gameState: GameState) {
       .map((l, li) => ({
         li,
         l,
-        r: reasonLevelIsLocked(li, runsHistory),
+        r: reasonLevelIsLocked(li, runsHistory, false)?.text,
       }))
       .filter((l) => l.r);
 
-
-    gameState.runStatistics.runTime=Math.round(gameState.runStatistics.runTime)
-    const perks={...gameState.perks}
-    for(let id in perks){
-      if(!perks[id]){
-        delete perks[id]
+    gameState.runStatistics.runTime = Math.round(
+      gameState.runStatistics.runTime,
+    );
+    const perks = { ...gameState.perks };
+    for (let id in perks) {
+      if (!perks[id]) {
+        delete perks[id];
       }
     }
     runsHistory.push({
@@ -144,7 +145,7 @@ export function getHistograms(gameState: GameState) {
     });
 
     const unlocked = locked.filter(
-      ({ li }) => !reasonLevelIsLocked(li, runsHistory),
+      ({ li }) => !reasonLevelIsLocked(li, runsHistory, true),
     );
     if (unlocked.length) {
       unlockedLevels = `

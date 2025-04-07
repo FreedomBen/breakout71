@@ -11,18 +11,42 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 
+# Game issues and potential solutions
+
+I should show what the starting perk is :
+- make the perk icon playable as the first level of the run
+- show it on screen for the first 5 seconds 
+
+When you have already a nice build and still get offered many perks, it gets tiring:
+- limit all build to N perks (maybe could be boosted with a perk)
+- add a "no more upgrade in the run, but double coins" perk
+
+One play style is too OP, no reason to try other things
+- encourage varied play style with level unlock requirements (testing)
+- add loop run where user levels can't be used in further loops (boring)
+- add lab mode where you need to make three builds (complex, lots of clicking, not fun)
+
+Some upgrades currently are not really useful
+- remove them
+- add more upgrades to complement them
+- force users to try them to unlock levels
 
 # Changelog
 
 ## To do
 
+- maybe just make the starting perk icon the first level ? kind of silly, kind of fun.
 - avoid showing a +1 and -1 at the same time when a combo increase is reset 
-- display runs history
 - display closest unlock with current perks in score and gameover screens
-- progress of unlock 
+- show the initial perk when we start a new game.
+- "skip" option on the upgrades, for when you don't want any of them.
+- fix starting perk option not working
+
 
 ## Done
 
+- progress bar for unlock in unlocks menu  
+- display runs history
 - in the runs history, only save perks that were chosen by the user
 - migration to save past content to localStorage.recovery_data right before starting a new version
 - mention unlock conditions in help
@@ -98,7 +122,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - QOL: option to display gained combo as onscreen text
 - QOL: publish an apk to itch.io with every build 
 - Internal: added a simple game data migration system 
- 
+
 ## 29059721
 
 - QOL: icons in settings menu
@@ -231,6 +255,8 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
 
 ## Easy perks ideas  
+- two for one : add a 2 for one upgrade combo to the choice lists
+- cash out : double last level's gains  
 - snowball :  Combo resets every 0.1s . +1 combo for each combo gained Since last reset.
 - Chain reaction : +lvl*lvl combo per brick broken by an explosion, combo resets after explosion is over
 - coins doubled when touched by ball, lvl times, looks smaller and lighter

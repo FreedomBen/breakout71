@@ -1,9 +1,10 @@
 * {
-  font-family: Courier New,
-  Courier,
-  Lucida Sans Typewriter,
-  Lucida Typewriter,
-  monospace;
+  font-family:
+    Courier New,
+    Courier,
+    Lucida Sans Typewriter,
+    Lucida Typewriter,
+    monospace;
   box-sizing: border-box;
 }
 
@@ -469,27 +470,45 @@ h2.histogram-title strong {
   max-width: none;
 
   table {
-    th:hover{
+    th:hover {
       cursor: pointer;
       background: black;
     }
-    td, th {
+    td,
+    th {
       padding: 0 5px;
       line-height: 20px;
       text-align: right;
     }
 
-    th:first-child, td:first-child {
-      text-align: left
+    th:first-child,
+    td:first-child {
+      text-align: left;
     }
-    img{
+    img {
       width: 20px;
-  height: auto;
+      height: auto;
       pointer-events: none;
     }
-  tr:nth-child(2n) {
-    background: rgba(0, 0, 0, 0.58);;
-  }
+    tr:nth-child(2n) {
+      background: rgba(0, 0, 0, 0.58);
+    }
   }
 }
 
+.progress-inline {
+  position: absolute;
+  display: block;
+  background: grey;
+  left: 62px;
+  right: 2px;
+  height: 7px;
+  bottom: 2px;
+  border-radius: 2px;
+  span {
+    position: absolute;
+    inset: 1px;
+    transform-origin: top left;
+    background: white;
+  }
+}

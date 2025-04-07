@@ -14,7 +14,7 @@ export function startingPerkMenuButton() {
     },
   };
 }
-function isChecked(u: Upgrade): boolean {
+export function isStartingPerk(u: Upgrade): boolean {
   return getSettingValue("start_with_" + u.id, u.giftable);
 }
 
@@ -24,9 +24,9 @@ export async function openStartingPerksEditor() {
     (u) =>
       !u.requires && !["instant_upgrade"].includes(u.id) && u.threshold <= ts,
   );
-  const starting = avaliable.filter((u) => isChecked(u));
+  const starting = avaliable.filter((u) => isStartingPerk(u));
   const buttons = avaliable.map((u) => {
-    const checked = isChecked(u);
+    const checked = isStartingPerk(u);
     return {
       icon: u.icon,
       text: u.name,
@@ -48,7 +48,7 @@ export async function openStartingPerksEditor() {
     ],
   });
   if (perk) {
-    setSettingValue("start_with_" + perk.id, !isChecked(perk));
+    setSettingValue("start_with_" + perk.id, !isStartingPerk(perk));
     openStartingPerksEditor();
   }
 }

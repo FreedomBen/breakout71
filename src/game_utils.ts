@@ -5,6 +5,7 @@ import {
   PerkId,
   PerksMap,
   RunHistoryItem,
+  Upgrade,
 } from "./types";
 import { icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
@@ -278,51 +279,96 @@ export function highScoreText() {
   return "";
 }
 
+type UpgradeLike = { id: PerkId; name: string; requires: string };
+
+export function getLevelUnlockCondition(levelIndex: number) {
+  // Returns "" if level is unlocked, otherwise a string explaining how to unlock it
+  let required: UpgradeLike[] = [],
+    forbidden: UpgradeLike[] = [],
+    minScore = 0;
+  if (levelIndex <= 10) {
+    //   Keep all as is
+  } else if (levelIndex < 20) {
+    minScore = 100 * levelIndex;
+  } else {
+    const excluded: Set<PerkId> = new Set([
+      "extra_levels",
+      "extra_life",
+      "one_more_choice",
+      "instant_upgrade",
+      "shunt",
+      "slow_down",
+    ]);
+    // Avoid excluding a perk that's needed for the required one
+    rawUpgrades.forEach((u) => {
+      if (u.requires) excluded.add(u.requires);
+    });
+
+    const possibletargets = rawUpgrades
+      .slice(0, Math.floor(levelIndex / 2))
+      .map((u) => u)
+      .filter((u) => !excluded.has(u.id))
+      .sort(
+        (a, b) => hashCode(levelIndex + a.id) - hashCode(levelIndex + b.id),
+      );
+
+    const length = Math.ceil(levelIndex / 30);
+    required = possibletargets.slice(0, length);
+    forbidden = possibletargets.slice(length, length + length);
+    minScore = 100 * levelIndex;
+  }
+  return {
+    required,
+    forbidden,
+    minScore,
+  };
+}
+
+export function getBestScoreMatching(
+  history: RunHistoryItem[],
+  required: UpgradeLike[] = [],
+  forbidden: UpgradeLike[] = [],
+) {
+  return Math.max(
+    0,
+    ...history
+      .filter(
+        (r) =>
+          !required.find((u) => !r?.perks?.[u.id]) &&
+          !forbidden.find((u) => r?.perks?.[u.id]),
+      )
+      .map((r) => r.score),
+  );
+}
+
 export function reasonLevelIsLocked(
   levelIndex: number,
   history: RunHistoryItem[],
-) {
-  // Returns "" if level is unlocked, otherwise a string explaining how to unlock it
-  if (levelIndex <= 10) {
-    return "";
-  }
-  if (levelIndex < 20) {
-    const minScore = 100 * levelIndex;
-    return history.find((r) => r.score >= minScore)
-      ? ""
-      : t("unlocks.minScore", { minScore });
-  }
-  const excluded: PerkId[] = [
-    "extra_levels",
-    "extra_life",
-    "one_more_choice",
-    "instant_upgrade",
-  ];
+  mentionBestScore: boolean,
+): null | { reached: number; minScore: number; text: string } {
+  const { required, forbidden, minScore } = getLevelUnlockCondition(levelIndex);
 
-  const possibletargets = rawUpgrades
-    .slice(0, Math.floor(levelIndex / 2))
-    .map((u) => u)
-    .filter((u) => !excluded.includes(u.id))
-    .sort((a, b) => hashCode(levelIndex + a.id) - hashCode(levelIndex + b.id));
-
-  const length = Math.ceil(levelIndex / 30);
-  const required = possibletargets.slice(0, length);
-  const forbidden = possibletargets.slice(length, length + length);
-  const minScore = 100 * levelIndex * Math.floor(Math.pow(1.01, levelIndex));
-  if (
-    history.find(
-      (r) =>
-        r.score >= minScore &&
-        !required.find((u) => !r?.perks?.[u.id]) &&
-        !forbidden.find((u) => r?.perks?.[u.id]),
-    )
-  ) {
-    return "";
-  } else {
-    return t("unlocks.minScoreWithPerks", {
+  const reached = getBestScoreMatching(history, required, forbidden);
+  let reachedText =
+    reached && mentionBestScore ? t("unlocks.reached", { reached }) : "";
+  if (reached >= minScore) {
+    return null;
+  } else if (!required.length && !forbidden.length) {
+    return {
+      reached,
       minScore,
-      required: required.map((u) => u.name).join(", "),
-      forbidden: forbidden.map((u) => u.name).join(", "),
-    });
+      text: t("unlocks.minScore", { minScore }) + reachedText,
+    };
+  } else {
+    return {
+      reached,
+      minScore,
+      text:
+        t("unlocks.minScoreWithPerks", {
+          minScore,
+          required: required.map((u) => u.name).join(", "),
+          forbidden: forbidden.map((u) => u.name).join(", "),
+        }) + reachedText,
+    };
   }
 }

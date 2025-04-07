@@ -43,7 +43,7 @@ export async function asyncAlert<t>({
   content: (string | AsyncAlertAction<t>)[];
   allowClose?: boolean;
   className?: string;
-}): Promise<t | void|string> {
+}): Promise<t | void> {
   updateAlertsOpen(+1);
   return new Promise((resolve) => {
     popupWrap.className = className;
@@ -139,11 +139,16 @@ ${icon}
         addto.appendChild(button);
       });
 
-    popup.addEventListener('click', e=>{
-        if(e.target.getAttribute('data-resolve-to')){
-            closeWithResult(e.target.getAttribute('data-resolve-to'))
+    popup.addEventListener(
+      "click",
+      (e) => {
+        const target = e.target as HTMLElement;
+        if (target.getAttribute("data-resolve-to")) {
+          closeWithResult(target.getAttribute("data-resolve-to") as t);
         }
-    },true)
+      },
+      true,
+    );
     popupWrap.appendChild(popup);
     (
       popupWrap.querySelector(

@@ -252,7 +252,6 @@ export function render(gameState: GameState) {
       coin.a,
     );
   });
-  console.log(gameState.level.color);
   // Black shadow around balls
   if (!isOptionOn("basic")) {
     ctx.globalCompositeOperation = "source-over";
@@ -897,7 +896,6 @@ export function drawFuzzyBall(
       size / 2,
     );
     gradient.addColorStop(0, color);
-    console.log(color);
     gradient.addColorStop(0.3, color + "88");
     gradient.addColorStop(0.6, color + "22");
     gradient.addColorStop(1, "transparent");
