@@ -905,71 +905,6 @@
 						</children>
 					</folder_node>
 					<folder_node>
-						<name>loop</name>
-						<children>
-							<concept_node>
-								<name>converted_rerolls</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>instructions</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>no_rerolls</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>title</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-						</children>
-					</folder_node>
-					<folder_node>
 						<name>main_menu</name>
 						<children>
 							<concept_node>
@@ -1439,21 +1374,6 @@
 							</concept_node>
 							<concept_node>
 								<name>load_save_file_help</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>loop_run_help</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -2074,21 +1994,6 @@
 							</concept_node>
 							<concept_node>
 								<name>current_lvl</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>current_lvl_loop</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -5642,7 +5547,7 @@
 		<translation_order>alphabetically</translation_order>
 		<copy_templates>
 			<copy_template>t('%1')</copy_template>
-			<copy_template/>
+			<copy_template>t(&quot;%1&quot;</copy_template>
 			<copy_template/>
 		</copy_templates>
 		<custom_languages/>

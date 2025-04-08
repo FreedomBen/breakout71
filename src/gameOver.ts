@@ -13,6 +13,7 @@ import { getTotalScore } from "./settings";
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
 import { rawUpgrades } from "./upgrades";
+import {run} from "jest";
 
 export function addToTotalPlayTime(ms: number) {
   try {
@@ -34,13 +35,7 @@ export function gameOver(title: string, intro: string) {
   stopRecording();
   addToTotalPlayTime(gameState.runStatistics.runTime);
 
-  let animationDelay = -300;
-  const getDelay = () => {
-    animationDelay += 800;
-    return "animation-delay:" + animationDelay + "ms;";
-  };
   // unlocks
-
   const endTs = getTotalScore();
   const startTs = endTs - gameState.score;
   const unlockedPerks = rawUpgrades.filter(
@@ -109,7 +104,7 @@ let runsHistory = [];
 try {
   runsHistory = JSON.parse(
     localStorage.getItem("breakout_71_runs_history") || "[]",
-  ) as RunHistoryItem[];
+  ).sort((a,b)=>b.score-a.score).slice(0,100) as RunHistoryItem[];
 } catch (e) {}
 
 export function getHistory() {
@@ -281,7 +276,6 @@ export function getHistograms(gameState: GameState) {
       (r) => r.max_combo,
       "",
     );
-    runStats += makeHistogram(t("gameOver.stats.loops"), (r) => r.loops, "");
 
     if (runStats) {
       runStats =
