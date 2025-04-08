@@ -201,6 +201,8 @@ export type GameState = {
   baseSpeed: number;
   // Score multiplier
   combo: number;
+  // Combo at the start of the tick
+  lastCombo: number;
   // Whether the game is running or paused
   running: boolean;
   isGameOver: boolean;

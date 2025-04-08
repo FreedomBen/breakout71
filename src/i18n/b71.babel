@@ -3918,6 +3918,56 @@
 								</children>
 							</folder_node>
 							<folder_node>
+								<name>minefield</name>
+								<children>
+									<concept_node>
+										<name>fullHelp</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>true</approved>
+											</translation>
+											<translation>
+												<language>fr-FR</language>
+												<approved>false</approved>
+											</translation>
+										</translations>
+									</concept_node>
+									<concept_node>
+										<name>help</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>true</approved>
+											</translation>
+											<translation>
+												<language>fr-FR</language>
+												<approved>true</approved>
+											</translation>
+										</translations>
+									</concept_node>
+									<concept_node>
+										<name>name</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>true</approved>
+											</translation>
+											<translation>
+												<language>fr-FR</language>
+												<approved>true</approved>
+											</translation>
+										</translations>
+									</concept_node>
+								</children>
+							</folder_node>
+							<folder_node>
 								<name>multiball</name>
 								<children>
 									<concept_node>
@@ -4713,6 +4763,56 @@
 								</children>
 							</folder_node>
 							<folder_node>
+								<name>side_flip</name>
+								<children>
+									<concept_node>
+										<name>fullHelp</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>true</approved>
+											</translation>
+											<translation>
+												<language>fr-FR</language>
+												<approved>false</approved>
+											</translation>
+										</translations>
+									</concept_node>
+									<concept_node>
+										<name>help</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>true</approved>
+											</translation>
+											<translation>
+												<language>fr-FR</language>
+												<approved>true</approved>
+											</translation>
+										</translations>
+									</concept_node>
+									<concept_node>
+										<name>name</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>en-US</language>
+												<approved>true</approved>
+											</translation>
+											<translation>
+												<language>fr-FR</language>
+												<approved>true</approved>
+											</translation>
+										</translations>
+									</concept_node>
+								</children>
+							</folder_node>
+							<folder_node>
 								<name>side_kick</name>
 								<children>
 									<concept_node>
@@ -4726,7 +4826,7 @@
 											</translation>
 											<translation>
 												<language>fr-FR</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 										</translations>
 									</concept_node>

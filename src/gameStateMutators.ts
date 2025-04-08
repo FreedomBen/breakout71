@@ -14,8 +14,6 @@ import {
 import {
   brickCenterX,
   brickCenterY,
-  // countBricksAbove,
-  // countBricksBelow,
   currentLevelInfo,
   distance2,
   distanceBetween,
@@ -24,15 +22,14 @@ import {
   getRowColIndex,
   isMovingWhilePassiveIncome,
   isPickyEatingPossible,
-  telekinesisEffectRate,
-  yoyoEffectRate,
-  makeEmptyPerksMap,
   max_levels,
   reachRedRowIndex,
   shouldPierceByColor,
+  telekinesisEffectRate,
+  yoyoEffectRate,
 } from "./game_utils";
 import { t } from "./i18n/i18n";
-import { icons, upgrades } from "./loadGameData";
+import { icons } from "./loadGameData";
 
 import {
   addToTotalScore,
@@ -52,10 +49,7 @@ import {
 } from "./game";
 import { stopRecording } from "./recording";
 import { isOptionOn } from "./options";
-import { getRunLevels } from "./newGameState";
-import { requiredAsyncAlert } from "./asyncAlert";
 import { clamp, comboKeepingRate } from "./pure_functions";
-import { openCreativeModePerksPicker } from "./creative";
 
 export function setMousePos(gameState: GameState, x: number) {
   gameState.puckPosition = x;
@@ -172,7 +166,16 @@ export function normalizeGameState(gameState: GameState) {
 }
 
 export function baseCombo(gameState: GameState) {
-  return 1 + gameState.perks.base_combo * 3 + gameState.perks.smaller_puck * 5;
+  const mineFieldBonus =
+    gameState.perks.minefield &&
+    gameState.bricks.filter((b) => b === "black").length *
+      gameState.perks.minefield;
+  return (
+    1 +
+    gameState.perks.base_combo * 3 +
+    gameState.perks.smaller_puck * 5 +
+    mineFieldBonus
+  );
 }
 
 export function resetCombo(
@@ -229,6 +232,7 @@ export function increaseCombo(
     makeText(gameState, x, y, "#ffd300", "+" + by, 25, 400 + by);
   }
 }
+
 export function decreaseCombo(
   gameState: GameState,
   by: number,
@@ -375,6 +379,9 @@ export function explodeBrick(
     // }
     setBrick(gameState, index, "");
     explosionAt(gameState, index, x, y, ball, 0);
+    if (gameState.perks.minefield) {
+      decreaseCombo(gameState, gameState.perks.minefield, x, y);
+    }
   } else if (color) {
     // Even if it bounces we don't want to count that as a miss
 
@@ -385,6 +392,10 @@ export function explodeBrick(
     setBrick(gameState, index, "");
 
     let coinsToSpawn = gameState.combo;
+    if (gameState.lastCombo > coinsToSpawn) {
+      // In case a reset happens in the same frame as a spawn, i want the combo to stay high (for minefield and zen in particular)
+      coinsToSpawn = gameState.lastCombo;
+    }
     if (gameState.perks.sturdy_bricks) {
       // +10% per level
       coinsToSpawn += Math.ceil(
@@ -447,11 +458,30 @@ export function explodeBrick(
       ball.y,
     );
 
-    if (gameState.perks.side_kick) {
-      if (ball.previousVX > 0) {
-        increaseCombo(gameState, gameState.perks.side_kick, ball.x, ball.y);
-      } else {
-        decreaseCombo(gameState, gameState.perks.side_kick * 2, ball.x, ball.y);
+    if (Math.abs(ball.y - y) < Math.abs(ball.x - x)) {
+      if (gameState.perks.side_kick) {
+        if (ball.previousVX > 0) {
+          increaseCombo(gameState, gameState.perks.side_kick, ball.x, ball.y);
+        } else {
+          decreaseCombo(
+            gameState,
+            gameState.perks.side_kick * 2,
+            ball.x,
+            ball.y,
+          );
+        }
+      }
+      if (gameState.perks.side_flip) {
+        if (ball.previousVX < 0) {
+          increaseCombo(gameState, gameState.perks.side_flip, ball.x, ball.y);
+        } else {
+          decreaseCombo(
+            gameState,
+            gameState.perks.side_flip * 2,
+            ball.x,
+            ball.y,
+          );
+        }
       }
     }
 
@@ -552,6 +582,7 @@ export function schedulGameSound(
   vol: number,
 ) {
   if (!vol) return;
+  if (!isOptionOn("sound")) return;
   x ??= gameState.offsetX + gameState.gameZoneWidth / 2;
   const ex = gameState.aboutToPlaySound[sound] as { vol: number; x: number };
 
@@ -672,6 +703,14 @@ function setBrick(gameState: GameState, index: number, color: string) {
     (color === "black" && 1) ||
     (color && 1 + gameState.perks.sturdy_bricks) ||
     0;
+  if (gameState.perks.minefield && color === "black") {
+    increaseCombo(
+      gameState,
+      gameState.perks.minefield,
+      brickCenterX(gameState, index),
+      brickCenterY(gameState, index),
+    );
+  }
 }
 
 const rainbow = [
@@ -683,6 +722,7 @@ const rainbow = [
   "#7038ff",
   "#ff3de5",
 ];
+
 export function rainbowColor(): colorString {
   return rainbow[Math.floor(gameState.levelTime / 50) % rainbow.length];
 }
@@ -903,6 +943,8 @@ export function gameStateTick(
     gameState.runStatistics.max_combo,
     gameState.combo,
   );
+
+  gameState.lastCombo = gameState.combo;
 
   if (
     gameState.perks.addiction &&

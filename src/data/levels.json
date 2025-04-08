@@ -977,13 +977,6 @@
     "color": ""
   },
   {
-    "name": "icon:side_kick",
-    "size": 4,
-    "bricks": "yyrryttryttryyrr",
-    "svg": null,
-    "color": ""
-  },
-  {
     "name": "icon:implosions",
     "size": 8,
     "bricks": "y______W__ryW_W__yr_WW____r_WWWy_WWW_rr___WW_rrryW_Wy___W_____y_",
@@ -1314,6 +1307,27 @@
     "name": "Bearded axe",
     "size": 12,
     "bricks": "______________WyyyOOy_____WyyyOOy_____Wyy_OO______Wyy_OO______Wyy_OO__________OO__________OO__________OO__________OO__________OO__________OO____",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:minefield",
+    "size": 7,
+    "bricks": "W__W__W_W___W___W_W__W_____W_W___W____g_____ggg__",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:side_flip",
+    "size": 7,
+    "bricks": "________ttttt__rttty__rttty__rttty__ttttt________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:side_kick",
+    "size": 7,
+    "bricks": "________ttttt__ytttr__ytttr__ytttr__ttttt________",
     "svg": null,
     "color": ""
   }

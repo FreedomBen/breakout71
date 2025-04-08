@@ -100,7 +100,8 @@ export function render(gameState: GameState) {
     const brightness = isOptionOn("extra_bright") ? 3 : 1;
 
     haloCanvasCtx.globalCompositeOperation = "lighten";
-    haloCanvasCtx.globalAlpha = 0.1;
+    haloCanvasCtx.globalAlpha =
+      0.1 + (0.5 * 10) / (liveCount(gameState.coins) + 10);
     forEachLiveOne(gameState.coins, (coin) => {
       const color = getCoinRenderColor(gameState, coin);
       drawFuzzyBall(

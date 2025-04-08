@@ -541,7 +541,7 @@ export const rawUpgrades = [
     threshold: 120000,
     giftable: false,
     id: "ghost_coins",
-    max: 1,
+    max: 3,
     name: t("upgrades.ghost_coins.name"),
     help: (lvl: number) => t("upgrades.ghost_coins.help", { lvl }),
     fullHelp: t("upgrades.ghost_coins.fullHelp"),
@@ -613,6 +613,17 @@ export const rawUpgrades = [
   },
   {
     requires: "",
+
+    threshold: 150000,
+    giftable: true,
+    id: "side_flip",
+    max: 3,
+    name: t("upgrades.side_flip.name"),
+    help: (lvl: number) => t("upgrades.side_flip.help", { lvl, loss: lvl * 2 }),
+    fullHelp: t("upgrades.side_flip.fullHelp"),
+  },
+  {
+    requires: "",
     threshold: 155000,
     giftable: false,
     id: "implosions",
@@ -662,5 +673,15 @@ export const rawUpgrades = [
     name: t("upgrades.limitless.name"),
     help: (lvl: number) => t("upgrades.limitless.help", { lvl }),
     fullHelp: t("upgrades.limitless.fullHelp"),
+  },
+  {
+    requires: "",
+    threshold: 180000,
+    giftable: false,
+    id: "minefield",
+    max: 3,
+    name: t("upgrades.minefield.name"),
+    help: (lvl: number) => t("upgrades.minefield.help", { lvl }),
+    fullHelp: t("upgrades.minefield.fullHelp"),
   },
 ] as const;

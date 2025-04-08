@@ -68,6 +68,7 @@ export function newGameState(params: RunParams): GameState {
     puckWidth: 200,
     baseSpeed: 12,
     combo: 1,
+    lastCombo: 1,
     gridSize: 12,
     running: false,
     isGameOver: false,

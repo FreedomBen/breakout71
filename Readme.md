@@ -30,13 +30,26 @@ Some upgrades currently are not really useful
 - add more upgrades to complement them
 - force users to try them to unlock levels
 
+New players get confused as to which upgrades they have and why a side became red
+- show a fat popup with a detailed explanation of the perk the first time you have it
+- only unlock very simple perks from the start (like base_combo)
+
+
 # Changelog
 
 ## To do
-
+ 
+- Explain the combo
+- As soon as level condition is reached, lock it in and tell the user 
 
 ## Done
 
+- Don't use "RAZ" in French explanations. 
+- explain ghost coin's slow down effect
+- when there are only a few coins, make them brighter
+- Perk : [colin] minefield 
+- clear scheduled sounds if sounds off
+- show unlocked levels above game stats in gameover screen
 - reduce resolution of lights even more (1/16)
 
 ## 29067205
@@ -257,6 +270,7 @@ Some upgrades currently are not really useful
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
 
 ## Easy perks ideas  
+- "+1  coin  for each brick within a small radius of the broken brick" ? 
 - two for one : add a 2 for one upgrade combo to the choice lists
 - cash out : double last level's gains  
 - snowball :  Combo resets every 0.1s . +1 combo for each combo gained Since last reset.
