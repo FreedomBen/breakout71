@@ -26,7 +26,7 @@
     "bricks": "ttttttt__tWWWWWWW_tWrrWttW_tWWWWWWW_ttttttt_____t______ttttt____ttttt_____t_t",
     "svg": 4,
     "color": "",
-    "credit": "https://steamcommunity.com/sharedfiles/filedetails/?id=487035876"
+    "credit": "My favorite character in https://nuclearthrone.com/"
   },
   {
     "name": "Creeper",
@@ -845,8 +845,8 @@
   },
   {
     "name": "icon:concave_puck",
-    "size": 8,
-    "bricks": "___________W_______________W____________W__W__W_WW___WW_WWWWWWW_",
+    "size": 7,
+    "bricks": "___W_____________W__________W__W__WWW___WWWWWWWWW",
     "svg": null,
     "color": ""
   },
@@ -923,7 +923,7 @@
   {
     "name": "icon:trampoline",
     "size": 8,
-    "bricks": "__y_y__y_y___y____llll___lygygl_lgggWggl_lgyggl__gllllg__g____g_",
+    "bricks": "___y_____y____y___bbyb___bttttb_bttytttb_bttttb__tbbbbt__t____t_",
     "svg": null,
     "color": ""
   },
@@ -959,13 +959,6 @@
     "name": "icon:passive_income",
     "size": 8,
     "bricks": "__________tttt____tttt_______________W___________________rWWWr__",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "name": "icon:restart",
-    "size": 10,
-    "bricks": "__GGGGGGGG__GGGGGGGG________GG________GG__G_____GG_GGG____GGGGGGG___GG_GGG____GG_GGGGGGGGG_GGGGGGGGG",
     "svg": null,
     "color": ""
   },
@@ -1286,7 +1279,8 @@
     "size": 11,
     "bricks": "___gggg_____gggrrgg_____ggrrg_______gggg_____gggyygg_____ggyyg_______gggg_____gggCCgg_____ggCCg_______gggg________gg_____",
     "svg": null,
-    "color": ""
+    "color": "",
+    "credit": "Left a wonderful review on the play store."
   },
   {
     "name": "Obigre",
@@ -1294,21 +1288,23 @@
     "bricks": "_______________________________________OOOORgRgRgOOOOWOORgRgRgOOOOOWORgRgRgOWOOWOORgRgRgOOWOOWORgRgRgOWOOWOORgRgRgOOOOOOORgRgRgOOO_______________________________________",
     "svg": null,
     "color": "",
-    "credit": "https://colin-crapahute.bearblog.dev/"
+    "credit": "Colin helped a lot with the game design https://colin-crapahute.bearblog.dev/"
   },
   {
     "name": "Noodlemire",
     "size": 15,
     "bricks": "_________________________________ggggggggg_____g_________g___g___________g_g_____________gg_____________gg_____yyy_____ggg__yyyyyyy__ggggtyyyyyyyyytggggtttttttttttgggg_ttttttttt_gg_____ttttt___________________________________",
     "svg": null,
-    "color": ""
+    "color": "",
+    "credit": "Early adopter of the game"
   },
   {
     "name": "Bearded axe",
     "size": 12,
     "bricks": "______________WyyyOOy_____WyyyOOy_____Wyy_OO______Wyy_OO______Wyy_OO__________OO__________OO__________OO__________OO__________OO__________OO____",
     "svg": null,
-    "color": ""
+    "color": "",
+    "credit": "Did some nice bug reports"
   },
   {
     "name": "icon:minefield",

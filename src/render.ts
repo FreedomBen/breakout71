@@ -969,7 +969,7 @@ export function drawBrick(
 
     canctx.setLineDash(offset !== -1 ? redBorderDash : emptyArray);
     canctx.lineDashOffset = offset;
-    canctx.strokeStyle = (offset !== -1 && "#FF0000") || whiteBorder || color;
+    canctx.strokeStyle = (offset !== -1 && "#FF000033") || whiteBorder || color;
     canctx.lineJoin = "round";
     canctx.lineWidth = whiteBorder ? 1 : bord;
     roundRect(

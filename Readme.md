@@ -43,6 +43,9 @@ New players get confused as to which upgrades they have and why a side became re
 
 ## Done
 
+- fixed some issues around saved level unlocks
+- change donation text to not suggest an amount
+
 ## 29068563
 
 - review the "next unlocks" in score and game over

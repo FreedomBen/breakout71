@@ -32,15 +32,18 @@ export function helpMenuEntry() {
 
           t("main_menu.credit_levels"),
           ...allLevels
-            .filter((l) => l.credit?.startsWith("http"))
+            .filter((l) => l.credit?.trim())
             .map(
               (l) => `
 <div class="upgrade used">
             ${icons[l.name]}
+            <div>
             <p>
-                <strong>${l.name}</strong><br/>
-          <a href="${l.credit}" target="_blank">${l.credit}</a> 
+                <strong>${l.name}</strong> 
           </p> 
+          ${miniMarkDown(l.credit || "")}
+</div>
+             
         </div>`,
             ),
         ],
