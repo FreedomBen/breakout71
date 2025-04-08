@@ -74,6 +74,7 @@ import { getHistory } from "./gameOver";
 import { generateSaveFileContent } from "./generateSaveFileContent";
 import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
 import { getNearestUnlockHTML, openScorePanel } from "./openScorePanel";
+import {monitorLevelsUnlocks} from "./monitorLevelsUnlocks";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -421,6 +422,10 @@ setInterval(() => {
   lastMeasuredFPS = FPSCounter;
   FPSCounter = 0;
 }, 1000);
+
+setInterval(() => {
+monitorLevelsUnlocks(gameState)
+}, 500);
 
 window.addEventListener("visibilitychange", () => {
   if (document.hidden) {

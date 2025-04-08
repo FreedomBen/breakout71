@@ -39,11 +39,12 @@ New players get confused as to which upgrades they have and why a side became re
 
 ## To do
  
-- Explain the combo
 - As soon as level condition is reached, lock it in and tell the user 
+- change fortunate ball to work more like coin magnet, carrying the balls around to catch them at next puck bounce
 
 ## Done
 
+- extra life only saves your last ball, max 7 instead of 3
 - Don't use "RAZ" in French explanations. 
 - explain ghost coin's slow down effect
 - when there are only a few coins, make them brighter

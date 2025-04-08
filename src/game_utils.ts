@@ -1,17 +1,9 @@
-import {
-  Ball,
-  GameState,
-  Level,
-  PerkId,
-  PerksMap,
-  RunHistoryItem,
-  Upgrade,
-} from "./types";
-import { icons, upgrades } from "./loadGameData";
-import { t } from "./i18n/i18n";
-import { clamp } from "./pure_functions";
-import { rawUpgrades } from "./upgrades";
-import { hashCode } from "./getLevelBackground";
+import {Ball, GameState, Level, PerkId, PerksMap, RunHistoryItem, UpgradeLike,} from "./types";
+import {icons, upgrades} from "./loadGameData";
+import {t} from "./i18n/i18n";
+import {clamp} from "./pure_functions";
+import {rawUpgrades} from "./upgrades";
+import {hashCode} from "./getLevelBackground";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -279,16 +271,10 @@ export function highScoreText() {
   return "";
 }
 
-type UpgradeLike = { id: PerkId; name: string; requires: string };
-
-export function getLevelUnlockCondition(levelIndex: number) {
-  // Returns "" if level is unlocked, otherwise a string explaining how to unlock it
-  let required: UpgradeLike[] = [],
-    forbidden: UpgradeLike[] = [],
-    minScore = Math.max(-1000 + 100 * levelIndex, 0);
-
-  if (levelIndex > 20) {
-    const excluded: Set<PerkId> = new Set([
+let excluded: Set<PerkId>;
+function isExcluded(id:PerkId){
+  if(!excluded) {
+    excluded = new Set([
       "extra_levels",
       "extra_life",
       "one_more_choice",
@@ -300,11 +286,22 @@ export function getLevelUnlockCondition(levelIndex: number) {
     rawUpgrades.forEach((u) => {
       if (u.requires) excluded.add(u.requires);
     });
+  }
+    return excluded.has(id)
+}
+
+export function getLevelUnlockCondition(levelIndex: number) {
+  // Returns "" if level is unlocked, otherwise a string explaining how to unlock it
+  let required: UpgradeLike[] = [],
+    forbidden: UpgradeLike[] = [],
+    minScore = Math.max(-1000 + 100 * levelIndex, 0);
+
+  if (levelIndex > 20) {
 
     const possibletargets = rawUpgrades
       .slice(0, Math.floor(levelIndex / 2))
       .map((u) => u)
-      .filter((u) => !excluded.has(u.id))
+      .filter((u) => !isExcluded(u.id))
       .sort(
         (a, b) => hashCode(levelIndex + a.id) - hashCode(levelIndex + b.id),
       );

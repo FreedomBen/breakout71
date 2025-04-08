@@ -1508,7 +1508,7 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     ball.y > ylimit &&
     ball.vy > 0 &&
     (ballIsUnderPuck ||
-      (gameState.perks.extra_life &&
+      (gameState.balls.length<2 && gameState.perks.extra_life &&
         ball.y > ylimit + gameState.puckHeight / 2))
   ) {
     if (ballIsUnderPuck) {

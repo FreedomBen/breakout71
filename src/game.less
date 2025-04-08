@@ -512,3 +512,35 @@ h2.histogram-title strong {
     background: white;
   }
 }
+
+
+.toast {
+  position:fixed;
+  left:0;
+  top:40px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  opacity:0.8;
+  background:black;
+  border:1px solid white;
+  border-radius:2px;
+  padding-right:10px;
+  pointer-events: none;
+  animation: toast 800ms forwards;
+}
+
+@keyframes toast {
+  0%{
+    opacity: 0;
+    transform:translate(-20px, 0);
+  }
+  10%,90%{
+    opacity: 0.8;
+    transform: none;
+  }
+  100%{
+    opacity: 0;
+    transform:translate(20px, 0);
+  }
+}

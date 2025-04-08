@@ -2,6 +2,8 @@ import { RunHistoryItem } from "./types";
 
 import _appVersion from "./data/version.json";
 import { generateSaveFileContent } from "./generateSaveFileContent";
+import {getLevelUnlockCondition, reasonLevelIsLocked} from "./game_utils";
+import {allLevels} from "./loadGameData";
 
 // The page will be reloaded if any migrations were run
 let migrationsRun = 0;
@@ -16,6 +18,17 @@ function migrate(name: string, cb: () => void) {
       console.warn("Migration " + name + " failed : ", e);
     }
   }
+}
+function afterMigration(){
+// Avoid a boot loop by setting the hash before reloading
+// We can't set the query string as it is used for other things
+if (migrationsRun && !window.location.hash) {
+  window.location.hash = "#reloadAfterMigration";
+  window.location.reload();
+}
+if (!migrationsRun) {
+  window.location.hash = "";
+}
 }
 
 migrate("save_data_before_upgrade_to_" + _appVersion, () => {
@@ -90,12 +103,25 @@ migrate("compact_runs_data", () => {
   localStorage.setItem("breakout_71_runs_history", JSON.stringify(runsHistory));
 });
 
-// Avoid a boot loop by setting the hash before reloading
-// We can't set the query string as it is used for other things
-if (migrationsRun && !window.location.hash) {
-  window.location.hash = "#reloadAfterMigration";
-  window.location.reload();
-}
-if (!migrationsRun) {
-  window.location.hash = "";
-}
+migrate("set_breakout_71_unlocked_levels"+_appVersion, () => {
+  // We want to lock any level unlocked by an app upgrade too
+   let runsHistory = JSON.parse(
+    localStorage.getItem("breakout_71_runs_history") || "[]",
+  ) as RunHistoryItem[];
+
+   let breakout_71_unlocked_levels = JSON.parse(
+    localStorage.getItem("breakout_71_unlocked_levels") || "[]",
+  ) as string[];
+
+    allLevels.filter((l,li)=>!reasonLevelIsLocked(li,runsHistory,false)).forEach(l=>{
+      if(!breakout_71_unlocked_levels.includes(l.name)){
+        breakout_71_unlocked_levels.push(l.name)
+      }
+    })
+  localStorage.setItem("breakout_71_unlocked_levels", JSON.stringify(breakout_71_unlocked_levels));
+});
+
+
+
+
+afterMigration()

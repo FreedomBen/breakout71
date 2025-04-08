@@ -42,13 +42,14 @@ export function getRunLevels(
 
 export function newGameState(params: RunParams): GameState {
   const highScore = getHighScore();
+  const totalScoreAtRunStart=getTotalScore()
 
   const perks = { ...makeEmptyPerksMap(upgrades), ...(params?.perks || {}) };
 
   let randomGift: PerkId | undefined = undefined;
   if (!sumOfValues(perks)) {
     const giftable = upgrades.filter(
-      (u) => highScore >= u.threshold && !u.requires && isStartingPerk(u),
+      (u) => totalScoreAtRunStart >= u.threshold && isStartingPerk(u),
     );
 
     randomGift =
@@ -106,7 +107,8 @@ export function newGameState(params: RunParams): GameState {
     ballSize: 20,
     coinSize: 14,
     puckHeight: 20,
-    totalScoreAtRunStart: getTotalScore(),
+
+    totalScoreAtRunStart,
     pauseUsesDuringRun: 0,
     keyboardPuckSpeed: 0,
     lastTick: performance.now(),

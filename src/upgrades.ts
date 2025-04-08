@@ -9,7 +9,7 @@ export const rawUpgrades = [
     threshold: 0,
     giftable: false,
     id: "extra_life",
-    max: 3,
+    max: 7,
     name: t("upgrades.extra_life.name"),
     help: (lvl: number) =>
       lvl === 1

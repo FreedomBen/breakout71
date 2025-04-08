@@ -154,7 +154,7 @@
   "score_panel.upgrades_picked": "Améliorations choisies jusqu'à présent :",
   "unlocks.greyed_out_help": "Les éléments grisées peuvent être débloquées en augmentant votre score total. Le score total augmente à chaque fois que vous marquez des points dans le jeu, en dehors des parties de test.",
   "unlocks.intro": "Votre score total est de {{ts}}. Vous trouverez ci-dessous toutes les améliorations et tous les niveaux que le jeu peut offrir. Cliquez sur l'un d'entre eux pour les essayer dans une partie de test. Astuce : vous pouvez choisir les améliorations de départ dans les réglages.",
-  "unlocks.just_unlocked": "Vous venez de débloquer un niveau",
+  "unlocks.just_unlocked": "Niveau débloqué",
   "unlocks.just_unlocked_plural": "Vous venez de débloquer {{count}} niveaux",
   "unlocks.level": "<h2>Vous avez débloqué {{unlocked}} niveaux sur {{out_of}}</h2>\n<p>Voici tous les niveaux du jeu, cliquez sur l'un d'eux pour démarrer une partie de test avec ce niveau de départ. </p> ",
   "unlocks.level_description": "Un niveau {{size}}x{{size}} avec {{bricks}} briques, {{colors}} couleurs et {{bombs}} bombes.",
