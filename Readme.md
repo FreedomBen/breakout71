@@ -43,6 +43,8 @@ New players get confused as to which upgrades they have and why a side became re
 
 ## Done
 
+## 29068563
+
 - review the "next unlocks" in score and game over
 - As soon as upgrade condition is reached, toast 
 - As soon as level condition is reached, lock it in and tell the user 
