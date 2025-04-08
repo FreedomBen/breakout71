@@ -45,6 +45,7 @@ New players get confused as to which upgrades they have and why a side became re
 
 - fixed some issues around saved level unlocks
 - change donation text to not suggest an amount
+- limited history to top 100 runs
 
 ## 29068563
 
