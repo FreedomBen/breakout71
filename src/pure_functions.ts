@@ -65,3 +65,13 @@ export function miniMarkDown(md: string) {
     )
     .join("\n");
 }
+
+export function firstWhere<Input, Output>(
+  arr: Input[],
+  mapper: (item: Input, index: number) => Output | undefined,
+): Output | undefined {
+  for (let i = 0; i < arr.length; i++) {
+    const result = mapper(arr[i], i);
+    if (typeof result !== "undefined") return result;
+  }
+}

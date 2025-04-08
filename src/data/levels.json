@@ -442,8 +442,8 @@
   },
   {
     "name": "icon:base_combo",
-    "size": 5,
-    "bricks": "ttttttytytttttttytytttttt",
+    "size": 7,
+    "bricks": "________bbbbb__bybyb__bbbbb__bybyb__bbbbb________",
     "svg": null
   },
   {

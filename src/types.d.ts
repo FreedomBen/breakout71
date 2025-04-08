@@ -1,5 +1,5 @@
-import {rawUpgrades} from "./upgrades";
-import {options} from "./options";
+import { rawUpgrades } from "./upgrades";
+import { options } from "./options";
 
 export type colorString = string;
 
@@ -258,7 +258,6 @@ export type GameState = {
   ballSize: number;
   coinSize: number;
   puckHeight: number;
-  totalScoreAtRunStart: number;
   pauseUsesDuringRun: number;
   keyboardPuckSpeed: number;
   lastTick: number;
@@ -296,4 +295,9 @@ export type OptionDef = {
   help: string;
 };
 export type OptionId = keyof typeof options;
-export type UpgradeLike = { id: PerkId; name: string; requires: string };
+export type UpgradeLike = {
+  id: PerkId;
+  name: string;
+  requires: string;
+  threshold: number;
+};

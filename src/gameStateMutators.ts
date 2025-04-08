@@ -31,11 +31,7 @@ import {
 import { t } from "./i18n/i18n";
 import { icons } from "./loadGameData";
 
-import {
-  addToTotalScore,
-  getCurrentMaxCoins,
-  getCurrentMaxParticles,
-} from "./settings";
+import { getCurrentMaxCoins, getCurrentMaxParticles } from "./settings";
 import { background } from "./render";
 import { gameOver } from "./gameOver";
 import {
@@ -50,6 +46,7 @@ import {
 import { stopRecording } from "./recording";
 import { isOptionOn } from "./options";
 import { clamp, comboKeepingRate } from "./pure_functions";
+import { addToTotalScore } from "./addToTotalScore";
 
 export function setMousePos(gameState: GameState, x: number) {
   gameState.puckPosition = x;
@@ -1508,7 +1505,8 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     ball.y > ylimit &&
     ball.vy > 0 &&
     (ballIsUnderPuck ||
-      (gameState.balls.length<2 && gameState.perks.extra_life &&
+      (gameState.balls.length < 2 &&
+        gameState.perks.extra_life &&
         ball.y > ylimit + gameState.puckHeight / 2))
   ) {
     if (ballIsUnderPuck) {

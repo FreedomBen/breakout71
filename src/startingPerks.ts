@@ -17,7 +17,6 @@ export function startingPerkMenuButton() {
   };
 }
 export function isStartingPerk(u: Upgrade): boolean {
-
   return getSettingValue("start_with_" + u.id, u.giftable);
 }
 

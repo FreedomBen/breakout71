@@ -11,6 +11,8 @@ import {
 import { getCreativeModeWarning, getHistory } from "./gameOver";
 import { pause } from "./game";
 import { allLevels, icons } from "./loadGameData";
+import { firstWhere } from "./pure_functions";
+import { getSettingValue, getTotalScore } from "./settings";
 
 export async function openScorePanel(gameState: GameState) {
   pause(true);
@@ -37,31 +39,34 @@ export async function openScorePanel(gameState: GameState) {
 
 export function getNearestUnlockHTML(gameState: GameState) {
   if (gameState.creative) return "";
-  const unlockable = allLevels
-    .map((l, li) => {
-      const { minScore, forbidden, required } = getLevelUnlockCondition(li);
-      return {
-        l,
-        li,
-        minScore,
-        forbidden,
-        required,
-        missing: required.filter((u) => !gameState?.perks?.[u.id]),
-        reason: reasonLevelIsLocked(li, getHistory(), false),
-      };
-    })
-    .filter(
-      ({ reason, forbidden, missing }) =>
-        // Level needs to be locked
-        reason &&
-        // we can't have a forbidden perk
-        !forbidden.find((u) => gameState?.perks?.[u.id]) &&
-        // All required upgrades need to be unlocked
-        !missing.find((u) => u.threshold > gameState.totalScoreAtRunStart),
-    );
+  const unlocked = new Set(getSettingValue("breakout_71_unlocked_levels", []));
+  const firstUnlockable = firstWhere(allLevels, (l, li) => {
+    if (unlocked.has(l.name)) return;
+    const reason = reasonLevelIsLocked(li, getHistory(), false);
+    if (!reason) return;
 
-  const firstUnlockable =
-    unlockable.find(({ missing }) => !missing.length) || unlockable[0];
+    const { minScore, forbidden, required } = getLevelUnlockCondition(li);
+    const missing = required.filter((u) => !gameState?.perks?.[u.id]);
+    // we can't have a forbidden perk
+    if (forbidden.find((u) => gameState?.perks?.[u.id])) {
+      return;
+    }
+
+    // All required upgrades need to be unlocked
+    if (missing.find((u) => u.threshold > getTotalScore())) {
+      return;
+    }
+
+    return {
+      l,
+      li,
+      minScore,
+      forbidden,
+      required,
+      missing,
+      reason,
+    };
+  });
 
   if (!firstUnlockable) return "";
   let missingPoints = firstUnlockable.minScore - gameState.score;
@@ -74,12 +79,8 @@ export function getNearestUnlockHTML(gameState: GameState) {
         points: missingPoints,
         level: firstUnlockable.l.name,
       })) ||
-    (missingPoints > 0 &&
-      t("score_panel.score_to_unlock", {
-        points: missingPoints,
-        level: firstUnlockable.l.name,
-      })) ||
-    t("score_panel.continue_to_unlock", {
+    t("score_panel.score_to_unlock", {
+      points: missingPoints,
       level: firstUnlockable.l.name,
     });
 

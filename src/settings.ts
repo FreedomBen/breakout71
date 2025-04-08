@@ -1,7 +1,5 @@
 // Settings
 
-import { GameState } from "./types";
-
 let cachedSettings: { [key: string]: unknown } = {};
 
 export function getSettingValue<T>(key: string, defaultValue: T) {
@@ -27,11 +25,6 @@ export function setSettingValue<T>(key: string, value: T) {
 
 export function getTotalScore() {
   return getSettingValue("breakout_71_total_score", 0);
-}
-
-export function addToTotalScore(gameState: GameState, points: number) {
-  if (!gameState.creative)
-    setSettingValue("breakout_71_total_score", getTotalScore() + points);
 }
 
 export function getCurrentMaxCoins() {

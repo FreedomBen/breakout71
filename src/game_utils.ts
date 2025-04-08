@@ -1,9 +1,18 @@
-import {Ball, GameState, Level, PerkId, PerksMap, RunHistoryItem, UpgradeLike,} from "./types";
-import {icons, upgrades} from "./loadGameData";
-import {t} from "./i18n/i18n";
-import {clamp} from "./pure_functions";
-import {rawUpgrades} from "./upgrades";
-import {hashCode} from "./getLevelBackground";
+import {
+  Ball,
+  GameState,
+  Level,
+  PerkId,
+  PerksMap,
+  RunHistoryItem,
+  UpgradeLike,
+} from "./types";
+import { icons, upgrades } from "./loadGameData";
+import { t } from "./i18n/i18n";
+import { clamp } from "./pure_functions";
+import { rawUpgrades } from "./upgrades";
+import { hashCode } from "./getLevelBackground";
+import { getTotalScore } from "./settings";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -74,7 +83,7 @@ export function getRowColIndex(gameState: GameState, row: number, col: number) {
 
 export function getPossibleUpgrades(gameState: GameState) {
   return upgrades
-    .filter((u) => gameState.totalScoreAtRunStart >= u.threshold)
+    .filter((u) => getTotalScore() >= u.threshold)
     .filter((u) => !u?.requires || gameState.perks[u?.requires]);
 }
 
@@ -272,8 +281,8 @@ export function highScoreText() {
 }
 
 let excluded: Set<PerkId>;
-function isExcluded(id:PerkId){
-  if(!excluded) {
+function isExcluded(id: PerkId) {
+  if (!excluded) {
     excluded = new Set([
       "extra_levels",
       "extra_life",
@@ -287,7 +296,7 @@ function isExcluded(id:PerkId){
       if (u.requires) excluded.add(u.requires);
     });
   }
-    return excluded.has(id)
+  return excluded.has(id);
 }
 
 export function getLevelUnlockCondition(levelIndex: number) {
@@ -297,7 +306,6 @@ export function getLevelUnlockCondition(levelIndex: number) {
     minScore = Math.max(-1000 + 100 * levelIndex, 0);
 
   if (levelIndex > 20) {
-
     const possibletargets = rawUpgrades
       .slice(0, Math.floor(levelIndex / 2))
       .map((u) => u)
