@@ -690,8 +690,10 @@ export async function setLevel(gameState: GameState, l: number) {
   // This caused problems with accented characters like the ô of côte d'ivoire for odd reasons
   // background.src = 'data:image/svg+xml;base64,' + btoa(lvl.svg)
   background.src = "data:image/svg+xml;UTF8," + lvl.svg;
-
-  document.body.style.setProperty("--level-background", lvl.color || "#000");
+  document.body.style.setProperty("--level-background", lvl.color || "#000000");
+  document
+    .getElementById("themeColor")
+    ?.setAttribute("content", lvl.color || "#000000");
 }
 
 function setBrick(gameState: GameState, index: number, color: string) {

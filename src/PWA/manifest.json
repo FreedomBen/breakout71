@@ -16,6 +16,6 @@
   ],
   "start_url": "/index.html?isPWA=true",
   "display": "fullscreen",
-  "theme_color": "#5DA3EA",
+  "theme_color": "#000000",
   "background_color": "#ffffff"
 }
