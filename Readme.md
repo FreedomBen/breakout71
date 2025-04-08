@@ -418,3 +418,56 @@ This requires recording a bit more info about each run.
 - missile goes when you break a brick 
 - [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran : i'll probably just let the second puck replace this
  
+# Credits
+
+I pulled many background patterns from https://pattern.monster/
+
+Some of the sound generating code was written by ChatGPT, and heavily
+adapted to my usage over time.
+
+I wanted an APK to start in fullscreen and be able to list it on fdroid and the play store. I started with an empty view and went to work trimming it down, with the help of that tutorial : https://github.com/fractalwrench/ApkGolf/blob/master/blog/BLOG_POST.md
+
+Colin (obigre) brought a lot of fantastic ideas to the game, here's his website (in French) : https://colin-crapahute.bearblog.dev/
+
+Tõnu Rääk made a Tiermaker template to share your favorite perk choices :  https://tiermaker.com/create/breakout-71-perks-18086724
+
+# Breakout games suggestions
+
+Here are a few interesting games in the breakout genre :
+
+- LBreakoutHD : https://sourceforge.net/p/lgames/code/HEAD/tree/trunk/lbreakouthd/
+- Wizorb : https://store.steampowered.com/app/207420/Wizorb/
+- Ricochet infinity : https://www.myabandonware.com/game/ricochet-infinity-dxm
+- First prototype of B71 : https://breakout-v1.lecaro.me/
+- Second prototype of B71: https://breakout-v2.lecaro.me/
+- Whackerball : https://store.steampowered.com/app/2192170/Whackerball/
+
+# PC game suggestions
+
+Here are a few games i've sank a lot of time in, and that inspired breakout in some way
+
+- Heat signature : https://www.humblebundle.com/store/heat-signature
+- FTL : https://www.gog.com/en/game/faster_than_light
+- Nova drift :   https://www.gog.com/en/game/nova_drift
+- Noita : https://www.gog.com/en/game/noita
+- Enter the gungeon : https://www.gog.com/en/game/enter_the_gungeon
+- Zero Sivert : https://store.steampowered.com/app/1782120/ZERO_Sievert/
+- Factorio :  https://www.factorio.com/
+- Nuclear throne : https://store.steampowered.com/app/242680/Nuclear_Throne/  (don't buy on GOG it's outdated) 
+- Brigador :  https://www.gog.com/en/game/brigador
+- Teleglitch https://www.gog.com/en/game/teleglitch_die_more_edition
+- Rollers of the realm : https://store.steampowered.com/app/262470/Rollers_of_the_Realm/
+
+
+# How to install
+
+Breakout 71 can be installed and work offline in many ways:
+
+- Download an index.html file from [itch.io](https://renanlecaro.itch.io/breakout71) to play offline on your computer (latest version always)
+- Download the latest apk from [itch.io](https://renanlecaro.itch.io/breakout71) to play offline on your android phone (latest version always)
+- Add [the app](https://breakout.lecaro.me/) to your home screen on android, and it should play even when offline thanks to the service workers (latest version always)
+- Install the latest version from the play store  : https://play.google.com/store/apps/details?id=me.lecaro.breakout (updated from time to time) 
+- Install the latest version from Fdroid : https://f-droid.org/packages/me.lecaro.breakout/ (updated very rarely because of the updates publication lag) 
+- Download the index.html file or apk from my archive server : https://archive.lecaro.me/public-files/b71/ (any version including latests)
+
+

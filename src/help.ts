@@ -28,8 +28,6 @@ export function helpMenuEntry() {
           ${miniMarkDown(u.fullHelp)}
 `,
           ),
-          miniMarkDown(t("main_menu.credits")),
-
           t("main_menu.credit_levels"),
           ...allLevels
             .filter((l) => l.credit?.trim())
