@@ -314,7 +314,7 @@ export function getLevelUnlockCondition(levelIndex: number) {
         (a, b) => hashCode(levelIndex + a.id) - hashCode(levelIndex + b.id),
       );
 
-    const length = Math.ceil(levelIndex / 30);
+    const length = Math.min(3, Math.ceil(levelIndex / 30));
     required = possibletargets.slice(0, length);
     forbidden = possibletargets.slice(length, length + length);
   }

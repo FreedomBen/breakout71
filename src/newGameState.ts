@@ -12,16 +12,21 @@ import {
 import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
 import { isOptionOn } from "./options";
 import { getHistory } from "./gameOver";
-import { getTotalScore } from "./settings";
+import { getSettingValue, getTotalScore } from "./settings";
 import { isStartingPerk } from "./startingPerks";
 
 export function getRunLevels(
   params: RunParams,
   randomGift: PerkId | undefined,
 ) {
+  const unlockedBefore = new Set(
+    getSettingValue("breakout_71_unlocked_levels", []),
+  );
+
   const history = getHistory();
   const unlocked = allLevels.filter(
-    (l, li) => !reasonLevelIsLocked(li, history, false),
+    (l, li) =>
+      unlockedBefore.has(l.name) || !reasonLevelIsLocked(li, history, false),
   );
 
   const firstLevel =

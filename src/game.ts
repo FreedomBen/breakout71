@@ -29,6 +29,7 @@ import {
   cycleMaxParticles,
   getCurrentMaxCoins,
   getCurrentMaxParticles,
+  getSettingValue,
   getTotalScore,
   setSettingValue,
 } from "./settings";
@@ -808,8 +809,13 @@ async function openUnlocksList() {
           : help(1),
     }));
 
+  const unlockedBefore = new Set(
+    getSettingValue("breakout_71_unlocked_levels", []),
+  );
   const levelActions = allLevels.map((l, li) => {
-    const lockedBecause = reasonLevelIsLocked(li, getHistory(), true);
+    const lockedBecause = unlockedBefore.has(l.name)
+      ? null
+      : reasonLevelIsLocked(li, getHistory(), true);
     const percentUnlocked = lockedBecause?.reached
       ? `<span class="progress-inline"><span style="transform: scale(${Math.floor((lockedBecause.reached / lockedBecause.minScore) * 100) / 100},1)"></span></span>`
       : "";
