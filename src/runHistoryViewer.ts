@@ -30,28 +30,6 @@ export function runHistoryViewerMenuEntry() {
           label: t("history.columns.score"),
           field: (r) => r.score,
         },
-        {
-          label: t("history.columns.runTime"),
-          tooltip: t("history.columns.runTime_tooltip"),
-
-          field: (r) => r.runTime,
-          render(v) {
-            return Math.floor(v / 1000) + "s";
-          },
-        },
-        {
-          label: t("history.columns.puck_bounces"),
-          tooltip: t("history.columns.puck_bounces_tooltip"),
-          field: (r) => r.puck_bounces,
-        },
-        {
-          label: t("history.columns.max_combo"),
-          field: (r) => r.max_combo,
-        },
-        {
-          label: t("history.columns.upgrades_picked"),
-          field: (r) => r.upgrades_picked,
-        },
         ...rawUpgrades.map((u) => ({
           label: icons["icon:" + u.id],
           tooltip: u.name,

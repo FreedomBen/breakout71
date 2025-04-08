@@ -74,9 +74,9 @@ export async function asyncAlert<t>({
     }
 
     if (title) {
-      const h2 = document.createElement("h2");
-      h2.innerHTML = title;
-      popup.appendChild(h2);
+      const h1 = document.createElement("h1");
+      h1.innerHTML = title;
+      popup.appendChild(h1);
     }
 
     content

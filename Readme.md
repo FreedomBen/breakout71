@@ -6,13 +6,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [Donate](https://paypal.me/renanlecaro)
 - Bitcoin : bc1qlh8kywy3ttsuqqa08yx2rdc8dqhdvyt43wlxmr
 - [Discord](https://discord.gg/bbcQw4x5zA)
-- [Post your comments on itch.io](https://renanlecaro.itch.io/breakout71)    
+- [itch.io](https://renanlecaro.itch.io/breakout71)    
 - [F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 
-# Game issues and potential solutions
- 
+# Game design issues and potential solutions
 
 When you have already a nice build and still get offered many perks, it gets tiring:
 - limit all build to N perks (maybe could be boosted with a perk)
@@ -20,19 +19,9 @@ When you have already a nice build and still get offered many perks, it gets tir
 - permanent "skip" option on the upgrades, for when you don't want any of them.
 - add a "double last level's coins" perk, then decreasing reward
 
-One play style is too OP, no reason to try other things
-- encourage varied play style with level unlock requirements (testing)
-- add loop run where user levels can't be used in further loops (boring)
-- add lab mode where you need to make three builds (complex, lots of clicking, not fun)
-
 Some upgrades currently are not really useful
 - remove them
-- add more upgrades to complement them
-- force users to try them to unlock levels
-
-New players get confused as to which upgrades they have and why a side became red
-- show a fat popup with a detailed explanation of the perk the first time you have it
-- only unlock very simple perks from the start (like base_combo)
+- add more upgrades to complement them 
 
 
 # Changelog
@@ -40,9 +29,11 @@ New players get confused as to which upgrades they have and why a side became re
 ## To do
  
 - change fortunate ball to work more like coin magnet, carrying the balls around to catch them at next puck bounce
+- add a test to forbid more than 5% grey bricks on black background, remove grey bricks border
 
 ## Done
 
+- simplified texts to make translation easier 
 - fixed some issues around saved level unlocks
 - change donation text to not suggest an amount
 - limited history to top 100 runs
@@ -238,47 +229,8 @@ New players get confused as to which upgrades they have and why a side became re
 
 # Ideas and features 
 
-## UX / gameplay
-
-- avoid showing a +1 and -1 at the same time when a combo increase is reset
-- translate fastlane presentation texts to french
-- mobile option: relative movement of the touch would be amplified and added to the puck 
-- mobile option: don't pause on mobile when lifting finger
-- [obigre] Offer to level ups perks separately from picking new ones 
-- strict sample size red borders ?
-- on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
-- add a clickable button to allow sound to play in chrome android
-- see how to do fullscreen on ios, or at least explain to do aA/hide toolbars
-- when game resumes near bottom, be unvulnerable for .5s ? , once per level
-
-
-## Game engine features ideas
-- save state in localstorage for easy resume of a game in progress
-- ask for permanent storage
-- more help somewhere accessible
-- limit GC by reusing coins and particles
-- convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
-- disable zooming (for ios double tap)
-- few puck bounces = more choices / upgrades
-- show total score on end screen (score added to total) 
-- handle back bouton in menu 
-- balls could collide with each other
-- manifest for PWA (android and apple)  
-- Offline mode web for iphone 
-- controller support on web/mobile
-- enable export of gameplay capture in webview
-- endgame histograms could work as filters, when you hover a bar, all other histograms would show the stats of those runs only, without changing reference of categories
-- would be nice to have a leaderboard for not using each perk too. Like "best runs without hot start"
-- restart run on r
-- when missing, redo particle trail, but give speed to particle that matches ball direction
-- Overgrowth — when the ball touches a bomb brick it turns into a regular green brick and spawns 1 more bricks near it (additional levels spawn 2 additional bricks)
-
-## graphics ideas
-- Waterline under the puck, coins slow down a lot, reflections
-- webgl rendering:  background gradient light map, shinier coins, quite hard
-- experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
-
 ## Easy perks ideas  
+- perk: "how about both?" adds a combo option with two perks for one 
 - "+1  coin  for each brick within a small radius of the broken brick" ? 
 - two for one : add a 2 for one upgrade combo to the choice lists
 - cash out : double last level's gains  
@@ -305,6 +257,8 @@ New players get confused as to which upgrades they have and why a side became re
 - +lvl combo per bricks / resets after 5/lvl seconds without sides hit ?
 - + lvl x n combo when destroying a brick after bouncing on a side/top n times ?
 - make stats a clairvoyant thing
+- [colin]P ocket money — bricks absorb coins that touch them, which are released on brick destruction (with a bonus?)
+- [colin] turn ball gravity on after a top bar hit, and until bouncing on puck
 
 ## Medium difficulty perks ideas 
 - balls collision split them into 4 smaller balls, lvl times (requires rework)
@@ -331,29 +285,19 @@ New players get confused as to which upgrades they have and why a side became re
 
 ## ideas to sort
 - wind : move coins based on puck movement not position  
-- loop only when 7 rerolls have been acumulated. 
-- store much more details about run (level by level) as numbers only (instead of json that gets big false)
 - double coin value when they hit the sides
 - [colin]Brambles — coins that touch the walls and ceiling get stuck and are thrown back when the last brick is destroyed
 - [colin]Ball of Greed — the ball can collect coins (might be worth dividing into levels: lvl 1, can collect coins only after two bounces on bricks or walls. lvl 2, can collect after 1 bounce. lvl 3, can collect coins anytime)(or change the ball collection radius as the level grows)
-- [colin]Pocket money — bricks absorb coins that touch them, which are released on brick destruction (with a bonus?)
 - [colin]Phantom ball — the ball phases through 2 bricks then becomes solid (lvl2: through 6 bricks, lvl3; through all bricks until it touches a wall) 
 - [colin]Cryptomoney — coins that should be generated by bricks are instantly collected, but count for half their value
 - [colin]Relative time — ball speed depends on its position: if it's high up on thi screen it's fast, if it's lower it's slower
-- [colin] turn ball gravity on after a top bar hit, and until bouncing on puck
-- [colin] hitman - hit the marked brick for +5 combo. each level increases the combo you get for it.
-- [colin] sweet spot - place your puck directly below a moving spot at the top of the level to increase your combo
+
 - ball attracted by bricks of the color of the ball
 - level flips horizontally every time a ball bounces on puck
-- coins that hit the puck disappear, missed ones are scored 
 - [colin] close quarters - balle attirée par tous les blocs/par un bloc aléatoire, actif à portée de bloc (+1bloc au lvlup)/proportionnel à une force (+puissance au lvlup)…
 - [colin] plusieurs perks qui déclenchent des effets quand une balle est perdue. par ex: +3 combo à chaque balle perdue, 5 blocs transformés en bombe, balle et coins ralentis, blocs régénérés…
 - [colin] faster style - augmente le combo en fonction de la vitesse de la balle
-- [colin] perk: analyzer - permet de voir les caractéristiques cachées des blocs (sturdy…)
-- [colin] perk: roulette - gagne instantanément 2 perks aléatoires
-- combo climbs every time a ball bounces on puck (but bounce is random?) 
-- [colin] reward the player with more choices/perks for breaking a brick while having reached an increasing combo thresholds. 5 combo, then 10, then 20, then 40 etc… once a threshold is reached you aren't rewarded for that threshold again until you start a rew run
-- [colin] inspired by Balatro's score system : have some perks add to the multiplicator, and some others to the amount of coins in a brick (or the raw value of coins inside), so that you users want to improve both for maximized profit ! maybe tie one of the to perks that help you, and the other to perks that are bad to you, so that gambling players are forced to make their life harder
+- [colin] perk: roulette - gagne instantanément 2 perks aléatoires 
 
 ## extra levels
 
@@ -376,27 +320,26 @@ New players get confused as to which upgrades they have and why a side became re
 - countries flags and shapes
 
 
+## UX / gameplay
 
-## extend re-playability
-- hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..
-- architect mode : 
-  - play 7 levels, each with a different build. 
-  - Perk levels can only be used once, so if you take one for level 1, you won't have it to level 2-7. 
-  - Your final score is your worst score times your best score  
-  - You'll see the levels in advance
+- avoid showing a +1 and -1 at the same time when a combo increase is reset
+- explain to iOS users how to add the app to home screen to get fullscreen
+- delayed start on mobile to let users place the puck where they want
+- experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
+- display a multiplicator if it's not 100%, have some perks add to it
 
-- stats by lack of perk, like "best score without using hot start". 
-- split screen multiplayer
-- Add color schemes into the game (ex : Catppuccin, Dracula, Terminal, etc)
 
-Instead of automatically unlocking things at the end of each run, add the coins to the user's account, 
-and let them spend those coins on upgrades. The upgrades would then be explained. They could have a condition like
-"reach high score of 1000" or 'reach high score of 99999 without using "hot start"'. 
-This requires recording a bit more info about each run. 
+## Game engine features ideas
+- add a clickable button to allow sound to play in chrome android
+- save state in localstorage for easy resume of a game in progress
+- ask for permanent storage
+- handle back bouton in menu 
+- Offline mode web for iphone 
+- controller support on web/mobile
+- leaderboard for not using each perk, like "best runs without hot start"
+ 
 
-- final bosses (large vertical level that scrolls down faster and faster)
-
-## Rejected ideas
+## Maybe one day
 - https://weblate.org/fr/ quite annoying to have merge conflicts while pushing, i'll enable it later. 
 - [jaceys] Move the restart button out of the menu, so that it is more easily accessible (will allow user to choose starting perk instead)
 - colored coins only (coins should be of the color of the ball to count, otherwise what ? i'd rather avoid negative points)
@@ -417,13 +360,34 @@ This requires recording a bit more info about each run.
 - missile goes when you catch coin
 - missile goes when you break a brick 
 - [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran : i'll probably just let the second puck replace this
- 
+ - store much more details about run (level by level) as numbers only (instead of json that gets big false)
+- [colin] hitman - hit the marked brick for +5 combo. each level increases the combo you get for it.
+- [colin] sweet spot - place your puck directly below a moving spot at the top of the level to increase your combo
+- [colin] reward the player with more choices/perks for breaking a brick while having reached an increasing combo thresholds. 5 combo, then 10, then 20, then 40 etc… once a threshold is reached you aren't rewarded for that threshold again until you start a rew run
+- mobile option: relative movement of the touch would be amplified and added to the puck 
+- mobile option: don't pause on mobile when lifting finger
+- translate fastlane presentation texts to french
+- convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
+- disable zooming (for ios double tap)
+- Waterline under the puck, coins slow down a lot, reflections
+- webgl rendering:  background gradient light map, shinier coins, quite hard
+- on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
+- hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..
+- architect mode : 
+  - play 7 levels, each with a different build. 
+  - Perk levels can only be used once, so if you take one for level 1, you won't have it to level 2-7. 
+  - Your final score is your worst score times your best score  
+  - You'll see the levels in advance
+- stats by lack of perk, like "best score without using hot start". 
+- split screen multiplayer
+- Add color schemes into the game (ex : Catppuccin, Dracula, Terminal, etc)
+- final bosses (large vertical level that scrolls down faster and faster)
+- add loop run where user levels can't be used in further loops (boring)
+- add lab mode where you need to make three builds (complex, lots of clicking, not fun)
+
 # Credits
 
 I pulled many background patterns from https://pattern.monster/
-
-Some of the sound generating code was written by ChatGPT, and heavily
-adapted to my usage over time.
 
 I wanted an APK to start in fullscreen and be able to list it on fdroid and the play store. I started with an empty view and went to work trimming it down, with the help of that tutorial : https://github.com/fractalwrench/ApkGolf/blob/master/blog/BLOG_POST.md
 
@@ -438,13 +402,11 @@ Here are a few interesting games in the breakout genre :
 - LBreakoutHD : https://sourceforge.net/p/lgames/code/HEAD/tree/trunk/lbreakouthd/
 - Wizorb : https://store.steampowered.com/app/207420/Wizorb/
 - Ricochet infinity : https://www.myabandonware.com/game/ricochet-infinity-dxm
-- First prototype of B71 : https://breakout-v1.lecaro.me/
-- Second prototype of B71: https://breakout-v2.lecaro.me/
 - Whackerball : https://store.steampowered.com/app/2192170/Whackerball/
 
 # PC game suggestions
 
-Here are a few games i've sank a lot of time in, and that inspired breakout in some way
+Here are a few games I've sank a lot of time in, and that inspired breakout in some way
 
 - Heat signature : https://www.humblebundle.com/store/heat-signature
 - FTL : https://www.gog.com/en/game/faster_than_light
@@ -456,7 +418,6 @@ Here are a few games i've sank a lot of time in, and that inspired breakout in s
 - Nuclear throne : https://store.steampowered.com/app/242680/Nuclear_Throne/  (don't buy on GOG it's outdated) 
 - Brigador :  https://www.gog.com/en/game/brigador
 - Teleglitch https://www.gog.com/en/game/teleglitch_die_more_edition
-- Rollers of the realm : https://store.steampowered.com/app/262470/Rollers_of_the_Realm/
 
 
 # How to install
@@ -470,4 +431,7 @@ Breakout 71 can be installed and work offline in many ways:
 - Install the latest version from Fdroid : https://f-droid.org/packages/me.lecaro.breakout/ (updated very rarely because of the updates publication lag) 
 - Download the index.html file or apk from my archive server : https://archive.lecaro.me/public-files/b71/ (any version including latests)
 
+# System requirements 
 
+The game should perform well even on low-end devices.  It's very lean and does not take much storage space (Roughly 0.1MB). The web version is supposed to work on iOS safari, Firefox ESR and chrome, on desktop and mobile.
+If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster. You can adjust many aspects of the game there, go have a look ! 

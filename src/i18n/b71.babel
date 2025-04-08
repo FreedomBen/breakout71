@@ -152,21 +152,6 @@
 									</concept_node>
 								</children>
 							</folder_node>
-							<concept_node>
-								<name>restart</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
 							<folder_node>
 								<name>stats</name>
 								<children>
@@ -426,96 +411,6 @@
 								<name>columns</name>
 								<children>
 									<concept_node>
-										<name>max_combo</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>max_level</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>puck_bounces</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>puck_bounces_tooltip</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>runTime</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>runTime_tooltip</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
 										<name>score</name>
 										<description/>
 										<comment/>
@@ -532,21 +427,6 @@
 									</concept_node>
 									<concept_node>
 										<name>started</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>en-US</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>upgrades_picked</name>
 										<description/>
 										<comment/>
 										<translations>
@@ -858,36 +738,6 @@
 								</translations>
 							</concept_node>
 							<concept_node>
-								<name>unlocked_level</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>unlocked_perk</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
 								<name>upgrade_perk_to_level</name>
 								<description/>
 								<comment/>
@@ -1149,21 +999,6 @@
 							</concept_node>
 							<concept_node>
 								<name>extra_bright_help</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>en-US</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>footer_html</name>
 								<description/>
 								<comment/>
 								<translations>

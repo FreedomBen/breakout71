@@ -14,6 +14,14 @@ import { Coin, colorString, GameState } from "./types";
 import { t } from "./i18n/i18n";
 import { gameState, lastMeasuredFPS } from "./game";
 import { isOptionOn } from "./options";
+import {
+  catchRateBest,
+  catchRateGood,
+  levelTimeBest,
+  levelTimeGood, missesBest, missesGood,
+  wallBouncedBest,
+  wallBouncedGood
+} from "./pure_functions";
 
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
 export const ctx = gameCanvas.getContext("2d", {
@@ -71,16 +79,16 @@ export function render(gameState: GameState) {
       : "") +
     (isOptionOn("show_stats")
       ? ` 
-        <span class="${(catchRate > 0.95 && "great") || (catchRate > 0.9 && "good") || ""}" data-tooltip="${t("play.stats.coins_catch_rate")}">
+        <span class="${(catchRate > catchRateBest/100 && "great") || (catchRate > catchRateGood/100 && "good") || ""}" data-tooltip="${t("play.stats.coins_catch_rate")}">
             ${Math.floor(catchRate * 100)}%
         </span><span> / </span>
-        <span class="${(gameState.levelTime < 30000 && "great") || (gameState.levelTime < 60000 && "good") || ""}" data-tooltip="${t("play.stats.levelTime")}">
+        <span class="${(gameState.levelTime <levelTimeBest*1000 && "great") || (gameState.levelTime < levelTimeGood*1000 && "good") || ""}" data-tooltip="${t("play.stats.levelTime")}">
         ${Math.ceil(gameState.levelTime / 1000)}s 
         </span><span> / </span>
-        <span class="${(gameState.levelWallBounces < 3 && "great") || (gameState.levelWallBounces < 10 && "good") || ""}" data-tooltip="${t("play.stats.levelWallBounces")}">
+        <span class="${(gameState.levelWallBounces < wallBouncedBest && "great") || (gameState.levelWallBounces < wallBouncedGood && "good") || ""}" data-tooltip="${t("play.stats.levelWallBounces")}">
         ${gameState.levelWallBounces} B 
         </span><span> / </span>  
-        <span class="${(gameState.levelMisses < 3 && "great") || (gameState.levelMisses < 6 && "good") || ""}" data-tooltip="${t("play.stats.levelMisses")}">
+        <span class="${(gameState.levelMisses < missesBest && "great") || (gameState.levelMisses < missesGood && "good") || ""}" data-tooltip="${t("play.stats.levelMisses")}">
         ${gameState.levelMisses} M
         </span><span> / </span>
         `

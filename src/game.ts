@@ -65,7 +65,14 @@ import {
 } from "./asyncAlert";
 import { isOptionOn, options, toggleOption } from "./options";
 import { hashCode } from "./getLevelBackground";
-import { hoursSpentPlaying } from "./pure_functions";
+import {
+  catchRateBest, catchRateGood,
+  hoursSpentPlaying,
+  levelTimeBest,
+  levelTimeGood, missesBest, missesGood,
+  wallBouncedBest,
+  wallBouncedGood
+} from "./pure_functions";
 import { helpMenuEntry } from "./help";
 import { creativeMode } from "./creative";
 import { setupTooltips } from "./tooltip";
@@ -210,35 +217,35 @@ export async function openUpgradesPicker(gameState: GameState) {
     wallHitsGain = "",
     missesGain = "";
 
-  if (gameState.levelWallBounces < 3) {
+  if (gameState.levelWallBounces < wallBouncedBest) {
     repeats++;
     gameState.rerolls++;
     wallHitsGain = t("level_up.plus_one_upgrade_and_reroll");
-  } else if (gameState.levelWallBounces < 10) {
+  } else if (gameState.levelWallBounces < wallBouncedGood) {
     repeats++;
     wallHitsGain = t("level_up.plus_one_upgrade");
   }
-  if (gameState.levelTime < 30 * 1000) {
+  if (gameState.levelTime < levelTimeBest * 1000) {
     repeats++;
     gameState.rerolls++;
     timeGain = t("level_up.plus_one_upgrade_and_reroll");
-  } else if (gameState.levelTime < 60 * 1000) {
+  } else if (gameState.levelTime < levelTimeGood * 1000) {
     repeats++;
     timeGain = t("level_up.plus_one_upgrade");
   }
-  if (catchRate > 0.95) {
+  if (catchRate > catchRateBest/100) {
     repeats++;
     gameState.rerolls++;
     catchGain = t("level_up.plus_one_upgrade_and_reroll");
-  } else if (catchRate > 0.9) {
+  } else if (catchRate > catchRateGood/100) {
     repeats++;
     catchGain = t("level_up.plus_one_upgrade");
   }
-  if (gameState.levelMisses < 3) {
+  if (gameState.levelMisses < missesBest) {
     repeats++;
     gameState.rerolls++;
     missesGain = t("level_up.plus_one_upgrade_and_reroll");
-  } else if (gameState.levelMisses < 6) {
+  } else if (gameState.levelMisses < missesGood) {
     repeats++;
     missesGain = t("level_up.plus_one_upgrade");
   }
@@ -500,7 +507,23 @@ export async function openMainMenu() {
 
   const cb = await asyncAlert<() => void>({
     title: t("main_menu.title"),
-    content: [...actions, t("main_menu.footer_html", { appVersion })],
+    content: [...actions,
+
+      `<p>       
+        <span>Made in France by <a href="https://lecaro.me">Renan LE CARO</a>.</span> 
+        <a href="https://paypal.me/renanlecaro" target="_blank">Donate</a>
+        <a href="https://discord.gg/bbcQw4x5zA" target="_blank">Discord</a>
+        <a href="https://f-droid.org/en/packages/me.lecaro.breakout/" target="_blank">F-Droid</a>
+        <a href="https://play.google.com/store/apps/details?id=me.lecaro.breakout" target="_blank">Google Play</a>
+        <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a> 
+        <a href="https://gitlab.com/lecarore/breakout71" target="_blank">Gitlab</a>
+        <a href="https://breakout.lecaro.me/" target="_blank">Web version</a>
+        <a href="https://news.ycombinator.com/item?id=43183131" target="_blank">HackerNews</a>
+        <a href="https://breakout.lecaro.me/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://archive.lecaro.me/public-files/b71/" target="_blank">Archives</a>
+        <span>v.${appVersion}</span>
+      </p>`
+    ],
     allowClose: true,
   });
   if (cb) {

@@ -78,7 +78,7 @@ export function gameOver(title: string, intro: string) {
       {
         icon: icons["icon:new_run"],
         value: null,
-        text: t("gameOver.restart"),
+        text: t("confirmRestart.yes"),
         help: "",
       },
       `<div id="level-recording-container"></div>`,
