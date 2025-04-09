@@ -10,13 +10,11 @@ app.use(bodyParser.text({
 }));
 
 app.get('/src/data/levels.json', (req, res) => {
-  console.log('src/data/levels.json')
     res.json(JSON.parse(fs.readFileSync('src/data/levels.json')))
 })
 
 app.post('/src/data/levels.json', (req, res) => {
     if(req.body?.trim()) {
-        console.log('Levels updated')
         fs.writeFileSync('src/data/levels.json', req.body)
     }
     res.end('OK')

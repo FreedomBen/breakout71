@@ -155,7 +155,8 @@ export const fitSize = () => {
   const baseWidth = Math.round(
     Math.min(gameState.canvasWidth, gameState.gameZoneHeight * 0.73),
   );
-  gameState.brickWidth = Math.floor(baseWidth / gameState.gridSize / 2) * 2;
+  gameState.brickWidth = Math.floor(baseWidth / gameState.gridSize / 2) * 2; 
+
   gameState.gameZoneWidth = gameState.brickWidth * gameState.gridSize;
   gameState.offsetX = Math.floor(
     (gameState.canvasWidth - gameState.gameZoneWidth) / 2,
@@ -974,8 +975,10 @@ document.addEventListener("keyup", async (e) => {
 export const gameState = newGameState({});
 
 export function restart(params: RunParams) {
-  fitSize();
+  // fitSize();
   Object.assign(gameState, newGameState(params));
+  // Recompute brick size according to level
+  fitSize();
   pauseRecording();
   setLevel(gameState, 0);
 }

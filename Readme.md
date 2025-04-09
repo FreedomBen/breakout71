@@ -28,11 +28,11 @@ Some upgrades currently are not really useful
 
 ## To do
  
-- change fortunate ball to work more like coin magnet, carrying the balls around to catch them at next puck bounce
-- add a test to forbid more than 5% grey bricks on black background, remove grey bricks border
 
 ## Done
 
+- change fortunate ball to work more like coin magnet, carrying the balls around to catch them at next puck bounce
+- add a test to forbid more than 5% grey bricks on black background, remove grey bricks border
 - simplified texts to make translation easier 
 - fixed some issues around saved level unlocks
 - change donation text to not suggest an amount

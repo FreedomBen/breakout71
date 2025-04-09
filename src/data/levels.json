@@ -77,7 +77,7 @@
     "size": 6,
     "bricks": "_______gggg__rrrr__yyyy",
     "svg": 8,
-    "color": ""
+    "color": "#5da3ea"
   },
   {
     "name": "France",
@@ -413,12 +413,13 @@
     "name": "Wiki",
     "size": 10,
     "bricks": "_______________________GGGG_____GGkkGG___GkggggkG__GgWWWWgG__GkggggkG___GGkkGG_____GGGG_______________________",
-    "svg": null
+    "svg": null,
+    "color": "#1c71d8"
   },
   {
     "name": "Baby Dog",
     "size": 8,
-    "bricks": "_______W__eeeeWWWWeeWeWWWegWegeeeeWWWWee_eWggWe__eWWWWe____WW",
+    "bricks": "_______W__eeeeWWWWeeWeWWWeBWeBeeeeWWWWee_eWBBWe__eWWWWe____WW___",
     "svg": null
   },
   {
@@ -570,7 +571,7 @@
   {
     "name": "icon:soft_reset",
     "size": 8,
-    "bricks": "___rg_____rrgg___rryggg_rryWggggrryWgggg_ryyggg___rrgg_____rg___",
+    "bricks": "____yy______yyy_____yyyy____yyyyyyyyyyyyyyyyyyyy_yyyyyy___yyyy__",
     "svg": null
   },
   {
@@ -782,7 +783,7 @@
     "size": 8,
     "bricks": "_________tttttt__tttttt__gggggg__gggggg__WWWWWW__WWWWWW",
     "svg": null,
-    "color": "#986a44"
+    "color": "#26a269"
   },
   {
     "name": "Finland",
@@ -1039,7 +1040,7 @@
     "size": 24,
     "bricks": "____________________________________________________ggggg______ggggg_______gg___g______g___gg_____gg________________gg___gg__________________gg_gggggggggg____gggggggggggggtttttggggggggbbbbbgggggtWWWttttggggbbbbWWWbgg_gtWttttttggggbbbbWbbbg__gtttttttgg__ggbbbbbbbg__gtttttttg____gbbbbbbbg__ggtttttgg____ggbbbbbgg___ggtttgg______ggbbbgg_____ggggg________ggggg___________________________________________________________________________________________________________________________________________________________________________________________________________________________",
     "svg": null,
-    "color": "#1a5fb4",
+    "color": "#26a269",
     "credit": "https://prohama.com/sunglasses-pattern-1/"
   },
   {
@@ -1109,7 +1110,7 @@
   {
     "name": "icon:fountain_toss",
     "size": 12,
-    "bricks": "________________tttt______tttggttt____tggggggt____t__gg__t____tllggllt___ltbyggbbtl_lbtttggtytblgyttybbtttyggggttbbtyggg_gggggggggg____gggggg___",
+    "bricks": "__________________________________________________WWWWWWWW___WttttttttW_WtytttytyttWWtttyttttttWlWtyttttytWl_lWWWWWWWWl___llllllll______________",
     "svg": null,
     "color": ""
   },
@@ -1122,8 +1123,8 @@
   },
   {
     "name": "Gear",
-    "size": 14,
-    "bricks": "_________________________________l_l_l_______l_lllll_l______lllllll_____lllll_lllll____lll___lll____lll_____lll____lll___lll____lllll_lllll_____lllllll______l_lllll_l_______l_l_l__________________",
+    "size": 13,
+    "bricks": "_________________l_l_l______l_lllll_l_____lllllll____lllll_lllll___lll___lll___lll_____lll___lll___lll___lllll_lllll____lllllll_____l_lllll_l______l_l_l_________________",
     "svg": null,
     "color": ""
   },
@@ -1279,7 +1280,7 @@
     "size": 11,
     "bricks": "___gggg_____gggrrgg_____ggrrg_______gggg_____gggyygg_____ggyyg_______gggg_____gggCCgg_____ggCCg_______gggg________gg_____",
     "svg": null,
-    "color": "",
+    "color": "#240a8b",
     "credit": "Left a wonderful review on the play store."
   },
   {
@@ -1287,7 +1288,7 @@
     "size": 13,
     "bricks": "_______________________________________OOOORgRgRgOOOOWOORgRgRgOOOOOWORgRgRgOWOOWOORgRgRgOOWOOWORgRgRgOWOOWOORgRgRgOOOOOOORgRgRgOOO_______________________________________",
     "svg": null,
-    "color": "",
+    "color": "#62a0ea",
     "credit": "Colin helped a lot with the game design https://colin-crapahute.bearblog.dev/"
   },
   {
@@ -1295,7 +1296,7 @@
     "size": 15,
     "bricks": "_________________________________ggggggggg_____g_________g___g___________g_g_____________gg_____________gg_____yyy_____ggg__yyyyyyy__ggggtyyyyyyyyytggggtttttttttttgggg_ttttttttt_gg_____ttttt___________________________________",
     "svg": null,
-    "color": "",
+    "color": "#240a8b",
     "credit": "Early adopter of the game"
   },
   {
@@ -1309,7 +1310,7 @@
   {
     "name": "icon:minefield",
     "size": 7,
-    "bricks": "W__W__W_W___W___W_W__W_____W_W___W____g_____ggg__",
+    "bricks": "W__W__W_W___W___W_W__W_____W_W___W____l_____lll__",
     "svg": null,
     "color": ""
   },

@@ -257,11 +257,10 @@ export function render(gameState: GameState) {
       coin.size,
       coin.x,
       coin.y,
+      // Red border around coins with asceticism
       (hasCombo && gameState.perks.asceticism && "#FF0000") ||
-        (color === "#ffd300" && "#ffd300") ||
-        (color == "#231f20" &&
-          gameState.level.color == "#000000" &&
-          "#FFFFFF") ||
+        // Gold coins
+        // (color === "#ffd300" && "#ffd300") ||
         gameState.level.color,
       coin.a,
     );
@@ -408,7 +407,7 @@ export function render(gameState: GameState) {
         gameState.coinSize,
         left + gameState.coinSize / 2,
         gameState.gameZoneHeight - gameState.puckHeight / 2,
-        gameState.puckColor,
+        "#ffd300",
         0,
       );
       drawText(
@@ -895,9 +894,15 @@ export function drawFuzzyBall(
   x: number,
   y: number,
 ) {
+
   const key = "fuzzy-circle" + color + "_" + width;
-  if (!color) debugger;
+  if (!color?.startsWith('#')) debugger;
+
   const size = Math.round(width * 3);
+  if (!size || isNaN(size)) {
+    debugger;
+    return
+  }
   if (!cachedGraphics[key]) {
     const can = document.createElement("canvas");
     can.width = size;
@@ -919,6 +924,7 @@ export function drawFuzzyBall(
     canctx.fillStyle = gradient;
     canctx.fillRect(0, 0, size, size);
     cachedGraphics[key] = can;
+
   }
   ctx.drawImage(
     cachedGraphics[key],
@@ -944,12 +950,6 @@ export function drawBrick(
   const width = brx - tlx,
     height = bry - tly;
 
-  const whiteBorder =
-    offset == -1 &&
-    color == "#231f20" &&
-    gameState.level.color == "#000000" &&
-    "#FFFFFF";
-
   const key =
     "brick" +
     color +
@@ -962,8 +962,7 @@ export function drawBrick(
     offset +
     "_" +
     borderOnly +
-    "_" +
-    whiteBorder;
+    "_"  ;
 
   if (!cachedGraphics[key]) {
     const can = document.createElement("canvas");
@@ -977,9 +976,9 @@ export function drawBrick(
 
     canctx.setLineDash(offset !== -1 ? redBorderDash : emptyArray);
     canctx.lineDashOffset = offset;
-    canctx.strokeStyle = (offset !== -1 && "#FF000033") || whiteBorder || color;
+    canctx.strokeStyle = (offset !== -1 && "#FF000033") || color;
     canctx.lineJoin = "round";
-    canctx.lineWidth = whiteBorder ? 1 : bord;
+    canctx.lineWidth =   bord;
     roundRect(
       canctx,
       bord / 2,
