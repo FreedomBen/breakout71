@@ -20,12 +20,8 @@ export function levelIconHTML(
   c.width = size;
   c.height = size;
 
-  if (color) {
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, size, size);
-  } else {
-    ctx.clearRect(0, 0, size, size);
-  }
+  ctx.clearRect(0, 0, size, size);
+
   const pxSize = size / levelSize;
   for (let x = 0; x < levelSize; x++) {
     for (let y = 0; y < levelSize; y++) {

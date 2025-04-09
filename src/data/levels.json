@@ -68,21 +68,21 @@
   {
     "name": "Swiss",
     "size": 7,
-    "bricks": "________RRRRR__RRWRR__RWWWR__RRWRR__RRRRR",
+    "bricks": "________RRRRR__RRWRR__RWWWR__RRWRR__RRRRR________",
     "svg": 13,
     "color": ""
   },
   {
     "name": "Germany",
-    "size": 6,
-    "bricks": "_______gggg__rrrr__yyyy",
+    "size": 4,
+    "bricks": "____ggggrrrryyyy",
     "svg": 8,
     "color": "#5da3ea"
   },
   {
     "name": "France",
-    "size": 8,
-    "bricks": "_________ttWWrr__ttWWrr__ttWWrr__ttWWrr__ttWWrr________",
+    "size": 6,
+    "bricks": "______ttWWrrttWWrrttWWrrttWWrrttWWrr",
     "svg": null,
     "color": ""
   },
@@ -731,8 +731,8 @@
   },
   {
     "name": "China",
-    "size": 8,
-    "bricks": "_________RRyRRR__RyRyRR__RRyRRR__RRRRRR",
+    "size": 6,
+    "bricks": "______RRyRRRRyRyRRRRyRRRRRRRRR______",
     "svg": null,
     "color": ""
   },
