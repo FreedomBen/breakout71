@@ -249,7 +249,7 @@
   "upgrades.pierce_color.name": "Perforación de color",
   "upgrades.pierce_color.tooltip": "+{{lvl}} daño a los ladrillos del color de la bola",
   "upgrades.pierce_color.verbose_description": "Siempre que una bola golpee un ladrillo del mismo color, lo atravesará sin obstáculos.\n\nCuando llegue a un ladrillo de otro color, lo romperá, tomará su color y rebotará.\n\nSi tienes ladrillos resistentes, la pelota puede rebotar en un ladrillo del mismo color.",
-  "upgrades.puck_repulse_ball.help_plural": "",
+  "upgrades.puck_repulse_ball.help_plural": "La fuerza de repulsión es mayor",
   "upgrades.puck_repulse_ball.name": "Aterrizaje suave",
   "upgrades.puck_repulse_ball.tooltip": "El disco repele las bolas",
   "upgrades.puck_repulse_ball.verbose_description": "Cuando una pelota se acerca al disco, empieza a ralentizarse, e incluso puede llegar a botar sin tocar el disco.",

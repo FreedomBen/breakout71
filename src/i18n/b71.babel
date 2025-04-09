@@ -15989,7 +15989,7 @@
 		<custom_languages/>
 		<id_extractor_ignores/>
 	</editor_configuration>
-	<primary_language>en-US</primary_language>
+	<primary_language>fr-FR</primary_language>
 	<configuration>
 		<indent>space2</indent>
 		<format>json</format>

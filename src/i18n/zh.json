@@ -249,7 +249,7 @@
   "upgrades.pierce_color.name": "颜色穿刺",
   "upgrades.pierce_color.tooltip": "+ 对球颜色的砖块造成{{lvl}} 伤害",
   "upgrades.pierce_color.verbose_description": "每当小球击中一块相同颜色的砖块时，它就会毫无阻碍地穿过砖块。\n\n一旦球碰到不同颜色的砖块，它就会打破砖块，拿走砖块的颜色并反弹。\n\n如果你有坚固的砖块，小球仍有可能从相同颜色的砖块上弹起。",
-  "upgrades.puck_repulse_ball.help_plural": "",
+  "upgrades.puck_repulse_ball.help_plural": "斥力更大",
   "upgrades.puck_repulse_ball.name": "软着陆",
   "upgrades.puck_repulse_ball.tooltip": "冰球击退小球",
   "upgrades.puck_repulse_ball.verbose_description": "当球接近冰球时，速度会开始减慢，甚至有可能在不接触冰球的情况下反弹。",

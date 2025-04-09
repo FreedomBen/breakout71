@@ -27,6 +27,9 @@ Some upgrades currently are not really useful
 # Changelog
 ## To do
 
+- rename "puck" into paddle
+- use french as base language to keep consistent formal/informal tone 
+
 ## Done
 
 ## 29069860
