@@ -1327,5 +1327,40 @@
     "bricks": "________ttttt__ytttr__ytttr__ytttr__ttttt________",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "Lebanon",
+    "size": 9,
+    "bricks": "_________rrrrrrrrrWWWWkWWWWWWWkkkWWWWWkkkkkWWWWWWkWWWWrrrrrrrrr__________________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "Spain",
+    "size": 9,
+    "bricks": "_________rrrrrrrrryyyyyyyyyyWrWyyyyyyrWryyyyyyWrWyyyyyyyyyyyyyyrrrrrrrrr_________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "Uzbekistan",
+    "size": 8,
+    "bricks": "tWtttWttWtttWttttWtWtWttWWWWWWWWWWWWWWWWGGGGGGGGGGGGGGGGGGGGGGGG",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "Pakistan",
+    "size": 8,
+    "bricks": "________WWkkkkkkWWkkWkWkWWkWkkkkWWkWkkWkWWkkWWkkWWkkkkkk________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "Korea",
+    "size": 10,
+    "bricks": "__________WWWWWWWWWWWgWWWWWWgWWgWrrrrWgWWWWrrbbWWWWWWrrbbWWWWgWbbbbWgWWgWWWWWWgWWWWWWWWWWW__________",
+    "svg": null,
+    "color": "#62a0ea"
   }
 ]

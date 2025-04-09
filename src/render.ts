@@ -18,9 +18,11 @@ import {
   catchRateBest,
   catchRateGood,
   levelTimeBest,
-  levelTimeGood, missesBest, missesGood,
+  levelTimeGood,
+  missesBest,
+  missesGood,
   wallBouncedBest,
-  wallBouncedGood
+  wallBouncedGood,
 } from "./pure_functions";
 
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
@@ -79,10 +81,10 @@ export function render(gameState: GameState) {
       : "") +
     (isOptionOn("show_stats")
       ? ` 
-        <span class="${(catchRate > catchRateBest/100 && "great") || (catchRate > catchRateGood/100 && "good") || ""}" data-tooltip="${t("play.stats.coins_catch_rate")}">
+        <span class="${(catchRate > catchRateBest / 100 && "great") || (catchRate > catchRateGood / 100 && "good") || ""}" data-tooltip="${t("play.stats.coins_catch_rate")}">
             ${Math.floor(catchRate * 100)}%
         </span><span> / </span>
-        <span class="${(gameState.levelTime <levelTimeBest*1000 && "great") || (gameState.levelTime < levelTimeGood*1000 && "good") || ""}" data-tooltip="${t("play.stats.levelTime")}">
+        <span class="${(gameState.levelTime < levelTimeBest * 1000 && "great") || (gameState.levelTime < levelTimeGood * 1000 && "good") || ""}" data-tooltip="${t("play.stats.levelTime")}">
         ${Math.ceil(gameState.levelTime / 1000)}s 
         </span><span> / </span>
         <span class="${(gameState.levelWallBounces < wallBouncedBest && "great") || (gameState.levelWallBounces < wallBouncedGood && "good") || ""}" data-tooltip="${t("play.stats.levelWallBounces")}">
@@ -894,14 +896,13 @@ export function drawFuzzyBall(
   x: number,
   y: number,
 ) {
-
   const key = "fuzzy-circle" + color + "_" + width;
-  if (!color?.startsWith('#')) debugger;
+  if (!color?.startsWith("#")) debugger;
 
   const size = Math.round(width * 3);
   if (!size || isNaN(size)) {
     debugger;
-    return
+    return;
   }
   if (!cachedGraphics[key]) {
     const can = document.createElement("canvas");
@@ -924,7 +925,6 @@ export function drawFuzzyBall(
     canctx.fillStyle = gradient;
     canctx.fillRect(0, 0, size, size);
     cachedGraphics[key] = can;
-
   }
   ctx.drawImage(
     cachedGraphics[key],
@@ -962,7 +962,7 @@ export function drawBrick(
     offset +
     "_" +
     borderOnly +
-    "_"  ;
+    "_";
 
   if (!cachedGraphics[key]) {
     const can = document.createElement("canvas");
@@ -978,7 +978,7 @@ export function drawBrick(
     canctx.lineDashOffset = offset;
     canctx.strokeStyle = (offset !== -1 && "#FF000033") || color;
     canctx.lineJoin = "round";
-    canctx.lineWidth =   bord;
+    canctx.lineWidth = bord;
     roundRect(
       canctx,
       bord / 2,

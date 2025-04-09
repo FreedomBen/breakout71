@@ -23,7 +23,7 @@ import {
 } from "./game_utils";
 
 import "./PWA/sw_loader";
-import { getCurrentLang, t } from "./i18n/i18n";
+import { getCurrentLang, languages, t } from "./i18n/i18n";
 import {
   cycleMaxCoins,
   cycleMaxParticles,
@@ -66,12 +66,15 @@ import {
 import { isOptionOn, options, toggleOption } from "./options";
 import { hashCode } from "./getLevelBackground";
 import {
-  catchRateBest, catchRateGood,
+  catchRateBest,
+  catchRateGood,
   hoursSpentPlaying,
   levelTimeBest,
-  levelTimeGood, missesBest, missesGood,
+  levelTimeGood,
+  missesBest,
+  missesGood,
   wallBouncedBest,
-  wallBouncedGood
+  wallBouncedGood,
 } from "./pure_functions";
 import { helpMenuEntry } from "./help";
 import { creativeMode } from "./creative";
@@ -234,11 +237,11 @@ export async function openUpgradesPicker(gameState: GameState) {
     repeats++;
     timeGain = t("level_up.plus_one_upgrade");
   }
-  if (catchRate > catchRateBest/100) {
+  if (catchRate > catchRateBest / 100) {
     repeats++;
     gameState.rerolls++;
     catchGain = t("level_up.plus_one_upgrade_and_reroll");
-  } else if (catchRate > catchRateGood/100) {
+  } else if (catchRate > catchRateGood / 100) {
     repeats++;
     catchGain = t("level_up.plus_one_upgrade");
   }
@@ -508,7 +511,8 @@ export async function openMainMenu() {
 
   const cb = await asyncAlert<() => void>({
     title: t("main_menu.title"),
-    content: [...actions,
+    content: [
+      ...actions,
 
       `<p>       
         <span>Made in France by <a href="https://lecaro.me">Renan LE CARO</a>.</span> 
@@ -523,7 +527,7 @@ export async function openMainMenu() {
         <a href="https://breakout.lecaro.me/privacy.html" target="_blank">Privacy Policy</a>
         <a href="https://archive.lecaro.me/public-files/b71/" target="_blank">Archives</a>
         <span>v.${appVersion}</span>
-      </p>`
+      </p>`,
     ],
     allowClose: true,
   });
@@ -554,26 +558,17 @@ async function openSettingsMenu() {
 
   const actions: AsyncAlertAction<() => void>[] = [startingPerkMenuButton()];
 
-  const languages = [
-    {
-      text: "English",
-      value: "en",
-      icon: icons["UK"],
-    },
-    {
-      text: "Français",
-      value: "fr",
-      icon: icons["France"],
-    },
-  ];
   actions.push({
-    icon: languages.find((l) => l.value === getCurrentLang())?.icon,
+    icon: icons[languages.find((l) => l.value === getCurrentLang())?.levelName],
     text: t("main_menu.language"),
     help: t("main_menu.language_help"),
     async value() {
       const pick = await asyncAlert({
         title: t("main_menu.language"),
-        content: [t("main_menu.language_help"), ...languages],
+        content: [
+          t("main_menu.language_help"),
+          ...languages.map((l) => ({ ...l, icon: icons[l.levelName] })),
+        ],
         allowClose: true,
       });
       if (

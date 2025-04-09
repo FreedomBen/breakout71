@@ -13,7 +13,7 @@ import { getTotalScore } from "./settings";
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
 import { rawUpgrades } from "./upgrades";
-import {run} from "jest";
+import { run } from "jest";
 
 export function addToTotalPlayTime(ms: number) {
   try {
@@ -104,7 +104,9 @@ let runsHistory = [];
 try {
   runsHistory = JSON.parse(
     localStorage.getItem("breakout_71_runs_history") || "[]",
-  ).sort((a,b)=>b.score-a.score).slice(0,100) as RunHistoryItem[];
+  )
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 100) as RunHistoryItem[];
 } catch (e) {}
 
 export function getHistory() {
