@@ -155,7 +155,7 @@ export const fitSize = () => {
   const baseWidth = Math.round(
     Math.min(gameState.canvasWidth, gameState.gameZoneHeight * 0.73),
   );
-  gameState.brickWidth = Math.floor(baseWidth / gameState.gridSize / 2) * 2; 
+  gameState.brickWidth = Math.floor(baseWidth / gameState.gridSize / 2) * 2;
 
   gameState.gameZoneWidth = gameState.brickWidth * gameState.gridSize;
   gameState.offsetX = Math.floor(

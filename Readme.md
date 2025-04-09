@@ -22,12 +22,13 @@ When you have already a nice build and still get offered many perks, it gets tir
 Some upgrades currently are not really useful
 - remove them
 - add more upgrades to complement them 
-
+- update them to be more useful
 
 # Changelog
-
 ## To do
- 
+
+- change translation keys to get better sorted files
+- translate to spanish, german, arabic
 
 ## Done
 
@@ -230,8 +231,8 @@ Some upgrades currently are not really useful
 # Ideas and features 
 
 ## Easy perks ideas  
-- perk: "how about both?" adds a combo option with two perks for one 
-- "+1  coin  for each brick within a small radius of the broken brick" ? 
+ 
+- "+1  coin for each brick within a small radius of the broken brick" ? 
 - two for one : add a 2 for one upgrade combo to the choice lists
 - cash out : double last level's gains  
 - snowball :  Combo resets every 0.1s . +1 combo for each combo gained Since last reset.
