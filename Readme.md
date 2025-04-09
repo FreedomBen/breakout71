@@ -29,6 +29,10 @@ Some upgrades currently are not really useful
 
 ## Done
 
+## 29069860
+
+- when rendering level icons, always use transparent background
+- resized some levels to use as flags, added some missing languages as levels
 - added machine translation, so that translators can try the game in their language first : ar,de,es,ko,ru,ur,uz,zh 
 - change translation keys to get better sorted files 
 - change fortunate ball to work more like coin magnet, carrying the balls around to catch them at next puck bounce
