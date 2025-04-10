@@ -221,7 +221,7 @@
   "upgrades.implosions.tooltip": "Les explosions aspirent les pièces au lieu de les faire exploser.",
   "upgrades.implosions.verbose_description": "La force d’explosion est appliquée dans l’autre sens. Les niveaux 2+ augmentent la puissance de l'implosion. ",
   "upgrades.instant_upgrade.name": "Un tiens vaut deux tu l'auras",
-  "upgrades.instant_upgrade.tooltip": "-1 amélioration maintenant, mais un choix de mois jusqu'à la fin de la partie.",
+  "upgrades.instant_upgrade.tooltip": "+2 améliorations, -1 choix jusqu'à la fin de la partie.",
   "upgrades.instant_upgrade.verbose_description": "Choisissez immédiatement deux améliorations, afin d'en obtenir une gratuite et une autre pour rembourser celle utilisée pour obtenir cet avantage. Chaque fois que vous choisirez des améliorations dans le menu suivant, vous aurez moins de choix.",
   "upgrades.left_is_lava.name": "Éviter le côté gauche",
   "upgrades.left_is_lava.tooltip": "+{{lvl}} combo par brique, perdu en touchant le bord gauche",

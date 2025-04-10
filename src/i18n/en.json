@@ -221,7 +221,7 @@
   "upgrades.implosions.tooltip": "Explosions suck coins in instead of blowing them out",
   "upgrades.implosions.verbose_description": "The explosion force is applied the other way. Further levels act as \"bigger explosion\"",
   "upgrades.instant_upgrade.name": "Instant upgrade",
-  "upgrades.instant_upgrade.tooltip": "+1 upgrade now, -1 choice until game end.",
+  "upgrades.instant_upgrade.tooltip": "+2 upgrade now, -1 choice until game end.",
   "upgrades.instant_upgrade.verbose_description": "Immediately pick two upgrades, so that you get one free one and one to repay the one used to get this perk. Every further menu to pick upgrades will have fewer options to choose from.",
   "upgrades.left_is_lava.name": "Avoid left side",
   "upgrades.left_is_lava.tooltip": "+{{lvl}} combo per brick broken. Combo resets if ball hits the left side of the screen",
