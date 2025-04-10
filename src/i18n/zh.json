@@ -109,6 +109,7 @@
   "main_menu.sounds_help": "可能会降低某些手机的运行速度。",
   "main_menu.starting_perks": "起步福利",
   "main_menu.starting_perks_checked": "当你开始一个新游戏时，你将获得其中一项福利。点击一项福利即可将其排除在外。",
+  "main_menu.starting_perks_full_random": "所有福利均已取消，选择将是随机的。",
   "main_menu.starting_perks_help": "选择可能的初始升级",
   "main_menu.starting_perks_unchecked": "以下福利不作为起始福利提供，但您可以点击将其添加到福利池中。",
   "main_menu.title": "突围 71",

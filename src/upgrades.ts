@@ -5,7 +5,6 @@ import { comboKeepingRate } from "./pure_functions";
 export const rawUpgrades = [
   {
     requires: "",
-
     threshold: 0,
     giftable: false,
     id: "extra_life",

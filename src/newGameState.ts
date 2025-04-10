@@ -13,7 +13,7 @@ import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
 import { isOptionOn } from "./options";
 import { getHistory } from "./gameOver";
 import { getSettingValue, getTotalScore } from "./settings";
-import { isStartingPerk } from "./startingPerks";
+import { isBlackListedForStart, isStartingPerk } from "./startingPerks";
 
 export function getRunLevels(
   params: RunParams,
@@ -52,9 +52,10 @@ export function newGameState(params: RunParams): GameState {
 
   let randomGift: PerkId | undefined = undefined;
   if (!sumOfValues(perks)) {
-    const giftable = upgrades.filter(
-      (u) => getTotalScore() >= u.threshold && isStartingPerk(u),
-    );
+    let giftable = upgrades.filter((u) => isStartingPerk(u));
+    if (!giftable.length) {
+      giftable = upgrades.filter((u) => !isBlackListedForStart(u));
+    }
 
     randomGift =
       (isOptionOn("easy") && "slow_down") ||

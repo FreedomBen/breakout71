@@ -16,41 +16,51 @@ export function startingPerkMenuButton() {
     },
   };
 }
+
+export function isBlackListedForStart(u: Upgrade) {
+  return !!(
+    u.requires ||
+    ["instant_upgrade"].includes(u.id) ||
+    u.threshold > getTotalScore()
+  );
+}
 export function isStartingPerk(u: Upgrade): boolean {
-  return getSettingValue("start_with_" + u.id, u.giftable);
+  return (
+    !isBlackListedForStart(u) &&
+    getSettingValue("start_with_" + u.id, u.giftable)
+  );
 }
 
 export async function openStartingPerksEditor() {
-  const ts = getTotalScore();
-  const avaliable = upgrades.filter(
-    (u) =>
-      !u.requires && !["instant_upgrade"].includes(u.id) && u.threshold <= ts,
-  );
-  const starting = avaliable.filter((u) => isStartingPerk(u));
+  const avaliable = upgrades.filter((u) => !isBlackListedForStart(u));
   const buttons = avaliable.map((u) => {
     const checked = isStartingPerk(u);
     return {
       icon: u.icon,
       text: u.name,
       tooltip: u.help(1),
-      value: u,
-      disabled: checked && starting.length < 2,
+      value: [u],
       checked,
     };
   });
+  const checkedList = buttons.filter((b) => b.checked);
 
-  const perk: Upgrade | null | void = await asyncAlert({
+  const perks: Upgrade[] | null | void = await asyncAlert({
     title: t("main_menu.starting_perks"),
     className: "actionsAsGrid",
     content: [
-      t("main_menu.starting_perks_checked"),
-      ...buttons.filter((b) => b.checked),
+      checkedList.length
+        ? t("main_menu.starting_perks_checked")
+        : t("main_menu.starting_perks_full_random"),
+      ...checkedList,
       t("main_menu.starting_perks_unchecked"),
       ...buttons.filter((b) => !b.checked),
     ],
   });
-  if (perk) {
-    setSettingValue("start_with_" + perk.id, !isStartingPerk(perk));
+  if (perks) {
+    perks?.forEach((perk) => {
+      setSettingValue("start_with_" + perk.id, !isStartingPerk(perk));
+    });
     openStartingPerksEditor();
   }
 }

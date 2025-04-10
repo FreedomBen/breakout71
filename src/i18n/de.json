@@ -109,6 +109,7 @@
   "main_menu.sounds_help": "Kann einige Telefone verlangsamen.",
   "main_menu.starting_perks": "Startvorteile",
   "main_menu.starting_perks_checked": "Wenn Sie ein neues Spiel beginnen, wird Ihnen eine dieser Vergünstigungen angeboten. Klicken Sie auf eine Vergünstigung, um sie auszuschließen.",
+  "main_menu.starting_perks_full_random": "Alle Vorteile wurden entfernt, die Auswahl erfolgt nach dem Zufallsprinzip.",
   "main_menu.starting_perks_help": "Wählen Sie mögliche Start-Upgrades",
   "main_menu.starting_perks_unchecked": "Die folgenden Vergünstigungen werden nicht als Startvergünstigungen angeboten, aber Sie können sie durch Anklicken zum Pool hinzufügen.",
   "main_menu.title": "Breakout 71",

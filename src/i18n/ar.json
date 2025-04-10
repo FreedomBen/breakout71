@@ -109,6 +109,7 @@
   "main_menu.sounds_help": "قد يؤدي إلى إبطاء بعض الهواتف.",
   "main_menu.starting_perks": "امتيازات البداية",
   "main_menu.starting_perks_checked": "عند بدء لعبة جديدة، ستُمنح إحدى هذه المزايا. انقر على أي ميزة لاستبعادها.",
+  "main_menu.starting_perks_full_random": "لقد تم إزالة جميع المزايا، وسيكون الاختيار عشوائيًا.",
   "main_menu.starting_perks_help": "اختر الترقيات الأولية الممكنة",
   "main_menu.starting_perks_unchecked": "لا يتم تقديم الامتيازات المذكورة أدناه كامتيازات ابتدائية، ولكن يمكنك النقر عليها لإضافتها إلى المجموعة.",
   "main_menu.title": "الاختراق 71",

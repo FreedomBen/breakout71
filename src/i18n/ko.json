@@ -109,6 +109,7 @@
   "main_menu.sounds_help": "일부 휴대폰의 속도가 느려질 수 있습니다.",
   "main_menu.starting_perks": "시작 특전",
   "main_menu.starting_perks_checked": "새 게임을 시작하면 이러한 특전 중 하나가 주어집니다. 특전을 클릭하면 특전을 제외할 수 있습니다.",
+  "main_menu.starting_perks_full_random": "모든 혜택이 제거되었으며, 선택은 무작위로 이루어집니다.",
   "main_menu.starting_perks_help": "가능한 시작 업그레이드 선택",
   "main_menu.starting_perks_unchecked": "아래 특전은 시작 특전으로 제공되지는 않지만 클릭하여 풀에 추가할 수 있습니다.",
   "main_menu.title": "브레이크아웃 71",

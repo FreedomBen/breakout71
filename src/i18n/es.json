@@ -109,6 +109,7 @@
   "main_menu.sounds_help": "Ralentiza ciertos teléfonos.",
   "main_menu.starting_perks": "Beneficios iniciales",
   "main_menu.starting_perks_checked": "Cuando inicies una nueva partida, se te asignará una de estas ventajas. Haz clic en una ventaja para excluirla.",
+  "main_menu.starting_perks_full_random": "Se han eliminado todos los beneficios, la elección será aleatoria.",
   "main_menu.starting_perks_help": "Elija sus prestaciones iniciales",
   "main_menu.starting_perks_unchecked": "Las prestaciones que figuran a continuación no se proponen como prestaciones iniciales, pero puede hacer clic en ellas para añadirlas a las posibles prestaciones iniciales.",
   "main_menu.title": "Breakout 71",
