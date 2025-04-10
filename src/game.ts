@@ -68,6 +68,7 @@ import { hashCode } from "./getLevelBackground";
 import {
   catchRateBest,
   catchRateGood,
+  clamp,
   hoursSpentPlaying,
   levelTimeBest,
   levelTimeGood,
@@ -397,12 +398,19 @@ export function tick() {
   const timeDeltaMs = currentTick - gameState.lastTick;
   gameState.lastTick = currentTick;
 
-  const frames = Math.min(4, timeDeltaMs / (1000 / 60));
+  let frames = Math.min(4, timeDeltaMs / (1000 / 60));
 
   if (gameState.keyboardPuckSpeed) {
     setMousePos(
       gameState,
       gameState.puckPosition + gameState.keyboardPuckSpeed,
+    );
+  }
+  if (gameState.perks.superhot) {
+    frames *= clamp(
+      Math.abs(gameState.puckPosition - gameState.lastPuckPosition) / 5,
+      0.2 / gameState.perks.superhot,
+      1,
     );
   }
   normalizeGameState(gameState);

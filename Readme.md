@@ -29,6 +29,8 @@ Some upgrades currently are not really useful
 
 ## Done
 
+- super hot : time moves only when paddle moves. Later levels slow down even more the time when you're not moving.
+- fixed memory leak in language detection code
 - transparency : ball becomes transparent towards top of screen, +50% coins. 
 - space coins : coins bounce without loosing momentum
 - trickledown : coins spawn at the top of the screen
@@ -248,9 +250,8 @@ Some upgrades currently are not really useful
 - cash out : double last level's gains  
 - snowball :  Combo resets every 0.1s . +1 combo for each combo gained Since last reset.
 - Chain reaction : +lvl*lvl combo per brick broken by an explosion, combo resets after explosion is over
-- coins doubled when touched by ball, lvl times, looks smaller and lighter
+
 - coins stained by balls
-- [vikingerik] : reward multiballs with combo somehow
 - fast pause : pause delay divided by {{lvl}} (helps with teleport)
 - [colin] Capital - les vies non perdues à la fin du niveau rapportent un bonus de points
 - ban 3 random perks from pool, gain 2 upgrades 
@@ -327,6 +328,7 @@ Some upgrades currently are not really useful
 
 - letters and an associated word or name
 - famous characters and movies
+- famous places : eiffel tower, taj mahal, etc..
 - fruits
 - animals
 - countries flags and shapes

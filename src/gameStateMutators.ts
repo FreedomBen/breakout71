@@ -1087,7 +1087,7 @@ export function gameStateTick(
 
           if (
             !isOptionOn("basic") &&
-            Math.random() * gameState.perks.ball_attracts_coins > 0.9
+            Math.random() * gameState.perks.ball_attracts_coins * frames > 0.9
           ) {
             makeParticle(
               gameState,
@@ -1108,6 +1108,7 @@ export function gameStateTick(
         1 -
         ((gameState.perks.viscosity * 0.03 + 0.002) * frames) /
           (1 + gameState.perks.etherealcoins);
+
       if (!gameState.perks.etherealcoins) {
         coin.vy *= ratio;
         coin.vx *= ratio;
@@ -1128,7 +1129,7 @@ export function gameStateTick(
             gameState.puckWidth + coin.size;
         coin.vy +=
           frames * coin.weight * 0.8 * (flip ? -gameState.perks.helium : 1);
-        if (flip && !isOptionOn("basic") && Math.random() < 0.1) {
+        if (flip && !isOptionOn("basic") && Math.random() < 0.1 * frames) {
           makeParticle(
             gameState,
             coin.x,

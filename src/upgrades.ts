@@ -700,4 +700,14 @@ export const rawUpgrades = [
     help: (lvl: number) => t("upgrades.transparency.tooltip", { lvl }),
     fullHelp: t("upgrades.transparency.verbose_description"),
   },
+  {
+    requires: "",
+    threshold: 195000,
+    giftable: false,
+    id: "superhot",
+    max: 3,
+    name: t("upgrades.superhot.name"),
+    help: (lvl: number) => t("upgrades.superhot.tooltip", { lvl }),
+    fullHelp: t("upgrades.superhot.verbose_description"),
+  },
 ] as const;

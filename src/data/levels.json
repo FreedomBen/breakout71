@@ -570,8 +570,8 @@
   },
   {
     "name": "icon:soft_reset",
-    "size": 8,
-    "bricks": "____yy______yyy_____yyyy____yyyyyyyyyyyyyyyyyyyy_yyyyyy___yyyy__",
+    "size": 9,
+    "bricks": "__rr______rrr_yy__rrrr_yyy_rrrr_yyyy_____yyyy_yyyyyyyy_yyyyyyyy__yyyyyy____yyyy__",
     "svg": null
   },
   {
@@ -1374,6 +1374,13 @@
     "name": "icon:transparency",
     "size": 9,
     "bricks": "__W_W_W___________W_W_W_W_W_________W_W_W_W_W_________W_W_W_W_W___________W_W_W__",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:superhot",
+    "size": 19,
+    "bricks": "_________________________________________________________WWW_W_W_WWW_WWW_WWWW___W_W_W_W_W___W_WWWW_W_W_WWW_WW__WWW__W_W_W_W___W___WW_WWW_WWW_W___WWW_W_W___________________WW__WW_WWWWW_WWWWWWWW__WW_WWWWW_WWWWWWWW__WW_WW_WW___WW__WWWWWW_WW_WW___WW__WWWWWW_WW_WW___WW__WW__WW_WWWWW___WW__WW__WW_WWWWW___WW___________________________________________________________",
     "svg": null,
     "color": ""
   }
