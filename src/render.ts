@@ -1,5 +1,6 @@
 import { baseCombo, forEachLiveOne, liveCount } from "./gameStateMutators";
 import {
+  ballTransparency,
   brickCenterX,
   brickCenterY,
   currentLevelInfo,
@@ -270,8 +271,11 @@ export function render(gameState: GameState) {
   // Black shadow around balls
   if (!isOptionOn("basic")) {
     ctx.globalCompositeOperation = "source-over";
-    ctx.globalAlpha = Math.min(0.8, liveCount(gameState.coins) / 20);
     gameState.balls.forEach((ball) => {
+      ctx.globalAlpha =
+        Math.min(0.8, liveCount(gameState.coins) / 20) *
+        (1 - ballTransparency(ball, gameState));
+
       drawBall(
         ctx,
         level.color || "#000",
@@ -338,7 +342,8 @@ export function render(gameState: GameState) {
 
   gameState.balls.forEach((ball) => {
     const drawingColor = gameState.ballsColor;
-
+    const ballAlpha = 1 - ballTransparency(ball, gameState);
+    ctx.globalAlpha = ballAlpha;
     // The white border around is to distinguish colored balls from coins/bg
     drawBall(
       ctx,
@@ -355,10 +360,11 @@ export function render(gameState: GameState) {
     ) {
       ctx.beginPath();
       ctx.moveTo(gameState.puckPosition, gameState.gameZoneHeight);
-      ctx.globalAlpha = Math.max(
-        telekinesisEffectRate(gameState, ball),
-        yoyoEffectRate(gameState, ball),
-      );
+      ctx.globalAlpha =
+        Math.max(
+          telekinesisEffectRate(gameState, ball),
+          yoyoEffectRate(gameState, ball),
+        ) * ballAlpha;
       ctx.strokeStyle = gameState.puckColor;
       ctx.bezierCurveTo(
         gameState.puckPosition,

@@ -28,12 +28,9 @@ export function getRunLevels(
     (l, li) =>
       unlockedBefore.has(l.name) || !reasonLevelIsLocked(li, history, false),
   );
-
-  const firstLevel =
-    (params?.level && unlocked.filter((l) => l.name === params?.level)) ||
-    (randomGift &&
-      allLevelsAndIcons.filter((l) => l.name == "icon:" + randomGift)) ||
-    [];
+  const firstLevel = allLevelsAndIcons.filter(
+    (l) => l.name == (params?.level || "icon:" + randomGift),
+  );
 
   const restInRandomOrder = unlocked
     .filter((l) => l.name !== params?.level)

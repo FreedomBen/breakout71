@@ -12,6 +12,7 @@ import {
 } from "./types";
 
 import {
+  ballTransparency,
   brickCenterX,
   brickCenterY,
   currentLevelInfo,
@@ -397,6 +398,14 @@ export function explodeBrick(
       // +10% per level
       coinsToSpawn += Math.ceil(
         ((2 + gameState.perks.sturdy_bricks) / 2) * coinsToSpawn,
+      );
+    }
+    if (gameState.perks.transparency) {
+      coinsToSpawn = Math.round(
+        coinsToSpawn *
+          (1 +
+            (ballTransparency(ball, gameState) * gameState.perks.transparency) /
+              2),
       );
     }
 
@@ -1099,9 +1108,10 @@ export function gameStateTick(
         1 -
         ((gameState.perks.viscosity * 0.03 + 0.002) * frames) /
           (1 + gameState.perks.etherealcoins);
-
-      coin.vy *= ratio;
-      coin.vx *= ratio;
+      if (!gameState.perks.etherealcoins) {
+        coin.vy *= ratio;
+        coin.vx *= ratio;
+      }
       if (coin.vx > 7 * gameState.baseSpeed) coin.vx = 7 * gameState.baseSpeed;
       if (coin.vx < -7 * gameState.baseSpeed)
         coin.vx = -7 * gameState.baseSpeed;
@@ -1191,17 +1201,18 @@ export function gameStateTick(
         (!gameState.perks.ghost_coins && typeof hitBrick !== "undefined") ||
         hitBorder
       ) {
-        coin.vx *= 0.8;
-        coin.vy *= 0.8;
+        if (!gameState.perks.etherealcoins) {
+          coin.vx *= 0.8;
+          coin.vy *= 0.8;
+          if (Math.abs(coin.vy) < 3) {
+            coin.vy = 0;
+          }
+        }
         coin.sa *= 0.9;
         if (speed > 20 && !coin.collidedLastFrame) {
           schedulGameSound(gameState, "coinBounce", coin.x, 0.2);
         }
         coin.collidedLastFrame = true;
-
-        if (Math.abs(coin.vy) < 3) {
-          coin.vy = 0;
-        }
       } else {
         coin.collidedLastFrame = false;
       }
@@ -1796,6 +1807,10 @@ function makeCoin(
 ) {
   let weight = 0.8 + Math.random() * 0.2 + Math.min(2, points * 0.01);
   weight *= 5 / (5 + gameState.perks.etherealcoins);
+
+  if (gameState.perks.trickledown) {
+    y = -20;
+  }
 
   append(gameState.coins, (p: Partial<Coin>) => {
     p.x = x;

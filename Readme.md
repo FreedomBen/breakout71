@@ -27,10 +27,15 @@ Some upgrades currently are not really useful
 # Changelog
 ## To do
 
+## Done
+
+- transparency : ball becomes transparent towards top of screen, +50% coins. 
+- space coins : coins bounce without loosing momentum
+- trickledown : coins spawn at the top of the screen
+- unlocked content : start with perk icon as level
+- allow removing all starting perks, to get full random
 - rename "puck" into paddle
 - use french as base language to keep consistent formal/informal tone 
-
-## Done
 
 ## 29069860
 

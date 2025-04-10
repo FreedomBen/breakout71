@@ -820,7 +820,7 @@ async function openUnlocksList() {
     .map(({ name, id, threshold, icon, help }) => ({
       text: name,
       disabled: ts < threshold,
-      value: { perks: { [id]: 1 } } as RunParams,
+      value: { perks: { [id]: 1 }, level: "icon:" + id } as RunParams,
       icon,
       [hintField]:
         ts < threshold

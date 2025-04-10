@@ -1362,5 +1362,19 @@
     "bricks": "__________WWWWWWWWWWWgWWWWWWgWWgWrrrrWgWWWWrrbbWWWWWWrrbbWWWWgWbbbbWgWWgWWWWWWgWWWWWWWWWWW__________",
     "svg": null,
     "color": "#62a0ea"
+  },
+  {
+    "name": "icon:trickledown",
+    "size": 8,
+    "bricks": "_ytttttt_________y_y_y__tttttt____________y_y_y___tttttt_y______",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:transparency",
+    "size": 9,
+    "bricks": "__W_W_W___________W_W_W_W_W_________W_W_W_W_W_________W_W_W_W_W___________W_W_W__",
+    "svg": null,
+    "color": ""
   }
 ]

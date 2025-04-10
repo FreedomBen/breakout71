@@ -373,3 +373,12 @@ export function reasonLevelIsLocked(
     };
   }
 }
+
+export function ballTransparency(ball: Ball, gameState: GameState) {
+  return clamp(
+    gameState.perks.transparency * (1 - ball.y / gameState.gameZoneHeight) -
+      0.2,
+    0,
+    1,
+  );
+}
