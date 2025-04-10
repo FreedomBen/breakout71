@@ -123,8 +123,9 @@ export function render(gameState: GameState) {
         coin.y / haloScale,
       );
     });
-    haloCanvasCtx.globalAlpha = 0.3;
+
     gameState.balls.forEach((ball) => {
+      haloCanvasCtx.globalAlpha = 0.3 * (1 - ballTransparency(ball, gameState));
       drawFuzzyBall(
         haloCanvasCtx,
         gameState.ballsColor,
@@ -251,12 +252,12 @@ export function render(gameState: GameState) {
   ctx.globalAlpha = 1;
   forEachLiveOne(gameState.coins, (coin) => {
     const color = getCoinRenderColor(gameState, coin);
+    const hollow = gameState.perks.metamorphosis && !coin.metamorphosisPoints;
 
-    // ctx.globalCompositeOperation = "source-over";
     ctx.globalCompositeOperation = "source-over";
     drawCoin(
       ctx,
-      color,
+      hollow ? "transparent" : color,
       coin.size,
       coin.x,
       coin.y,
@@ -264,6 +265,7 @@ export function render(gameState: GameState) {
       (hasCombo && gameState.perks.asceticism && "#FF0000") ||
         // Gold coins
         // (color === "#ffd300" && "#ffd300") ||
+        (hollow && color) ||
         gameState.level.color,
       coin.a,
     );
@@ -868,6 +870,9 @@ export function drawCoin(
     if (borderColor == "#FF0000") {
       canctx.lineWidth = 2;
       canctx.setLineDash(redBorderDash);
+    }
+    if (color === "transparent") {
+      canctx.lineWidth = 2;
     }
     canctx.stroke();
 

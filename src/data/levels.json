@@ -910,7 +910,7 @@
   {
     "name": "icon:zen",
     "size": 9,
-    "bricks": "___vv______vvvv______vv______bbbb____bbbbbb____bbbb____tttttt__tttttttt__tttttt__",
+    "bricks": "___tt______tttt_____BttB_____bbbb____bbbbbb___BbbbbB___tttttt__tttttttt__tttttt__",
     "svg": null,
     "color": ""
   },
@@ -1310,7 +1310,7 @@
   {
     "name": "icon:minefield",
     "size": 7,
-    "bricks": "W__W__W_W___W___W_W__W_____W_W___W____l_____lll__",
+    "bricks": "W__B__WWWBBBWWB__W__BBBWWWBBW__B__WWWBBBWW_______",
     "svg": null,
     "color": ""
   },
@@ -1379,8 +1379,29 @@
   },
   {
     "name": "icon:superhot",
-    "size": 19,
-    "bricks": "_________________________________________________________WWWBWBWBWWWBWWWBWWWWBBBWBWBWBWBWBBBWBWWWWBWBWBWWWBWWBBWWWBBWBWBWBWBBBWBBBWWBWWWBWWWBWBBBWWWBWBW___________________WWBBWWBWWWWWBWWWWWWWWBBWWBWWWWWBWWWWWWWWBBWWBWWBWWBBBWWBBWWWWWWBWWBWWBBBWWBBWWWWWWBWWBWWBBBWWBBWWBBWWBWWWWWBBBWWBBWWBBWWBWWWWWBBBWWBB_________________________________________________________",
+    "size": 11,
+    "bricks": "____________________________________________W_W_WWW_WWWWWW_W_W__W_W_W_WWW__W_____________________________________________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:bricks_attract_coins",
+    "size": 7,
+    "bricks": "_y__y___tttttyyttttt__ttttt_yttttty_ttttt___y__y_",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:rainbow",
+    "size": 6,
+    "bricks": "__rOyC_rOyCa_rOyCarOyCatrOyCatrOyCat",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:hypnosis",
+    "size": 8,
+    "bricks": "WrrrrrrrWrWWWWWrWrWrrrWrWrWrWrWrWrWWWrWrWrrrrrWrWWWWWWWrrrrrrrrr",
     "svg": null,
     "color": ""
   }

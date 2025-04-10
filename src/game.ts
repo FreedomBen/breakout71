@@ -957,7 +957,7 @@ document.addEventListener("keyup", async (e) => {
   } else if (e.key.toLowerCase() === "m" && !alertsOpen) {
     openMainMenu().then();
   } else if (e.key.toLowerCase() === "s" && !alertsOpen) {
-    openScorePanel().then();
+    openScorePanel(gameState).then();
   } else if (
     e.key.toLowerCase() === "r" &&
     !alertsOpen &&

@@ -23,14 +23,25 @@ Some upgrades currently are not really useful
 - remove them
 - add more upgrades to complement them 
 - update them to be more useful
+- 
 
 # Changelog
 ## To do
 
+- rework unbounded to just add padding around bricks
+- bricks attract balls
+
 ## Done
 
+- new perk : hypnosis
+- new perk : rainbow
+- new perk : bricks attract coins
+- super hot level rework
+- zen level added bombs
+
+## 29071527
+
 - super hot : time moves only when paddle moves. Later levels slow down even more the time when you're not moving.
-- fixed memory leak in language detection code
 - transparency : ball becomes transparent towards top of screen, +50% coins. 
 - space coins : coins bounce without loosing momentum
 - trickledown : coins spawn at the top of the screen
@@ -38,6 +49,7 @@ Some upgrades currently are not really useful
 - allow removing all starting perks, to get full random
 - rename "puck" into paddle
 - use french as base language to keep consistent formal/informal tone 
+- fixed memory leak in language detection code
 
 ## 29069860
 

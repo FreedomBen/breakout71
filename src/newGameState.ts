@@ -136,7 +136,9 @@ export function newGameState(params: RunParams): GameState {
     autoCleanUses: 0,
     ...defaultSounds(),
     rerolls: 0,
-    creative: sumOfValues(params.perks) > 1 || params.level,
+    creative:
+      sumOfValues(params.perks) > 1 ||
+      (params.level && params.level !== "icon:" + randomGift),
   };
   resetBalls(gameState);
 

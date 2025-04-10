@@ -81,6 +81,22 @@ export function getRowColIndex(gameState: GameState, row: number, col: number) {
   return row * gameState.gridSize + col;
 }
 
+export function getClosestBall(
+  gameState: GameState,
+  x: number,
+  y: number,
+): Ball | null {
+  let closestBall: Ball | null = null;
+  let dist = 0;
+  gameState.balls.forEach((ball) => {
+    const d2 = (ball.x - x) * (ball.x - x) + (ball.y - y) * (ball.y - y);
+    if (d2 < dist || !closestBall) {
+      closestBall = ball;
+      dist = d2;
+    }
+  });
+  return closestBall;
+}
 export function getPossibleUpgrades(gameState: GameState) {
   return upgrades
     .filter((u) => getTotalScore() >= u.threshold)
@@ -375,9 +391,10 @@ export function reasonLevelIsLocked(
 }
 
 export function ballTransparency(ball: Ball, gameState: GameState) {
+  if (!gameState.perks.transparency) return 0;
   return clamp(
-    gameState.perks.transparency * (1 - ball.y / gameState.gameZoneHeight) -
-      0.2,
+    gameState.perks.transparency *
+      (1 - (ball.y / gameState.gameZoneHeight) * 1.2),
     0,
     1,
   );

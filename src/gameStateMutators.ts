@@ -18,6 +18,7 @@ import {
   currentLevelInfo,
   distance2,
   distanceBetween,
+  getClosestBall,
   getMajorityValue,
   getPossibleUpgrades,
   getRowColIndex,
@@ -412,6 +413,7 @@ export function explodeBrick(
     gameState.levelSpawnedCoins += coinsToSpawn;
     gameState.runStatistics.coins_spawned += coinsToSpawn;
     gameState.runStatistics.bricks_broken++;
+
     const maxCoins = getCurrentMaxCoins() * (isOptionOn("basic") ? 0.5 : 1);
     const spawnableCoins =
       liveCount(gameState.coins) > getCurrentMaxCoins()
@@ -435,6 +437,7 @@ export function explodeBrick(
         cy =
           y +
           (Math.random() - 0.5) * (gameState.brickWidth - gameState.coinSize);
+
       makeCoin(
         gameState,
         cx,
@@ -442,7 +445,6 @@ export function explodeBrick(
         ball.previousVX * (0.5 + Math.random()),
         ball.previousVY * (0.5 + Math.random()),
         color,
-
         points,
       );
     }
@@ -1050,56 +1052,80 @@ export function gameStateTick(
         coin.sa -= attractionX / 10;
       }
 
-      if (gameState.perks.ball_attracts_coins) {
+      if (gameState.perks.ball_attracts_coins && gameState.balls.length) {
         // Find closest ball
-        let closestBall = gameState.balls[0];
-        let dist = distance2(closestBall, coin);
-        gameState.balls.forEach((ball) => {
-          if (ball == closestBall) return;
-          const d2 = distance2(ball, coin);
-          if (d2 < dist) {
-            closestBall = ball;
-            dist = d2;
-          }
-        });
+        let closestBall = getClosestBall(gameState, coin.x, coin.y);
+        if (closestBall) {
+          let dist = distance2(closestBall, coin);
 
-        const minDist = gameState.brickWidth * gameState.brickWidth;
-        if (
-          dist > minDist &&
-          dist < minDist * 4 * 4 * gameState.perks.ball_attracts_coins
-        ) {
-          // Slow down coins in effect radius
-          const ratio = 1 - 0.02 * (0.5 + gameState.perks.ball_attracts_coins);
-          coin.vx *= ratio;
-          coin.vy *= ratio;
-          coin.vy *= ratio;
-          // Carry them
-          const dx =
-            ((closestBall.x - coin.x) / dist) *
-            50 *
-            gameState.perks.ball_attracts_coins;
-          const dy =
-            ((closestBall.y - coin.y) / dist) *
-            50 *
-            gameState.perks.ball_attracts_coins;
-          coin.vx += dx;
-          coin.vy += dy;
-
+          const minDist = gameState.brickWidth * gameState.brickWidth;
           if (
-            !isOptionOn("basic") &&
-            Math.random() * gameState.perks.ball_attracts_coins * frames > 0.9
+            dist > minDist &&
+            dist < minDist * 4 * 4 * gameState.perks.ball_attracts_coins
           ) {
-            makeParticle(
-              gameState,
-              coin.x + dx * 5,
-              coin.y + dy * 5,
-              dx * 2,
-              dy * 2,
-              rainbowColor(),
-              true,
-              gameState.coinSize / 2,
-              100,
-            );
+            // Slow down coins in effect radius
+            const ratio =
+              1 - 0.02 * (0.5 + gameState.perks.ball_attracts_coins);
+            coin.vx *= ratio;
+            coin.vy *= ratio;
+            coin.vy *= ratio;
+            // Carry them
+            const dx =
+              ((closestBall.x - coin.x) / dist) *
+              50 *
+              gameState.perks.ball_attracts_coins;
+            const dy =
+              ((closestBall.y - coin.y) / dist) *
+              50 *
+              gameState.perks.ball_attracts_coins;
+            coin.vx += dx;
+            coin.vy += dy;
+
+            if (
+              !isOptionOn("basic") &&
+              Math.random() * gameState.perks.ball_attracts_coins * frames > 0.9
+            ) {
+              makeParticle(
+                gameState,
+                coin.x + dx * 5,
+                coin.y + dy * 5,
+                dx * 2,
+                dy * 2,
+                rainbowColor(),
+                true,
+                gameState.coinSize / 2,
+                100,
+              );
+            }
+          }
+        }
+      }
+
+      if (gameState.perks.bricks_attract_coins) {
+        const row = Math.floor(coin.y / gameState.brickWidth);
+        const col = Math.floor(
+          (coin.x - gameState.offsetX) / gameState.brickWidth,
+        );
+
+        const size = 2;
+        for (let dcol = -size; dcol < size; dcol++) {
+          for (let drow = -size; drow < size; drow++) {
+            const index = getRowColIndex(gameState, row + drow, col + dcol);
+            if (gameState.bricks[index]) {
+              const dx =
+                brickCenterX(gameState, index) +
+                (clamp(dcol, -1, 1) * gameState.brickWidth) / 2 -
+                coin.x;
+              const dy =
+                brickCenterY(gameState, index) +
+                (clamp(drow, -1, 1) * gameState.brickWidth) / 2 -
+                coin.y;
+              const d = dx * dx + dy * dy;
+              coin.vx +=
+                (dx / d) * 80 * gameState.perks.bricks_attract_coins * frames;
+              coin.vy +=
+                (dy / d) * 100 * gameState.perks.bricks_attract_coins * frames;
+            }
           }
         }
       }
@@ -1108,7 +1134,6 @@ export function gameStateTick(
         1 -
         ((gameState.perks.viscosity * 0.03 + 0.002) * frames) /
           (1 + gameState.perks.etherealcoins);
-
       if (!gameState.perks.etherealcoins) {
         coin.vy *= ratio;
         coin.vx *= ratio;
@@ -1122,28 +1147,41 @@ export function gameStateTick(
       coin.a += coin.sa;
 
       // Gravity
-      if (!gameState.perks.etherealcoins) {
-        const flip =
-          gameState.perks.helium > 0 &&
-          Math.abs(coin.x - gameState.puckPosition) * 2 >
-            gameState.puckWidth + coin.size;
-        coin.vy +=
-          frames * coin.weight * 0.8 * (flip ? -gameState.perks.helium : 1);
-        if (flip && !isOptionOn("basic") && Math.random() < 0.1 * frames) {
-          makeParticle(
-            gameState,
-            coin.x,
-            coin.y,
-            0,
-            gameState.baseSpeed,
-            gameState.perks.metamorphosis || isOptionOn("colorful_coins")
-              ? coin.color
-              : "#ffd300",
-            true,
-            5,
-            250,
-          );
+      const flip =
+        gameState.perks.helium > 0 &&
+        Math.abs(coin.x - gameState.puckPosition) * 2 >
+          gameState.puckWidth + coin.size;
+      let dvy =
+        frames * coin.weight * 0.8 * (flip ? -gameState.perks.helium : 1);
+
+      if (gameState.perks.etherealcoins) {
+        if (gameState.perks.helium) {
+          dvy *= 0.2 / gameState.perks.etherealcoins;
+        } else {
+          dvy *= 0;
         }
+      }
+
+      coin.vy += dvy;
+
+      if (
+        gameState.perks.helium &&
+        !isOptionOn("basic") &&
+        Math.random() < 0.1 * frames
+      ) {
+        makeParticle(
+          gameState,
+          coin.x,
+          coin.y,
+          0,
+          dvy * 10,
+          gameState.perks.metamorphosis || isOptionOn("colorful_coins")
+            ? coin.color
+            : "#ffd300",
+          true,
+          5,
+          250,
+        );
       }
 
       const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
@@ -1195,6 +1233,17 @@ export function gameStateTick(
           gameState.bricks[hitBrick] = coin.color;
           coin.metamorphosisPoints--;
           schedulGameSound(gameState, "colorChange", coin.x, 0.3);
+
+          if (gameState.perks.hypnosis) {
+            const closestBall = getClosestBall(gameState, coin.x, coin.y);
+            if (closestBall) {
+              coin.x = closestBall.x;
+              coin.y = closestBall.y;
+              coin.vx = (Math.random() - 0.5) * gameState.baseSpeed;
+              coin.vy = (Math.random() - 0.5) * gameState.baseSpeed;
+              coin.metamorphosisPoints = gameState.perks.metamorphosis;
+            }
+          }
         }
       }
 
@@ -1202,12 +1251,11 @@ export function gameStateTick(
         (!gameState.perks.ghost_coins && typeof hitBrick !== "undefined") ||
         hitBorder
       ) {
-        if (!gameState.perks.etherealcoins) {
-          coin.vx *= 0.8;
-          coin.vy *= 0.8;
-          if (Math.abs(coin.vy) < 3) {
-            coin.vy = 0;
-          }
+        const ratio = 1 - 0.2 / (1 + gameState.perks.etherealcoins);
+        coin.vx *= ratio;
+        coin.vy *= ratio;
+        if (Math.abs(coin.vy) < 1) {
+          coin.vy = 0;
         }
         coin.sa *= 0.9;
         if (speed > 20 && !coin.collidedLastFrame) {
@@ -1732,12 +1780,16 @@ export function ballTick(gameState: GameState, ball: Ball, delta: number) {
     }
   }
 
-  if (!isOptionOn("basic")) {
+  if (
+    !isOptionOn("basic") &&
+    ballTransparency(ball, gameState) < Math.random()
+  ) {
     const remainingPierce = ball.piercePoints;
     const remainingSapper = ball.sapperUses < gameState.perks.sapper;
     const willMiss =
       isOptionOn("red_miss") && ball.vy > 0 && !ball.hitSinceBounce;
     const extraCombo = gameState.combo - 1;
+
     if (
       willMiss ||
       (extraCombo && Math.random() > 0.1 / (1 + extraCombo)) ||
@@ -1809,9 +1861,12 @@ function makeCoin(
   let weight = 0.8 + Math.random() * 0.2 + Math.min(2, points * 0.01);
   weight *= 5 / (5 + gameState.perks.etherealcoins);
 
-  if (gameState.perks.trickledown) {
-    y = -20;
-  }
+  if (gameState.perks.trickledown) y = -20;
+  if (
+    gameState.perks.rainbow &&
+    Math.random() > 1 / (1 + gameState.perks.rainbow)
+  )
+    color = rainbowColor();
 
   append(gameState.coins, (p: Partial<Coin>) => {
     p.x = x;
