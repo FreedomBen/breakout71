@@ -33,6 +33,7 @@ Some upgrades currently are not really useful
 
 ## Done
 
+- don't tell user to get -100 points to unlock level
 - display colored coins when there's hypnosis or rainbow enabled
 
 ## 29071903

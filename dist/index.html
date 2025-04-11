@@ -5667,7 +5667,7 @@ function getNearestUnlockHTML(gameState) {
         };
     });
     if (!firstUnlockable) return "";
-    let missingPoints = firstUnlockable.minScore - gameState.score;
+    let missingPoints = Math.max(0, firstUnlockable.minScore - gameState.score);
     let missingUpgrades = firstUnlockable.missing.map((u)=>u.name).join(", ");
     const title = missingUpgrades && (0, _i18N.t)("score_panel.get_upgrades_to_unlock", {
         missingUpgrades,
@@ -5678,7 +5678,7 @@ function getNearestUnlockHTML(gameState) {
         level: firstUnlockable.l.name
     });
     return `
-<p>${(0, _i18N.t)("score_panel.close_to_unlock")}</p>
+    <p>${(0, _i18N.t)("score_panel.close_to_unlock")}</p>
     <div class="upgrade used">
           ${(0, _loadGameData.icons)[firstUnlockable.l.name]}
           <p>

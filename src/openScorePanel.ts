@@ -69,7 +69,7 @@ export function getNearestUnlockHTML(gameState: GameState) {
   });
 
   if (!firstUnlockable) return "";
-  let missingPoints = firstUnlockable.minScore - gameState.score;
+  let missingPoints = Math.max(0,firstUnlockable.minScore - gameState.score);
   let missingUpgrades = firstUnlockable.missing.map((u) => u.name).join(", ");
 
   const title =
@@ -85,7 +85,7 @@ export function getNearestUnlockHTML(gameState: GameState) {
     });
 
   return `
-<p>${t("score_panel.close_to_unlock")}</p>
+    <p>${t("score_panel.close_to_unlock")}</p>
     <div class="upgrade used">
           ${icons[firstUnlockable.l.name]}
           <p>
