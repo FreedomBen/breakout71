@@ -33,11 +33,17 @@ Some upgrades currently are not really useful
 
 ## Done
 
+- display colored coins when there's hypnosis or rainbow enabled
+
+## 29071903
+
 - new perk : hypnosis
 - new perk : rainbow
 - new perk : bricks attract coins
-- super hot level rework
-- zen level added bombs
+- Extra choice: wrong text for french "2 more choices"
+- metamorphosis : when coins are spent, display them hollowed out
+- super hot : starting level rework
+- zen : added bombs to starting level
 
 ## 29071527
 

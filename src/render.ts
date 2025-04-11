@@ -1108,7 +1108,12 @@ export function getDashOffset(gameState: GameState) {
 }
 
 function getCoinRenderColor(gameState: GameState, coin: Coin) {
-  if (gameState.perks.metamorphosis || isOptionOn("colorful_coins"))
+  if (
+    gameState.perks.metamorphosis ||
+    isOptionOn("colorful_coins") ||
+    gameState.perks.hypnosis ||
+    gameState.perks.rainbow
+  )
     return coin.color;
   return "#ffd300";
 }
