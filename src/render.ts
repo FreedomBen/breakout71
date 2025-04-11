@@ -329,9 +329,9 @@ export function render(gameState: GameState) {
     ctx.fillStyle = gameState.puckColor;
     for (let i = 0; i < gameState.perks.extra_life; i++) {
       ctx.fillRect(
-          gameState.offsetXRoundedDown,
+        gameState.offsetXRoundedDown,
         gameState.gameZoneHeight - gameState.puckHeight / 2 + 2 * i,
-         gameState.gameZoneWidthRoundedUp,
+        gameState.gameZoneWidthRoundedUp,
         1,
       );
     }
@@ -444,18 +444,14 @@ export function render(gameState: GameState) {
   //  Borders
 
   ctx.globalCompositeOperation = "source-over";
-  ctx.globalAlpha =   1;
+  ctx.globalAlpha = 1;
 
   let redLeftSide =
-    hasCombo &&
-    (gameState.perks.left_is_lava || gameState.perks.trampoline);
+    hasCombo && (gameState.perks.left_is_lava || gameState.perks.trampoline);
   let redRightSide =
-    hasCombo &&
-    (gameState.perks.right_is_lava || gameState.perks.trampoline);
+    hasCombo && (gameState.perks.right_is_lava || gameState.perks.trampoline);
   let redTop =
-    hasCombo &&
-    (gameState.perks.top_is_lava || gameState.perks.trampoline);
-
+    hasCombo && (gameState.perks.top_is_lava || gameState.perks.trampoline);
 
   if (gameState.offsetXRoundedDown) {
     // draw outside of gaming area to avoid capturing borders in recordings
@@ -466,7 +462,8 @@ export function render(gameState: GameState) {
       gameState.offsetXRoundedDown - 1,
       0,
       gameState.offsetXRoundedDown - 1,
-      height,  1,
+      height,
+      1,
     );
 
     drawStraightLine(
@@ -477,7 +474,7 @@ export function render(gameState: GameState) {
       0,
       width - gameState.offsetXRoundedDown + 1,
       height,
-        1,
+      1,
     );
   } else {
     drawStraightLine(
@@ -507,9 +504,9 @@ export function render(gameState: GameState) {
       ctx,
       gameState,
       "#FF0000",
-        gameState.offsetXRoundedDown,
+      gameState.offsetXRoundedDown,
       1,
-        width - gameState.offsetXRoundedDown,
+      width - gameState.offsetXRoundedDown,
       1,
       1,
     );

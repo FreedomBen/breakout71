@@ -69,7 +69,7 @@ export function getNearestUnlockHTML(gameState: GameState) {
   });
 
   if (!firstUnlockable) return "";
-  let missingPoints = Math.max(0,firstUnlockable.minScore - gameState.score);
+  let missingPoints = Math.max(0, firstUnlockable.minScore - gameState.score);
   let missingUpgrades = firstUnlockable.missing.map((u) => u.name).join(", ");
 
   const title =

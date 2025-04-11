@@ -16,7 +16,7 @@ import {
   sumOfValues,
 } from "./game_utils";
 import { getHistory } from "./gameOver";
-import {noCreative} from "./upgrades";
+import { noCreative } from "./upgrades";
 
 export function creativeMode(gameState: GameState) {
   return {

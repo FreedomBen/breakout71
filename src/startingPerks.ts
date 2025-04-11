@@ -4,7 +4,7 @@ import { t } from "./i18n/i18n";
 import { icons, upgrades } from "./loadGameData";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { isOptionOn } from "./options";
-import {notStartingPerk} from "./upgrades";
+import { notStartingPerk } from "./upgrades";
 
 export function startingPerkMenuButton() {
   return {
@@ -20,15 +20,14 @@ export function startingPerkMenuButton() {
 
 export function isBlackListedForStart(u: Upgrade) {
   return !!(
-      notStartingPerk.includes(u.id) ||
+    notStartingPerk.includes(u.id) ||
     u.requires ||
     u.threshold > getTotalScore()
   );
 }
 export function isStartingPerk(u: Upgrade): boolean {
   return (
-    !isBlackListedForStart(u) &&
-    getSettingValue("start_with_" + u.id, u.gift)
+    !isBlackListedForStart(u) && getSettingValue("start_with_" + u.id, u.gift)
   );
 }
 
