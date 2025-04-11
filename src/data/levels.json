@@ -868,7 +868,7 @@
   {
     "name": "icon:unbounded",
     "size": 9,
-    "bricks": "rrWWWWWrrrr_____rrrrtttttrrrrttt__rrrr____yrrrr_____rrrr___y_yWrr_____rrrrWWW__ry",
+    "bricks": "WWWWWWWWWW_r_r_r_WWrtttttrWW_ttttt_WWr_____rWW_______WWr___W_rWW_______WWrWWW__rW",
     "svg": null,
     "color": ""
   },
@@ -1402,6 +1402,13 @@
     "name": "icon:hypnosis",
     "size": 8,
     "bricks": "WrrrrrrrWrWWWWWrWrWrrrWrWrWrWrWrWrWWWrWrWrrrrrWrWWWWWWWrrrrrrrrr",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:bricks_attract_ball",
+    "size": 8,
+    "bricks": "llW_____ll_v________p________bll____t_ll___G____lly_____ll_r____",
     "svg": null,
     "color": ""
   }

@@ -134,39 +134,40 @@ export function pause(playerAskedForPause: boolean) {
   }
 }
 
-export const fitSize = () => {
+export const fitSize = (gameState:GameState) => {
+  if(!gameState) throw new Error("Missign game state")
   const past_off = gameState.offsetXRoundedDown,
     past_width = gameState.gameZoneWidthRoundedUp,
     past_heigh = gameState.gameZoneHeight;
 
-  const { width, height } = gameCanvas.getBoundingClientRect();
+  const width= window.innerWidth, height=window.innerHeight
+
+  console.log('fitSize',width, height)
   gameState.canvasWidth = width;
   gameState.canvasHeight = height;
   gameCanvas.width = width;
   gameCanvas.height = height;
-  // ctx.fillStyle = currentLevelInfo(gameState)?.color || "black";
-  // ctx.globalAlpha = 1;
-  // ctx.fillRect(0, 0, width, height);
   backgroundCanvas.width = width;
   backgroundCanvas.height = height;
-
   haloCanvas.width = width / haloScale;
   haloCanvas.height = height / haloScale;
 
   gameState.gameZoneHeight = isOptionOn("mobile-mode")
-    ? (height * 80) / 100
-    : height;
+    ? Math.floor(height * .80)    : height;
+
   const baseWidth = Math.round(
-    Math.min(gameState.canvasWidth, gameState.gameZoneHeight * 0.73),
+    Math.min(gameState.canvasWidth , gameState.gameZoneHeight * (0.73 )* (gameState.gridSize+gameState.perks.unbounded*2 ) / gameState.gridSize),
   );
-  gameState.brickWidth = Math.floor(baseWidth / gameState.gridSize / 2) * 2;
+
+  gameState.brickWidth = Math.floor(baseWidth / (gameState.gridSize+gameState.perks.unbounded*2) / 2) * 2;
 
   gameState.gameZoneWidth = gameState.brickWidth * gameState.gridSize;
   gameState.offsetX = Math.floor(
     (gameState.canvasWidth - gameState.gameZoneWidth) / 2,
   );
-  gameState.offsetXRoundedDown = gameState.offsetX;
-  if (gameState.offsetX < gameState.ballSize) gameState.offsetXRoundedDown = 0;
+  // Space between left side and border
+  gameState.offsetXRoundedDown = gameState.offsetX - gameState.perks.unbounded*gameState.brickWidth;
+  if (gameState.offsetX < gameState.ballSize+gameState.perks.unbounded*2*gameState.brickWidth) gameState.offsetXRoundedDown = 0;
   gameState.gameZoneWidthRoundedUp = width - 2 * gameState.offsetXRoundedDown;
   backgroundCanvas.title = "resized";
   // Ensure puck stays within bounds
@@ -200,14 +201,14 @@ export const fitSize = () => {
     `${window.innerHeight * 0.01}px`,
   );
 };
-window.addEventListener("resize", fitSize);
-window.addEventListener("fullscreenchange", fitSize);
+window.addEventListener("resize", ()=>fitSize(gameState));
+window.addEventListener("fullscreenchange", ()=>fitSize(gameState));
 
 setInterval(() => {
   // Sometimes, the page changes size without triggering the event (when switching to fullscreen, closing debug panel...)
   const { width, height } = gameCanvas.getBoundingClientRect();
   if (width !== gameState.canvasWidth || height !== gameState.canvasHeight)
-    fitSize();
+    fitSize(gameState);
 }, 1000);
 
 export async function openUpgradesPicker(gameState: GameState) {
@@ -416,8 +417,8 @@ export function tick() {
   normalizeGameState(gameState);
 
   if (gameState.running) {
-    gameState.levelTime += timeDeltaMs;
-    gameState.runStatistics.runTime += timeDeltaMs;
+    gameState.levelTime += timeDeltaMs*frames;
+    gameState.runStatistics.runTime += timeDeltaMs*frames;
     gameStateTick(gameState, frames);
   }
   if (gameState.running || gameState.needsRender) {
@@ -599,7 +600,7 @@ async function openSettingsMenu() {
         help: options[key].help,
         value: () => {
           toggleOption(key);
-          fitSize();
+          fitSize(gameState);
           applyFullScreenChoice();
           openSettingsMenu();
         },
@@ -978,15 +979,24 @@ document.addEventListener("keyup", async (e) => {
 export const gameState = newGameState({});
 
 export function restart(params: RunParams) {
-  // fitSize();
   Object.assign(gameState, newGameState(params));
   // Recompute brick size according to level
-  fitSize();
+  fitSize(gameState);
   pauseRecording();
   setLevel(gameState, 0);
 }
 
-restart({});
+restart(window.location.search.includes('stress')?{
+ 
+  perks:{
+    bricks_attract_ball:2,
+    superhot:1,
+    bricks_attract_coins:3,
+    hot_start:3,
+    pierce:3,
+    rainbow:3
+  }
+}:{});
 
 tick();
 setupTooltips();

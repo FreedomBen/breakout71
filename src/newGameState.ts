@@ -138,7 +138,7 @@ export function newGameState(params: RunParams): GameState {
     rerolls: 0,
     creative:
       sumOfValues(params.perks) > 1 ||
-      (params.level && params.level !== "icon:" + randomGift),
+      (params.level && !params.level.startsWith("icon:")),
   };
   resetBalls(gameState);
 

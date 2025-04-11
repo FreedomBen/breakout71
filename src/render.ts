@@ -329,11 +329,9 @@ export function render(gameState: GameState) {
     ctx.fillStyle = gameState.puckColor;
     for (let i = 0; i < gameState.perks.extra_life; i++) {
       ctx.fillRect(
-        gameState.perks.unbounded ? 0 : gameState.offsetXRoundedDown,
+          gameState.offsetXRoundedDown,
         gameState.gameZoneHeight - gameState.puckHeight / 2 + 2 * i,
-        gameState.perks.unbounded
-          ? gameState.canvasWidth
-          : gameState.gameZoneWidthRoundedUp,
+         gameState.gameZoneWidthRoundedUp,
         1,
       );
     }
@@ -446,20 +444,18 @@ export function render(gameState: GameState) {
   //  Borders
 
   ctx.globalCompositeOperation = "source-over";
-  ctx.globalAlpha = gameState.perks.unbounded ? 0.1 : 1;
+  ctx.globalAlpha =   1;
 
   let redLeftSide =
     hasCombo &&
-    !gameState.perks.unbounded &&
     (gameState.perks.left_is_lava || gameState.perks.trampoline);
   let redRightSide =
     hasCombo &&
-    !gameState.perks.unbounded &&
     (gameState.perks.right_is_lava || gameState.perks.trampoline);
   let redTop =
     hasCombo &&
-    gameState.perks.unbounded <= 2 &&
     (gameState.perks.top_is_lava || gameState.perks.trampoline);
+
 
   if (gameState.offsetXRoundedDown) {
     // draw outside of gaming area to avoid capturing borders in recordings
@@ -467,22 +463,21 @@ export function render(gameState: GameState) {
       ctx,
       gameState,
       (redLeftSide && "#FF0000") || "#FFFFFF",
-      gameState.offsetX - 1,
+      gameState.offsetXRoundedDown - 1,
       0,
-      gameState.offsetX - 1,
-      height,
-      gameState.perks.unbounded ? 0.1 : 1,
+      gameState.offsetXRoundedDown - 1,
+      height,  1,
     );
 
     drawStraightLine(
       ctx,
       gameState,
       (redRightSide && "#FF0000") || "#FFFFFF",
-      width - gameState.offsetX + 1,
+      width - gameState.offsetXRoundedDown + 1,
       0,
-      width - gameState.offsetX + 1,
+      width - gameState.offsetXRoundedDown + 1,
       height,
-      gameState.perks.unbounded ? 0.1 : 1,
+        1,
     );
   } else {
     drawStraightLine(
@@ -512,9 +507,9 @@ export function render(gameState: GameState) {
       ctx,
       gameState,
       "#FF0000",
-      gameState.perks.unbounded ? 0 : gameState.offsetXRoundedDown,
+        gameState.offsetXRoundedDown,
       1,
-      gameState.perks.unbounded ? width : width - gameState.offsetXRoundedDown,
+        width - gameState.offsetXRoundedDown,
       1,
       1,
     );

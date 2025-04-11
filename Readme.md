@@ -28,11 +28,13 @@ Some upgrades currently are not really useful
 # Changelog
 ## To do
 
-- bricks attract balls
-- rework unbounded to just add padding around bricks
 
 ## Done
 
+- superhot: fixed particles durations and level duration
+- bricks aattract coins : less powerfull 
+- bricks attract balls
+- unbounded nerf : just adds padding around bricks, not combo add
 - don't tell user to get -100 points to unlock level
 - display colored coins when there's hypnosis or rainbow enabled
 
