@@ -26,7 +26,7 @@ export type Palette = { [k: string]: string };
 
 export type Upgrade = {
   threshold: number;
-  giftable: boolean;
+  gift: boolean;
   id: PerkId;
   name: string;
   icon: string;

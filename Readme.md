@@ -28,8 +28,8 @@ Some upgrades currently are not really useful
 # Changelog
 ## To do
 
-- rework unbounded to just add padding around bricks
 - bricks attract balls
+- rework unbounded to just add padding around bricks
 
 ## Done
 

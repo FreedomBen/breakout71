@@ -16,15 +16,15 @@ import {
 export function helpMenuEntry() {
   return {
     icon: icons["icon:help"],
-    text: t("main_menu.help_title"),
-    help: t("main_menu.help_help"),
+    text: t("help.title"),
+    help: t("help.help"),
     async value() {
       await asyncAlert({
-        title: t("main_menu.help_title"),
+        title: t("help.title"),
         allowClose: true,
         content: [
           miniMarkDown(
-            t("main_menu.help_content", {
+            t("help.content", {
               catchRateBest,
               catchRateGood,
               levelTimeBest,
@@ -35,7 +35,7 @@ export function helpMenuEntry() {
               wallBouncedGood,
             }),
           ),
-          miniMarkDown(t("main_menu.help_upgrades")),
+          miniMarkDown(t("help.upgrades")),
           ...upgrades.map(
             (u) => `
 <div class="upgrade used">
@@ -49,7 +49,7 @@ export function helpMenuEntry() {
           ${miniMarkDown(u.fullHelp)}
 `,
           ),
-          "<h2>" + t("main_menu.credit_levels") + "</h2>",
+          "<h2>" + t("help.levels") + "</h2>",
           ...allLevels
             .filter((l) => l.credit?.trim())
             .map(

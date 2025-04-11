@@ -568,13 +568,13 @@ async function openSettingsMenu() {
 
   actions.push({
     icon: icons[languages.find((l) => l.value === getCurrentLang())?.levelName],
-    text: t("main_menu.language"),
-    help: t("main_menu.language_help"),
+    text: t("settings.language"),
+    help: t("settings.language_help"),
     async value() {
       const pick = await asyncAlert({
-        title: t("main_menu.language"),
+        title: t("settings.language"),
         content: [
-          t("main_menu.language_help"),
+          t("settings.language_help"),
           ...languages.map((l) => ({ ...l, icon: icons[l.levelName] })),
         ],
         allowClose: true,
@@ -607,8 +607,8 @@ async function openSettingsMenu() {
   }
   actions.push({
     icon: icons["icon:download"],
-    text: t("main_menu.download_save_file"),
-    help: t("main_menu.download_save_file_help"),
+    text: t("settings.download_save_file"),
+    help: t("settings.download_save_file_help"),
     async value() {
       const signedPayload = generateSaveFileContent();
 
@@ -647,8 +647,8 @@ async function openSettingsMenu() {
 
   actions.push({
     icon: icons["icon:upload"],
-    text: t("main_menu.load_save_file"),
-    help: t("main_menu.load_save_file_help"),
+    text: t("settings.load_save_file"),
+    help: t("settings.load_save_file_help"),
     async value() {
       if (!document.getElementById("save_file_picker")) {
         let input: HTMLInputElement = document.createElement("input");
@@ -705,20 +705,20 @@ async function openSettingsMenu() {
                 localStorage.setItem(key, localStorageContent[key]);
               }
               await asyncAlert({
-                title: t("main_menu.save_file_loaded"),
+                title: t("settings.save_file_loaded"),
                 content: [
-                  t("main_menu.save_file_loaded_help"),
-                  { text: t("main_menu.save_file_loaded_ok") },
+                  t("settings.save_file_loaded_help"),
+                  { text: t("settings.save_file_loaded_ok") },
                 ],
               });
               window.location.reload();
             }
           } catch (e: any) {
             await asyncAlert({
-              title: t("main_menu.save_file_error"),
+              title: t("settings.save_file_error"),
               content: [
                 e.message,
-                { text: t("main_menu.save_file_loaded_ok") },
+                { text: t("settings.save_file_loaded_ok") },
               ],
             });
           }
@@ -732,8 +732,8 @@ async function openSettingsMenu() {
 
   actions.push({
     icon: icons["icon:coins"],
-    text: t("main_menu.max_coins", { max: getCurrentMaxCoins() }),
-    help: t("main_menu.max_coins_help"),
+    text: t("settings.max_coins", { max: getCurrentMaxCoins() }),
+    help: t("settings.max_coins_help"),
     async value() {
       cycleMaxCoins();
       await openSettingsMenu();
@@ -741,8 +741,8 @@ async function openSettingsMenu() {
   });
   actions.push({
     icon: icons["icon:particles"],
-    text: t("main_menu.max_particles", { max: getCurrentMaxParticles() }),
-    help: t("main_menu.max_particles_help"),
+    text: t("settings.max_particles", { max: getCurrentMaxParticles() }),
+    help: t("settings.max_particles_help"),
     async value() {
       cycleMaxParticles();
       await openSettingsMenu();
@@ -751,20 +751,20 @@ async function openSettingsMenu() {
 
   actions.push({
     icon: icons["icon:reset"],
-    text: t("main_menu.reset"),
-    help: t("main_menu.reset_help"),
+    text: t("settings.reset"),
+    help: t("settings.reset_help"),
     async value() {
       if (
         await asyncAlert({
-          title: t("main_menu.reset"),
+          title: t("settings.reset"),
           content: [
-            t("main_menu.reset_instruction"),
+            t("settings.reset_instruction"),
             {
-              text: t("main_menu.reset_confirm"),
+              text: t("settings.reset_confirm"),
               value: true,
             },
             {
-              text: t("main_menu.reset_cancel"),
+              text: t("settings.reset_cancel"),
               value: false,
             },
           ],

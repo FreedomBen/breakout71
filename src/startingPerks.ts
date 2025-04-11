@@ -4,13 +4,14 @@ import { t } from "./i18n/i18n";
 import { icons, upgrades } from "./loadGameData";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { isOptionOn } from "./options";
+import {notStartingPerk} from "./upgrades";
 
 export function startingPerkMenuButton() {
   return {
     disabled: isOptionOn("easy"),
     icon: icons["icon:starting_perks"],
-    text: t("main_menu.starting_perks"),
-    help: t("main_menu.starting_perks_help"),
+    text: t("starting_perks.title"),
+    help: t("starting_perks.help"),
     async value() {
       await openStartingPerksEditor();
     },
@@ -19,15 +20,15 @@ export function startingPerkMenuButton() {
 
 export function isBlackListedForStart(u: Upgrade) {
   return !!(
+      notStartingPerk.includes(u.id) ||
     u.requires ||
-    ["instant_upgrade"].includes(u.id) ||
     u.threshold > getTotalScore()
   );
 }
 export function isStartingPerk(u: Upgrade): boolean {
   return (
     !isBlackListedForStart(u) &&
-    getSettingValue("start_with_" + u.id, u.giftable)
+    getSettingValue("start_with_" + u.id, u.gift)
   );
 }
 
@@ -46,14 +47,14 @@ export async function openStartingPerksEditor() {
   const checkedList = buttons.filter((b) => b.checked);
 
   const perks: Upgrade[] | null | void = await asyncAlert({
-    title: t("main_menu.starting_perks"),
+    title: t("starting_perks.title"),
     className: "actionsAsGrid",
     content: [
       checkedList.length
-        ? t("main_menu.starting_perks_checked")
-        : t("main_menu.starting_perks_full_random"),
+        ? t("starting_perks.checked")
+        : t("starting_perks.random"),
       ...checkedList,
-      t("main_menu.starting_perks_unchecked"),
+      t("starting_perks.unchecked"),
       ...buttons.filter((b) => !b.checked),
     ],
   });

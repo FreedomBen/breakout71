@@ -1,12 +1,30 @@
 import { t } from "./i18n/i18n";
 
 import { comboKeepingRate } from "./pure_functions";
+import {PerkId} from "./types";
+
+
+  // Those perks are excluded from creative mode
+  export const noCreative: PerkId[] = [
+    "extra_levels",
+    "shunt",
+    "one_more_choice",
+    "instant_upgrade",
+  ];
+
+
+  // Those perks are excluded from the starting perks list
+  export const notStartingPerk: PerkId[] = [
+    "instant_upgrade",
+  ];
+
 
 export const rawUpgrades = [
   {
     requires: "",
     threshold: 0,
-    giftable: false,
+    gift: false,
+
     id: "extra_life",
     max: 7,
     name: t("upgrades.extra_life.name"),
@@ -21,7 +39,8 @@ export const rawUpgrades = [
     requires: "",
     threshold: 0,
     id: "base_combo",
-    giftable: true,
+    gift: true,
+
     max: 7,
     name: t("upgrades.base_combo.name"),
     help: (lvl: number) =>
@@ -31,7 +50,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 0,
-    giftable: false,
+    gift: false,
+
     id: "slow_down",
     max: 2,
     name: t("upgrades.slow_down.name"),
@@ -41,7 +61,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 0,
-    giftable: false,
+    gift: false,
+
     id: "bigger_puck",
     max: 2,
     name: t("upgrades.bigger_puck.name"),
@@ -51,7 +72,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 0,
-    giftable: false,
+    gift: false,
+
     id: "viscosity",
     max: 3,
 
@@ -62,7 +84,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 50,
-    giftable: false,
+    gift: false,
+
     id: "skip_last",
     max: 7,
     name: t("upgrades.skip_last.name"),
@@ -76,7 +99,8 @@ export const rawUpgrades = [
     requires: "",
     threshold: 100,
     id: "streak_shots",
-    giftable: true,
+    gift: true,
+
     max: 1,
     name: t("upgrades.streak_shots.name"),
     help: (lvl: number) => t("upgrades.streak_shots.tooltip", { lvl }),
@@ -88,7 +112,8 @@ export const rawUpgrades = [
 
     threshold: 200,
     id: "left_is_lava",
-    giftable: true,
+    gift: true,
+
     max: 1,
 
     name: t("upgrades.left_is_lava.name"),
@@ -100,7 +125,8 @@ export const rawUpgrades = [
 
     threshold: 300,
     id: "right_is_lava",
-    giftable: true,
+    gift: true,
+
     max: 1,
     name: t("upgrades.right_is_lava.name"),
     help: (lvl: number) => t("upgrades.right_is_lava.tooltip", { lvl }),
@@ -111,7 +137,8 @@ export const rawUpgrades = [
 
     threshold: 400,
     id: "top_is_lava",
-    giftable: true,
+    gift: true,
+
     max: 1,
     name: t("upgrades.top_is_lava.name"),
     help: (lvl: number) => t("upgrades.top_is_lava.tooltip", { lvl }),
@@ -122,7 +149,8 @@ export const rawUpgrades = [
 
     threshold: 500,
     id: "telekinesis",
-    giftable: true,
+    gift: true,
+
     max: 1,
     name: t("upgrades.telekinesis.name"),
     help: (lvl: number) =>
@@ -134,7 +162,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 700,
-    giftable: false,
+    gift: false,
+
     id: "coin_magnet",
     max: 3,
     name: t("upgrades.coin_magnet.name"),
@@ -149,7 +178,8 @@ export const rawUpgrades = [
 
     threshold: 800,
     id: "multiball",
-    giftable: true,
+    gift: true,
+
     max: 6,
     name: t("upgrades.multiball.name"),
     help: (lvl: number) => t("upgrades.multiball.tooltip", { count: lvl + 1 }),
@@ -159,7 +189,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 1000,
-    giftable: false,
+    gift: false,
+
     id: "smaller_puck",
     max: 2,
     name: t("upgrades.smaller_puck.name"),
@@ -173,7 +204,8 @@ export const rawUpgrades = [
     requires: "",
     threshold: 1500,
     id: "pierce",
-    giftable: false,
+    gift: false,
+
     max: 3,
     name: t("upgrades.pierce.name"),
     help: (lvl: number) => t("upgrades.pierce.tooltip", { count: 3 * lvl }),
@@ -184,7 +216,8 @@ export const rawUpgrades = [
 
     threshold: 2000,
     id: "picky_eater",
-    giftable: true,
+    gift: true,
+
     max: 1,
     name: t("upgrades.picky_eater.name"),
     help: (lvl: number) => t("upgrades.picky_eater.tooltip", { lvl }),
@@ -194,7 +227,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 2500,
-    giftable: false,
+    gift: false,
+
     id: "metamorphosis",
     max: 1,
     name: t("upgrades.metamorphosis.name"),
@@ -206,7 +240,8 @@ export const rawUpgrades = [
 
     threshold: 3000,
     id: "compound_interest",
-    giftable: true,
+    gift: true,
+
     max: 1,
     name: t("upgrades.compound_interest.name"),
     help: (lvl: number) => t("upgrades.compound_interest.tooltip", { lvl }),
@@ -216,7 +251,8 @@ export const rawUpgrades = [
     requires: "",
     threshold: 4000,
     id: "hot_start",
-    giftable: true,
+    gift: true,
+
     max: 3,
     name: t("upgrades.hot_start.name"),
     help: (lvl: number) =>
@@ -231,7 +267,8 @@ export const rawUpgrades = [
 
     threshold: 6000,
     id: "sapper",
-    giftable: false,
+    gift: false,
+
     max: 7,
     name: t("upgrades.sapper.name"),
     help: (lvl: number) =>
@@ -245,7 +282,8 @@ export const rawUpgrades = [
 
     threshold: 9000,
     id: "bigger_explosions",
-    giftable: false,
+    gift: false,
+
     max: 1,
     name: t("upgrades.bigger_explosions.name"),
     help: (lvl: number) => t("upgrades.bigger_explosions.tooltip"),
@@ -255,7 +293,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 13000,
-    giftable: false,
+    gift: false,
+
     adventure: false,
     id: "extra_levels",
     max: 3,
@@ -268,7 +307,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 15000,
-    giftable: false,
+    gift: false,
+
     id: "pierce_color",
     max: 4,
     name: t("upgrades.pierce_color.name"),
@@ -278,7 +318,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 18000,
-    giftable: false,
+    gift: false,
+
     id: "soft_reset",
     max: 3,
     name: t("upgrades.soft_reset.name"),
@@ -291,7 +332,8 @@ export const rawUpgrades = [
   {
     requires: "multiball",
     threshold: 21000,
-    giftable: false,
+    gift: false,
+
     id: "ball_repulse_ball",
     max: 3,
     name: t("upgrades.ball_repulse_ball.name"),
@@ -304,7 +346,8 @@ export const rawUpgrades = [
   {
     requires: "multiball",
     threshold: 25000,
-    giftable: false,
+    gift: false,
+
     id: "ball_attract_ball",
     max: 3,
     name: t("upgrades.ball_attract_ball.name"),
@@ -318,7 +361,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 30000,
-    giftable: false,
+    gift: false,
+
     id: "puck_repulse_ball",
     max: 2,
     name: t("upgrades.puck_repulse_ball.name"),
@@ -332,7 +376,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 35000,
-    giftable: false,
+    gift: false,
+
     id: "wind",
     max: 3,
     name: t("upgrades.wind.name"),
@@ -344,7 +389,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 40000,
-    giftable: false,
+    gift: false,
+
     id: "sturdy_bricks",
     max: 4,
     name: t("upgrades.sturdy_bricks.name"),
@@ -359,7 +405,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 45000,
-    giftable: false,
+    gift: false,
+
     id: "respawn",
     max: 4,
     name: t("upgrades.respawn.name"),
@@ -373,7 +420,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 50000,
-    giftable: false,
+    gift: false,
+
     id: "one_more_choice",
     max: 3,
     name: t("upgrades.one_more_choice.name"),
@@ -384,7 +432,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 55000,
-    giftable: false,
+    gift: false,
+
     id: "instant_upgrade",
     max: 2,
     adventure: false,
@@ -395,7 +444,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 60000,
-    giftable: false,
+    gift: false,
+
     id: "concave_puck",
     max: 1,
     name: t("upgrades.concave_puck.name"),
@@ -406,7 +456,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 65000,
-    giftable: false,
+    gift: false,
+
     id: "helium",
     max: 1,
     name: t("upgrades.helium.name"),
@@ -417,7 +468,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 70000,
-    giftable: true,
+    gift: true,
+
     id: "asceticism",
     max: 1,
     name: t("upgrades.asceticism.name"),
@@ -428,7 +480,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 75000,
-    giftable: false,
+    gift: false,
+
     id: "unbounded",
     max: 1,
     name: t("upgrades.unbounded.name"),
@@ -442,7 +495,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 80000,
-    giftable: false,
+    gift: false,
+
     id: "shunt",
     max: 3,
     name: t("upgrades.shunt.name"),
@@ -456,7 +510,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 85000,
-    giftable: false,
+    gift: false,
+
     id: "yoyo",
     max: 1,
     name: t("upgrades.yoyo.name"),
@@ -467,7 +522,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 90000,
-    giftable: true,
+    gift: true,
+
     id: "nbricks",
     max: 3,
     name: t("upgrades.nbricks.name"),
@@ -478,7 +534,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 95000,
-    giftable: false,
+    gift: false,
+
     id: "etherealcoins",
     max: 1,
     name: t("upgrades.etherealcoins.name"),
@@ -488,7 +545,8 @@ export const rawUpgrades = [
   {
     requires: "multiball",
     threshold: 100000,
-    giftable: false,
+    gift: false,
+
     id: "shocks",
     max: 1,
     name: t("upgrades.shocks.name"),
@@ -498,7 +556,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 105000,
-    giftable: true,
+    gift: true,
+
     id: "zen",
     max: 1,
     name: t("upgrades.zen.name"),
@@ -508,7 +567,8 @@ export const rawUpgrades = [
   {
     requires: "extra_life",
     threshold: 110000,
-    giftable: false,
+    gift: false,
+
     id: "sacrifice",
     max: 1,
     name: t("upgrades.sacrifice.name"),
@@ -522,7 +582,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 115000,
-    giftable: true,
+    gift: true,
+
     id: "trampoline",
     max: 1,
     name: t("upgrades.trampoline.name"),
@@ -533,7 +594,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 120000,
-    giftable: false,
+    gift: false,
+
     id: "ghost_coins",
     max: 3,
     name: t("upgrades.ghost_coins.name"),
@@ -543,7 +605,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 125000,
-    giftable: false,
+    gift: false,
+
     id: "forgiving",
     max: 1,
     name: t("upgrades.forgiving.name"),
@@ -554,7 +617,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 130000,
-    giftable: false,
+    gift: false,
+
     id: "ball_attracts_coins",
     max: 3,
     name: t("upgrades.ball_attracts_coins.name"),
@@ -565,7 +629,8 @@ export const rawUpgrades = [
     requires: "",
     threshold: 135000,
     // a bit too hard when starting up
-    giftable: false,
+    gift: false,
+
     id: "reach",
     max: 1,
     name: t("upgrades.reach.name"),
@@ -576,7 +641,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 140000,
-    giftable: true,
+    gift: true,
+
     id: "passive_income",
     max: 4,
     name: t("upgrades.passive_income.name"),
@@ -587,7 +653,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 145000,
-    giftable: false,
+    gift: false,
+
     id: "clairvoyant",
     max: 1,
     name: t("upgrades.clairvoyant.name"),
@@ -598,7 +665,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 150000,
-    giftable: true,
+    gift: true,
+
     id: "side_kick",
     max: 3,
     name: t("upgrades.side_kick.name"),
@@ -610,7 +678,8 @@ export const rawUpgrades = [
     requires: "",
 
     threshold: 150000,
-    giftable: true,
+    gift: true,
+
     id: "side_flip",
     max: 3,
     name: t("upgrades.side_flip.name"),
@@ -621,7 +690,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 155000,
-    giftable: false,
+    gift: false,
+
     id: "implosions",
     max: 1,
     name: t("upgrades.implosions.name"),
@@ -631,7 +701,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 160000,
-    giftable: false,
+    gift: false,
+
     id: "corner_shot",
     max: 1,
     name: t("upgrades.corner_shot.name"),
@@ -641,7 +712,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 165000,
-    giftable: false,
+    gift: false,
+
     id: "addiction",
     max: 7,
     name: t("upgrades.addiction.name"),
@@ -652,7 +724,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 170000,
-    giftable: false,
+    gift: false,
+
     id: "fountain_toss",
     max: 7,
     name: t("upgrades.fountain_toss.name"),
@@ -663,7 +736,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 175000,
-    giftable: false,
+    gift: false,
+
     id: "limitless",
     max: 1,
     name: t("upgrades.limitless.name"),
@@ -673,7 +747,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 180000,
-    giftable: false,
+    gift: false,
+
     id: "minefield",
     max: 3,
     name: t("upgrades.minefield.name"),
@@ -683,7 +758,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 185000,
-    giftable: false,
+    gift: false,
+
     id: "trickledown",
     max: 1,
     name: t("upgrades.trickledown.name"),
@@ -693,7 +769,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 190000,
-    giftable: false,
+    gift: false,
+
     id: "transparency",
     max: 3,
     name: t("upgrades.transparency.name"),
@@ -703,7 +780,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 195000,
-    giftable: false,
+    gift: false,
+
     id: "superhot",
     max: 3,
     name: t("upgrades.superhot.name"),
@@ -713,7 +791,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 200000,
-    giftable: false,
+    gift: false,
+
     id: "bricks_attract_coins",
     max: 3,
     name: t("upgrades.bricks_attract_coins.name"),
@@ -723,7 +802,8 @@ export const rawUpgrades = [
   {
     requires: "",
     threshold: 205000,
-    giftable: false,
+    gift: false,
+
     id: "rainbow",
     max: 7,
     name: t("upgrades.rainbow.name"),
@@ -733,7 +813,8 @@ export const rawUpgrades = [
   {
     requires: "metamorphosis",
     threshold: 210000,
-    giftable: false,
+    gift: false,
+
     id: "hypnosis",
     max: 1,
     name: t("upgrades.hypnosis.name"),

@@ -130,7 +130,7 @@ export function startRecordingGame(gameState: GameState) {
       a.href = video.src;
     }
 
-    a.textContent = t("main_menu.record_download", {
+    a.textContent = t("settings.record_download", {
       size: (blob.size / 1000000).toFixed(2),
     });
     targetDiv.appendChild(a);

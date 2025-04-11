@@ -16,13 +16,13 @@ import {
   sumOfValues,
 } from "./game_utils";
 import { getHistory } from "./gameOver";
+import {noCreative} from "./upgrades";
 
 export function creativeMode(gameState: GameState) {
   return {
     icon: icons["icon:creative"],
     text: t("lab.menu_entry"),
     help:
-      // highScoreForMode("creative") ||
       (getTotalScore() < creativeModeThreshold &&
         t("lab.unlocks_at", { score: creativeModeThreshold })) ||
       t("lab.help"),
@@ -39,13 +39,6 @@ export async function openCreativeModePerksPicker() {
       {},
     ),
     choice: Upgrade | Level | "reset" | void;
-
-  let noCreative: PerkId[] = [
-    "extra_levels",
-    "shunt",
-    "one_more_choice",
-    "instant_upgrade",
-  ];
 
   while (
     (choice = await asyncAlert<Upgrade | Level | "reset">({

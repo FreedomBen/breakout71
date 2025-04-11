@@ -281,7 +281,7 @@ export function getHistograms(gameState: GameState) {
 
     if (runStats) {
       runStats =
-        `<p>${t("gameOver.stats.intro", { count: runsHistory.length - 1 })}</p>` +
+        `<p>${t("gameOver.stats_intro", { count: runsHistory.length - 1 })}</p>` +
         runStats;
     }
   } catch (e) {
