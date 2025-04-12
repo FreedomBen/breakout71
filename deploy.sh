@@ -20,6 +20,14 @@ versionCode=$(($(date +%s) / 60))
 
 bash ./build.sh $versionCode
 
+
+# generate signed apk for itch.io
+./gradlew assembleRelease
+
+# generate signed bundle for play store
+./gradlew bundleRelease
+
+
 # Create a release commit
 git add .
 git commit -m "Build $versionCode"

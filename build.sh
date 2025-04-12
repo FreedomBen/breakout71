@@ -53,10 +53,4 @@ cp public/* build
 # Add only index.html file to the apk, it should be enough
 cp build/index.html ./app/src/main/assets/
 
-# generate signed apk for itch.io
-./gradlew assembleRelease
-
-# generate signed bundle for play store
-./gradlew bundleRelease
-
 

@@ -221,7 +221,10 @@ window.addEventListener("fullscreenchange", () => fitSize(gameState));
 
 setInterval(() => {
   // Sometimes, the page changes size without triggering the event (when switching to fullscreen, closing debug panel...)
-  const { width, height } = gameCanvas.getBoundingClientRect();
+
+  const width = window.innerWidth,
+    height = window.innerHeight;
+
   if (width !== gameState.canvasWidth || height !== gameState.canvasHeight)
     fitSize(gameState);
 }, 1000);
