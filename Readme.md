@@ -11,28 +11,28 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
 
-# Game design issues and potential solutions
+# Current priorities 
 
-When you have already a nice build and still get offered many perks, it gets tiring:
-- limit all build to N perks (maybe could be boosted with a perk)
-- add a "no more upgrade in the run, but double coins" perk 
-- permanent "skip" option on the upgrades, for when you don't want any of them.
-- add a "double last level's coins" perk, then decreasing reward
+The goal of this project is to make software used by many people. The game is already pretty fun. I'm now trying to 
+translate it to Arabic and Russian. Other translation are very welcome, contact me if you'd like to submit one.
 
-Some upgrades currently are not really useful
-- remove them
-- add more upgrades to complement them 
-- update them to be more useful
-- 
+While translations are being written, I'll try to avoid adding features that require new translations. That means only 
+bug fixes and optimisations, maybe adding levels. Once we have a nice stable release available in 4 
+languages, I may add features again. 
+
 
 # Changelog
 ## To do
 
 - game crashes when reaching level 12 (no level info in runLevels)
--  
+- auto-detect device performance at first startup and adjust settings accordingly
+- fix game breaking issue
+- balance existing perks
+- 
 
 ## Done
 
+- added back some extra languages
 - superhot: fixed particles durations and level duration
 - bricks aattract coins : less powerfull 
 - bricks attract balls

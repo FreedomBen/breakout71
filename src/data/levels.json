@@ -1411,5 +1411,12 @@
     "bricks": "llW_____ll_v________p________bll____t_ll___G____lly_____ll_r____",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "Chile",
+    "size": 9,
+    "bricks": "_________tttWWWWWWtWtWWWWWWtttWWWWWWrrrrrrrrrrrrrrrrrrrrrrrrrrr__________________",
+    "svg": null,
+    "color": ""
   }
 ]

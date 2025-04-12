@@ -1,10 +1,10 @@
 import en from "./en.json";
 import fr from "./fr.json";
 import ar from "./ar.json";
+import ru from "./ru.json";
+import es from "./es.json";
 // import de from "./de.json";
-// import es from "./es.json";
 // import ko from "./ko.json";
-// import ru from "./ru.json";
 // import ur from "./ur.json";
 // import uz from "./uz.json";
 // import zh from "./zh.json";
@@ -31,20 +31,20 @@ export const languages = [
 
     levelName: "Lebanon",
   },
-  // {
-  //   text: "Español",
-  //   value: "es",
-  //   strings: es,
-  //
-  //   levelName: "Spain",
-  // },
-  // {
-  //   text: "Русский",
-  //   value: "ru",
-  //   strings: ru,
-  //
-  //   levelName: "Russia",
-  // },
+  {
+    text: "Español",
+    value: "es",
+    strings: es,
+
+    levelName: "Chile",
+  },
+  {
+    text: "Русский",
+    value: "ru",
+    strings: ru,
+
+    levelName: "Russia",
+  },
 
   // {
   //   text: "Deutsch",
