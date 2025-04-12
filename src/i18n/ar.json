@@ -395,7 +395,6 @@
   "upgrades.trickledown.name": "اقتصاد التسرب",
   "upgrades.trickledown.tooltip": "تظهر العملات المعدنية في الجزء العلوي من الشاشة.",
   "upgrades.trickledown.verbose_description": "قد يساعدك هذا على وضع بعض العملات المعدنية جانبًا. ",
-  "upgrades.unbounded.help_no_ceiling": "",
   "upgrades.unbounded.name": "غير محدود",
   "upgrades.unbounded.tooltip": "يضيف مساحة إلى يسار ويمين المستوى، ولكن مجدافك لا يمكنه الذهاب إلى هذا الحد.",
   "upgrades.unbounded.verbose_description": "قد يساعدك ترقية أخرى على توسيع مدى مجدافك.",

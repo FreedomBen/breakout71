@@ -651,7 +651,7 @@ export async function setLevel(gameState: GameState, l: number) {
   }
   gameState.currentLevel = l;
 
-  gameState.level = gameState.runLevels[l];
+  gameState.level = gameState.runLevels[l % gameState.runLevels.length];
 
   gameState.levelTime = 0;
   gameState.winAt = 0;

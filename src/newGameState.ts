@@ -37,9 +37,11 @@ export function getRunLevels(
     .filter((l) => l.name !== params?.levelToAvoid)
     .sort(() => Math.random() - 0.5);
 
-  return firstLevel.concat(
-    restInRandomOrder.slice(0, 7 + 3).sort((a, b) => a.sortKey - b.sortKey),
-  );
+  return firstLevel
+    .concat(
+      restInRandomOrder.slice(0, 7 + 3).sort((a, b) => a.sortKey - b.sortKey),
+    )
+    .concat(restInRandomOrder.slice(7 + 3));
 }
 
 export function newGameState(params: RunParams): GameState {

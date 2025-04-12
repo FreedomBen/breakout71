@@ -13,8 +13,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 # Current priorities 
 
-The goal of this project is to make software used by many people. The game is already pretty fun. I'm now trying to 
-translate it to Arabic and Russian. Other translation are very welcome, contact me if you'd like to submit one.
+The goal of this project is to make a game used by many people. The game is already pretty fun. I'm now trying to 
+translate it to (Lebanese) Arabic, Russian and (Chilean) Spanish. Other translation are very welcome, contact me 
+if you'd like to submit one.
 
 While translations are being written, I'll try to avoid adding features that require new translations. That means only 
 bug fixes and optimisations, maybe adding levels. Once we have a nice stable release available in 4 
@@ -24,13 +25,13 @@ languages, I may add features again.
 # Changelog
 ## To do
 
-- game crashes when reaching level 12 (no level info in runLevels)
-- auto-detect device performance at first startup and adjust settings accordingly
-- fix game breaking issue
-- balance existing perks
-- 
+- auto-detect device performance at first startup and adjust settings accordingly  
 
 ## Done
+
+- game crashes when reaching level 12 (no level info in runLevels)
+
+## 29074385
 
 - added back some extra languages
 - superhot: fixed particles durations and level duration

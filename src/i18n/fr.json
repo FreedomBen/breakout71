@@ -395,7 +395,6 @@
   "upgrades.trickledown.name": "Ruissellement",
   "upgrades.trickledown.tooltip": "Les pièces apparaissent en haut de l'écran.",
   "upgrades.trickledown.verbose_description": "Ça pourrait vous aider à mettre des pièces de coté. ",
-  "upgrades.unbounded.help_no_ceiling": "",
   "upgrades.unbounded.name": "Besoin d'espace",
   "upgrades.unbounded.tooltip": "Plus d'espace autour des briques, mais la raquette ne peut pas aller aussi loin.",
   "upgrades.unbounded.verbose_description": "Une autre amélioration pourrait vous permettre d'étendre la portée de votre raquette.",

@@ -395,7 +395,6 @@
   "upgrades.trickledown.name": "Trickle down economics",
   "upgrades.trickledown.tooltip": "The coins appear at the top of the screen.",
   "upgrades.trickledown.verbose_description": "It might help you put some coins aside.",
-  "upgrades.unbounded.help_no_ceiling": "",
   "upgrades.unbounded.name": "Padding",
   "upgrades.unbounded.tooltip": "Adds space left and right of the level, but your paddle can't go that far. ",
   "upgrades.unbounded.verbose_description": "Another upgrade might help you extends the reach of your paddle. ",

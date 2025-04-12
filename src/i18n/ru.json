@@ -395,7 +395,6 @@
   "upgrades.trickledown.name": "Экономика по принципу \"копеечной монеты",
   "upgrades.trickledown.tooltip": "Монеты появляются в верхней части экрана.",
   "upgrades.trickledown.verbose_description": "Это может помочь вам отложить несколько монет.",
-  "upgrades.unbounded.help_no_ceiling": "",
   "upgrades.unbounded.name": "Набивка",
   "upgrades.unbounded.tooltip": "Добавляет пространство слева и справа от уровня, но ваше весло не может пройти так далеко.",
   "upgrades.unbounded.verbose_description": "Еще одна модернизация может помочь вам увеличить радиус действия весла.",
