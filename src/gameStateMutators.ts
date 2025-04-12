@@ -95,7 +95,7 @@ function computerControl(gameState: GameState) {
     if (coinsCount) {
       targetX = coinsTotalX / coinsCount;
     } else {
-      targetX = ball.x;
+      targetX = gameState.canvasWidth / 2;
     }
   }
 

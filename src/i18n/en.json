@@ -334,7 +334,7 @@
   "upgrades.respawn.tooltip": "{{percent}}% of bricks re-spawn after {{delay}}s.",
   "upgrades.respawn.verbose_description": "Some particle effect will let you know where bricks will appear. ",
   "upgrades.right_is_lava.name": "Avoid right side",
-  "upgrades.right_is_lava.tooltip": "+{{lvl}} combo per brick. Combo resets if ball hits the left side of the screen",
+  "upgrades.right_is_lava.tooltip": "+{{lvl}} combo per brick. Combo resets if ball hits the right side of the screen",
   "upgrades.right_is_lava.verbose_description": "Whenever you break a brick, your combo will increase by one, so you'll get one more coin from all the next bricks you break.\n\nHowever, your combo will reset as soon as your ball hits the right side. \n\nAs soon as your combo rises, the right side becomes red to remind you that you should avoid hitting them.\n",
   "upgrades.sacrifice.help_l1": "Loosing a life clears all bricks",
   "upgrades.sacrifice.help_over": "Loosing a life {{lvl}}x the combo then clears all bricks",

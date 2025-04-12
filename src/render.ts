@@ -99,7 +99,9 @@ export function render(gameState: GameState) {
     `<span class="score" data-tooltip="${t("play.score_tooltip")}">$${gameState.score}</span>`;
 
   scoreDisplay.className =
-    gameState.lastScoreIncrease > gameState.levelTime - 500 ? "active" : "";
+    (gameState.computer_controlled && "hidden") ||
+    (gameState.lastScoreIncrease > gameState.levelTime - 500 && "active") ||
+    "";
 
   // Clear
   if (!isOptionOn("basic") && level.svg && level.color === "#000000") {

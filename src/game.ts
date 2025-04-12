@@ -983,6 +983,9 @@ document.addEventListener("keyup", async (e) => {
     !alertsOpen &&
     pageLoad < Date.now() - 500
   ) {
+    if (gameState.computer_controlled) {
+      return startComputerControlledGame();
+    }
     // When doing ctrl + R in dev to refresh, i don't want to instantly restart a run
     if (await confirmRestart(gameState)) {
       restart({
