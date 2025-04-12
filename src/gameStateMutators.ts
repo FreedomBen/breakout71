@@ -44,13 +44,16 @@ import {
   hitsSomething,
   openUpgradesPicker,
   pause,
+  startComputerControlledGame,
 } from "./game";
 import { stopRecording } from "./recording";
 import { isOptionOn } from "./options";
 import { clamp, comboKeepingRate } from "./pure_functions";
 import { addToTotalScore } from "./addToTotalScore";
+import { hashCode } from "./getLevelBackground";
 
 export function setMousePos(gameState: GameState, x: number) {
+  if (gameState.computer_controlled) return;
   gameState.puckPosition = x;
 
   // Sets the puck position, and updates the ball position if they are supposed to follow it
@@ -62,6 +65,48 @@ function getBallDefaultVx(gameState: GameState) {
     (gameState.perks.concave_puck ? 0 : 1) *
     (Math.random() > 0.5 ? gameState.baseSpeed : -gameState.baseSpeed)
   );
+}
+
+function computerControl(gameState: GameState) {
+  let targetX = gameState.puckPosition;
+  const ball = getClosestBall(
+    gameState,
+    gameState.puckPosition,
+    gameState.gameZoneHeight,
+  );
+  if (!ball) return;
+  const puckOffset =
+    (((hashCode(gameState.runStatistics.puck_bounces + "goeirjgoriejg") % 100) -
+      50) /
+      100) *
+    gameState.puckWidth;
+
+  if (ball.y > gameState.gameZoneHeight / 2 && ball.vy > 0) {
+    targetX = ball.x + puckOffset;
+  } else {
+    let coinsTotalX = 0,
+      coinsCount = 0;
+    forEachLiveOne(gameState.coins, (c) => {
+      if (c.vy > 0 && c.y > gameState.gameZoneHeight / 2) {
+        coinsTotalX += c.x;
+        coinsCount++;
+      }
+    });
+    if (coinsCount) {
+      targetX = coinsTotalX / coinsCount;
+    } else {
+      targetX = ball.x;
+    }
+  }
+
+  gameState.puckPosition += clamp(
+    (targetX - gameState.puckPosition) / 10,
+    -10,
+    10,
+  );
+  if (gameState.levelTime > 30000) {
+    startComputerControlledGame();
+  }
 }
 
 export function resetBalls(gameState: GameState) {
@@ -592,6 +637,7 @@ export function schedulGameSound(
 ) {
   if (!vol) return;
   if (!isOptionOn("sound")) return;
+  if (gameState.computer_controlled) return;
   x ??= gameState.offsetX + gameState.gameZoneWidth / 2;
   const ex = gameState.aboutToPlaySound[sound] as { vol: number; x: number };
 
@@ -945,6 +991,9 @@ export function gameStateTick(
   // How many frames to compute at once, can go above 1 to compensate lag
   frames = 1,
 ) {
+  // Ai movement of puck
+  if (gameState.computer_controlled) computerControl(gameState);
+
   gameState.runStatistics.max_combo = Math.max(
     gameState.runStatistics.max_combo,
     gameState.combo,
@@ -1019,7 +1068,9 @@ export function gameStateTick(
     //   instant win condition
     (gameState.levelTime && !remainingBricks && !liveCount(gameState.coins))
   ) {
-    if (gameState.currentLevel + 1 < max_levels(gameState)) {
+    if (gameState.computer_controlled) {
+      startComputerControlledGame();
+    } else if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
     } else {
       gameOver(
@@ -1659,10 +1710,14 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.destroyed = true;
     gameState.runStatistics.balls_lost++;
     if (!gameState.balls.find((b) => !b.destroyed)) {
-      gameOver(
-        t("gameOver.lost.title"),
-        t("gameOver.lost.summary", { score: gameState.score }),
-      );
+      if (gameState.computer_controlled) {
+        startComputerControlledGame();
+      } else {
+        gameOver(
+          t("gameOver.lost.title"),
+          t("gameOver.lost.summary", { score: gameState.score }),
+        );
+      }
     }
   }
   const radius = gameState.ballSize / 2;

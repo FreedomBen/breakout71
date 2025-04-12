@@ -7,6 +7,7 @@ import {
   OptionId,
   ParticleFlash,
   PerkId,
+  PerksMap,
   RunParams,
   TextFlash,
 } from "./types";
@@ -20,6 +21,7 @@ import {
   max_levels,
   pickedUpgradesHTMl,
   reasonLevelIsLocked,
+  sample,
 } from "./game_utils";
 
 import "./PWA/sw_loader";
@@ -103,6 +105,7 @@ export async function play() {
 export function pause(playerAskedForPause: boolean) {
   if (!gameState.running) return;
   if (gameState.pauseTimeout) return;
+  if (gameState.computer_controlled) return;
 
   const stop = () => {
     gameState.running = false;
@@ -580,6 +583,7 @@ function donationNag(gameState) {
     },
   ];
 }
+
 async function openSettingsMenu() {
   pause(true);
 
@@ -999,22 +1003,30 @@ export function restart(params: RunParams) {
   fitSize(gameState);
   pauseRecording();
   setLevel(gameState, 0);
+  if (params?.computer_controlled) {
+    play();
+  }
 }
 
-restart(
-  window.location.search.includes("stress")
-    ? {
-        perks: {
-          bricks_attract_ball: 2,
-          superhot: 1,
-          bricks_attract_coins: 3,
-          hot_start: 3,
-          pierce: 3,
-          rainbow: 3,
-        },
-      }
-    : {},
-);
+if (window.location.search.includes("autoplay")) {
+  startComputerControlledGame();
+} else {
+  restart({});
+}
+
+export function startComputerControlledGame() {
+  const perks: Partial<PerksMap> = { base_combo: 7, pierce: 3 };
+  for (let i = 0; i < 10; i++) {
+    const u = sample(upgrades);
+    perks[u.id] = Math.floor(Math.random() * u.max) + 1;
+  }
+  perks.superhot = 0;
+  restart({
+    level: sample(allLevels)?.name,
+    computer_controlled: true,
+    perks,
+  });
+}
 
 tick();
 setupTooltips();

@@ -281,6 +281,7 @@ export type GameState = {
   };
   rerolls: number;
   creative: boolean;
+  computer_controlled: boolean;
 };
 
 export type RunParams = {
@@ -288,6 +289,7 @@ export type RunParams = {
   levelToAvoid?: string;
   perkToAvoid?: PerkId;
   perks?: Partial<PerksMap>;
+  computer_controlled?: boolean;
 };
 export type OptionDef = {
   default: boolean;

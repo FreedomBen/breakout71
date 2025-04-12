@@ -139,8 +139,10 @@ export function newGameState(params: RunParams): GameState {
     ...defaultSounds(),
     rerolls: 0,
     creative:
+      params?.computer_controlled ||
       sumOfValues(params.perks) > 1 ||
       (params.level && !params.level.startsWith("icon:")),
+    computer_controlled: params?.computer_controlled || false,
   };
   resetBalls(gameState);
 
