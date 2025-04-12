@@ -28,6 +28,8 @@ Some upgrades currently are not really useful
 # Changelog
 ## To do
 
+- game crashes when reaching level 12 (no level info in runLevels)
+-  
 
 ## Done
 

@@ -1,6 +1,6 @@
 import en from "./en.json";
 import fr from "./fr.json";
-// import ar from "./ar.json";
+import ar from "./ar.json";
 // import de from "./de.json";
 // import es from "./es.json";
 // import ko from "./ko.json";
@@ -24,13 +24,13 @@ export const languages = [
 
     levelName: "France",
   },
-  // {
-  //   text: "عربي",
-  //   value: "ar",
-  //   strings: ar,
-  //
-  //   levelName: "Lebanon",
-  // },
+  {
+    text: "عربي",
+    value: "ar",
+    strings: ar,
+
+    levelName: "Lebanon",
+  },
   // {
   //   text: "Español",
   //   value: "es",

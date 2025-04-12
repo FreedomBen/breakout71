@@ -52,6 +52,7 @@ import { addToTotalScore } from "./addToTotalScore";
 
 export function setMousePos(gameState: GameState, x: number) {
   gameState.puckPosition = x;
+
   // Sets the puck position, and updates the ball position if they are supposed to follow it
   gameState.needsRender = true;
 }
