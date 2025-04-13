@@ -3,7 +3,8 @@ import fr from "./fr.json";
 import ar from "./ar.json";
 import ru from "./ru.json";
 import es from "./es.json";
-// import de from "./de.json";
+import tr from "./tr.json";
+import de from "./de.json";
 // import ko from "./ko.json";
 // import ur from "./ur.json";
 // import uz from "./uz.json";
@@ -14,7 +15,6 @@ export const languages = [
     text: "English",
     value: "en",
     strings: en,
-
     levelName: "UK",
   },
   {
@@ -46,13 +46,19 @@ export const languages = [
     levelName: "Russia",
   },
 
-  // {
-  //   text: "Deutsch",
-  //   value: "de",
-  //   strings: de,
-  //
-  //   levelName: "Germany",
-  // },
+  {
+    text: "Deutsch",
+    value: "de",
+    strings: de,
+    levelName: "Germany",
+  },
+  {
+    text: "Türkçe",
+    value: "tr",
+    strings: tr,
+
+    levelName: "Türkiye",
+  },
   // {
   //   text: "汉语",
   //   value: "zh",
