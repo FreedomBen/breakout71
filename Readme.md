@@ -25,7 +25,9 @@ languages, I may add features again.
 # Changelog
 ## To do
 
-- auto-detect device performance at first startup and adjust settings accordingly  
+- allow loading newer save in outdated app (for rollback)
+- level editor :english only, web only, link to test level, same link needs to be shared to discord
+- auto-detect device performance at first startup and adjust settings accordingly
 
 ## Done
 
@@ -472,4 +474,5 @@ Breakout 71 can be installed and work offline in many ways:
 # System requirements 
 
 The game should perform well even on low-end devices.  It's very lean and does not take much storage space (Roughly 0.1MB). The web version is supposed to work on iOS safari, Firefox ESR and chrome, on desktop and mobile.
-If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster. You can adjust many aspects of the game there, go have a look ! 
+If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster. You can adjust many aspects of the game there, go have a look !
+

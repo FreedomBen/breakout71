@@ -705,12 +705,13 @@ async function openSettingsMenu() {
               } = JSON.parse(content);
               if (fileType !== "B71-save-file")
                 throw new Error("Not a B71 save file");
-              if (fileVersion > appVersion)
-                throw new Error(
-                  "Please update your app first, this file is for version " +
-                    fileVersion +
-                    " or newer.",
-                );
+              // Actually, loading a save file to an older version is pretty useful
+              // if (fileVersion > appVersion)
+              //   throw new Error(
+              //     "Please update your app first, this file is for version " +
+              //       fileVersion +
+              //       " or newer.",
+              //   );
 
               if (
                 key !==

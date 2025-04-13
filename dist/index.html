@@ -1139,7 +1139,13 @@ async function openSettingsMenu() {
                             });
                             const { fileType, appVersion: fileVersion, signedPayload, key } = JSON.parse(content);
                             if (fileType !== "B71-save-file") throw new Error("Not a B71 save file");
-                            if (fileVersion > (0, _loadGameData.appVersion)) throw new Error("Please update your app first, this file is for version " + fileVersion + " or newer.");
+                            // Actually, loading a save file to an older version is pretty useful
+                            // if (fileVersion > appVersion)
+                            //   throw new Error(
+                            //     "Please update your app first, this file is for version " +
+                            //       fileVersion +
+                            //       " or newer.",
+                            //   );
                             if (key !== (0, _getLevelBackground.hashCode)("Security by obscurity, but really the game is oss so eh" + signedPayload)) throw new Error("Key does not match content.");
                             const localStorageContent = JSON.parse(signedPayload);
                             localStorage.clear();
