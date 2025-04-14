@@ -1,5 +1,5 @@
-import { GameState, Level, PerkId, Upgrade } from "./types";
-import { allLevels, icons, upgrades } from "./loadGameData";
+import { GameState, Level, PerkId, RawLevel, Upgrade } from "./types";
+import { allLevels, icons, transformRawLevel, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import {
@@ -17,6 +17,7 @@ import {
 } from "./game_utils";
 import { getHistory } from "./gameOver";
 import { noCreative } from "./upgrades";
+import { levelIconHTML } from "./levelIcon";
 
 export function creativeMode(gameState: GameState) {
   return {
@@ -39,7 +40,9 @@ export async function openCreativeModePerksPicker() {
       {},
     ),
     choice: Upgrade | Level | "reset" | void;
-
+  const customLevels = (getSettingValue("custom_levels", []) as RawLevel[]).map(
+    transformRawLevel,
+  );
   while (
     (choice = await asyncAlert<Upgrade | Level | "reset">({
       title: t("lab.menu_entry"),
@@ -78,6 +81,13 @@ export async function openCreativeModePerksPicker() {
             tooltip: problem || describeLevel(l),
           };
         }),
+        ...customLevels.map((l) => ({
+          icon: levelIconHTML(l.bricks, l.size, l.color),
+          text: l.name,
+          value: l,
+          disabled: !l.bricks.filter((b) => b !== "_").length,
+          tooltip: describeLevel(l),
+        })),
       ],
     }))
   ) {
@@ -88,7 +98,7 @@ export async function openCreativeModePerksPicker() {
     } else if ("bricks" in choice) {
       setSettingValue("creativeModePerks", creativeModePerks);
       if (await confirmRestart(gameState)) {
-        restart({ perks: creativeModePerks, level: choice.name });
+        restart({ perks: creativeModePerks, level: choice });
       }
       return;
     } else if (choice) {

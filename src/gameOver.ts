@@ -9,11 +9,12 @@ import {
   pickedUpgradesHTMl,
   reasonLevelIsLocked,
 } from "./game_utils";
-import { getTotalScore } from "./settings";
+import { getSettingValue, getTotalScore } from "./settings";
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
 import { rawUpgrades } from "./upgrades";
 import { run } from "jest";
+import { editRawLevelList } from "./levelEditor";
 
 export function addToTotalPlayTime(ms: number) {
   try {
@@ -30,10 +31,17 @@ export function addToTotalPlayTime(ms: number) {
 export function gameOver(title: string, intro: string) {
   if (!gameState.running) return;
   if (gameState.isGameOver) return;
+
   gameState.isGameOver = true;
   pause(true);
   stopRecording();
   addToTotalPlayTime(gameState.runStatistics.runTime);
+
+  if (typeof gameState.isEditorTrialRun === "number") {
+    editRawLevelList(gameState.isEditorTrialRun);
+    restart({});
+    return;
+  }
 
   // unlocks
   const endTs = getTotalScore();

@@ -24,13 +24,14 @@ languages, I may add features again.
 
 # Changelog
 ## To do
-
-- allow loading newer save in outdated app (for rollback)
-- level editor :english only, web only, link to test level, same link needs to be shared to discord
+- redo video
 - auto-detect device performance at first startup and adjust settings accordingly
+- demo mode that shows device name (for phone shops to catch attention)
 
 ## Done
 
+- level editor
+- allow loading newer save in outdated app (for rollback)
 - game crashes when reaching level 12 (no level info in runLevels)
 
 ## 29074385

@@ -13,28 +13,29 @@ const rawLevelsList = _rawLevelsList as RawLevel[];
 export const appVersion = _appVersion as string;
 
 export const icons = {} as { [k: string]: string };
-export const allLevelsAndIcons = rawLevelsList
-  .map((level, i) => {
-    const bricks = level.bricks
-      .split("")
-      .map((c) => palette[c])
-      .slice(0, level.size * level.size);
-    const bricksCount = bricks.filter((i) => i).length;
-    const icon = levelIconHTML(bricks, level.size, level.color);
-    icons[level.name] = icon;
-    return {
-      ...level,
-      bricks,
-      bricksCount,
-      icon,
-      color: level.color || "#000000",
-      svg: getLevelBackground(level),
-    };
-  })
-  .map((l, li) => ({
-    ...l,
-    sortKey: ((Math.random() + 3) / 3.5) * l.bricksCount,
-  })) as Level[];
+
+export function transformRawLevel(level: RawLevel) {
+  const bricks = level.bricks
+    .split("")
+    .map((c) => palette[c])
+    .slice(0, level.size * level.size);
+  const bricksCount = bricks.filter((i) => i).length;
+  const icon = levelIconHTML(bricks, level.size, level.color);
+  icons[level.name] = icon;
+  return {
+    ...level,
+    bricks,
+    bricksCount,
+    icon,
+    color: level.color || "#000000",
+    svg: getLevelBackground(level),
+    sortKey: ((Math.random() + 3) / 3.5) * bricksCount,
+  };
+}
+
+export const allLevelsAndIcons = rawLevelsList.map(
+  transformRawLevel,
+) as Level[];
 
 export const allLevels = allLevelsAndIcons.filter(
   (l) => !l.name.startsWith("icon:"),

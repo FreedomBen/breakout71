@@ -7,7 +7,6 @@ export type RawLevel = {
   name: string;
   size: number;
   bricks: string;
-  svg: number | null;
   color: string;
   credit?: string;
 };
@@ -282,14 +281,16 @@ export type GameState = {
   rerolls: number;
   creative: boolean;
   computer_controlled: boolean;
+  isEditorTrialRun?: number;
 };
 
 export type RunParams = {
-  level?: string;
+  level?: Level;
   levelToAvoid?: string;
   perkToAvoid?: PerkId;
   perks?: Partial<PerksMap>;
   computer_controlled?: boolean;
+  isEditorTrialRun?: number;
 };
 export type OptionDef = {
   default: boolean;

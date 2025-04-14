@@ -70,6 +70,7 @@ canvas:not(#game) {
     color: gold;
     transition: color 0.01s;
   }
+
   &.hidden {
     display: none;
   }
@@ -477,6 +478,7 @@ h2.histogram-title strong {
       cursor: pointer;
       background: black;
     }
+
     td,
     th {
       padding: 0 5px;
@@ -488,11 +490,13 @@ h2.histogram-title strong {
     td:first-child {
       text-align: left;
     }
+
     img {
       width: 20px;
       height: auto;
       pointer-events: none;
     }
+
     tr:nth-child(2n) {
       background: rgba(0, 0, 0, 0.58);
     }
@@ -508,6 +512,7 @@ h2.histogram-title strong {
   height: 7px;
   bottom: 2px;
   border-radius: 2px;
+
   span {
     position: absolute;
     inset: 1px;
@@ -542,5 +547,42 @@ h2.histogram-title strong {
   90% {
     opacity: 0.8;
     transform: none;
+  }
+}
+
+.gridEdit > div > span,
+.palette > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid;
+  cursor: pointer;
+  &:hover {
+    border-color: gold;
+    z-index: 1;
+    position: relative;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+.gridEdit {
+  & > div {
+    display: flex;
+
+    & > span {
+      width: calc(min(500px, 100vw, 100vh - 200px) / var(--grid-size));
+      height: calc(min(500px, 100vw, 100vh - 200px) / var(--grid-size));
+    }
+  }
+}
+
+.palette {
+  display: flex;
+  flex-wrap: wrap;
+  & > span {
+    &[data-selected="true"] {
+      border: 2px solid white;
+    }
   }
 }

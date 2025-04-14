@@ -1,4 +1,10 @@
-import { allLevels, appVersion, icons, upgrades } from "./loadGameData";
+import {
+  allLevels,
+  allLevelsAndIcons,
+  appVersion,
+  icons,
+  upgrades,
+} from "./loadGameData";
 import {
   Ball,
   Coin,
@@ -89,6 +95,7 @@ import { generateSaveFileContent } from "./generateSaveFileContent";
 import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
 import { getNearestUnlockHTML, openScorePanel } from "./openScorePanel";
 import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
+import { levelEditorMenuEntry } from "./levelEditor";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -518,6 +525,7 @@ export async function openMainMenu() {
     },
     creativeMode(gameState),
     runHistoryViewerMenuEntry(),
+    levelEditorMenuEntry(),
     {
       icon: icons["icon:unlocks"],
       text: t("main_menu.unlocks"),
@@ -849,7 +857,10 @@ async function openUnlocksList() {
     .map(({ name, id, threshold, icon, help }) => ({
       text: name,
       disabled: ts < threshold,
-      value: { perks: { [id]: 1 }, level: "icon:" + id } as RunParams,
+      value: {
+        perks: { [id]: 1 },
+        level: allLevelsAndIcons.find((l) => l.name === "icon:" + id),
+      } as RunParams,
       icon,
       [hintField]:
         ts < threshold
@@ -871,7 +882,7 @@ async function openUnlocksList() {
     return {
       text: l.name + percentUnlocked,
       disabled: !!lockedBecause,
-      value: { level: l.name } as RunParams,
+      value: { level: l } as RunParams,
       icon: icons[l.name],
       [hintField]: lockedBecause?.text || describeLevel(l),
     };

@@ -28,12 +28,12 @@ export function getRunLevels(
     (l, li) =>
       unlockedBefore.has(l.name) || !reasonLevelIsLocked(li, history, false),
   );
-  const firstLevel = allLevelsAndIcons.filter(
-    (l) => l.name == (params?.level || "icon:" + randomGift),
-  );
+  const firstLevel = params?.level
+    ? [params.level]
+    : allLevelsAndIcons.filter((l) => l.name == "icon:" + randomGift);
 
   const restInRandomOrder = unlocked
-    .filter((l) => l.name !== params?.level)
+    .filter((l) => l.name !== params?.level?.name)
     .filter((l) => l.name !== params?.levelToAvoid)
     .sort(() => Math.random() - 0.5);
 
@@ -141,8 +141,9 @@ export function newGameState(params: RunParams): GameState {
     creative:
       params?.computer_controlled ||
       sumOfValues(params.perks) > 1 ||
-      (params.level && !params.level.startsWith("icon:")),
+      (params.level && !params.level.name.startsWith("icon:")),
     computer_controlled: params?.computer_controlled || false,
+    isEditorTrialRun: params?.isEditorTrialRun,
   };
   resetBalls(gameState);
 
