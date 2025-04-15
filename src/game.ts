@@ -27,7 +27,8 @@ import {
   max_levels,
   pickedUpgradesHTMl,
   reasonLevelIsLocked,
-  sample, sumOfValues,
+  sample,
+  sumOfValues,
 } from "./game_utils";
 
 import "./PWA/sw_loader";
@@ -41,7 +42,8 @@ import {
 } from "./settings";
 import {
   forEachLiveOne,
-  gameStateTick, liveCount,
+  gameStateTick,
+  liveCount,
   normalizeGameState,
   pickRandomUpgrades,
   setLevel,
@@ -420,9 +422,8 @@ export function hitsSomething(x: number, y: number, radius: number) {
   );
 }
 
-
 export function tick() {
-startWork('tick init')
+  startWork("tick init");
 
   const currentTick = performance.now();
   const timeDeltaMs = currentTick - gameState.lastTick;
@@ -443,9 +444,9 @@ startWork('tick init')
     );
   }
 
-startWork('normalizeGameState')
+  startWork("normalizeGameState");
   normalizeGameState(gameState);
-startWork('gameStateTick')
+  startWork("gameStateTick");
   if (gameState.running) {
     gameState.levelTime += timeDeltaMs * frames;
     gameState.runStatistics.runTime += timeDeltaMs * frames;
@@ -456,15 +457,15 @@ startWork('gameStateTick')
     gameState.needsRender = false;
     render(gameState);
   }
-startWork('recordOneFrame')
+  startWork("recordOneFrame");
   if (gameState.running) {
     recordOneFrame(gameState);
   }
-startWork('playPendingSounds')
+  startWork("playPendingSounds");
   if (isOptionOn("sound")) {
     playPendingSounds(gameState);
   }
-startWork('idle')
+  startWork("idle");
 
   requestAnimationFrame(tick);
   FPSCounter++;
@@ -477,28 +478,41 @@ setInterval(() => {
   FPSCounter = 0;
 }, 1000);
 
-const showStats=  window.location.search.includes("stress")
-let total={}
-let lastTick=performance.now();
-let doing= ''
-export function startWork(what){
-  if(!showStats) return
-  const newNow=performance.now();
-  if(doing) {
-    total[doing] = (total[doing]||0) + ( newNow-lastTick )
+const showStats = window.location.search.includes("stress");
+let total = {};
+let lastTick = performance.now();
+let doing = "";
+export function startWork(what) {
+  if (!showStats) return;
+  const newNow = performance.now();
+  if (doing) {
+    total[doing] = (total[doing] || 0) + (newNow - lastTick);
   }
-  lastTick=newNow
-  doing=what
+  lastTick = newNow;
+  doing = what;
 }
-if(showStats)
-setInterval(()=>{
-  const totalTime = sumOfValues(total)
-  console.debug(
-      liveCount(gameState.coins) +' coins\n'+
-      Object.entries(total).sort((a,b)=>b[1]-a[1]).filter(a=>a[1]>1).map(t=>t[0]+':'+(t[1]/totalTime*100).toFixed(2)+'% ('+t[1]+'ms)').join('\n'))
-  total={}
-},2000)
-
+if (showStats)
+  setInterval(() => {
+    const totalTime = sumOfValues(total);
+    console.debug(
+      liveCount(gameState.coins) +
+        " coins\n" +
+        Object.entries(total)
+          .sort((a, b) => b[1] - a[1])
+          .filter((a) => a[1] > 1)
+          .map(
+            (t) =>
+              t[0] +
+              ":" +
+              ((t[1] / totalTime) * 100).toFixed(2) +
+              "% (" +
+              t[1] +
+              "ms)",
+          )
+          .join("\n"),
+    );
+    total = {};
+  }, 2000);
 
 setInterval(() => {
   monitorLevelsUnlocks(gameState);
@@ -1041,22 +1055,26 @@ export function restart(params: RunParams) {
     play();
   }
 }
- if (window.location.search.match(/autoplay|stress/)  ) {
+if (window.location.search.match(/autoplay|stress/)) {
   startComputerControlledGame();
-  if(!isOptionOn('show_fps'))
-   toggleOption('show_fps')
+  if (!isOptionOn("show_fps")) toggleOption("show_fps");
 } else {
   restart({});
 }
 
 export function startComputerControlledGame() {
-
   const perks: Partial<PerksMap> = { base_combo: 20, pierce: 3 };
-  if(window.location.search.includes("stress")){
-
-      Object.assign(perks,{base_combo:5000, pierce:20, rainbow:3, sapper:2, etherealcoins:1, bricks_attract_ball:1, respawn:3})
-
-  }else{
+  if (window.location.search.includes("stress")) {
+    Object.assign(perks, {
+      base_combo: 5000,
+      pierce: 20,
+      rainbow: 3,
+      sapper: 2,
+      etherealcoins: 1,
+      bricks_attract_ball: 1,
+      respawn: 3,
+    });
+  } else {
     for (let i = 0; i < 10; i++) {
       const u = sample(upgrades);
 

@@ -9,7 +9,7 @@ import {
   pickedUpgradesHTMl,
   reasonLevelIsLocked,
 } from "./game_utils";
-import {getSettingValue, getTotalScore, setSettingValue} from "./settings";
+import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
 import { rawUpgrades } from "./upgrades";
@@ -17,7 +17,10 @@ import { run } from "jest";
 import { editRawLevelList } from "./levelEditor";
 
 export function addToTotalPlayTime(ms: number) {
-    setSettingValue('breakout_71_total_play_time',    getSettingValue('breakout_71_total_play_time',0)+ms)
+  setSettingValue(
+    "breakout_71_total_play_time",
+    getSettingValue("breakout_71_total_play_time", 0) + ms,
+  );
 }
 
 export function gameOver(title: string, intro: string) {

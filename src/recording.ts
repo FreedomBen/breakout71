@@ -12,7 +12,6 @@ let mediaRecorder: MediaRecorder | null,
   recordCanvasCtx: CanvasRenderingContext2D;
 
 export function recordOneFrame(gameState: GameState) {
-
   if (!isOptionOn("record")) {
     return;
   }

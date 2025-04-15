@@ -32,7 +32,8 @@ languages, I may add features again.
 - measured and improve the performance (test here https://breakout.lecaro.me/?stresstest)
 - added a few levels
 - autoplay mode (with wake lock and computer play https://breakout.lecaro.me/?autoplay )
-- slower coins fall once they are past the paddle 
+- Added particle and sound effect when coin drops below the "waterline" of the puck
+- slower coins fall once they are under the paddle 
 - in game level editor
 - allow loading newer save in outdated app (for rollback)
 - game crashes when reaching level 12 (no level info in runLevels)

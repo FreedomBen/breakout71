@@ -521,7 +521,6 @@ h2.histogram-title strong {
   }
 }
 
-
 .toast {
   position: fixed;
   left: 0;
@@ -535,17 +534,18 @@ h2.histogram-title strong {
   border-radius: 2px;
   padding-right: 10px;
   pointer-events: none;
-  transition: opacity 200ms, transform 200ms;
-  &.hidden{
+  transition:
+    opacity 200ms,
+    transform 200ms;
+  &.hidden {
     opacity: 0;
     transform: translate(-20px, -20px) scale(0.5);
   }
-  &.visible{
+  &.visible {
     opacity: 0.8;
     transform: none;
   }
 }
-
 
 .gridEdit > div > span,
 .palette > span {
