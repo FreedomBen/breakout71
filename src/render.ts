@@ -72,7 +72,7 @@ export function render(gameState: GameState) {
     : 1;
 
   scoreDisplay.innerHTML =
-    (isOptionOn("show_fps")
+    (isOptionOn("show_fps") || gameState.computer_controlled
       ? ` 
                <span class="${(Math.abs(lastMeasuredFPS - 60) < 2 && " ") || (Math.abs(lastMeasuredFPS - 60) < 10 && "good") || "bad"}">
             ${lastMeasuredFPS} FPS
@@ -99,7 +99,7 @@ export function render(gameState: GameState) {
     `<span class="score" data-tooltip="${t("play.score_tooltip")}">$${gameState.score}</span>`;
 
   scoreDisplay.className =
-    (gameState.computer_controlled && "hidden") ||
+    (gameState.computer_controlled && "computer_controlled") ||
     (gameState.lastScoreIncrease > gameState.levelTime - 500 && "active") ||
     "";
 
@@ -549,6 +549,18 @@ export function render(gameState: GameState) {
 
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = 1;
+
+  if (isOptionOn("mobile-mode") && gameState.computer_controlled) {
+    drawText(
+      ctx,
+      "breakout.lecaro.me?autoplay",
+      gameState.puckColor,
+      gameState.puckHeight,
+      gameState.canvasWidth / 2,
+      gameState.gameZoneHeight +
+        (gameState.canvasHeight - gameState.gameZoneHeight) / 2,
+    );
+  }
   if (isOptionOn("mobile-mode") && !gameState.running) {
     drawText(
       ctx,
@@ -560,6 +572,15 @@ export function render(gameState: GameState) {
         (gameState.canvasHeight - gameState.gameZoneHeight) / 2,
     );
   }
+
+  // if(isOptionOn('mobile-mode')) {
+  //   ctx.globalCompositeOperation = "source-over";
+  //   ctx.globalAlpha = 0.5;
+  //   ctx.fillStyle = 'black'
+  //   ctx.fillRect(0,gameState.gameZoneHeight, gameState.canvasWidth, gameState.canvasHeight-gameState.gameZoneHeight)
+  // }
+  // ctx.globalAlpha=1
+  askForWakeLock(gameState);
 
   if (shaked) {
     ctx.resetTransform();
@@ -1110,4 +1131,24 @@ function getCoinRenderColor(gameState: GameState, coin: Coin) {
   )
     return coin.color;
   return "#ffd300";
+}
+
+let wakeLock = null,
+  wakeLockPending = false;
+function askForWakeLock(gameState: GameState) {
+  if (gameState.computer_controlled && !wakeLock && !wakeLockPending) {
+    wakeLockPending = true;
+    try {
+      navigator.wakeLock.request("screen").then((lock) => {
+        wakeLock = lock;
+        wakeLockPending = false;
+        lock.addEventListener("release", () => {
+          // the wake lock has been released
+          wakeLock = null;
+        });
+      });
+    } catch (e) {
+      console.warn("askForWakeLock error", e);
+    }
+  }
 }

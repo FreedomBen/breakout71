@@ -186,8 +186,6 @@
   "settings.load_save_file_help": "Select a save file on your device",
   "settings.max_coins": " {{max}} coins on screen maximum",
   "settings.max_coins_help": "Cosmetic only, no effect on score",
-  "settings.max_particles": " {{max}} particles maximum",
-  "settings.max_particles_help": "Limits the number of particles show on screen for visual effect. ",
   "settings.mobile": "Mobile mode",
   "settings.mobile_help": "Leaves space under the paddle.",
   "settings.pointer_lock": "Mouse pointer lock",

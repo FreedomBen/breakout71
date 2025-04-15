@@ -28,17 +28,11 @@ export function getTotalScore() {
 }
 
 export function getCurrentMaxCoins() {
-  return Math.pow(2, getSettingValue("max_coins", 1)) * 200;
+  return Math.pow(2, getSettingValue("max_coins", 6)) * 200;
 }
 export function getCurrentMaxParticles() {
-  return Math.pow(2, getSettingValue("max_particles", 1)) * 200;
+  return  getCurrentMaxCoins()
 }
 export function cycleMaxCoins() {
-  setSettingValue("max_coins", (getSettingValue("max_coins", 1) + 1) % 6);
-}
-export function cycleMaxParticles() {
-  setSettingValue(
-    "max_particles",
-    (getSettingValue("max_particles", 1) + 1) % 6,
-  );
+  setSettingValue("max_coins", (getSettingValue("max_coins", 6) + 1) % 6);
 }

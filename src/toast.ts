@@ -1,17 +1,17 @@
-let onScreen = 0;
 
-export function toast(html) {
-  const div = document.createElement("div");
-  div.classList = "toast";
-  div.innerHTML = html;
-  const lasts = 1500 + onScreen * 200;
-  div.style.animationDuration = lasts + "ms";
-  div.style.top = 40 + onScreen * 50 + "px";
 
+let div= document.createElement("div");
+div.classList = 'hidden toast';
   document.body.appendChild(div);
-  onScreen++;
-  setTimeout(() => {
-    div.remove();
-    onScreen--;
-  }, lasts);
+let timeout: NodeJS.Timeout|undefined;
+export function toast(html) {
+  div.classList = "toast visible";
+  div.innerHTML = html;
+  if(timeout) {
+    clearTimeout(timeout)
+  }
+  timeout=setTimeout(() => {
+    timeout=undefined
+    div.classList = 'hidden toast';
+  }, 1500);
 }

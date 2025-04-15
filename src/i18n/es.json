@@ -186,8 +186,6 @@
   "settings.load_save_file_help": "Seleccione un archivo guardado en su dispositivo",
   "settings.max_coins": " {{max}} monedas en pantalla máximo",
   "settings.max_coins_help": "Solo cosmético, sin efecto en la puntuación.",
-  "settings.max_particles": " {{max}} partículas máximo",
-  "settings.max_particles_help": "Limita la cantidad de partículas que se muestran en la pantalla para lograr un efecto visual.",
   "settings.mobile": "Modo móvil",
   "settings.mobile_help": "Deja espacio debajo de la paleta.",
   "settings.pointer_lock": "Bloqueo del puntero del ratón",

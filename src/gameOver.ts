@@ -9,7 +9,7 @@ import {
   pickedUpgradesHTMl,
   reasonLevelIsLocked,
 } from "./game_utils";
-import { getSettingValue, getTotalScore } from "./settings";
+import {getSettingValue, getTotalScore, setSettingValue} from "./settings";
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
 import { rawUpgrades } from "./upgrades";
@@ -18,13 +18,8 @@ import { editRawLevelList } from "./levelEditor";
 
 export function addToTotalPlayTime(ms: number) {
   try {
-    localStorage.setItem(
-      "breakout_71_total_play_time",
-      JSON.stringify(
-        JSON.parse(localStorage.getItem("breakout_71_total_play_time") || "0") +
-          ms,
-      ),
-    );
+    setSettingValue('breakout_71_total_play_time',    getSettingValue('breakout_71_total_play_time',0)+ms)
+
   } catch (e) {}
 }
 

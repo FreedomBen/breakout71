@@ -44,6 +44,7 @@ import {
 import {
   forEachLiveOne,
   gameStateTick,
+  liveCount,
   normalizeGameState,
   pickRandomUpgrades,
   setLevel,
@@ -96,6 +97,7 @@ import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
 import { getNearestUnlockHTML, openScorePanel } from "./openScorePanel";
 import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
+import {toast} from "./toast";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -470,6 +472,7 @@ export let lastMeasuredFPS = 60;
 setInterval(() => {
   lastMeasuredFPS = FPSCounter;
   FPSCounter = 0;
+
 }, 1000);
 
 setInterval(() => {
@@ -768,15 +771,6 @@ async function openSettingsMenu() {
       await openSettingsMenu();
     },
   });
-  actions.push({
-    icon: icons["icon:particles"],
-    text: t("settings.max_particles", { max: getCurrentMaxParticles() }),
-    help: t("settings.max_particles_help"),
-    async value() {
-      cycleMaxParticles();
-      await openSettingsMenu();
-    },
-  });
 
   actions.push({
     icon: icons["icon:reset"],
@@ -1022,22 +1016,29 @@ export function restart(params: RunParams) {
     play();
   }
 }
-
-if (window.location.search.includes("autoplay")) {
+ if (window.location.search.includes("autoplay")) {
   startComputerControlledGame();
-} else {
+} else if (window.location.search.includes("stress")) {
+   if(!isOptionOn('show_fps'))
+   toggleOption('show_fps')
+  restart({
+    level:allLevels.find(l=>l.name=='Worms'),
+    perks:{base_combo:5000, pierce:20, rainbow:3, sapper:2, etherealcoins:1}
+  });
+}else {
   restart({});
 }
 
 export function startComputerControlledGame() {
-  const perks: Partial<PerksMap> = { base_combo: 7, pierce: 3 };
+  const perks: Partial<PerksMap> = { base_combo: 20, pierce: 3 };
   for (let i = 0; i < 10; i++) {
     const u = sample(upgrades);
-    perks[u.id] = Math.floor(Math.random() * u.max) + 1;
+
+    perks[u.id] ||= Math.floor(Math.random() * u.max) + 1;
   }
   perks.superhot = 0;
   restart({
-    level: sample(allLevels)?.name,
+    level: sample(allLevels.filter((l) => l.color === "#000000")),
     computer_controlled: true,
     perks,
   });

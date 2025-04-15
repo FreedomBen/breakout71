@@ -186,8 +186,6 @@
   "settings.load_save_file_help": "Wählen Sie eine Speicherdatei auf Ihrem Gerät",
   "settings.max_coins": " {{max}} Münzen auf dem Bildschirm maximal",
   "settings.max_coins_help": "Nur kosmetisch, keine Auswirkung auf das Ergebnis",
-  "settings.max_particles": " {{max}} Teilchen maximal",
-  "settings.max_particles_help": "Begrenzt die Anzahl der auf dem Bildschirm angezeigten Partikel für visuelle Effekte.",
   "settings.mobile": "Mobiler Modus",
   "settings.mobile_help": "Lässt Platz unter dem Paddel.",
   "settings.pointer_lock": "Mauszeigersperre",

@@ -276,6 +276,7 @@ export type GameState = {
     explode: { vol: number; x: number };
     lifeLost: { vol: number; x: number };
     coinCatch: { vol: number; x: number };
+    plouf: { vol: number; x: number };
     colorChange: { vol: number; x: number };
   };
   rerolls: number;

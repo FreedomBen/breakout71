@@ -24,13 +24,23 @@ languages, I may add features again.
 
 # Changelog
 ## To do
-- redo video
-- auto-detect device performance at first startup and adjust settings accordingly
-- demo mode that shows device name (for phone shops to catch attention)
+
+- redo video presentation
+- chill game mode, to just relax your mind :
+  - no 7 levels limit
+  - no upgrades offered at the end of the level 
+  - get a  random perk
+  - every 7 level it's replaced by another random perk
+  - every 7 levels, +10 base combo and +1 piece
+  
+
 
 ## Done
 
-- level editor
+- added a few levels
+- autoplay mode (with wake lock and computer play)
+- slower coins fall once they are past the paddle 
+- in game level editor
 - allow loading newer save in outdated app (for rollback)
 - game crashes when reaching level 12 (no level info in runLevels)
 
@@ -382,6 +392,7 @@ languages, I may add features again.
 
 ## Maybe one day
 - https://weblate.org/fr/ quite annoying to have merge conflicts while pushing, i'll enable it later. 
+- auto-detect device performance at first startup and adjust settings accordingly (hard to do in any sort of useful way)
 - [jaceys] Move the restart button out of the menu, so that it is more easily accessible (will allow user to choose starting perk instead)
 - colored coins only (coins should be of the color of the ball to count, otherwise what ? i'd rather avoid negative points)
 - coins avoid ball of different color (pointless)

@@ -186,8 +186,6 @@
   "settings.load_save_file_help": "Depuis un fichier ",
   "settings.max_coins": "{{max}} pièces affichées maximum",
   "settings.max_coins_help": "Visuel uniquement, pas d'impact sur le score",
-  "settings.max_particles": " {{max}} particules maximum",
-  "settings.max_particles_help": "Limite le nombre de particules affichées à l'écran pour les effets visuels",
   "settings.mobile": "Mode mobile",
   "settings.mobile_help": "Laisse un espace sous la raquette.",
   "settings.pointer_lock": "Verrouillage du pointeur",

@@ -934,12 +934,6 @@
     "color": ""
   },
   {
-    "name": "icon:particles",
-    "size": 8,
-    "bricks": "_b_b_b__________b_bbb_b___bbb___b_bbb__b_____b___b_b__b________b",
-    "color": ""
-  },
-  {
     "name": "icon:reset",
     "size": 8,
     "bricks": "bb____bbbbb__bbb_bbbbbb___bbbb____bbbb___bbbbbb_bbb__bbbbb____bb",

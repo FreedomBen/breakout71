@@ -186,8 +186,6 @@
   "settings.load_save_file_help": "Cihazınızda bir kayıt dosyası seçin",
   "settings.max_coins": "Ekranda maksimum {{max}} jeton var",
   "settings.max_coins_help": "Sadece kozmetik, puan üzerinde etkisi yok",
-  "settings.max_particles": " {{max}} parçacık maksimum",
-  "settings.max_particles_help": "Görsel efekt için ekranda gösterilen parçacık sayısını sınırlar.",
   "settings.mobile": "Mobil mod",
   "settings.mobile_help": "Kürek altında boşluk bırakır.",
   "settings.pointer_lock": "Fare işaretçisi kilidi",

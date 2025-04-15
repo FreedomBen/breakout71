@@ -186,8 +186,6 @@
   "settings.load_save_file_help": "Выберите файл сохранения на вашем устройстве",
   "settings.max_coins": " {{max}} монет на экране максимум",
   "settings.max_coins_help": "Только косметика, не влияет на результат",
-  "settings.max_particles": " {{max}} частиц максимум",
-  "settings.max_particles_help": "Ограничивает количество частиц, отображаемых на экране для визуального эффекта.",
   "settings.mobile": "Мобильный режим",
   "settings.mobile_help": "Оставляет место под лопаткой.",
   "settings.pointer_lock": "Блокировка указателя мыши",

@@ -186,8 +186,6 @@
   "settings.load_save_file_help": "حدد ملف الحفظ على جهازك",
   "settings.max_coins": " {{max}} عملات معدنية على الشاشة كحد أقصى",
   "settings.max_coins_help": "تجميلي فقط، لا يؤثر على النتيجة",
-  "settings.max_particles": " {{max}} جسيمات كحد أقصى",
-  "settings.max_particles_help": "يحدد عدد الجسيمات التي تظهر على الشاشة للتأثير البصري.",
   "settings.mobile": "الوضع المحمول",
   "settings.mobile_help": "يترك مساحة تحت المجداف.",
   "settings.pointer_lock": "قفل مؤشر الماوس",

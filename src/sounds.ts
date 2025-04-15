@@ -16,7 +16,7 @@ export function playPendingSounds(gameState: GameState) {
     };
     if (ex.vol) {
       sounds[soundName](
-        Math.min(2, ex.vol),
+        Math.min(1, ex.vol),
         pixelsToPan(gameState, ex.x),
         gameState.combo,
       );
@@ -25,13 +25,21 @@ export function playPendingSounds(gameState: GameState) {
   }
 }
 export const sounds = {
-  wallBeep: (vol: number, pan: number, combo: number) => {
+  wallBeep: (volume: number, pan: number) => {
     if (!isOptionOn("sound")) return;
-    createSingleBounceSound(800, pan, vol);
+
+    createSingleBounceSound(800, pan, volume);
+  },
+
+  plouf: (volume: number, pan: number) => {
+    if (!isOptionOn("sound")) return;
+    createSingleBounceSound(240, pan, volume*0.5);
+    // createWaterDropSound(800, pan, volume*0.2, 0.2,'triangle')
   },
 
   comboIncreaseMaybe: (volume: number, pan: number, combo: number) => {
     if (!isOptionOn("sound")) return;
+
     let delta = 0;
     if (!isNaN(lastComboPlayed)) {
       if (lastComboPlayed < combo) delta = 1;
@@ -268,4 +276,45 @@ function createOscillator(
   oscillator.type = type;
   oscillator.frequency.setValueAtTime(frequency, context.currentTime);
   return oscillator;
+}
+// TODO
+
+function createWaterDropSound(
+  baseFreq = 500,
+  pan = 0.5,
+  volume = 1,
+  duration = 0.6,
+  type: OscillatorType = "sine"
+) {
+  const context = getAudioContext();
+  if (!context) return;
+
+  const oscillator = createOscillator(context, baseFreq, type);
+  const gainNode = context.createGain();
+  const panner = context.createStereoPanner();
+
+  // Connect nodes
+  oscillator.connect(gainNode);
+  gainNode.connect(panner);
+  panner.connect(context.destination);
+  panner.connect(audioRecordingTrack);
+
+  // Panning
+  panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime);
+
+  const now = context.currentTime;
+
+  // Volume envelope: soft plop -> fade out
+  gainNode.gain.setValueAtTime(0.0001, now);
+  gainNode.gain.exponentialRampToValueAtTime(0.7 * volume, now + duration/100); // Quick swell
+  gainNode.gain.exponentialRampToValueAtTime(0.1, now + duration/3); // Fade out
+  gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration); // Fade out
+
+  // Pitch envelope: slight downward pitch bend to simulate water tension
+  oscillator.frequency.setValueAtTime(baseFreq, now);
+  oscillator.frequency.exponentialRampToValueAtTime(baseFreq * 0.5, now + duration);
+
+  // Start and stop
+  oscillator.start(now);
+  oscillator.stop(now + duration);
 }

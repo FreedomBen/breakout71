@@ -240,6 +240,7 @@ export function defaultSounds() {
       explode: { vol: 0, x: 0 },
       lifeLost: { vol: 0, x: 0 },
       coinCatch: { vol: 0, x: 0 },
+      plouf: { vol: 0, x: 0 },
       colorChange: { vol: 0, x: 0 },
     },
   };

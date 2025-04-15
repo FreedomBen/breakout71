@@ -1160,8 +1160,12 @@ export function gameStateTick(
 
       const ratio =
         1 -
-        ((gameState.perks.viscosity * 0.03 + 0.002) * frames) /
+        ((gameState.perks.viscosity * 0.03 +
+          0.002 +
+          (coin.y > gameState.gameZoneHeight ? 0.2 : 0)) *
+          frames) /
           (1 + gameState.perks.etherealcoins);
+
       if (!gameState.perks.etherealcoins) {
         coin.vy *= ratio;
         coin.vx *= ratio;
@@ -1214,6 +1218,9 @@ export function gameStateTick(
 
       const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
       const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
+      if(coin.previousY<gameState.gameZoneHeight && coin.y>gameState.gameZoneHeight && coin.vy>0 && speed > 20) {
+        schedulGameSound(gameState, "plouf", coin.x, clamp(speed, 20,100)/100*0.2);
+      }
 
       if (
         coin.y > gameState.gameZoneHeight - coinRadius - gameState.puckHeight &&
