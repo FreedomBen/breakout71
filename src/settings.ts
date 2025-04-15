@@ -2,15 +2,20 @@
 
 let cachedSettings: { [key: string]: unknown } = {};
 
+ try {
+   for(let key in localStorage){
+
+ try {
+      cachedSettings[key] = JSON.parse(localStorage.getItem(key)||'null')  ;
+ } catch (e) {
+  console.warn(e);
+}
+   }
+} catch (e) {
+  console.warn(e);
+}
+
 export function getSettingValue<T>(key: string, defaultValue: T) {
-  if (typeof cachedSettings[key] == "undefined") {
-    try {
-      const ls = localStorage.getItem(key);
-      if (ls) cachedSettings[key] = JSON.parse(ls) as T;
-    } catch (e) {
-      console.warn(e);
-    }
-  }
   return (cachedSettings[key] as T) ?? defaultValue;
 }
 
@@ -28,11 +33,11 @@ export function getTotalScore() {
 }
 
 export function getCurrentMaxCoins() {
-  return Math.pow(2, getSettingValue("max_coins", 6)) * 200;
+  return Math.pow(2, getSettingValue("max_coins", 2)) * 200;
 }
 export function getCurrentMaxParticles() {
   return  getCurrentMaxCoins()
 }
 export function cycleMaxCoins() {
-  setSettingValue("max_coins", (getSettingValue("max_coins", 6) + 1) % 6);
+  setSettingValue("max_coins", (getSettingValue("max_coins", 2) + 1) % 10);
 }

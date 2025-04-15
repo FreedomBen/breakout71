@@ -964,24 +964,31 @@ function hitsSomething(x, y, radius) {
     return hasBrick(brickIndex(x - radius, y - radius)) ?? hasBrick(brickIndex(x + radius, y - radius)) ?? hasBrick(brickIndex(x + radius, y + radius)) ?? hasBrick(brickIndex(x - radius, y + radius));
 }
 function tick() {
+    startWork('tick init');
     const currentTick = performance.now();
     const timeDeltaMs = currentTick - gameState.lastTick;
     gameState.lastTick = currentTick;
     let frames = Math.min(4, timeDeltaMs / (1000 / 60));
     if (gameState.keyboardPuckSpeed) (0, _gameStateMutators.setMousePos)(gameState, gameState.puckPosition + gameState.keyboardPuckSpeed);
     if (gameState.perks.superhot) frames *= (0, _pureFunctions.clamp)(Math.abs(gameState.puckPosition - gameState.lastPuckPosition) / 5, 0.2 / gameState.perks.superhot, 1);
+    startWork('normalizeGameState');
     (0, _gameStateMutators.normalizeGameState)(gameState);
+    startWork('gameStateTick');
     if (gameState.running) {
         gameState.levelTime += timeDeltaMs * frames;
         gameState.runStatistics.runTime += timeDeltaMs * frames;
         (0, _gameStateMutators.gameStateTick)(gameState, frames);
     }
+    startWork('render');
     if (gameState.running || gameState.needsRender) {
         gameState.needsRender = false;
         (0, _render.render)(gameState);
     }
+    startWork('recordOneFrame');
     if (gameState.running) (0, _recording.recordOneFrame)(gameState);
+    startWork('playPendingSounds');
     if ((0, _options.isOptionOn)("sound")) (0, _sounds.playPendingSounds)(gameState);
+    startWork('idle');
     requestAnimationFrame(tick);
     FPSCounter++;
 }
@@ -991,6 +998,20 @@ setInterval(()=>{
     lastMeasuredFPS = FPSCounter;
     FPSCounter = 0;
 }, 1000);
+let total = {};
+let lastTick = performance.now();
+let doing = '';
+function startWork(what) {
+    const newNow = performance.now();
+    if (doing) total[doing] = (total[doing] || 0) + (newNow - lastTick);
+    lastTick = newNow;
+    doing = what;
+}
+setInterval(()=>{
+    const totalTime = (0, _gameUtils.sumOfValues)(total);
+    console.log((0, _gameStateMutators.liveCount)(gameState.coins) + ' coins\n' + Object.entries(total).sort((a, b)=>b[1] - a[1]).filter((a)=>a[1] > 1).map((t)=>t[0] + ':' + (t[1] / totalTime * 100).toFixed(2) + '% (' + t[1] + 'ms)').join('\n'));
+    total = {};
+}, 2000);
 setInterval(()=>{
     (0, _monitorLevelsUnlocks.monitorLevelsUnlocks)(gameState);
 }, 500);
@@ -2388,13 +2409,16 @@ parcelHelpers.export(exports, "getCurrentMaxCoins", ()=>getCurrentMaxCoins);
 parcelHelpers.export(exports, "getCurrentMaxParticles", ()=>getCurrentMaxParticles);
 parcelHelpers.export(exports, "cycleMaxCoins", ()=>cycleMaxCoins);
 let cachedSettings = {};
-function getSettingValue(key, defaultValue) {
-    if (typeof cachedSettings[key] == "undefined") try {
-        const ls = localStorage.getItem(key);
-        if (ls) cachedSettings[key] = JSON.parse(ls);
+try {
+    for(let key in localStorage)try {
+        cachedSettings[key] = JSON.parse(localStorage.getItem(key) || 'null');
     } catch (e) {
         console.warn(e);
     }
+} catch (e) {
+    console.warn(e);
+}
+function getSettingValue(key, defaultValue) {
     return cachedSettings[key] ?? defaultValue;
 }
 function setSettingValue(key, value) {
@@ -2409,13 +2433,13 @@ function getTotalScore() {
     return getSettingValue("breakout_71_total_score", 0);
 }
 function getCurrentMaxCoins() {
-    return Math.pow(2, getSettingValue("max_coins", 6)) * 200;
+    return Math.pow(2, getSettingValue("max_coins", 2)) * 200;
 }
 function getCurrentMaxParticles() {
     return getCurrentMaxCoins();
 }
 function cycleMaxCoins() {
-    setSettingValue("max_coins", (getSettingValue("max_coins", 6) + 1) % 6);
+    setSettingValue("max_coins", (getSettingValue("max_coins", 2) + 1) % 10);
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports,__globalThis) {

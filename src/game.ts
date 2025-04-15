@@ -27,24 +27,21 @@ import {
   max_levels,
   pickedUpgradesHTMl,
   reasonLevelIsLocked,
-  sample,
+  sample, sumOfValues,
 } from "./game_utils";
 
 import "./PWA/sw_loader";
 import { getCurrentLang, languages, t } from "./i18n/i18n";
 import {
   cycleMaxCoins,
-  cycleMaxParticles,
   getCurrentMaxCoins,
-  getCurrentMaxParticles,
   getSettingValue,
   getTotalScore,
   setSettingValue,
 } from "./settings";
 import {
   forEachLiveOne,
-  gameStateTick,
-  liveCount,
+  gameStateTick, liveCount,
   normalizeGameState,
   pickRandomUpgrades,
   setLevel,
@@ -97,7 +94,6 @@ import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
 import { getNearestUnlockHTML, openScorePanel } from "./openScorePanel";
 import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
-import {toast} from "./toast";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -424,13 +420,15 @@ export function hitsSomething(x: number, y: number, radius: number) {
   );
 }
 
+
 export function tick() {
+startWork('tick init')
+
   const currentTick = performance.now();
   const timeDeltaMs = currentTick - gameState.lastTick;
   gameState.lastTick = currentTick;
 
   let frames = Math.min(4, timeDeltaMs / (1000 / 60));
-
   if (gameState.keyboardPuckSpeed) {
     setMousePos(
       gameState,
@@ -444,23 +442,30 @@ export function tick() {
       1,
     );
   }
-  normalizeGameState(gameState);
 
+startWork('normalizeGameState')
+  normalizeGameState(gameState);
+startWork('gameStateTick')
   if (gameState.running) {
     gameState.levelTime += timeDeltaMs * frames;
     gameState.runStatistics.runTime += timeDeltaMs * frames;
     gameStateTick(gameState, frames);
   }
+
+startWork('render')
   if (gameState.running || gameState.needsRender) {
     gameState.needsRender = false;
     render(gameState);
   }
+startWork('recordOneFrame')
   if (gameState.running) {
     recordOneFrame(gameState);
   }
+startWork('playPendingSounds')
   if (isOptionOn("sound")) {
     playPendingSounds(gameState);
   }
+startWork('idle')
 
   requestAnimationFrame(tick);
   FPSCounter++;
@@ -468,12 +473,31 @@ export function tick() {
 
 let FPSCounter = 0;
 export let lastMeasuredFPS = 60;
-
 setInterval(() => {
   lastMeasuredFPS = FPSCounter;
   FPSCounter = 0;
-
 }, 1000);
+
+let total={}
+let lastTick=performance.now();
+let doing= ''
+function startWork(what){
+  const newNow=performance.now();
+  if(doing) {
+    total[doing] = (total[doing]||0) + ( newNow-lastTick )
+  }
+  lastTick=newNow
+  doing=what
+}
+setInterval(()=>{
+  const totalTime = sumOfValues(total)
+  console.log(
+      liveCount(gameState.coins) +' coins\n'+
+      Object.entries(total).sort((a,b)=>b[1]-a[1]).filter(a=>a[1]>1).map(t=>t[0]+':'+(t[1]/totalTime*100).toFixed(2)+'% ('+t[1]+'ms)').join('\n'))
+
+  total={}
+},2000)
+
 
 setInterval(() => {
   monitorLevelsUnlocks(gameState);
