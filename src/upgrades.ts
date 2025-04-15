@@ -818,7 +818,7 @@ export const rawUpgrades = [
     threshold: 215000,
     gift: false,
     id: "bricks_attract_ball",
-    max: 3,
+    max: 1,
     name: t("upgrades.bricks_attract_ball.name"),
     help: (lvl: number) =>
       t("upgrades.bricks_attract_ball.tooltip", { count: lvl * 3 }),

@@ -19,14 +19,25 @@ export function getSettingValue<T>(key: string, defaultValue: T) {
   return (cachedSettings[key] as T) ?? defaultValue;
 }
 
+//  We avoid using localstorage synchronously for perf reasons
+let needsSaving= new Set()
 export function setSettingValue<T>(key: string, value: T) {
-  cachedSettings[key] = value;
+  if(cachedSettings[key] !==value){
+        needsSaving.add(key)
+     cachedSettings[key] = value;
+  }
+}
+setInterval(()=>{
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    for(let key of needsSaving){
+        localStorage.setItem(key, JSON.stringify(cachedSettings[key]));
+    }
+    needsSaving.clear()
   } catch (e) {
     console.warn(e);
   }
-}
+}, 500)
+
 
 export function getTotalScore() {
   return getSettingValue("breakout_71_total_score", 0);
@@ -39,5 +50,5 @@ export function getCurrentMaxParticles() {
   return  getCurrentMaxCoins()
 }
 export function cycleMaxCoins() {
-  setSettingValue("max_coins", (getSettingValue("max_coins", 2) + 1) % 10);
+  setSettingValue("max_coins", (getSettingValue("max_coins", 2) + 1) % 7);
 }

@@ -13,7 +13,7 @@ import {
 } from "./game_utils";
 import { Coin, colorString, GameState } from "./types";
 import { t } from "./i18n/i18n";
-import { gameState, lastMeasuredFPS } from "./game";
+import {gameState, lastMeasuredFPS, startWork} from "./game";
 import { isOptionOn } from "./options";
 import {
   catchRateBest,
@@ -25,6 +25,7 @@ import {
   wallBouncedBest,
   wallBouncedGood,
 } from "./pure_functions";
+import {getCurrentMaxCoins} from "./settings";
 
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
 export const ctx = gameCanvas.getContext("2d", {
@@ -51,6 +52,7 @@ const haloCanvasCtx = haloCanvas.getContext("2d", {
 export const haloScale = 16;
 
 export function render(gameState: GameState) {
+startWork('render:init')
   const level = currentLevelInfo(gameState);
 
   const hasCombo = gameState.combo > baseCombo(gameState);
@@ -70,11 +72,14 @@ export function render(gameState: GameState) {
     ? (gameState.levelSpawnedCoins - gameState.levelLostCoins) /
       gameState.levelSpawnedCoins
     : 1;
-
+startWork('render:scoreDisplay')
   scoreDisplay.innerHTML =
     (isOptionOn("show_fps") || gameState.computer_controlled
       ? ` 
-               <span class="${(Math.abs(lastMeasuredFPS - 60) < 2 && " ") || (Math.abs(lastMeasuredFPS - 60) < 10 && "good") || "bad"}">
+ <span>
+            ${Math.floor(liveCount(gameState.coins) / getCurrentMaxCoins() * 100)} %
+        </span><span> / </span>
+          <span class="${(Math.abs(lastMeasuredFPS - 60) < 2 && " ") || (Math.abs(lastMeasuredFPS - 60) < 10 && "good") || "bad"}">
             ${lastMeasuredFPS} FPS
         </span><span> / </span>
          
@@ -102,19 +107,20 @@ export function render(gameState: GameState) {
     (gameState.computer_controlled && "computer_controlled") ||
     (gameState.lastScoreIncrease > gameState.levelTime - 500 && "active") ||
     "";
-
   // Clear
   if (!isOptionOn("basic") && level.svg && level.color === "#000000") {
+
+    startWork('render:halo:clear')
     haloCanvasCtx.globalCompositeOperation = "source-over";
     haloCanvasCtx.globalAlpha = 0.99;
     haloCanvasCtx.fillStyle = level.color;
     haloCanvasCtx.fillRect(0, 0, width / haloScale, height / haloScale);
 
     const brightness = isOptionOn("extra_bright") ? 3 : 1;
-
     haloCanvasCtx.globalCompositeOperation = "lighten";
     haloCanvasCtx.globalAlpha =
       0.1 + (0.5 * 10) / (liveCount(gameState.coins) + 10);
+    startWork('render:halo:coins')
     forEachLiveOne(gameState.coins, (coin) => {
       const color = getCoinRenderColor(gameState, coin);
       drawFuzzyBall(
@@ -126,6 +132,7 @@ export function render(gameState: GameState) {
       );
     });
 
+    startWork('render:halo:balls')
     gameState.balls.forEach((ball) => {
       haloCanvasCtx.globalAlpha = 0.3 * (1 - ballTransparency(ball, gameState));
       drawFuzzyBall(
@@ -136,6 +143,8 @@ export function render(gameState: GameState) {
         ball.y / haloScale,
       );
     });
+
+    startWork('render:halo:bricks')
     haloCanvasCtx.globalAlpha = 0.05;
     gameState.bricks.forEach((color, index) => {
       if (!color) return;
@@ -151,6 +160,7 @@ export function render(gameState: GameState) {
       );
     });
 
+    startWork('render:halo:particles')
     haloCanvasCtx.globalCompositeOperation = "screen";
     forEachLiveOne(gameState.particles, (flash) => {
       const { x, y, time, color, size, duration } = flash;
@@ -174,6 +184,7 @@ export function render(gameState: GameState) {
     ctx.drawImage(haloCanvas, 0, 0, width, height);
     ctx.imageSmoothingEnabled = false;
 
+    startWork('render:halo:pattern')
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "multiply";
     if (level.svg && background.width && background.complete) {
@@ -225,6 +236,8 @@ export function render(gameState: GameState) {
       ctx.fillRect(0, 0, width, height);
     }
   } else {
+
+    startWork('render:halo-basic')
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = level.color || "#000";
@@ -237,6 +250,7 @@ export function render(gameState: GameState) {
     });
   }
 
+startWork('render:explosionshake')
   ctx.globalAlpha = 1;
   ctx.globalCompositeOperation = "source-over";
   const lastExplosionDelay = Date.now() - gameState.lastExplosion + 5;
@@ -249,7 +263,7 @@ export function render(gameState: GameState) {
       Math.sin(Date.now() + 36) * amplitude,
     );
   }
-
+startWork('render:coins')
   // Coins
   ctx.globalAlpha = 1;
   forEachLiveOne(gameState.coins, (coin) => {
@@ -272,6 +286,7 @@ export function render(gameState: GameState) {
       coin.a,
     );
   });
+  startWork('render:ball shade')
   // Black shadow around balls
   if (!isOptionOn("basic")) {
     ctx.globalCompositeOperation = "source-over";
@@ -289,10 +304,11 @@ export function render(gameState: GameState) {
       );
     });
   }
-
+startWork('render:bricks')
   ctx.globalCompositeOperation = "source-over";
   renderAllBricks();
 
+startWork('render:lights')
   ctx.globalCompositeOperation = "screen";
   forEachLiveOne(gameState.lights, (flash) => {
     const { x, y, time, color, size, duration } = flash;
@@ -309,6 +325,7 @@ export function render(gameState: GameState) {
     );
   });
 
+startWork('render:texts')
   ctx.globalCompositeOperation = "screen";
   forEachLiveOne(gameState.texts, (flash) => {
     const { x, y, time, color, size, duration } = flash;
@@ -318,6 +335,7 @@ export function render(gameState: GameState) {
     drawText(ctx, flash.text, color, size, x, y - elapsed / 10);
   });
 
+startWork('render:particles')
   forEachLiveOne(gameState.particles, (particle) => {
     const { x, y, time, color, size, duration } = particle;
     const elapsed = gameState.levelTime - time;
@@ -325,6 +343,8 @@ export function render(gameState: GameState) {
     ctx.globalCompositeOperation = "screen";
     drawBall(ctx, color, size, x, y);
   });
+
+startWork('render:extra_life')
   if (gameState.perks.extra_life) {
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
@@ -339,9 +359,9 @@ export function render(gameState: GameState) {
     }
   }
 
+startWork('render:balls')
   ctx.globalAlpha = 1;
   ctx.globalCompositeOperation = "source-over";
-
   gameState.balls.forEach((ball) => {
     const drawingColor = gameState.ballsColor;
     const ballAlpha = 1 - ballTransparency(ball, gameState);
@@ -390,10 +410,10 @@ export function render(gameState: GameState) {
       ctx.stroke();
     }
   });
-  // The puck
+
+  startWork('render:puck')
   ctx.globalAlpha = 1;
   ctx.globalCompositeOperation = "source-over";
-
   drawPuck(
     ctx,
     gameState.puckColor,
@@ -404,6 +424,7 @@ export function render(gameState: GameState) {
     gameState.perks.streak_shots && hasCombo ? getDashOffset(gameState) : -1,
   );
 
+  startWork('render:combotext')
   if (gameState.combo > 1) {
     ctx.globalCompositeOperation = "source-over";
     const comboText = "x " + gameState.combo;
@@ -443,8 +464,8 @@ export function render(gameState: GameState) {
       );
     }
   }
+  startWork('render:Borders')
   //  Borders
-
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = 1;
 
@@ -527,6 +548,7 @@ export function render(gameState: GameState) {
     1,
   );
 
+  startWork('render:contrast')
   if (
     !isOptionOn("basic") &&
     isOptionOn("contrast") &&
@@ -547,6 +569,7 @@ export function render(gameState: GameState) {
     ctx.imageSmoothingEnabled = false;
   }
 
+  startWork('render:breakout.lecaro.me?autoplay')
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = 1;
 
@@ -561,6 +584,7 @@ export function render(gameState: GameState) {
         (gameState.canvasHeight - gameState.gameZoneHeight) / 2,
     );
   }
+  startWork('render:mobile_press_to_play')
   if (isOptionOn("mobile-mode") && !gameState.running) {
     drawText(
       ctx,
@@ -580,8 +604,10 @@ export function render(gameState: GameState) {
   //   ctx.fillRect(0,gameState.gameZoneHeight, gameState.canvasWidth, gameState.canvasHeight-gameState.gameZoneHeight)
   // }
   // ctx.globalAlpha=1
+  startWork('render:askForWakeLock')
   askForWakeLock(gameState);
 
+  startWork('render:resetTransform')
   if (shaked) {
     ctx.resetTransform();
   }

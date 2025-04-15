@@ -17,10 +17,7 @@ import { run } from "jest";
 import { editRawLevelList } from "./levelEditor";
 
 export function addToTotalPlayTime(ms: number) {
-  try {
     setSettingValue('breakout_71_total_play_time',    getSettingValue('breakout_71_total_play_time',0)+ms)
-
-  } catch (e) {}
 }
 
 export function gameOver(title: string, intro: string) {

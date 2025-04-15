@@ -33,7 +33,7 @@ export const sounds = {
 
   plouf: (volume: number, pan: number) => {
     if (!isOptionOn("sound")) return;
-    createSingleBounceSound(240, pan, volume*0.5);
+    createSingleBounceSound(500, pan, volume*0.5);
     // createWaterDropSound(800, pan, volume*0.2, 0.2,'triangle')
   },
 

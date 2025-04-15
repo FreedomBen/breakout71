@@ -461,11 +461,11 @@ export function explodeBrick(
     gameState.runStatistics.coins_spawned += coinsToSpawn;
     gameState.runStatistics.bricks_broken++;
 
-    const maxCoins = getCurrentMaxCoins() * (isOptionOn("basic") ? 0.5 : 1);
+    const maxCoins = getCurrentMaxCoins()
     const spawnableCoins =
       liveCount(gameState.coins) > getCurrentMaxCoins()
         ? 1
-        : Math.floor(maxCoins - liveCount(gameState.coins)) / 3;
+        : Math.floor((maxCoins - liveCount(gameState.coins)) /2) ;
 
     const pointsPerCoin = Math.max(1, Math.ceil(coinsToSpawn / spawnableCoins));
 
@@ -1220,6 +1220,9 @@ export function gameStateTick(
       const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
       if(coin.previousY<gameState.gameZoneHeight && coin.y>gameState.gameZoneHeight && coin.vy>0 && speed > 20) {
         schedulGameSound(gameState, "plouf", coin.x, clamp(speed, 20,100)/100*0.2);
+        if(!isOptionOn('basic')){
+          makeParticle(gameState, coin.x,gameState.gameZoneHeight, -coin.vx/5, -coin.vy/5, coin.color, false )
+        }
       }
 
       if (

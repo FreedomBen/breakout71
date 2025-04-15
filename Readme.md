@@ -26,19 +26,12 @@ languages, I may add features again.
 ## To do
 
 - redo video presentation
-- chill game mode, to just relax your mind :
-  - no 7 levels limit
-  - no upgrades offered at the end of the level 
-  - get a  random perk
-  - every 7 level it's replaced by another random perk
-  - every 7 levels, +10 base combo and +1 piece
-  
-
 
 ## Done
 
+- measured and improve the performance (test here https://breakout.lecaro.me/?stresstest)
 - added a few levels
-- autoplay mode (with wake lock and computer play)
+- autoplay mode (with wake lock and computer play https://breakout.lecaro.me/?autoplay )
 - slower coins fall once they are past the paddle 
 - in game level editor
 - allow loading newer save in outdated app (for rollback)
@@ -373,6 +366,12 @@ languages, I may add features again.
 
 ## UX / gameplay
 
+- chill game mode, to just relax your mind :
+  - no 7 levels limit
+  - no upgrades offered at the end of the level 
+  - get a  random perk
+  - every 7 level it's replaced by another random perk
+  - every 7 levels, +10 base combo and +1 piece
 - avoid showing a +1 and -1 at the same time when a combo increase is reset
 - explain to iOS users how to add the app to home screen to get fullscreen
 - delayed start on mobile to let users place the puck where they want

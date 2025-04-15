@@ -723,6 +723,7 @@ parcelHelpers.export(exports, "hasBrick", ()=>hasBrick);
 parcelHelpers.export(exports, "hitsSomething", ()=>hitsSomething);
 parcelHelpers.export(exports, "tick", ()=>tick);
 parcelHelpers.export(exports, "lastMeasuredFPS", ()=>lastMeasuredFPS);
+parcelHelpers.export(exports, "startWork", ()=>startWork);
 parcelHelpers.export(exports, "creativeModeThreshold", ()=>creativeModeThreshold);
 parcelHelpers.export(exports, "openMainMenu", ()=>openMainMenu);
 parcelHelpers.export(exports, "confirmRestart", ()=>confirmRestart);
@@ -979,7 +980,6 @@ function tick() {
         gameState.runStatistics.runTime += timeDeltaMs * frames;
         (0, _gameStateMutators.gameStateTick)(gameState, frames);
     }
-    startWork('render');
     if (gameState.running || gameState.needsRender) {
         gameState.needsRender = false;
         (0, _render.render)(gameState);
@@ -998,18 +998,20 @@ setInterval(()=>{
     lastMeasuredFPS = FPSCounter;
     FPSCounter = 0;
 }, 1000);
+const showStats = window.location.search.includes("stress");
 let total = {};
 let lastTick = performance.now();
 let doing = '';
 function startWork(what) {
+    if (!showStats) return;
     const newNow = performance.now();
     if (doing) total[doing] = (total[doing] || 0) + (newNow - lastTick);
     lastTick = newNow;
     doing = what;
 }
-setInterval(()=>{
+if (showStats) setInterval(()=>{
     const totalTime = (0, _gameUtils.sumOfValues)(total);
-    console.log((0, _gameStateMutators.liveCount)(gameState.coins) + ' coins\n' + Object.entries(total).sort((a, b)=>b[1] - a[1]).filter((a)=>a[1] > 1).map((t)=>t[0] + ':' + (t[1] / totalTime * 100).toFixed(2) + '% (' + t[1] + 'ms)').join('\n'));
+    console.debug((0, _gameStateMutators.liveCount)(gameState.coins) + ' coins\n' + Object.entries(total).sort((a, b)=>b[1] - a[1]).filter((a)=>a[1] > 1).map((t)=>t[0] + ':' + (t[1] / totalTime * 100).toFixed(2) + '% (' + t[1] + 'ms)').join('\n'));
     total = {};
 }, 2000);
 setInterval(()=>{
@@ -1435,30 +1437,31 @@ function restart(params) {
     (0, _gameStateMutators.setLevel)(gameState, 0);
     if (params?.computer_controlled) play();
 }
-if (window.location.search.includes("autoplay")) startComputerControlledGame();
-else if (window.location.search.includes("stress")) {
+if (window.location.search.match(/autoplay|stress/)) {
+    startComputerControlledGame();
     if (!(0, _options.isOptionOn)('show_fps')) (0, _options.toggleOption)('show_fps');
-    restart({
-        level: (0, _loadGameData.allLevels).find((l)=>l.name == 'Worms'),
-        perks: {
-            base_combo: 5000,
-            pierce: 20,
-            rainbow: 3,
-            sapper: 2,
-            etherealcoins: 1
-        }
-    });
 } else restart({});
 function startComputerControlledGame() {
     const perks = {
         base_combo: 20,
         pierce: 3
     };
-    for(let i = 0; i < 10; i++){
-        const u = (0, _gameUtils.sample)((0, _loadGameData.upgrades));
-        perks[u.id] ||= Math.floor(Math.random() * u.max) + 1;
+    if (window.location.search.includes("stress")) Object.assign(perks, {
+        base_combo: 5000,
+        pierce: 20,
+        rainbow: 3,
+        sapper: 2,
+        etherealcoins: 1,
+        bricks_attract_ball: 1,
+        respawn: 3
+    });
+    else {
+        for(let i = 0; i < 10; i++){
+            const u = (0, _gameUtils.sample)((0, _loadGameData.upgrades));
+            perks[u.id] ||= Math.floor(Math.random() * u.max) + 1;
+        }
+        perks.superhot = 0;
     }
-    perks.superhot = 0;
     restart({
         level: (0, _gameUtils.sample)((0, _loadGameData.allLevels).filter((l)=>l.color === "#000000")),
         computer_controlled: true,
@@ -2287,7 +2290,7 @@ const rawUpgrades = [
         threshold: 215000,
         gift: false,
         id: "bricks_attract_ball",
-        max: 3,
+        max: 1,
         name: (0, _i18N.t)("upgrades.bricks_attract_ball.name"),
         help: (lvl)=>(0, _i18N.t)("upgrades.bricks_attract_ball.tooltip", {
                 count: lvl * 3
@@ -2421,14 +2424,22 @@ try {
 function getSettingValue(key, defaultValue) {
     return cachedSettings[key] ?? defaultValue;
 }
+//  We avoid using localstorage synchronously for perf reasons
+let needsSaving = new Set();
 function setSettingValue(key, value) {
-    cachedSettings[key] = value;
+    if (cachedSettings[key] !== value) {
+        needsSaving.add(key);
+        cachedSettings[key] = value;
+    }
+}
+setInterval(()=>{
     try {
-        localStorage.setItem(key, JSON.stringify(value));
+        for (let key of needsSaving)localStorage.setItem(key, JSON.stringify(cachedSettings[key]));
+        needsSaving.clear();
     } catch (e) {
         console.warn(e);
     }
-}
+}, 500);
 function getTotalScore() {
     return getSettingValue("breakout_71_total_score", 0);
 }
@@ -2439,7 +2450,7 @@ function getCurrentMaxParticles() {
     return getCurrentMaxCoins();
 }
 function cycleMaxCoins() {
-    setSettingValue("max_coins", (getSettingValue("max_coins", 2) + 1) % 10);
+    setSettingValue("max_coins", (getSettingValue("max_coins", 2) + 1) % 7);
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports,__globalThis) {
@@ -2628,7 +2639,7 @@ const sounds = {
     },
     plouf: (volume, pan)=>{
         if (!(0, _options.isOptionOn)("sound")) return;
-        createSingleBounceSound(240, pan, volume * 0.5);
+        createSingleBounceSound(500, pan, volume * 0.5);
     // createWaterDropSound(800, pan, volume*0.2, 0.2,'triangle')
     },
     comboIncreaseMaybe: (volume, pan, combo)=>{
@@ -3524,8 +3535,8 @@ function explodeBrick(gameState, index, ball, isExplosion) {
         gameState.levelSpawnedCoins += coinsToSpawn;
         gameState.runStatistics.coins_spawned += coinsToSpawn;
         gameState.runStatistics.bricks_broken++;
-        const maxCoins = (0, _settings.getCurrentMaxCoins)() * ((0, _options.isOptionOn)("basic") ? 0.5 : 1);
-        const spawnableCoins = liveCount(gameState.coins) > (0, _settings.getCurrentMaxCoins)() ? 1 : Math.floor(maxCoins - liveCount(gameState.coins)) / 3;
+        const maxCoins = (0, _settings.getCurrentMaxCoins)();
+        const spawnableCoins = liveCount(gameState.coins) > (0, _settings.getCurrentMaxCoins)() ? 1 : Math.floor((maxCoins - liveCount(gameState.coins)) / 2);
         const pointsPerCoin = Math.max(1, Math.ceil(coinsToSpawn / spawnableCoins));
         while(coinsToSpawn > 0){
             const points = Math.min(pointsPerCoin, coinsToSpawn);
@@ -3874,7 +3885,10 @@ frames = 1) {
             if (gameState.perks.helium && !(0, _options.isOptionOn)("basic") && Math.random() < 0.1 * frames) makeParticle(gameState, coin.x, coin.y, 0, dvy * 10, gameState.perks.metamorphosis || (0, _options.isOptionOn)("colorful_coins") ? coin.color : "#ffd300", true, 5, 250);
             const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
             const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
-            if (coin.previousY < gameState.gameZoneHeight && coin.y > gameState.gameZoneHeight && coin.vy > 0 && speed > 20) schedulGameSound(gameState, "plouf", coin.x, (0, _pureFunctions.clamp)(speed, 20, 100) / 100 * 0.2);
+            if (coin.previousY < gameState.gameZoneHeight && coin.y > gameState.gameZoneHeight && coin.vy > 0 && speed > 20) {
+                schedulGameSound(gameState, "plouf", coin.x, (0, _pureFunctions.clamp)(speed, 20, 100) / 100 * 0.2);
+                if (!(0, _options.isOptionOn)('basic')) makeParticle(gameState, coin.x, gameState.gameZoneHeight, -coin.vx / 5, -coin.vy / 5, coin.color, false);
+            }
             if (coin.y > gameState.gameZoneHeight - coinRadius - gameState.puckHeight && coin.y < gameState.gameZoneHeight + gameState.puckHeight + coin.vy && Math.abs(coin.x - gameState.puckPosition) < coinRadius + gameState.puckWidth / 2 + // a bit of margin to be nice , negative in case it's a negative coin
             gameState.puckHeight * (coin.points ? 1 : -1)) {
                 addToScore(gameState, coin);
@@ -4298,6 +4312,7 @@ var _i18N = require("./i18n/i18n");
 var _game = require("./game");
 var _options = require("./options");
 var _pureFunctions = require("./pure_functions");
+var _settings = require("./settings");
 const gameCanvas = document.getElementById("game");
 const ctx = gameCanvas.getContext("2d", {
     alpha: false
@@ -4316,6 +4331,7 @@ const haloCanvasCtx = haloCanvas.getContext("2d", {
 });
 const haloScale = 16;
 function render(gameState) {
+    (0, _game.startWork)('render:init');
     const level = (0, _gameUtils.currentLevelInfo)(gameState);
     const hasCombo = gameState.combo > (0, _gameStateMutators.baseCombo)(gameState);
     const { width, height } = gameCanvas;
@@ -4326,8 +4342,12 @@ function render(gameState) {
     });
     else menuLabel.innerText = (0, _i18N.t)("play.menu_label");
     const catchRate = gameState.levelSpawnedCoins ? (gameState.levelSpawnedCoins - gameState.levelLostCoins) / gameState.levelSpawnedCoins : 1;
+    (0, _game.startWork)('render:scoreDisplay');
     scoreDisplay.innerHTML = ((0, _options.isOptionOn)("show_fps") || gameState.computer_controlled ? ` 
-               <span class="${Math.abs((0, _game.lastMeasuredFPS) - 60) < 2 && " " || Math.abs((0, _game.lastMeasuredFPS) - 60) < 10 && "good" || "bad"}">
+ <span>
+            ${Math.floor((0, _gameStateMutators.liveCount)(gameState.coins) / (0, _settings.getCurrentMaxCoins)() * 100)} %
+        </span><span> / </span>
+          <span class="${Math.abs((0, _game.lastMeasuredFPS) - 60) < 2 && " " || Math.abs((0, _game.lastMeasuredFPS) - 60) < 10 && "good" || "bad"}">
             ${0, _game.lastMeasuredFPS} FPS
         </span><span> / </span>
          
@@ -4348,6 +4368,7 @@ function render(gameState) {
     scoreDisplay.className = gameState.computer_controlled && "computer_controlled" || gameState.lastScoreIncrease > gameState.levelTime - 500 && "active" || "";
     // Clear
     if (!(0, _options.isOptionOn)("basic") && level.svg && level.color === "#000000") {
+        (0, _game.startWork)('render:halo:clear');
         haloCanvasCtx.globalCompositeOperation = "source-over";
         haloCanvasCtx.globalAlpha = 0.99;
         haloCanvasCtx.fillStyle = level.color;
@@ -4355,14 +4376,17 @@ function render(gameState) {
         const brightness = (0, _options.isOptionOn)("extra_bright") ? 3 : 1;
         haloCanvasCtx.globalCompositeOperation = "lighten";
         haloCanvasCtx.globalAlpha = 0.1 + 5 / ((0, _gameStateMutators.liveCount)(gameState.coins) + 10);
+        (0, _game.startWork)('render:halo:coins');
         (0, _gameStateMutators.forEachLiveOne)(gameState.coins, (coin)=>{
             const color = getCoinRenderColor(gameState, coin);
             drawFuzzyBall(haloCanvasCtx, color, gameState.coinSize * 2 * brightness / haloScale, coin.x / haloScale, coin.y / haloScale);
         });
+        (0, _game.startWork)('render:halo:balls');
         gameState.balls.forEach((ball)=>{
             haloCanvasCtx.globalAlpha = 0.3 * (1 - (0, _gameUtils.ballTransparency)(ball, gameState));
             drawFuzzyBall(haloCanvasCtx, gameState.ballsColor, gameState.ballSize * 2 * brightness / haloScale, ball.x / haloScale, ball.y / haloScale);
         });
+        (0, _game.startWork)('render:halo:bricks');
         haloCanvasCtx.globalAlpha = 0.05;
         gameState.bricks.forEach((color, index)=>{
             if (!color) return;
@@ -4370,6 +4394,7 @@ function render(gameState) {
             drawFuzzyBall(haloCanvasCtx, color == "black" ? "#666666" : color, // Perf could really go down there because of the size of the halo
             Math.min(200, gameState.brickWidth * 1.5 * brightness) / haloScale, x / haloScale, y / haloScale);
         });
+        (0, _game.startWork)('render:halo:particles');
         haloCanvasCtx.globalCompositeOperation = "screen";
         (0, _gameStateMutators.forEachLiveOne)(gameState.particles, (flash)=>{
             const { x, y, time, color, size, duration } = flash;
@@ -4383,6 +4408,7 @@ function render(gameState) {
         ctx.imageSmoothingQuality = "high";
         ctx.drawImage(haloCanvas, 0, 0, width, height);
         ctx.imageSmoothingEnabled = false;
+        (0, _game.startWork)('render:halo:pattern');
         ctx.globalAlpha = 1;
         ctx.globalCompositeOperation = "multiply";
         if (level.svg && background.width && background.complete) {
@@ -4422,6 +4448,7 @@ function render(gameState) {
             ctx.fillRect(0, 0, width, height);
         }
     } else {
+        (0, _game.startWork)('render:halo-basic');
         ctx.globalAlpha = 1;
         ctx.globalCompositeOperation = "source-over";
         ctx.fillStyle = level.color || "#000";
@@ -4433,6 +4460,7 @@ function render(gameState) {
             drawBall(ctx, color, size, x, y);
         });
     }
+    (0, _game.startWork)('render:explosionshake');
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     const lastExplosionDelay = Date.now() - gameState.lastExplosion + 5;
@@ -4441,6 +4469,7 @@ function render(gameState) {
         const amplitude = (gameState.perks.bigger_explosions + 1) * 50 / lastExplosionDelay;
         ctx.translate(Math.sin(Date.now()) * amplitude, Math.sin(Date.now() + 36) * amplitude);
     }
+    (0, _game.startWork)('render:coins');
     // Coins
     ctx.globalAlpha = 1;
     (0, _gameStateMutators.forEachLiveOne)(gameState.coins, (coin)=>{
@@ -4452,6 +4481,7 @@ function render(gameState) {
         // (color === "#ffd300" && "#ffd300") ||
         hollow && color || gameState.level.color, coin.a);
     });
+    (0, _game.startWork)('render:ball shade');
     // Black shadow around balls
     if (!(0, _options.isOptionOn)("basic")) {
         ctx.globalCompositeOperation = "source-over";
@@ -4460,8 +4490,10 @@ function render(gameState) {
             drawBall(ctx, level.color || "#000", gameState.ballSize * 6, ball.x, ball.y);
         });
     }
+    (0, _game.startWork)('render:bricks');
     ctx.globalCompositeOperation = "source-over";
     renderAllBricks();
+    (0, _game.startWork)('render:lights');
     ctx.globalCompositeOperation = "screen";
     (0, _gameStateMutators.forEachLiveOne)(gameState.lights, (flash)=>{
         const { x, y, time, color, size, duration } = flash;
@@ -4469,6 +4501,7 @@ function render(gameState) {
         ctx.globalAlpha = Math.min(1, 2 - elapsed / duration * 2) * 0.5;
         drawBrick(gameState, ctx, color, x, y, -1, gameState.perks.clairvoyant >= 2);
     });
+    (0, _game.startWork)('render:texts');
     ctx.globalCompositeOperation = "screen";
     (0, _gameStateMutators.forEachLiveOne)(gameState.texts, (flash)=>{
         const { x, y, time, color, size, duration } = flash;
@@ -4477,6 +4510,7 @@ function render(gameState) {
         ctx.globalCompositeOperation = "source-over";
         drawText(ctx, flash.text, color, size, x, y - elapsed / 10);
     });
+    (0, _game.startWork)('render:particles');
     (0, _gameStateMutators.forEachLiveOne)(gameState.particles, (particle)=>{
         const { x, y, time, color, size, duration } = particle;
         const elapsed = gameState.levelTime - time;
@@ -4484,12 +4518,14 @@ function render(gameState) {
         ctx.globalCompositeOperation = "screen";
         drawBall(ctx, color, size, x, y);
     });
+    (0, _game.startWork)('render:extra_life');
     if (gameState.perks.extra_life) {
         ctx.globalAlpha = 1;
         ctx.globalCompositeOperation = "source-over";
         ctx.fillStyle = gameState.puckColor;
         for(let i = 0; i < gameState.perks.extra_life; i++)ctx.fillRect(gameState.offsetXRoundedDown, gameState.gameZoneHeight - gameState.puckHeight / 2 + 2 * i, gameState.gameZoneWidthRoundedUp, 1);
     }
+    (0, _game.startWork)('render:balls');
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     gameState.balls.forEach((ball)=>{
@@ -4517,10 +4553,11 @@ function render(gameState) {
             ctx.stroke();
         }
     });
-    // The puck
+    (0, _game.startWork)('render:puck');
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     drawPuck(ctx, gameState.puckColor, gameState.puckWidth, gameState.puckHeight, 0, gameState.perks.concave_puck, gameState.perks.streak_shots && hasCombo ? getDashOffset(gameState) : -1);
+    (0, _game.startWork)('render:combotext');
     if (gameState.combo > 1) {
         ctx.globalCompositeOperation = "source-over";
         const comboText = "x " + gameState.combo;
@@ -4532,6 +4569,7 @@ function render(gameState) {
             drawText(ctx, comboText, "#000", gameState.puckHeight, left + gameState.coinSize * 1.5, gameState.gameZoneHeight - gameState.puckHeight / 2, true);
         } else drawText(ctx, comboTextWidth > gameState.puckWidth ? gameState.combo.toString() : comboText, "#000", comboTextWidth > gameState.puckWidth ? 12 : 20, gameState.puckPosition, gameState.gameZoneHeight - gameState.puckHeight / 2, false);
     }
+    (0, _game.startWork)('render:Borders');
     //  Borders
     ctx.globalCompositeOperation = "source-over";
     ctx.globalAlpha = 1;
@@ -4549,6 +4587,7 @@ function render(gameState) {
     if (redTop) drawStraightLine(ctx, gameState, "#FF0000", gameState.offsetXRoundedDown, 1, width - gameState.offsetXRoundedDown, 1, 1);
     ctx.globalAlpha = 1;
     drawStraightLine(ctx, gameState, hasCombo && gameState.perks.compound_interest && "#FF0000" || (0, _options.isOptionOn)("mobile-mode") && "#FFFFFF" || "", gameState.offsetXRoundedDown, gameState.gameZoneHeight, width - gameState.offsetXRoundedDown, gameState.gameZoneHeight, 1);
+    (0, _game.startWork)('render:contrast');
     if (!(0, _options.isOptionOn)("basic") && (0, _options.isOptionOn)("contrast") && level.svg && level.color === "#000000") {
         ctx.imageSmoothingEnabled = true;
         // haloCanvasCtx.globalCompositeOperation = 'multiply';
@@ -4562,9 +4601,11 @@ function render(gameState) {
         ctx.drawImage(haloCanvas, 0, 0, width, height);
         ctx.imageSmoothingEnabled = false;
     }
+    (0, _game.startWork)('render:breakout.lecaro.me?autoplay');
     ctx.globalCompositeOperation = "source-over";
     ctx.globalAlpha = 1;
     if ((0, _options.isOptionOn)("mobile-mode") && gameState.computer_controlled) drawText(ctx, "breakout.lecaro.me?autoplay", gameState.puckColor, gameState.puckHeight, gameState.canvasWidth / 2, gameState.gameZoneHeight + (gameState.canvasHeight - gameState.gameZoneHeight) / 2);
+    (0, _game.startWork)('render:mobile_press_to_play');
     if ((0, _options.isOptionOn)("mobile-mode") && !gameState.running) drawText(ctx, (0, _i18N.t)("play.mobile_press_to_play"), gameState.puckColor, gameState.puckHeight, gameState.canvasWidth / 2, gameState.gameZoneHeight + (gameState.canvasHeight - gameState.gameZoneHeight) / 2);
     // if(isOptionOn('mobile-mode')) {
     //   ctx.globalCompositeOperation = "source-over";
@@ -4573,7 +4614,9 @@ function render(gameState) {
     //   ctx.fillRect(0,gameState.gameZoneHeight, gameState.canvasWidth, gameState.canvasHeight-gameState.gameZoneHeight)
     // }
     // ctx.globalAlpha=1
+    (0, _game.startWork)('render:askForWakeLock');
     askForWakeLock(gameState);
+    (0, _game.startWork)('render:resetTransform');
     if (shaked) ctx.resetTransform();
 }
 function drawStraightLine(ctx, gameState, mode, x1, y1, x2, y2, alpha = 1) {
@@ -4860,7 +4903,7 @@ function askForWakeLock(gameState) {
     }
 }
 
-},{"./gameStateMutators":"9ZeQl","./game_utils":"cEeac","./i18n/i18n":"eNPRm","./game":"edeGs","./options":"d5NoS","./pure_functions":"6pQh7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"caCAf":[function(require,module,exports,__globalThis) {
+},{"./gameStateMutators":"9ZeQl","./game_utils":"cEeac","./i18n/i18n":"eNPRm","./game":"edeGs","./options":"d5NoS","./pure_functions":"6pQh7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./settings":"5blfu"}],"caCAf":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "addToTotalPlayTime", ()=>addToTotalPlayTime);
@@ -4878,9 +4921,7 @@ var _asyncAlert = require("./asyncAlert");
 var _upgrades = require("./upgrades");
 var _levelEditor = require("./levelEditor");
 function addToTotalPlayTime(ms) {
-    try {
-        (0, _settings.setSettingValue)('breakout_71_total_play_time', (0, _settings.getSettingValue)('breakout_71_total_play_time', 0) + ms);
-    } catch (e) {}
+    (0, _settings.setSettingValue)('breakout_71_total_play_time', (0, _settings.getSettingValue)('breakout_71_total_play_time', 0) + ms);
 }
 function gameOver(title, intro) {
     if (!(0, _game.gameState).running) return;

@@ -452,7 +452,6 @@ startWork('gameStateTick')
     gameStateTick(gameState, frames);
   }
 
-startWork('render')
   if (gameState.running || gameState.needsRender) {
     gameState.needsRender = false;
     render(gameState);
@@ -478,10 +477,12 @@ setInterval(() => {
   FPSCounter = 0;
 }, 1000);
 
+const showStats=  window.location.search.includes("stress")
 let total={}
 let lastTick=performance.now();
 let doing= ''
-function startWork(what){
+export function startWork(what){
+  if(!showStats) return
   const newNow=performance.now();
   if(doing) {
     total[doing] = (total[doing]||0) + ( newNow-lastTick )
@@ -489,12 +490,12 @@ function startWork(what){
   lastTick=newNow
   doing=what
 }
+if(showStats)
 setInterval(()=>{
   const totalTime = sumOfValues(total)
-  console.log(
+  console.debug(
       liveCount(gameState.coins) +' coins\n'+
       Object.entries(total).sort((a,b)=>b[1]-a[1]).filter(a=>a[1]>1).map(t=>t[0]+':'+(t[1]/totalTime*100).toFixed(2)+'% ('+t[1]+'ms)').join('\n'))
-
   total={}
 },2000)
 
@@ -1040,27 +1041,29 @@ export function restart(params: RunParams) {
     play();
   }
 }
- if (window.location.search.includes("autoplay")) {
+ if (window.location.search.match(/autoplay|stress/)  ) {
   startComputerControlledGame();
-} else if (window.location.search.includes("stress")) {
-   if(!isOptionOn('show_fps'))
+  if(!isOptionOn('show_fps'))
    toggleOption('show_fps')
-  restart({
-    level:allLevels.find(l=>l.name=='Worms'),
-    perks:{base_combo:5000, pierce:20, rainbow:3, sapper:2, etherealcoins:1}
-  });
-}else {
+} else {
   restart({});
 }
 
 export function startComputerControlledGame() {
-  const perks: Partial<PerksMap> = { base_combo: 20, pierce: 3 };
-  for (let i = 0; i < 10; i++) {
-    const u = sample(upgrades);
 
-    perks[u.id] ||= Math.floor(Math.random() * u.max) + 1;
+  const perks: Partial<PerksMap> = { base_combo: 20, pierce: 3 };
+  if(window.location.search.includes("stress")){
+
+      Object.assign(perks,{base_combo:5000, pierce:20, rainbow:3, sapper:2, etherealcoins:1, bricks_attract_ball:1, respawn:3})
+
+  }else{
+    for (let i = 0; i < 10; i++) {
+      const u = sample(upgrades);
+
+      perks[u.id] ||= Math.floor(Math.random() * u.max) + 1;
+    }
+    perks.superhot = 0;
   }
-  perks.superhot = 0;
   restart({
     level: sample(allLevels.filter((l) => l.color === "#000000")),
     computer_controlled: true,
