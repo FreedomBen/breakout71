@@ -1,9 +1,10 @@
-import { baseCombo, forEachLiveOne, liveCount } from "./gameStateMutators";
+import {baseCombo, forEachLiveOne, liveCount} from "./gameStateMutators";
 import {
   ballTransparency,
   brickCenterX,
   brickCenterY,
   currentLevelInfo,
+  getCoinRenderColor,
   isMovingWhilePassiveIncome,
   isPickyEatingPossible,
   max_levels,
@@ -11,10 +12,10 @@ import {
   telekinesisEffectRate,
   yoyoEffectRate,
 } from "./game_utils";
-import { Coin, colorString, GameState } from "./types";
-import { t } from "./i18n/i18n";
-import { gameState, lastMeasuredFPS, startWork } from "./game";
-import { isOptionOn } from "./options";
+import {colorString, GameState} from "./types";
+import {t} from "./i18n/i18n";
+import {gameState, lastMeasuredFPS, startWork} from "./game";
+import {isOptionOn} from "./options";
 import {
   catchRateBest,
   catchRateGood,
@@ -25,7 +26,7 @@ import {
   wallBouncedBest,
   wallBouncedGood,
 } from "./pure_functions";
-import { getCurrentMaxCoins } from "./settings";
+import {getCurrentMaxCoins} from "./settings";
 
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
 export const ctx = gameCanvas.getContext("2d", {
@@ -1149,17 +1150,6 @@ export function getDashOffset(gameState: GameState) {
     return 0;
   }
   return Math.floor(((gameState.levelTime % 500) / 500) * 10) % 10;
-}
-
-function getCoinRenderColor(gameState: GameState, coin: Coin) {
-  if (
-    gameState.perks.metamorphosis ||
-    isOptionOn("colorful_coins") ||
-    gameState.perks.hypnosis ||
-    gameState.perks.rainbow
-  )
-    return coin.color;
-  return "#ffd300";
 }
 
 let wakeLock = null,

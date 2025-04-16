@@ -1,18 +1,11 @@
-import {
-  Ball,
-  GameState,
-  Level,
-  PerkId,
-  PerksMap,
-  RunHistoryItem,
-  UpgradeLike,
-} from "./types";
-import { icons, upgrades } from "./loadGameData";
-import { t } from "./i18n/i18n";
-import { clamp } from "./pure_functions";
-import { rawUpgrades } from "./upgrades";
-import { hashCode } from "./getLevelBackground";
-import { getTotalScore } from "./settings";
+import {Ball, Coin, GameState, Level, PerkId, PerksMap, RunHistoryItem, UpgradeLike,} from "./types";
+import {icons, upgrades} from "./loadGameData";
+import {t} from "./i18n/i18n";
+import {clamp} from "./pure_functions";
+import {rawUpgrades} from "./upgrades";
+import {hashCode} from "./getLevelBackground";
+import {getTotalScore} from "./settings";
+import {isOptionOn} from "./options";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -399,4 +392,15 @@ export function ballTransparency(ball: Ball, gameState: GameState) {
     0,
     1,
   );
+}
+
+export function getCoinRenderColor(gameState: GameState, coin: Coin) {
+    if (
+        gameState.perks.metamorphosis ||
+        isOptionOn("colorful_coins") ||
+        gameState.perks.hypnosis ||
+        gameState.perks.rainbow
+    )
+        return coin.color;
+    return "#ffd300";
 }

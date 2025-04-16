@@ -26,8 +26,15 @@ languages, I may add features again.
 ## To do
 
 - redo video presentation
+- Back to Creative Menu at the end of a Creative level
+- make Corner Shot scale like Need Some Space
 
 ## Done
+
+- don't show unlock toast at first startup for levels that are unlocked by default
+- Droplet particle color should be gold for gold coins 
+
+## 29079818
 
 - Imported levels : Mario, Minesweeper and Target
 - Fixed an issue with localstorage saving of custom levels

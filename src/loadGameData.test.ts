@@ -28,7 +28,7 @@ describe("json data checks", () => {
       .filter((l) => {
         const uniqueBricks = l.bricks
           .split("")
-          .filter((b) => b !== "_" && b !== "black")
+          .filter((b) => b !== "_" && b !== "B")
           .filter((a, b, c) => c.indexOf(a) === b);
         return uniqueBricks.length > 5 && !l.name.startsWith("icon:");
       })

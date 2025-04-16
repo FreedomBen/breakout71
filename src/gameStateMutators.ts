@@ -18,7 +18,7 @@ import {
   currentLevelInfo,
   distance2,
   distanceBetween,
-  getClosestBall,
+  getClosestBall, getCoinRenderColor,
   getMajorityValue,
   getPossibleUpgrades,
   getRowColIndex,
@@ -660,9 +660,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
       coin.previousY,
       (gameState.canvasWidth - coin.x) / 100,
       -coin.y / 100,
-      gameState.perks.metamorphosis || isOptionOn("colorful_coins")
-        ? coin.color
-        : "#ffd300",
+      getCoinRenderColor(gameState, coin),
 
       true,
       gameState.coinSize / 2,
@@ -1237,7 +1235,7 @@ export function gameStateTick(
             gameState.gameZoneHeight,
             -coin.vx / 5,
             -coin.vy / 5,
-            coin.color,
+            getCoinRenderColor(gameState, coin),
             false,
           );
         }
