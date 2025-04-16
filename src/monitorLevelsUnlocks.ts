@@ -33,7 +33,7 @@ export function monitorLevelsUnlocks(gameState: GameState) {
     if (unlocked.has(name)) return;
     // Score not reached yet
     if (gameState.score < minScore) return;
-    if (! minScore) return;
+    if (!minScore) return;
 
     if (gameState.score < minScore) return;
     // We are missing a required perk

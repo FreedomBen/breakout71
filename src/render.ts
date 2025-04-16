@@ -1,4 +1,4 @@
-import {baseCombo, forEachLiveOne, liveCount} from "./gameStateMutators";
+import { baseCombo, forEachLiveOne, liveCount } from "./gameStateMutators";
 import {
   ballTransparency,
   brickCenterX,
@@ -12,10 +12,10 @@ import {
   telekinesisEffectRate,
   yoyoEffectRate,
 } from "./game_utils";
-import {colorString, GameState} from "./types";
-import {t} from "./i18n/i18n";
-import {gameState, lastMeasuredFPS, startWork} from "./game";
-import {isOptionOn} from "./options";
+import { colorString, GameState } from "./types";
+import { t } from "./i18n/i18n";
+import { gameState, lastMeasuredFPS, startWork } from "./game";
+import { isOptionOn } from "./options";
 import {
   catchRateBest,
   catchRateGood,
@@ -26,7 +26,7 @@ import {
   wallBouncedBest,
   wallBouncedGood,
 } from "./pure_functions";
-import {getCurrentMaxCoins} from "./settings";
+import { getCurrentMaxCoins } from "./settings";
 
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
 export const ctx = gameCanvas.getContext("2d", {
