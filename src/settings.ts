@@ -26,7 +26,7 @@ export function setSettingValue<T>(key: string, value: T) {
     cachedSettings[key] = value;
   }
 }
-setInterval(() => {
+export function commitSettingsChangesToLocalStorage() {
   try {
     for (let key of needsSaving) {
       localStorage.setItem(key, JSON.stringify(cachedSettings[key]));
@@ -35,7 +35,8 @@ setInterval(() => {
   } catch (e) {
     console.warn(e);
   }
-}, 500);
+}
+setInterval(commitSettingsChangesToLocalStorage, 500);
 
 export function getTotalScore() {
   return getSettingValue("breakout_71_total_score", 0);

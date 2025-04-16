@@ -416,7 +416,7 @@
   "upgrades.trickledown.name": "Escorrentía",
   "upgrades.trickledown.tooltip": "Las monedas aparecen en la parte superior de la pantalla.",
   "upgrades.trickledown.verbose_description": "Podría ayudarte a ahorrar algunas monedas. ",
-  "upgrades.unbounded.name": "Liberado, entregado",
+  "upgrades.unbounded.name": "Espacio libre",
   "upgrades.unbounded.tooltip": "+{{lvl}} combo por ladrillo, más lados para mantener la pelota en juego, peligro",
   "upgrades.unbounded.verbose_description": "Espero que hayas encontrado la forma de mantener tu bola en la pantalla. En el nivel 2+, el techo también desaparecerá. Se trata de una ventaja avanzada.",
   "upgrades.viscosity.name": "Fluido viscoso",

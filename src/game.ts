@@ -34,6 +34,7 @@ import {
 import "./PWA/sw_loader";
 import { getCurrentLang, languages, t } from "./i18n/i18n";
 import {
+  commitSettingsChangesToLocalStorage,
   cycleMaxCoins,
   getCurrentMaxCoins,
   getSettingValue,
@@ -658,6 +659,7 @@ async function openSettingsMenu() {
         (await confirmRestart(gameState))
       ) {
         setSettingValue("lang", pick);
+        commitSettingsChangesToLocalStorage();
         window.location.reload();
       }
     },

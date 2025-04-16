@@ -10,6 +10,8 @@ import { restart } from "./game";
 import { describeLevel } from "./game_utils";
 
 const palette = _palette as Palette;
+const MAX_LEVEL_SIZE = 21;
+const MIN_LEVEL_SIZE = 2;
 
 export function levelEditorMenuEntry() {
   const min = 10000;
@@ -72,7 +74,11 @@ async function openLevelEditorLevelsList() {
             name ||= "Imported on " + new Date().toISOString().slice(0, 10);
             credit ||= "";
             const size = Math.sqrt(bricks.length);
-            if (Math.floor(size) === size && size >= 2 && size <= 20) {
+            if (
+              Math.floor(size) === size &&
+              size >= MIN_LEVEL_SIZE &&
+              size <= MAX_LEVEL_SIZE
+            ) {
               rawList.push({
                 color: automaticBackgroundColor(bricks.split("")),
                 size,
@@ -163,12 +169,12 @@ export async function editRawLevelList(nth: number, color = "W") {
       {
         text: t("editor.editing.bigger"),
         value: "size:+1",
-        disabled: level.size > 20,
+        disabled: level.size >= MAX_LEVEL_SIZE,
       },
       {
         text: t("editor.editing.smaller"),
         value: "size:-1",
-        disabled: level.size < 3,
+        disabled: level.size <= MIN_LEVEL_SIZE,
       },
       {
         text: t("editor.editing.left"),

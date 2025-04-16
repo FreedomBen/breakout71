@@ -449,7 +449,7 @@ export function explodeBrick(
       );
     }
     if (gameState.perks.transparency) {
-      coinsToSpawn = Math.round(
+      coinsToSpawn = Math.ceil(
         coinsToSpawn *
           (1 +
             (ballTransparency(ball, gameState) * gameState.perks.transparency) /

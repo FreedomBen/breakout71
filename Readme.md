@@ -29,6 +29,13 @@ languages, I may add features again.
 
 ## Done
 
+- combo text on paddle will be grey if we're at the base combo
+- transparency now rounds up
+- import level up to 21 x 21
+- corrected icon of "padding"
+
+## 29079087
+
 - measured and improve the performance (test here https://breakout.lecaro.me/?stresstest)
 - added a few levels
 - autoplay mode (with wake lock and computer play https://breakout.lecaro.me/?autoplay )

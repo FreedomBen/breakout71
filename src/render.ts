@@ -425,20 +425,15 @@ export function render(gameState: GameState) {
   startWork("render:combotext");
   if (gameState.combo > 1) {
     ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
+
     const comboText = "x " + gameState.combo;
     const comboTextWidth = (comboText.length * gameState.puckHeight) / 1.8;
     const totalWidth = comboTextWidth + gameState.coinSize * 2;
     const left = gameState.puckPosition - totalWidth / 2;
+
+    ctx.globalAlpha = gameState.combo > baseCombo(gameState) ? 1 : 0.3;
     if (totalWidth < gameState.puckWidth) {
-      drawCoin(
-        ctx,
-        "#ffd300",
-        gameState.coinSize,
-        left + gameState.coinSize / 2,
-        gameState.gameZoneHeight - gameState.puckHeight / 2,
-        "#ffd300",
-        0,
-      );
       drawText(
         ctx,
         comboText,
@@ -447,6 +442,17 @@ export function render(gameState: GameState) {
         left + gameState.coinSize * 1.5,
         gameState.gameZoneHeight - gameState.puckHeight / 2,
         true,
+      );
+
+      ctx.globalAlpha = 1;
+      drawCoin(
+        ctx,
+        "#ffd300",
+        gameState.coinSize,
+        left + gameState.coinSize / 2,
+        gameState.gameZoneHeight - gameState.puckHeight / 2,
+        "#ffd300",
+        0,
       );
     } else {
       drawText(
@@ -462,7 +468,7 @@ export function render(gameState: GameState) {
       );
     }
   }
-  startWork("render:Borders");
+  startWork("render:borders");
   //  Borders
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = 1;
@@ -532,6 +538,7 @@ export function render(gameState: GameState) {
       1,
     );
 
+  startWork("render:bottom_line");
   ctx.globalAlpha = 1;
   drawStraightLine(
     ctx,
@@ -567,10 +574,9 @@ export function render(gameState: GameState) {
     ctx.imageSmoothingEnabled = false;
   }
 
-  startWork("render:breakout.lecaro.me?autoplay");
+  startWork("render:text_under_puck");
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = 1;
-
   if (isOptionOn("mobile-mode") && gameState.computer_controlled) {
     drawText(
       ctx,
@@ -582,7 +588,6 @@ export function render(gameState: GameState) {
         (gameState.canvasHeight - gameState.gameZoneHeight) / 2,
     );
   }
-  startWork("render:mobile_press_to_play");
   if (isOptionOn("mobile-mode") && !gameState.running) {
     drawText(
       ctx,
