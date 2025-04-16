@@ -29,6 +29,12 @@ languages, I may add features again.
 
 ## Done
 
+- Imported levels : Mario, Minesweeper and Target
+- Fixed an issue with localstorage saving of custom levels
+
+
+## 29079805
+
 - combo text on paddle will be grey if we're at the base combo
 - transparency now rounds up
 - import level up to 21 x 21

@@ -21,10 +21,8 @@ export function getSettingValue<T>(key: string, defaultValue: T) {
 //  We avoid using localstorage synchronously for perf reasons
 let needsSaving: Set<string> = new Set();
 export function setSettingValue<T>(key: string, value: T) {
-  if (cachedSettings[key] !== value) {
-    needsSaving.add(key);
-    cachedSettings[key] = value;
-  }
+  needsSaving.add(key);
+  cachedSettings[key] = value;
 }
 export function commitSettingsChangesToLocalStorage() {
   try {
@@ -36,7 +34,7 @@ export function commitSettingsChangesToLocalStorage() {
     console.warn(e);
   }
 }
-setInterval(commitSettingsChangesToLocalStorage, 500);
+setInterval(() => commitSettingsChangesToLocalStorage(), 500);
 
 export function getTotalScore() {
   return getSettingValue("breakout_71_total_score", 0);

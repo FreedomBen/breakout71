@@ -1,6 +1,11 @@
 import { icons, transformRawLevel } from "./loadGameData";
 import { t } from "./i18n/i18n";
-import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
+import {
+  commitSettingsChangesToLocalStorage,
+  getSettingValue,
+  getTotalScore,
+  setSettingValue,
+} from "./settings";
 import { asyncAlert } from "./asyncAlert";
 import { Palette, RawLevel } from "./types";
 import { levelIconHTML } from "./levelIcon";

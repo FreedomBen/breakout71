@@ -1302,5 +1302,33 @@
     "bricks": "___________Oyyyyyyy__Oyyyyyyy__Oyy__Oyy__Oyy_______Oyyyyyyy_______Oyy__Oyy__Oyy__Oyyyyyyy__Oyyyyyyy_",
     "name": "S",
     "credit": ""
+  },
+  {
+    "color": "",
+    "size": 11,
+    "bricks": "____________S_vvv_SSS__S___v___S__SSS_vvv_S__________S__S_vvv_SSS__S___v______SSS_vvv_S____S_____S__v_SSS_SSS____________",
+    "name": "Abstract 15",
+    "credit": "Just random strokes"
+  },
+  {
+    "color": "",
+    "size": 11,
+    "bricks": "________________________RRRRR_____RRRRRRRRR__kkkOOkO___kOkOOOkOOO_kOkkOOOkOOOkkOOOOkkkk___OOOOOOO________________________",
+    "name": "Mario!",
+    "credit": "Suggested by Nicolas03. A Mario level ! Sprite taken from https://art.pixilart.com/sr2d5c0683c82aws3.png . The sprite belongs to Nintendo"
+  },
+  {
+    "color": "",
+    "size": 16,
+    "bricks": "___llltCCttBC______lllCBBttCB______ltttBttltt______ltBrBClttt______lttCCCttBt______llttCBtttt______ltCBCttlll______ltBCCtCtCt______lttCCBCBrB______llltBCCtrB______ttttttlltt______CBrttlllll______CBrBCttttl______ttCCBttBtl______tttCCCtCCt______tBttBtltBt___",
+    "name": "Minesweeper",
+    "credit": "Suggested by Noodlemire.For once, you'll want to trigger as many mines as possible."
+  },
+  {
+    "color": "",
+    "size": 19,
+    "bricks": "__________________________________________________________________________________________________________________________WWW_______________WrrrW_____________WrWWWrW____________WrWBWrW____________WrWWWrW_____________WrrrW_______________WWW__________________________________________________________________________________________________________________________",
+    "name": "Target",
+    "credit": "Suggested by Noodlemire. Unusually small level, with lots of room to miss your shots. Acts as decent aim practice."
   }
 ]
