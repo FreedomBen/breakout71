@@ -30,6 +30,16 @@ export const options = {
     name: t("settings.extra_bright"),
     help: t("settings.extra_bright_help"),
   },
+  smooth_lighting: {
+    default: true,
+    name: t("settings.smooth_lighting"),
+    help: t("settings.smooth_lighting_help"),
+  },
+  precise_lighting: {
+    default: true,
+    name: t("settings.precise_lighting"),
+    help: t("settings.precise_lighting_help"),
+  },
   contrast: {
     default: false,
     name: t("settings.contrast"),

@@ -53,8 +53,8 @@ import {
 import {
   backgroundCanvas,
   gameCanvas,
+  getHaloScale,
   haloCanvas,
-  haloScale,
   render,
   scoreDisplay,
 } from "./render";
@@ -160,6 +160,7 @@ export const fitSize = (gameState: GameState) => {
   gameCanvas.height = height;
   backgroundCanvas.width = width;
   backgroundCanvas.height = height;
+  const haloScale = getHaloScale();
   haloCanvas.width = width / haloScale;
   haloCanvas.height = height / haloScale;
 
@@ -424,8 +425,7 @@ export function hitsSomething(x: number, y: number, radius: number) {
 }
 
 export function tick() {
-  startWork("tick init");
-
+  startWork("physics");
   const currentTick = performance.now();
   const timeDeltaMs = currentTick - gameState.lastTick;
   gameState.lastTick = currentTick;
@@ -445,9 +445,7 @@ export function tick() {
     );
   }
 
-  startWork("normalizeGameState");
   normalizeGameState(gameState);
-  startWork("gameStateTick");
   if (gameState.running) {
     gameState.levelTime += timeDeltaMs * frames;
     gameState.runStatistics.runTime += timeDeltaMs * frames;
@@ -459,11 +457,11 @@ export function tick() {
     gameState.needsRender = false;
     render(gameState);
   }
-  startWork("recordOneFrame");
+  startWork("record video");
   if (gameState.running) {
     recordOneFrame(gameState);
   }
-  startWork("playPendingSounds");
+  startWork("sound");
   if (isOptionOn("sound")) {
     playPendingSounds(gameState);
   }
@@ -480,12 +478,12 @@ setInterval(() => {
   FPSCounter = 0;
 }, 1000);
 
-const showStats = window.location.search.includes("stress");
+const stats = document.getElementById("stats") as HTMLDivElement;
 let total = {};
 let lastTick = performance.now();
-let doing = "";
+let doing = "idle";
 export function startWork(what) {
-  if (!showStats) return;
+  if (!gameState.startParams.stress) return;
   const newNow = performance.now();
   if (doing) {
     total[doing] = (total[doing] || 0) + (newNow - lastTick);
@@ -493,28 +491,38 @@ export function startWork(what) {
   lastTick = newNow;
   doing = what;
 }
-if (showStats)
-  setInterval(() => {
-    const totalTime = sumOfValues(total);
-    console.debug(
-      liveCount(gameState.coins) +
-        " coins\n" +
-        Object.entries(total)
-          .sort((a, b) => b[1] - a[1])
-          .filter((a) => a[1] > 1)
-          .map(
-            (t) =>
-              t[0] +
-              ":" +
-              ((t[1] / totalTime) * 100).toFixed(2) +
-              "% (" +
-              t[1] +
-              "ms)",
-          )
-          .join("\n"),
-    );
-    total = {};
-  }, 2000);
+setInterval(() => {
+  if (!gameState.startParams.stress) {
+    stats.style.display = "none";
+    return;
+  }
+
+  stats.style.display = "block";
+  const totalTime = sumOfValues(total);
+  stats.innerHTML =
+    `
+    <div> 
+    <strong>Coins ${liveCount(gameState.coins)} / ${getCurrentMaxCoins()} - Particles : ${liveCount(gameState.particles) + liveCount(gameState.lights) + liveCount(gameState.texts)}</strong>
+      
+    </div> 
+    
+   
+    
+    ` +
+    Object.entries(total)
+      // .sort((a, b) => b[1] - a[1])
+      .map(
+        (t) =>
+          `  <div> 
+           <div style="transform: scale(${clamp(t[1] / totalTime, 0, 1)},1)"></div> 
+  <strong>${t[0]} : ${t[1]} ms</strong> 
+  </div>
+        `,
+      )
+      .join("\n");
+
+  total = {};
+}, 1000);
 
 setInterval(() => {
   monitorLevelsUnlocks(gameState);
@@ -669,11 +677,19 @@ async function openSettingsMenu() {
     if (options[key]) {
       actions.push({
         icon: isOptionOn(key)
-            ? icons["icon:checkmark_checked"]
-            : icons["icon:checkmark_unchecked"],
+          ? icons["icon:checkmark_checked"]
+          : icons["icon:checkmark_unchecked"],
         text: options[key].name,
         help: options[key].help,
-        disabled : (key=='extra_bright' && isOptionOn('basic')) || (key=='contrast' && isOptionOn('basic')) || false,
+        disabled:
+          (isOptionOn("basic") &&
+            [
+              "extra_bright",
+              "contrast",
+              "smooth_lighting",
+              "precise_lighting",
+            ].includes(key)) ||
+          false,
         value: () => {
           toggleOption(key);
           fitSize(gameState);
@@ -841,6 +857,20 @@ async function openSettingsMenu() {
         localStorage.clear();
         window.location.reload();
       }
+    },
+  });
+  actions.push({
+    text: t("settings.autoplay"),
+    help: t("settings.autoplay_help"),
+    async value() {
+      startComputerControlledGame(false);
+    },
+  });
+  actions.push({
+    text: t("settings.stress_test"),
+    help: t("settings.stress_test_help"),
+    async value() {
+      startComputerControlledGame(true);
     },
   });
 
@@ -1034,7 +1064,7 @@ document.addEventListener("keyup", async (e) => {
     pageLoad < Date.now() - 500
   ) {
     if (gameState.startParams.computer_controlled) {
-      return startComputerControlledGame();
+      return startComputerControlledGame(gameState.startParams.stress);
     }
     // When doing ctrl + R in dev to refresh, i don't want to instantly restart a run
     if (await confirmRestart(gameState)) {
@@ -1054,6 +1084,7 @@ export function restart(params: RunParams) {
   Object.assign(gameState, newGameState(params));
   // Recompute brick size according to level
   fitSize(gameState);
+
   pauseRecording();
   setLevel(gameState, 0);
   if (params?.computer_controlled) {
@@ -1061,15 +1092,14 @@ export function restart(params: RunParams) {
   }
 }
 if (window.location.search.match(/autoplay|stress/)) {
-  startComputerControlledGame();
-  if (!isOptionOn("show_fps")) toggleOption("show_fps");
+  startComputerControlledGame(window.location.search.includes("stress"));
 } else {
   restart({});
 }
 
-export function startComputerControlledGame() {
+export function startComputerControlledGame(stress: boolean = false) {
   const perks: Partial<PerksMap> = { base_combo: 20, pierce: 3 };
-  if (window.location.search.includes("stress")) {
+  if (stress) {
     Object.assign(perks, {
       base_combo: 5000,
       pierce: 20,
@@ -1082,7 +1112,6 @@ export function startComputerControlledGame() {
   } else {
     for (let i = 0; i < 10; i++) {
       const u = sample(upgrades);
-
       perks[u.id] ||= Math.floor(Math.random() * u.max) + 1;
     }
     perks.superhot = 0;
@@ -1091,6 +1120,7 @@ export function startComputerControlledGame() {
     level: sample(allLevels.filter((l) => l.color === "#000000")),
     computer_controlled: true,
     perks,
+    stress,
   });
 }
 

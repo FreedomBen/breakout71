@@ -43,6 +43,7 @@ export async function openCreativeModePerksPicker() {
   const customLevels = (getSettingValue("custom_levels", []) as RawLevel[]).map(
     transformRawLevel,
   );
+
   while (
     (choice = await asyncAlert<Upgrade | Level | "reset">({
       title: t("lab.menu_entry"),
@@ -65,7 +66,7 @@ export async function openCreativeModePerksPicker() {
               (u.max + (creativeModePerks.limitless || 0)),
             value: u,
             className: creativeModePerks[u.id]
-              ? "sandbox"
+              ? "sandbox highlight"
               : "sandbox grey-out-unless-hovered",
             tooltip: u.help(creativeModePerks[u.id] || 1),
           })),
@@ -79,6 +80,10 @@ export async function openCreativeModePerksPicker() {
             value: l,
             disabled: !!problem,
             tooltip: problem || describeLevel(l),
+            className:
+              getSettingValue("creativeModeLevel", "") === l.name
+                ? "highlight"
+                : "",
           };
         }),
         ...customLevels.map((l) => ({
@@ -97,6 +102,7 @@ export async function openCreativeModePerksPicker() {
       });
     } else if ("bricks" in choice) {
       setSettingValue("creativeModePerks", creativeModePerks);
+      setSettingValue("creativeModeLevel", choice.name);
       if (await confirmRestart(gameState)) {
         restart({
           perks: creativeModePerks,

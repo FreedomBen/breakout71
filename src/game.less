@@ -8,6 +8,8 @@
   box-sizing: border-box;
 }
 
+@purple: #6262ea;
+
 body {
   margin: 0;
   padding: 0;
@@ -581,5 +583,43 @@ h2.histogram-title strong {
     &[data-selected="true"] {
       border: 2px solid white;
     }
+  }
+}
+
+#stats {
+  position: fixed;
+  left: 0;
+  top: 40px;
+  width: 100vw;
+  max-width: 400px;
+  color: white;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 1;
+  & > div {
+    background: rgba(38, 38, 38, 0.5);
+    position: relative;
+    > div {
+      background: @purple;
+      position: absolute;
+      inset: 0;
+      transform-origin: top left;
+    }
+    > strong {
+      position: relative;
+      padding: 0 5px;
+    }
+  }
+}
+
+.highlight {
+  position: relative;
+  &:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-45deg, @purple, transparent);
+    mix-blend-mode: screen;
+    opacity: 0.3;
   }
 }

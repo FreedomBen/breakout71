@@ -766,7 +766,8 @@ export const rawUpgrades = [
     id: "transparency",
     max: 3,
     name: t("upgrades.transparency.name"),
-    help: (lvl: number) => t("upgrades.transparency.tooltip", { lvl }),
+    help: (lvl: number) =>
+      t("upgrades.transparency.tooltip", { lvl, percent: lvl * 50 }),
     fullHelp: t("upgrades.transparency.verbose_description"),
   },
   {

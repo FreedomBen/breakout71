@@ -20,6 +20,7 @@ import {
   distanceBetween,
   getClosestBall,
   getCoinRenderColor,
+  getCornerOffset,
   getMajorityValue,
   getPossibleUpgrades,
   getRowColIndex,
@@ -106,7 +107,7 @@ function computerControl(gameState: GameState) {
     10,
   );
   if (gameState.levelTime > 30000) {
-    startComputerControlledGame();
+    startComputerControlledGame(gameState.startParams.stress);
   }
 }
 
@@ -183,11 +184,7 @@ export function normalizeGameState(gameState: GameState) {
       ),
   );
 
-  const corner =
-    (gameState.levelTime
-      ? gameState.perks.corner_shot * gameState.puckWidth
-      : 0) -
-    gameState.perks.unbounded * gameState.brickWidth;
+  const corner = getCornerOffset(gameState);
 
   let minX = gameState.offsetXRoundedDown + gameState.puckWidth / 2 - corner;
 
@@ -638,7 +635,7 @@ export function schedulGameSound(
 ) {
   if (!vol) return;
   if (!isOptionOn("sound")) return;
-  if (gameState.startParams.computer_controlled) return;
+
   x ??= gameState.offsetX + gameState.gameZoneWidth / 2;
   const ex = gameState.aboutToPlaySound[sound] as { vol: number; x: number };
 
@@ -1068,7 +1065,7 @@ export function gameStateTick(
     (gameState.levelTime && !remainingBricks && !liveCount(gameState.coins))
   ) {
     if (gameState.startParams.computer_controlled) {
-      startComputerControlledGame();
+      startComputerControlledGame(gameState.startParams.stress);
     } else if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
     } else {
@@ -1738,7 +1735,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     gameState.runStatistics.balls_lost++;
     if (!gameState.balls.find((b) => !b.destroyed)) {
       if (gameState.startParams.computer_controlled) {
-        startComputerControlledGame();
+        startComputerControlledGame(gameState.startParams.stress);
       } else {
         gameOver(
           t("gameOver.lost.title"),

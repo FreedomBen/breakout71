@@ -16,6 +16,7 @@ export function playPendingSounds(gameState: GameState) {
     };
     if (ex.vol) {
       sounds[soundName](
+        //   In stress test, dim the sounds but play them
         Math.min(1, ex.vol),
         pixelsToPan(gameState, ex.x),
         gameState.combo,

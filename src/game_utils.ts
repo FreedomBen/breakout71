@@ -412,3 +412,12 @@ export function getCoinRenderColor(gameState: GameState, coin: Coin) {
     return coin.color;
   return "#ffd300";
 }
+
+export function getCornerOffset(gameState: GameState) {
+  return (
+    (gameState.levelTime
+      ? gameState.perks.corner_shot * gameState.brickWidth
+      : 0) -
+    gameState.perks.unbounded * gameState.brickWidth
+  );
+}

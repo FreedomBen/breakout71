@@ -5,6 +5,7 @@ import {
   brickCenterY,
   currentLevelInfo,
   getCoinRenderColor,
+  getCornerOffset,
   isMovingWhilePassiveIncome,
   isPickyEatingPossible,
   max_levels,
@@ -50,7 +51,9 @@ const haloCanvasCtx = haloCanvas.getContext("2d", {
   alpha: false,
 }) as CanvasRenderingContext2D;
 
-export const haloScale = 16;
+export function getHaloScale() {
+  return 16 * (isOptionOn("precise_lighting") ? 1 : 2);
+}
 
 export function render(gameState: GameState) {
   startWork("render:init");
@@ -77,13 +80,9 @@ export function render(gameState: GameState) {
   scoreDisplay.innerHTML =
     (isOptionOn("show_fps") || gameState.startParams.computer_controlled
       ? ` 
- <span>
-            ${Math.floor((liveCount(gameState.coins) / getCurrentMaxCoins()) * 100)} %
-        </span><span> / </span>
           <span class="${(Math.abs(lastMeasuredFPS - 60) < 2 && " ") || (Math.abs(lastMeasuredFPS - 60) < 10 && "good") || "bad"}">
             ${lastMeasuredFPS} FPS
         </span><span> / </span>
-         
             `
       : "") +
     (isOptionOn("show_stats")
@@ -110,6 +109,7 @@ export function render(gameState: GameState) {
     "";
   // Clear
   if (!isOptionOn("basic") && level.svg && level.color === "#000000") {
+    const haloScale = getHaloScale();
     startWork("render:halo:clear");
     haloCanvasCtx.globalCompositeOperation = "source-over";
     haloCanvasCtx.globalAlpha = 0.99;
@@ -176,11 +176,12 @@ export function render(gameState: GameState) {
       );
     });
 
+    startWork("render:halo:scale_up");
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
 
-    ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
+    ctx.imageSmoothingEnabled = isOptionOn("smooth_lighting") || false;
     ctx.drawImage(haloCanvas, 0, 0, width, height);
     ctx.imageSmoothingEnabled = false;
 
@@ -541,16 +542,18 @@ export function render(gameState: GameState) {
 
   startWork("render:bottom_line");
   ctx.globalAlpha = 1;
+  const corner = getCornerOffset(gameState);
   drawStraightLine(
     ctx,
     gameState,
     (hasCombo && gameState.perks.compound_interest && "#FF0000") ||
       (isOptionOn("mobile-mode") && "#FFFFFF") ||
+      (corner && "#FFFFFF") ||
       "",
-    gameState.offsetXRoundedDown,
-    gameState.gameZoneHeight,
-    width - gameState.offsetXRoundedDown,
-    gameState.gameZoneHeight,
+    gameState.offsetXRoundedDown - corner,
+    gameState.gameZoneHeight - 1,
+    width - gameState.offsetXRoundedDown + corner,
+    gameState.gameZoneHeight - 1,
     1,
   );
 
@@ -561,9 +564,8 @@ export function render(gameState: GameState) {
     level.svg &&
     level.color === "#000000"
   ) {
-    ctx.imageSmoothingEnabled = true;
-    // haloCanvasCtx.globalCompositeOperation = 'multiply';
-    // haloCanvasCtx.fillRect(0,0,haloCanvas.width,haloCanvas.height)
+    ctx.imageSmoothingEnabled = isOptionOn("smooth_lighting") || false;
+
     haloCanvasCtx.fillStyle = "#FFFFFF";
     haloCanvasCtx.globalAlpha = 0.25;
     haloCanvasCtx.globalCompositeOperation = "screen";
@@ -1155,7 +1157,11 @@ export function getDashOffset(gameState: GameState) {
 let wakeLock = null,
   wakeLockPending = false;
 function askForWakeLock(gameState: GameState) {
-  if (gameState.startParams.computer_controlled && !wakeLock && !wakeLockPending) {
+  if (
+    gameState.startParams.computer_controlled &&
+    !wakeLock &&
+    !wakeLockPending
+  ) {
     wakeLockPending = true;
     try {
       navigator.wakeLock.request("screen").then((lock) => {

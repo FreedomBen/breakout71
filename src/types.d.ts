@@ -292,6 +292,7 @@ export type RunParams = {
   computer_controlled?: boolean;
   isEditorTrialRun?: number;
   isCreativeRun?: boolean;
+  stress?: boolean;
 };
 export type OptionDef = {
   default: boolean;

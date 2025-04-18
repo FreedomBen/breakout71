@@ -24,11 +24,15 @@ Other translation are very welcome, contact me if you'd like to submit one.
 ## To do
 
 - redo video presentation
-- make Corner Shot scale like Need Some Space
 
 ## Done
 
-- disable irrelevant options 
+- highlight last used creative level
+- access autoplay mode from the menu
+- access stress test mode from the menu, show real time stats 
+- Render bottom border differently to show how far the puck can go
+- Corner Shot:  scale like Need Some Space
+- grey out irrelevant options in the settings
 - Back to Creative Menu at the end of a Creative level
 
 ## 29080170
