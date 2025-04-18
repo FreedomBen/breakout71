@@ -15,6 +15,7 @@ import { asyncAlert } from "./asyncAlert";
 import { rawUpgrades } from "./upgrades";
 import { run } from "jest";
 import { editRawLevelList } from "./levelEditor";
+import { openCreativeModePerksPicker } from "./creative";
 
 export function addToTotalPlayTime(ms: number) {
   setSettingValue(
@@ -32,8 +33,14 @@ export function gameOver(title: string, intro: string) {
   stopRecording();
   addToTotalPlayTime(gameState.runStatistics.runTime);
 
-  if (typeof gameState.isEditorTrialRun === "number") {
-    editRawLevelList(gameState.isEditorTrialRun);
+  if (typeof gameState.startParams.isEditorTrialRun === "number") {
+    editRawLevelList(gameState.startParams.isEditorTrialRun);
+    restart({});
+    return;
+  }
+
+  if (typeof gameState.startParams.isCreativeRun) {
+    openCreativeModePerksPicker();
     restart({});
     return;
   }

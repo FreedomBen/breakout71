@@ -113,7 +113,7 @@ export async function play() {
 export function pause(playerAskedForPause: boolean) {
   if (!gameState.running) return;
   if (gameState.pauseTimeout) return;
-  if (gameState.computer_controlled) return;
+  if (gameState.startParams.computer_controlled) return;
 
   const stop = () => {
     gameState.running = false;
@@ -451,7 +451,8 @@ export function tick() {
   if (gameState.running) {
     gameState.levelTime += timeDeltaMs * frames;
     gameState.runStatistics.runTime += timeDeltaMs * frames;
-    gameStateTick(gameState, frames);
+    const steps = isOptionOn("precise_physics") ? 4 : 1;
+    for (let i = 0; i < steps; i++) gameStateTick(gameState, frames / steps);
   }
 
   if (gameState.running || gameState.needsRender) {
@@ -665,13 +666,14 @@ async function openSettingsMenu() {
     },
   });
   for (const key of Object.keys(options) as OptionId[]) {
-    if (options[key])
+    if (options[key]) {
       actions.push({
         icon: isOptionOn(key)
-          ? icons["icon:checkmark_checked"]
-          : icons["icon:checkmark_unchecked"],
+            ? icons["icon:checkmark_checked"]
+            : icons["icon:checkmark_unchecked"],
         text: options[key].name,
         help: options[key].help,
+        disabled : (key=='extra_bright' && isOptionOn('basic')) || (key=='contrast' && isOptionOn('basic')) || false,
         value: () => {
           toggleOption(key);
           fitSize(gameState);
@@ -679,6 +681,7 @@ async function openSettingsMenu() {
           openSettingsMenu();
         },
       });
+    }
   }
   actions.push({
     icon: icons["icon:download"],
@@ -1030,7 +1033,7 @@ document.addEventListener("keyup", async (e) => {
     !alertsOpen &&
     pageLoad < Date.now() - 500
   ) {
-    if (gameState.computer_controlled) {
+    if (gameState.startParams.computer_controlled) {
       return startComputerControlledGame();
     }
     // When doing ctrl + R in dev to refresh, i don't want to instantly restart a run

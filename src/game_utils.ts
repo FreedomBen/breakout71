@@ -319,7 +319,6 @@ function isExcluded(id: PerkId) {
 }
 
 export function getLevelUnlockCondition(levelIndex: number) {
-  // Returns "" if level is unlocked, otherwise a string explaining how to unlock it
   let required: UpgradeLike[] = [],
     forbidden: UpgradeLike[] = [],
     minScore = Math.max(-1000 + 100 * levelIndex, 0);

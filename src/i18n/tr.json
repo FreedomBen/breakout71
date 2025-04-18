@@ -190,6 +190,8 @@
   "settings.mobile_help": "Kürek altında boşluk bırakır.",
   "settings.pointer_lock": "Fare işaretçisi kilidi",
   "settings.pointer_lock_help": "Fare imlecini kilitler ve gizler.",
+  "settings.precise_physics": "",
+  "settings.precise_physics_help": "",
   "settings.record": "Oyun videolarını kaydedin",
   "settings.record_download": "Videoyu indir ({{size}} MB)",
   "settings.record_help": "Her seviyenin videosunu edinin.",

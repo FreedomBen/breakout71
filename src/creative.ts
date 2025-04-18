@@ -98,7 +98,11 @@ export async function openCreativeModePerksPicker() {
     } else if ("bricks" in choice) {
       setSettingValue("creativeModePerks", creativeModePerks);
       if (await confirmRestart(gameState)) {
-        restart({ perks: creativeModePerks, level: choice });
+        restart({
+          perks: creativeModePerks,
+          level: choice,
+          isCreativeRun: true,
+        });
       }
       return;
     } else if (choice) {

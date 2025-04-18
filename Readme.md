@@ -13,26 +13,29 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 # Current priorities 
 
-The goal of this project is to make a game used by many people. The game is already pretty fun. I'm now trying to 
-translate it to (Lebanese) Arabic, Russian and (Chilean) Spanish. Other translation are very welcome, contact me 
-if you'd like to submit one.
+The goal of this project is to make a game used by many people. 
+The game is already pretty fun.
 
-While translations are being written, I'll try to avoid adding features that require new translations. That means only 
-bug fixes and optimisations, maybe adding levels. Once we have a nice stable release available in 4 
-languages, I may add features again. 
-
+I'm now trying to translate it to (Lebanese) Arabic, Russian and (Chilean) Spanish. 
+Other translation are very welcome, contact me if you'd like to submit one.
+ 
 
 # Changelog
 ## To do
 
 - redo video presentation
-- Back to Creative Menu at the end of a Creative level
 - make Corner Shot scale like Need Some Space
 
 ## Done
 
+- disable irrelevant options 
+- Back to Creative Menu at the end of a Creative level
+
+## 29080170
+
 - don't show unlock toast at first startup for levels that are unlocked by default
 - Droplet particle color should be gold for gold coins 
+- added levels: A Very Dangerous High-Five,  The Boys
 
 ## 29079818
 
@@ -323,6 +326,7 @@ languages, I may add features again.
 - make stats a clairvoyant thing
 - [colin]P ocket money — bricks absorb coins that touch them, which are released on brick destruction (with a bonus?)
 - [colin] turn ball gravity on after a top bar hit, and until bouncing on puck
+- fan : paddle motion creates upward draft that lifts coins and balls
 
 ## Medium difficulty perks ideas 
 - balls collision split them into 4 smaller balls, lvl times (requires rework)

@@ -75,7 +75,7 @@ export function render(gameState: GameState) {
     : 1;
   startWork("render:scoreDisplay");
   scoreDisplay.innerHTML =
-    (isOptionOn("show_fps") || gameState.computer_controlled
+    (isOptionOn("show_fps") || gameState.startParams.computer_controlled
       ? ` 
  <span>
             ${Math.floor((liveCount(gameState.coins) / getCurrentMaxCoins()) * 100)} %
@@ -105,7 +105,7 @@ export function render(gameState: GameState) {
     `<span class="score" data-tooltip="${t("play.score_tooltip")}">$${gameState.score}</span>`;
 
   scoreDisplay.className =
-    (gameState.computer_controlled && "computer_controlled") ||
+    (gameState.startParams.computer_controlled && "computer_controlled") ||
     (gameState.lastScoreIncrease > gameState.levelTime - 500 && "active") ||
     "";
   // Clear
@@ -578,7 +578,7 @@ export function render(gameState: GameState) {
   startWork("render:text_under_puck");
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = 1;
-  if (isOptionOn("mobile-mode") && gameState.computer_controlled) {
+  if (isOptionOn("mobile-mode") && gameState.startParams.computer_controlled) {
     drawText(
       ctx,
       "breakout.lecaro.me?autoplay",
@@ -1155,7 +1155,7 @@ export function getDashOffset(gameState: GameState) {
 let wakeLock = null,
   wakeLockPending = false;
 function askForWakeLock(gameState: GameState) {
-  if (gameState.computer_controlled && !wakeLock && !wakeLockPending) {
+  if (gameState.startParams.computer_controlled && !wakeLock && !wakeLockPending) {
     wakeLockPending = true;
     try {
       navigator.wakeLock.request("screen").then((lock) => {

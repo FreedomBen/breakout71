@@ -55,6 +55,11 @@ export const options = {
     name: t("settings.kid"),
     help: t("settings.kid_help"),
   },
+  precise_physics: {
+    default: true,
+    name: t("settings.precise_physics"),
+    help: t("settings.precise_physics_help"),
+  },
   // Could not get the sharing to work without loading androidx and all the modern android things so for now I'll just disable sharing in the android app
   record: {
     default: false,

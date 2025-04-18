@@ -54,7 +54,7 @@ import { addToTotalScore } from "./addToTotalScore";
 import { hashCode } from "./getLevelBackground";
 
 export function setMousePos(gameState: GameState, x: number) {
-  if (gameState.computer_controlled) return;
+  if (gameState.startParams.computer_controlled) return;
   gameState.puckPosition = x;
 
   // Sets the puck position, and updates the ball position if they are supposed to follow it
@@ -638,7 +638,7 @@ export function schedulGameSound(
 ) {
   if (!vol) return;
   if (!isOptionOn("sound")) return;
-  if (gameState.computer_controlled) return;
+  if (gameState.startParams.computer_controlled) return;
   x ??= gameState.offsetX + gameState.gameZoneWidth / 2;
   const ex = gameState.aboutToPlaySound[sound] as { vol: number; x: number };
 
@@ -991,7 +991,7 @@ export function gameStateTick(
   frames = 1,
 ) {
   // Ai movement of puck
-  if (gameState.computer_controlled) computerControl(gameState);
+  if (gameState.startParams.computer_controlled) computerControl(gameState);
 
   gameState.runStatistics.max_combo = Math.max(
     gameState.runStatistics.max_combo,
@@ -1067,7 +1067,7 @@ export function gameStateTick(
     //   instant win condition
     (gameState.levelTime && !remainingBricks && !liveCount(gameState.coins))
   ) {
-    if (gameState.computer_controlled) {
+    if (gameState.startParams.computer_controlled) {
       startComputerControlledGame();
     } else if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
@@ -1737,7 +1737,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.destroyed = true;
     gameState.runStatistics.balls_lost++;
     if (!gameState.balls.find((b) => !b.destroyed)) {
-      if (gameState.computer_controlled) {
+      if (gameState.startParams.computer_controlled) {
         startComputerControlledGame();
       } else {
         gameOver(

@@ -281,8 +281,7 @@ export type GameState = {
   };
   rerolls: number;
   creative: boolean;
-  computer_controlled: boolean;
-  isEditorTrialRun?: number;
+  startParams: RunParams;
 };
 
 export type RunParams = {
@@ -292,6 +291,7 @@ export type RunParams = {
   perks?: Partial<PerksMap>;
   computer_controlled?: boolean;
   isEditorTrialRun?: number;
+  isCreativeRun?: boolean;
 };
 export type OptionDef = {
   default: boolean;

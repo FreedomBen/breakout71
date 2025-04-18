@@ -190,6 +190,8 @@
   "settings.mobile_help": "Lässt Platz unter dem Paddel.",
   "settings.pointer_lock": "Mauszeigersperre",
   "settings.pointer_lock_help": "Sperrt und versteckt den Mauszeiger.",
+  "settings.precise_physics": "",
+  "settings.precise_physics_help": "",
   "settings.record": "Spielvideos aufnehmen",
   "settings.record_download": "Video herunterladen ({{size}} MB)",
   "settings.record_help": "Holen Sie sich ein Video von jedem Level.",

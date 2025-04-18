@@ -65,6 +65,7 @@ export function newGameState(params: RunParams): GameState {
   const runLevels = getRunLevels(params, randomGift);
 
   const gameState: GameState = {
+    startParams: params,
     runLevels,
     level: runLevels[0],
     currentLevel: 0,
@@ -141,9 +142,7 @@ export function newGameState(params: RunParams): GameState {
     creative:
       params?.computer_controlled ||
       sumOfValues(params.perks) > 1 ||
-      (params.level && !params.level.name.startsWith("icon:")),
-    computer_controlled: params?.computer_controlled || false,
-    isEditorTrialRun: params?.isEditorTrialRun,
+      (params.level && !params.level.name.startsWith("icon:"))
   };
   resetBalls(gameState);
 

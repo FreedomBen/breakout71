@@ -190,6 +190,8 @@
   "settings.mobile_help": "Оставляет место под лопаткой.",
   "settings.pointer_lock": "Блокировка указателя мыши",
   "settings.pointer_lock_help": "Фиксирует и скрывает курсор мыши.",
+  "settings.precise_physics": "",
+  "settings.precise_physics_help": "",
   "settings.record": "Запись видеороликов игрового процесса",
   "settings.record_download": "Скачать видео ({{size}} МБ)",
   "settings.record_help": "Получите видеозапись каждого уровня.",

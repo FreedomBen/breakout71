@@ -190,6 +190,8 @@
   "settings.mobile_help": "Deja espacio debajo de la paleta.",
   "settings.pointer_lock": "Bloqueo del puntero del ratón",
   "settings.pointer_lock_help": "Bloquea y oculta el cursor del mouse.",
+  "settings.precise_physics": "",
+  "settings.precise_physics_help": "",
   "settings.record": "Grabar vídeos de juego",
   "settings.record_download": "Descargar vídeo ({{size}} MB)",
   "settings.record_help": "Obtenga un vídeo de cada nivel.",

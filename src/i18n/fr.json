@@ -190,6 +190,8 @@
   "settings.mobile_help": "Laisse un espace sous la raquette.",
   "settings.pointer_lock": "Verrouillage du pointeur",
   "settings.pointer_lock_help": "Cache aussi le curseur de la souris.",
+  "settings.precise_physics": "",
+  "settings.precise_physics_help": "",
   "settings.record": "Enregistrer des vidéos de jeu",
   "settings.record_download": "Télécharger la vidéo ({{size}} MB)",
   "settings.record_help": "Obtenez une vidéo de chaque niveau.",

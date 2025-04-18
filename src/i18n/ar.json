@@ -190,6 +190,8 @@
   "settings.mobile_help": "يترك مساحة تحت المجداف.",
   "settings.pointer_lock": "قفل مؤشر الماوس",
   "settings.pointer_lock_help": "يقوم بقفل وإخفاء مؤشر الماوس.",
+  "settings.precise_physics": "",
+  "settings.precise_physics_help": "",
   "settings.record": "تسجيل مقاطع فيديو للعبة",
   "settings.record_download": "تنزيل الفيديو ({{size}} ميجابايت)",
   "settings.record_help": "احصل على فيديو لكل مستوى.",
