@@ -27,6 +27,8 @@ Other translation are very welcome, contact me if you'd like to submit one.
 
 ## Done
 
+## 29083397
+
 - highlight last used creative level
 - access autoplay mode from the menu
 - access stress test mode from the menu, show real time stats 

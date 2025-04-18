@@ -111,6 +111,7 @@ export function render(gameState: GameState) {
   if (!isOptionOn("basic") && level.svg && level.color === "#000000") {
     const haloScale = getHaloScale();
     startWork("render:halo:clear");
+
     haloCanvasCtx.globalCompositeOperation = "source-over";
     haloCanvasCtx.globalAlpha = 0.99;
     haloCanvasCtx.fillStyle = level.color;
@@ -547,8 +548,8 @@ export function render(gameState: GameState) {
     ctx,
     gameState,
     (hasCombo && gameState.perks.compound_interest && "#FF0000") ||
-      (isOptionOn("mobile-mode") && "#FFFFFF") ||
-      (corner && "#FFFFFF") ||
+      (isOptionOn("mobile-mode") && "#666666") ||
+      (corner && "#666666") ||
       "",
     gameState.offsetXRoundedDown - corner,
     gameState.gameZoneHeight - 1,
@@ -622,22 +623,25 @@ export function render(gameState: GameState) {
 function drawStraightLine(
   ctx: CanvasRenderingContext2D,
   gameState: GameState,
-  mode: "#FFFFFF" | "" | "#FF0000",
+  mode: "#FFFFFF" | "" | "#FF0000" | string,
   x1,
   y1,
   x2,
   y2,
   alpha = 1,
 ) {
+  x1 = Math.round(x1);
+  y1 = Math.round(y1);
+  x2 = Math.round(x2);
+  y2 = Math.round(y2);
   ctx.globalAlpha = alpha;
   if (!mode) return;
+  ctx.strokeStyle = mode;
   if (mode == "#FF0000") {
-    ctx.strokeStyle = "#FF0000";
     ctx.lineDashOffset = getDashOffset(gameState);
     ctx.lineWidth = 2;
     ctx.setLineDash(redBorderDash);
   } else {
-    ctx.strokeStyle = "#FFFFFF";
     ctx.lineWidth = 1;
   }
   ctx.beginPath();
