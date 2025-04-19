@@ -27,6 +27,7 @@ Other translation are very welcome, contact me if you'd like to submit one.
 
 ## Done
 
+- automatic detection of the number of steps required for physics
 - trial runs detection fix
 
 ## 29083397
