@@ -80,16 +80,28 @@ migrate("remove_long_and_creative_mode_data", () => {
     localStorage.setItem("breakout_71_runs_history", JSON.stringify(cleaned));
 });
 
-migrate("compact_runs_data", () => {
+migrate("compact_runs_data_again", () => {
   let runsHistory = JSON.parse(
     localStorage.getItem("breakout_71_runs_history") || "[]",
   ) as RunHistoryItem[];
+  runsHistory = runsHistory.filter((r) => {
+    if (!r.perks) return false;
+    if ("mode" in r) {
+      if (r.mode !== "short") {
+        return false;
+      }
+      delete r.mode;
+    }
 
+    return true;
+  });
   runsHistory.forEach((r) => {
     r.runTime = Math.round(r.runTime);
-    for (let key in r.perks) {
-      if (r.perks && !r.perks[key]) {
-        delete r.perks[key];
+    if (r.perks) {
+      for (let key in r.perks) {
+        if (!r.perks[key]) {
+          delete r.perks[key];
+        }
       }
     }
     if ("best_level_score" in r) {

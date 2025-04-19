@@ -708,24 +708,16 @@ async function openSettingsMenu() {
     text: t("settings.download_save_file"),
     help: t("settings.download_save_file_help"),
     async value() {
-      const signedPayload = generateSaveFileContent();
-
       const dlLink = document.createElement("a");
-
+      const obj = {
+        fileType: "B71-save-file",
+        appVersion,
+        payload: generateSaveFileContent(),
+      };
+      const json = JSON.stringify(obj, null, 2);
       dlLink.setAttribute(
         "href",
-        "data:application/json;base64," +
-          btoa(
-            JSON.stringify({
-              fileType: "B71-save-file",
-              appVersion,
-              signedPayload,
-              key: hashCode(
-                "Security by obscurity, but really the game is oss so eh" +
-                  signedPayload,
-              ),
-            }),
-          ),
+        "data:application/json;charset=utf-8," + encodeURIComponent(json),
       );
 
       dlLink.setAttribute(
@@ -735,7 +727,7 @@ async function openSettingsMenu() {
             .toISOString()
             .slice(0, 19)
             .replace(/[^0-9]+/gi, "-") +
-          ".b71",
+          ".json",
       );
       document.body.appendChild(dlLink);
       dlLink.click();
@@ -772,36 +764,21 @@ async function openSettingsMenu() {
 
                 reader.readAsText(file);
               });
-              const {
-                fileType,
-                appVersion: fileVersion,
-                signedPayload,
-                key,
-              } = JSON.parse(content);
+              const { fileType, signedPayload, payload } = JSON.parse(content);
               if (fileType !== "B71-save-file")
                 throw new Error("Not a B71 save file");
-              // Actually, loading a save file to an older version is pretty useful
-              // if (fileVersion > appVersion)
-              //   throw new Error(
-              //     "Please update your app first, this file is for version " +
-              //       fileVersion +
-              //       " or newer.",
-              //   );
-
-              if (
-                key !==
-                hashCode(
-                  "Security by obscurity, but really the game is oss so eh" +
-                    signedPayload,
-                )
-              ) {
-                throw new Error("Key does not match content.");
-              }
-
-              const localStorageContent = JSON.parse(signedPayload);
-              localStorage.clear();
-              for (let key in localStorageContent) {
-                localStorage.setItem(key, localStorageContent[key]);
+              if (payload) {
+                localStorage.clear();
+                for (let key in payload) {
+                  localStorage.setItem(key, JSON.stringify(payload[key]));
+                }
+              } else if (signedPayload) {
+                //   Old file format
+                const localStorageContent = JSON.parse(signedPayload);
+                localStorage.clear();
+                for (let key in localStorageContent) {
+                  localStorage.setItem(key, localStorageContent[key]);
+                }
               }
               await asyncAlert({
                 title: t("settings.save_file_loaded"),

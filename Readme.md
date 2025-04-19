@@ -27,6 +27,11 @@ Other translation are very welcome, contact me if you'd like to submit one.
 
 ## Done
 
+
+## 29084571
+
+- simpler and more readable encoding for save files
+- removed check of payload signature on save file, seemed to fail because of the poor encoding of the name of the "côte d'ivoire" level
 - automatic detection of the number of steps required for physics
 - trial runs detection fix
 

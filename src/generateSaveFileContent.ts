@@ -5,8 +5,10 @@ export function generateSaveFileContent() {
     const key = localStorage.key(i) as string;
     // Avoid including recovery info in the recovery info
     if (["recovery_data"].includes(key)) continue;
-    const value = localStorage.getItem(key) as string;
-    localStorageContent[key] = value;
+    try {
+      const value = localStorage.getItem(key) as string;
+      localStorageContent[key] = JSON.parse(value);
+    } catch (e) {}
   }
-  return JSON.stringify(localStorageContent);
+  return localStorageContent;
 }
