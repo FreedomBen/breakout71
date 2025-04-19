@@ -449,7 +449,8 @@ export function tick() {
   if (gameState.running) {
     gameState.levelTime += timeDeltaMs * frames;
     gameState.runStatistics.runTime += timeDeltaMs * frames;
-    const steps = isOptionOn("precise_physics") ? 4 : 1;
+    const maxBallSpeed = Math.sqrt(Math.max(0,...gameState.balls.map(({vx,vy})=>vx*vx+vy*vy)))*frames
+    const steps = Math.ceil( maxBallSpeed / 8)
     for (let i = 0; i < steps; i++) gameStateTick(gameState, frames / steps);
   }
 

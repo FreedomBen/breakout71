@@ -194,8 +194,6 @@
   "settings.pointer_lock_help": "Fare imlecini kilitler ve gizler.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
-  "settings.precise_physics": "Kesin fizik",
-  "settings.precise_physics_help": "Çok hızlı topların tuğlaların arasından geçmesini önlemek için top ve jeton hareketini bir adım yerine 4 küçük adımda hesaplayın. Yavaş cihazlarda FPS'yi ~%10 artırmak için devre dışı bırakın.",
   "settings.record": "Oyun videolarını kaydedin",
   "settings.record_download": "Videoyu indir ({{size}} MB)",
   "settings.record_help": "Her seviyenin videosunu edinin.",

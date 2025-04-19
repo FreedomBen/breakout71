@@ -39,7 +39,7 @@ export function gameOver(title: string, intro: string) {
     return;
   }
 
-  if (typeof gameState.startParams.isCreativeRun) {
+  if (gameState.startParams.isCreativeRun) {
     openCreativeModePerksPicker();
     restart({});
     return;

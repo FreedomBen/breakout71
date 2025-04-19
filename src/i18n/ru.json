@@ -194,8 +194,6 @@
   "settings.pointer_lock_help": "Фиксирует и скрывает курсор мыши.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
-  "settings.precise_physics": "Точная физика",
-  "settings.precise_physics_help": "Вычислять движение мяча и монеты за 4 небольших шага вместо одного, чтобы избежать очень быстрых мячей, проходящих через кирпичи. Отключить, чтобы увеличить FPS примерно на 10% на медленных устройствах.",
   "settings.record": "Запись видеороликов игрового процесса",
   "settings.record_download": "Скачать видео ({{size}} МБ)",
   "settings.record_help": "Получите видеозапись каждого уровня.",

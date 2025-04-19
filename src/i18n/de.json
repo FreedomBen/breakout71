@@ -194,8 +194,6 @@
   "settings.pointer_lock_help": "Sperrt und versteckt den Mauszeiger.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
-  "settings.precise_physics": "Präzise Physik",
-  "settings.precise_physics_help": "Berechnen Sie die Bewegung von Bällen und Münzen in vier kleinen Schritten statt in einem, um zu vermeiden, dass sehr schnelle Bälle durch Ziegelsteine fliegen. Deaktivieren Sie diese Option, um die FPS auf langsamen Geräten um ca. 10 % zu erhöhen.",
   "settings.record": "Spielvideos aufnehmen",
   "settings.record_download": "Video herunterladen ({{size}} MB)",
   "settings.record_help": "Holen Sie sich ein Video von jedem Level.",

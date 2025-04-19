@@ -194,8 +194,6 @@
   "settings.pointer_lock_help": "يقوم بقفل وإخفاء مؤشر الماوس.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
-  "settings.precise_physics": "الفيزياء الدقيقة",
-  "settings.precise_physics_help": "احسب حركة الكرة والعملة المعدنية في أربع خطوات صغيرة بدلاً من خطوة واحدة لتجنب مرور الكرات السريعة جدًا عبر الطوب. عطّل هذه الميزة لزيادة معدل الإطارات في الثانية بنسبة ١٠٪ تقريبًا على الأجهزة البطيئة.",
   "settings.record": "تسجيل مقاطع فيديو للعبة",
   "settings.record_download": "تنزيل الفيديو ({{size}} ميجابايت)",
   "settings.record_help": "احصل على فيديو لكل مستوى.",

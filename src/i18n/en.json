@@ -194,8 +194,6 @@
   "settings.pointer_lock_help": "Locks and hides the mouse cursor.",
   "settings.precise_lighting": "Precise lighting",
   "settings.precise_lighting_help": "Use a smaller grid for background light effect",
-  "settings.precise_physics": "Precise physics",
-  "settings.precise_physics_help": "Compute ball and coin motion in 4 small steps instead of one to avoid very fast balls passing through bricks. Disable to increase FPS by ~10% on slow devices. ",
   "settings.record": "Record gameplay videos",
   "settings.record_download": "Download video ({{size}} MB)",
   "settings.record_help": "Get a video of each level.",

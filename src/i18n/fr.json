@@ -194,8 +194,6 @@
   "settings.pointer_lock_help": "Cache aussi le curseur de la souris.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
-  "settings.precise_physics": "Physique précise",
-  "settings.precise_physics_help": "Calculez le mouvement des balles et des pièces en quatre petites étapes au lieu d'une seule pour éviter que les balles très rapides ne traversent les briques. Désactivez cette option pour augmenter le nombre d'images par seconde d'environ 10 % sur les appareils lents.",
   "settings.record": "Enregistrer des vidéos de jeu",
   "settings.record_download": "Télécharger la vidéo ({{size}} MB)",
   "settings.record_help": "Obtenez une vidéo de chaque niveau.",

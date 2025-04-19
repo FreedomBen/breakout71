@@ -194,8 +194,6 @@
   "settings.pointer_lock_help": "Bloquea y oculta el cursor del mouse.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
-  "settings.precise_physics": "Física precisa",
-  "settings.precise_physics_help": "Calcula el movimiento de la bola y la moneda en 4 pasos pequeños en lugar de uno para evitar que las bolas atraviesen ladrillos muy rápido. Desactívalo para aumentar los FPS en aproximadamente un 10 % en dispositivos lentos.",
   "settings.record": "Grabar vídeos de juego",
   "settings.record_download": "Descargar vídeo ({{size}} MB)",
   "settings.record_help": "Obtenga un vídeo de cada nivel.",

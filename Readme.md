@@ -27,6 +27,8 @@ Other translation are very welcome, contact me if you'd like to submit one.
 
 ## Done
 
+- trial runs detection fix
+
 ## 29083397
 
 - highlight last used creative level
