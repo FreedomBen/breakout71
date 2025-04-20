@@ -2475,7 +2475,7 @@ try {
             warnedUserAboutLSIssue = true;
             (0, _toast.toast)(`Storage issue : ${e?.message}`);
         }
-        console.warn(e);
+        console.warn('Reading ' + key, e);
     }
 } catch (e) {
     console.warn(e);
@@ -6167,6 +6167,14 @@ migrate("set_breakout_71_unlocked_levels" + (0, _versionJsonDefault.default), ()
         if (!breakout_71_unlocked_levels.includes(l.name)) breakout_71_unlocked_levels.push(l.name);
     });
     localStorage.setItem("breakout_71_unlocked_levels", JSON.stringify(breakout_71_unlocked_levels));
+});
+migrate('clean_ls', ()=>{
+    for(let key in localStorage)try {
+        JSON.parse(localStorage.getItem(key) || "null");
+    } catch (e) {
+        localStorage.removeItem(key);
+        console.warn('Removed invalid key ' + key, e);
+    }
 });
 afterMigration();
 

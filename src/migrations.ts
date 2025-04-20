@@ -140,4 +140,16 @@ migrate("set_breakout_71_unlocked_levels" + _appVersion, () => {
   );
 });
 
+migrate('clean_ls', ()=>{
+   for (let key in localStorage) {
+    try {
+        JSON.parse(localStorage.getItem(key) || "null");
+    } catch (e) {
+      localStorage.removeItem(key)
+      console.warn('Removed invalid key '+key,e);
+    }
+  }
+
+})
+
 afterMigration();
