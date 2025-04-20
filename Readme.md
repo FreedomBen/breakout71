@@ -26,6 +26,7 @@ Other translation are very welcome, contact me if you'd like to submit one.
 
 ## Done
 
+- toast an error if storage is blocked
 - in apk, video download doesn't work
 - ask for permanent storage
 - option: reuse past frame's light in new frame lighting computation when there are 150+ coins on screen, to limit the performance impact of rendering lots of lights 
