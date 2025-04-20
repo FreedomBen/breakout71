@@ -4,6 +4,7 @@ import _appVersion from "./data/version.json";
 import { generateSaveFileContent } from "./generateSaveFileContent";
 import { getLevelUnlockCondition, reasonLevelIsLocked } from "./game_utils";
 import { allLevels } from "./loadGameData";
+import { toast } from "./toast";
 
 // The page will be reloaded if any migrations were run
 let migrationsRun = 0;
@@ -15,6 +16,7 @@ function migrate(name: string, cb: () => void) {
       localStorage.setItem(name, "" + Date.now());
       migrationsRun++;
     } catch (e) {
+      toast((e as Error).message);
       console.warn("Migration " + name + " failed : ", e);
     }
   }

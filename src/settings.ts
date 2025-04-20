@@ -3,12 +3,17 @@
 import { toast } from "./toast";
 
 let cachedSettings: { [key: string]: unknown } = {};
+let warnedUserAboutLSIssue = false;
 
 try {
   for (let key in localStorage) {
     try {
       cachedSettings[key] = JSON.parse(localStorage.getItem(key) || "null");
     } catch (e) {
+      if (!warnedUserAboutLSIssue) {
+        warnedUserAboutLSIssue = true;
+        toast(`Storage issue : ${(e as Error)?.message}`);
+      }
       console.warn(e);
     }
   }
@@ -28,7 +33,6 @@ export function setSettingValue<T>(key: string, value: T) {
   cachedSettings[key] = value;
 }
 
-let warnedUserAboutLSIssue = false;
 export function commitSettingsChangesToLocalStorage() {
   try {
     for (let key of needsSaving) {
