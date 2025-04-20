@@ -218,8 +218,6 @@
   "settings.smooth_lighting_help": "Blur the background light effects to make them look less square. Increases lag.",
   "settings.sounds": "Game sounds",
   "settings.sounds_help": "Beeps, bloops and brrrr",
-  "settings.storage_granted": "Your high scores should now be saved permanently",
-  "settings.storage_refused": "Storage access refused, your high scores and unlocks might get lost",
   "settings.stress_test": "Stress test",
   "settings.stress_test_help": "Start a bot controlled game with a very high number of coins, to test the performance limits of your device.",
   "starting_perks.checked": "When you start a new game, one of those perks will be given to you. Click a perk to exclude it. ",
