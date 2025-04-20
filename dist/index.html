@@ -3716,7 +3716,9 @@ function addToScore(gameState, coin) {
     (0, _addToTotalScore.addToTotalScore)(gameState, coin.points);
     if (gameState.score > gameState.highScore && !gameState.creative) {
         gameState.highScore = gameState.score;
-        localStorage.setItem("breakout-3-hs-short", gameState.score.toString());
+        try {
+            localStorage.setItem("breakout-3-hs-short", gameState.score.toString());
+        } catch (e) {}
     }
     if (!(0, _options.isOptionOn)("basic")) makeParticle(gameState, coin.previousX, coin.previousY, (gameState.canvasWidth - coin.x) / 100, -coin.y / 100, (0, _gameUtils.getCoinRenderColor)(gameState, coin), true, gameState.coinSize / 2, 100 + Math.random() * 50);
     schedulGameSound(gameState, "coinCatch", coin.x, 1);

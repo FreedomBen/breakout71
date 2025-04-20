@@ -649,7 +649,11 @@ export function addToScore(gameState: GameState, coin: Coin) {
   addToTotalScore(gameState, coin.points);
   if (gameState.score > gameState.highScore && !gameState.creative) {
     gameState.highScore = gameState.score;
+    try{
     localStorage.setItem("breakout-3-hs-short", gameState.score.toString());
+    }catch (e){
+
+    }
   }
   if (!isOptionOn("basic")) {
     makeParticle(

@@ -1,7 +1,6 @@
 import { icons, transformRawLevel } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import {
-  commitSettingsChangesToLocalStorage,
   getSettingValue,
   getTotalScore,
   setSettingValue,
