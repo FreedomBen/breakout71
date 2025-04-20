@@ -1230,6 +1230,9 @@ export function gameStateTick(
           coin.x,
           (clamp(speed, 20, 100) / 100) * 0.2,
         );
+        if (gameState.perks.compound_interest) {
+          resetCombo(gameState, coin.x, gameState.gameZoneHeight - 20);
+        }
         if (!isOptionOn("basic")) {
           makeParticle(
             gameState,
@@ -1257,9 +1260,7 @@ export function gameStateTick(
       } else if (coin.y > gameState.canvasHeight + coinRadius * 10) {
         gameState.levelLostCoins += coin.points;
         destroy(gameState.coins, coinIndex);
-        if (gameState.perks.compound_interest) {
-          resetCombo(gameState, coin.x, gameState.gameZoneHeight - 20);
-        }
+
         if (
           gameState.combo < gameState.perks.fountain_toss * 30 &&
           Math.random() < (1 / gameState.combo) * gameState.perks.fountain_toss

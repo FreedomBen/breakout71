@@ -38,23 +38,58 @@ export async function openCreativeModePerksPicker() {
   let creativeModePerks: Partial<{ [id in PerkId]: number }> = getSettingValue(
       "creativeModePerks",
       {},
-    ),
-    choice: Upgrade | Level | "reset" | void;
+    );
   const customLevels = (getSettingValue("custom_levels", []) as RawLevel[]).map(
     transformRawLevel,
   );
 
-  while (
-    (choice = await asyncAlert<Upgrade | Level | "reset">({
+  while (true  ) {
+
+    const levelOptions= [
+         ...allLevels.map((l, li) => {
+            const problem =
+              reasonLevelIsLocked(li, getHistory(), true)?.text || "";
+            return {
+              icon: icons[l.name],
+              text: l.name,
+              value: l,
+              disabled: !!problem,
+              tooltip: problem || describeLevel(l),
+              className:''
+            };
+          }),
+          ...customLevels.map((l) => ({
+            icon: levelIconHTML(l.bricks, l.size, l.color),
+            text: l.name,
+            value: l,
+            disabled: !l.bricks.filter((b) => b !== "_").length,
+            tooltip: describeLevel(l),
+              className:''
+          }))
+    ]
+
+    const selectedLeveOption= levelOptions.find(l=>l.text===getSettingValue("creativeModeLevel", '')) || levelOptions[0]
+    selectedLeveOption.className= 'highlight'
+
+
+    const choice=await asyncAlert<Upgrade | Level | "reset" | "play">({
       title: t("lab.menu_entry"),
       className: "actionsAsGrid",
       content: [
-        t("lab.instructions"),
         {
+            icon: icons['icon:reset'],
           value: "reset",
           text: t("lab.reset"),
           disabled: !sumOfValues(creativeModePerks),
         },
+          {
+            icon: icons['icon:new_run'],
+          value: "play",
+          text: t("lab.play"),
+          disabled: !sumOfValues(creativeModePerks),
+        },
+
+        t("lab.instructions"),
         ...upgrades
           .filter((u) => !noCreative.includes(u.id))
           .map((u) => ({
@@ -67,56 +102,35 @@ export async function openCreativeModePerksPicker() {
             value: u,
             className: creativeModePerks[u.id]
               ? "sandbox highlight"
-              : "sandbox ",
+              : "sandbox not-highlighed",
             tooltip: u.help(creativeModePerks[u.id] || 1),
           })),
         t("lab.select_level"),
-        ...allLevels.map((l, li) => {
-          const problem =
-            reasonLevelIsLocked(li, getHistory(), true)?.text || "";
-          return {
-            icon: icons[l.name],
-            text: l.name,
-            value: l,
-            disabled: !!problem,
-            tooltip: problem || describeLevel(l),
-            className:
-              getSettingValue("creativeModeLevel", "") === l.name
-                ? "highlight"
-                : "",
-          };
-        }),
-        ...customLevels.map((l) => ({
-          icon: levelIconHTML(l.bricks, l.size, l.color),
-          text: l.name,
-          value: l,
-          disabled: !l.bricks.filter((b) => b !== "_").length,
-          tooltip: describeLevel(l),
-        })),
+          ...levelOptions
       ],
-    }))
-  ) {
+    })
+    if(!choice)return
     if (choice === "reset") {
       upgrades.forEach((u) => {
         creativeModePerks[u.id] = 0;
       });
-    } else if ("bricks" in choice) {
       setSettingValue("creativeModePerks", creativeModePerks);
-      setSettingValue("creativeModeLevel", choice.name);
+      setSettingValue("creativeModeLevel", '')
+    }  else if (choice === "play") {
       if (await confirmRestart(gameState)) {
         restart({
           perks: creativeModePerks,
-          level: choice,
+          level: selectedLeveOption.value,
           isCreativeRun: true,
         });
+        return
       }
-      return;
+    } else if ("bricks" in choice) {
+      setSettingValue("creativeModeLevel", choice.name);
     } else if (choice) {
       creativeModePerks[choice.id] =
         ((creativeModePerks[choice.id] || 0) + 1) %
         (choice.max + 1 + (creativeModePerks.limitless || 0));
-    } else {
-      return;
     }
   }
 }

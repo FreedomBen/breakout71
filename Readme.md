@@ -22,13 +22,11 @@ Other translation are very welcome, contact me if you'd like to submit one.
 
 # Changelog
 ## To do
-
-
-## Done
-
+- compound_interest : combo resets as soon as coin passes the paddle line
+- added bombs to implosion and kaboom starter levels
 - toast an error if storage is blocked
 - toast an error if migration fails
-- in apk, video download doesn't work
+- fixed video download in apk
 - ask for permanent storage
 - option: reuse past frame's light in new frame lighting computation when there are 150+ coins on screen, to limit the performance impact of rendering lots of lights 
 
@@ -384,6 +382,7 @@ Other translation are very welcome, contact me if you'd like to submit one.
 - [colin] plusieurs perks qui déclenchent des effets quand une balle est perdue. par ex: +3 combo à chaque balle perdue, 5 blocs transformés en bombe, balle et coins ralentis, blocs régénérés…
 - [colin] faster style - augmente le combo en fonction de la vitesse de la balle
 - [colin] perk: roulette - gagne instantanément 2 perks aléatoires 
+- other block types : bumper (speed up ball) [colin], metal (can't break) [nicolas]
 
 ## extra levels
 

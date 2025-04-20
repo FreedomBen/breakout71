@@ -472,7 +472,7 @@
   {
     "name": "icon:bigger_explosions",
     "size": 8,
-    "bricks": "__r_______ry_rr___ryry__ryyyW_rr_rrWyyy___yryrr__yrry_rr_rr"
+    "bricks": "__r_______ry_rr___ryry__ryyyWBrr_rrWyyy__Byryrr__yrryBrr_rr_____"
   },
   {
     "name": "icon:extra_levels",
@@ -830,7 +830,7 @@
   {
     "name": "icon:implosions",
     "size": 8,
-    "bricks": "y______W__ryW_W__yr_WW____r_WWWy_WWW_rr___WW_rrryW_Wy___W_____y_",
+    "bricks": "y______W__ryW_W__yrBWW____rBWWWy_WWWBrr___WWBrrryW_Wy___W_____y_",
     "color": ""
   },
   {
@@ -1317,7 +1317,6 @@
     "name": "Mario!",
     "credit": "Suggested by Nicolas03. A Mario level ! Sprite taken from https://art.pixilart.com/sr2d5c0683c82aws3.png . The sprite belongs to Nintendo"
   },
-
   {
     "color": "",
     "size": 16,
