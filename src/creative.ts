@@ -116,7 +116,7 @@ export async function openCreativeModePerksPicker() {
       });
       setSettingValue("creativeModePerks", creativeModePerks);
       setSettingValue("creativeModeLevel", '')
-    }  else if (choice === "play") {
+    }  else if (choice === "play" || ("bricks" in choice && choice.name==getSettingValue("creativeModeLevel", ''))) {
       if (await confirmRestart(gameState)) {
         restart({
           perks: creativeModePerks,
@@ -131,6 +131,8 @@ export async function openCreativeModePerksPicker() {
       creativeModePerks[choice.id] =
         ((creativeModePerks[choice.id] || 0) + 1) %
         (choice.max + 1 + (creativeModePerks.limitless || 0));
+
+      setSettingValue("creativeModePerks", creativeModePerks);
     }
   }
 }

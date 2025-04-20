@@ -22,6 +22,14 @@ Other translation are very welcome, contact me if you'd like to submit one.
 
 # Changelog
 ## To do
+## Done
+
+- level editor : removed the conditions on bricks count, level name and credits to be able to copy the code
+- shadow around ball when there are many coins : enabled in basic mode too
+- hot start : after reset, if you raise the combo again,  only start ticking down after a whole second. 
+- new perk : ottawa treaty, breaking a brick near a bomb disarms the bomb
+- shocks now doesn't add ball speed at level 1 
+- creative mode UI rework
 - compound_interest : combo resets as soon as coin passes the paddle line
 - added bombs to implosion and kaboom starter levels
 - toast an error if storage is blocked
@@ -320,7 +328,7 @@ Other translation are very welcome, contact me if you'd like to submit one.
 - cash out : double last level's gains  
 - snowball :  Combo resets every 0.1s . +1 combo for each combo gained Since last reset.
 - Chain reaction : +lvl*lvl combo per brick broken by an explosion, combo resets after explosion is over
-
+- catching a coin changes the color of the balls
 - coins stained by balls
 - fast pause : pause delay divided by {{lvl}} (helps with teleport)
 - [colin] Capital - les vies non perdues à la fin du niveau rapportent un bonus de points

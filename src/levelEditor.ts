@@ -165,10 +165,7 @@ export async function editRawLevelList(nth: number, color = "W") {
         text: t("editor.editing.copy"),
         value: "copy",
         help: t("editor.editing.copy_help"),
-        disabled:
-          !level.name ||
-          !level.credit ||
-          bricks.filter((b) => b !== "_").length < 6,
+
       },
       {
         text: t("editor.editing.bigger"),
@@ -253,14 +250,14 @@ export async function editRawLevelList(nth: number, color = "W") {
       return;
     }
     if (action === "copy") {
-      let text = "```\n[" + level.name?.replace(/\[|\]/gi, " ") + "]";
+      let text = "```\n[" + (level.name||'unnamed level')?.replace(/\[|\]/gi, " ") + "]";
       bricks.forEach((b, bi) => {
         if (!(bi % level.size)) text += "\n";
         text += b;
       });
       text +=
         "\n[" +
-        (level.credit?.replace(/\[|\]/gi, " ") || "Missing credits!") +
+        (level.credit?.replace(/\[|\]/gi, " ") || "Missing credits") +
         "]\n```";
       navigator.clipboard.writeText(text);
       // return

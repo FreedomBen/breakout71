@@ -84,6 +84,7 @@ export type Coin = {
   destroyed?: boolean;
   collidedLastFrame?: boolean;
   metamorphosisPoints: number;
+  floatingTime:number;
 };
 export type Ball = {
   x: number;

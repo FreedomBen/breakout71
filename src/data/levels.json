@@ -1341,8 +1341,22 @@
   {
     "color": "#115988",
     "size": 21,
-    "bricks": "__________________________________________________yy_______________yy__yy__yy___________yy__yy__yy____________yy__yy_yy_________y__yy__yy_yy________yyy_yyy_yy_yy_________yy__yy_yyyyy__________yy_yyyyyyyy___yyy____yyyyygggyyy__yyy______yyygBBBgyy_yyy________ygBBBBBgyyyy_________ygBBBBBgyyy__________yygBBBgyyyy___________yygBgyyyy____________yyyByyyy_____________yyyyByy_______________yyByy_________________r_________________________________",
+    "bricks": "__________________________________________________yy_______________yy__yy__yy___________yy__yy__yy____________yy__yy_yy_________y__yy__yy_yy________yyy_yyy_yy_yy_________yy__yy_yyyyy__________yy_yyyyyyyy___yyy____yyyyygggyyy__yyy______yyygBBBgyy_yyy________ygBBBBBgyyyy__W______ygBBBBBgyyy__________yygBBBgyyyy___________yygBgyyyy____________yyyByyyy_____________yyyyByy_______________yyByy_________________r_________________________________",
     "name": "A Very Dangerous High-Five",
     "credit": "Suggested by Noodlemire. A unique shape, fun to bounce the ball between fingers. The palm was initially boring on its own, so I gave it a big bomb. It adds a distinct feeling between the top and bottom halves."
+  },
+  {
+    "name": "icon:buoy",
+    "size": 7,
+    "bricks": "___b______b_____bbb__abbbbbaaatttaaaaataaaaaaaaaa",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:ottawa_treaty",
+    "size": 8,
+    "bricks": "BBtWWtBBBttWWttBtWWtttWtttWWWWtttttWWtttttWWWtttBWWtWttBBBtttWBB",
+    "svg": null,
+    "color": ""
   }
 ]

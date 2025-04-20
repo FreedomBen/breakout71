@@ -302,22 +302,20 @@ export function render(gameState: GameState) {
   });
   startWork("render:ball shade");
   // Black shadow around balls
-  if (!isOptionOn("basic")) {
-    ctx.globalCompositeOperation = "source-over";
-    gameState.balls.forEach((ball) => {
-      ctx.globalAlpha =
-        Math.min(0.8, liveCount(gameState.coins) / 20) *
-        (1 - ballTransparency(ball, gameState));
+  ctx.globalCompositeOperation = "source-over";
+  gameState.balls.forEach((ball) => {
+    ctx.globalAlpha =
+      Math.min(0.8, liveCount(gameState.coins) / 20) *
+      (1 - ballTransparency(ball, gameState));
 
-      drawBall(
-        ctx,
-        level.color || "#000",
-        gameState.ballSize * 6,
-        ball.x,
-        ball.y,
-      );
-    });
-  }
+    drawBall(
+      ctx,
+      level.color || "#000",
+      gameState.ballSize * 6,
+      ball.x,
+      ball.y,
+    );
+  });
   startWork("render:bricks");
   ctx.globalCompositeOperation = "source-over";
   renderAllBricks();

@@ -5,7 +5,6 @@ import { gameState, pause, restart } from "./game";
 import {
   currentLevelInfo,
   describeLevel,
-  findLast,
   pickedUpgradesHTMl,
   reasonLevelIsLocked,
 } from "./game_utils";
@@ -98,6 +97,8 @@ export function gameOver(title: string, intro: string) {
         help: "",
       },
       `<div id="level-recording-container"></div>`,
+
+      pickedUpgradesHTMl(gameState),
       unlocksInfo,
       getHistograms(gameState),
     ],

@@ -825,4 +825,25 @@ export const rawUpgrades = [
       t("upgrades.bricks_attract_ball.tooltip", { count: lvl * 3 }),
     fullHelp: t("upgrades.bricks_attract_ball.verbose_description"),
   },
+  {
+    requires: "",
+    threshold: 220000,
+    gift: false,
+    id: "buoy",
+    max: 3,
+    name: t("upgrades.buoy.name"),
+    help: (lvl: number) =>
+      t("upgrades.buoy.tooltip", { duration: lvl * 0.5 }),
+    fullHelp: t("upgrades.buoy.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 225000,
+    gift: false,
+    id: "ottawa_treaty",
+    max: 1,
+    name: t("upgrades.ottawa_treaty.name"),
+    help: () =>t("upgrades.ottawa_treaty.tooltip"),
+    fullHelp: t("upgrades.ottawa_treaty.verbose_description"),
+  },
 ] as const;
