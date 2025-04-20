@@ -27,8 +27,9 @@ Other translation are very welcome, contact me if you'd like to submit one.
 
 ## Done
 
+- option: reuse past frame's light in new frame lighting computation when there are 150+ coins on screen, to limit the performance impact of rendering lots of lights 
 
-## 29084571
+## 29084606
 
 - simpler and more readable encoding for save files
 - removed check of payload signature on save file, seemed to fail because of the poor encoding of the name of the "côte d'ivoire" level

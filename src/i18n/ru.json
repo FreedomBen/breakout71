@@ -194,6 +194,8 @@
   "settings.pointer_lock_help": "Фиксирует и скрывает курсор мыши.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
+  "settings.probabilistic_lighting": "",
+  "settings.probabilistic_lighting_help": "",
   "settings.record": "Запись видеороликов игрового процесса",
   "settings.record_download": "Скачать видео ({{size}} МБ)",
   "settings.record_help": "Получите видеозапись каждого уровня.",

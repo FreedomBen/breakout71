@@ -194,6 +194,8 @@
   "settings.pointer_lock_help": "Fare imlecini kilitler ve gizler.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
+  "settings.probabilistic_lighting": "",
+  "settings.probabilistic_lighting_help": "",
   "settings.record": "Oyun videolarını kaydedin",
   "settings.record_download": "Videoyu indir ({{size}} MB)",
   "settings.record_help": "Her seviyenin videosunu edinin.",

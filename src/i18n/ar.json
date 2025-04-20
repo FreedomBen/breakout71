@@ -194,6 +194,8 @@
   "settings.pointer_lock_help": "يقوم بقفل وإخفاء مؤشر الماوس.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
+  "settings.probabilistic_lighting": "",
+  "settings.probabilistic_lighting_help": "",
   "settings.record": "تسجيل مقاطع فيديو للعبة",
   "settings.record_download": "تنزيل الفيديو ({{size}} ميجابايت)",
   "settings.record_help": "احصل على فيديو لكل مستوى.",

@@ -194,6 +194,8 @@
   "settings.pointer_lock_help": "Sperrt und versteckt den Mauszeiger.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
+  "settings.probabilistic_lighting": "",
+  "settings.probabilistic_lighting_help": "",
   "settings.record": "Spielvideos aufnehmen",
   "settings.record_download": "Video herunterladen ({{size}} MB)",
   "settings.record_help": "Holen Sie sich ein Video von jedem Level.",

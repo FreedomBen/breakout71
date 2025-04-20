@@ -194,6 +194,8 @@
   "settings.pointer_lock_help": "Bloquea y oculta el cursor del mouse.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
+  "settings.probabilistic_lighting": "",
+  "settings.probabilistic_lighting_help": "",
   "settings.record": "Grabar vídeos de juego",
   "settings.record_download": "Descargar vídeo ({{size}} MB)",
   "settings.record_help": "Obtenga un vídeo de cada nivel.",

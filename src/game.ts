@@ -692,6 +692,7 @@ async function openSettingsMenu() {
               "contrast",
               "smooth_lighting",
               "precise_lighting",
+              "probabilistic_lighting",
             ].includes(key)) ||
           false,
         value: () => {

@@ -194,6 +194,8 @@
   "settings.pointer_lock_help": "Locks and hides the mouse cursor.",
   "settings.precise_lighting": "Precise lighting",
   "settings.precise_lighting_help": "Use a smaller grid for background light effect",
+  "settings.probabilistic_lighting": "Persistence of vision",
+  "settings.probabilistic_lighting_help": "Improve performance when there are more than 150 coins by reusing some of the light of the previous frame",
   "settings.record": "Record gameplay videos",
   "settings.record_download": "Download video ({{size}} MB)",
   "settings.record_help": "Get a video of each level.",

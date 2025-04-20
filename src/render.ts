@@ -55,7 +55,9 @@ export function getHaloScale() {
   return 16 * (isOptionOn("precise_lighting") ? 1 : 2);
 }
 
+let framesCounter=0
 export function render(gameState: GameState) {
+  framesCounter++
   startWork("render:init");
   const level = currentLevelInfo(gameState);
 
@@ -109,11 +111,15 @@ export function render(gameState: GameState) {
     "";
   // Clear
   if (!isOptionOn("basic") && level.svg && level.color === "#000000") {
+    // TODO only if many coins on screen
+    const skipN = isOptionOn('probabilistic_lighting') && liveCount(gameState.coins)> 150? 3 : 0
+    const shouldSkip = index=> skipN ? (framesCounter + index) % (skipN+1) !==0  : false
+
     const haloScale = getHaloScale();
     startWork("render:halo:clear");
 
     haloCanvasCtx.globalCompositeOperation = "source-over";
-    haloCanvasCtx.globalAlpha = 0.99;
+    haloCanvasCtx.globalAlpha =  skipN ? 0.1:0.99
     haloCanvasCtx.fillStyle = level.color;
     haloCanvasCtx.fillRect(0, 0, width / haloScale, height / haloScale);
 
@@ -122,7 +128,8 @@ export function render(gameState: GameState) {
     haloCanvasCtx.globalAlpha =
       0.1 + (0.5 * 10) / (liveCount(gameState.coins) + 10);
     startWork("render:halo:coins");
-    forEachLiveOne(gameState.coins, (coin) => {
+    forEachLiveOne(gameState.coins, (coin,index) => {
+      if(shouldSkip(index)) return
       const color = getCoinRenderColor(gameState, coin);
       drawFuzzyBall(
         haloCanvasCtx,
@@ -134,7 +141,8 @@ export function render(gameState: GameState) {
     });
 
     startWork("render:halo:balls");
-    gameState.balls.forEach((ball) => {
+    gameState.balls.forEach((ball,index) => {
+      if(shouldSkip(index)) return
       haloCanvasCtx.globalAlpha = 0.3 * (1 - ballTransparency(ball, gameState));
       drawFuzzyBall(
         haloCanvasCtx,
@@ -149,6 +157,7 @@ export function render(gameState: GameState) {
     haloCanvasCtx.globalAlpha = 0.05;
     gameState.bricks.forEach((color, index) => {
       if (!color) return;
+      if(shouldSkip(index)) return
       const x = brickCenterX(gameState, index),
         y = brickCenterY(gameState, index);
       drawFuzzyBall(
@@ -163,7 +172,8 @@ export function render(gameState: GameState) {
 
     startWork("render:halo:particles");
     haloCanvasCtx.globalCompositeOperation = "screen";
-    forEachLiveOne(gameState.particles, (flash) => {
+    forEachLiveOne(gameState.particles, (flash,index) => {
+      if(shouldSkip(index)) return
       const { x, y, time, color, size, duration } = flash;
       const elapsed = gameState.levelTime - time;
       haloCanvasCtx.globalAlpha =
@@ -567,12 +577,19 @@ export function render(gameState: GameState) {
   ) {
     ctx.imageSmoothingEnabled = isOptionOn("smooth_lighting") || false;
 
-    haloCanvasCtx.fillStyle = "#FFFFFF";
-    haloCanvasCtx.globalAlpha = 0.25;
-    haloCanvasCtx.globalCompositeOperation = "screen";
-    haloCanvasCtx.fillRect(0, 0, haloCanvas.width, haloCanvas.height);
-    ctx.globalAlpha = 1;
+    if(isOptionOn('probabilistic_lighting')) {
+        ctx.globalAlpha = 1;
+     ctx.globalCompositeOperation = "soft-light";
+    }else{
+
+      haloCanvasCtx.fillStyle = "#FFFFFF";
+      haloCanvasCtx.globalAlpha = 0.25;
+      haloCanvasCtx.globalCompositeOperation = "screen";
+      haloCanvasCtx.fillRect(0, 0, haloCanvas.width, haloCanvas.height);
+      ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "overlay";
+    }
+
     ctx.drawImage(haloCanvas, 0, 0, width, height);
 
     ctx.imageSmoothingEnabled = false;
@@ -604,13 +621,6 @@ export function render(gameState: GameState) {
     );
   }
 
-  // if(isOptionOn('mobile-mode')) {
-  //   ctx.globalCompositeOperation = "source-over";
-  //   ctx.globalAlpha = 0.5;
-  //   ctx.fillStyle = 'black'
-  //   ctx.fillRect(0,gameState.gameZoneHeight, gameState.canvasWidth, gameState.canvasHeight-gameState.gameZoneHeight)
-  // }
-  // ctx.globalAlpha=1
   startWork("render:askForWakeLock");
   askForWakeLock(gameState);
 
@@ -958,6 +968,7 @@ export function drawFuzzyBall(
   x: number,
   y: number,
 ) {
+  width=Math.max(width,2)
   const key = "fuzzy-circle" + color + "_" + width;
   if (!color?.startsWith("#")) debugger;
 

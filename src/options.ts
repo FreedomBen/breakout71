@@ -40,6 +40,11 @@ export const options = {
     name: t("settings.precise_lighting"),
     help: t("settings.precise_lighting_help"),
   },
+  probabilistic_lighting: {
+    default: false,
+    name: t("settings.probabilistic_lighting"),
+    help: t("settings.probabilistic_lighting_help"),
+  },
   contrast: {
     default: false,
     name: t("settings.contrast"),

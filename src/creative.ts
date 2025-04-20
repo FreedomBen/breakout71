@@ -67,7 +67,7 @@ export async function openCreativeModePerksPicker() {
             value: u,
             className: creativeModePerks[u.id]
               ? "sandbox highlight"
-              : "sandbox grey-out-unless-hovered",
+              : "sandbox ",
             tooltip: u.help(creativeModePerks[u.id] || 1),
           })),
         t("lab.select_level"),

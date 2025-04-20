@@ -194,6 +194,8 @@
   "settings.pointer_lock_help": "Cache aussi le curseur de la souris.",
   "settings.precise_lighting": "",
   "settings.precise_lighting_help": "",
+  "settings.probabilistic_lighting": "",
+  "settings.probabilistic_lighting_help": "",
   "settings.record": "Enregistrer des vidéos de jeu",
   "settings.record_download": "Télécharger la vidéo ({{size}} MB)",
   "settings.record_help": "Obtenez une vidéo de chaque niveau.",
