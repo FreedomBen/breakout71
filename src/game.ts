@@ -37,7 +37,8 @@ import { getCurrentLang, languages, t } from "./i18n/i18n";
 import {
   commitSettingsChangesToLocalStorage,
   cycleMaxCoins,
-  getCurrentMaxCoins, getCurrentMaxParticles,
+  getCurrentMaxCoins,
+  getCurrentMaxParticles,
   getSettingValue,
   getTotalScore,
   setSettingValue,
@@ -114,7 +115,7 @@ export function pause(playerAskedForPause: boolean) {
   if (!gameState.running) return;
   if (gameState.pauseTimeout) return;
   if (gameState.startParams.computer_controlled) {
-     if (gameState.startParams?.computer_controlled) {
+    if (gameState.startParams?.computer_controlled) {
       play();
     }
     return;
@@ -496,7 +497,6 @@ export function startWork(what) {
   doing = what;
 }
 setInterval(() => {
-
   lastMeasuredFPS = FPSCounter;
   FPSCounter = 0;
 
@@ -512,7 +512,7 @@ setInterval(() => {
     <div> 
     ${lastMeasuredFPS} FPS -
     ${liveCount(gameState.coins)} / ${getCurrentMaxCoins()} Coins - 
-     ${liveCount(gameState.particles) + liveCount(gameState.lights) + liveCount(gameState.texts)} / ${getCurrentMaxParticles()*3} particles 
+     ${liveCount(gameState.particles) + liveCount(gameState.lights) + liveCount(gameState.texts)} / ${getCurrentMaxParticles() * 3} particles 
     </div>  
     
      

@@ -9,7 +9,12 @@ import {
   pickedUpgradesHTMl,
   reasonLevelIsLocked,
 } from "./game_utils";
-import {askForPersistentStorage, getSettingValue, getTotalScore, setSettingValue} from "./settings";
+import {
+  askForPersistentStorage,
+  getSettingValue,
+  getTotalScore,
+  setSettingValue,
+} from "./settings";
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
 import { rawUpgrades } from "./upgrades";
@@ -30,7 +35,7 @@ export function gameOver(title: string, intro: string) {
 
   gameState.isGameOver = true;
   pause(true);
-  askForPersistentStorage()
+  askForPersistentStorage();
   stopRecording();
   addToTotalPlayTime(gameState.runStatistics.runTime);
 

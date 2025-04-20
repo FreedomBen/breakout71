@@ -4,6 +4,7 @@ import { getAudioRecordingTrack } from "./sounds";
 import { t } from "./i18n/i18n";
 import { GameState } from "./types";
 import { isOptionOn } from "./options";
+import { toast } from "./toast";
 
 let mediaRecorder: MediaRecorder | null,
   captureStream: MediaStream,
@@ -12,7 +13,7 @@ let mediaRecorder: MediaRecorder | null,
   recordCanvasCtx: CanvasRenderingContext2D;
 
 export function recordOneFrame(gameState: GameState) {
-  if (!isOptionOn("record") ) {
+  if (!isOptionOn("record")) {
     return;
   }
   // if (!gameState.running) return;
@@ -59,7 +60,7 @@ export function drawMainCanvasOnSmallCanvas(gameState: GameState) {
 }
 
 export function startRecordingGame(gameState: GameState) {
-  if (!isOptionOn("record") ) {
+  if (!isOptionOn("record")) {
     return;
   }
   if (mediaRecorder) return;
@@ -107,6 +108,7 @@ export function startRecordingGame(gameState: GameState) {
     ) {
       await new Promise((r) => setTimeout(r, 200));
     }
+
     const video = document.createElement("video");
     video.autoplay = true;
     video.controls = false;
@@ -125,13 +127,36 @@ export function startRecordingGame(gameState: GameState) {
     a.download = captureFileName("webm");
     a.target = "_blank";
 
-    a.href = video.src;
-
+    if (isInWebView) {
+      a.href = await blobToBase64(blob);
+    } else {
+      a.href = video.src;
+    }
     a.textContent = t("settings.record_download", {
       size: (blob.size / 1000000).toFixed(2),
     });
     targetDiv.appendChild(a);
+
   };
+}
+
+function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader();
+
+    reader.onload = function () {
+      console.log(reader.result);
+      resolve(reader.result);
+    };
+    reader.onerror = function () {
+      const e = reader.error;
+      console.error(e);
+      toast(e?.message || "Failed to convert the video to a data url");
+      reject(new Error("Failed to readAsDataURL of the video "));
+    };
+
+    reader.readAsDataURL(blob);
+  });
 }
 
 export function pauseRecording() {

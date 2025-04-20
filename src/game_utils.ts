@@ -423,3 +423,4 @@ export function getCornerOffset(gameState: GameState) {
 }
 
 export const isInWebView = !!window.location.href.includes("isInWebView=true");
+console.log({isInWebView})
