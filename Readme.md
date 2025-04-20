@@ -383,6 +383,7 @@ Other translation are very welcome, contact me if you'd like to submit one.
 - [colin] faster style - augmente le combo en fonction de la vitesse de la balle
 - [colin] perk: roulette - gagne instantanément 2 perks aléatoires 
 - other block types : bumper (speed up ball) [colin], metal (can't break) [nicolas]
+- flip perk 
 
 ## extra levels
 
