@@ -421,3 +421,5 @@ export function getCornerOffset(gameState: GameState) {
     gameState.perks.unbounded * gameState.brickWidth
   );
 }
+
+export const isInWebView = !!window.location.href.includes("isInWebView=true");

@@ -23,6 +23,7 @@ import {
   describeLevel,
   getRowColIndex,
   highScoreText,
+  isInWebView,
   levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,
@@ -36,7 +37,7 @@ import { getCurrentLang, languages, t } from "./i18n/i18n";
 import {
   commitSettingsChangesToLocalStorage,
   cycleMaxCoins,
-  getCurrentMaxCoins,
+  getCurrentMaxCoins, getCurrentMaxParticles,
   getSettingValue,
   getTotalScore,
   setSettingValue,
@@ -113,7 +114,12 @@ export async function play() {
 export function pause(playerAskedForPause: boolean) {
   if (!gameState.running) return;
   if (gameState.pauseTimeout) return;
-  if (gameState.startParams.computer_controlled) return;
+  if (gameState.startParams.computer_controlled) {
+     if (gameState.startParams?.computer_controlled) {
+      play();
+    }
+    return;
+  }
 
   const stop = () => {
     gameState.running = false;
@@ -475,17 +481,12 @@ export function tick() {
   FPSCounter++;
 }
 
-let FPSCounter = 0;
-export let lastMeasuredFPS = 60;
-setInterval(() => {
-  lastMeasuredFPS = FPSCounter;
-  FPSCounter = 0;
-}, 1000);
-
 const stats = document.getElementById("stats") as HTMLDivElement;
 let total = {};
 let lastTick = performance.now();
 let doing = "idle";
+let FPSCounter = 0;
+export let lastMeasuredFPS = 60;
 export function startWork(what) {
   if (!gameState.startParams.stress) return;
   const newNow = performance.now();
@@ -496,6 +497,10 @@ export function startWork(what) {
   doing = what;
 }
 setInterval(() => {
+
+  lastMeasuredFPS = FPSCounter;
+  FPSCounter = 0;
+
   if (!gameState.startParams.stress) {
     stats.style.display = "none";
     return;
@@ -506,10 +511,12 @@ setInterval(() => {
   stats.innerHTML =
     `
     <div> 
-    <strong>Coins ${liveCount(gameState.coins)} / ${getCurrentMaxCoins()} - Particles : ${liveCount(gameState.particles) + liveCount(gameState.lights) + liveCount(gameState.texts)}</strong>
-      
-    </div> 
+    ${lastMeasuredFPS} FPS -
+    ${liveCount(gameState.coins)} / ${getCurrentMaxCoins()} Coins - 
+     ${liveCount(gameState.particles) + liveCount(gameState.lights) + liveCount(gameState.texts)} / ${getCurrentMaxParticles()*3} particles 
+    </div>  
     
+     
    
     
     ` +
@@ -519,7 +526,7 @@ setInterval(() => {
         (t) =>
           `  <div> 
            <div style="transform: scale(${clamp(t[1] / totalTime, 0, 1)},1)"></div> 
-  <strong>${t[0]} : ${t[1]} ms</strong> 
+  <strong>${t[0]} : ${Math.floor(t[1])} ms</strong> 
   </div>
         `,
       )
@@ -694,6 +701,7 @@ async function openSettingsMenu() {
               "precise_lighting",
               "probabilistic_lighting",
             ].includes(key)) ||
+          (isInWebView && key == "record") ||
           false,
         value: () => {
           toggleOption(key);

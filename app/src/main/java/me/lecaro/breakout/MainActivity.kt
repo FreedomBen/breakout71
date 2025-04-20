@@ -1,11 +1,7 @@
 package me.lecaro.breakout
 
-import android.app.Activity
-import android.app.DownloadManager
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,13 +16,12 @@ import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import java.io.File
 import java.net.URLDecoder
-import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.jar.Manifest
 
 const val CHOOSE_FILE_REQUEST_CODE = 548459
 
@@ -60,9 +55,9 @@ class MainActivity : android.app.Activity() {
             val sdf = SimpleDateFormat("yyyy-M-dd-hh-mm")
             val currentDate = sdf.format(Date())
             val urlEncoded = url.substring("data:application/json;charset=utf-8,".length)
-            val  str =URLDecoder.decode(urlEncoded, StandardCharsets.UTF_8.name())
+            val str = URLDecoder.decode(urlEncoded, StandardCharsets.UTF_8.name())
 
-            writeFile(str,  "breakout-71-save-$currentDate.json", "application/json")
+            writeFileAndShare(str, "breakout-71-save-$currentDate.json", "application/json")
 
         } catch (e: Exception) {
             Log.e("DL", "Error ${e.message}")
@@ -70,41 +65,52 @@ class MainActivity : android.app.Activity() {
         }
     }
 
-    fun writeFile(jsonData:String,fileName:String, mime:String){
+    fun writeFileAndShare(jsonData: String, fileName: String, mime: String) {
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    // android 10
-                    val contentValues = ContentValues().apply {
-                        put(MediaStore.Downloads.DISPLAY_NAME, fileName)
-                        put(MediaStore.Downloads.MIME_TYPE,mime )
-                        put(MediaStore.Downloads.RELATIVE_PATH,  Environment.DIRECTORY_DOWNLOADS)
-                    }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // android 10
+            val contentValues = ContentValues().apply {
+                put(MediaStore.Downloads.DISPLAY_NAME, fileName)
+                put(MediaStore.Downloads.MIME_TYPE, mime)
+                put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+            }
 
-                    val uri: Uri? = contentResolver.insert(
-                        MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues
-                    )
-                    uri?.let {
-                        contentResolver.openOutputStream(it)?.use { outputStream ->
-                            outputStream.write(jsonData.toByteArray())
-                        }
-                    }
-
-                    val shareIntent: Intent = Intent().apply {
-                        action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_STREAM, uri)
-                        type = mime
-                    }
-                    startActivity(Intent.createChooser(shareIntent, null))
-
-                } else {
-
-
-                    val dir = getExternalFilesDir(null)
-                    val file = File(dir, fileName)
-                    file.writeText(jsonData)
-                    Toast.makeText(this, "Saved in $dir", Toast.LENGTH_LONG).show()
-
+            val uri: Uri? = contentResolver.insert(
+                MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues
+            )
+            uri?.let {
+                contentResolver.openOutputStream(it)?.use { outputStream ->
+                    outputStream.write(jsonData.toByteArray())
                 }
+            }
+
+            val shareIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_STREAM, uri)
+                type = mime
+            }
+            startActivity(Intent.createChooser(shareIntent, null))
+
+        } else {
+
+            val file = File(getExternalFilesDir(null), fileName)
+            file.writeText(jsonData)
+            val uri = FileProvider.getUriForFile(
+                this,
+                "$packageName.fileprovider",  // Adjust if your authority is different
+                file
+            )
+
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_STREAM, uri)
+                type = mime
+                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            }
+
+            startActivity(Intent.createChooser(shareIntent, null))
+
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

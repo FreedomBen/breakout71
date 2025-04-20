@@ -23,7 +23,8 @@ Other translation are very welcome, contact me if you'd like to submit one.
 # Changelog
 ## To do
 
-- redo video presentation
+- in apk, video download doesnt work
+- 
 
 ## Done
 
