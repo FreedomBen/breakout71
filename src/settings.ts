@@ -1,5 +1,8 @@
 // Settings
 
+import {toast} from "./toast";
+import {t} from "./i18n/i18n";
+
 let cachedSettings: { [key: string]: unknown } = {};
 
 try {
@@ -24,6 +27,7 @@ export function setSettingValue<T>(key: string, value: T) {
   needsSaving.add(key);
   cachedSettings[key] = value;
 }
+
 export function commitSettingsChangesToLocalStorage() {
   try {
     for (let key of needsSaving) {
@@ -48,4 +52,20 @@ export function getCurrentMaxParticles() {
 }
 export function cycleMaxCoins() {
   setSettingValue("max_coins", (getSettingValue("max_coins", 2) + 1) % 7);
+}
+
+let asked=false
+export   function askForPersistentStorage(){
+  if(asked) return
+  asked=true
+  if (navigator.storage && navigator.storage.persist) {
+    navigator.storage.persist().then((persistent) => {
+      if (persistent) {
+        toast(t('settings.storage_granted'))
+      } else {
+        toast(t('settings.storage_refused'))
+      }
+    });
+  }
+
 }

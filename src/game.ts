@@ -74,7 +74,6 @@ import {
   requiredAsyncAlert,
 } from "./asyncAlert";
 import { isOptionOn, options, toggleOption } from "./options";
-import { hashCode } from "./getLevelBackground";
 import {
   catchRateBest,
   catchRateGood,
@@ -701,7 +700,7 @@ async function openSettingsMenu() {
               "precise_lighting",
               "probabilistic_lighting",
             ].includes(key)) ||
-          (isInWebView && key == "record") ||
+          // (isInWebView && key == "record") ||
           false,
         value: () => {
           toggleOption(key);

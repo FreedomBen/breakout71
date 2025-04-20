@@ -218,6 +218,8 @@
   "settings.smooth_lighting_help": "",
   "settings.sounds": "Oyun sesleri",
   "settings.sounds_help": "Bipler, blooplar ve brrrr",
+  "settings.storage_granted": "",
+  "settings.storage_refused": "",
   "settings.stress_test": "",
   "settings.stress_test_help": "",
   "starting_perks.checked": "Yeni bir oyuna başladığınızda, bu avantajlardan biri size verilecektir. Bir avantajı hariç tutmak için tıklayın.",

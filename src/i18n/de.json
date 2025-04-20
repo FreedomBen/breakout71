@@ -218,6 +218,8 @@
   "settings.smooth_lighting_help": "",
   "settings.sounds": "Spiel-Sounds",
   "settings.sounds_help": "Piepsen, Bloops und Brrrr",
+  "settings.storage_granted": "",
+  "settings.storage_refused": "",
   "settings.stress_test": "",
   "settings.stress_test_help": "",
   "starting_perks.checked": "Wenn Sie ein neues Spiel beginnen, wird Ihnen eine dieser Vergünstigungen angeboten. Klicken Sie auf eine Vergünstigung, um sie auszuschließen.",

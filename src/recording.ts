@@ -12,7 +12,7 @@ let mediaRecorder: MediaRecorder | null,
   recordCanvasCtx: CanvasRenderingContext2D;
 
 export function recordOneFrame(gameState: GameState) {
-  if (!isOptionOn("record") || isInWebView) {
+  if (!isOptionOn("record") ) {
     return;
   }
   // if (!gameState.running) return;
@@ -59,7 +59,7 @@ export function drawMainCanvasOnSmallCanvas(gameState: GameState) {
 }
 
 export function startRecordingGame(gameState: GameState) {
-  if (!isOptionOn("record") || isInWebView) {
+  if (!isOptionOn("record") ) {
     return;
   }
   if (mediaRecorder) return;

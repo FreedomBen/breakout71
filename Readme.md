@@ -24,10 +24,10 @@ Other translation are very welcome, contact me if you'd like to submit one.
 ## To do
 
 - in apk, video download doesnt work
-- 
 
 ## Done
 
+- ask for permanent storage
 - option: reuse past frame's light in new frame lighting computation when there are 150+ coins on screen, to limit the performance impact of rendering lots of lights 
 
 ## 29084606
@@ -423,7 +423,6 @@ Other translation are very welcome, contact me if you'd like to submit one.
 ## Game engine features ideas
 - add a clickable button to allow sound to play in chrome android
 - save state in localstorage for easy resume of a game in progress
-- ask for permanent storage
 - handle back bouton in menu 
 - Offline mode web for iphone 
 - controller support on web/mobile

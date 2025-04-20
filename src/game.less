@@ -109,7 +109,7 @@ body:not(.has-alert-open) #popup {
 
 #popup {
   &::before {
-    z-index: 10;
+    z-index: 4;
     content: "";
     display: block;
     position: fixed;
@@ -121,7 +121,7 @@ body:not(.has-alert-open) #popup {
   overflow: auto;
 
   & > div {
-    z-index: 11;
+    z-index: 5;
     position: relative;
     margin: auto;
     padding: 20px 10px;
@@ -224,7 +224,7 @@ body:not(.has-alert-open) #popup {
     border: none;
     cursor: pointer;
     overflow: hidden;
-    z-index: 12;
+    z-index: 6;
 
     &:before {
       content: "+";
@@ -265,45 +265,6 @@ body:not(.has-alert-open) #popup {
         margin-right: 0;
         max-width: 400px;
       }
-    }
-  }
-}
-
-/*Unlocks progress bar*/
-.progress {
-  display: block;
-  padding: 5px 10px;
-  background: #1c1c2f;
-  color: #fff;
-  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-
-  & > .progress_bar_part {
-    display: block;
-    background: #4049ca;
-    box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.5);
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    transform-origin: top left;
-    animation: grow 1s both ease-out;
-    z-index: 1;
-  }
-
-  & > span {
-    display: block;
-    position: relative;
-    z-index: 2;
-  }
-
-  @keyframes grow {
-    0% {
-      transform: scale(0, 1);
     }
   }
 }
@@ -462,7 +423,7 @@ h2.histogram-title strong {
   background: black;
   color: white;
   padding: 10px;
-  z-index: 11;
+  z-index: 5;
 
   border-radius: 2px;
   pointer-events: none;
@@ -539,6 +500,7 @@ h2.histogram-title strong {
   transition:
     opacity 200ms,
     transform 200ms;
+  z-index: 7;
   &.hidden {
     opacity: 0;
     transform: translate(-20px, -20px) scale(0.5);
