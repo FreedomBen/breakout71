@@ -21,6 +21,9 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.Toast
 import java.io.File
+import java.net.URLDecoder
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.jar.Manifest
@@ -50,37 +53,27 @@ class MainActivity : android.app.Activity() {
 
     private fun downloadFile(url: String) {
         try {
-            if (!url.startsWith("data:")) {
+            if (!url.startsWith("data:application/json;charset=utf-8,")) {
                 Log.w("DL", "url ignored because it does not start with data:")
                 return
             }
             val sdf = SimpleDateFormat("yyyy-M-dd-hh-mm")
             val currentDate = sdf.format(Date())
-            val base64Data = url.substringAfterLast(',')
-            val decodedBytes = android.util.Base64.decode(base64Data, android.util.Base64.DEFAULT)
+            val urlEncoded = url.substring("data:application/json;charset=utf-8,".length)
+            val  str =URLDecoder.decode(urlEncoded, StandardCharsets.UTF_8.name())
 
-            if (url.startsWith("data:application/json;base64,")) {
-            writeFile(decodedBytes,  "breakout-71-save-$currentDate.json", "application/json")
+            writeFile(str,  "breakout-71-save-$currentDate.json", "application/json")
 
-            } else if (url.startsWith("data:video/webm;base64,")) {
-            writeFile(decodedBytes,  "breakout-71-gameplay-capture-$currentDate.webm", "video/webm")
-            } else {
-                Log.w("DL", "unexpected type " + url)
-            }
         } catch (e: Exception) {
             Log.e("DL", "Error ${e.message}")
             Toast.makeText(this, "Error ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 
-    fun writeFile(decodedBytes:ByteArray,fileName:String, mime:String){
+    fun writeFile(jsonData:String,fileName:String, mime:String){
 
-
-
-                val jsonData = String(decodedBytes);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
-
+                    // android 10
                     val contentValues = ContentValues().apply {
                         put(MediaStore.Downloads.DISPLAY_NAME, fileName)
                         put(MediaStore.Downloads.MIME_TYPE,mime )
@@ -92,13 +85,12 @@ class MainActivity : android.app.Activity() {
                     )
                     uri?.let {
                         contentResolver.openOutputStream(it)?.use { outputStream ->
-                            outputStream.write(decodedBytes)
+                            outputStream.write(jsonData.toByteArray())
                         }
                     }
 
                     val shareIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
-                        // Example: content://com.google.android.apps.photos.contentprovider/...
                         putExtra(Intent.EXTRA_STREAM, uri)
                         type = mime
                     }
@@ -155,13 +147,18 @@ class MainActivity : android.app.Activity() {
                 } catch (e: Exception) {
                     Log.e("DL", "Error ${e.message}")
                     Toast.makeText(activity, "Error ${e.message}", Toast.LENGTH_LONG).show()
-
                     return false
                 }
             }
         }
 
         webView.setDownloadListener(DownloadListener { url, userAgent, contentDisposition, mimetype, contentLength ->
+            Log.d("DL", "url: ${url}")
+            Log.d("DL", "userAgent: ${userAgent}")
+            Log.d("DL", "contentDisposition: ${contentDisposition}")
+            Log.d("DL", "mimetype: ${mimetype}")
+            Log.d("DL", "contentLength: ${contentLength}")
+
             downloadFile(url)
         })
 
