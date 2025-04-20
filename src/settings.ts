@@ -68,6 +68,6 @@ export async function askForPersistentStorage() {
   }
   const persistent = await navigator.storage.persist();
   if (!persistent) {
-    console.warn('No storage granted')
+    console.warn("No storage granted");
   }
 }

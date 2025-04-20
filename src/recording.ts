@@ -145,7 +145,6 @@ function blobToBase64(blob: Blob): Promise<string> {
     let reader = new FileReader();
 
     reader.onload = function () {
-      console.log(reader.result);
       resolve(reader.result);
     };
     reader.onerror = function () {

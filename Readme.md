@@ -23,10 +23,10 @@ Other translation are very welcome, contact me if you'd like to submit one.
 # Changelog
 ## To do
 
-- in apk, video download doesnt work
 
 ## Done
 
+- in apk, video download doesn't work
 - ask for permanent storage
 - option: reuse past frame's light in new frame lighting computation when there are 150+ coins on screen, to limit the performance impact of rendering lots of lights 
 
