@@ -48,16 +48,22 @@ class MainActivity : android.app.Activity() {
 
     private fun downloadFile(url: String) {
         try {
-            if (!url.startsWith("data:application/json;charset=utf-8,")) {
-                Log.w("DL", "url ignored because it does not start with data:")
-                return
-            }
             val sdf = SimpleDateFormat("yyyy-M-dd-hh-mm")
             val currentDate = sdf.format(Date())
-            val urlEncoded = url.substring("data:application/json;charset=utf-8,".length)
-            val str = URLDecoder.decode(urlEncoded, StandardCharsets.UTF_8.name())
 
-            writeFileAndShare(str, "breakout-71-save-$currentDate.json", "application/json")
+            if (url.startsWith("data:application/json;charset=utf-8,")) {
+
+                val urlEncoded = url.substring("data:application/json;charset=utf-8,".length)
+                val str = URLDecoder.decode(urlEncoded, StandardCharsets.UTF_8.name())
+                writeFileAndShare(str.toByteArray(), "breakout-71-save-$currentDate.json", "application/json")
+            }
+
+            if (url.startsWith("data:video/webm;base64,")) {
+                val base64Data = url.substring("data:video/webm;base64,".length)
+                val decodedBytes = android.util.Base64.decode(base64Data, android.util.Base64.DEFAULT)
+                writeFileAndShare(decodedBytes, "breakout-71-capture-$currentDate.webm", "video/webm")
+            }
+
 
         } catch (e: Exception) {
             Log.e("DL", "Error ${e.message}")
@@ -65,7 +71,7 @@ class MainActivity : android.app.Activity() {
         }
     }
 
-    fun writeFileAndShare(jsonData: String, fileName: String, mime: String) {
+    fun writeFileAndShare(bytes:ByteArray, fileName: String, mime: String) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // android 10
@@ -80,7 +86,7 @@ class MainActivity : android.app.Activity() {
             )
             uri?.let {
                 contentResolver.openOutputStream(it)?.use { outputStream ->
-                    outputStream.write(jsonData.toByteArray())
+                    outputStream.write(bytes)
                 }
             }
 
@@ -94,7 +100,7 @@ class MainActivity : android.app.Activity() {
         } else {
 
             val file = File(getExternalFilesDir(null), fileName)
-            file.writeText(jsonData)
+            file.writeBytes(bytes)
             val uri = FileProvider.getUriForFile(
                 this,
                 "$packageName.fileprovider",  // Adjust if your authority is different

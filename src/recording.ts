@@ -89,6 +89,7 @@ export function startRecordingGame(gameState: GameState) {
   const recordedChunks: Blob[] = [];
 
   const instance = new MediaRecorder(captureStream, {
+    // Required for less mushy result
     videoBitsPerSecond: 3500000,
   });
   mediaRecorder = instance;
@@ -136,7 +137,6 @@ export function startRecordingGame(gameState: GameState) {
       size: (blob.size / 1000000).toFixed(2),
     });
     targetDiv.appendChild(a);
-
   };
 }
 

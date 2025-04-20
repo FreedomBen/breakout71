@@ -1,77 +1,73 @@
 // Settings
 
-import {toast} from "./toast";
-import {t} from "./i18n/i18n";
-
 let cachedSettings: { [key: string]: unknown } = {};
 
 try {
-    for (let key in localStorage) {
-        try {
-            cachedSettings[key] = JSON.parse(localStorage.getItem(key) || "null");
-        } catch (e) {
-            console.warn(e);
-        }
+  for (let key in localStorage) {
+    try {
+      cachedSettings[key] = JSON.parse(localStorage.getItem(key) || "null");
+    } catch (e) {
+      console.warn(e);
     }
+  }
 } catch (e) {
-    console.warn(e);
+  console.warn(e);
 }
 
 export function getSettingValue<T>(key: string, defaultValue: T) {
-    return (cachedSettings[key] as T) ?? defaultValue;
+  return (cachedSettings[key] as T) ?? defaultValue;
 }
 
 //  We avoid using localstorage synchronously for perf reasons
 let needsSaving: Set<string> = new Set();
 
 export function setSettingValue<T>(key: string, value: T) {
-    needsSaving.add(key);
-    cachedSettings[key] = value;
+  needsSaving.add(key);
+  cachedSettings[key] = value;
 }
 
 export function commitSettingsChangesToLocalStorage() {
-    try {
-        for (let key of needsSaving) {
-            localStorage.setItem(key, JSON.stringify(cachedSettings[key]));
-        }
-        needsSaving.clear();
-    } catch (e) {
-        console.warn(e);
+  try {
+    for (let key of needsSaving) {
+      localStorage.setItem(key, JSON.stringify(cachedSettings[key]));
     }
+    needsSaving.clear();
+  } catch (e) {
+    console.warn(e);
+  }
 }
 
 setInterval(() => commitSettingsChangesToLocalStorage(), 500);
 
 export function getTotalScore() {
-    return getSettingValue("breakout_71_total_score", 0);
+  return getSettingValue("breakout_71_total_score", 0);
 }
 
 export function getCurrentMaxCoins() {
-    return Math.pow(2, getSettingValue("max_coins", 2)) * 200;
+  return Math.pow(2, getSettingValue("max_coins", 2)) * 200;
 }
 
 export function getCurrentMaxParticles() {
-    return getCurrentMaxCoins();
+  return getCurrentMaxCoins();
 }
 
 export function cycleMaxCoins() {
-    setSettingValue("max_coins", (getSettingValue("max_coins", 2) + 1) % 7);
+  setSettingValue("max_coins", (getSettingValue("max_coins", 2) + 1) % 7);
 }
-
 
 let asked = false;
 
 export async function askForPersistentStorage() {
-    if (asked) return;
-    asked = true;
-    if (!navigator.storage) return
-    if (!navigator.storage.persist) return
-    if (!navigator.storage.persisted) return
-    if (await navigator.storage.persisted()) {
-        return
-    }
-    const persistent = await navigator.storage.persist()
-    if (!persistent) {
-        toast(t("settings.storage_refused"));
-    }
+  if (asked) return;
+  asked = true;
+  if (!navigator.storage) return;
+  if (!navigator.storage.persist) return;
+  if (!navigator.storage.persisted) return;
+  if (await navigator.storage.persisted()) {
+    return;
+  }
+  const persistent = await navigator.storage.persist();
+  if (!persistent) {
+    console.warn('No storage granted')
+  }
 }
