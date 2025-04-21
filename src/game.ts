@@ -589,11 +589,19 @@ export async function openMainMenu() {
     runHistoryViewerMenuEntry(),
     levelEditorMenuEntry(),
     {
-      icon: icons["icon:unlocks"],
-      text: t("main_menu.unlocks"),
+      icon: icons["icon:unlocked_upgrades"],
+      text: t("unlocks.upgrades"),
       help: t("main_menu.unlocks_help"),
       value() {
-        openUnlocksList();
+        openUnlockedUpgradesList();
+      },
+    },
+    {
+      icon: icons["icon:unlocked_levels"],
+      text: t("unlocks.levels"),
+      help: t("main_menu.unlocks_help"),
+      value() {
+        openUnlockedLevelsList();
       },
     },
 
@@ -905,10 +913,9 @@ async function applyFullScreenChoice() {
   return false;
 }
 
-async function openUnlocksList() {
+async function openUnlockedUpgradesList() {
   const ts = getTotalScore();
   const hintField = isOptionOn("mobile-mode") ? "help" : "tooltip";
-
   const upgradeActions = upgrades
     .sort((a, b) => a.threshold - b.threshold)
     .map(({ name, id, threshold, icon, help }) => ({
@@ -924,6 +931,29 @@ async function openUnlocksList() {
           ? t("unlocks.minTotalScore", { score: threshold })
           : help(1),
     }));
+
+  const tryOn = await asyncAlert<RunParams>({
+    title: t("unlocks.title_upgrades", {
+      unlocked: upgradeActions.filter((a) => !a.disabled).length,
+      out_of: upgradeActions.length,
+    }),
+    content: [
+      `<p>${t("unlocks.intro", { ts })}
+   ${upgradeActions.find((u) => u.disabled) ? t("unlocks.greyed_out_help") : ""}</p>  `,
+      ...upgradeActions,
+    ],
+    allowClose: true,
+    className: "actionsAsGrid large",
+  });
+  if (tryOn) {
+    if (await confirmRestart(gameState)) {
+      restart({ ...tryOn });
+    }
+  }
+}
+
+async function openUnlockedLevelsList() {
+  const hintField = isOptionOn("mobile-mode") ? "help" : "tooltip";
 
   const unlockedBefore = new Set(
     getSettingValue("breakout_71_unlocked_levels", []),
@@ -946,22 +976,13 @@ async function openUnlocksList() {
   });
 
   const tryOn = await asyncAlert<RunParams>({
-    title: t("unlocks.title_upgrades", {
-      unlocked: upgradeActions.filter((a) => !a.disabled).length,
-      out_of: upgradeActions.length,
+    title: t("unlocks.level", {
+      unlocked: levelActions.filter((a) => !a.disabled).length,
+      out_of: levelActions.length,
     }),
-    content: [
-      `<p>${t("unlocks.intro", { ts })}
-   ${upgradeActions.find((u) => u.disabled) ? t("unlocks.greyed_out_help") : ""}</p>  `,
-      ...upgradeActions,
-      t("unlocks.level", {
-        unlocked: levelActions.filter((a) => !a.disabled).length,
-        out_of: levelActions.length,
-      }),
-      ...levelActions,
-    ],
+    content: [...levelActions],
     allowClose: true,
-    className: isOptionOn("mobile-mode") ? "" : "actionsAsGrid",
+    className: "actionsAsGrid large",
   });
   if (tryOn) {
     if (await confirmRestart(gameState)) {

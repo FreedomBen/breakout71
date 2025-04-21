@@ -1,8 +1,9 @@
 import { getHistory } from "./gameOver";
-import { icons } from "./loadGameData";
+import { appVersion, icons } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { asyncAlert } from "./asyncAlert";
 import { rawUpgrades } from "./upgrades";
+import { getSettingValue, setSettingValue } from "./settings";
 
 export function runHistoryViewerMenuEntry() {
   const history = getHistory();
@@ -41,6 +42,11 @@ export function runHistoryViewerMenuEntry() {
         })),
       ];
       while (true) {
+        const hasCurrentVersion = history.find(
+          (r) => r.appVersion === appVersion,
+        );
+        const hasPastVersion = history.find((r) => r.appVersion !== appVersion);
+
         const header = columns
           .map(
             (c, ci) =>
@@ -49,6 +55,12 @@ export function runHistoryViewerMenuEntry() {
           .join("");
         const toString = (v) => v.toString();
         const tbody = history
+          .filter(
+            (r) =>
+              !hasCurrentVersion ||
+              r.appVersion === appVersion ||
+              getSettingValue("show_old_versions_in_stats", false),
+          )
           .sort(
             (a, b) =>
               sortDir * (columns[sort].field(a) - columns[sort].field(b)),
@@ -77,6 +89,14 @@ export function runHistoryViewerMenuEntry() {
 <tbody>${tbody}</tbody>
 </table>
                     `,
+            hasPastVersion &&
+              hasCurrentVersion && {
+                icon: getSettingValue("show_old_versions_in_stats", false)
+                  ? icons["icon:checkmark_checked"]
+                  : icons["icon:checkmark_unchecked"],
+                value: "toggle",
+                text: t("history.include_past_versions"),
+              },
           ],
         });
         if (!result) return;
@@ -88,6 +108,12 @@ export function runHistoryViewerMenuEntry() {
             sortDir = -1;
             sort = newSort;
           }
+        }
+        if (result === "toggle") {
+          setSettingValue(
+            "show_old_versions_in_stats",
+            !getSettingValue("show_old_versions_in_stats", false),
+          );
         }
       }
     },

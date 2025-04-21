@@ -427,7 +427,7 @@ export function render(gameState: GameState) {
   });
 
   startWork("render:puck");
-  ctx.globalAlpha = isMovingWhilePassiveIncome(gameState) ? 0.2: 1;
+  ctx.globalAlpha = isMovingWhilePassiveIncome(gameState) ? 0.2 : 1;
   ctx.globalCompositeOperation = "source-over";
   drawPuck(
     ctx,
@@ -685,7 +685,6 @@ export function renderAllBricks() {
   const redBorderOnBricksWithWrongColor =
     hasCombo && gameState.perks.picky_eater && isPickyEatingPossible(gameState);
 
-
   const redRowReach = reachRedRowIndex(gameState);
   const { clairvoyant } = gameState.perks;
   let offset = getDashOffset(gameState);
@@ -746,7 +745,7 @@ export function renderAllBricks() {
           color !== "black" &&
           redBorderOnBricksWithWrongColor) ||
         (hasCombo && gameState.perks.zen && color === "black") ||
-        redBecauseOfReach  ;
+        redBecauseOfReach;
 
       canctx.globalCompositeOperation = "source-over";
       drawBrick(

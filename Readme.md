@@ -14,8 +14,13 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
+
 ## Done
 
+- sticky coins : coins stay stuck when there's an explosion
+- split level unlock and perks unlocks
+- wrap_left
+- wrap_right
 - rework passive income
 
 ## 29087252

@@ -869,8 +869,11 @@ export const rawUpgrades = [
     id: "double_or_nothing",
     max: 3,
     name: t("upgrades.double_or_nothing.name"),
-    help: (lvl: number) => t("upgrades.double_or_nothing.tooltip",
-        {percent: lvl*10, multiplier:1+lvl}),
+    help: (lvl: number) =>
+      t("upgrades.double_or_nothing.tooltip", {
+        percent: lvl * 10,
+        multiplier: 1 + lvl,
+      }),
     fullHelp: t("upgrades.double_or_nothing.verbose_description"),
   },
   {
@@ -882,7 +885,8 @@ export const rawUpgrades = [
     name: t("upgrades.wrap_left.name"),
     help: () => t("upgrades.wrap_left.tooltip"),
     fullHelp: t("upgrades.wrap_left.verbose_description"),
-  }, {
+  },
+  {
     requires: "",
     threshold: 245000,
     gift: false,

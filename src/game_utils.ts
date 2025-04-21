@@ -276,11 +276,14 @@ export function shouldPierceByColor(
   return true;
 }
 
-export function isMovingWhilePassiveIncome(gameState: GameState, gracePeriod = 0) {
+export function isMovingWhilePassiveIncome(
+  gameState: GameState,
+  gracePeriod = 0,
+) {
   return !!(
     gameState.lastPuckMove &&
     gameState.perks.passive_income &&
-    gameState.lastPuckMove  >
+    gameState.lastPuckMove >
       gameState.levelTime - 250 * gameState.perks.passive_income + gracePeriod
   );
 }

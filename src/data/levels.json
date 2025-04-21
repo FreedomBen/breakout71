@@ -1054,12 +1054,6 @@
     "color": ""
   },
   {
-    "name": "icon:unlocks",
-    "size": 6,
-    "bricks": "_bbbb__b__b__b__b_gggggggggggggggggg",
-    "color": ""
-  },
-  {
     "name": "icon:settings",
     "size": 9,
     "bricks": "___g_g____g_ggg_g___ggbgg__gggbbbggg_gbb_bbg_gggbbbggg__ggbgg___g_ggg_g____g_g___",
@@ -1391,6 +1385,20 @@
     "name": "icon:wrap_right",
     "size": 8,
     "bricks": "WWWWWWWWW___W__WW__v___WW_v____WWp____pWW____v_WW___v__W__WWW___",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:unlocked_upgrades",
+    "size": 9,
+    "bricks": "___ggg_____ggbgg___ggbbbgg_ggbbgbbgggbbbgbbbggggbgbggg__gbgbg____gbgbg____ggggg__",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:unlocked_levels",
+    "size": 9,
+    "bricks": "ggggggggggbbbgbbbggbgggggbggbgbgbgbgggggggggggbgbgbgbggbgggggbggbbbgbbbgggggggggg",
     "svg": null,
     "color": ""
   }

@@ -8,15 +8,6 @@ export function comboKeepingRate(level: number) {
   return clamp(1 - (1 / (1 + level)) * 1.5, 0, 1);
 }
 
-export function shouldCoinsStick(gameState: GameState) {
-  return (
-    gameState.perks.sticky_coins &&
-    (!gameState.lastExplosion ||
-      gameState.lastExplosion <
-        gameState.levelTime - 300 * gameState.perks.sticky_coins)
-  );
-}
-
 export function ballTransparency(ball: Ball, gameState: GameState) {
   if (!gameState.perks.transparency) return 0;
   return clamp(

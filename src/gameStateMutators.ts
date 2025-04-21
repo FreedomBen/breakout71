@@ -54,7 +54,6 @@ import {
   clamp,
   coinsBoostedCombo,
   comboKeepingRate,
-  shouldCoinsStick,
 } from "./pure_functions";
 import { addToTotalScore } from "./addToTotalScore";
 import { hashCode } from "./getLevelBackground";
@@ -232,14 +231,12 @@ export function resetCombo(
   const prev = gameState.combo;
   gameState.combo = baseCombo(gameState);
 
-  if(gameState.perks.double_or_nothing){
-    gameState.score =  Math.floor(
-        gameState.score *
-        clamp(1-gameState.perks.double_or_nothing/10 , 0,1)
+  if (gameState.perks.double_or_nothing) {
+    gameState.score = Math.floor(
+      gameState.score * clamp(1 - gameState.perks.double_or_nothing / 10, 0, 1),
     );
-    schedulGameSound(gameState, "lifeLost", x,1)
+    schedulGameSound(gameState, "lifeLost", x, 1);
   }
-
 
   if (prev > gameState.combo && gameState.perks.soft_reset) {
     gameState.combo += Math.floor(
@@ -278,7 +275,7 @@ export function increaseCombo(
   if (by <= 0) {
     return;
   }
-  by*= (1+gameState.perks.double_or_nothing)
+  by *= 1 + gameState.perks.double_or_nothing;
   gameState.combo += by;
   if (
     isOptionOn("comboIncreaseTexts") &&
@@ -484,6 +481,13 @@ export function explodeBrick(
       );
     }
 
+    let zenBonus = 0;
+    if (gameState.perks.zen) {
+      gameState.bricks.forEach((b) => {
+        if (b === "black") zenBonus += gameState.perks.zen;
+      });
+    }
+
     increaseCombo(
       gameState,
       gameState.perks.streak_shots +
@@ -493,8 +497,8 @@ export function explodeBrick(
         gameState.perks.top_is_lava +
         gameState.perks.picky_eater +
         gameState.perks.asceticism * 3 +
-        gameState.perks.zen +
         gameState.perks.passive_income +
+        zenBonus +
         gameState.perks.addiction,
       ball.x,
       ball.y,
@@ -888,7 +892,7 @@ export function coinBrickHitCheck(gameState: GameState, coin: Coin) {
     undefined;
 
   if (typeof (vhit ?? hhit ?? chit) !== "undefined") {
-    if (shouldCoinsStick(gameState)) {
+    if (gameState.perks.sticky_coins) {
       if (coin.collidedLastFrame) {
         coin.x = previousX;
         coin.y = previousY;
@@ -1224,37 +1228,49 @@ export function gameStateTick(
 
       const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
 
-    if (
-      gameState.perks.wrap_left >1&&
-      hitBorder % 2 &&
-      coin.x < gameState.offsetX + gameState.gameZoneWidth / 2
-    ) {
-      schedulGameSound(gameState, "plouf", coin.x, 1)
-      coin.x= gameState.offsetX + gameState.gameZoneWidth - gameState.coinSize/2
-      if(coin.vx>0){
-         coin.vx*=-1
-      }
-      if(!isOptionOn('basic')){
-        spawnExplosion(gameState, 3 , coin.x, coin.y, "#6262EA");
-        spawnImplosion(gameState, 3 , coin.previousX, coin.previousY, "#6262EA");
-      }
-    }else  if (
-      gameState.perks.wrap_right>1 &&
-      hitBorder % 2 &&
-      coin.x > gameState.offsetX + gameState.gameZoneWidth / 2
-    ) {
-      schedulGameSound(gameState, "plouf", coin.x, 1)
-      coin.x= gameState.offsetX +  gameState.coinSize/2
+      if (
+        gameState.perks.wrap_left > 1 &&
+        hitBorder % 2 &&
+        coin.x < gameState.offsetX + gameState.gameZoneWidth / 2
+      ) {
+        schedulGameSound(gameState, "plouf", coin.x, 1);
+        coin.x =
+          gameState.offsetX + gameState.gameZoneWidth - gameState.coinSize / 2;
+        if (coin.vx > 0) {
+          coin.vx *= -1;
+        }
+        if (!isOptionOn("basic")) {
+          spawnExplosion(gameState, 3, coin.x, coin.y, "#6262EA");
+          spawnImplosion(
+            gameState,
+            3,
+            coin.previousX,
+            coin.previousY,
+            "#6262EA",
+          );
+        }
+      } else if (
+        gameState.perks.wrap_right > 1 &&
+        hitBorder % 2 &&
+        coin.x > gameState.offsetX + gameState.gameZoneWidth / 2
+      ) {
+        schedulGameSound(gameState, "plouf", coin.x, 1);
+        coin.x = gameState.offsetX + gameState.coinSize / 2;
 
-      if(coin.vx<0){
-         coin.vx*=-1
+        if (coin.vx < 0) {
+          coin.vx *= -1;
+        }
+        if (!isOptionOn("basic")) {
+          spawnExplosion(gameState, 3, coin.x, coin.y, "#6262EA");
+          spawnImplosion(
+            gameState,
+            3,
+            coin.previousX,
+            coin.previousY,
+            "#6262EA",
+          );
+        }
       }
-      if(!isOptionOn('basic')){
-        spawnExplosion(gameState, 3 , coin.x, coin.y, "#6262EA");
-        spawnImplosion(gameState, 3 , coin.previousX, coin.previousY, "#6262EA");
-      }
-    }
-
 
       if (
         coin.previousY < gameState.gameZoneHeight &&
@@ -1293,7 +1309,7 @@ export function gameStateTick(
             gameState.puckWidth / 2 +
             // a bit of margin to be nice , negative in case it's a negative coin
             gameState.puckHeight * (coin.points ? 1 : -1) &&
-          !isMovingWhilePassiveIncome(gameState)
+        !isMovingWhilePassiveIncome(gameState)
       ) {
         addToScore(gameState, coin);
         destroy(gameState.coins, coinIndex);
@@ -1528,7 +1544,10 @@ export function gameStateTick(
         100 * (Math.random() + 1),
       );
     }
-    if (gameState.perks.streak_shots && !isMovingWhilePassiveIncome(gameState)) {
+    if (
+      gameState.perks.streak_shots &&
+      !isMovingWhilePassiveIncome(gameState)
+    ) {
       const pos = 0.5 - Math.random();
       makeParticle(
         gameState,
@@ -1658,7 +1677,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   }
   if (
     gameState.perks.puck_repulse_ball &&
-      !isMovingWhilePassiveIncome(gameState) &&
+    !isMovingWhilePassiveIncome(gameState) &&
     Math.abs(ball.x - gameState.puckPosition) <
       gameState.puckWidth / 2 +
         (gameState.ballSize * (9 + gameState.perks.puck_repulse_ball)) / 10
@@ -1700,31 +1719,31 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       borderHitCode % 2 &&
       ball.x < gameState.offsetX + gameState.gameZoneWidth / 2
     ) {
-      schedulGameSound(gameState, "plouf", ball.x, 1)
-      ball.x= gameState.offsetX + gameState.gameZoneWidth - gameState.ballSize/2
-      if(ball.vx>0){
-         ball.vx*=-1
+      schedulGameSound(gameState, "plouf", ball.x, 1);
+      ball.x =
+        gameState.offsetX + gameState.gameZoneWidth - gameState.ballSize / 2;
+      if (ball.vx > 0) {
+        ball.vx *= -1;
       }
 
-
-      if(!isOptionOn('basic')){
-        spawnExplosion(gameState, 7 , ball.x, ball.y, "#6262EA");
-        spawnImplosion(gameState, 7 , ball.previousX, ball.previousY, "#6262EA");
+      if (!isOptionOn("basic")) {
+        spawnExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
+        spawnImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
       }
-    }else  if (
+    } else if (
       gameState.perks.wrap_right &&
       borderHitCode % 2 &&
       ball.x > gameState.offsetX + gameState.gameZoneWidth / 2
     ) {
-      schedulGameSound(gameState, "plouf", ball.x, 1)
-      ball.x= gameState.offsetX +  gameState.ballSize/2
+      schedulGameSound(gameState, "plouf", ball.x, 1);
+      ball.x = gameState.offsetX + gameState.ballSize / 2;
 
-      if(ball.vx<0){
-         ball.vx*=-1
+      if (ball.vx < 0) {
+        ball.vx *= -1;
       }
-      if(!isOptionOn('basic')){
-        spawnExplosion(gameState, 7 , ball.x, ball.y, "#6262EA");
-        spawnImplosion(gameState, 7 , ball.previousX, ball.previousY, "#6262EA");
+      if (!isOptionOn("basic")) {
+        spawnExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
+        spawnImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
       }
     }
 
@@ -1758,7 +1777,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     gameState.gameZoneHeight - gameState.puckHeight - gameState.ballSize / 2;
   const ballIsUnderPuck =
     Math.abs(ball.x - gameState.puckPosition) <
-    gameState.ballSize / 2 + gameState.puckWidth / 2 && !isMovingWhilePassiveIncome(gameState, 150);
+      gameState.ballSize / 2 + gameState.puckWidth / 2 &&
+    !isMovingWhilePassiveIncome(gameState, 150);
   if (
     ball.y > ylimit &&
     ball.vy > 0 &&
