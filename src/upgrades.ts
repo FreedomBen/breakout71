@@ -189,7 +189,8 @@ export const rawUpgrades = [
     id: "smaller_puck",
     max: 2,
     name: t("upgrades.smaller_puck.name"),
-    help: (lvl: number) =>  t("upgrades.smaller_puck.tooltip", {percent:50*lvl}),
+    help: (lvl: number) =>
+      t("upgrades.smaller_puck.tooltip", { percent: 50 * lvl }),
     fullHelp: t("upgrades.smaller_puck.verbose_description"),
   },
   {
@@ -718,14 +719,13 @@ export const rawUpgrades = [
     id: "fountain_toss",
     max: 7,
     name: t("upgrades.fountain_toss.name"),
-    help: () =>      t("upgrades.fountain_toss.tooltip"),
+    help: () => t("upgrades.fountain_toss.tooltip"),
     fullHelp: t("upgrades.fountain_toss.verbose_description"),
   },
   {
     requires: "",
     threshold: 175000,
     gift: false,
-
     id: "limitless",
     max: 1,
     name: t("upgrades.limitless.name"),
@@ -828,8 +828,7 @@ export const rawUpgrades = [
     id: "buoy",
     max: 3,
     name: t("upgrades.buoy.name"),
-    help: (lvl: number) =>
-      t("upgrades.buoy.tooltip", { duration: lvl * 0.5 }),
+    help: (lvl: number) => t("upgrades.buoy.tooltip", { duration: lvl * 0.5 }),
     fullHelp: t("upgrades.buoy.verbose_description"),
   },
   {
@@ -839,7 +838,7 @@ export const rawUpgrades = [
     id: "ottawa_treaty",
     max: 1,
     name: t("upgrades.ottawa_treaty.name"),
-    help: () =>t("upgrades.ottawa_treaty.tooltip"),
+    help: () => t("upgrades.ottawa_treaty.tooltip"),
     fullHelp: t("upgrades.ottawa_treaty.verbose_description"),
   },
   {
@@ -849,18 +848,18 @@ export const rawUpgrades = [
     id: "three_cushion",
     max: 1,
     name: t("upgrades.three_cushion.name"),
-    help: (lvl:number) =>t("upgrades.three_cushion.tooltip",{max:lvl*3}),
+    help: (lvl: number) =>
+      t("upgrades.three_cushion.tooltip", { max: lvl * 3 }),
     fullHelp: t("upgrades.three_cushion.verbose_description"),
   },
-    {
+  {
     requires: "",
     threshold: 235000,
     gift: false,
     id: "sticky_coins",
     max: 1,
     name: t("upgrades.sticky_coins.name"),
-    help: (lvl:number) =>t("upgrades.sticky_coins.tooltip"),
+    help: (lvl: number) => t("upgrades.sticky_coins.tooltip"),
     fullHelp: t("upgrades.sticky_coins.verbose_description"),
   },
-
 ] as const;

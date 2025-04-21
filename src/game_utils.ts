@@ -13,7 +13,7 @@ import { t } from "./i18n/i18n";
 import { clamp } from "./pure_functions";
 import { rawUpgrades } from "./upgrades";
 import { hashCode } from "./getLevelBackground";
-import { getTotalScore } from "./settings";
+import { getSettingValue, getTotalScore } from "./settings";
 import { isOptionOn } from "./options";
 
 export function describeLevel(level: Level) {
@@ -392,16 +392,6 @@ export function reasonLevelIsLocked(
   }
 }
 
-export function ballTransparency(ball: Ball, gameState: GameState) {
-  if (!gameState.perks.transparency) return 0;
-  return clamp(
-    gameState.perks.transparency *
-      (1 - (ball.y / gameState.gameZoneHeight) * 1.2),
-    0,
-    1,
-  );
-}
-
 export function getCoinRenderColor(gameState: GameState, coin: Coin) {
   if (
     gameState.perks.metamorphosis ||
@@ -423,3 +413,12 @@ export function getCornerOffset(gameState: GameState) {
 }
 
 export const isInWebView = !!window.location.href.includes("isInWebView=true");
+
+export function hoursSpentPlaying() {
+  try {
+    const timePlayed = getSettingValue("breakout_71_total_play_time", 0);
+    return Math.floor(timePlayed / 1000 / 60 / 60);
+  } catch (e) {
+    return 0;
+  }
+}

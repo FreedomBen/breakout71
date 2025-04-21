@@ -1,10 +1,6 @@
 import { icons, transformRawLevel } from "./loadGameData";
 import { t } from "./i18n/i18n";
-import {
-  getSettingValue,
-  getTotalScore,
-  setSettingValue,
-} from "./settings";
+import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { asyncAlert } from "./asyncAlert";
 import { Palette, RawLevel } from "./types";
 import { levelIconHTML } from "./levelIcon";
@@ -165,7 +161,6 @@ export async function editRawLevelList(nth: number, color = "W") {
         text: t("editor.editing.copy"),
         value: "copy",
         help: t("editor.editing.copy_help"),
-
       },
       {
         text: t("editor.editing.bigger"),
@@ -250,7 +245,10 @@ export async function editRawLevelList(nth: number, color = "W") {
       return;
     }
     if (action === "copy") {
-      let text = "```\n[" + (level.name||'unnamed level')?.replace(/\[|\]/gi, " ") + "]";
+      let text =
+        "```\n[" +
+        (level.name || "unnamed level")?.replace(/\[|\]/gi, " ") +
+        "]";
       bricks.forEach((b, bi) => {
         if (!(bi % level.size)) text += "\n";
         text += b;

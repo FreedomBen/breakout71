@@ -23,6 +23,7 @@ import {
   describeLevel,
   getRowColIndex,
   highScoreText,
+  hoursSpentPlaying,
   isInWebView,
   levelsListHTMl,
   max_levels,
@@ -79,7 +80,6 @@ import {
   catchRateBest,
   catchRateGood,
   clamp,
-  hoursSpentPlaying,
   levelTimeBest,
   levelTimeGood,
   missesBest,
@@ -248,7 +248,8 @@ setInterval(() => {
 }, 1000);
 
 export async function openUpgradesPicker(gameState: GameState) {
-  const catchRate =  (gameState.score - gameState.levelStartScore) /
+  const catchRate =
+    (gameState.score - gameState.levelStartScore) /
     (gameState.levelSpawnedCoins || 1);
 
   let repeats = 1;

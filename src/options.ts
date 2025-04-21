@@ -2,7 +2,8 @@ import { t } from "./i18n/i18n";
 
 import { OptionDef, OptionId } from "./types";
 import { getSettingValue, setSettingValue } from "./settings";
-import { hoursSpentPlaying } from "./pure_functions";
+
+import { hoursSpentPlaying } from "./game_utils";
 
 export const options = {
   sound: {

@@ -10,20 +10,14 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
-
-# Current priorities 
-
-The goal of this project is to make a game used by many people. 
-The game is already pretty fun.
-
-I'm now trying to translate it to (Lebanese) Arabic, Russian and (Chilean) Spanish. 
-Other translation are very welcome, contact me if you'd like to submit one.
  
-
 # Changelog
 ## To do
 ## Done
 
+- apply percentage boost to combo shown on brick
+- smaller puck now gives +50% coins per level
+- transparency now gives +50% coins if ALL balls are fully transparent, less otherwise
 - new perk : sticky coins (coins stick to bricks)
 - left/top/right is laval  perks : at level 2+, the corresponding borders completely disappears (reachable with limitless)
 - new perk : three cushion (gain point for indirect hits) 

@@ -1,6 +1,5 @@
 import { baseCombo, forEachLiveOne, liveCount } from "./gameStateMutators";
 import {
-  ballTransparency,
   brickCenterX,
   brickCenterY,
   currentLevelInfo,
@@ -18,8 +17,10 @@ import { t } from "./i18n/i18n";
 import { gameState, lastMeasuredFPS, startWork } from "./game";
 import { isOptionOn } from "./options";
 import {
+  ballTransparency,
   catchRateBest,
-  catchRateGood, coinsBoostedCombo,
+  catchRateGood,
+  coinsBoostedCombo,
   levelTimeBest,
   levelTimeGood,
   missesBest,
@@ -75,12 +76,11 @@ export function render(gameState: GameState) {
   }
 
   const catchRate = gameState.levelSpawnedCoins
-    ?
-      (gameState.score - gameState.levelStartScore) /
-    (gameState.levelSpawnedCoins || 1)
-      // (gameState.levelSpawnedCoins - gameState.levelLostCoins) /
+    ? (gameState.score - gameState.levelStartScore) /
+      (gameState.levelSpawnedCoins || 1)
+    : // (gameState.levelSpawnedCoins - gameState.levelLostCoins) /
       // gameState.levelSpawnedCoins
-    : 1;
+      1;
   startWork("render:scoreDisplay");
   scoreDisplay.innerHTML =
     (isOptionOn("show_fps") || gameState.startParams.computer_controlled
@@ -440,12 +440,12 @@ export function render(gameState: GameState) {
   );
 
   startWork("render:combotext");
-  const spawns=coinsBoostedCombo(gameState)
-  if (spawns > 1) { 
+  const spawns = coinsBoostedCombo(gameState);
+  if (spawns > 1) {
     ctx.globalCompositeOperation = "source-over";
     ctx.globalAlpha = 1;
 
-    const comboText =  spawns.toString();
+    const comboText = spawns.toString();
     const comboTextWidth = (comboText.length * gameState.puckHeight) / 1.8;
     const totalWidth = comboTextWidth + gameState.coinSize * 2;
     const left = gameState.puckPosition - totalWidth / 2;
@@ -500,56 +500,55 @@ export function render(gameState: GameState) {
 
   if (gameState.offsetXRoundedDown) {
     // draw outside of gaming area to avoid capturing borders in recordings
-    if(gameState.perks.left_is_lava<2)
-    drawStraightLine(
-      ctx,
-      gameState,
-      (redLeftSide && "#FF0000") || "#FFFFFF",
-      gameState.offsetXRoundedDown - 1,
-      0,
-      gameState.offsetXRoundedDown - 1,
-      height,
-      1,
-    );
-    if(gameState.perks.right_is_lava<2)
-    drawStraightLine(
-      ctx,
-      gameState,
-      (redRightSide && "#FF0000") || "#FFFFFF",
-      width - gameState.offsetXRoundedDown + 1,
-      0,
-      width - gameState.offsetXRoundedDown + 1,
-      height,
-      1,
-    );
+    if (gameState.perks.left_is_lava < 2)
+      drawStraightLine(
+        ctx,
+        gameState,
+        (redLeftSide && "#FF0000") || "#FFFFFF",
+        gameState.offsetXRoundedDown - 1,
+        0,
+        gameState.offsetXRoundedDown - 1,
+        height,
+        1,
+      );
+    if (gameState.perks.right_is_lava < 2)
+      drawStraightLine(
+        ctx,
+        gameState,
+        (redRightSide && "#FF0000") || "#FFFFFF",
+        width - gameState.offsetXRoundedDown + 1,
+        0,
+        width - gameState.offsetXRoundedDown + 1,
+        height,
+        1,
+      );
   } else {
+    if (gameState.perks.left_is_lava < 2)
+      drawStraightLine(
+        ctx,
+        gameState,
+        (redLeftSide && "#FF0000") || "",
+        0,
+        0,
+        0,
+        height,
+        1,
+      );
 
-    if(gameState.perks.left_is_lava<2)
-    drawStraightLine(
-      ctx,
-      gameState,
-      (redLeftSide && "#FF0000") || "",
-      0,
-      0,
-      0,
-      height,
-      1,
-    );
-
-    if(gameState.perks.right_is_lava<2)
-    drawStraightLine(
-      ctx,
-      gameState,
-      (redRightSide && "#FF0000") || "",
-      width - 1,
-      0,
-      width - 1,
-      height,
-      1,
-    );
+    if (gameState.perks.right_is_lava < 2)
+      drawStraightLine(
+        ctx,
+        gameState,
+        (redRightSide && "#FF0000") || "",
+        width - 1,
+        0,
+        width - 1,
+        height,
+        1,
+      );
   }
 
-  if (redTop && gameState.perks.top_is_lava<2)
+  if (redTop && gameState.perks.top_is_lava < 2)
     drawStraightLine(
       ctx,
       gameState,

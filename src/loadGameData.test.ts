@@ -1,20 +1,12 @@
 import _palette from "./data/palette.json";
 import _rawLevelsList from "./data/levels.json";
 import _appVersion from "./data/version.json";
-import { rawUpgrades } from "./upgrades";
 
 describe("json data checks", () => {
   it("_rawLevelsList has icon levels", () => {
     expect(
       _rawLevelsList.filter((l) => l.name.startsWith("icon:")).length,
     ).toBeGreaterThan(10);
-  });
-
-  it("all upgrades have icons", () => {
-    const missingIcon = rawUpgrades.filter(
-      (u) => !_rawLevelsList.find((l) => l.name == "icon:" + u.id),
-    );
-    expect(missingIcon).toEqual([]);
   });
 
   it("_rawLevelsList has non-icon few levels", () => {

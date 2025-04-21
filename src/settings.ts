@@ -14,7 +14,7 @@ try {
         warnedUserAboutLSIssue = true;
         toast(`Storage issue : ${(e as Error)?.message}`);
       }
-      console.warn('Reading '+key,e);
+      console.warn("Reading " + key, e);
     }
   }
 } catch (e) {
