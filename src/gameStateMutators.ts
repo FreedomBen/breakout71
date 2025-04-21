@@ -1224,6 +1224,38 @@ export function gameStateTick(
 
       const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
 
+    if (
+      gameState.perks.wrap_left >1&&
+      hitBorder % 2 &&
+      coin.x < gameState.offsetX + gameState.gameZoneWidth / 2
+    ) {
+      schedulGameSound(gameState, "plouf", coin.x, 1)
+      coin.x= gameState.offsetX + gameState.gameZoneWidth - gameState.coinSize/2
+      if(coin.vx>0){
+         coin.vx*=-1
+      }
+      if(!isOptionOn('basic')){
+        spawnExplosion(gameState, 3 , coin.x, coin.y, "#6262EA");
+        spawnImplosion(gameState, 3 , coin.previousX, coin.previousY, "#6262EA");
+      }
+    }else  if (
+      gameState.perks.wrap_right>1 &&
+      hitBorder % 2 &&
+      coin.x > gameState.offsetX + gameState.gameZoneWidth / 2
+    ) {
+      schedulGameSound(gameState, "plouf", coin.x, 1)
+      coin.x= gameState.offsetX +  gameState.coinSize/2
+
+      if(coin.vx<0){
+         coin.vx*=-1
+      }
+      if(!isOptionOn('basic')){
+        spawnExplosion(gameState, 3 , coin.x, coin.y, "#6262EA");
+        spawnImplosion(gameState, 3 , coin.previousX, coin.previousY, "#6262EA");
+      }
+    }
+
+
       if (
         coin.previousY < gameState.gameZoneHeight &&
         coin.y > gameState.gameZoneHeight &&
@@ -1661,6 +1693,39 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       ball.x < gameState.offsetX + gameState.gameZoneWidth / 2
     ) {
       resetCombo(gameState, ball.x, ball.y);
+    }
+
+    if (
+      gameState.perks.wrap_left &&
+      borderHitCode % 2 &&
+      ball.x < gameState.offsetX + gameState.gameZoneWidth / 2
+    ) {
+      schedulGameSound(gameState, "plouf", ball.x, 1)
+      ball.x= gameState.offsetX + gameState.gameZoneWidth - gameState.ballSize/2
+      if(ball.vx>0){
+         ball.vx*=-1
+      }
+
+
+      if(!isOptionOn('basic')){
+        spawnExplosion(gameState, 7 , ball.x, ball.y, "#6262EA");
+        spawnImplosion(gameState, 7 , ball.previousX, ball.previousY, "#6262EA");
+      }
+    }else  if (
+      gameState.perks.wrap_right &&
+      borderHitCode % 2 &&
+      ball.x > gameState.offsetX + gameState.gameZoneWidth / 2
+    ) {
+      schedulGameSound(gameState, "plouf", ball.x, 1)
+      ball.x= gameState.offsetX +  gameState.ballSize/2
+
+      if(ball.vx<0){
+         ball.vx*=-1
+      }
+      if(!isOptionOn('basic')){
+        spawnExplosion(gameState, 7 , ball.x, ball.y, "#6262EA");
+        spawnImplosion(gameState, 7 , ball.previousX, ball.previousY, "#6262EA");
+      }
     }
 
     if (

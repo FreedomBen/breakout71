@@ -882,5 +882,14 @@ export const rawUpgrades = [
     name: t("upgrades.wrap_left.name"),
     help: () => t("upgrades.wrap_left.tooltip"),
     fullHelp: t("upgrades.wrap_left.verbose_description"),
+  }, {
+    requires: "",
+    threshold: 245000,
+    gift: false,
+    id: "wrap_right",
+    max: 1,
+    name: t("upgrades.wrap_right.name"),
+    help: () => t("upgrades.wrap_right.tooltip"),
+    fullHelp: t("upgrades.wrap_right.verbose_description"),
   },
 ] as const;

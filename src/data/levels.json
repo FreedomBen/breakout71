@@ -1379,5 +1379,19 @@
     "bricks": "__yyy___yrrry_yOOOrOyyOOrOOyyOOOOOy_yOrOy___yyy__",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:wrap_left",
+    "size": 8,
+    "bricks": "WWWWWWWWW_W____WW__v___WW___v__WW____v_WWp____pWW_v____W__WWW___",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:wrap_right",
+    "size": 8,
+    "bricks": "WWWWWWWWW___W__WW__v___WW_v____WWp____pWW____v_WW___v__W__WWW___",
+    "svg": null,
+    "color": ""
   }
 ]
