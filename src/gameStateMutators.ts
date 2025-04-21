@@ -232,6 +232,15 @@ export function resetCombo(
   const prev = gameState.combo;
   gameState.combo = baseCombo(gameState);
 
+  if(gameState.perks.double_or_nothing){
+    gameState.score =  Math.floor(
+        gameState.score *
+        clamp(1-gameState.perks.double_or_nothing/10 , 0,1)
+    );
+    schedulGameSound(gameState, "lifeLost", x,1)
+  }
+
+
   if (prev > gameState.combo && gameState.perks.soft_reset) {
     gameState.combo += Math.floor(
       (prev - gameState.combo) * comboKeepingRate(gameState.perks.soft_reset),
@@ -269,6 +278,7 @@ export function increaseCombo(
   if (by <= 0) {
     return;
   }
+  by*= (1+gameState.perks.double_or_nothing)
   gameState.combo += by;
   if (
     isOptionOn("comboIncreaseTexts") &&
@@ -526,10 +536,6 @@ export function explodeBrick(
             gameState.combo++;
         }
       }
-    }
-
-    if (isMovingWhilePassiveIncome(gameState)) {
-      resetCombo(gameState, x, y);
     }
 
     if (!isExplosion) {
@@ -1254,7 +1260,8 @@ export function gameStateTick(
           coinRadius +
             gameState.puckWidth / 2 +
             // a bit of margin to be nice , negative in case it's a negative coin
-            gameState.puckHeight * (coin.points ? 1 : -1)
+            gameState.puckHeight * (coin.points ? 1 : -1) &&
+          !isMovingWhilePassiveIncome(gameState)
       ) {
         addToScore(gameState, coin);
         destroy(gameState.coins, coinIndex);
@@ -1489,7 +1496,7 @@ export function gameStateTick(
         100 * (Math.random() + 1),
       );
     }
-    if (gameState.perks.streak_shots) {
+    if (gameState.perks.streak_shots && !isMovingWhilePassiveIncome(gameState)) {
       const pos = 0.5 - Math.random();
       makeParticle(
         gameState,
@@ -1619,6 +1626,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   }
   if (
     gameState.perks.puck_repulse_ball &&
+      !isMovingWhilePassiveIncome(gameState) &&
     Math.abs(ball.x - gameState.puckPosition) <
       gameState.puckWidth / 2 +
         (gameState.ballSize * (9 + gameState.perks.puck_repulse_ball)) / 10
@@ -1685,7 +1693,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     gameState.gameZoneHeight - gameState.puckHeight - gameState.ballSize / 2;
   const ballIsUnderPuck =
     Math.abs(ball.x - gameState.puckPosition) <
-    gameState.ballSize / 2 + gameState.puckWidth / 2;
+    gameState.ballSize / 2 + gameState.puckWidth / 2 && !isMovingWhilePassiveIncome(gameState, 150);
   if (
     ball.y > ylimit &&
     ball.vy > 0 &&

@@ -427,7 +427,7 @@ export function render(gameState: GameState) {
   });
 
   startWork("render:puck");
-  ctx.globalAlpha = 1;
+  ctx.globalAlpha = isMovingWhilePassiveIncome(gameState) ? 0.2: 1;
   ctx.globalCompositeOperation = "source-over";
   drawPuck(
     ctx,
@@ -440,8 +440,9 @@ export function render(gameState: GameState) {
   );
 
   startWork("render:combotext");
+
   const spawns = coinsBoostedCombo(gameState);
-  if (spawns > 1) {
+  if (spawns > 1 && !isMovingWhilePassiveIncome(gameState)) {
     ctx.globalCompositeOperation = "source-over";
     ctx.globalAlpha = 1;
 
@@ -684,7 +685,6 @@ export function renderAllBricks() {
   const redBorderOnBricksWithWrongColor =
     hasCombo && gameState.perks.picky_eater && isPickyEatingPossible(gameState);
 
-  const redColorOnAllBricks = hasCombo && isMovingWhilePassiveIncome(gameState);
 
   const redRowReach = reachRedRowIndex(gameState);
   const { clairvoyant } = gameState.perks;
@@ -692,7 +692,6 @@ export function renderAllBricks() {
   if (
     !(
       redBorderOnBricksWithWrongColor ||
-      redColorOnAllBricks ||
       redRowReach !== -1 ||
       gameState.perks.zen
     )
@@ -712,8 +711,6 @@ export function renderAllBricks() {
     redRowReach +
     "_" +
     redBorderOnBricksWithWrongColor +
-    "_" +
-    redColorOnAllBricks +
     "_" +
     gameState.ballsColor +
     "_" +
@@ -749,8 +746,7 @@ export function renderAllBricks() {
           color !== "black" &&
           redBorderOnBricksWithWrongColor) ||
         (hasCombo && gameState.perks.zen && color === "black") ||
-        redBecauseOfReach ||
-        redColorOnAllBricks;
+        redBecauseOfReach  ;
 
       canctx.globalCompositeOperation = "source-over";
       drawBrick(

@@ -1372,5 +1372,12 @@
     "bricks": "__________yy_yy___tttty__ytttt___ytttt____tttty______yy_________",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:double_or_nothing",
+    "size": 7,
+    "bricks": "__yyy___yrrry_yOOOrOyyOOrOOyyOOOOOy_yOrOy___yyy__",
+    "svg": null,
+    "color": ""
   }
 ]

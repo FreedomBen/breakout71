@@ -13,8 +13,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
  
 # Changelog
 ## To do
+
 ## Done
 
+- rework passive income
+
+## 29087252
 - apply percentage boost to combo shown on brick
 - smaller puck now gives +50% coins per level
 - transparency now gives +50% coins if ALL balls are fully transparent, less otherwise
