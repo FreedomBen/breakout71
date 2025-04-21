@@ -1,4 +1,6 @@
 import { getSettingValue } from "./settings";
+import {GameState} from "./types";
+import {ballTransparency} from "./game_utils";
 
 export function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(value, max));
@@ -15,6 +17,26 @@ export function hoursSpentPlaying() {
   } catch (e) {
     return 0;
   }
+}
+
+export function shouldCoinsStick(gameState:GameState){
+  return gameState.perks.sticky_coins && (!gameState.lastExplosion || gameState.lastExplosion < gameState.levelTime - 300 * gameState.perks.sticky_coins)
+}
+
+export function coinsBoostedCombo(gameState:GameState){
+  let boost = 1+gameState.perks.sturdy_bricks / 2 + gameState.perks.smaller_puck/2
+  if(gameState.perks.transparency){
+    let min=1;
+    gameState.balls.forEach(ball=>{
+      const bt=ballTransparency(ball, gameState)
+      if(bt<min){
+        min=bt
+      }
+    })
+    boost+=min*gameState.perks.transparency / 2
+  }
+  return Math.ceil(Math.max(gameState.combo,gameState.lastCombo) * boost)
+
 }
 
 export function miniMarkDown(md: string) {

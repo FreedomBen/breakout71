@@ -19,7 +19,7 @@ import { gameState, lastMeasuredFPS, startWork } from "./game";
 import { isOptionOn } from "./options";
 import {
   catchRateBest,
-  catchRateGood,
+  catchRateGood, coinsBoostedCombo,
   levelTimeBest,
   levelTimeGood,
   missesBest,
@@ -270,7 +270,7 @@ export function render(gameState: GameState) {
   startWork("render:explosionshake");
   ctx.globalAlpha = 1;
   ctx.globalCompositeOperation = "source-over";
-  const lastExplosionDelay = Date.now() - gameState.lastExplosion + 5;
+  const lastExplosionDelay = gameState.levelTime - gameState.lastExplosion + 5;
   const shaked = lastExplosionDelay < 200 && !isOptionOn("basic");
   if (shaked) {
     const amplitude =
@@ -440,11 +440,12 @@ export function render(gameState: GameState) {
   );
 
   startWork("render:combotext");
-  if (gameState.combo > 1) {
+  const spawns=coinsBoostedCombo(gameState)
+  if (spawns > 1) { 
     ctx.globalCompositeOperation = "source-over";
     ctx.globalAlpha = 1;
 
-    const comboText = "x " + gameState.combo;
+    const comboText =  spawns.toString();
     const comboTextWidth = (comboText.length * gameState.puckHeight) / 1.8;
     const totalWidth = comboTextWidth + gameState.coinSize * 2;
     const left = gameState.puckPosition - totalWidth / 2;

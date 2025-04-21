@@ -24,6 +24,7 @@ Other translation are very welcome, contact me if you'd like to submit one.
 ## To do
 ## Done
 
+- new perk : sticky coins (coins stick to bricks)
 - left/top/right is laval  perks : at level 2+, the corresponding borders completely disappears (reachable with limitless)
 - new perk : three cushion (gain point for indirect hits) 
 - live stats: coins still in the air appear as "lost" in the catch percentage, as in the final computation

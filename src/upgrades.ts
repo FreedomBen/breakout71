@@ -189,10 +189,7 @@ export const rawUpgrades = [
     id: "smaller_puck",
     max: 2,
     name: t("upgrades.smaller_puck.name"),
-    help: (lvl: number) =>
-      lvl == 1
-        ? t("upgrades.smaller_puck.tooltip")
-        : t("upgrades.smaller_puck.help_plural"),
+    help: (lvl: number) =>  t("upgrades.smaller_puck.tooltip", {percent:50*lvl}),
     fullHelp: t("upgrades.smaller_puck.verbose_description"),
   },
   {
@@ -721,8 +718,7 @@ export const rawUpgrades = [
     id: "fountain_toss",
     max: 7,
     name: t("upgrades.fountain_toss.name"),
-    help: (lvl: number) =>
-      t("upgrades.fountain_toss.tooltip", { lvl, max: lvl * 30 }),
+    help: () =>      t("upgrades.fountain_toss.tooltip"),
     fullHelp: t("upgrades.fountain_toss.verbose_description"),
   },
   {

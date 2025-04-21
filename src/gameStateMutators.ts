@@ -50,7 +50,7 @@ import {
 } from "./game";
 import {stopRecording} from "./recording";
 import {isOptionOn} from "./options";
-import {clamp, comboKeepingRate} from "./pure_functions";
+import {clamp, coinsBoostedCombo, comboKeepingRate, shouldCoinsStick} from "./pure_functions";
 import {addToTotalScore} from "./addToTotalScore";
 import {hashCode} from "./getLevelBackground";
 
@@ -219,7 +219,6 @@ export function baseCombo(gameState: GameState) {
     return (
         1 +
         gameState.perks.base_combo * 3 +
-        gameState.perks.smaller_puck * 5 +
         mineFieldBonus
     );
 }
@@ -385,7 +384,7 @@ export function explosionAt(
         c.vx += (((dx / d2) * 10 * size) / c.weight) * factor;
         c.vy += (((dy / d2) * 10 * size) / c.weight) * factor;
     });
-    gameState.lastExplosion = Date.now();
+    gameState.lastExplosion = gameState.levelTime;
 
     if (gameState.perks.implosions) {
         spawnImplosion(gameState, 7 * size, x, y, "#FFFFFF");
@@ -419,10 +418,6 @@ export function explodeBrick(
         const x = brickCenterX(gameState, index),
             y = brickCenterY(gameState, index);
 
-        // if (color === "transparent") {
-        //     schedulGameSound(gameState, "void", x, 1);
-        //     resetCombo(gameState, x, y);
-        // }
         setBrick(gameState, index, "");
         explosionAt(gameState, index, x, y, ball, 0);
         if (gameState.perks.minefield) {
@@ -437,25 +432,7 @@ export function explodeBrick(
 
         setBrick(gameState, index, "");
 
-        let coinsToSpawn = gameState.combo;
-        if (gameState.lastCombo > coinsToSpawn) {
-            // In case a reset happens in the same frame as a spawn, i want the combo to stay high (for minefield and zen in particular)
-            coinsToSpawn = gameState.lastCombo;
-        }
-        if (gameState.perks.sturdy_bricks) {
-            // +10% per level
-            coinsToSpawn += Math.ceil(
-                ((2 + gameState.perks.sturdy_bricks) / 2) * coinsToSpawn,
-            );
-        }
-        if (gameState.perks.transparency) {
-            coinsToSpawn = Math.ceil(
-                coinsToSpawn *
-                (1 +
-                    (ballTransparency(ball, gameState) * gameState.perks.transparency) /
-                    2),
-            );
-        }
+        let coinsToSpawn = coinsBoostedCombo(gameState)
 
         gameState.levelSpawnedCoins += coinsToSpawn;
         gameState.runStatistics.coins_spawned += coinsToSpawn;
@@ -565,7 +542,7 @@ export function explodeBrick(
                     resetCombo(gameState, ball.x, ball.y);
                 }
                 schedulGameSound(gameState, "colorChange", ball.x, 0.8);
-                gameState.lastExplosion = gameState.levelTime;
+                // gameState.lastExplosion = gameState.levelTime;
                 gameState.ballsColor = color;
                 if (!isOptionOn("basic")) {
                     gameState.balls.forEach((ball) => {
@@ -905,33 +882,40 @@ export function coinBrickHitCheck(gameState: GameState, coin: Coin) {
             hitsSomething(x, y, radius)) ||
         undefined;
 
-    if (gameState.perks.ghost_coins) {
-        //     slow down
-        if (typeof (vhit ?? hhit ?? chit) !== "undefined") {
+    if (typeof (vhit ?? hhit ?? chit) !== "undefined") {
+        if (shouldCoinsStick(gameState)) {
+            if(coin.collidedLastFrame) {
+                coin.x = previousX
+                coin.y = previousY
+            }
+            coin.vx = 0
+            coin.vy = 0
+        } else if (gameState.perks.ghost_coins) {
+            //     slow down
             coin.vy *= 1 - 0.2 / gameState.perks.ghost_coins;
             coin.vx *= 1 - 0.2 / gameState.perks.ghost_coins;
-        }
-    } else {
-        if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
-            coin.y = coin.previousY;
-            coin.vy *= -1;
+        } else {
+            if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
+                coin.y = coin.previousY;
+                coin.vy *= -1;
 
-            //   Roll on corners
-            const leftHit = gameState.bricks[brickIndex(x - radius, y + radius)];
-            const rightHit = gameState.bricks[brickIndex(x + radius, y + radius)];
+                //   Roll on corners
+                const leftHit = gameState.bricks[brickIndex(x - radius, y + radius)];
+                const rightHit = gameState.bricks[brickIndex(x + radius, y + radius)];
 
-            if (leftHit && !rightHit) {
-                coin.vx += 1;
-                coin.sa -= 1;
+                if (leftHit && !rightHit) {
+                    coin.vx += 1;
+                    coin.sa -= 1;
+                }
+                if (!leftHit && rightHit) {
+                    coin.vx -= 1;
+                    coin.sa += 1;
+                }
             }
-            if (!leftHit && rightHit) {
-                coin.vx -= 1;
-                coin.sa += 1;
+            if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
+                coin.x = coin.previousX;
+                coin.vx *= -1;
             }
-        }
-        if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
-            coin.x = coin.previousX;
-            coin.vx *= -1;
         }
     }
     return vhit ?? hhit ?? chit;
@@ -984,6 +968,7 @@ export function bordersHitCheck(
         coin.vx *= -1;
         hhit = 1;
     }
+
 
     return hhit + vhit * 2;
 }
@@ -1227,7 +1212,10 @@ export function gameStateTick(
             }
 
             const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
+
             const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
+
+
             if (
                 coin.previousY < gameState.gameZoneHeight &&
                 coin.y > gameState.gameZoneHeight &&
@@ -1282,8 +1270,8 @@ export function gameStateTick(
                     Math.random() / coin.points < (1 / gameState.combo) * gameState.perks.fountain_toss
                 ) {
                     increaseCombo(gameState, 1,
-                        clamp(coin.x,20, gameState.canvasWidth-20 ),
-                        clamp(coin.y,20, gameState.gameZoneHeight-20 )
+                        clamp(coin.x, 20, gameState.canvasWidth - 20),
+                        clamp(coin.y, 20, gameState.gameZoneHeight - 20)
                     );
                 }
             }
@@ -1314,6 +1302,7 @@ export function gameStateTick(
                 }
             }
 
+            // Sound and slow down
             if (
                 (!gameState.perks.ghost_coins && typeof hitBrick !== "undefined") ||
                 hitBorder
@@ -1328,10 +1317,12 @@ export function gameStateTick(
                 if (speed > 20 && !coin.collidedLastFrame) {
                     schedulGameSound(gameState, "coinBounce", coin.x, 0.2);
                 }
-                coin.collidedLastFrame = true;
-            } else {
-                coin.collidedLastFrame = false;
             }
+            // remember collision
+            coin.collidedLastFrame =  !!(
+                 typeof hitBrick !== "undefined" ||
+                hitBorder
+            )
         });
 
         gameState.balls.forEach((ball) => ballTick(gameState, ball, frames));
