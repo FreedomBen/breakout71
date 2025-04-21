@@ -1358,5 +1358,19 @@
     "bricks": "BBtWWtBBBttWWttBtWWtttWtttWWWWtttttWWtttttWWWtttBWWtWttBBBtttWBB",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:three_cushion",
+    "size": 8,
+    "bricks": "BkkkkkkBk___W__kk__W_W_kk_W___WkkW___y_kk_W____kk__W___kBkkkkkkB",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:sticky_coins",
+    "size": 8,
+    "bricks": "__________yy_yy___tttty__ytttt___ytttt____tttty______yy_________",
+    "svg": null,
+    "color": ""
   }
 ]

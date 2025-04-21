@@ -139,6 +139,7 @@ export function resetBalls(gameState: GameState) {
             piercePoints: gameState.perks.pierce * 3,
             hitSinceBounce: 0,
             brokenSinceBounce: 0,
+            sidesHitsSinceBounce: 0,
             sapperUses: 0,
         });
     }
@@ -160,6 +161,7 @@ export function putBallsAtPuck(gameState: GameState) {
         ball.previousY = ball.y;
         ball.hitSinceBounce = 0;
         ball.brokenSinceBounce = 0;
+        ball.sidesHitsSinceBounce = 0;
         ball.piercePoints = gameState.perks.pierce * 3;
     });
 }
@@ -959,7 +961,7 @@ export function bordersHitCheck(
     let vhit = 0,
         hhit = 0;
 
-    if (coin.x < gameState.offsetXRoundedDown + radius) {
+    if (coin.x < gameState.offsetXRoundedDown + radius && gameState.perks.left_is_lava < 2) {
         coin.x =
             gameState.offsetXRoundedDown +
             radius +
@@ -967,12 +969,12 @@ export function bordersHitCheck(
         coin.vx *= -1;
         hhit = 1;
     }
-    if (coin.y < radius) {
+    if (coin.y < radius && gameState.perks.top_is_lava < 2) {
         coin.y = radius + (radius - coin.y);
         coin.vy *= -1;
         vhit = 1;
     }
-    if (coin.x > gameState.canvasWidth - gameState.offsetXRoundedDown - radius) {
+    if (coin.x > gameState.canvasWidth - gameState.offsetXRoundedDown - radius && gameState.perks.right_is_lava < 2) {
         coin.x =
             gameState.canvasWidth -
             gameState.offsetXRoundedDown -
@@ -1024,11 +1026,11 @@ export function gameStateTick(
         gameState.lastBrickBroken = 0;
     }
 
-    if(gameState.perks.hot_start){
-        if(gameState.combo===baseCombo(gameState)){
+    if (gameState.perks.hot_start) {
+        if (gameState.combo === baseCombo(gameState)) {
             // Give 1s of time between catching a coin and tick down
-            gameState.lastTickDown=gameState.levelTime
-        }else  if (
+            gameState.lastTickDown = gameState.levelTime
+        } else if (
             gameState.levelTime > gameState.lastTickDown + 1000
         ) {
             gameState.lastTickDown = gameState.levelTime;
@@ -1266,15 +1268,23 @@ export function gameStateTick(
             ) {
                 addToScore(gameState, coin);
                 destroy(gameState.coins, coinIndex);
-            } else if (coin.y > gameState.canvasHeight + coinRadius * 10) {
+            } else if (
+                coin.y > gameState.canvasHeight + coinRadius * 10 ||
+                coin.y < -coinRadius * 10 ||
+                coin.x < -coinRadius * 10 ||
+                coin.x > gameState.canvasWidth + coinRadius * 10
+            ) {
                 gameState.levelLostCoins += coin.points;
                 destroy(gameState.coins, coinIndex);
 
                 if (
                     gameState.combo < gameState.perks.fountain_toss * 30 &&
-                    Math.random() < (1 / gameState.combo) * gameState.perks.fountain_toss
+                    Math.random() / coin.points < (1 / gameState.combo) * gameState.perks.fountain_toss
                 ) {
-                    increaseCombo(gameState, 1, coin.x, gameState.gameZoneHeight - 20);
+                    increaseCombo(gameState, 1,
+                        clamp(coin.x,20, gameState.canvasWidth-20 ),
+                        clamp(coin.y,20, gameState.gameZoneHeight-20 )
+                    );
                 }
             }
 
@@ -1283,7 +1293,7 @@ export function gameStateTick(
                 if (
                     gameState.bricks[hitBrick] &&
                     coin.color !== gameState.bricks[hitBrick] &&
-                    gameState.bricks[hitBrick] !== "black"  &&
+                    gameState.bricks[hitBrick] !== "black" &&
                     coin.metamorphosisPoints
                 ) {
                     // Not using setbrick because we don't want to reset HP
@@ -1419,7 +1429,7 @@ export function gameStateTick(
     ) {
         // The red should still be visible on a white bg
 
-        if (gameState.perks.top_is_lava) {
+        if (gameState.perks.top_is_lava == 1) {
             makeParticle(
                 gameState,
                 gameState.offsetXRoundedDown +
@@ -1434,7 +1444,7 @@ export function gameStateTick(
             );
         }
 
-        if (gameState.perks.left_is_lava) {
+        if (gameState.perks.left_is_lava == 1) {
             makeParticle(
                 gameState,
                 gameState.offsetXRoundedDown,
@@ -1448,7 +1458,7 @@ export function gameStateTick(
             );
         }
 
-        if (gameState.perks.right_is_lava) {
+        if (gameState.perks.right_is_lava == 1) {
             makeParticle(
                 gameState,
                 gameState.offsetXRoundedDown + gameState.gameZoneWidthRoundedUp,
@@ -1640,6 +1650,12 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
         frames,
     );
     if (borderHitCode) {
+
+        ball.sidesHitsSinceBounce++
+        if (ball.sidesHitsSinceBounce <= gameState.perks.three_cushion * 3) {
+            increaseCombo(gameState, 1, ball.x, ball.y);
+        }
+
         if (
             gameState.perks.left_is_lava &&
             borderHitCode % 2 &&
@@ -1741,13 +1757,20 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
         gameState.runStatistics.puck_bounces++;
         ball.hitSinceBounce = 0;
         ball.brokenSinceBounce = 0;
+        ball.sidesHitsSinceBounce = 0;
         ball.sapperUses = 0;
         ball.piercePoints = gameState.perks.pierce * 3;
     }
 
     if (
         gameState.running &&
-        ball.y > gameState.gameZoneHeight + gameState.ballSize / 2
+        (
+            ball.y > gameState.gameZoneHeight + gameState.ballSize / 2 ||
+            ball.y < -gameState.gameZoneHeight ||
+            ball.x < -gameState.gameZoneHeight ||
+            ball.x > gameState.canvasWidth + gameState.gameZoneHeight
+        )
+
     ) {
         ball.destroyed = true;
         gameState.runStatistics.balls_lost++;
@@ -1780,6 +1803,9 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
         const initialBrickColor = gameState.bricks[hitBrick];
         ball.hitSinceBounce++;
 
+        if (!ball.sidesHitsSinceBounce && gameState.perks.three_cushion) {
+            resetCombo(gameState, ball.x, ball.y);
+        }
         if (gameState.perks.nbricks) {
             if (ball.hitSinceBounce > gameState.perks.nbricks) {
                 resetCombo(gameState, ball.x, ball.y);
@@ -1824,8 +1850,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
 
         if (!gameState.brickHP[hitBrick]) {
             ball.brokenSinceBounce++;
-
-            applyOttawaTreatyPerk(gameState, hitBrick,ball)
+            applyOttawaTreatyPerk(gameState, hitBrick, ball)
             explodeBrick(gameState, hitBrick, ball, false);
             if (
                 ball.sapperUses < gameState.perks.sapper &&
@@ -1835,6 +1860,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
                 setBrick(gameState, hitBrick, "black");
                 ball.sapperUses++;
             }
+
+
         } else {
             schedulGameSound(gameState, "wallBeep", x, 1);
             makeLight(
@@ -2129,12 +2156,12 @@ function goToNearestBrick(
 }
 
 
-function applyOttawaTreatyPerk(gameState: GameState, index: number,ball:Ball) {
-    if (!gameState.perks.ottawa_treaty) return  console.log('!gameState.perks.ottawa_treaty')
-    if (ball.sapperUses) return console.log('ball.sapperUses')
+function applyOttawaTreatyPerk(gameState: GameState, index: number, ball: Ball) {
+    if (!gameState.perks.ottawa_treaty) return
+    if (ball.sapperUses) return
 
     const originalColor = gameState.bricks[index]
-    if (originalColor == 'black') return console.log("originalColor == 'black'")
+    if (originalColor == 'black') return
     const x = index % gameState.gridSize
     const y = Math.floor(index / gameState.gridSize)
     let converted = 0
@@ -2143,17 +2170,17 @@ function applyOttawaTreatyPerk(gameState: GameState, index: number,ball:Ball) {
             if (dx || dy) {
                 const nIndex = getRowColIndex(gameState, y + dy, x + dx)
                 if (gameState.bricks[nIndex] && gameState.bricks[nIndex] === 'black') {
-                    console.log('converted brick '+nIndex+ ' from '+gameState.bricks[nIndex] + ' to '+originalColor)
+
                     setBrick(gameState, nIndex, originalColor)
                     schedulGameSound(gameState, "colorChange", brickCenterX(gameState, index), 1)
                     // Avoid infinite bricks generation hack
-                    ball.sapperUses=Infinity
+                    ball.sapperUses = Infinity
                     converted++
                     // Don't convert more than one brick per hit normally
-                    if(converted>=gameState.perks.ottawa_treaty) return console.log("converted>=gameState.perks.ottawa_treaty");
+                    if (converted >= gameState.perks.ottawa_treaty) return
 
                 }
             }
- return console.log("done",converted);
+    return
 }
 

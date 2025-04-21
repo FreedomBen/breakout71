@@ -24,6 +24,9 @@ Other translation are very welcome, contact me if you'd like to submit one.
 ## To do
 ## Done
 
+- left/top/right is laval  perks : at level 2+, the corresponding borders completely disappears (reachable with limitless)
+- new perk : three cushion (gain point for indirect hits) 
+- live stats: coins still in the air appear as "lost" in the catch percentage, as in the final computation
 - level editor : removed the conditions on bricks count, level name and credits to be able to copy the code
 - shadow around ball when there are many coins : enabled in basic mode too
 - hot start : after reset, if you raise the combo again,  only start ticking down after a whole second. 
@@ -374,6 +377,8 @@ Other translation are very welcome, contact me if you'd like to submit one.
 - accelerometer controls coins and balls
 - [colin] side pucks - same as above but with two side pucks : hard to know where to put them 
 - [colin] Perk: second puck in the middle of the screen
+- [colin] Sponge Ball : the ball stores coins it collides with, and releases them when bouncing on any border (left, right, top). 
+
 
 ## ideas to sort
 - wind : move coins based on puck movement not position  

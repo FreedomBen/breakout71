@@ -75,8 +75,11 @@ export function render(gameState: GameState) {
   }
 
   const catchRate = gameState.levelSpawnedCoins
-    ? (gameState.levelSpawnedCoins - gameState.levelLostCoins) /
-      gameState.levelSpawnedCoins
+    ?
+      (gameState.score - gameState.levelStartScore) /
+    (gameState.levelSpawnedCoins || 1)
+      // (gameState.levelSpawnedCoins - gameState.levelLostCoins) /
+      // gameState.levelSpawnedCoins
     : 1;
   startWork("render:scoreDisplay");
   scoreDisplay.innerHTML =
@@ -496,6 +499,7 @@ export function render(gameState: GameState) {
 
   if (gameState.offsetXRoundedDown) {
     // draw outside of gaming area to avoid capturing borders in recordings
+    if(gameState.perks.left_is_lava<2)
     drawStraightLine(
       ctx,
       gameState,
@@ -506,7 +510,7 @@ export function render(gameState: GameState) {
       height,
       1,
     );
-
+    if(gameState.perks.right_is_lava<2)
     drawStraightLine(
       ctx,
       gameState,
@@ -518,6 +522,8 @@ export function render(gameState: GameState) {
       1,
     );
   } else {
+
+    if(gameState.perks.left_is_lava<2)
     drawStraightLine(
       ctx,
       gameState,
@@ -529,6 +535,7 @@ export function render(gameState: GameState) {
       1,
     );
 
+    if(gameState.perks.right_is_lava<2)
     drawStraightLine(
       ctx,
       gameState,
@@ -540,7 +547,8 @@ export function render(gameState: GameState) {
       1,
     );
   }
-  if (redTop)
+
+  if (redTop && gameState.perks.top_is_lava<2)
     drawStraightLine(
       ctx,
       gameState,

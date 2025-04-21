@@ -846,4 +846,25 @@ export const rawUpgrades = [
     help: () =>t("upgrades.ottawa_treaty.tooltip"),
     fullHelp: t("upgrades.ottawa_treaty.verbose_description"),
   },
+  {
+    requires: "",
+    threshold: 230000,
+    gift: false,
+    id: "three_cushion",
+    max: 1,
+    name: t("upgrades.three_cushion.name"),
+    help: (lvl:number) =>t("upgrades.three_cushion.tooltip",{max:lvl*3}),
+    fullHelp: t("upgrades.three_cushion.verbose_description"),
+  },
+    {
+    requires: "",
+    threshold: 235000,
+    gift: false,
+    id: "sticky_coins",
+    max: 1,
+    name: t("upgrades.sticky_coins.name"),
+    help: (lvl:number) =>t("upgrades.sticky_coins.tooltip"),
+    fullHelp: t("upgrades.sticky_coins.verbose_description"),
+  },
+
 ] as const;

@@ -103,6 +103,7 @@ export type Ball = {
   hitSinceBounce: number;
   // Brick was really broken ,but could have been respawned as a bomb
   brokenSinceBounce: number;
+  sidesHitsSinceBounce: number;
   sapperUses: number;
   destroyed?: boolean;
 };

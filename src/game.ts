@@ -248,8 +248,7 @@ setInterval(() => {
 }, 1000);
 
 export async function openUpgradesPicker(gameState: GameState) {
-  const catchRate =
-    (gameState.score - gameState.levelStartScore) /
+  const catchRate =  (gameState.score - gameState.levelStartScore) /
     (gameState.levelSpawnedCoins || 1);
 
   let repeats = 1;
