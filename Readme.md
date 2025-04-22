@@ -17,7 +17,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+- included german corrections by Pock
 - added particle effect for wrap
+- removed grace period from passive income, updated icon
 
 ## 29087440
 

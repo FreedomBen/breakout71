@@ -151,14 +151,14 @@ migrate("clean_ls", () => {
   }
 });
 
-
 migrate("set_user_id", () => {
   // Useful to identify a player when uploading his save file multiple times to a web service
-  if(!localStorage.getItem('breakout_71_user_id')){
-    localStorage.setItem('breakout_71_user_id', JSON.stringify(self?.crypto?.randomUUID()||'user_'+Math.random()))
+  if (!localStorage.getItem("breakout_71_user_id")) {
+    localStorage.setItem(
+      "breakout_71_user_id",
+      JSON.stringify(self?.crypto?.randomUUID() || "user_" + Math.random()),
+    );
   }
 });
-
-
 
 afterMigration();
