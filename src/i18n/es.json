@@ -414,7 +414,7 @@
   "upgrades.soft_reset.tooltip": "Al reiniciar el combo se conserva el {{percent}}% de los puntos",
   "upgrades.soft_reset.verbose_description": "Limita el impacto de un reinicio de combo.",
   "upgrades.sticky_coins.name": "Monedas pegajosas",
-  "upgrades.sticky_coins.tooltip": "Las monedas se adhieren a los ladrillos",
+  "upgrades.sticky_coins.tooltip": "",
   "upgrades.sticky_coins.verbose_description": "",
   "upgrades.streak_shots.name": "Secuencia de destrucción",
   "upgrades.streak_shots.tooltip": "Más piezas si rompes varios ladrillos a la vez.",
@@ -464,6 +464,6 @@
   "upgrades.yoyo.tooltip": "La pelota desciende hacia la raqueta.",
   "upgrades.yoyo.verbose_description": "Es lo contrario de la Telequinesis: controlar la pelota mientras cae hacia la raqueta.",
   "upgrades.zen.name": "Zen",
-  "upgrades.zen.tooltip": "+{{lvl}} combo por bomba en pantalla al romper un ladrillo, se reinicia cuando hay una explosión",
+  "upgrades.zen.tooltip": "",
   "upgrades.zen.verbose_description": ""
 }

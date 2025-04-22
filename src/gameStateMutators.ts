@@ -403,6 +403,7 @@ export function explosionAt(
   gameState.runStatistics.bricks_broken++;
 
   if (gameState.perks.zen) {
+    gameState.lastZenComboIncrease = gameState.levelTime
     resetCombo(gameState, x, y);
   }
 }
@@ -481,12 +482,6 @@ export function explodeBrick(
       );
     }
 
-    let zenBonus = 0;
-    if (gameState.perks.zen) {
-      gameState.bricks.forEach((b) => {
-        if (b === "black") zenBonus += gameState.perks.zen;
-      });
-    }
 
     increaseCombo(
       gameState,
@@ -498,7 +493,6 @@ export function explodeBrick(
         gameState.perks.picky_eater +
         gameState.perks.asceticism * 3 +
         gameState.perks.passive_income +
-        zenBonus +
         gameState.perks.addiction,
       ball.x,
       ball.y,
@@ -691,6 +685,7 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.winAt = 0;
   gameState.levelWallBounces = 0;
   gameState.lastPuckMove = 0;
+  gameState.lastZenComboIncrease = 0;
   gameState.autoCleanUses = 0;
   gameState.lastTickDown = gameState.levelTime;
   gameState.levelStartScore = gameState.score;
@@ -892,14 +887,7 @@ export function coinBrickHitCheck(gameState: GameState, coin: Coin) {
     undefined;
 
   if (typeof (vhit ?? hhit ?? chit) !== "undefined") {
-    if (gameState.perks.sticky_coins) {
-      if (coin.collidedLastFrame) {
-        coin.x = previousX;
-        coin.y = previousY;
-      }
-      coin.vx = 0;
-      coin.vy = 0;
-    } else if (gameState.perks.ghost_coins) {
+    if (gameState.perks.ghost_coins) {
       //     slow down
       coin.vy *= 1 - 0.2 / gameState.perks.ghost_coins;
       coin.vx *= 1 - 0.2 / gameState.perks.ghost_coins;
@@ -999,8 +987,8 @@ export function gameStateTick(
     gameState.runStatistics.max_combo,
     gameState.combo,
   );
-
   gameState.lastCombo = gameState.combo;
+  zenTick(gameState)
 
   if (
     gameState.perks.addiction &&
@@ -1338,6 +1326,8 @@ export function gameStateTick(
         }
       }
 
+        const positionBeforeBrickBounceX=coin.x
+        const positionBeforeBrickBounceY=coin.y
       const hitBrick = coinBrickHitCheck(gameState, coin);
       if (gameState.perks.metamorphosis && typeof hitBrick !== "undefined") {
         if (
@@ -1362,6 +1352,24 @@ export function gameStateTick(
             }
           }
         }
+      }
+
+      if (gameState.perks.sticky_coins &&
+          typeof hitBrick !== "undefined" &&
+          (
+          coin.color === gameState.bricks[hitBrick] ||
+          gameState.perks.sticky_coins>1
+      )) {
+        if (coin.collidedLastFrame) {
+          coin.x = coin.previousX;
+          coin.y = coin.previousY;
+        }else{
+          coin.x=positionBeforeBrickBounceX
+          coin.y=positionBeforeBrickBounceY
+
+        }
+        coin.vx = 0;
+        coin.vy = 0;
       }
 
       // Sound and slow down
@@ -2308,4 +2316,13 @@ function applyOttawaTreatyPerk(
         }
       }
   return;
+}
+
+
+export function zenTick(gameState:GameState){
+    if (!gameState.perks.zen)  return
+    if(gameState.levelTime>gameState.lastZenComboIncrease +3000){
+      gameState.lastZenComboIncrease=gameState.levelTime
+      increaseCombo(gameState, gameState.perks.zen, gameState.puckPosition, gameState.gameZoneHeight- gameState.puckHeight)
+    }
 }

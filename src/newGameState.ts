@@ -82,6 +82,7 @@ export function newGameState(params: RunParams): GameState {
     puckPosition: 400,
     lastPuckPosition: 400,
     lastPuckMove: 0,
+    lastZenComboIncrease: 0,
     pauseTimeout: null,
     canvasWidth: 0,
     canvasHeight: 0,

@@ -414,7 +414,7 @@
   "upgrades.soft_reset.tooltip": "Kombo sıfırlamaları % {{percent}}tutar",
   "upgrades.soft_reset.verbose_description": "Bir kombo sıfırlamanın etkisini sınırlayın.",
   "upgrades.sticky_coins.name": "Yapışkan paralar",
-  "upgrades.sticky_coins.tooltip": "Paralar tuğlalara yapışıyor",
+  "upgrades.sticky_coins.tooltip": "",
   "upgrades.sticky_coins.verbose_description": "",
   "upgrades.streak_shots.name": "Vuruş serisi",
   "upgrades.streak_shots.tooltip": "Kürek çekmeden önce çok sayıda tuğla kırarsanız daha fazla para kazanırsınız.",
@@ -464,6 +464,6 @@
   "upgrades.yoyo.tooltip": "Top küreğe doğru düşer",
   "upgrades.yoyo.verbose_description": "Telekinezinin tam tersi, topun aşağı düşerken kontrol edilmesi.",
   "upgrades.zen.name": "Zen",
-  "upgrades.zen.tooltip": "Tuğla kırarken ekrandaki bomba başına +{{lvl}} kombo, patlama olduğunda sıfırlanır",
+  "upgrades.zen.tooltip": "",
   "upgrades.zen.verbose_description": ""
 }

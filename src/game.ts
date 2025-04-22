@@ -24,7 +24,6 @@ import {
   getRowColIndex,
   highScoreText,
   hoursSpentPlaying,
-  isInWebView,
   levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,

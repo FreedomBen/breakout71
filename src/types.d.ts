@@ -253,8 +253,6 @@ export type GameState = {
   levelSpawnedCoins: number;
   levelLostCoins: number;
 
-  // MAX_COINS: number;
-  // MAX_PARTICLES: number;
   puckColor: colorString;
   ballSize: number;
   coinSize: number;
@@ -267,6 +265,7 @@ export type GameState = {
   lastOffered: Partial<{ [k in PerkId]: number }>;
   levelTime: number;
   lastPuckMove: number;
+  lastZenComboIncrease: number;
   winAt: number;
   levelWallBounces: number;
   autoCleanUses: number;

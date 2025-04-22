@@ -17,6 +17,10 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+- zen : combo increases every 3 seconds, resets on explosion
+
+## 29088513
+
 - included german corrections by Pock
 - added particle effect for wrap
 - removed grace period from passive income, updated icon

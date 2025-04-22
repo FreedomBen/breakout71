@@ -414,7 +414,7 @@
   "upgrades.soft_reset.tooltip": "Комбо-сброс сохраняет {{percent}}%",
   "upgrades.soft_reset.verbose_description": "Ограничьте влияние комбо-сброса.",
   "upgrades.sticky_coins.name": "Липкие монеты",
-  "upgrades.sticky_coins.tooltip": "Монеты прилипают к кирпичам",
+  "upgrades.sticky_coins.tooltip": "",
   "upgrades.sticky_coins.verbose_description": "",
   "upgrades.streak_shots.name": "Попадание в полосу",
   "upgrades.streak_shots.tooltip": "Больше монет, если вы разобьете много кирпичей, прежде чем подпрыгнуть на лопатке.",
@@ -464,6 +464,6 @@
   "upgrades.yoyo.tooltip": "Мяч падает на лопатку",
   "upgrades.yoyo.verbose_description": "Это противоположность телекинезу: управляйте мячом, пока он падает обратно.",
   "upgrades.zen.name": "Дзен",
-  "upgrades.zen.tooltip": "+{{lvl}} комбо за бомбу на экране при разрушении кирпичей, сбрасывается при взрыве",
+  "upgrades.zen.tooltip": "",
   "upgrades.zen.verbose_description": ""
 }

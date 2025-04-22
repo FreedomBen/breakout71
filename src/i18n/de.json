@@ -414,7 +414,7 @@
   "upgrades.soft_reset.tooltip": "Combo-Rückstellungen halten {{percent}}%",
   "upgrades.soft_reset.verbose_description": "Begrenzen Sie die Auswirkungen eines Combo-Resets.",
   "upgrades.sticky_coins.name": "Klebrige Münzen",
-  "upgrades.sticky_coins.tooltip": "Münzen kleben an Ziegeln",
+  "upgrades.sticky_coins.tooltip": "",
   "upgrades.sticky_coins.verbose_description": "",
   "upgrades.streak_shots.name": "Glückssträhne",
   "upgrades.streak_shots.tooltip": "Mehr Münzen, wenn du viele Steine zerbrichst, bevor du auf das Paddel springst.",
@@ -464,6 +464,6 @@
   "upgrades.yoyo.tooltip": "Ball fällt in Richtung Paddel",
   "upgrades.yoyo.verbose_description": "Es ist das Gegenteil von Telekinese, den Ball zu kontrollieren, während er wieder nach unten fällt.",
   "upgrades.zen.name": "Zen",
-  "upgrades.zen.tooltip": "+{{lvl}} Combo pro Ziegel, wird bei einer Explosion zurückgesetzt",
+  "upgrades.zen.tooltip": "",
   "upgrades.zen.verbose_description": "Schließlich handelt es sich um ein gewaltfreies Spiel."
 }

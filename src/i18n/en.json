@@ -414,8 +414,8 @@
   "upgrades.soft_reset.tooltip": "Combo resets keeps {{percent}}%",
   "upgrades.soft_reset.verbose_description": "Limit the impact of a combo reset.",
   "upgrades.sticky_coins.name": "Sticky coins",
-  "upgrades.sticky_coins.tooltip": "Coins stick to bricks",
-  "upgrades.sticky_coins.verbose_description": "",
+  "upgrades.sticky_coins.tooltip": "Coins stick to bricks of the same color",
+  "upgrades.sticky_coins.verbose_description": "At level 2, they stick to bricks of any color",
   "upgrades.streak_shots.name": "Hit streak",
   "upgrades.streak_shots.tooltip": "More coins if you break many bricks before bouncing on the paddle.",
   "upgrades.streak_shots.verbose_description": "Every time you break a brick, your combo increases by one. \n\nHowever, as soon as the ball touches your paddle, the combo is reset to its default value.\n\nOnce your combo rises above the base value, your paddle will have a red border to remind you that it will destroy your combo to touch it with the ball.",
@@ -464,6 +464,6 @@
   "upgrades.yoyo.tooltip": "Ball falls toward paddle",
   "upgrades.yoyo.verbose_description": "It's the opposite of telekinesis, control the ball while it's falling back down.",
   "upgrades.zen.name": "Zen",
-  "upgrades.zen.tooltip": "+{{lvl}} combo per bomb on screen when breaking a bricks, reset when there's an explosion",
+  "upgrades.zen.tooltip": "+{{lvl}} combo every 3s, reset when there's an explosion",
   "upgrades.zen.verbose_description": ""
 }

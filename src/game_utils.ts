@@ -397,6 +397,7 @@ export function getCoinRenderColor(gameState: GameState, coin: Coin) {
     gameState.perks.metamorphosis ||
     isOptionOn("colorful_coins") ||
     gameState.perks.hypnosis ||
+    gameState.perks.sticky_coins ||
     gameState.perks.rainbow
   )
     return coin.color;

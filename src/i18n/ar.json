@@ -414,7 +414,7 @@
   "upgrades.soft_reset.tooltip": "إعادة تعيين المجموعة تحافظ على {{percent}}%",
   "upgrades.soft_reset.verbose_description": "الحد من تأثير إعادة تعيين المجموعة.",
   "upgrades.sticky_coins.name": "العملات المعدنية اللاصقة",
-  "upgrades.sticky_coins.tooltip": "العملات المعدنية تلتصق بالطوب",
+  "upgrades.sticky_coins.tooltip": "",
   "upgrades.sticky_coins.verbose_description": "",
   "upgrades.streak_shots.name": "سلسلة الضربات",
   "upgrades.streak_shots.tooltip": "مزيد من العملات المعدنية إذا قمت بكسر العديد من الطوب قبل القفز على المجداف.",
@@ -464,6 +464,6 @@
   "upgrades.yoyo.tooltip": "الكرة تسقط نحو المضرب",
   "upgrades.yoyo.verbose_description": "إنه عكس التحريك الذهني، أي التحكم بالكرة أثناء سقوطها مرة أخرى إلى الأسفل.",
   "upgrades.zen.name": "زين",
-  "upgrades.zen.tooltip": "+{{lvl}} مجموعة لكل قنبلة على الشاشة عند كسر الطوب، يتم إعادة ضبطها عند حدوث انفجار",
+  "upgrades.zen.tooltip": "",
   "upgrades.zen.verbose_description": ""
 }
