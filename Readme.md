@@ -17,11 +17,15 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+- added particle effect for wrap
+
+## 29087440
+
+- zen : now you gain one combo per bomb on screen when breaking a brick (so no bombs, no gain)
 - sticky coins : coins stay stuck when there's an explosion
-- split level unlock and perks unlocks
-- wrap_left
-- wrap_right
-- rework passive income
+- wrap_left / wrap_right : teleport  the ball to the other side of the screen when it hits a border  
+- passive income : now moving the puck makes it transparent to coins and balls, but not reset the combo 
+- main menu : split level unlock and perks unlocks
 
 ## 29087252
 - apply percentage boost to combo shown on brick

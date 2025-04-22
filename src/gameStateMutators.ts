@@ -1231,11 +1231,11 @@ export function gameStateTick(
       if (
         gameState.perks.wrap_left > 1 &&
         hitBorder % 2 &&
-        coin.x < gameState.offsetX + gameState.gameZoneWidth / 2
+        coin.previousX < gameState.offsetX + gameState.gameZoneWidth / 2
       ) {
         schedulGameSound(gameState, "plouf", coin.x, 1);
         coin.x =
-          gameState.offsetX + gameState.gameZoneWidth - gameState.coinSize / 2;
+          gameState.offsetX + gameState.gameZoneWidth - gameState.coinSize;
         if (coin.vx > 0) {
           coin.vx *= -1;
         }
@@ -1249,13 +1249,15 @@ export function gameStateTick(
             "#6262EA",
           );
         }
-      } else if (
+      }
+
+      if (
         gameState.perks.wrap_right > 1 &&
         hitBorder % 2 &&
-        coin.x > gameState.offsetX + gameState.gameZoneWidth / 2
+        coin.previousX > gameState.offsetX + gameState.gameZoneWidth / 2
       ) {
         schedulGameSound(gameState, "plouf", coin.x, 1);
-        coin.x = gameState.offsetX + gameState.coinSize / 2;
+        coin.x = gameState.offsetX + gameState.coinSize;
 
         if (coin.vx < 0) {
           coin.vx *= -1;
@@ -1472,7 +1474,7 @@ export function gameStateTick(
   if (
     gameState.combo > baseCombo(gameState) &&
     !isOptionOn("basic") &&
-    (gameState.combo - baseCombo(gameState)) * Math.random() > 5
+    (gameState.combo - baseCombo(gameState)) * Math.random() * frames > 5
   ) {
     // The red should still be visible on a white bg
 
@@ -1562,6 +1564,40 @@ export function gameStateTick(
       );
     }
   }
+
+  if(
+      gameState.perks.wrap_left &&
+      gameState.perks.left_is_lava<2 &&
+      Math.random()*frames > 0.1){
+      makeParticle(
+        gameState,
+        gameState.offsetXRoundedDown,
+        Math.random() * gameState.gameZoneHeight,
+        5,
+        (Math.random() - 0.5) * 10,
+       "#6262EA",
+        true,
+        gameState.coinSize / 2,
+        100 * (Math.random() + 1),
+      );
+  }
+  if(
+      gameState.perks.wrap_right &&
+      gameState.perks.right_is_lava<2 &&
+      Math.random()*frames > 0.1){
+      makeParticle(
+        gameState,
+        gameState.offsetXRoundedDown+gameState.gameZoneWidth,
+        Math.random() * gameState.gameZoneHeight,
+        -5,
+        (Math.random() - 0.5) * 10,
+       "#6262EA",
+        true,
+        gameState.coinSize / 2,
+        100 * (Math.random() + 1),
+      );
+  }
+
 
   // Respawn what's needed, show particles
   forEachLiveOne(gameState.respawns, (r, ri) => {
@@ -1704,24 +1740,16 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.sidesHitsSinceBounce++;
     if (ball.sidesHitsSinceBounce <= gameState.perks.three_cushion * 3) {
       increaseCombo(gameState, 1, ball.x, ball.y);
-    }
-
-    if (
-      gameState.perks.left_is_lava &&
-      borderHitCode % 2 &&
-      ball.x < gameState.offsetX + gameState.gameZoneWidth / 2
-    ) {
-      resetCombo(gameState, ball.x, ball.y);
-    }
-
+    } 
     if (
       gameState.perks.wrap_left &&
       borderHitCode % 2 &&
-      ball.x < gameState.offsetX + gameState.gameZoneWidth / 2
+      //   x might be moved by wrap so we rely on previousX
+      ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2
     ) {
       schedulGameSound(gameState, "plouf", ball.x, 1);
       ball.x =
-        gameState.offsetX + gameState.gameZoneWidth - gameState.ballSize / 2;
+        gameState.offsetX + gameState.gameZoneWidth - gameState.ballSize ;
       if (ball.vx > 0) {
         ball.vx *= -1;
       }
@@ -1730,13 +1758,16 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
         spawnExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
         spawnImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
       }
-    } else if (
+    }
+
+    if (
       gameState.perks.wrap_right &&
       borderHitCode % 2 &&
-      ball.x > gameState.offsetX + gameState.gameZoneWidth / 2
+      //   x might be moved by wrap so we rely on previousX
+      ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2
     ) {
       schedulGameSound(gameState, "plouf", ball.x, 1);
-      ball.x = gameState.offsetX + gameState.ballSize / 2;
+      ball.x = gameState.offsetX + gameState.ballSize ;
 
       if (ball.vx < 0) {
         ball.vx *= -1;
@@ -1748,9 +1779,19 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     }
 
     if (
+      gameState.perks.left_is_lava &&
+      borderHitCode % 2 &&
+      //   x might be moved by wrap so we rely on previousX
+      ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2
+    ) {
+      resetCombo(gameState, ball.x, ball.y);
+    }
+
+    if (
       gameState.perks.right_is_lava &&
       borderHitCode % 2 &&
-      ball.x > gameState.offsetX + gameState.gameZoneWidth / 2
+      //   x might be moved by wrap so we rely on previousX
+      ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2
     ) {
       resetCombo(gameState, ball.x, ball.y);
     }

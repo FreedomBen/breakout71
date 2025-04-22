@@ -4112,17 +4112,18 @@ frames = 1) {
             if (gameState.perks.helium && !(0, _options.isOptionOn)("basic") && Math.random() < 0.1 * frames) makeParticle(gameState, coin.x, coin.y, 0, dvy * 10, (0, _gameUtils.getCoinRenderColor)(gameState, coin), true, 5, 250);
             const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
             const hitBorder = bordersHitCheck(gameState, coin, coin.size / 2, frames);
-            if (gameState.perks.wrap_left > 1 && hitBorder % 2 && coin.x < gameState.offsetX + gameState.gameZoneWidth / 2) {
+            if (gameState.perks.wrap_left > 1 && hitBorder % 2 && coin.previousX < gameState.offsetX + gameState.gameZoneWidth / 2) {
                 schedulGameSound(gameState, "plouf", coin.x, 1);
-                coin.x = gameState.offsetX + gameState.gameZoneWidth - gameState.coinSize / 2;
+                coin.x = gameState.offsetX + gameState.gameZoneWidth - gameState.coinSize;
                 if (coin.vx > 0) coin.vx *= -1;
                 if (!(0, _options.isOptionOn)("basic")) {
                     spawnExplosion(gameState, 3, coin.x, coin.y, "#6262EA");
                     spawnImplosion(gameState, 3, coin.previousX, coin.previousY, "#6262EA");
                 }
-            } else if (gameState.perks.wrap_right > 1 && hitBorder % 2 && coin.x > gameState.offsetX + gameState.gameZoneWidth / 2) {
+            }
+            if (gameState.perks.wrap_right > 1 && hitBorder % 2 && coin.previousX > gameState.offsetX + gameState.gameZoneWidth / 2) {
                 schedulGameSound(gameState, "plouf", coin.x, 1);
-                coin.x = gameState.offsetX + gameState.coinSize / 2;
+                coin.x = gameState.offsetX + gameState.coinSize;
                 if (coin.vx < 0) coin.vx *= -1;
                 if (!(0, _options.isOptionOn)("basic")) {
                     spawnExplosion(gameState, 3, coin.x, coin.y, "#6262EA");
@@ -4212,7 +4213,7 @@ frames = 1) {
             }
         });
     }
-    if (gameState.combo > baseCombo(gameState) && !(0, _options.isOptionOn)("basic") && (gameState.combo - baseCombo(gameState)) * Math.random() > 5) {
+    if (gameState.combo > baseCombo(gameState) && !(0, _options.isOptionOn)("basic") && (gameState.combo - baseCombo(gameState)) * Math.random() * frames > 5) {
         // The red should still be visible on a white bg
         if (gameState.perks.top_is_lava == 1) makeParticle(gameState, gameState.offsetXRoundedDown + Math.random() * gameState.gameZoneWidthRoundedUp, 0, (Math.random() - 0.5) * 10, 5, "#FF0000", true, gameState.coinSize / 2, 100 * (Math.random() + 1));
         if (gameState.perks.left_is_lava == 1) makeParticle(gameState, gameState.offsetXRoundedDown, Math.random() * gameState.gameZoneHeight, 5, (Math.random() - 0.5) * 10, "#FF0000", true, gameState.coinSize / 2, 100 * (Math.random() + 1));
@@ -4230,6 +4231,8 @@ frames = 1) {
             makeParticle(gameState, gameState.puckPosition + gameState.puckWidth * pos, gameState.gameZoneHeight - gameState.puckHeight, pos * 10, -5, "#FF0000", true, gameState.coinSize / 2, 100 * (Math.random() + 1));
         }
     }
+    if (gameState.perks.wrap_left && gameState.perks.left_is_lava < 2 && Math.random() * frames > 0.1) makeParticle(gameState, gameState.offsetXRoundedDown, Math.random() * gameState.gameZoneHeight, 5, (Math.random() - 0.5) * 10, "#6262EA", true, gameState.coinSize / 2, 100 * (Math.random() + 1));
+    if (gameState.perks.wrap_right && gameState.perks.right_is_lava < 2 && Math.random() * frames > 0.1) makeParticle(gameState, gameState.offsetXRoundedDown + gameState.gameZoneWidth, Math.random() * gameState.gameZoneHeight, -5, (Math.random() - 0.5) * 10, "#6262EA", true, gameState.coinSize / 2, 100 * (Math.random() + 1));
     // Respawn what's needed, show particles
     forEachLiveOne(gameState.respawns, (r, ri)=>{
         if (gameState.bricks[r.index]) destroy(gameState.respawns, ri);
@@ -4294,25 +4297,30 @@ function ballTick(gameState, ball, frames) {
     if (borderHitCode) {
         ball.sidesHitsSinceBounce++;
         if (ball.sidesHitsSinceBounce <= gameState.perks.three_cushion * 3) increaseCombo(gameState, 1, ball.x, ball.y);
-        if (gameState.perks.left_is_lava && borderHitCode % 2 && ball.x < gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(gameState, ball.x, ball.y);
-        if (gameState.perks.wrap_left && borderHitCode % 2 && ball.x < gameState.offsetX + gameState.gameZoneWidth / 2) {
+        if (gameState.perks.wrap_left && borderHitCode % 2 && //   x might be moved by wrap so we rely on previousX
+        ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2) {
             schedulGameSound(gameState, "plouf", ball.x, 1);
-            ball.x = gameState.offsetX + gameState.gameZoneWidth - gameState.ballSize / 2;
+            ball.x = gameState.offsetX + gameState.gameZoneWidth - gameState.ballSize;
             if (ball.vx > 0) ball.vx *= -1;
             if (!(0, _options.isOptionOn)("basic")) {
                 spawnExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
                 spawnImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
             }
-        } else if (gameState.perks.wrap_right && borderHitCode % 2 && ball.x > gameState.offsetX + gameState.gameZoneWidth / 2) {
+        }
+        if (gameState.perks.wrap_right && borderHitCode % 2 && //   x might be moved by wrap so we rely on previousX
+        ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2) {
             schedulGameSound(gameState, "plouf", ball.x, 1);
-            ball.x = gameState.offsetX + gameState.ballSize / 2;
+            ball.x = gameState.offsetX + gameState.ballSize;
             if (ball.vx < 0) ball.vx *= -1;
             if (!(0, _options.isOptionOn)("basic")) {
                 spawnExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
                 spawnImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
             }
         }
-        if (gameState.perks.right_is_lava && borderHitCode % 2 && ball.x > gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(gameState, ball.x, ball.y);
+        if (gameState.perks.left_is_lava && borderHitCode % 2 && //   x might be moved by wrap so we rely on previousX
+        ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(gameState, ball.x, ball.y);
+        if (gameState.perks.right_is_lava && borderHitCode % 2 && //   x might be moved by wrap so we rely on previousX
+        ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(gameState, ball.x, ball.y);
         if (gameState.perks.top_is_lava && borderHitCode >= 2) resetCombo(gameState, ball.x, ball.y + gameState.ballSize * 3);
         if (gameState.perks.trampoline) decreaseCombo(gameState, gameState.perks.trampoline, ball.x, ball.y + gameState.ballSize);
         schedulGameSound(gameState, "wallBeep", ball.x, 1);
@@ -6399,6 +6407,10 @@ migrate("clean_ls", ()=>{
         localStorage.removeItem(key);
         console.warn("Removed invalid key " + key, e);
     }
+});
+migrate("set_user_id", ()=>{
+    // Useful to identify a player when uploading his save file multiple times to a web service
+    if (!localStorage.getItem('breakout_71_user_id')) localStorage.setItem('breakout_71_user_id', JSON.stringify(self?.crypto?.randomUUID() || 'user_' + Math.random()));
 });
 afterMigration();
 
