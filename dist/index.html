@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
+  <head><script src="/editor.3e642fb8.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -726,7 +726,107 @@ h2.histogram-title strong {
       this[globalName] = mainExports;
     }
   }
-})({"x07Me":[function(require,module,exports,__globalThis) {
+})({"4zvMK":[function(require,module,exports,__globalThis) {
+require("46218fad07b7d6b8")(require("7a6184c6fdfdd1ad").getBundleURL('8P7OJ') + "editor.3e642fb8.js");
+
+},{"46218fad07b7d6b8":"61B45","7a6184c6fdfdd1ad":"lgJ39"}],"61B45":[function(require,module,exports,__globalThis) {
+"use strict";
+var cacheLoader = require("ca2a84f7fa4a3bb0");
+module.exports = cacheLoader(function(bundle) {
+    return new Promise(function(resolve, reject) {
+        // Don't insert the same script twice (e.g. if it was already in the HTML)
+        var existingScripts = document.getElementsByTagName('script');
+        if ([].concat(existingScripts).some(function(script) {
+            return script.src === bundle;
+        })) {
+            resolve();
+            return;
+        }
+        var preloadLink = document.createElement('link');
+        preloadLink.href = bundle;
+        preloadLink.rel = 'preload';
+        preloadLink.as = 'script';
+        document.head.appendChild(preloadLink);
+        var script = document.createElement('script');
+        script.async = true;
+        script.type = 'text/javascript';
+        script.src = bundle;
+        script.onerror = function(e) {
+            var error = new TypeError("Failed to fetch dynamically imported module: ".concat(bundle, ". Error: ").concat(e.message));
+            script.onerror = script.onload = null;
+            script.remove();
+            reject(error);
+        };
+        script.onload = function() {
+            script.onerror = script.onload = null;
+            resolve();
+        };
+        document.getElementsByTagName('head')[0].appendChild(script);
+    });
+});
+
+},{"ca2a84f7fa4a3bb0":"j49pS"}],"j49pS":[function(require,module,exports,__globalThis) {
+"use strict";
+var cachedBundles = {};
+var cachedPreloads = {};
+var cachedPrefetches = {};
+function getCache(type) {
+    switch(type){
+        case 'preload':
+            return cachedPreloads;
+        case 'prefetch':
+            return cachedPrefetches;
+        default:
+            return cachedBundles;
+    }
+}
+module.exports = function(loader, type) {
+    return function(bundle) {
+        var cache = getCache(type);
+        if (cache[bundle]) return cache[bundle];
+        return cache[bundle] = loader.apply(null, arguments).catch(function(e) {
+            delete cache[bundle];
+            throw e;
+        });
+    };
+};
+
+},{}],"lgJ39":[function(require,module,exports,__globalThis) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"x07Me":[function(require,module,exports,__globalThis) {
 var _gameTs = require("./game.ts");
 
 },{"./game.ts":"edeGs"}],"edeGs":[function(require,module,exports,__globalThis) {
@@ -1570,7 +1670,7 @@ var _versionJsonDefault = parcelHelpers.interopDefault(_versionJson);
 var _upgrades = require("./upgrades");
 var _getLevelBackground = require("./getLevelBackground");
 var _levelIcon = require("./levelIcon");
-var _levelEditor = require("./levelEditor");
+var _pureFunctions = require("./pure_functions");
 const palette = (0, _paletteJsonDefault.default);
 const rawLevelsList = (0, _levelsJsonDefault.default);
 const appVersion = (0, _versionJsonDefault.default);
@@ -1586,7 +1686,7 @@ function transformRawLevel(level) {
         bricks,
         bricksCount,
         icon,
-        color: (0, _levelEditor.automaticBackgroundColor)(splitBricks),
+        color: (0, _pureFunctions.automaticBackgroundColor)(splitBricks),
         svg: (0, _getLevelBackground.getLevelBackground)(level),
         sortKey: (Math.random() + 3) / 3.5 * bricksCount
     };
@@ -1598,10 +1698,7 @@ const upgrades = (0, _upgrades.rawUpgrades).map((u)=>({
         icon: icons["icon:" + u.id]
     }));
 
-},{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./levelEditor":"cirX1"}],"ktRBU":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("{\"_\":\"\",\"B\":\"black\",\"W\":\"#FFFFFF\",\"g\":\"#231f20\",\"y\":\"#FFD300\",\"b\":\"#6262EA\",\"t\":\"#5DA3EA\",\"s\":\"#E67070\",\"r\":\"#e32119\",\"R\":\"#ab0c0c\",\"c\":\"#59EEA3\",\"G\":\"#A1F051\",\"v\":\"#A664E8\",\"p\":\"#E869E8\",\"a\":\"#5BECEC\",\"C\":\"#53EE53\",\"S\":\"#F44848\",\"P\":\"#E66BA8\",\"O\":\"#F29E4A\",\"k\":\"#618227\",\"e\":\"#e1c8b4\",\"l\":\"#9b9fa4\"}");
-
-},{}],"8JSUc":[function(require,module,exports,__globalThis) {
+},{"./data/palette.json":"ktRBU","./data/levels.json":"8JSUc","./data/version.json":"iyP6E","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./levelIcon":"6rQoT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./pure_functions":"6pQh7"}],"8JSUc":[function(require,module,exports,__globalThis) {
 module.exports = JSON.parse('[{"name":"71 mini","size":5,"bricks":"bbb____bt__btt__b_t___ttt","color":""},{"name":"Butterfly","bricks":"_________bb_t_t_bbbbb_t_bbbbbbbtbbbb_bbbtbbb____btb____bbbtbbb__bb_t_bb__________","size":9,"color":""},{"name":"Castle","size":7,"bricks":"s_s_s_ssssssssssBBBssssBBBssttbbbttttbbbtttbtbtbt","color":""},{"name":"Eyes","size":9,"bricks":"ttttttt__tWWWWWWW_tWrrWttW_tWWWWWWW_ttttttt_____t______ttttt____ttttt_____t_t","color":"","credit":"My favorite character in https://nuclearthrone.com/"},{"name":"Creeper","size":10,"bricks":"___________ccGGccGG__cGccGcGc__GBBccBBc__cBBGcBBc__GccBBGGc__ccBBBBcG__GGBBBBcG__cGBccBGc___________","credit":"https://en.wikipedia.org/wiki/Creeper_(Minecraft)","color":""},{"name":"Stairs","size":8,"bricks":"tt______tt______bbtt____bbtt____vvbbtt__vvbbtt__ppvvbbttppvvbbtt","color":""},{"name":"Dots","size":9,"bricks":"b_t_a_c_c__________b_t_a_c__________P_b_t_a_c__________P_b_t_a__________P_P_b_t_a","color":""},{"name":"Lines","size":9,"bricks":"aaaaaaaa___________tttttttt_________aaaaaaaa___________tttttttt_________aaaaaaaa","color":""},{"name":"Heart","size":15,"bricks":"__________________RRR___RRR_____RSSSR_RSSSR___RSWWSSRSSSSSR__RSWSSSSSSSSSR__RSSSSSSSSSSSR__RSWSSSSSSSSSR___RSSSSSSSSSR_____RSSSSSSSR_______RSSSSSR_________RSSSR___________RSR_____________R____________________________________","color":"","credit":"https://www.youtube.com/watch?v=gdWiTfzXb1g"},{"name":"Swiss","size":7,"bricks":"________RRRRR__RRWRR__RWWWR__RRWRR__RRRRR________","color":""},{"name":"Germany","size":4,"bricks":"____ggggrrrryyyy","color":"#5da3ea"},{"name":"France","size":6,"bricks":"______ttWWrrttWWrrttWWrrttWWrrttWWrr","color":""},{"name":"Smiley","size":8,"bricks":"_________yy__yy__yy__yy__________________yyyyyy___yyyy__________","color":""},{"name":"Labyrinthe","size":11,"bricks":"_______tttS_Stttt_S________t___S__Stt_ttttt____t_____S__ttt_S_S____t___t_tttt_t_S_t____tSt_t_t_Sttt___t_t_____Sttt_tttttS"},{"name":"Temple","size":11,"bricks":"_______________WWW______WWWWWWW___WWWWWWWWW___b_b_b_b____b_b_b_b____v_v_v_v____P_P_P_P____P_P_P_P____WWWWWWW___WWWWWWWWW_","color":""},{"name":"Pacman","size":12,"bricks":"____yyyy______yyyyyyyy___yyyyByyyyy__yyyyyyyyy__yyyyyyyy____yyyyyy______yyyyyy___S_Syyyyyyyy_____yyyyyyyyy___yyyyyyyyyy___yyyyyyyy______yyyy","color":"","credit":"https://en.wikipedia.org/wiki/Pacman"},{"name":"Ship","size":11,"bricks":"____sWW________sWWW_______sWWW_______s___OOOOOOOOOOOOOO_OBOBOBOBOO__OOOOOOOO_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb___________"},{"name":"We come in peace","size":13,"bricks":"________________a_____a_______a___a_______aaaaaaa_____aaBaaaBaa___aaaaaaaaaaa__aaaaaaaaaaa__a_aaaaaaa_a__a_a_____a_a_____aa_aa_____________________________","color":"","credit":"https://en.wikipedia.org/wiki/Space_invaders"},{"name":"Space mushroom","size":10,"bricks":"______________WW_______WWWW_____WWWWWW___WWBWWBWW__WWWWWWWW____W__W_____W_WW_W___W_W__W_W","color":"","credit":"https://en.wikipedia.org/wiki/Space_invaders"},{"name":"Wololo","size":9,"bricks":"____WW_OOW___WW__OWW__W___OWWWbbbW_WWW_WbW_WOW__WWb__OW__bbb__O___W_W__O___W_W__O","color":"","credit":"https://aoe.heavengames.com/theacademy/unitsboatsandbuildings/priest/"},{"name":"Small heart","size":15,"bricks":"________________________________RRRR___RRRR___RrWWrR_RWWrrR__RWWrrrRWWrrrR__RrrrrrrrrrrrR__RrrrrrrrrrrrR___RrrrrrrrrrR_____RrrrrrrrR_______RrrrrrR_________RrrrR___________RrR_____________R______________________","color":""},{"name":"Eye","size":9,"bricks":"____________ggg_____gWWWg___gWbbbWg_gWWbBbWWg_gWbbbWg___gWWWg_____ggg____________","color":"#5da3ea"},{"name":"Enderman","size":10,"bricks":"___________gggggggg__gggggggg__gggggggg__gggggggg__vvvggvvv__gggggggg__gggggggg__gggggggg_____________________","color":"#154b07","credit":"https://minecraft.wiki/w/Enderman"},{"name":"Mushroom","size":16,"bricks":"_____________________rrrrWW________WWrrrrWWWW_____WWrrrrrrWWWW____WrrWWWWrrWWW___rrrWWWWWWrrrrr__rrrWWWWWWrrWWr__WrrWWWWWWrWWWW__WWrrWWWWrrWWWW__WWrrrrrrrrrWWr__WrrWWWWWWWWrrr_____WWBWWBWW_______WWWBWWBWWW______WWWWWWWWWW_______WWWWWWWW____________________","color":"","credit":"https://pixelartmaker.com/art/cce4295a92035ea"},{"name":"Tulip","size":11,"bricks":"______________R_R_R______RRRRR______RRRRR______RRRRR_______RRR_________k________k_k_k______k_k_k_______kkk_________k________________","color":""},{"name":"Chain","size":7,"bricks":"yyy____yBy____yyyyy____yBy____yyyyy____yBy____yyy","color":""},{"name":"Marion","size":9,"bricks":"rr_____rr_rr___rr__rrr_rrr__rrrrrrr__rr_r_rr__rr___rr__rr___rr__rr___rr_rrr___rrr","color":""},{"name":"Renan","size":9,"bricks":"yyyyyyy___yyyyyyy__yy___yy__yy___yy__yyyyyy___yy_yy____yy__yy___yy___yy_yyy___yyy","color":""},{"name":"Violet Pairs","size":8,"bricks":"b_b_b_b_b_b_b_b__________t_t_t_t_t_t_t_t________b_b_b_b_b_b_b_b","color":""},{"name":"Red Cups","size":11,"bricks":"___________rBr_rBr_rBrrrr_rrr_rrr___________r_rBr_rBr_rr_rrr_rrr_r___________rBr_rBr_rBrrrr_rrr_rrr__________","color":""},{"name":"Cactus","size":10,"bricks":"____G______rG_Gk______G_Gk______kkkk_r_____kkk_G______GkGk_____rGkk_______Gk________kk________kk_____","color":""},{"name":"Sunny Face","size":11,"bricks":"____yyy______yyyyyyy___yyyyyyyyy__yyyyyyyyy_yyyWWyWWyyyyyyyyyyyyyyyyyyyyyyyyy_yyWWWWWyy__yyyWWWyyy___yyyyyyy______yyy","color":"#5da3ea"},{"name":"Mountain","size":9,"bricks":"_______________W_______WWW______GGWW__W_GGGGG_kkkGGGGG_kkkkGGGGkkkkkGGGGkkkkkkGGG_________","color":""},{"name":"Dollar","size":17,"bricks":"________________________G_G______________G_G____________GGGGGGG_________GGGGGGGGG_______GG__G_G__GG______GG__G_G__GG______GG__G_G___________GGGGGGGG__________GGGGGGGG___________G_G__GG______GG__G_G__GG______GG__G_G__GG_______GGGGGGGGG_________GGGGGGG____________G_G______________G_G________________________","color":""},{"name":"Waves","size":8,"bricks":"___bbb____bbb____bbttbbbbbttbbbbttttaatttttaattttaaaaaaa","color":""},{"name":"Box","size":8,"bricks":"yyyyyyyyy______yy_bbbb_yy_b__b_yy_b__b_yy_bbbb_yy______yyyyyyyyy","color":"","squared":false},{"name":"Rose","size":9,"bricks":"__SS______SSSS_____SSSS_____SSSS______SS_k______k_kk_____kk_k______kk________k","color":""},{"name":"Time","size":9,"bricks":"__________WWWWWWW___WWWWW_____yyy_______y________y_______WyW_____WyyyW___yyyyyyy__________","color":"","squared":false},{"name":"Watermelon","size":8,"bricks":"_____Sk_____SSBk___SBSSk__SSSSSk_SSBSSk_SBSSSSk_kSSSkk___kkk____","color":""},{"name":"Worms","size":13,"bricks":"___sssss_______sssssss______WWsWWsss_____WBsBWsss_____WBsBWsss_____WWsWWsss_____sssssss_______ssssss_____WWWWWWss_______WssWs__s_____ssss__sss___sssssssssss__sssssssss_ss","color":"","squared":false,"credit":"https://en.wikipedia.org/wiki/Worms_(series)"},{"name":"Ocean Sunrise","size":8,"bricks":"SSSSSSSSSSSyySSSSSyyyySSSyyyyyySbttttttbbbttttbbbbbttbbbbbbbbbbb","color":""},{"name":"Crosses","size":13,"bricks":"b___b___b___b__v___v___v___vvv_vvv_vvv___v___v___v__p___p___p___ppp_ppp_ppp_ppp___p___p___p__P___P___P___PPP_PPP_PPP___P___P___P__p___p___p___ppp_ppp_ppp_ppp___p___p___p","color":""},{"name":"Negative space","size":9,"bricks":"tttttttttt_t_t_t_t_________b_b_b_b_bbbbbbbbbb_b_b_b_b___________t_t_t_t_ttttttttt_________"},{"name":"UK","size":11,"bricks":"brbbWrWbbrbbbrbWrWbrbbbbbrWrWrbbbWWWWWrWWWWWrrrrrrrrrrrWWWWWrWWWWWbbbrWrWrbbbbbrbWrWbrbbbrbbWrWbbrb__________","color":""},{"name":"Greece","size":11,"bricks":"ttWttttttttttWttWWWWWWWWWWWttttttttWttWWWWWWttWttttttttWWWWWWWWWWWtttttttttttWWWWWWWWWWWttttttttttt__________","color":""},{"name":"Russia","size":8,"bricks":"________WWWWWWWWWWWWWWWWttttttttttttttttrrrrrrrrrrrrrrrr________________","color":""},{"name":"Ukraine","size":8,"bricks":"________ttttttttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyy________","color":""},{"name":"Poland","size":7,"bricks":"________WWWWW__WWWWW__rrrrr__rrrrr_______________","color":""},{"name":"Yellow 71","size":9,"bricks":"_________yyyyy__yyyyyyy_yyy___yy__yy__yyy__yy_yyy___yy_yy____yy_yy____yy__________________","color":""},{"name":"71 on white","size":6,"bricks":"WWWWWWrrrWWrWWrWrrWrWWWrWrWWWrWWWWWW______"},{"name":"Blue 71","size":8,"bricks":"ttttt__bttttt_bb___ttbbb__tt__bb__tt__bb_tt___bb_tt___bb_tt___bb","color":""},{"name":"Seventy one","size":21,"bricks":"rr_yy_rrry_yrrry_yrrrr_ry_yr__y_yr_ry_y_r_rr_yy_rr_yy_r_ry_y_r_r_ry_yr__y_yr_ry_y_r_rr_y_yrrry_yrrryyy_r_yyy__________________y______________r_____yyyrrry_yrrryyyrr_y_y__yrr_y_yrr_y_yr__y_yyyyrrr_y_rrry_yrrryyy____________________yrrryyyrrr_________yy_r_ry_yrr_____________rrry_yrrryyyyyyyyyyyy_____________________________________________________________________________________________________________________________"},{"name":"B71","size":10,"bricks":"__________bbbtttt_b_b__b__tbb_b__b__t_b_bbb__t__b_b__b_t__b_b__bt___b_bbb_t__bbb__________"},{"name":"Pig","size":9,"bricks":"__________PP___PP__PPP_PPP__WWPPPWW__WBPPPBW__PPsssPP__PsBsBsP__PPsssPP___________"},{"name":"Big Pig","size":15,"bricks":"________________sss_______sss__ss__sssss__ss____sssssssss_____sWBsssssBWs___ssBBsssssBBss__ssss_____ssss__sss_sssss_sss__sss_sBsBs_sss__sss_sssss_sss___sss_____sss____sssssssssss__GGGsssssssssGGGGGGsGsssssGsGGGGGGssGGGGGssGGG_______________","color":""},{"name":"Donkey Kong","size":9,"bricks":"OOr__a___OOr__a___ppppppp_O______a________a____pppppppr_a______b_a___O__ppppppp__","color":""},{"name":"Banana","size":12,"bricks":"_________________e__________eee_________eee_________eee_________eeeyy_____yyeeyyyy___yyyyey_yC___yy_yyy___C_____yyyy_________yyyy_________yyyy"},{"name":"Fox","size":8,"bricks":"e______eee_OO_eeeeOOOOeeeOBOOBOeOOOOOOOO_WWBBWW___WWWW_____WW___"},{"name":"Wiki","size":10,"bricks":"_______________________GGGG_____GGkkGG___GkggggkG__GgWWWWgG__GkggggkG___GGkkGG_____GGGG_______________________","color":"#1c71d8"},{"name":"Baby Dog","size":8,"bricks":"_______W__eeeeWWWWeeWeWWWeBWeBeeeeWWWWee_eWBBWe__eWWWWe____WW___"},{"name":"dog 21","size":9,"bricks":"__________O_____O_OOOWWWOOOOOWWWWWOOOOeWWWWOO_eBeWWBW__eBeWWBW___eWBWW_____WRW____________","credit":"https://prohama.com/dog-21-pattern/"},{"name":"icon:extra_life","size":9,"bricks":"___________kk_Gk___kkGGkkG_kkGGkkGGkkGGkkGGkk_GkkGGkk___kGGkk_____Gkk_______k____"},{"name":"icon:streak_shots","size":8,"bricks":"_tttttt__ttWttt___W_W____W___W__W_____W__W___W____W_W_____rrr___"},{"name":"icon:base_combo","size":7,"bricks":"________ttttt__tytyt__ttttt__tytyt__ttttt________"},{"name":"icon:slow_down","size":10,"bricks":"_____________kk_______kkkk_____kkkkkkGG__kkkkkkGBG_kkkkkkGGGGkkkkkkGG__GGGGGG____GG__GG_____________"},{"name":"icon:bigger_puck","size":8,"bricks":"_________kkkkkk__kkkkkk______________________W___________GGGGGG_"},{"name":"icon:viscosity","size":8,"bricks":"________bb______ttbb__bbttttbbtttbttbtttttbttbtttttyttyttttttttt"},{"name":"icon:left_is_lava","size":8,"bricks":"r_______rtttttt_rtttttt_r_______r_______r____W__r_______r_WWW___"},{"name":"icon:right_is_lava","size":8,"bricks":"_______r_ttttttr_ttttttr_______r_______r_____W_r_______r__WWW__r"},{"name":"icon:telekinesis","size":8,"bricks":"_____GW_____G______G______G_______G_______G_______G_____kkkkk___"},{"name":"icon:top_is_lava","size":8,"bricks":"rrrrrrrr_tttttt__tttttt____________________W_______________WWW__"},{"name":"icon:coin_magnet","size":8,"bricks":"__y__y_yy_________y_y_y_y________y_y______________y______WWW____"},{"name":"icon:skip_last","size":5,"bricks":"kGGGkGkGkGGGkGGGkGkGkGGGk"},{"name":"icon:multiball","size":8,"bricks":"_________tttttt__tttttt___________W__W____________________WWW___"},{"name":"icon:smaller_puck","size":8,"bricks":"_________tttttt__tttttt_____________W_____________________WW____"},{"name":"icon:pierce","size":6,"bricks":"ttttttttttWtttt__ttt__ttt__ttt__tttt"},{"name":"icon:picky_eater","size":8,"bricks":"_rrr_______ry_____ryy_____r_y______yyy______________y_____WWWW__"},{"name":"icon:metamorphosis","size":8,"bricks":"aaaaaa__aaaa__________W___________ttaatt__tttttt_________WWW"},{"name":"icon:compound_interest","size":8,"bricks":"_________tttttt__ttt__t______y_____________W__y_________rrWWWrrr"},{"name":"icon:hot_start","size":7,"bricks":"_______rry_rrryyr_ryryry_ryryyr_ryrrry_rrr_______"},{"name":"icon:sapper","size":9,"bricks":"_____WW______W__W_tttWttt_yttgggtt__tgggggt__tgggggt__tgggggt__ttgggtt__ttttttt___________","color":"#000000"},{"name":"icon:bigger_explosions","size":8,"bricks":"__O_______Oy_OO___OyOy__OyyyWBOO_OOWyyy__ByOyOO__yOOyBOO_OO_____"},{"name":"icon:extra_levels","size":6,"bricks":"__________b__t_bb_ttt_b__t_bbb____________"},{"name":"icon:pierce_color","size":8,"bricks":"bb___bbbb__b_bbb_____bbb____bbbbb____bbbbb____bbbbb____bbbbb____"},{"name":"icon:soft_reset","size":9,"bricks":"__gg______ggg_yy__gggg_yyy_gggg_yyyy_____yyyy_yyyyyyyy_yyyyyyyy__yyyyyy____yyyy__"},{"name":"icon:ball_repulse_ball","size":8,"bricks":"WsP__PsWs______sP______P________________P______Ps______sWsP__PsW"},{"name":"icon:ball_attract_ball","size":8,"bricks":"__P__P____s__s__PsW__WsP________________PsW__WsP__s__s____P__P__"},{"name":"icon:puck_repulse_ball","size":8,"bricks":"__________________W_______s___W___P__s______P____________WWW__"},{"name":"A","size":7,"bricks":"__ttt___ttttt_ttt_ttttt___ttttttttttt___tttt___tt"},{"name":"B","size":9,"bricks":"_bbbbb_____bb_bb____bb_bb____bb_bb____bbbb_____bb_bb____bb_bb____bb_bb___bbbbb____"},{"name":"C","size":8,"bricks":"__rrrr___rrrrrr_rrr___rrrr______rr______rrr___rr_rrrrrr___rrrr"},{"name":"D","size":8,"bricks":"_GGGGG____GG__G___GG__GG__GG__GG__GG__GG__GG__GG__GG__G__GGGGG"},{"name":"e","size":8,"bricks":"__tttt___tttttt_tt____tttt____tttttttttttt_______tt__tt___tttt_"},{"name":"icon:wind","size":9,"bricks":"_ss______s___PPPP_s_________sssssss___________sssssss_s________s___PPPP__ss"},{"name":"icon:sturdy_bricks","size":7,"bricks":"ttbttttbtttbtt____W_____W_W___W___W_______WWW____"},{"name":"icon:respawn","size":9,"bricks":"tttt___ttttt__t__ttta_ttt_______________________________W_________________WWW"},{"name":"Elephant","size":18,"bricks":"_________________________llll_________lll_llllll_lll___lsssllllllllsssl__lsssllllllllsssl__lsssllBllBllsssl__lssllWllllWllssl___ll__llllll__ll_________llll_______________ll______________llll______________ll________________________________________________________________________________________________________________________________________","color":"","credit":"https://prohama.com/elephant-5-pattern/"},{"name":"Orca","size":20,"bricks":"____________________________________________________________________________________________ggggg____ggg_ggg___ggggggg____ggggg___ggggggggg____ggg___ggggWggWWW_____gggggggggggWWWW_____ggggggggggWWWWW_____gggggggggWWWWW_______gggggggWWWWW___________WWggWWW______________ggg_gg______________gg__g__________________________________________________________________________________________________________","color":"#1c71d8","credit":"https://prohama.com/whale-2-pattern/"},{"name":"Shark","size":17,"bricks":"__________________________________________g_______________ggg____________ggggggg_________ggggggggg_______ggggggggggg_____gggggWWWggggg____gBgWWWWWWWgBg___ggWWWWrWrWWWWgg__ggWWWrrrrrWWWgg_ggWWWrrrrrrrWWWggggWWrrrrrrrrrWWgggWWWrWrWrWrWrWWWggWWrrWWWWWWWrrWWggWWWWWWWWWWWWWWWg_________________","color":"#3584e4","credit":"https://prohama.com/shark-2-pattern/"},{"name":"Bird","size":13,"bricks":"_______RRR____R____RSSSR___RR__RSSWWWR__RSR_RSWWBWR__RSSRRSWWWWyy_RSSSRSWWWR___RSSSSSSRR_____RRSSyyyy______RSyyyyy___RRRRSyyyy____RSSSRyyy_____RRRR______________________","color":"","credit":"https://prohama.com/bird-1-size-13x12/"},{"name":"Tux","size":14,"bricks":"_____gggg________gggggggg_____gggggggggg____gggggggggg___gggggggggggg__gggWBggWBggg__gggBBggBBggg__ggggyyyygggg_ggggggyyggggggggggWWWWWWggggg_gWWWWWWWWg_g__WWWWWWWWWW____WWWWWWWWWW____yyy____yyy__","color":"#62a0ea","credit":"https://prohama.com/pingwin-4-pattern/"},{"name":"Armenia","size":6,"bricks":"_______rrrr__bbbb__yyyy_____________","color":""},{"name":"Austria","size":6,"bricks":"_______rrrr__WWWW__rrrr______","color":""},{"name":"Benin","size":8,"bricks":"_________kkyyyy__kkyyyy__kkrrrr__kkrrrr__________________________","color":""},{"name":"Botswana","size":10,"bricks":"___________tttttttt__tttttttt__tttttttt__WWWWWWWW__BBBBBBBB__WWWWWWWW__tttttttt__tttttttt__tttttttt___________","color":""},{"name":"Bulgaria","size":6,"bricks":"_______WWWW__cccc__rrrr_____________","color":""},{"name":"Canada","size":7,"bricks":"________rWWWr__rWrWr__rWWWr______________________","color":""},{"name":"Chad","size":8,"bricks":"_________bbyyRR__bbyyRR__bbyyRR","color":""},{"name":"China","size":6,"bricks":"______RRyRRRRyRyRRRRyRRRRRRRRR______","color":""},{"name":"Colombia","size":7,"bricks":"________yyyyy__yyyyy__bbbbb__RRRRR_______________","color":""},{"name":"Republic of the Congo","size":7,"bricks":"________kkkyy__kkyyr__kyyrr__yyrrr_______________","color":""},{"name":"C\xf4te d\'Ivoire","size":8,"bricks":"_________OOWWGG__OOWWGG__OOWWGG","color":""},{"name":"Denmark","size":8,"bricks":"_________rrWrrr__rrWrrr__WWWWWW__rrWrrr__rrWrrr","color":""},{"name":"El Salvador","size":8,"bricks":"_________bbbbbb__bbbbbb__WWWkWW__WWkWWW__bbbbbb__bbbbbb","color":""},{"name":"Egypt","size":8,"bricks":"_________RRRRRR__RRRRRR__WWWyWW__WWyWWW__gggggg__gggggg","color":"#1c71d8"},{"name":"Estonia","size":8,"bricks":"_________tttttt__tttttt__gggggg__gggggg__WWWWWW__WWWWWW","color":"#26a269"},{"name":"Finland","size":6,"bricks":"_______WtWW__tttt__WtWW_____________","color":""},{"name":"Gabon","size":5,"bricks":"______CCC__yyy__ttt______","color":""},{"name":"Georgia","size":9,"bricks":"__________WrWrWrW__WWWrWWW__rrrrrrr__WWWrWWW__WrWrWrW__________________","color":""},{"name":"Guinea","size":8,"bricks":"_________rryycc__rryycc__rryycc","color":""},{"name":"Indonesia","size":6,"bricks":"_______rrrr__rrrr__WWWW__WWWW_______","color":""},{"name":"icon:one_more_choice","size":7,"bricks":"ttt____tbbb___tbttt__tbtbbb__btbbb___tbbb____bbb_"},{"name":"icon:checkmark_checked","size":6,"bricks":"_ggggbgBBBbbbbBbbggbbbBggBbBBg_gggg_"},{"name":"icon:checkmark_unchecked","size":6,"bricks":"_gggg_gBBBBggBBBBggBBBBggBBBBg_gggg_"},{"name":"icon:concave_puck","size":7,"bricks":"___G_____________G__________k__G__kkk___kkkkkkkkk","color":""},{"name":"icon:helium","size":8,"bricks":"_y____y_yP____PyPP___yPPP____P_P_____P____y_y______y______WWW___","color":""},{"name":"icon:asceticism","size":8,"bricks":"_yyyyyy__yy__yy_____W_______r_________r____r_________r__WWW___r_","color":""},{"name":"icon:unbounded","size":8,"bricks":"ggttttggggttttggggttttgggg____gggg____gggg__W_gggg____ggggWWW_gg","color":""},{"name":"icon:shunt","size":8,"bricks":"_______y______yy______yy__yyyyyy__y__yyy_yy__yyy_yy__yyyyyy__yyy","color":""},{"name":"icon:yoyo","size":8,"bricks":"_GGGGGG_kkkkkkkkGGGGGGGG_WWWWWW_GWGGGGGGkkWkkkkk_GGWGGG_____W___","color":""},{"name":"icon:nbricks","size":6,"bricks":"yy__rryyy_yyyyyyyyyyyyyyyy_yyyrr__yy","color":""},{"name":"icon:etherealcoins","size":11,"bricks":"_____y_________yyy________WWW________WWW_______yWWWy_____yyWWWyy____yyWWWyy____yyWWWyy____y_WyW_y_______W________________","color":""},{"name":"icon:shocks","size":8,"bricks":"____y_Oy_WWWO_y__WWWOO_O_WWWy_yyyyOyyOO_OO_yWWW__yO_WWW_y__yWWW_","color":""},{"name":"icon:zen","size":12,"bricks":"________________bbbb_______bbbbbb_______bbbb________BrrB_______tttttt_____tttttttt_____tttttt______BrrrrB_____bbbbbbbb___bbbbbbbbbb___bbbbbbbb__","color":""},{"name":"icon:sacrifice","size":9,"bricks":"__t___t___ttt_ttt_ttWWWWWttttWbWbWttttWWbWWtt_ttWWWtt___tWtWt_____ttt_______t____","color":""},{"name":"icon:trampoline","size":8,"bricks":"rrrrrrrrrttttttrrttttttrr______rr___W__rr______rr______r__yyy___","color":""},{"name":"icon:ghost_coins","size":7,"bricks":"__yyy___yyyyy_yyOyOyyyyyyyyyyyOOOyyyyyyyyyyy_y_yy","color":""},{"name":"icon:forgiving","size":8,"bricks":"____y______y_y____y___y__y_____yy_____y__y___y____y_y____WWWWW__","color":""},{"name":"icon:ball_attracts_coins","size":8,"bricks":"WWW_____WWW_y___WWW____y__y_y____y____y_____y_____y____y___y_y__","color":""},{"name":"icon:reach","size":8,"bricks":"tttttttttttttttttt____ttrr____rr___________W_____________WWW____","color":""},{"name":"icon:passive_income","size":7,"bricks":"_ttttt__ttt_t______W____y____________y_____rgggr_","color":""},{"name":"icon:clairvoyant","size":9,"bricks":"__y___y__y__y_y__y_y__t__y____ttt_____tWWWt___tWWgWWt_tttWWWttt__________________","color":""},{"name":"icon:implosions","size":8,"bricks":"y______W___yW_W__y_BWW_____BWWWy_WWWB_____WWB___yW_Wy___W_____y_","color":""},{"name":"icon:corner_shot","size":9,"bricks":"___W____y___W_y______W___y____W_y______W___y____W______W_W_WWW_WW_W_WWWWWW_W_WWWW","color":""},{"name":"icon:premium","size":11,"bricks":"__g____g___g____g____g_g__gbg__g______g______gg_gbg_gg_gbbgbbbgbbggbbgbbbgbbg_gbgbbbgbg___ggggggg____ggggggg_____________","color":""},{"name":"icon:reroll","size":8,"bricks":"__llllll_llBlBlelllllleBWWWWWeeeWBWBWeBeWWWWWeeeWBWBWBe_WWWWWe__","color":""},{"name":"icon:addiction","size":9,"bricks":"__________________________l__WWWWW_lWWWrrllllr_WWWWW_lr_______l__________________","color":""},{"name":"icon:help","size":8,"bricks":"___bb_____bbbb___bb__bb__bb__bb_____bb_____bb______________bb___","color":""},{"name":"Pingwin","size":13,"bricks":"______gggg________ggWWgg_______gWWgWgy______ggWWWg_______ggggg_______gggWWW______gggggWWW___gggggggWWW____ggggggWWW_____ggggWWWW____gggWWWWW______ggWWWW________gWWyyy___","color":"#3584e4","credit":"https://prohama.com/pingwin-2-pattern/"},{"name":"Dog 8","size":17,"bricks":"_____________________________________gg_ggggg_gg____ggWWgWWWWWgWWgg__gWWgWWWWWWWgWWg__gWWgWWWWWWWgWWg__gggWWWWWWWWWggg___gWggWWWWWggWg____gWggWWWWWggWg____gWWWWgggWWWWg_____gWgWWgWWgWg______gWWggsggWWg_______gWgsssgWg_________ggsssgg____________ggg_________________________________________","color":"#62a0ea","credit":"https://prohama.com/dog-8-pattern/"},{"name":"Sunglasses","size":24,"bricks":"____________________________________________________ggggg______ggggg_______gg___g______g___gg_____gg________________gg___gg__________________gg_gggggggggg____gggggggggggggtttttggggggggbbbbbgggggtWWWttttggggbbbbWWWbgg_gtWttttttggggbbbbWbbbg__gtttttttgg__ggbbbbbbbg__gtttttttg____gbbbbbbbg__ggtttttgg____ggbbbbbgg___ggtttgg______ggbbbgg_____ggggg________ggggg___________________________________________________________________________________________________________________________________________________________________________________________________________________________","color":"#26a269","credit":"https://prohama.com/sunglasses-pattern-1/"},{"name":"Balloon","size":21,"bricks":"_____bbbWbbbWbbb_________PWbWPWbWPWbWP_______bWbbbWbbbWbbbWb_____WbbbWbbbWbbbWbbbW___WPWbWPWbWPWbWPWbWPW__bWbbbWbbbWbbbWbbbWb__bbbPbbbPbbbPbbbPbbb__bbPPPbPPPbPPPbPPPbb___PPWPPPWPPPWPPPWPP____PWbWPWbWPWbWPWbWP_____PWPPPWPPPWPPPWP_______PPWPPPWPPPWPP_________WbWPWbWPWbW___________bbbbbbbbb_____________b_____b______________b_____b______________b_____b______________WWWWWWW_______________PPPPP________________PPPPP________________PPPPP________","color":"#240a8b","credit":"https://prohama.com/balloon-1/"},{"name":"Opening","size":14,"bricks":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbyyyyyyyyyyyybbyB___BB___Bybby__________ybbyyy______yyybbbbyyB__Byybbbbbbbyy__yybbbbbbbbby__ybbbbbyyyyby__ybyyyy___yby__yby______yby__yby______yBy__yBy______yyy__yyy___","color":"#000000"},{"name":"Stripes","size":17,"bricks":"bbb______tttttt________tttttt________tttttt______bbtttttt______bbbbbttt______bbbbbb________bbbbbb________bbbbbb______ttbbbbbb______tttttbbb______tttttt________tttttt________tttttt______bbtttttt______bbbbbttt______bbbbbb________bbbbbb________bbbbbb________bbbbbb___________bbb______________","color":""},{"name":"icon:starting_perks","size":8,"bricks":"_________b_b_b___________g_g_g_g_________g_g_g_g_________g_g_g_g","color":""},{"name":"icon:download","size":8,"bricks":"___bb______bb______bb______bb______bb____bbbbbb___bbbb__gggbbggg","color":""},{"name":"icon:upload","size":8,"bricks":"gggbbggg__bbbb___bbbbbb____bb______bb______bb______bb______bb___","color":""},{"name":"icon:coins","size":8,"bricks":"__bbbb___bbggbb_bbggggbbbggggggbbggggggbbbggggbb_bbggbb___bbbb__","color":""},{"name":"icon:reset","size":8,"bricks":"bb____bbbbb__bbb_bbbbbb___bbbb____bbbb___bbbbbb_bbb__bbbbb____bb","color":""},{"name":"icon:fountain_toss","size":12,"bricks":"WWWWW_______WWWWW____y_________y______________y______y__y_____WWWWWWWW___WttttttttW_WtytttytyttWWtttyttttttWlWtyttttytWl_lWWWWWWWWl___llllllll__","color":""},{"name":"You are here","size":13,"bricks":"_____rrr_________rrrrr_______rrr_rrr______rr___rr______rr___rr_______rr_rr________rrrrr_________rrr__________rrr_________WWrWW_______WWWrWWW______WWWWWWW_______WWWWW____","color":""},{"name":"Gear","size":13,"bricks":"_________________l_l_l______l_lllll_l_____lllllll____lllll_lllll___lll___lll___lll_____lll___lll___lll___lllll_lllll____lllllll_____l_lllll_l______l_l_l_________________","color":""},{"name":"Play","size":15,"bricks":"_________________rrrrrrrrrrr___rrrrWWrrrrrrr__rrrrWWWrrrrrr__rrrrWWWWrrrrr__rrrrWWWWWrrrr__rrrrWWWWWWrrr__rrrrWWWWWrrrr__rrrrWWWWrrrrr__rrrrWWWrrrrrr__rrrrWWrrrrrrr___rrrrrrrrrrr_______________________________________________","color":""},{"name":"City","size":18,"bricks":"_______yyy___bbbbb________yyy__ybyyb________yyy__ybyyb__tt___yyy_b_ybbbb_tttt______bbbbbbbtttttt_______ybyybbbbbbb_______ybyybbyybyb_____b_ybbbbbyybyb_____bbbbbbbbbbbbb__bb___bbbbbbybyyb_bbbb__ybyybbybyybbbbbbb_ybyybbbbbbbtttttt_ybbbbbyybybtyyyyt_bbbbbbyybybtyyyyt_bbbbbbbbbbbtttttt_byybybybyybtytyyt_byybybybyybtttttt_byybb","color":""},{"name":"Wiggle","size":17,"bricks":"__________________cccccc_ccc_cccc__c____c_c_c_c__c__ccc_cc_c_ccc_cc____c_c__c_____c___ccc_cccc_ccc_cc__c________c_c__c__ccc_ccc_cc_cccc____c_c_c_c________ccc_c_c_ccccccc__c___c_________c__ccc_ccccccccccc____c______________ccc_ccc_ccc_ccc__c___c_c_c_c_c_c__ccccc_ccc_ccc_c__________________","color":""},{"name":"Graph","size":18,"bricks":"_______________________yy________________yyt__yytttt______tt_tttyy___t____yyt____t_____t____yy____tt_____t____t_____t______yy___t_____t______yy__tt_____yytttttt___tt___ttyy_____t___t____t__t_____t___yytttt__t_____t___yy______tt____t____t_______yy___t____ttt_____yyttyy______tyy___t___yy_______yytttt_________________________","color":""},{"name":"Lightbulb","size":14,"bricks":"_______________y__yyyyy___y____yyyyyyy______yyyyyyyyy_____yyyyyyyyy___y_yyyyyyyyy__y__yyyyyyyyy_____yyyyyyyyy_____yyyBBByyy___y__yyByByy___y____yByBy_________lllll______y___lll___y_______lll______","color":""},{"name":"Note","size":16,"bricks":"_____________WWW__________WWWWWW_______WWWWWW__W____WWWWWW_____W____WWW________W____W__________W____W__________W____W__________W____W__________W____W________WWW____W_______WWWW____W_______WWW___WWW____________WWWW____________WWW____________________________","color":""},{"name":"Rocket","size":13,"bricks":"______b___________bbb_________bbBbb________btttb________ttBtt________ttttt________ttBtt________ttttt________ttBtt_______bbtttbb_____bbbyyybbb____bbbyyybbb____bb_ByB_bb__","color":""},{"name":"Abstract","size":16,"bricks":"________________aaaaa_cccc_aaaaaaaaaa_cccc_aaaaa________________aaaa_cccc_aaaaaaaaaa_cccc_aaaaaa________________aaa_cccc_aaaaaaaaaa_cccc_aaaaaaa________________aa_cccc_aaaaaaaaaa_cccc_aaaaaaaa________________a_cccc_aaaaaaaaaa_cccc_aaaaaaaaa________________","color":""},{"name":"Fingerprint","size":15,"bricks":"___SSSSSSSS______S_______SS____S__SSSSS__SS__S__S____SS__S____S__SS__SS_S___S__S_SS__S__S_S__S___SS_SS__SS_S_____S___S__S_S__SS__S__SS_S_S_SS_S__S__S_S_S_S___S_S__S_S_S_S___S_S__S___S_S___S_S__S__S__S___S_S__S__S__S__S___S_S_","color":""},{"name":"Leaf","size":14,"bricks":"____________________________________________________________GGkGG________GGkGGkGG_____GGkGGkGGkkG_kkkkkkkkkkkGGG__GGkGGkGGkkG____GGkGGkGG_______GGkGG_______________________________________________","color":""},{"name":"Abstract 2","size":14,"bricks":"______________yyyy______yyyy______________bbb_bbbbbb_bbbbb___bbbb___bbb__y__bb__y__b______________bbb_bbbbbb_bbbbb___bbbb___bbb__y__bb__y__b______________bbb_bbbbbb_bbbbb___bbbb___bbb__y__bb__y__b","color":""},{"name":"Abstract 3","size":13,"bricks":"______________p_aaa_ppp_a__p___a_p___a__ppp_a_p_aaa_______________aaa_p_a_ppp__a___p_a___p__a_ppp_aaa_p_______________p_aaa_ppp_a__p___a_p___a__ppp_a_p_aaa______________","color":""},{"name":"Abstract 4","size":13,"bricks":"______________y_y_y_y_y_y__y_y_y_y_y_y__y_y_y_y_y_y_______________bbb_bbb_bbb_______________bbb_bbb_bbb_______________y_y_y_y_y_y__y_y_y_y_y_y__y_y_y_y_y_y______________","color":""},{"name":"Abstract 5","size":13,"bricks":"______________ccc_ccc_ccc__c_a_c_c_a_c__caa_aaa_aac_______________cca_aaa_acc__c_a_a_a_a_c__cca_aaa_acc_______________caa_aaa_aac__c_a_c_c_a_c__ccc_ccc_ccc______________","color":""},{"name":"Abstract 6","size":13,"bricks":"_vvvvv_vvvvv__v___v_v___v__v_bbbbbbb_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_vvv_b_v__v_b_____b_v__vvvvvvvvvvv_bbbb_____bbbb","color":""},{"name":"icon:new_run","size":7,"bricks":"_ggg____gbgg___gbbgg__gbbbg__gbbgg__gbgg___ggg___","color":""},{"name":"icon:settings","size":9,"bricks":"___g_g____g_ggg_g___ggbgg__gggbbbggg_gbb_bbg_gggbbbggg__ggbgg___g_ggg_g____g_g___","color":""},{"name":"icon:creative","size":7,"bricks":"bbg_bgg_______bbb_bgg_______bgg_bbg_______bbg_bbb","color":""},{"name":"icon:limitless","size":12,"bricks":"_________________________bbb____ttb_bbbbb__tttbbbb_bbbttt_bbbb__bbbt__bbbb_ttbbb__bbttttttbbbbbb_ttt___bbbb_____________________________________","color":""},{"name":"icon:history","size":8,"bricks":"__gggg___ggbggg_gggbgggggggbggggggggbbgggggggggg_gggggg___gggg__","color":""},{"name":"Hemiola","size":11,"bricks":"___gggg_____gggrrgg_____ggrrg_______gggg_____gggyygg_____ggyyg_______gggg_____gggCCgg_____ggCCg_______gggg________gg_____","color":"#240a8b","credit":"Left a wonderful review on the play store."},{"name":"Obigre","size":13,"bricks":"_______________________________________OOOORgRgRgOOOOWOORgRgRgOOOOOWORgRgRgOWOOWOORgRgRgOOWOOWORgRgRgOWOOWOORgRgRgOOOOOOORgRgRgOOO_______________________________________","color":"#62a0ea","credit":"Colin helped a lot with the game design https://colin-crapahute.bearblog.dev/"},{"name":"Noodlemire","size":15,"bricks":"_________________________________ggggggggg_____g_________g___g___________g_g_____________gg_____________gg_____yyy_____ggg__yyyyyyy__ggggtyyyyyyyyytggggtttttttttttgggg_ttttttttt_gg_____ttttt___________________________________","color":"#240a8b","credit":"Early adopter of the game"},{"name":"Bearded axe","size":12,"bricks":"______________WyyyOOy_____WyyyOOy_____Wyy_OO______Wyy_OO______Wyy_OO__________OO__________OO__________OO__________OO__________OO__________OO____","color":"","credit":"Did some nice bug reports"},{"name":"icon:minefield","size":7,"bricks":"W__B__WWWBBBWWB__W__BBBWWWBBW__B__WWWBBBWW_______","color":""},{"name":"icon:side_flip","size":7,"bricks":"________ttttt__rttty__rttty__rttty__ttttt________","color":""},{"name":"icon:side_kick","size":7,"bricks":"________ttttt__ytttr__ytttr__ytttr__ttttt________","color":""},{"name":"Lebanon","size":9,"bricks":"_________rrrrrrrrrWWWWkWWWWWWWkkkWWWWWkkkkkWWWWWWkWWWWrrrrrrrrr__________________","color":""},{"name":"Spain","size":9,"bricks":"_________rrrrrrrrryyyyyyyyyyWrWyyyyyyrWryyyyyyWrWyyyyyyyyyyyyyyrrrrrrrrr_________","color":""},{"name":"Uzbekistan","size":8,"bricks":"tWtttWttWtttWttttWtWtWttWWWWWWWWWWWWWWWWGGGGGGGGGGGGGGGGGGGGGGGG","color":""},{"name":"Pakistan","size":8,"bricks":"________WWkkkkkkWWkkWkWkWWkWkkkkWWkWkkWkWWkkWWkkWWkkkkkk________","color":""},{"name":"Korea","size":10,"bricks":"__________WWWWWWWWWWWgWWWWWWgWWgWrrrrWgWWWWrrbbWWWWWWrrbbWWWWgWbbbbWgWWgWWWWWWgWWWWWWWWWWW__________","color":"#62a0ea"},{"name":"icon:trickledown","size":8,"bricks":"_ytttttt_________y_y_y__tttttt____________y_y_y___tttttt_y______","color":""},{"name":"icon:transparency","size":9,"bricks":"__W_W_W___________W_W_W_W_W_________W_W_W_W_W_________W_W_W_W_W___________W_W_W__","color":""},{"name":"icon:superhot","size":11,"bricks":"____________________________________________W_W_WWW_WWWWWW_W_W__W_W_W_WWW__W_____________________________________________","color":""},{"name":"icon:bricks_attract_coins","size":7,"bricks":"_y__y___tttttyyttttt__ttttt_yttttty_ttttt___y__y_","color":""},{"name":"icon:rainbow","size":6,"bricks":"__rOyC_rOyCa_rOyCarOyCatrOyCatrOyCat","color":""},{"name":"icon:hypnosis","size":8,"bricks":"___WW______WW_______ay_____c__a______c______y_______a_c____c_y_a","color":""},{"name":"icon:bricks_attract_ball","size":8,"bricks":"llW_____ll_P________P________Pll____P_ll___P____llP_____ll_P____","color":""},{"name":"Chile","size":9,"bricks":"_________tttWWWWWWtWtWWWWWWtttWWWWWWrrrrrrrrrrrrrrrrrrrrrrrrrrr__________________","color":""},{"name":"T\xfcrkiye","size":12,"bricks":"____________rrrrrrrrrrrrrrrWWWrrrrrrrrWWrrrrrrrrrWWrrWrWrrrrrWWrrrWrrrrrrWWrrWrWrrrrrrWWrrrrrrrrrrrWWWrrrrrrrrrrrrrrrrrr________________________","color":""},{"name":"icon:editor","size":10,"bricks":"_______ggg______gggg_____ggggg____ggggg____ggggg____ggggg____ggggg____bgggg_____bbgg______bbb_______","color":""},{"color":"","size":11,"bricks":"_____e________WWWWW_____WWWWWWW____WWWWWWW____WWWWWWW__W__lllll__WWWeeeeeeeWWeeeeeWeeeeeeleeWWWeeleeeeWWWWWeeeeleWWlWWele","name":"Taj Mahal","credit":"An approximative reproduction "},{"color":"","size":9,"bricks":"__________SS_t_SS__S_____S____t_t____t_____t____t_t____S_____S__SS_t_SS__________","name":"Abstract 7","credit":""},{"color":"","size":8,"bricks":"PP_vv_PP_P__v__P________vv_PP_vvv__P__v_________PP_vv_PP_P__v__P","name":"Abstract 9","credit":""},{"color":"","size":9,"bricks":"____W_____WWWWWWW__WB_W_BW__W_____W_WWW_B_WWW_W_____W__WB_W_BW__WWWWWWW_____W____","name":"Crosshair","credit":""},{"color":"","size":15,"bricks":"bbbB_ttttt_BbbbbBbb_ttBtt_bbBbb____tt_tt____bbbbb_tt_tt_bbbb_______________ttttt_b_b_tttttt_____b_b_____tt_ttt_b_b_ttt_ttBtBt_bBb_tBtBtttt_t_bbb_t_ttt________________bb_ttttttt_bb__Bb_tB___Bt_bB__Bb_ttt_ttt_bB_bbb_________bbb","name":"Abstract 10","credit":""},{"color":"","size":6,"bricks":"SSSSSSSOOOOSSBOOBSSOOOOSSOOOOS_OSSO_","name":"Face","credit":""},{"color":"","size":11,"bricks":"_____O__________O__________O__________O_________OOO________OOO____k___O_O___kkk_OO_OO_kkkkkOOOOOkkkkkOOO_OOOkkkOOO___OOOk","name":"Eiffel tower","credit":""},{"color":"","size":9,"bricks":"P_t_s_t_PP_t___t_PP_ttttt_PP_______PPPPPPPPPPP_______PP_sssss_PP_s___s_PP_s_t_s_P","name":"Abstract 11","credit":""},{"color":"","size":8,"bricks":"BbBb____bbbb____BbBb____bbbb________tBtB____tttt____tBtB____tttt","name":"Abstract 12","credit":""},{"color":"","size":9,"bricks":"SSSSbSSSSSbbSbSbbSSbbS_SbbSSSSS_SSSSbb_____bbSSSS_SSSSSbbS_SbbSSbbSbSbbSSSSSbSSSS","name":"Abstract 13","credit":""},{"color":"","size":11,"bricks":"aa_tt_aa_ttaa_tt_aa_tt__B__B__B__bb_aa_bb_aabb_aa_bb_aa__B__B__B__aa_bb_tt_bbaa_bb_tt_bb__B__B__B__tt_aa_bb_aatt_aa_bb_aa","name":"Abstract 14","credit":""},{"color":"","size":10,"bricks":"___________Oyyyyyyy__Oyyyyyyy__Oyy__Oyy__Oyy_______Oyyyyyyy_______Oyy__Oyy__Oyy__Oyyyyyyy__Oyyyyyyy_","name":"S","credit":""},{"color":"","size":11,"bricks":"____________S_vvv_SSS__S___v___S__SSS_vvv_S__________S__S_vvv_SSS__S___v______SSS_vvv_S____S_____S__v_SSS_SSS____________","name":"Abstract 15","credit":"Just random strokes"},{"color":"","size":11,"bricks":"________________________RRRRR_____RRRRRRRRR__kkkOOkO___kOkOOOkOOO_kOkkOOOkOOOkkOOOOkkkk___OOOOOOO________________________","name":"Mario!","credit":"Suggested by Nicolas03. A Mario level ! Sprite taken from https://art.pixilart.com/sr2d5c0683c82aws3.png . The sprite belongs to Nintendo"},{"color":"","size":16,"bricks":"___llltCCttBC______lllCBBttCB______lttbBbtltt______ltBrBClttt______lttCCCttBt______llttCBtttt______ltCBCttlll______ltBCCtCtCt______lttCCBCBrB______llltBCCtrB______ttttttlltt______CBrttlllll______CBrBCttttl______ttCCBttBtl______tttCCCtCCt______tBttBtltBt___","name":"Minesweeper","credit":"Suggested by Noodlemire. For once, you\'ll want to trigger as many mines as possible."},{"color":"","size":19,"bricks":"__________________________________________________________________________________________________________________________WWW_______________WrrrW_____________WrWWWrW____________WrWBWrW____________WrWWWrW_____________WrrrW_______________WWW__________________________________________________________________________________________________________________________","name":"Target","credit":"Suggested by Noodlemire. Unusually small level, with lots of room to miss your shots. Acts as decent aim practice."},{"color":"","size":10,"bricks":"__________rrrrr_____WWrWWrrrrrWWrWWWWrWWWWrWWWWrWWrWrWWWWrWWWrWWWrWrWW_____WrWWW____________________","name":"The Boys","credit":"Suggested by Bearded-Axe. My boys initals"},{"color":"#115988","size":21,"bricks":"__________________________________________________yy_______________yy__yy__yy___________yy__yy__yy____________yy__yy_yy_________y__yy__yy_yy________yyy_yyy_yy_yy_________yy__yy_yyyyy__________yy_yyyyyyyy___yyy____yyyyygggyyy__yyy______yyygBBBgyy_yyy________ygBBBBBgyyyy__W______ygBBBBBgyyy__________yygBBBgyyyy___________yygBgyyyy____________yyyByyyy_____________yyyyByy_______________yyByy_________________r_________________________________","name":"A Very Dangerous High-Five","credit":"Suggested by Noodlemire. A unique shape, fun to bounce the ball between fingers. The palm was initially boring on its own, so I gave it a big bomb. It adds a distinct feeling between the top and bottom halves."},{"name":"icon:buoy","size":7,"bricks":"___b______b_____bbb__abbbbbaaatttaaaaataaaaaaaaaa","svg":null,"color":""},{"name":"icon:ottawa_treaty","size":8,"bricks":"BBtWWtBBBttWWttBtWWtttWtttWWWWtttttWWtttttWWWtttBWWtWttBBBtttWBB","svg":null,"color":""},{"name":"icon:three_cushion","size":8,"bricks":"BkkkkkkBk___W__kk__W_W_kk_W___WkkW___y_kk_W____kk__W___kBkkkkkkB","svg":null,"color":""},{"name":"icon:sticky_coins","size":8,"bricks":"__________yy_yy___tttty__ytttt___ytttt____tttty______yy_________","svg":null,"color":""},{"name":"icon:double_or_nothing","size":7,"bricks":"__yyy___yrrry_yOOOrOyyOOrOOyyOOOOOy_yOrOy___yyy__","svg":null,"color":""},{"name":"icon:wrap_left","size":8,"bricks":"WWWWWWWWW_W____WW__v___WW___v__WW____v_WWp____pWW_v____W__WWW___","svg":null,"color":""},{"name":"icon:wrap_right","size":8,"bricks":"WWWWWWWWW___W__WW__v___WW_v____WWp____pWW____v_WW___v__W__WWW___","svg":null,"color":""},{"name":"icon:unlocked_upgrades","size":9,"bricks":"___ggg_____ggbgg___ggbbbgg_ggbbgbbgggbbbgbbbggggbgbggg__gbgbg____gbgbg____ggggg__","svg":null,"color":""},{"name":"icon:unlocked_levels","size":9,"bricks":"ggggggggggbbbgbbbggbgggggbggbgbgbgbgggggggggggbgbgbgbggbgggggbggbbbgbbbgggggggggg","svg":null,"color":""},{"name":"icon:happy_family","size":9,"bricks":"___________tt_tt____tt_tt____tt_tt__W_tt_tt_W__________W_____W____W_W____________","svg":null,"color":""}]');
 
 },{}],"iyP6E":[function(require,module,exports,__globalThis) {
@@ -2644,120 +2741,6 @@ function toast(html) {
     }, 1500);
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports,__globalThis) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"6pQh7":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "clamp", ()=>clamp);
-parcelHelpers.export(exports, "comboKeepingRate", ()=>comboKeepingRate);
-parcelHelpers.export(exports, "ballTransparency", ()=>ballTransparency);
-parcelHelpers.export(exports, "coinsBoostedCombo", ()=>coinsBoostedCombo);
-parcelHelpers.export(exports, "miniMarkDown", ()=>miniMarkDown);
-parcelHelpers.export(exports, "firstWhere", ()=>firstWhere);
-parcelHelpers.export(exports, "wallBouncedBest", ()=>wallBouncedBest);
-parcelHelpers.export(exports, "wallBouncedGood", ()=>wallBouncedGood);
-parcelHelpers.export(exports, "levelTimeBest", ()=>levelTimeBest);
-parcelHelpers.export(exports, "levelTimeGood", ()=>levelTimeGood);
-parcelHelpers.export(exports, "catchRateBest", ()=>catchRateBest);
-parcelHelpers.export(exports, "catchRateGood", ()=>catchRateGood);
-parcelHelpers.export(exports, "missesBest", ()=>missesBest);
-parcelHelpers.export(exports, "missesGood", ()=>missesGood);
-function clamp(value, min, max) {
-    return Math.max(min, Math.min(value, max));
-}
-function comboKeepingRate(level) {
-    return clamp(1 - 1 / (1 + level) * 1.5, 0, 1);
-}
-function ballTransparency(ball, gameState) {
-    if (!gameState.perks.transparency) return 0;
-    return clamp(gameState.perks.transparency * (1 - ball.y / gameState.gameZoneHeight * 1.2), 0, 1);
-}
-function coinsBoostedCombo(gameState) {
-    let boost = 1 + gameState.perks.sturdy_bricks / 2 + gameState.perks.smaller_puck / 2;
-    if (gameState.perks.transparency) {
-        let min = 1;
-        gameState.balls.forEach((ball)=>{
-            const bt = ballTransparency(ball, gameState);
-            if (bt < min) min = bt;
-        });
-        boost += min * gameState.perks.transparency / 2;
-    }
-    return Math.ceil(Math.max(gameState.combo, gameState.lastCombo) * boost);
-}
-function miniMarkDown(md) {
-    let html = [];
-    let lastNode = null;
-    md.split("\n").forEach((line)=>{
-        const titlePrefix = line.match(/^#+ /)?.[0];
-        if (titlePrefix) {
-            if (lastNode) html.push(lastNode);
-            lastNode = {
-                tagName: "h" + (titlePrefix.length - 1),
-                text: line.slice(titlePrefix.length)
-            };
-        } else if (line.startsWith("- ")) {
-            if (lastNode?.tagName !== "ul") {
-                if (lastNode) html.push(lastNode);
-                lastNode = {
-                    tagName: "ul",
-                    text: ""
-                };
-            }
-            lastNode.text += "<li>" + line.slice(2) + "</li>";
-        } else if (!line.trim()) {
-            if (lastNode) html.push(lastNode);
-            lastNode = null;
-        } else {
-            if (lastNode?.tagName !== "p") {
-                if (lastNode) html.push(lastNode);
-                lastNode = {
-                    tagName: "p",
-                    text: ""
-                };
-            }
-            lastNode.text += line + " ";
-        }
-    });
-    if (lastNode) html.push(lastNode);
-    return html.map((h)=>"<" + h.tagName + ">" + h.text.replace(/\bhttps?:\/\/[^\s<>]+/gi, (a)=>`<a href="${a}">${a}</a>`) + "</" + h.tagName + ">").join("\n");
-}
-function firstWhere(arr, mapper) {
-    for(let i = 0; i < arr.length; i++){
-        const result = mapper(arr[i], i);
-        if (typeof result !== "undefined") return result;
-    }
-}
-const wallBouncedBest = 3, wallBouncedGood = 10, levelTimeBest = 30, levelTimeGood = 60, catchRateBest = 95, catchRateGood = 90, missesBest = 3, missesGood = 6;
-
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7OIPf":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -2779,10 +2762,7 @@ function hashCode(string) {
     return Math.abs(hash);
 }
 
-},{"./data/backgrounds.json":"31wW4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"31wW4":[function(require,module,exports,__globalThis) {
-module.exports = JSON.parse("[\"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><path d='M3.25 10h13.5M10 3.25v13.5' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M11 6a5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5 5 5 0 015 5' stroke='none' fill='white'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><path d='M10-10L20 0v10L10 0zM20 0L10-10V0l10 10zm0 10L10 0v10l10 10zm0 10L10 10v10l10 10zM0 20l10-10v10L0 30zm0-10L10 0v10L0 20zM0 0l10-10V0L0 10z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M15.986 4.186 4.1 16.072v.58L16.566 4.186Zm7.62 0 12.38 12.38v-.58l-11.8-11.8Zm12.38 19.248L23.52 35.9h.58l11.886-11.886ZM4.1 23.52v.58l11.8 11.8h.58z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25'><path d='M9.19 0v3.93A9.187 9.187 0 003.93 9.19H0m0 6.618h3.93a9.188 9.188 0 005.26 5.26V25m6.619 0v-3.93a9.188 9.188 0 005.261-5.261H25m0-6.618h-3.93A9.188 9.188 0 0015.81 3.93V0' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='29' height='33.487'><path d='M29 20.928v14.813M14.5 12.56v16.745M29-2.559v6.744l-14.5 8.374L0 4.189v-6.745m29 6.742l14.5 8.37m0 16.745L29 20.928l-14.5 8.376L0 20.931l-14.5 8.376m0-16.744L0 4.189m0 31.487V20.931' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='29' height='50.115'><path d='M14.498 16.858L0 8.488.002-8.257l14.5-8.374L29-8.26l-.002 16.745zm0 50.06L0 58.548l.002-16.745 14.5-8.373L29 41.8l-.002 16.744zM28.996 41.8l-14.498-8.37.002-16.744L29 8.312l14.498 8.37-.002 16.745zm-29 0l-14.498-8.37.002-16.744L0 8.312l14.498 8.37-.002 16.745z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='62' height='68'><rect x='0' y='0' width='62' height='68' fill='black'/><path d='M41.845 51.072h3.465v-7.035h-7.076v13.999H52.18V37.21H31.117m0 27.79V37.21M20.389 51.07h-3.466v-7.034H24v13.999H10.055V37.21h21.062m10.728-20.283h3.465v7.035h-7.076V9.964H52.18V30.79H31.117m0-27.789v27.79M20.389 16.927h-3.466v7.035H24V9.964H10.055V30.79h21.062M3 3h56v62H3.126z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='26.55' height='25'><rect x='0' y='0' width='26.55' height='25' fill='black'/><path d='M0 10.86v3.22c2.7.08 4.9 2.31 4.9 5.03V25h3.2v-5.9c0-4.48-3.63-8.16-8.1-8.24ZM18.17 25h3.21v-5.9a5.05 5.05 0 0 1 5.03-5.02h.14v-3.21h-.14a8.27 8.27 0 0 0-8.24 8.24zm3.21-25h-3.21v1.64a5.05 5.05 0 0 1-5.03 5.02A5.05 5.05 0 0 1 8.1 1.64V0H4.89v1.64c0 4.53 3.7 8.24 8.25 8.24 4.53 0 8.24-3.7 8.24-8.24z' stroke='none' fill='white'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='79.392'><path d='m.135 40.054-14.277-25.722M0 40.054l14.278-25.722M0 40.054v-40m0 40-20-20 20-20 20 20Zm-.135-.716L14.142 65.06M0 39.338-14.278 65.06M0 39.338v40m0-40 20 20-20 20-20-20Zm40.136.716L25.858 14.332M40 40.054l14.278-25.722M40 40.054v-40m-20 20 20-20 20 20-20 20Zm19.865 19.284L54.142 65.06M40 39.338 25.722 65.06M40 39.338v40m20-20-20 20-20-20 20-20Z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='50' height='29.442'><path d='M35.569-17.373 22.959 4.468l-12.61-21.841Zm0 29.442-12.61 21.84-12.61-21.84Zm25-14.721-12.61 21.841-12.61-21.841zm0 29.441-12.61 21.842-12.61-21.842Zm-33.478 0L39.7 4.95l12.61 21.84zM10.569-2.652l-12.61 21.841-12.61-21.841Zm0 29.441-12.61 21.842-12.61-21.842Zm-33.478 0L-10.3 4.95l12.61 21.84zm25-14.72L14.7-9.773l12.61 21.842zm0 29.441L14.7 19.67l12.61 21.841z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='59.428'><path d='M0 70.975V47.881m20-1.692L8.535 52.808v13.239L20 72.667l11.465-6.62V52.808zm0-32.95l11.465-6.62V-6.619L20-13.24 8.535-6.619V6.619L20 13.24m8.535 4.927v13.238L40 38.024l11.465-6.62V18.166L40 11.546zM20 36.333L0 47.88m0 0v23.094m0 0l20 11.548 20-11.548V47.88m0 0L20 36.333m0 0l20 11.549M0 11.547l-11.465 6.619v13.239L0 38.025l11.465-6.62v-13.24L0 11.548v-23.094l20-11.547 20 11.547v23.094M20 36.333V13.24' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='70' height='8'><path d='M-.02 22c8.373 0 11.938-4.695 16.32-9.662C20.785 7.258 25.728 2 35 2c9.272 0 14.215 5.258 18.7 10.338C58.082 17.305 61.647 22 70.02 22M-.02 14.002C8.353 14 11.918 9.306 16.3 4.339 20.785-.742 25.728-6 35-6 44.272-6 49.215-.742 53.7 4.339c4.382 4.967 7.947 9.661 16.32 9.664M70 6.004c-8.373-.001-11.918-4.698-16.3-9.665C49.215-8.742 44.272-14 35-14c-9.272 0-14.215 5.258-18.7 10.339C11.918 1.306 8.353 6-.02 6.002' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='45' height='51.96'><path d='M52.48 44.47a15 15 0 01-14.96 0 15 15 0 00-7.48 12.96M7.48 44.42a15 15 0 01-14.96 0M15 57.44c0-5.35-2.9-10.35-7.52-13.02a15 15 0 017.48-12.97M7.48 18.5a14.97 14.97 0 01-14.98-.03m15.02-.03A15 15 0 0115 5.47a15 15 0 00-4.4-10.62m23.8.05A15 15 0 0030 5.53a15 15 0 017.48 12.96 14.9 14.9 0 0015.02-.03m-22.5 13a15.13 15.13 0 017.52 13.01m-7.56-39a15 15 0 01-14.96 0M7.48 18.5a15 15 0 017.48 12.96 15 15 0 0015.04 0 15 15 0 017.48-12.96' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='72' height='43.875'><path d='m14.296 7.185 7.236 7.234L36.002-.048l14.47 14.47 7.236-7.233L36-14.518Zm-7.275 7.251 7.258 7.26 7.259-7.26-7.258-7.259zm-28.798 14.76 7.237 7.237L-.023 21.916 14.452 36.39l7.26-7.258L0 7.42Zm50.746 7.193-7.258-7.258-7.26 7.258 7.26 7.26zm57.568.046 7.24-7.238L72 7.42 50.282 29.137l7.259 7.259L72.02 21.918Zm-28.993-.042-7.26-7.258-7.258 7.258 7.26 7.26zm.233 14.742L36 29.358 14.223 51.135l7.258 7.258L36 43.875l14.518 14.517ZM50.453 14.45l7.259 7.26 7.258-7.26-7.258-7.257z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M45.69 13.342c-1.677.945-3.557 1.6-5.48 1.588-1.922-.012-3.795-.691-5.462-1.653-1.668-.962-3.156-2.202-4.637-3.435-1.48-1.232-2.97-2.47-4.641-3.427-1.67-.957-3.547-1.628-5.47-1.628-1.923 0-3.8.67-5.47 1.628-1.67.956-3.161 2.195-4.641 3.427-1.48 1.233-2.97 2.473-4.637 3.435-1.667.962-3.54 1.641-5.463 1.653-1.922.012-3.802-.643-5.478-1.588v13.316c1.676-.945 3.556-1.6 5.478-1.588 1.923.012 3.796.691 5.463 1.653 1.668.962 3.156 2.202 4.637 3.435 1.48 1.232 2.97 2.47 4.641 3.427 1.67.957 3.547 1.628 5.47 1.628 1.923 0 3.8-.67 5.47-1.628 1.67-.956 3.161-2.195 4.641-3.427 1.48-1.233 2.97-2.473 4.637-3.435 1.667-.962 3.54-1.641 5.463-1.653 1.922-.012 3.802.643 5.478 1.588z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='40'><path d='M0 0v5.436c.385-.146.767.123 1.163.82.948 1.674 2.214 2.996 3.46 4.294C6.977 13.002 9.2 15.318 9.2 19.995c0 4.679-2.223 6.994-4.577 9.447-1.246 1.299-2.512 2.621-3.46 4.295-.396.698-.777.966-1.163.82V40h1.198v-.005c0-4.678 2.224-6.992 4.579-9.445 1.245-1.298 2.51-2.62 3.459-4.295.654-1.154 1.273-1.154 1.926 0 .95 1.673 2.214 2.997 3.46 4.295 2.353 2.452 4.578 4.767 4.578 9.445V40h.8v-5.442c-.252-.095-.504-.365-.762-.82-.95-1.675-2.214-2.998-3.46-4.296-2.353-2.452-4.576-4.768-4.576-9.447-.001-4.678 2.221-6.993 4.575-9.445 1.246-1.298 2.512-2.62 3.46-4.294.259-.456.511-.725.763-.82V0h-.8c0 4.676-2.224 6.991-4.577 9.442-1.246 1.298-2.512 2.621-3.46 4.296-.653 1.153-1.273 1.153-1.926 0-.948-1.675-2.214-2.998-3.46-4.296C3.424 6.991 1.2 4.676 1.2 0Z' stroke='none' fill='white'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='50' height='33.333'><path d='M25 .806v2.79h.8V.806Zm0 4.465v2.791h.8v-2.79Zm-2.043 3.902-2.32 1.55.444.665 2.32-1.55-.443-.665zm4.885 0-.444.665 2.32 1.55.445-.665zM-.4 10.61v2.79h.8v-2.79zm50 0v2.79h.8v-2.79zm-30.356 1.042-2.32 1.55.443.666 2.322-1.55-.444-.666zm12.311 0-.444.665 2.32 1.55.445-.664zm3.783 2.566-.444.666 2.321 1.55.444-.666zm-19.852.025-2.32 1.55.444.665 2.32-1.55zm-15.886.77v2.79h.8v-2.79Zm50 0v2.79h.8v-2.79Zm-50 4.465v2.79h.8v-2.79h-.8Zm50 0v2.79h.8v-2.79h-.8zM2.442 23.379l-.444.665 2.32 1.55.445-.665zm45.115 0-2.32 1.55.443.666 2.322-1.55-.444-.666zM6.155 25.86l-.444.665 2.32 1.55.445-.665zm37.69 0-2.322 1.55.444.665 2.321-1.55-.444-.666zM9.937 28.424l-.444.665 2.32 1.55.445-.665-2.321-1.55zm30.11.003-2.321 1.55.444.666 2.321-1.55zM25 29.737v2.79h.8v-2.79z' stroke='none' fill='white'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='69.282' height='40'><path d='M34.641-20v80m34.64-40L0-20m69.282 80L0 20m69.282 0L0 60m69.282-80L0 20m69.282-40v80M0-20v80M34.64 40l11.547-20m11.547 20l11.547 20M34.641 40h23.094m11.547-20L57.735 40M46.188 20L34.641 40l11.547 20h23.094L80.83 40 69.282 20H46.188zM34.641 40l11.547-20m11.547 20l11.547 20M34.641 40h23.094m11.547-20L57.735 40M46.188 20L34.641 40l11.547 20h23.094L80.83 40 69.282 20H46.188zM34.641 0l11.547-20M57.735 0l11.547 20M34.642 0h23.093m11.547-20L57.735 0M46.188-20L34.641 0l11.547 20h23.094L80.83 0 69.282-20H46.188zM34.641 40L23.094 20M11.547 40L0 60m34.64-20H11.548M0 20l11.547 20m11.547-20l11.547 20-11.547 20H0l-11.547-20L0 20h23.094zM34.641 0L23.094-20M11.547 0L0 20M34.64 0H11.548M0-20L11.547 0m11.547-20L34.641 0 23.094 20H0L-11.547 0 0-20h23.094z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='29' height='50.115'><path d='M14.5 6.628L8.886 3.372v-6.515L14.502-6.4l5.612 3.257-.001 6.514zm0 50.06l-5.613-3.256v-6.515l5.614-3.258 5.612 3.257-.001 6.515zm14.497-25.117l-5.612-3.257v-6.515L29 18.541l5.612 3.257-.001 6.515zm-29 0l-5.612-3.257v-6.515L0 18.541l5.612 3.257v6.515zM14.5 11.82L4.36 5.967l.002-11.706 10.14-5.855L24.638-5.74l-.001 11.707zm0 50.06L4.36 56.028l.002-11.706 10.14-5.855 10.137 5.852-.001 11.707zm14.498-25.118L18.858 30.91l.002-11.707L29 13.349l10.137 5.853-.001 11.706zm-29 0l-10.139-5.852.002-11.707L0 13.349l10.138 5.853-.002 11.706zm14.501-19.905L0 8.488.002-8.257l14.5-8.374L29-8.26l-.002 16.745zm0 50.06L0 58.548l.002-16.745 14.5-8.373L29 41.8l-.002 16.744zM28.996 41.8l-14.498-8.37.002-16.744L29 8.312l14.498 8.37-.002 16.745zm-29 0l-14.498-8.37.002-16.744L0 8.312l14.498 8.37-.002 16.745z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><path d='M6.13-.002.005 6.125v1.059L6.59 13.77l.013-.014 16.243 16.24L6.617 46.23.535 40.15l10.147-10.153L.004 19.318v1.037l9.644 9.641-9.646 9.65v1.03L12.73 53.402l-6.082 6.082-6.127-6.127.014-.015-.533-.531v1.06l6.127 6.127h1.055l6.586-6.584-.012-.012 16.246-16.246L46.236 53.39l-6.082 6.082-10.15-10.15-10.68 10.677h1.033l9.647-9.644 9.646 9.644h1.034l12.722-12.723 6.082 6.082-6.125 6.125-.013-.011-.528.527h1.057l6.123-6.123V52.81l-6.58-6.58-.016.015L37.16 29.996 53.393 13.77l6.082 6.082-10.15 10.144 10.677 10.678v-1.031l-9.647-9.647 9.647-9.64v-1.038L47.279 6.596 53.361.514l6.13 6.127-.016.013.527.53V6.123L53.879-.002h-1.057l-6.586 6.586.014.012-16.244 16.246L13.77 6.607l6.082-6.08 10.153 10.15L40.684-.001H39.65l-9.646 9.647-9.647-9.647h-1.03L6.601 12.723.52 6.64 6.646.514l.012.013.528-.529H6.13zm7.114 7.113 16.76 16.76 16.762-16.76 6.127 6.127-16.764 16.758 16.764 16.762-6.127 6.127-16.76-16.76-16.762 16.76-6.127-6.127 16.758-16.762L7.117 13.238l6.127-6.127z' stroke='none' fill='white'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='80' height='97.989'><path d='m40 15.681 20.818-48.593-6.307-14.72-14.51 33.87-14.512-33.87-6.307 14.72zm0 .803-8.204 19.15L40 54.782l8.205-19.15zm14.511 33.872-6.306-14.723L40 54.783l-8.204-19.15-6.307 14.723L40 84.227zm0-29.445-6.306 14.722 6.306 14.723 6.307-14.723zM25.49 50.356l6.307-14.723-6.307-14.722-6.307 14.722zm0-29.445L19.182 6.19l-6.307 14.724 6.307 14.72zm29.022 0 6.307 14.722 6.308-14.72-6.308-14.724zm-14.51 92.76 20.817-48.594-6.307-14.721-14.51 33.871L25.49 50.356l-6.307 14.721zM25.488 50.355l-6.307-14.723-6.307 14.722 6.307 14.722zm29.022 0 6.307 14.721 6.308-14.722-6.308-14.722zm12.615-29.443-6.308 14.72 6.308 14.722 6.307-14.722zm-54.25 29.443 6.307-14.722-6.307-14.72-6.308 14.72zm0-29.442L6.567 6.189.26 20.91l6.307 14.722zm54.25 0 6.308 14.72 6.307-14.722L73.433 6.19zm0 29.442-6.307 14.722L67.126 79.8l6.307-14.722zM12.876 79.8l6.307-14.722-6.307-14.722-6.308 14.722zm0-29.444L6.567 35.633.26 50.356l6.307 14.721zm54.25 0 6.308 14.722 6.307-14.721-6.307-14.723zm0 29.444 6.308 14.723L79.741 79.8l-6.307-14.722zm-54.25 0L6.567 65.077.26 79.8l6.307 14.723z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><path d='M9 20.502h0A7.5 7.5 0 0 1 1.5 28 7.5 7.5 0 0 0-6 35.5h0a7.5 7.5 0 0 1-7.5 7.499 7.476 7.476 0 0 1-5.304-2.196A7.482 7.482 0 0 1-21 35.5h0a7.5 7.5 0 0 1 7.5-7.5A7.5 7.5 0 0 0-6 20.502h0a7.5 7.5 0 1 1 15 0zm15 0h0A7.5 7.5 0 0 1 16.5 28a7.476 7.476 0 0 1-5.304-2.196A7.482 7.482 0 0 1 9 20.502h0c0-2.072-.84-3.947-2.197-5.303A7.477 7.477 0 0 0 1.5 13.002a7.476 7.476 0 0 1-5.304-2.196A7.482 7.482 0 0 1-6 5.503h0a7.5 7.5 0 1 1 15 0h0c0 2.07.84 3.945 2.196 5.303a7.476 7.476 0 0 0 5.304 2.196c2.07 0 3.945.84 5.303 2.197A7.471 7.471 0 0 1 24 20.502zm15 0h0A7.5 7.5 0 0 1 31.5 28a7.5 7.5 0 0 0-7.5 7.5h0a7.5 7.5 0 0 1-7.5 7.499 7.476 7.476 0 0 1-5.304-2.196A7.482 7.482 0 0 1 9 35.5h0a7.5 7.5 0 0 1 7.5-7.5 7.5 7.5 0 0 0 7.5-7.498h0a7.5 7.5 0 1 1 15 0zm0-30h0A7.5 7.5 0 0 1 31.5-2 7.5 7.5 0 0 0 24 5.5h0a7.5 7.5 0 0 1-7.5 7.499 7.476 7.476 0 0 1-5.304-2.196A7.482 7.482 0 0 1 9 5.5h0A7.5 7.5 0 0 1 16.5-2 7.5 7.5 0 0 0 24-9.498h0a7.5 7.5 0 1 1 15 0zm-22.5 37.5a7.5 7.5 0 0 0-7.5 7.5c0-2.072-.84-3.947-2.197-5.303A7.477 7.477 0 0 0 1.5 28.002 7.5 7.5 0 0 0 9 20.503c0 2.07.84 3.945 2.196 5.303a7.476 7.476 0 0 0 5.304 2.196zm15-15a7.5 7.5 0 0 0-7.5 7.5c0-2.072-.84-3.947-2.197-5.303a7.477 7.477 0 0 0-5.303-2.197A7.5 7.5 0 0 0 24 5.503c0 2.07.84 3.945 2.196 5.303a7.476 7.476 0 0 0 5.304 2.196z' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='69.282'><path d='M13.333-3.849v23.094M6.667-15.396l20 11.547M13.333-19.245l20 11.547M20 0v23.094m20-34.641l-6.667 3.849-6.666 3.849L20 0M0-11.547l6.667 3.849 6.666 3.849L20 0m0-23.094l20 11.547v23.094L20 23.094l-6.667-3.849-6.666-3.849L0 11.547v-23.094l6.667-3.849 6.666-3.849zM40-3.769L20 7.698m20-3.849l-16.253 9.384L20 15.396M6.667-7.698v23.094m6.666 50.037v23.094M6.667 53.886l20 11.547M13.333 50.037l20 11.547M20 69.282v23.094m20-34.641l-6.667 3.849-6.666 3.849L20 69.282M0 57.735l6.667 3.849 6.666 3.849L20 69.282m0-23.094l20 11.547v23.094L20 92.376l-6.667-3.849-6.666-3.849L0 80.829V57.735l6.667-3.849 6.666-3.849zm20 19.325L20 76.98m20-3.849L20 84.678M6.667 61.584v23.094m26.666-53.886v23.094m-6.666-34.641l20 11.547M33.333 15.396l20 11.547M40 34.641v23.094m20-34.641l-6.667 3.849-6.666 3.849L40 34.641M20 23.094l6.667 3.849 6.666 3.849L40 34.641m0-23.094l20 11.547v23.094L40 57.735l-6.667-3.849-6.666-3.849L20 46.188V23.094l6.667-3.849 6.666-3.849zm20 19.325L40 42.339m20-3.849L40 50.037M26.667 26.943v23.094M-6.667 30.792v23.094m-6.666-34.641l20 11.547M-6.667 15.396l20 11.547M0 34.641v23.094m20-34.641l-6.667 3.849-6.666 3.849L0 34.641m-20-11.547l6.667 3.849 6.666 3.849L0 34.641m0-23.094l20 11.547v23.094L0 57.735l-6.667-3.849-6.666-3.849L-20 46.188V23.094l6.667-3.849 6.666-3.849zm20 19.325L0 42.339m20-3.849L0 50.037m-13.333-23.094v23.094' stroke-width='1' stroke='white' fill='none'/></svg>\",\"<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M46.231 19.999a5.937 7.48 0 01-5.937 7.48A5.937 7.48 0 0134.357 20a5.937 7.48 0 015.937-7.48 5.937 7.48 0 015.937 7.48zm-40.421 0a5.937 7.48 0 01-5.937 7.48A5.937 7.48 0 01-6.064 20a5.937 7.48 0 015.937-7.48 5.937 7.48 0 015.937 7.48zm20.21 20.285a5.937 7.48 0 01-5.937 7.48 5.937 7.48 0 01-5.936-7.48 5.937 7.48 0 015.936-7.48 5.937 7.48 0 015.937 7.48zm0-40.57a5.937 7.48 0 01-5.937 7.48 5.937 7.48 0 01-5.936-7.48 5.937 7.48 0 015.936-7.48 5.937 7.48 0 015.937 7.48zM-5.732 46.942c1.676-.944 3.556-1.6 5.478-1.587 1.924.011 3.796.69 5.463 1.653 1.668.962 3.156 2.202 4.637 3.434 1.48 1.233 2.97 2.471 4.641 3.428 1.67.957 3.547 1.627 5.47 1.627 1.924 0 3.8-.67 5.47-1.627s3.161-2.195 4.642-3.428c1.48-1.232 2.968-2.472 4.636-3.434 1.667-.963 3.54-1.642 5.463-1.653 1.922-.012 3.802.643 5.479 1.587V33.628c-1.677.944-3.557 1.6-5.479 1.587-1.923-.011-3.796-.69-5.463-1.653-1.668-.962-3.156-2.202-4.636-3.434-1.48-1.233-2.971-2.471-4.642-3.428-1.67-.957-3.546-1.627-5.47-1.627-1.923 0-3.8.67-5.47 1.627s-3.161 2.195-4.641 3.428c-1.48 1.232-2.97 2.472-4.637 3.434-1.667.963-3.54 1.641-5.463 1.653-1.922.012-3.802-.643-5.478-1.587zM45.647-6.943c-1.677.944-3.557 1.6-5.479 1.587-1.923-.011-3.796-.69-5.463-1.653-1.668-.962-3.156-2.202-4.636-3.434-1.48-1.233-2.971-2.471-4.642-3.428-1.67-.957-3.546-1.627-5.47-1.627-1.923 0-3.8.67-5.47 1.627s-3.161 2.195-4.641 3.428c-1.48 1.232-2.97 2.472-4.637 3.434-1.667.963-3.54 1.642-5.463 1.653-1.922.012-3.802-.643-5.478-1.587V6.372c1.676-.944 3.556-1.6 5.478-1.587 1.924.012 3.796.69 5.463 1.653C6.877 7.4 8.365 8.64 9.846 9.872c1.48 1.233 2.97 2.471 4.641 3.428 1.67.957 3.547 1.627 5.47 1.627 1.924 0 3.8-.67 5.47-1.627s3.161-2.195 4.642-3.428c1.48-1.232 2.968-2.472 4.636-3.434 1.667-.963 3.54-1.642 5.463-1.653 1.922-.012 3.802.643 5.479 1.587z' stroke-width='1' stroke='white' fill='none'/></svg>\"]");
-
-},{}],"6rQoT":[function(require,module,exports,__globalThis) {
+},{"./data/backgrounds.json":"31wW4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6rQoT":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "levelIconHTML", ()=>levelIconHTML);
@@ -2810,353 +2790,327 @@ function levelIconHTML(bricks, levelSize, color) {
     return `<img alt="" width="${size}" height="${size}" src="${c.toDataURL()}"/>`;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cirX1":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dQKPV":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "levelEditorMenuEntry", ()=>levelEditorMenuEntry);
-parcelHelpers.export(exports, "editRawLevelList", ()=>editRawLevelList);
-parcelHelpers.export(exports, "automaticBackgroundColor", ()=>automaticBackgroundColor);
-var _loadGameData = require("./loadGameData");
+parcelHelpers.export(exports, "playPendingSounds", ()=>playPendingSounds);
+parcelHelpers.export(exports, "sounds", ()=>sounds);
+parcelHelpers.export(exports, "getAudioContext", ()=>getAudioContext);
+parcelHelpers.export(exports, "getAudioRecordingTrack", ()=>getAudioRecordingTrack);
+var _options = require("./options");
+let lastPlay = Date.now();
+function playPendingSounds(gameState) {
+    if (lastPlay > Date.now() - 60) return;
+    lastPlay = Date.now();
+    for(let key in gameState.aboutToPlaySound){
+        const soundName = key;
+        const ex = gameState.aboutToPlaySound[soundName];
+        if (ex.vol) {
+            sounds[soundName](//   In stress test, dim the sounds but play them
+            Math.min(1, ex.vol), pixelsToPan(gameState, ex.x), gameState.combo);
+            ex.vol = 0;
+        }
+    }
+}
+const sounds = {
+    wallBeep: (volume, pan)=>{
+        if (!(0, _options.isOptionOn)("sound")) return;
+        createSingleBounceSound(800, pan, volume);
+    },
+    plouf: (volume, pan)=>{
+        if (!(0, _options.isOptionOn)("sound")) return;
+        createSingleBounceSound(500, pan, volume * 0.5);
+    // createWaterDropSound(800, pan, volume*0.2, 0.2,'triangle')
+    },
+    comboIncreaseMaybe: (volume, pan, combo)=>{
+        if (!(0, _options.isOptionOn)("sound")) return;
+        let delta = 0;
+        if (!isNaN(lastComboPlayed)) {
+            if (lastComboPlayed < combo) delta = 1;
+            if (lastComboPlayed > combo) delta = -1;
+        }
+        playShepard(delta, pan, volume);
+        lastComboPlayed = combo;
+    },
+    comboDecrease (volume, pan, combo) {
+        if (!(0, _options.isOptionOn)("sound")) return;
+        playShepard(-1, pan, volume);
+    },
+    coinBounce: (volume, pan, combo)=>{
+        if (!(0, _options.isOptionOn)("sound")) return;
+        createSingleBounceSound(1200, pan, volume, 0.1, "triangle");
+    },
+    // void: (volume: number, pan: number) => {
+    //   if (!isOptionOn("sound")) return;
+    //   createSingleBounceSound(1200, pan, volume, 0.5, "sawtooth");
+    //   createSingleBounceSound(600, pan, volume, 0.3, "sawtooth");
+    // },
+    // freeze: (volume: number, pan: number) => {
+    //   if (!isOptionOn("sound")) return;
+    //   createSingleBounceSound(220, pan, volume, 0.5, "square");
+    //   createSingleBounceSound(440, pan, volume, 0.5, "square");
+    // },
+    explode: (volume, pan, combo)=>{
+        if (!(0, _options.isOptionOn)("sound")) return;
+        createExplosionSound(pan);
+    },
+    lifeLost (volume, pan, combo) {
+        if (!(0, _options.isOptionOn)("sound")) return;
+        createShatteredGlassSound(pan);
+    },
+    coinCatch (volume, pan, combo) {
+        if (!(0, _options.isOptionOn)("sound")) return;
+        createSingleBounceSound(900, pan, volume, 0.1, "triangle");
+    },
+    colorChange (volume, pan, combo) {
+        createSingleBounceSound(400, pan, volume, 0.5, "sine");
+        createSingleBounceSound(800, pan, volume * 0.5, 0.2, "square");
+    }
+};
+// How to play the code on the leftconst context = new window.AudioContext();
+let audioContext, audioRecordingTrack;
+function getAudioContext() {
+    if (!audioContext) {
+        if (!(0, _options.isOptionOn)("sound")) return null;
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        audioRecordingTrack = audioContext.createMediaStreamDestination();
+    }
+    return audioContext;
+}
+function getAudioRecordingTrack() {
+    getAudioContext();
+    return audioRecordingTrack;
+}
+function createSingleBounceSound(baseFreq = 800, pan = 0.5, volume = 1, duration = 0.1, type = "sine") {
+    const context = getAudioContext();
+    if (!context) return;
+    const oscillator = createOscillator(context, baseFreq, type);
+    // Create a gain node to control the volume
+    const gainNode = context.createGain();
+    oscillator.connect(gainNode);
+    // Create a stereo panner node for left-right panning
+    const panner = context.createStereoPanner();
+    panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime);
+    gainNode.connect(panner);
+    panner.connect(context.destination);
+    panner.connect(audioRecordingTrack);
+    // Set up the gain envelope to simulate the impact and quick decay
+    gainNode.gain.setValueAtTime(0.8 * volume, context.currentTime); // Initial impact
+    gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + duration); // Quick decay
+    // Start the oscillator
+    oscillator.start(context.currentTime);
+    // Stop the oscillator after the decay
+    oscillator.stop(context.currentTime + duration);
+}
+let noiseBuffer;
+function getNoiseBuffer(context) {
+    if (!noiseBuffer) {
+        const bufferSize = context.sampleRate * 2; // 2 seconds
+        noiseBuffer = context.createBuffer(1, bufferSize, context.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        // Fill the buffer with random noise
+        for(let i = 0; i < bufferSize; i++)output[i] = Math.random() * 2 - 1;
+    }
+    return noiseBuffer;
+}
+function createExplosionSound(pan = 0.5) {
+    const context = getAudioContext();
+    if (!context) return;
+    // Create an audio buffer
+    // Create a noise source
+    const noiseSource = context.createBufferSource();
+    noiseSource.buffer = getNoiseBuffer(context);
+    // Create a gain node to control the volume
+    const gainNode = context.createGain();
+    noiseSource.connect(gainNode);
+    // Create a filter to shape the explosion sound
+    const filter = context.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(1000, context.currentTime); // Set the initial frequency
+    gainNode.connect(filter);
+    // Create a stereo panner node for left-right panning
+    const panner = context.createStereoPanner();
+    panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime); // pan 0 to 1 maps to -1 to 1
+    // Connect filter to panner and then to the destination (speakers)
+    filter.connect(panner);
+    panner.connect(context.destination);
+    panner.connect(audioRecordingTrack);
+    // Ramp down the gain to simulate the explosion's fade-out
+    gainNode.gain.setValueAtTime(1, context.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 1);
+    // Lower the filter frequency over time to create the "explosive" effect
+    filter.frequency.exponentialRampToValueAtTime(60, context.currentTime + 1);
+    // Start the noise source
+    noiseSource.start(context.currentTime);
+    // Stop the noise source after the sound has played
+    noiseSource.stop(context.currentTime + 1);
+}
+function pixelsToPan(gameState, pan) {
+    return Math.max(0, Math.min(1, (pan - gameState.offsetXRoundedDown) / gameState.gameZoneWidthRoundedUp));
+}
+let lastComboPlayed = NaN, shepard = 6;
+function playShepard(delta, pan, volume) {
+    const shepardMax = 11, factor = 1.05945594920268, baseNote = 392;
+    shepard += delta;
+    if (shepard > shepardMax) shepard = 0;
+    if (shepard < 0) shepard = shepardMax;
+    const play = (note)=>{
+        const freq = baseNote * Math.pow(factor, note);
+        const diff = Math.abs(note - shepardMax * 0.5);
+        const maxDistanceToIdeal = 1.5 * shepardMax;
+        const vol = Math.max(0, volume * (1 - diff / maxDistanceToIdeal));
+        createSingleBounceSound(freq, pan, vol);
+        return freq.toFixed(2) + " at " + Math.floor(vol * 100) + "% diff " + diff;
+    };
+    play(1 + shepardMax + shepard);
+    play(shepard);
+    play(-1 - shepardMax + shepard);
+}
+function createShatteredGlassSound(pan) {
+    const context = getAudioContext();
+    if (!context) return;
+    const oscillators = [
+        createOscillator(context, 3000, "square"),
+        createOscillator(context, 4500, "square"),
+        createOscillator(context, 6000, "square")
+    ];
+    const gainNode = context.createGain();
+    const noiseSource = context.createBufferSource();
+    noiseSource.buffer = getNoiseBuffer(context);
+    oscillators.forEach((oscillator)=>oscillator.connect(gainNode));
+    noiseSource.connect(gainNode);
+    gainNode.gain.setValueAtTime(0.2, context.currentTime);
+    oscillators.forEach((oscillator)=>oscillator.start());
+    noiseSource.start();
+    oscillators.forEach((oscillator)=>oscillator.stop(context.currentTime + 0.2));
+    noiseSource.stop(context.currentTime + 0.2);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.2);
+    // Create a stereo panner node for left-right panning
+    const panner = context.createStereoPanner();
+    panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime);
+    gainNode.connect(panner);
+    panner.connect(context.destination);
+    panner.connect(audioRecordingTrack);
+    gainNode.connect(panner);
+}
+// Helper function to create an oscillator with a specific frequency
+function createOscillator(context, frequency, type) {
+    const oscillator = context.createOscillator();
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, context.currentTime);
+    return oscillator;
+}
+
+},{"./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d5NoS":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "options", ()=>options);
+parcelHelpers.export(exports, "isOptionOn", ()=>isOptionOn);
+parcelHelpers.export(exports, "toggleOption", ()=>toggleOption);
 var _i18N = require("./i18n/i18n");
 var _settings = require("./settings");
-var _asyncAlert = require("./asyncAlert");
-var _levelIcon = require("./levelIcon");
-var _paletteJson = require("./data/palette.json");
-var _paletteJsonDefault = parcelHelpers.interopDefault(_paletteJson);
-var _game = require("./game");
 var _gameUtils = require("./game_utils");
-const palette = (0, _paletteJsonDefault.default);
-const MAX_LEVEL_SIZE = 21;
-const MIN_LEVEL_SIZE = 2;
-function levelEditorMenuEntry() {
-    const min = 10000;
-    const disabled = (0, _settings.getTotalScore)() < min;
-    return {
-        icon: (0, _loadGameData.icons)["icon:editor"],
-        text: (0, _i18N.t)("editor.title"),
-        disabled,
-        help: disabled ? (0, _i18N.t)("editor.locked", {
-            min
-        }) : (0, _i18N.t)("editor.help"),
-        async value () {
-            openLevelEditorLevelsList().then();
-        }
-    };
-}
-async function openLevelEditorLevelsList() {
-    const rawList = (0, _settings.getSettingValue)("custom_levels", []);
-    const customLevels = rawList.map((0, _loadGameData.transformRawLevel));
-    let choice = await (0, _asyncAlert.asyncAlert)({
-        title: (0, _i18N.t)("editor.title"),
-        content: [
-            ...customLevels.map((l, li)=>({
-                    text: l.name,
-                    icon: (0, _levelIcon.levelIconHTML)(l.bricks, l.size, l.color),
-                    value () {
-                        editRawLevelList(li);
-                    },
-                    help: l.credit || (0, _gameUtils.describeLevel)(l)
-                })),
-            {
-                text: (0, _i18N.t)("editor.new_level"),
-                icon: (0, _loadGameData.icons)["icon:editor"],
-                value () {
-                    rawList.push({
-                        color: "",
-                        size: 6,
-                        bricks: "____________________________________",
-                        name: "custom level" + (rawList.length + 1),
-                        credit: ""
-                    });
-                    (0, _settings.setSettingValue)("custom_levels", rawList);
-                    editRawLevelList(rawList.length - 1);
-                }
-            },
-            {
-                text: (0, _i18N.t)("editor.import"),
-                help: (0, _i18N.t)("editor.import_instruction"),
-                value () {
-                    const code = prompt((0, _i18N.t)("editor.import_instruction"))?.trim();
-                    if (code) {
-                        let [name, credit] = code.match(/\[([^\]]+)]/gi);
-                        let bricks = code.split(name)[1].split(credit)[0].replace(/\s/gi, "");
-                        name = name.slice(1, -1);
-                        credit = credit.slice(1, -1);
-                        name ||= "Imported on " + new Date().toISOString().slice(0, 10);
-                        credit ||= "";
-                        const size = Math.sqrt(bricks.length);
-                        if (Math.floor(size) === size && size >= MIN_LEVEL_SIZE && size <= MAX_LEVEL_SIZE) {
-                            rawList.push({
-                                color: automaticBackgroundColor(bricks.split("")),
-                                size,
-                                bricks,
-                                name,
-                                credit
-                            });
-                            (0, _settings.setSettingValue)("custom_levels", rawList);
-                        }
-                    }
-                    openLevelEditorLevelsList();
-                }
-            }
-        ]
-    });
-    if (typeof choice == "function") choice();
-}
-async function editRawLevelList(nth, color = "W") {
-    let rawList = (0, _settings.getSettingValue)("custom_levels", []);
-    const level = rawList[nth];
-    const bricks = level.bricks.split("");
-    let grid = "";
-    for(let y = 0; y < level.size; y++){
-        grid += '<div style="background: ' + (level.color || "black") + ';">';
-        for(let x = 0; x < level.size; x++){
-            const c = bricks[y * level.size + x];
-            grid += `<span data-resolve-to="paint_brick:${x}:${y}" style="background: ${palette[c]}">${c == "B" ? "\uD83D\uDCA3" : ""}</span>`;
-        }
-        grid += "</div>";
+const options = {
+    sound: {
+        default: true,
+        name: (0, _i18N.t)("settings.sounds"),
+        help: (0, _i18N.t)("settings.sounds_help")
+    },
+    "mobile-mode": {
+        default: window.innerHeight > window.innerWidth,
+        name: (0, _i18N.t)("settings.mobile"),
+        help: (0, _i18N.t)("settings.mobile_help")
+    },
+    basic: {
+        default: false,
+        name: (0, _i18N.t)("settings.basic"),
+        help: (0, _i18N.t)("settings.basic_help")
+    },
+    colorful_coins: {
+        default: false,
+        name: (0, _i18N.t)("settings.colorful_coins"),
+        help: (0, _i18N.t)("settings.colorful_coins_help")
+    },
+    extra_bright: {
+        default: true,
+        name: (0, _i18N.t)("settings.extra_bright"),
+        help: (0, _i18N.t)("settings.extra_bright_help")
+    },
+    smooth_lighting: {
+        default: true,
+        name: (0, _i18N.t)("settings.smooth_lighting"),
+        help: (0, _i18N.t)("settings.smooth_lighting_help")
+    },
+    precise_lighting: {
+        default: true,
+        name: (0, _i18N.t)("settings.precise_lighting"),
+        help: (0, _i18N.t)("settings.precise_lighting_help")
+    },
+    probabilistic_lighting: {
+        default: false,
+        name: (0, _i18N.t)("settings.probabilistic_lighting"),
+        help: (0, _i18N.t)("settings.probabilistic_lighting_help")
+    },
+    contrast: {
+        default: false,
+        name: (0, _i18N.t)("settings.contrast"),
+        help: (0, _i18N.t)("settings.contrast_help")
+    },
+    show_fps: {
+        default: false,
+        name: (0, _i18N.t)("settings.show_fps"),
+        help: (0, _i18N.t)("settings.show_fps_help")
+    },
+    show_stats: {
+        default: false,
+        name: (0, _i18N.t)("settings.show_stats"),
+        help: (0, _i18N.t)("settings.show_stats_help")
+    },
+    pointerLock: {
+        default: false,
+        name: (0, _i18N.t)("settings.pointer_lock"),
+        help: (0, _i18N.t)("settings.pointer_lock_help")
+    },
+    easy: {
+        default: false,
+        name: (0, _i18N.t)("settings.kid"),
+        help: (0, _i18N.t)("settings.kid_help")
+    },
+    // Could not get the sharing to work without loading androidx and all the modern android things so for now I'll just disable sharing in the android app
+    record: {
+        default: false,
+        name: (0, _i18N.t)("settings.record"),
+        help: (0, _i18N.t)("settings.record_help")
+    },
+    fullscreen: {
+        default: false,
+        name: (0, _i18N.t)("settings.fullscreen"),
+        help: (0, _i18N.t)("settings.fullscreen_help")
+    },
+    donation_reminder: {
+        default: (0, _gameUtils.hoursSpentPlaying)() > 5,
+        name: (0, _i18N.t)("settings.donation_reminder"),
+        help: (0, _i18N.t)("settings.donation_reminder_help")
+    },
+    red_miss: {
+        default: true,
+        name: (0, _i18N.t)("settings.red_miss"),
+        help: (0, _i18N.t)("settings.red_miss_help")
+    },
+    comboIncreaseTexts: {
+        default: true,
+        name: (0, _i18N.t)("settings.comboIncreaseTexts"),
+        help: (0, _i18N.t)("settings.comboIncreaseTexts_help")
     }
-    const levelColors = new Set(bricks);
-    levelColors.delete("_");
-    levelColors.delete("B");
-    let colorList = '<div class="palette">' + Object.entries(palette).filter(([key, value])=>key !== "_").filter(([key, value])=>levelColors.size < 5 || levelColors.has(key) || key === "B").map(([key, value])=>`<span data-resolve-to="set_color:${key}" data-selected="${key == color}" style="background: ${value}">${key == "B" ? "\uD83D\uDCA3" : ""}</span>`).join("") + "</div>";
-    const clicked = await (0, _asyncAlert.asyncAlert)({
-        title: (0, _i18N.t)("editor.editing.title", {
-            name: level.name
-        }),
-        content: [
-            (0, _i18N.t)("editor.editing.color"),
-            colorList,
-            (0, _i18N.t)("editor.editing.help"),
-            `<div class="gridEdit" style="--grid-size:${level.size};">${grid}</div>`,
-            {
-                icon: (0, _loadGameData.icons)["icon:new_run"],
-                text: (0, _i18N.t)("editor.editing.play"),
-                value: "play"
-            },
-            {
-                text: (0, _i18N.t)("editor.editing.rename"),
-                value: "rename",
-                help: level.name
-            },
-            {
-                text: (0, _i18N.t)("editor.editing.credit"),
-                value: "credit",
-                help: level.credit
-            },
-            {
-                text: (0, _i18N.t)("editor.editing.delete"),
-                value: "delete"
-            },
-            {
-                text: (0, _i18N.t)("editor.editing.copy"),
-                value: "copy",
-                help: (0, _i18N.t)("editor.editing.copy_help")
-            },
-            {
-                text: (0, _i18N.t)("editor.editing.bigger"),
-                value: "size:+1",
-                disabled: level.size >= MAX_LEVEL_SIZE
-            },
-            {
-                text: (0, _i18N.t)("editor.editing.smaller"),
-                value: "size:-1",
-                disabled: level.size <= MIN_LEVEL_SIZE
-            },
-            {
-                text: (0, _i18N.t)("editor.editing.left"),
-                value: "move:-1:0"
-            },
-            {
-                text: (0, _i18N.t)("editor.editing.right"),
-                value: "move:1:0"
-            },
-            {
-                text: (0, _i18N.t)("editor.editing.up"),
-                value: "move:0:-1"
-            },
-            {
-                text: (0, _i18N.t)("editor.editing.down"),
-                value: "move:0:1"
-            }
-        ]
-    });
-    if (!clicked) return;
-    if (typeof clicked === "string") {
-        const [action, a, b] = clicked.split(":");
-        if (action == "paint_brick") {
-            const x = parseInt(a), y = parseInt(b);
-            bricks[y * level.size + x] = bricks[y * level.size + x] === color ? "_" : color;
-            level.bricks = bricks.join("");
-        }
-        if (action == "set_color") color = a;
-        if (action == "size") {
-            const newSize = level.size + parseInt(a);
-            const newBricks = [];
-            for(let y = 0; y < newSize; y++)for(let x = 0; x < newSize; x++)newBricks.push(x < level.size && y < level.size && bricks[y * level.size + x] || "_");
-            level.size = newSize;
-            level.bricks = newBricks.join("");
-        }
-        if (action == "move") {
-            const dx = parseInt(a), dy = parseInt(b);
-            const newBricks = [];
-            for(let y = 0; y < level.size; y++)for(let x = 0; x < level.size; x++){
-                const tx = x - dx;
-                const ty = y - dy;
-                if (tx < 0 || tx >= level.size || ty < 0 || ty >= level.size) newBricks.push("_");
-                else newBricks.push(bricks[ty * level.size + tx]);
-            }
-            level.bricks = newBricks.join("");
-        }
-        if (action === "play") {
-            (0, _game.restart)({
-                level: (0, _loadGameData.transformRawLevel)(level),
-                isEditorTrialRun: nth,
-                perks: {
-                    base_combo: 7
-                }
-            });
-            return;
-        }
-        if (action === "copy") {
-            let text = "```\n[" + (level.name || "unnamed level")?.replace(/\[|\]/gi, " ") + "]";
-            bricks.forEach((b, bi)=>{
-                if (!(bi % level.size)) text += "\n";
-                text += b;
-            });
-            text += "\n[" + (level.credit?.replace(/\[|\]/gi, " ") || "Missing credits") + "]\n```";
-            navigator.clipboard.writeText(text);
-        // return
-        }
-        if (action === "rename") {
-            const name = prompt((0, _i18N.t)("editor.editing.rename_prompt"), level.name);
-            if (name) level.name = name;
-        }
-        if (action === "credit") {
-            const credit = prompt((0, _i18N.t)("editor.editing.credit_prompt"), level.credit || "");
-            if (credit !== "null") level.credit = credit || "";
-        }
-        if (action === "delete") {
-            rawList = rawList.filter((l, li)=>li !== nth);
-            (0, _settings.setSettingValue)("custom_levels", rawList);
-            openLevelEditorLevelsList();
-            return;
-        }
-    }
-    level.color = automaticBackgroundColor(bricks);
-    (0, _settings.setSettingValue)("custom_levels", rawList);
-    editRawLevelList(nth, color);
+};
+function isOptionOn(key) {
+    return (0, _settings.getSettingValue)("breakout-settings-enable-" + key, options[key]?.default);
 }
-function automaticBackgroundColor(bricks) {
-    return bricks.filter((b)=>b === "g").length > bricks.filter((b)=>b !== "_").length * 0.05 ? "#115988" : "";
+function toggleOption(key) {
+    (0, _settings.setSettingValue)("breakout-settings-enable-" + key, !isOptionOn(key));
 }
 
-},{"./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","./settings":"5blfu","./asyncAlert":"rSqLY","./levelIcon":"6rQoT","./data/palette.json":"ktRBU","./game":"edeGs","./game_utils":"cEeac","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"rSqLY":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "alertsOpen", ()=>alertsOpen);
-parcelHelpers.export(exports, "closeModal", ()=>closeModal);
-parcelHelpers.export(exports, "requiredAsyncAlert", ()=>requiredAsyncAlert);
-parcelHelpers.export(exports, "asyncAlert", ()=>asyncAlert);
-var _i18N = require("./i18n/i18n");
-let alertsOpen = 0, closeModal = null;
-const popupWrap = document.getElementById("popup");
-const closeModaleButton = document.getElementById("close-modale");
-closeModaleButton.addEventListener("click", (e)=>{
-    e.preventDefault();
-    if (closeModal) closeModal();
-});
-closeModaleButton.title = (0, _i18N.t)("play.close_modale_window_tooltip");
-let lastClickedItemIndex = -1;
-function requiredAsyncAlert(p) {
-    return asyncAlert({
-        ...p,
-        allowClose: false
-    });
-}
-async function asyncAlert({ title, content = [], allowClose = true, className = "" }) {
-    updateAlertsOpen(1);
-    return new Promise((resolve)=>{
-        popupWrap.className = className;
-        closeModaleButton.style.display = allowClose ? "" : "none";
-        const popup = document.createElement("div");
-        let closed = false;
-        function closeWithResult(value) {
-            if (closed) return;
-            closed = true;
-            Array.prototype.forEach.call(popup.querySelectorAll("button:not([disabled])"), (b)=>b.disabled = true);
-            document.body.style.minHeight = document.body.scrollHeight + "px";
-            setTimeout(()=>document.body.style.minHeight = "", 0);
-            popup.remove();
-            resolve(value);
-        }
-        if (allowClose) closeModal = ()=>{
-            closeWithResult(undefined);
-        };
-        else closeModal = null;
-        if (title) {
-            const h1 = document.createElement("h1");
-            h1.innerHTML = title;
-            popup.appendChild(h1);
-        }
-        content?.filter((i)=>i).forEach((entry, index)=>{
-            if (!entry) return;
-            if (typeof entry == "string") {
-                const p = document.createElement("div");
-                p.innerHTML = entry;
-                popup.appendChild(p);
-                return;
-            }
-            let addto;
-            if (popup.lastChild?.nodeName == "SECTION") addto = popup.lastChild;
-            else {
-                addto = document.createElement("section");
-                addto.className = "actions";
-                popup.appendChild(addto);
-            }
-            const { text, value, help, disabled, className = "", icon = "", tooltip } = entry;
-            const button = document.createElement("button");
-            button.innerHTML = `
-${icon}
-<div>
-                    <strong>${text}</strong>
-                    <em>${help || ""}</em>
-            </div>`;
-            if (tooltip) button.setAttribute("data-tooltip", tooltip);
-            if (disabled) button.setAttribute("disabled", "disabled");
-            else button.addEventListener("click", (e)=>{
-                e.preventDefault();
-                e.stopPropagation();
-                closeWithResult(value);
-                // Focus "same" button if it's still there
-                lastClickedItemIndex = index;
-            });
-            button.className = className + (lastClickedItemIndex === index ? " needs-focus" : "");
-            addto.appendChild(button);
-        });
-        popup.addEventListener("click", (e)=>{
-            const target = e.target;
-            if (target.getAttribute("data-resolve-to")) closeWithResult(target.getAttribute("data-resolve-to"));
-        }, true);
-        popupWrap.appendChild(popup);
-        popupWrap.querySelector(`section.actions > button.needs-focus`)?.focus();
-        lastClickedItemIndex = -1;
-    }).then((v)=>{
-        updateAlertsOpen(-1);
-        closeModal = null;
-        return v;
-    }, ()=>{
-        closeModal = null;
-        updateAlertsOpen(-1);
-    });
-}
-function updateAlertsOpen(delta) {
-    alertsOpen += delta;
-    if (alertsOpen > 1) alert("Two alerts where opened at once");
-    document.body.classList[alertsOpen ? "add" : "remove"]("has-alert-open");
-}
-
-},{"./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cEeac":[function(require,module,exports,__globalThis) {
+},{"./i18n/i18n":"eNPRm","./settings":"5blfu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./game_utils":"cEeac"}],"cEeac":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "describeLevel", ()=>describeLevel);
@@ -3482,327 +3436,7 @@ function hoursSpentPlaying() {
     }
 }
 
-},{"./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","./pure_functions":"6pQh7","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./settings":"5blfu","./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d5NoS":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "options", ()=>options);
-parcelHelpers.export(exports, "isOptionOn", ()=>isOptionOn);
-parcelHelpers.export(exports, "toggleOption", ()=>toggleOption);
-var _i18N = require("./i18n/i18n");
-var _settings = require("./settings");
-var _gameUtils = require("./game_utils");
-const options = {
-    sound: {
-        default: true,
-        name: (0, _i18N.t)("settings.sounds"),
-        help: (0, _i18N.t)("settings.sounds_help")
-    },
-    "mobile-mode": {
-        default: window.innerHeight > window.innerWidth,
-        name: (0, _i18N.t)("settings.mobile"),
-        help: (0, _i18N.t)("settings.mobile_help")
-    },
-    basic: {
-        default: false,
-        name: (0, _i18N.t)("settings.basic"),
-        help: (0, _i18N.t)("settings.basic_help")
-    },
-    colorful_coins: {
-        default: false,
-        name: (0, _i18N.t)("settings.colorful_coins"),
-        help: (0, _i18N.t)("settings.colorful_coins_help")
-    },
-    extra_bright: {
-        default: true,
-        name: (0, _i18N.t)("settings.extra_bright"),
-        help: (0, _i18N.t)("settings.extra_bright_help")
-    },
-    smooth_lighting: {
-        default: true,
-        name: (0, _i18N.t)("settings.smooth_lighting"),
-        help: (0, _i18N.t)("settings.smooth_lighting_help")
-    },
-    precise_lighting: {
-        default: true,
-        name: (0, _i18N.t)("settings.precise_lighting"),
-        help: (0, _i18N.t)("settings.precise_lighting_help")
-    },
-    probabilistic_lighting: {
-        default: false,
-        name: (0, _i18N.t)("settings.probabilistic_lighting"),
-        help: (0, _i18N.t)("settings.probabilistic_lighting_help")
-    },
-    contrast: {
-        default: false,
-        name: (0, _i18N.t)("settings.contrast"),
-        help: (0, _i18N.t)("settings.contrast_help")
-    },
-    show_fps: {
-        default: false,
-        name: (0, _i18N.t)("settings.show_fps"),
-        help: (0, _i18N.t)("settings.show_fps_help")
-    },
-    show_stats: {
-        default: false,
-        name: (0, _i18N.t)("settings.show_stats"),
-        help: (0, _i18N.t)("settings.show_stats_help")
-    },
-    pointerLock: {
-        default: false,
-        name: (0, _i18N.t)("settings.pointer_lock"),
-        help: (0, _i18N.t)("settings.pointer_lock_help")
-    },
-    easy: {
-        default: false,
-        name: (0, _i18N.t)("settings.kid"),
-        help: (0, _i18N.t)("settings.kid_help")
-    },
-    // Could not get the sharing to work without loading androidx and all the modern android things so for now I'll just disable sharing in the android app
-    record: {
-        default: false,
-        name: (0, _i18N.t)("settings.record"),
-        help: (0, _i18N.t)("settings.record_help")
-    },
-    fullscreen: {
-        default: false,
-        name: (0, _i18N.t)("settings.fullscreen"),
-        help: (0, _i18N.t)("settings.fullscreen_help")
-    },
-    donation_reminder: {
-        default: (0, _gameUtils.hoursSpentPlaying)() > 5,
-        name: (0, _i18N.t)("settings.donation_reminder"),
-        help: (0, _i18N.t)("settings.donation_reminder_help")
-    },
-    red_miss: {
-        default: true,
-        name: (0, _i18N.t)("settings.red_miss"),
-        help: (0, _i18N.t)("settings.red_miss_help")
-    },
-    comboIncreaseTexts: {
-        default: true,
-        name: (0, _i18N.t)("settings.comboIncreaseTexts"),
-        help: (0, _i18N.t)("settings.comboIncreaseTexts_help")
-    }
-};
-function isOptionOn(key) {
-    return (0, _settings.getSettingValue)("breakout-settings-enable-" + key, options[key]?.default);
-}
-function toggleOption(key) {
-    (0, _settings.setSettingValue)("breakout-settings-enable-" + key, !isOptionOn(key));
-}
-
-},{"./i18n/i18n":"eNPRm","./settings":"5blfu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./game_utils":"cEeac"}],"dQKPV":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "playPendingSounds", ()=>playPendingSounds);
-parcelHelpers.export(exports, "sounds", ()=>sounds);
-parcelHelpers.export(exports, "getAudioContext", ()=>getAudioContext);
-parcelHelpers.export(exports, "getAudioRecordingTrack", ()=>getAudioRecordingTrack);
-var _options = require("./options");
-let lastPlay = Date.now();
-function playPendingSounds(gameState) {
-    if (lastPlay > Date.now() - 60) return;
-    lastPlay = Date.now();
-    for(let key in gameState.aboutToPlaySound){
-        const soundName = key;
-        const ex = gameState.aboutToPlaySound[soundName];
-        if (ex.vol) {
-            sounds[soundName](//   In stress test, dim the sounds but play them
-            Math.min(1, ex.vol), pixelsToPan(gameState, ex.x), gameState.combo);
-            ex.vol = 0;
-        }
-    }
-}
-const sounds = {
-    wallBeep: (volume, pan)=>{
-        if (!(0, _options.isOptionOn)("sound")) return;
-        createSingleBounceSound(800, pan, volume);
-    },
-    plouf: (volume, pan)=>{
-        if (!(0, _options.isOptionOn)("sound")) return;
-        createSingleBounceSound(500, pan, volume * 0.5);
-    // createWaterDropSound(800, pan, volume*0.2, 0.2,'triangle')
-    },
-    comboIncreaseMaybe: (volume, pan, combo)=>{
-        if (!(0, _options.isOptionOn)("sound")) return;
-        let delta = 0;
-        if (!isNaN(lastComboPlayed)) {
-            if (lastComboPlayed < combo) delta = 1;
-            if (lastComboPlayed > combo) delta = -1;
-        }
-        playShepard(delta, pan, volume);
-        lastComboPlayed = combo;
-    },
-    comboDecrease (volume, pan, combo) {
-        if (!(0, _options.isOptionOn)("sound")) return;
-        playShepard(-1, pan, volume);
-    },
-    coinBounce: (volume, pan, combo)=>{
-        if (!(0, _options.isOptionOn)("sound")) return;
-        createSingleBounceSound(1200, pan, volume, 0.1, "triangle");
-    },
-    // void: (volume: number, pan: number) => {
-    //   if (!isOptionOn("sound")) return;
-    //   createSingleBounceSound(1200, pan, volume, 0.5, "sawtooth");
-    //   createSingleBounceSound(600, pan, volume, 0.3, "sawtooth");
-    // },
-    // freeze: (volume: number, pan: number) => {
-    //   if (!isOptionOn("sound")) return;
-    //   createSingleBounceSound(220, pan, volume, 0.5, "square");
-    //   createSingleBounceSound(440, pan, volume, 0.5, "square");
-    // },
-    explode: (volume, pan, combo)=>{
-        if (!(0, _options.isOptionOn)("sound")) return;
-        createExplosionSound(pan);
-    },
-    lifeLost (volume, pan, combo) {
-        if (!(0, _options.isOptionOn)("sound")) return;
-        createShatteredGlassSound(pan);
-    },
-    coinCatch (volume, pan, combo) {
-        if (!(0, _options.isOptionOn)("sound")) return;
-        createSingleBounceSound(900, pan, volume, 0.1, "triangle");
-    },
-    colorChange (volume, pan, combo) {
-        createSingleBounceSound(400, pan, volume, 0.5, "sine");
-        createSingleBounceSound(800, pan, volume * 0.5, 0.2, "square");
-    }
-};
-// How to play the code on the leftconst context = new window.AudioContext();
-let audioContext, audioRecordingTrack;
-function getAudioContext() {
-    if (!audioContext) {
-        if (!(0, _options.isOptionOn)("sound")) return null;
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        audioRecordingTrack = audioContext.createMediaStreamDestination();
-    }
-    return audioContext;
-}
-function getAudioRecordingTrack() {
-    getAudioContext();
-    return audioRecordingTrack;
-}
-function createSingleBounceSound(baseFreq = 800, pan = 0.5, volume = 1, duration = 0.1, type = "sine") {
-    const context = getAudioContext();
-    if (!context) return;
-    const oscillator = createOscillator(context, baseFreq, type);
-    // Create a gain node to control the volume
-    const gainNode = context.createGain();
-    oscillator.connect(gainNode);
-    // Create a stereo panner node for left-right panning
-    const panner = context.createStereoPanner();
-    panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime);
-    gainNode.connect(panner);
-    panner.connect(context.destination);
-    panner.connect(audioRecordingTrack);
-    // Set up the gain envelope to simulate the impact and quick decay
-    gainNode.gain.setValueAtTime(0.8 * volume, context.currentTime); // Initial impact
-    gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + duration); // Quick decay
-    // Start the oscillator
-    oscillator.start(context.currentTime);
-    // Stop the oscillator after the decay
-    oscillator.stop(context.currentTime + duration);
-}
-let noiseBuffer;
-function getNoiseBuffer(context) {
-    if (!noiseBuffer) {
-        const bufferSize = context.sampleRate * 2; // 2 seconds
-        noiseBuffer = context.createBuffer(1, bufferSize, context.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-        // Fill the buffer with random noise
-        for(let i = 0; i < bufferSize; i++)output[i] = Math.random() * 2 - 1;
-    }
-    return noiseBuffer;
-}
-function createExplosionSound(pan = 0.5) {
-    const context = getAudioContext();
-    if (!context) return;
-    // Create an audio buffer
-    // Create a noise source
-    const noiseSource = context.createBufferSource();
-    noiseSource.buffer = getNoiseBuffer(context);
-    // Create a gain node to control the volume
-    const gainNode = context.createGain();
-    noiseSource.connect(gainNode);
-    // Create a filter to shape the explosion sound
-    const filter = context.createBiquadFilter();
-    filter.type = "lowpass";
-    filter.frequency.setValueAtTime(1000, context.currentTime); // Set the initial frequency
-    gainNode.connect(filter);
-    // Create a stereo panner node for left-right panning
-    const panner = context.createStereoPanner();
-    panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime); // pan 0 to 1 maps to -1 to 1
-    // Connect filter to panner and then to the destination (speakers)
-    filter.connect(panner);
-    panner.connect(context.destination);
-    panner.connect(audioRecordingTrack);
-    // Ramp down the gain to simulate the explosion's fade-out
-    gainNode.gain.setValueAtTime(1, context.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 1);
-    // Lower the filter frequency over time to create the "explosive" effect
-    filter.frequency.exponentialRampToValueAtTime(60, context.currentTime + 1);
-    // Start the noise source
-    noiseSource.start(context.currentTime);
-    // Stop the noise source after the sound has played
-    noiseSource.stop(context.currentTime + 1);
-}
-function pixelsToPan(gameState, pan) {
-    return Math.max(0, Math.min(1, (pan - gameState.offsetXRoundedDown) / gameState.gameZoneWidthRoundedUp));
-}
-let lastComboPlayed = NaN, shepard = 6;
-function playShepard(delta, pan, volume) {
-    const shepardMax = 11, factor = 1.05945594920268, baseNote = 392;
-    shepard += delta;
-    if (shepard > shepardMax) shepard = 0;
-    if (shepard < 0) shepard = shepardMax;
-    const play = (note)=>{
-        const freq = baseNote * Math.pow(factor, note);
-        const diff = Math.abs(note - shepardMax * 0.5);
-        const maxDistanceToIdeal = 1.5 * shepardMax;
-        const vol = Math.max(0, volume * (1 - diff / maxDistanceToIdeal));
-        createSingleBounceSound(freq, pan, vol);
-        return freq.toFixed(2) + " at " + Math.floor(vol * 100) + "% diff " + diff;
-    };
-    play(1 + shepardMax + shepard);
-    play(shepard);
-    play(-1 - shepardMax + shepard);
-}
-function createShatteredGlassSound(pan) {
-    const context = getAudioContext();
-    if (!context) return;
-    const oscillators = [
-        createOscillator(context, 3000, "square"),
-        createOscillator(context, 4500, "square"),
-        createOscillator(context, 6000, "square")
-    ];
-    const gainNode = context.createGain();
-    const noiseSource = context.createBufferSource();
-    noiseSource.buffer = getNoiseBuffer(context);
-    oscillators.forEach((oscillator)=>oscillator.connect(gainNode));
-    noiseSource.connect(gainNode);
-    gainNode.gain.setValueAtTime(0.2, context.currentTime);
-    oscillators.forEach((oscillator)=>oscillator.start());
-    noiseSource.start();
-    oscillators.forEach((oscillator)=>oscillator.stop(context.currentTime + 0.2));
-    noiseSource.stop(context.currentTime + 0.2);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.2);
-    // Create a stereo panner node for left-right panning
-    const panner = context.createStereoPanner();
-    panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime);
-    gainNode.connect(panner);
-    panner.connect(context.destination);
-    panner.connect(audioRecordingTrack);
-    gainNode.connect(panner);
-}
-// Helper function to create an oscillator with a specific frequency
-function createOscillator(context, frequency, type) {
-    const oscillator = context.createOscillator();
-    oscillator.type = type;
-    oscillator.frequency.setValueAtTime(frequency, context.currentTime);
-    return oscillator;
-}
-
-},{"./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2n0gK":[function(require,module,exports,__globalThis) {
+},{"./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","./pure_functions":"6pQh7","./upgrades":"1u3Dx","./getLevelBackground":"7OIPf","./settings":"5blfu","./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2n0gK":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 if ("serviceWorker" in navigator && window.location.href.endsWith("/index.html?isPWA=true")) {
@@ -3814,42 +3448,7 @@ if ("serviceWorker" in navigator && window.location.href.endsWith("/index.html?i
 },{"b04459cc43e56e8c":"e1UyG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"e1UyG":[function(require,module,exports,__globalThis) {
 module.exports = require("c74501e5727c0abc").getBundleURL('8P7OJ') + "sw-b71.41cdff1b.js";
 
-},{"c74501e5727c0abc":"lgJ39"}],"lgJ39":[function(require,module,exports,__globalThis) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"9ZeQl":[function(require,module,exports,__globalThis) {
+},{"c74501e5727c0abc":"lgJ39"}],"9ZeQl":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "setMousePos", ()=>setMousePos);
@@ -5897,7 +5496,336 @@ function captureFileName(ext = "webm") {
     return "breakout-71-capture-" + new Date().toISOString().replace(/[^0-9\-]+/gi, "-") + "." + ext;
 }
 
-},{"./render":"9AS2t","./game_utils":"cEeac","./sounds":"dQKPV","./i18n/i18n":"eNPRm","./options":"d5NoS","./toast":"nAuvo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"63kYJ":[function(require,module,exports,__globalThis) {
+},{"./render":"9AS2t","./game_utils":"cEeac","./sounds":"dQKPV","./i18n/i18n":"eNPRm","./options":"d5NoS","./toast":"nAuvo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"rSqLY":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "alertsOpen", ()=>alertsOpen);
+parcelHelpers.export(exports, "closeModal", ()=>closeModal);
+parcelHelpers.export(exports, "requiredAsyncAlert", ()=>requiredAsyncAlert);
+parcelHelpers.export(exports, "asyncAlert", ()=>asyncAlert);
+var _i18N = require("./i18n/i18n");
+let alertsOpen = 0, closeModal = null;
+const popupWrap = document.getElementById("popup");
+const closeModaleButton = document.getElementById("close-modale");
+closeModaleButton.addEventListener("click", (e)=>{
+    e.preventDefault();
+    if (closeModal) closeModal();
+});
+closeModaleButton.title = (0, _i18N.t)("play.close_modale_window_tooltip");
+let lastClickedItemIndex = -1;
+function requiredAsyncAlert(p) {
+    return asyncAlert({
+        ...p,
+        allowClose: false
+    });
+}
+async function asyncAlert({ title, content = [], allowClose = true, className = "" }) {
+    updateAlertsOpen(1);
+    return new Promise((resolve)=>{
+        popupWrap.className = className;
+        closeModaleButton.style.display = allowClose ? "" : "none";
+        const popup = document.createElement("div");
+        let closed = false;
+        function closeWithResult(value) {
+            if (closed) return;
+            closed = true;
+            Array.prototype.forEach.call(popup.querySelectorAll("button:not([disabled])"), (b)=>b.disabled = true);
+            document.body.style.minHeight = document.body.scrollHeight + "px";
+            setTimeout(()=>document.body.style.minHeight = "", 0);
+            popup.remove();
+            resolve(value);
+        }
+        if (allowClose) closeModal = ()=>{
+            closeWithResult(undefined);
+        };
+        else closeModal = null;
+        if (title) {
+            const h1 = document.createElement("h1");
+            h1.innerHTML = title;
+            popup.appendChild(h1);
+        }
+        content?.filter((i)=>i).forEach((entry, index)=>{
+            if (!entry) return;
+            if (typeof entry == "string") {
+                const p = document.createElement("div");
+                p.innerHTML = entry;
+                popup.appendChild(p);
+                return;
+            }
+            let addto;
+            if (popup.lastChild?.nodeName == "SECTION") addto = popup.lastChild;
+            else {
+                addto = document.createElement("section");
+                addto.className = "actions";
+                popup.appendChild(addto);
+            }
+            const { text, value, help, disabled, className = "", icon = "", tooltip } = entry;
+            const button = document.createElement("button");
+            button.innerHTML = `
+${icon}
+<div>
+                    <strong>${text}</strong>
+                    <em>${help || ""}</em>
+            </div>`;
+            if (tooltip) button.setAttribute("data-tooltip", tooltip);
+            if (disabled) button.setAttribute("disabled", "disabled");
+            else button.addEventListener("click", (e)=>{
+                e.preventDefault();
+                e.stopPropagation();
+                closeWithResult(value);
+                // Focus "same" button if it's still there
+                lastClickedItemIndex = index;
+            });
+            button.className = className + (lastClickedItemIndex === index ? " needs-focus" : "");
+            addto.appendChild(button);
+        });
+        popup.addEventListener("click", (e)=>{
+            const target = e.target;
+            if (target.getAttribute("data-resolve-to")) closeWithResult(target.getAttribute("data-resolve-to"));
+        }, true);
+        popupWrap.appendChild(popup);
+        popupWrap.querySelector(`section.actions > button.needs-focus`)?.focus();
+        lastClickedItemIndex = -1;
+    }).then((v)=>{
+        updateAlertsOpen(-1);
+        closeModal = null;
+        return v;
+    }, ()=>{
+        closeModal = null;
+        updateAlertsOpen(-1);
+    });
+}
+function updateAlertsOpen(delta) {
+    alertsOpen += delta;
+    if (alertsOpen > 1) alert("Two alerts where opened at once");
+    document.body.classList[alertsOpen ? "add" : "remove"]("has-alert-open");
+}
+
+},{"./i18n/i18n":"eNPRm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cirX1":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "levelEditorMenuEntry", ()=>levelEditorMenuEntry);
+parcelHelpers.export(exports, "editRawLevelList", ()=>editRawLevelList);
+var _loadGameData = require("./loadGameData");
+var _i18N = require("./i18n/i18n");
+var _settings = require("./settings");
+var _asyncAlert = require("./asyncAlert");
+var _levelIcon = require("./levelIcon");
+var _paletteJson = require("./data/palette.json");
+var _paletteJsonDefault = parcelHelpers.interopDefault(_paletteJson);
+var _game = require("./game");
+var _gameUtils = require("./game_utils");
+var _pureFunctions = require("./pure_functions");
+const palette = (0, _paletteJsonDefault.default);
+function levelEditorMenuEntry() {
+    const min = 10000;
+    const disabled = (0, _settings.getTotalScore)() < min;
+    return {
+        icon: (0, _loadGameData.icons)["icon:editor"],
+        text: (0, _i18N.t)("editor.title"),
+        disabled,
+        help: disabled ? (0, _i18N.t)("editor.locked", {
+            min
+        }) : (0, _i18N.t)("editor.help"),
+        async value () {
+            openLevelEditorLevelsList().then();
+        }
+    };
+}
+async function openLevelEditorLevelsList() {
+    const rawList = (0, _settings.getSettingValue)("custom_levels", []);
+    const customLevels = rawList.map((0, _loadGameData.transformRawLevel));
+    let choice = await (0, _asyncAlert.asyncAlert)({
+        title: (0, _i18N.t)("editor.title"),
+        content: [
+            ...customLevels.map((l, li)=>({
+                    text: l.name,
+                    icon: (0, _levelIcon.levelIconHTML)(l.bricks, l.size, l.color),
+                    value () {
+                        editRawLevelList(li);
+                    },
+                    help: l.credit || (0, _gameUtils.describeLevel)(l)
+                })),
+            {
+                text: (0, _i18N.t)("editor.new_level"),
+                icon: (0, _loadGameData.icons)["icon:editor"],
+                value () {
+                    rawList.push({
+                        color: "",
+                        size: 6,
+                        bricks: "____________________________________",
+                        name: "custom level" + (rawList.length + 1),
+                        credit: ""
+                    });
+                    (0, _settings.setSettingValue)("custom_levels", rawList);
+                    editRawLevelList(rawList.length - 1);
+                }
+            },
+            {
+                text: (0, _i18N.t)("editor.import"),
+                help: (0, _i18N.t)("editor.import_instruction"),
+                value () {
+                    const code = prompt((0, _i18N.t)("editor.import_instruction"))?.trim();
+                    if (code) {
+                        const lvl = (0, _pureFunctions.levelCodeToRawLevel)(code);
+                        if (lvl) {
+                            rawList.push(lvl);
+                            (0, _settings.setSettingValue)("custom_levels", rawList);
+                        }
+                    }
+                    openLevelEditorLevelsList();
+                }
+            }
+        ]
+    });
+    if (typeof choice == "function") choice();
+}
+async function editRawLevelList(nth, color = "W") {
+    let rawList = (0, _settings.getSettingValue)("custom_levels", []);
+    const level = rawList[nth];
+    const bricks = level.bricks.split("");
+    let grid = "";
+    for(let y = 0; y < level.size; y++){
+        grid += '<div style="background: ' + (level.color || "black") + ';">';
+        for(let x = 0; x < level.size; x++){
+            const c = bricks[y * level.size + x];
+            grid += `<span data-resolve-to="paint_brick:${x}:${y}" style="background: ${palette[c]}">${c == "B" ? "\uD83D\uDCA3" : ""}</span>`;
+        }
+        grid += "</div>";
+    }
+    const levelColors = new Set(bricks);
+    levelColors.delete("_");
+    levelColors.delete("B");
+    let colorList = '<div class="palette">' + Object.entries(palette).filter(([key, value])=>key !== "_").filter(([key, value])=>levelColors.size < 5 || levelColors.has(key) || key === "B").map(([key, value])=>`<span data-resolve-to="set_color:${key}" data-selected="${key == color}" style="background: ${value}">${key == "B" ? "\uD83D\uDCA3" : ""}</span>`).join("") + "</div>";
+    const clicked = await (0, _asyncAlert.asyncAlert)({
+        title: (0, _i18N.t)("editor.editing.title", {
+            name: level.name
+        }),
+        content: [
+            (0, _i18N.t)("editor.editing.color"),
+            colorList,
+            (0, _i18N.t)("editor.editing.help"),
+            `<div class="gridEdit" style="--grid-size:${level.size};">${grid}</div>`,
+            {
+                icon: (0, _loadGameData.icons)["icon:new_run"],
+                text: (0, _i18N.t)("editor.editing.play"),
+                value: "play"
+            },
+            {
+                text: (0, _i18N.t)("editor.editing.rename"),
+                value: "rename",
+                help: level.name
+            },
+            {
+                text: (0, _i18N.t)("editor.editing.credit"),
+                value: "credit",
+                help: level.credit
+            },
+            {
+                text: (0, _i18N.t)("editor.editing.delete"),
+                value: "delete"
+            },
+            {
+                text: (0, _i18N.t)("editor.editing.copy"),
+                value: "copy",
+                help: (0, _i18N.t)("editor.editing.copy_help")
+            },
+            {
+                text: (0, _i18N.t)("editor.editing.bigger"),
+                value: "size:+1",
+                disabled: level.size >= (0, _pureFunctions.MAX_LEVEL_SIZE)
+            },
+            {
+                text: (0, _i18N.t)("editor.editing.smaller"),
+                value: "size:-1",
+                disabled: level.size <= (0, _pureFunctions.MIN_LEVEL_SIZE)
+            },
+            {
+                text: (0, _i18N.t)("editor.editing.left"),
+                value: "move:-1:0"
+            },
+            {
+                text: (0, _i18N.t)("editor.editing.right"),
+                value: "move:1:0"
+            },
+            {
+                text: (0, _i18N.t)("editor.editing.up"),
+                value: "move:0:-1"
+            },
+            {
+                text: (0, _i18N.t)("editor.editing.down"),
+                value: "move:0:1"
+            }
+        ]
+    });
+    if (!clicked) return;
+    if (typeof clicked === "string") {
+        const [action, a, b] = clicked.split(":");
+        if (action == "paint_brick") {
+            const x = parseInt(a), y = parseInt(b);
+            bricks[y * level.size + x] = bricks[y * level.size + x] === color ? "_" : color;
+            level.bricks = bricks.join("");
+        }
+        if (action == "set_color") color = a;
+        if (action == "size") {
+            const newSize = level.size + parseInt(a);
+            const newBricks = [];
+            for(let y = 0; y < newSize; y++)for(let x = 0; x < newSize; x++)newBricks.push(x < level.size && y < level.size && bricks[y * level.size + x] || "_");
+            level.size = newSize;
+            level.bricks = newBricks.join("");
+        }
+        if (action == "move") {
+            const dx = parseInt(a), dy = parseInt(b);
+            const newBricks = [];
+            for(let y = 0; y < level.size; y++)for(let x = 0; x < level.size; x++){
+                const tx = x - dx;
+                const ty = y - dy;
+                if (tx < 0 || tx >= level.size || ty < 0 || ty >= level.size) newBricks.push("_");
+                else newBricks.push(bricks[ty * level.size + tx]);
+            }
+            level.bricks = newBricks.join("");
+        }
+        if (action === "play") {
+            (0, _game.restart)({
+                level: (0, _loadGameData.transformRawLevel)(level),
+                isEditorTrialRun: nth,
+                perks: {
+                    base_combo: 7
+                }
+            });
+            return;
+        }
+        if (action === "copy") {
+            let text = "```\n[" + (level.name || "unnamed level")?.replace(/\[|\]/gi, " ") + "]";
+            bricks.forEach((b, bi)=>{
+                if (!(bi % level.size)) text += "\n";
+                text += b;
+            });
+            text += "\n[" + (level.credit?.replace(/\[|\]/gi, " ") || "Missing credits") + "]\n```";
+            navigator.clipboard.writeText(text);
+        // return
+        }
+        if (action === "rename") {
+            const name = prompt((0, _i18N.t)("editor.editing.rename_prompt"), level.name);
+            if (name) level.name = name;
+        }
+        if (action === "credit") {
+            const credit = prompt((0, _i18N.t)("editor.editing.credit_prompt"), level.credit || "");
+            if (credit !== "null") level.credit = credit || "";
+        }
+        if (action === "delete") {
+            rawList = rawList.filter((l, li)=>li !== nth);
+            (0, _settings.setSettingValue)("custom_levels", rawList);
+            openLevelEditorLevelsList();
+            return;
+        }
+    }
+    level.color = (0, _pureFunctions.automaticBackgroundColor)(bricks);
+    (0, _settings.setSettingValue)("custom_levels", rawList);
+    editRawLevelList(nth, color);
+}
+
+},{"./loadGameData":"l1B4x","./i18n/i18n":"eNPRm","./settings":"5blfu","./asyncAlert":"rSqLY","./levelIcon":"6rQoT","./data/palette.json":"ktRBU","./game":"edeGs","./game_utils":"cEeac","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./pure_functions":"6pQh7"}],"63kYJ":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "creativeMode", ()=>creativeMode);
@@ -6655,7 +6583,7 @@ function monitorLevelsUnlocks(gameState) {
     });
 }
 
-},{"./settings":"5blfu","./loadGameData":"l1B4x","./game_utils":"cEeac","./i18n/i18n":"eNPRm","./toast":"nAuvo","./gameStateMutators":"9ZeQl","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["x07Me"], "x07Me", "parcelRequire94c2")
+},{"./settings":"5blfu","./loadGameData":"l1B4x","./game_utils":"cEeac","./i18n/i18n":"eNPRm","./toast":"nAuvo","./gameStateMutators":"9ZeQl","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["4zvMK","x07Me"], "x07Me", "parcelRequire94c2")
 
 </script>
   </body>

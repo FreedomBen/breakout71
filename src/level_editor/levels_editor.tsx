@@ -6,6 +6,7 @@ import { getLevelBackground, hashCode } from "../getLevelBackground";
 import { createRoot } from "react-dom/client";
 import { useCallback, useEffect, useState } from "react";
 import { moveLevel, resizeLevel, setBrick } from "./levels_editor_util";
+import {levelCodeToRawLevel} from "../pure_functions";
 
 const backgrounds = _backgrounds as string[];
 
@@ -90,17 +91,11 @@ function App() {
                     height: 40,
                     position: "absolute",
                   }}
-                ></button>,
+                >{ (color=="black" && '💣')||' '}</button>,
               );
             }
           }
 
-          const background = color
-            ? { backgroundImage: "none", backgroundColor: color }
-            : {
-                backgroundImage: `url("data:image/svg+xml;UTF8,${encodeURIComponent(getLevelBackground(level) as string)}")`,
-                backgroundColor: "transparent",
-              };
 
           return (
             <div key={li}>
@@ -141,31 +136,12 @@ function App() {
                 <button onClick={() => updateLevel(li, moveLevel(level, 0, 1))}>
                   D
                 </button>
-                <input
-                  type="color"
-                  value={level.color || ""}
-                  onChange={(e) =>
-                    e.target.value && updateLevel(li, { color: e.target.value })
-                  }
-                />
-                <input
-                  type="number"
-                  value={level.svg || hashCode(level.name) % backgrounds.length}
-                  onChange={(e) =>
-                    !isNaN(parseFloat(e.target.value)) &&
-                    updateLevel(li, {
-                      color: "",
-                      svg: parseFloat(e.target.value),
-                    })
-                  }
-                />
               </div>
               <div
                 className="level-bricks-preview"
                 style={{
                   width: size * 40,
-                  height: size * 40,
-                  ...background,
+                  height: size * 40
                 }}
               >
                 {brickButtons}
@@ -180,14 +156,14 @@ function App() {
             key={code}
             className={code === selected ? "active" : ""}
             style={{
-              background: color || "linear-gradient(45deg,black,white)",
+              background: color || "",
               display: "inline-block",
               width: "40px",
               height: "40px",
               border: "1px solid black",
             }}
             onClick={() => setSelected(code)}
-          ></button>
+          >{(color=='' && 'x') || (color=="black" && '💣')||' '}</button>
         ))}
       </div>
       <button
@@ -210,6 +186,21 @@ function App() {
         }}
       >
         new
+      </button>
+      <button
+        id="import-level"
+        onClick={() => {
+          const code = prompt("Level Code ? ");
+          if(!code) return;
+          const l=levelCodeToRawLevel(code)
+           if(!l)return;
+          setLevels((list) => [
+            ...list,
+             l
+          ]);
+        }}
+      >
+        import
       </button>
     </div>
   );

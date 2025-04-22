@@ -5,7 +5,8 @@ import _appVersion from "./data/version.json";
 import { rawUpgrades } from "./upgrades";
 import { getLevelBackground } from "./getLevelBackground";
 import { levelIconHTML } from "./levelIcon";
-import {automaticBackgroundColor} from "./levelEditor";
+
+import {automaticBackgroundColor} from "./pure_functions";
 
 const palette = _palette as Palette;
 

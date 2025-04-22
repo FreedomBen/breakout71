@@ -1,4 +1,4 @@
-import { Ball, GameState } from "./types";
+import {Ball, GameState} from "./types";
 
 export function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(value, max));
@@ -102,3 +102,38 @@ export const wallBouncedBest = 3,
   catchRateGood = 90,
   missesBest = 3,
   missesGood = 6;
+
+export const MAX_LEVEL_SIZE = 21;
+export const MIN_LEVEL_SIZE = 2;
+
+export function automaticBackgroundColor(bricks: string[]) {
+    return bricks.filter((b) => b === "g").length >
+    bricks.filter((b) => b !== "_").length * 0.05
+        ? "#115988"
+        : "";
+}
+
+export function levelCodeToRawLevel(code: string) {
+
+    let [name, credit] = code.match(/\[([^\]]+)]/gi);
+
+    let bricks = code
+        .split(name)[1]
+        .split(credit)[0]
+        .replace(/\s/gi, "");
+    name = name.slice(1, -1);
+    credit = credit.slice(1, -1);
+    name ||= "Imported on " + new Date().toISOString().slice(0, 10);
+    credit ||= "";
+    const size = Math.sqrt(bricks.length);
+    if (Math.floor(size) === size &&
+        size >= MIN_LEVEL_SIZE &&
+        size <= MAX_LEVEL_SIZE)
+        return {
+            color: automaticBackgroundColor(bricks.split("")),
+            size,
+            bricks,
+            name,
+            credit,
+        }
+}

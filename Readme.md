@@ -17,7 +17,8 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
-- categorize and color perks
+- 
+- color coded perks (green = noob friendly, red = combo with reset condition)
 - removed : instant_upgrade
 - nerfed : helium : now need to be level 3 to have the same effect of keeping coins up
 
