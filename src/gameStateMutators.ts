@@ -607,6 +607,8 @@ export function pickRandomUpgrades(gameState: GameState, count: number) {
     icon: icons["icon:" + u.id],
     value: u.id as PerkId,
     help: u.help(gameState.perks[u.id] + 1),
+    className: 'upgrade '
+
   }));
 }
 

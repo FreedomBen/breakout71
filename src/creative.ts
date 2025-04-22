@@ -100,9 +100,9 @@ export async function openCreativeModePerksPicker() {
               "/" +
               (u.max + (creativeModePerks.limitless || 0)),
             value: u,
-            className: creativeModePerks[u.id]
-              ? "sandbox highlight"
-              : "sandbox not-highlighed",
+            className: ' upgrade '+(creativeModePerks[u.id]
+              ? " highlight"
+              : " not-highlighed"),
             tooltip: u.help(creativeModePerks[u.id] || 1),
           })),
         t("lab.select_level"),

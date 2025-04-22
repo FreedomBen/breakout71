@@ -17,7 +17,6 @@ import {
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
 import { rawUpgrades } from "./upgrades";
-import { run } from "jest";
 import { editRawLevelList } from "./levelEditor";
 import { openCreativeModePerksPicker } from "./creative";
 

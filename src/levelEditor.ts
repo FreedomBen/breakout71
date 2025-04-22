@@ -289,7 +289,7 @@ export async function editRawLevelList(nth: number, color = "W") {
   editRawLevelList(nth, color);
 }
 
-function automaticBackgroundColor(bricks: string[]) {
+export function automaticBackgroundColor(bricks: string[]) {
   return bricks.filter((b) => b === "g").length >
     bricks.filter((b) => b !== "_").length * 0.05
     ? "#115988"

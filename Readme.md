@@ -17,6 +17,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+- categorize and color perks
 - removed : instant_upgrade
 - nerfed : helium : now need to be level 3 to have the same effect of keeping coins up
 
@@ -347,6 +348,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Easy perks ideas  
  
+- ball turns following puck motion
 - "+1  coin for each ball within a small radius of the broken brick" ? 
 - two for one : add a 2 for one upgrade combo to the choice lists
 - cash out : double last level's gains  

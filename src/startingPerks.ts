@@ -38,7 +38,7 @@ export async function openStartingPerksEditor() {
       text: u.name,
       tooltip: u.help(1),
       value: [u],
-      checked,
+      checked
     };
   });
   const checkedList = buttons.filter((b) => b.checked);
