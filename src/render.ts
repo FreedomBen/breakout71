@@ -271,7 +271,10 @@ export function render(gameState: GameState) {
   ctx.globalAlpha = 1;
   ctx.globalCompositeOperation = "source-over";
   const lastExplosionDelay = gameState.levelTime - gameState.lastExplosion + 5;
-  const shaked = lastExplosionDelay < 200 && !isOptionOn("basic");
+
+  const shaked = lastExplosionDelay < 200 && !isOptionOn("basic") &&
+      // Otherwise, if you pause after an explosion, moving the mouses shakes the picture
+      gameState.running;
   if (shaked) {
     const amplitude =
       ((gameState.perks.bigger_explosions + 1) * 50) / lastExplosionDelay;

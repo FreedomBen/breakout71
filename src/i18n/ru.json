@@ -318,7 +318,7 @@
   "upgrades.happy_family.verbose_description": "",
   "upgrades.helium.name": "Гелий",
   "upgrades.helium.tooltip": "Гравитация изменяется слева и справа от весла",
-  "upgrades.helium.verbose_description": "Это повлияет на монеты и позволит им плавать до тех пор, пока вы не соберете их.",
+  "upgrades.helium.verbose_description": "",
   "upgrades.hot_start.name": "Горячий старт",
   "upgrades.hot_start.tooltip": "Начните с комбо {{start}}, -{{loss}} комбо в секунду",
   "upgrades.hot_start.verbose_description": "В начале каждого уровня ваше комбо будет начинаться с +30 очков, но затем каждую секунду оно будет уменьшаться на одно. Эффект суммируется с другими перками.",

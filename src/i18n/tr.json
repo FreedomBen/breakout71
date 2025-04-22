@@ -318,7 +318,7 @@
   "upgrades.happy_family.verbose_description": "",
   "upgrades.helium.name": "Helyum",
   "upgrades.helium.tooltip": "Yerçekimi küreğin solunda ve sağında tersine döndü",
-  "upgrades.helium.verbose_description": "Bu, paraları etkileyecek ve siz onları almaya hazır olana kadar paraların havada asılı kalmasına neden olacaktır.",
+  "upgrades.helium.verbose_description": "",
   "upgrades.hot_start.name": "Sıcak başlangıç",
   "upgrades.hot_start.tooltip": " {{start}}kombosundan başla, saniyede{{loss}} kombo",
   "upgrades.hot_start.verbose_description": "Her seviyenin başında kombonuz +30 puanla başlayacak, ancak daha sonra her saniye bir puan düşecek. Etki diğer avantajlarla birikiyor.",

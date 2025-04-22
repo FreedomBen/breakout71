@@ -17,6 +17,11 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+- removed : instant_upgrade
+- nerfed : helium : now need to be level 3 to have the same effect of keeping coins up
+
+## 29088680
+
 - new perk: happy family:  + lvl points per paddle bounce per extra ball, reset on ball lost
 - nerfed perk : sticky coins : stick to same color at level 1, any color at level 2+
 - nerfed perk: zen : combo increases every 3 seconds, resets on explosion
@@ -342,7 +347,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Easy perks ideas  
  
-- "+1  coin for each brick within a small radius of the broken brick" ? 
+- "+1  coin for each ball within a small radius of the broken brick" ? 
 - two for one : add a 2 for one upgrade combo to the choice lists
 - cash out : double last level's gains  
 - snowball :  Combo resets every 0.1s . +1 combo for each combo gained Since last reset.
@@ -388,6 +393,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - the more balls are close to a brick, the more combo is gained when breaking it. If only one ball, loose one point or reset
 - ball avoids brick of wrong color
 - puck slowly follows desired  position, but +1 combo
+- knockback : hitting a brick pushes it (requires sturdy bricks)
 
 ## Hard perk ideas
 - accelerometer controls coins and balls

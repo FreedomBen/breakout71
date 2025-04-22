@@ -318,7 +318,7 @@
   "upgrades.happy_family.verbose_description": "",
   "upgrades.helium.name": "Helium",
   "upgrades.helium.tooltip": "Umgekehrte Schwerkraft links und rechts des Paddels",
-  "upgrades.helium.verbose_description": "Dies wirkt sich auf die Münzen aus und lässt sie nach oben treiben, bis Sie bereit sind, sie aufzuheben.",
+  "upgrades.helium.verbose_description": "",
   "upgrades.hot_start.name": "Heißer Start",
   "upgrades.hot_start.tooltip": "Start bei Kombo {{start}}, -{{loss}} Kombo pro Sekunde",
   "upgrades.hot_start.verbose_description": "Zu Beginn eines jeden Levels beginnt deine Kombo mit +30 Punkten, aber dann wird sie jede Sekunde um einen Punkt verringert. Der Effekt ist mit anderen Perks stapelbar.",

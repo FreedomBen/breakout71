@@ -318,7 +318,7 @@
   "upgrades.happy_family.verbose_description": "",
   "upgrades.helium.name": "Helio",
   "upgrades.helium.tooltip": "Las piezas flotan en lugar de caer alrededor de la raqueta.",
-  "upgrades.helium.verbose_description": "Las monedas esperarán a estar debajo de la raqueta para caer.",
+  "upgrades.helium.verbose_description": "",
   "upgrades.hot_start.name": "Arranque en caliente",
   "upgrades.hot_start.tooltip": "Combo a {{start}}, -{{loss}} combo por segundo",
   "upgrades.hot_start.verbose_description": "Al principio de cada nivel, tu combo comenzará con +30 puntos, pero cada segundo se reducirá en un punto.  ",

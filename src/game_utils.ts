@@ -306,7 +306,6 @@ function isExcluded(id: PerkId) {
       "extra_levels",
       "extra_life",
       "one_more_choice",
-      "instant_upgrade",
       "shunt",
       "slow_down",
     ]);

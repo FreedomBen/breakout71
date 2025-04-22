@@ -8,11 +8,8 @@ export const noCreative: PerkId[] = [
   "extra_levels",
   "shunt",
   "one_more_choice",
-  "instant_upgrade",
 ];
 
-// Those perks are excluded from the starting perks list
-export const notStartingPerk: PerkId[] = ["instant_upgrade"];
 
 export const rawUpgrades = [
   {
@@ -423,16 +420,17 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-
     threshold: 55000,
     gift: false,
-
-    id: "instant_upgrade",
-    max: 2,
-    adventure: false,
-    name: t("upgrades.instant_upgrade.name"),
-    help: (lvl: number) => t("upgrades.instant_upgrade.tooltip", { lvl }),
-    fullHelp: t("upgrades.instant_upgrade.verbose_description"),
+    id: "double_or_nothing",
+    max: 3,
+    name: t("upgrades.double_or_nothing.name"),
+    help: (lvl: number) =>
+      t("upgrades.double_or_nothing.tooltip", {
+        percent: lvl * 10,
+        multiplier: 1 + lvl,
+      }),
+    fullHelp: t("upgrades.double_or_nothing.verbose_description"),
   },
   {
     requires: "",
@@ -447,19 +445,17 @@ export const rawUpgrades = [
   },
   {
     requires: "",
-
     threshold: 65000,
     gift: false,
 
     id: "helium",
-    max: 1,
+    max: 3,
     name: t("upgrades.helium.name"),
     help: (lvl: number) => t("upgrades.helium.tooltip"),
     fullHelp: t("upgrades.helium.verbose_description"),
   },
   {
     requires: "",
-
     threshold: 70000,
     gift: true,
 
@@ -861,20 +857,6 @@ export const rawUpgrades = [
     name: t("upgrades.sticky_coins.name"),
     help: (lvl: number) => t("upgrades.sticky_coins.tooltip"),
     fullHelp: t("upgrades.sticky_coins.verbose_description"),
-  },
-  {
-    requires: "",
-    threshold: 235000,
-    gift: false,
-    id: "double_or_nothing",
-    max: 3,
-    name: t("upgrades.double_or_nothing.name"),
-    help: (lvl: number) =>
-      t("upgrades.double_or_nothing.tooltip", {
-        percent: lvl * 10,
-        multiplier: 1 + lvl,
-      }),
-    fullHelp: t("upgrades.double_or_nothing.verbose_description"),
   },
   {
     requires: "",

@@ -299,7 +299,7 @@ export async function openUpgradesPicker(gameState: GameState) {
       help: string;
     }> = pickRandomUpgrades(
       gameState,
-      3 + gameState.perks.one_more_choice - gameState.perks.instant_upgrade,
+      3 + gameState.perks.one_more_choice ,
     );
     if (!actions.length) break;
 
@@ -359,9 +359,6 @@ export async function openUpgradesPicker(gameState: GameState) {
       gameState.rerolls--;
     } else {
       gameState.perks[upgradeId]++;
-      if (upgradeId === "instant_upgrade") {
-        repeats += 2;
-      }
       gameState.runStatistics.upgrades_picked++;
     }
   }

@@ -318,7 +318,7 @@
   "upgrades.happy_family.verbose_description": "",
   "upgrades.helium.name": "الهيليوم",
   "upgrades.helium.tooltip": "انعكست الجاذبية إلى اليسار واليمين من المجداف",
-  "upgrades.helium.verbose_description": "يؤثر هذا على العملات المعدنية وسيسمح لها بالطفو حتى تصبح جاهزًا لالتقاطها.",
+  "upgrades.helium.verbose_description": "",
   "upgrades.hot_start.name": "بداية ساخنة",
   "upgrades.hot_start.tooltip": "ابدأ عند المجموعة {{start}}، -{{loss}} مجموعة في الثانية",
   "upgrades.hot_start.verbose_description": "في بداية كل مستوى، تبدأ مجموعتك بـ +٣٠ نقطة، ثم تنخفض نقطة واحدة كل ثانية. يتراكم هذا التأثير مع مزايا أخرى.",

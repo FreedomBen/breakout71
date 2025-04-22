@@ -705,11 +705,6 @@
     "bricks": "ttt____tbbb___tbttt__tbtbbb__btbbb___tbbb____bbb_"
   },
   {
-    "name": "icon:instant_upgrade",
-    "size": 5,
-    "bricks": "ttt__tbbb_tbbb_tbbb__bbb_"
-  },
-  {
     "name": "icon:checkmark_checked",
     "size": 6,
     "bricks": "_ggggbgBBBbbbbBbbggbbbBggBbBBg_gggg_"
