@@ -403,7 +403,7 @@ export function explosionAt(
   gameState.runStatistics.bricks_broken++;
 
   if (gameState.perks.zen) {
-    gameState.lastZenComboIncrease = gameState.levelTime
+    gameState.lastZenComboIncrease = gameState.levelTime;
     resetCombo(gameState, x, y);
   }
 }
@@ -481,7 +481,6 @@ export function explodeBrick(
         points,
       );
     }
-
 
     increaseCombo(
       gameState,
@@ -988,7 +987,7 @@ export function gameStateTick(
     gameState.combo,
   );
   gameState.lastCombo = gameState.combo;
-  zenTick(gameState)
+  zenTick(gameState);
 
   if (
     gameState.perks.addiction &&
@@ -1276,7 +1275,7 @@ export function gameStateTick(
           (clamp(speed, 20, 100) / 100) * 0.2,
         );
         if (gameState.perks.compound_interest) {
-          resetCombo(gameState, coin.x, gameState.gameZoneHeight - 20);
+          resetCombo(gameState, coin.x, coin.y);
         }
         if (!isOptionOn("basic")) {
           makeParticle(
@@ -1317,17 +1316,12 @@ export function gameStateTick(
           Math.random() / coin.points <
             (1 / gameState.combo) * gameState.perks.fountain_toss
         ) {
-          increaseCombo(
-            gameState,
-            1,
-            clamp(coin.x, 20, gameState.canvasWidth - 20),
-            clamp(coin.y, 20, gameState.gameZoneHeight - 20),
-          );
+          increaseCombo(gameState, 1, coin.x, coin.y);
         }
       }
 
-        const positionBeforeBrickBounceX=coin.x
-        const positionBeforeBrickBounceY=coin.y
+      const positionBeforeBrickBounceX = coin.x;
+      const positionBeforeBrickBounceY = coin.y;
       const hitBrick = coinBrickHitCheck(gameState, coin);
       if (gameState.perks.metamorphosis && typeof hitBrick !== "undefined") {
         if (
@@ -1354,19 +1348,18 @@ export function gameStateTick(
         }
       }
 
-      if (gameState.perks.sticky_coins &&
-          typeof hitBrick !== "undefined" &&
-          (
-          coin.color === gameState.bricks[hitBrick] ||
-          gameState.perks.sticky_coins>1
-      )) {
+      if (
+        gameState.perks.sticky_coins &&
+        typeof hitBrick !== "undefined" &&
+        (coin.color === gameState.bricks[hitBrick] ||
+          gameState.perks.sticky_coins > 1)
+      ) {
         if (coin.collidedLastFrame) {
           coin.x = coin.previousX;
           coin.y = coin.previousY;
-        }else{
-          coin.x=positionBeforeBrickBounceX
-          coin.y=positionBeforeBrickBounceY
-
+        } else {
+          coin.x = positionBeforeBrickBounceX;
+          coin.y = positionBeforeBrickBounceY;
         }
         coin.vx = 0;
         coin.vy = 0;
@@ -1805,15 +1798,10 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     }
 
     if (gameState.perks.top_is_lava && borderHitCode >= 2) {
-      resetCombo(gameState, ball.x, ball.y + gameState.ballSize * 3);
+      resetCombo(gameState, ball.x, ball.y);
     }
     if (gameState.perks.trampoline) {
-      decreaseCombo(
-        gameState,
-        gameState.perks.trampoline,
-        ball.x,
-        ball.y + gameState.ballSize,
-      );
+      decreaseCombo(gameState, gameState.perks.trampoline, ball.x, ball.y);
     }
 
     schedulGameSound(gameState, "wallBeep", ball.x, 1);
@@ -1855,9 +1843,15 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     if (gameState.perks.streak_shots) {
       resetCombo(gameState, ball.x, ball.y);
     }
-    if (gameState.perks.trampoline) {
-      increaseCombo(gameState, gameState.perks.trampoline, ball.x, ball.y);
-    }
+
+    increaseCombo(
+      gameState,
+      gameState.perks.trampoline +
+        gameState.perks.happy_family * Math.max(0, gameState.balls.length - 1),
+      ball.x,
+      ball.y,
+    );
+
     if (
       gameState.perks.nbricks &&
       ball.hitSinceBounce < gameState.perks.nbricks
@@ -1872,7 +1866,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
           (gameState.levelMisses / 10 / gameState.perks.forgiving) *
             (gameState.combo - baseCombo(gameState)),
         );
-        decreaseCombo(gameState, loss, ball.x, ball.y - gameState.ballSize);
+        decreaseCombo(gameState, loss, ball.x, ball.y);
       } else {
         resetCombo(gameState, ball.x, ball.y);
       }
@@ -1904,6 +1898,9 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   ) {
     ball.destroyed = true;
     gameState.runStatistics.balls_lost++;
+    if (gameState.perks.happy_family) {
+      resetCombo(gameState, ball.x, ball.y);
+    }
     if (!gameState.balls.find((b) => !b.destroyed)) {
       if (gameState.startParams.computer_controlled) {
         startComputerControlledGame(gameState.startParams.stress);
@@ -2147,8 +2144,12 @@ function makeText(
 ) {
   append(gameState.texts, (p: Partial<TextFlash>) => {
     p.time = gameState.levelTime;
-    p.x = x;
-    p.y = y;
+    p.x = clamp(x, 20, gameState.canvasWidth - 20);
+    p.y = clamp(
+      y,
+      40,
+      gameState.gameZoneHeight - gameState.puckHeight - gameState.ballSize,
+    );
     p.color = color;
     p.size = size;
     p.duration = clamp(duration, 400, 2000);
@@ -2318,11 +2319,15 @@ function applyOttawaTreatyPerk(
   return;
 }
 
-
-export function zenTick(gameState:GameState){
-    if (!gameState.perks.zen)  return
-    if(gameState.levelTime>gameState.lastZenComboIncrease +3000){
-      gameState.lastZenComboIncrease=gameState.levelTime
-      increaseCombo(gameState, gameState.perks.zen, gameState.puckPosition, gameState.gameZoneHeight- gameState.puckHeight)
-    }
+export function zenTick(gameState: GameState) {
+  if (!gameState.perks.zen) return;
+  if (gameState.levelTime > gameState.lastZenComboIncrease + 3000) {
+    gameState.lastZenComboIncrease = gameState.levelTime;
+    increaseCombo(
+      gameState,
+      gameState.perks.zen,
+      gameState.puckPosition,
+      gameState.gameZoneHeight - gameState.puckHeight,
+    );
+  }
 }

@@ -17,7 +17,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
-- zen : combo increases every 3 seconds, resets on explosion
+- new perk: happy family:  + lvl points per paddle bounce per extra ball, reset on ball lost
+- nerfed perk : sticky coins : stick to same color at level 1, any color at level 2+
+- nerfed perk: zen : combo increases every 3 seconds, resets on explosion
 
 ## 29088513
 

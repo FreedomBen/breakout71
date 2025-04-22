@@ -896,4 +896,14 @@ export const rawUpgrades = [
     help: () => t("upgrades.wrap_right.tooltip"),
     fullHelp: t("upgrades.wrap_right.verbose_description"),
   },
+  {
+    requires: "multiball",
+    threshold: 245000,
+    gift: false,
+    id: "happy_family",
+    max: 1,
+    name: t("upgrades.happy_family.name"),
+    help: () => t("upgrades.happy_family.tooltip"),
+    fullHelp: t("upgrades.happy_family.verbose_description"),
+  },
 ] as const;

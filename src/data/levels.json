@@ -1401,5 +1401,12 @@
     "bricks": "ggggggggggbbbgbbbggbgggggbggbgbgbgbgggggggggggbgbgbgbggbgggggbggbbbgbbbgggggggggg",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:happy_family",
+    "size": 9,
+    "bricks": "___________tt_tt____tt_tt____tt_tt__W_tt_tt_W__________W_____W____W_W____________",
+    "svg": null,
+    "color": ""
   }
 ]
