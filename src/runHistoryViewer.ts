@@ -1,8 +1,7 @@
 import { getHistory } from "./gameOver";
-import { appVersion, icons } from "./loadGameData";
+import {appVersion, icons, upgrades} from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { asyncAlert } from "./asyncAlert";
-import { rawUpgrades } from "./upgrades";
 import { getSettingValue, setSettingValue } from "./settings";
 
 export function runHistoryViewerMenuEntry() {
@@ -31,7 +30,7 @@ export function runHistoryViewerMenuEntry() {
           label: t("history.columns.score"),
           field: (r) => r.score,
         },
-        ...rawUpgrades.map((u) => ({
+        ...upgrades.map((u) => ({
           label: icons["icon:" + u.id],
           tooltip: u.name,
           field: (r) => r.perks?.[u.id] || 0,

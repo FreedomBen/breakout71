@@ -10,7 +10,6 @@ const levelIconHTMLCanvasCtx =
 export function levelIconHTML(
   bricks: string[],
   levelSize: number,
-  color: string,
 ) {
   const size = 46;
   const c = levelIconHTMLCanvas;

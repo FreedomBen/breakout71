@@ -11,7 +11,6 @@ import {
 import { icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { clamp } from "./pure_functions";
-import { rawUpgrades } from "./upgrades";
 import { hashCode } from "./getLevelBackground";
 import { getSettingValue, getTotalScore } from "./settings";
 import { isOptionOn } from "./options";
@@ -132,7 +131,7 @@ export function pickedUpgradesHTMl(gameState: GameState) {
         state,
         html: `
         <div class="upgrade ${["??", "used", "banned", "free"][state]}">
-            ${u.icon}
+            ${icons['icon:'+u.id]}
             <p>
             <strong>${u.name}</strong>
           ${u.help(Math.max(1, gameState.perks[u.id]))}
@@ -310,7 +309,7 @@ function isExcluded(id: PerkId) {
       "slow_down",
     ]);
     // Avoid excluding a perk that's needed for the required one
-    rawUpgrades.forEach((u) => {
+    upgrades.forEach((u) => {
       if (u.requires) excluded.add(u.requires);
     });
   }
@@ -323,7 +322,7 @@ export function getLevelUnlockCondition(levelIndex: number) {
     minScore = Math.max(-1000 + 100 * levelIndex, 0);
 
   if (levelIndex > 20) {
-    const possibletargets = [...rawUpgrades]
+    const possibletargets = [...upgrades]
       .slice(0, Math.floor(levelIndex / 2))
       .filter((u) => !isExcluded(u.id))
       .sort(

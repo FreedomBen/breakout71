@@ -40,7 +40,7 @@ async function openLevelEditorLevelsList() {
     content: [
       ...customLevels.map((l, li) => ({
         text: l.name,
-        icon: levelIconHTML(l.bricks, l.size, l.color),
+        icon: levelIconHTML(l.bricks, l.size),
         value() {
           editRawLevelList(li);
         },

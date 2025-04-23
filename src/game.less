@@ -197,6 +197,7 @@ body:not(.has-alert-open) #popup {
   &.actionsAsGrid.large > div > section {
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   }
+
   &.actionsAsGrid > div {
     max-width: none;
 
@@ -504,10 +505,12 @@ h2.histogram-title strong {
     opacity 200ms,
     transform 200ms;
   z-index: 7;
+
   &.hidden {
     opacity: 0;
     transform: translate(-20px, -20px) scale(0.5);
   }
+
   &.visible {
     opacity: 0.8;
     transform: none;
@@ -523,6 +526,7 @@ h2.histogram-title strong {
   height: 40px;
   border: 1px solid;
   cursor: pointer;
+
   &:hover {
     border-color: gold;
     z-index: 1;
@@ -530,6 +534,7 @@ h2.histogram-title strong {
     box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 }
+
 .gridEdit {
   & > div {
     display: flex;
@@ -544,6 +549,7 @@ h2.histogram-title strong {
 .palette {
   display: flex;
   flex-wrap: wrap;
+
   & > span {
     &[data-selected="true"] {
       border: 2px solid white;
@@ -561,15 +567,18 @@ h2.histogram-title strong {
   z-index: 3;
   pointer-events: none;
   opacity: 1;
+
   & > div {
     background: rgba(38, 38, 38, 0.5);
     position: relative;
+
     > div {
       background: @purple;
       position: absolute;
       inset: 0;
       transform-origin: top left;
     }
+
     > strong {
       position: relative;
       padding: 0 5px;
@@ -579,6 +588,7 @@ h2.histogram-title strong {
 
 .highlight {
   position: relative;
+
   &:before {
     content: "";
     position: absolute;
@@ -588,7 +598,18 @@ h2.histogram-title strong {
     opacity: 0.3;
   }
 }
+
 .not-highlighed {
   opacity: 0.8;
   color: #8a8a8a;
+}
+
+.help_button_tooltip {
+  position: fixed;
+  z-index: 8;
+  left: 0;
+  top: 0;
+  background: black;
+  padding: 20px;
+  border-bottom: 1px solid white;
 }

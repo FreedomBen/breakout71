@@ -7,7 +7,6 @@ export type RawLevel = {
   name: string;
   size: number;
   bricks: string;
-  color: string;
   credit?: string;
 };
 export type Level = {
@@ -28,8 +27,7 @@ export type Upgrade = {
   gift: boolean;
   id: PerkId;
   name: string;
-  category: string;
-  icon: string;
+  category: number;
   max: number;
   help: (lvl: number) => string;
   fullHelp: string;

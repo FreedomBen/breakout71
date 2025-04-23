@@ -8,6 +8,7 @@ import { levelIconHTML } from "./levelIcon";
 
 import { automaticBackgroundColor } from "./pure_functions";
 
+export const upgrades = [...rawUpgrades].sort((a, b) => a.category - b.category || a.threshold - b.threshold)  as Upgrade[];
 const palette = _palette as Palette;
 
 const rawLevelsList = _rawLevelsList as RawLevel[];
@@ -22,7 +23,7 @@ export function transformRawLevel(level: RawLevel) {
     .map((c) => palette[c])
     .slice(0, level.size * level.size);
   const bricksCount = bricks.filter((i) => i).length;
-  const icon = levelIconHTML(bricks, level.size, level.color);
+  const icon = levelIconHTML(bricks, level.size);
   icons[level.name] = icon;
   return {
     ...level,
@@ -43,7 +44,3 @@ export const allLevels = allLevelsAndIcons.filter(
   (l) => !l.name.startsWith("icon:"),
 );
 
-export const upgrades = rawUpgrades.map((u) => ({
-  ...u,
-  icon: icons["icon:" + u.id],
-})) as Upgrade[];

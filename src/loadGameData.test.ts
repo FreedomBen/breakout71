@@ -30,18 +30,6 @@ describe("json data checks", () => {
   it("Has a few colors", () => {
     expect(Object.keys(_palette).length).toBeGreaterThan(10);
   });
-  it("Avoids dark bricks on dark bg", () => {
-    const levelsWithDarkBricksAndBG = _rawLevelsList
-      .filter((l) => !l.color && !l.name.match(/^icon:/))
-      .map((l) => ({
-        name: l.name,
-        bricks: l.bricks.split("").filter((c) => c !== "_").length,
-        darkBricks: l.bricks.split("").filter((c) => c === "g").length,
-      }))
-      .filter((l) => l.darkBricks > 0.05 * l.bricks);
-
-    expect(levelsWithDarkBricksAndBG).toEqual([]);
-  });
   it("Has an _appVersion", () => {
     expect(parseInt(_appVersion)).toBeGreaterThan(2000);
   });

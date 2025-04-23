@@ -1,4 +1,5 @@
 import { t } from "./i18n/i18n";
+import { isOptionOn } from "./options";
 
 export let alertsOpen = 0,
   closeModal: null | (() => void) = null;
@@ -118,9 +119,6 @@ ${icon}
                     <em>${help || ""}</em>
             </div>`;
 
-        if (tooltip) {
-          button.setAttribute("data-tooltip", tooltip);
-        }
         if (disabled) {
           button.setAttribute("disabled", "disabled");
         } else {
@@ -137,6 +135,31 @@ ${icon}
           className + (lastClickedItemIndex === index ? " needs-focus" : "");
 
         addto.appendChild(button);
+
+        if (tooltip) {
+          if (isOptionOn("mobile-mode")) {
+            const helpBtn = document.createElement("button");
+            helpBtn.innerText = "?";
+            helpBtn.className = "help";
+            let helpTooltip = document.createElement("div");
+            helpTooltip.textContent = tooltip;
+            helpTooltip.className = "help_button_tooltip";
+            helpBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+            });
+            helpBtn.addEventListener("touchstart", (e) => {
+              e.stopPropagation();
+              document.body.appendChild(helpTooltip);
+            });
+            helpBtn.addEventListener("touchend", (e) => {
+              document.body.removeChild(helpTooltip);
+            });
+
+            button.appendChild(helpBtn);
+          } else {
+            button.setAttribute("data-tooltip", tooltip);
+          }
+        }
       });
 
     popup.addEventListener(

@@ -57,7 +57,7 @@ export async function openCreativeModePerksPicker() {
         };
       }),
       ...customLevels.map((l) => ({
-        icon: levelIconHTML(l.bricks, l.size, l.color),
+        icon: levelIconHTML(l.bricks, l.size),
         text: l.name,
         value: l,
         disabled: !l.bricks.filter((b) => b !== "_").length,
@@ -93,7 +93,7 @@ export async function openCreativeModePerksPicker() {
         ...upgrades
           .filter((u) => !noCreative.includes(u.id))
           .map((u) => ({
-            icon: u.icon,
+            icon: icons['icon:'+u.id],
             text: u.name,
             help:
               (creativeModePerks[u.id] || 0) +

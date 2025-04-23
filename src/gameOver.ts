@@ -16,7 +16,6 @@ import {
 } from "./settings";
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
-import { rawUpgrades } from "./upgrades";
 import { editRawLevelList } from "./levelEditor";
 import { openCreativeModePerksPicker } from "./creative";
 
@@ -52,7 +51,7 @@ export function gameOver(title: string, intro: string) {
   // unlocks
   const endTs = getTotalScore();
   const startTs = endTs - gameState.score;
-  const unlockedPerks = rawUpgrades.filter(
+  const unlockedPerks = upgrades.filter(
     (o) => o.threshold > startTs && o.threshold < endTs,
   );
 

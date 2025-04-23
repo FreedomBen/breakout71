@@ -39,7 +39,7 @@ export function helpMenuEntry() {
           ...upgrades.map(
             (u) => `
 <div class="upgrade used">
-            ${u.icon}
+            ${icons['icon:'+u.id]}
             <p>
                 <strong>${u.name}</strong><br/>
           ${u.help(1)}

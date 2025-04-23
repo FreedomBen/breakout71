@@ -80,7 +80,8 @@ import {
   catchRateGood,
   clamp,
   levelTimeBest,
-  levelTimeGood, miniMarkDown,
+  levelTimeGood,
+  miniMarkDown,
   missesBest,
   missesGood,
   wallBouncedBest,
@@ -97,7 +98,7 @@ import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
 import { getNearestUnlockHTML, openScorePanel } from "./openScorePanel";
 import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
-import {categories} from "./upgrades";
+import { categories } from "./upgrades";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -912,7 +913,7 @@ async function openUnlockedUpgradesList() {
   const ts = getTotalScore();
   const upgradeActions = upgrades
     .sort((a, b) => a.threshold - b.threshold)
-    .map(({ name, id, threshold, icon, help ,category, fullHelp}) => ({
+    .map(({ name, id, threshold, icon, help, category, fullHelp }) => ({
       text: name,
       disabled: ts < threshold,
       value: {
@@ -925,7 +926,7 @@ async function openUnlockedUpgradesList() {
         ts < threshold
           ? t("unlocks.minTotalScore", { score: threshold })
           : help(1),
-      tooltip:ts < threshold ? '':  fullHelp,
+      tooltip: ts < threshold ? "" : fullHelp,
     }));
 
   const tryOn = await asyncAlert<RunParams>({
@@ -934,18 +935,20 @@ async function openUnlockedUpgradesList() {
       out_of: upgradeActions.length,
     }),
     content: [
-     t("unlocks.intro", { ts }),
-      upgradeActions.find((u) => u.disabled) ? t("unlocks.greyed_out_help") : "",
-         miniMarkDown(t("unlocks.category.beginner")),
-      ...upgradeActions.filter(u=>u.category==categories.beginner),
-          miniMarkDown(t("unlocks.category.combo")),
-      ...upgradeActions.filter(u=>u.category==categories.combo),
-          miniMarkDown(t("unlocks.category.combo_boost")),
-      ...upgradeActions.filter(u=>u.category==categories.combo_boost),
-          miniMarkDown(t("unlocks.category.simple")),
-      ...upgradeActions.filter(u=>u.category==categories.simple),
-          miniMarkDown(t("unlocks.category.advanced")),
-      ...upgradeActions.filter(u=>u.category==categories.advanced),
+      t("unlocks.intro", { ts }),
+      upgradeActions.find((u) => u.disabled)
+        ? t("unlocks.greyed_out_help")
+        : "",
+      miniMarkDown(t("unlocks.category.beginner")),
+      ...upgradeActions.filter((u) => u.category == categories.beginner),
+      miniMarkDown(t("unlocks.category.combo")),
+      ...upgradeActions.filter((u) => u.category == categories.combo),
+      miniMarkDown(t("unlocks.category.combo_boost")),
+      ...upgradeActions.filter((u) => u.category == categories.combo_boost),
+      miniMarkDown(t("unlocks.category.simple")),
+      ...upgradeActions.filter((u) => u.category == categories.simple),
+      miniMarkDown(t("unlocks.category.advanced")),
+      ...upgradeActions.filter((u) => u.category == categories.advanced),
     ],
     allowClose: true,
     // className: "actionsAsGrid large",
