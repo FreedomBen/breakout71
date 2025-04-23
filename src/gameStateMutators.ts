@@ -262,43 +262,32 @@ export function resetCombo(
   return lost;
 }
 
-export function increaseCombo(
+
+export function offsetCombo(
   gameState: GameState,
   by: number,
   x: number,
   y: number,
 ) {
-  if (by <= 0) {
-    return;
-  }
-  by *= 1 + gameState.perks.double_or_nothing;
-  gameState.combo += by;
-  if (
-    isOptionOn("comboIncreaseTexts") &&
-    typeof x !== "undefined" &&
-    typeof y !== "undefined"
-  ) {
-    makeText(gameState, x, y, "#ffd300", "+" + by, 25, 400 + by);
+  if(!by) return
+  if (by > 0) {
+
+    by *= 1 + gameState.perks.double_or_nothing;
+    gameState.combo += by;
+      makeText(gameState, x, y, "#ffd300", "+" + by, 25, 400 + by);
+
+  }else{
+    const prev = gameState.combo;
+      gameState.combo = Math.max(baseCombo(gameState), gameState.combo + by);
+      const lost = Math.max(0, prev - gameState.combo);
+
+      if (lost) {
+        schedulGameSound(gameState, "comboDecrease", x, 1);
+        makeText(gameState, x, y, "#FF0000", "-" + lost, 20, 400 + lost);
+      }
   }
 }
 
-export function decreaseCombo(
-  gameState: GameState,
-  by: number,
-  x: number,
-  y: number,
-) {
-  const prev = gameState.combo;
-  gameState.combo = Math.max(baseCombo(gameState), gameState.combo - by);
-  const lost = Math.max(0, prev - gameState.combo);
-
-  if (lost) {
-    schedulGameSound(gameState, "comboDecrease", x, 1);
-    if (typeof x !== "undefined" && typeof y !== "undefined") {
-      makeText(gameState, x, y, "#FF0000", "-" + lost, 20, 400 + lost);
-    }
-  }
-}
 
 export function spawnExplosion(
   gameState: GameState,
@@ -474,10 +463,8 @@ export function explodeBrick(
         points,
       );
     }
-
-    increaseCombo(
-      gameState,
-      gameState.perks.streak_shots +
+    let resetComboNeeeded=false
+    let comboGain =  gameState.perks.streak_shots +
         gameState.perks.compound_interest +
         gameState.perks.left_is_lava +
         gameState.perks.right_is_lava +
@@ -485,45 +472,35 @@ export function explodeBrick(
         gameState.perks.picky_eater +
         gameState.perks.asceticism * 3 +
         gameState.perks.passive_income +
-        gameState.perks.addiction,
-      ball.x,
-      ball.y,
-    );
+        gameState.perks.addiction
+
 
     if (Math.abs(ball.y - y) < Math.abs(ball.x - x)) {
       if (gameState.perks.side_kick) {
         if (ball.previousVX > 0) {
-          increaseCombo(gameState, gameState.perks.side_kick, ball.x, ball.y);
+          comboGain+=gameState.perks.side_kick
         } else {
-          decreaseCombo(
-            gameState,
-            gameState.perks.side_kick * 2,
-            ball.x,
-            ball.y,
-          );
+          comboGain-=gameState.perks.side_kick * 2
+
         }
       }
       if (gameState.perks.side_flip) {
         if (ball.previousVX < 0) {
-          increaseCombo(gameState, gameState.perks.side_flip, ball.x, ball.y);
+          comboGain+=gameState.perks.side_flip
         } else {
-          decreaseCombo(
-            gameState,
-            gameState.perks.side_flip * 2,
-            ball.x,
-            ball.y,
-          );
+          comboGain-=gameState.perks.side_flip * 2
         }
       }
     }
 
+
     if (redRowReach !== -1) {
       if (Math.floor(index / gameState.level.size) === redRowReach) {
-        resetCombo(gameState, x, y);
+        resetComboNeeeded=true
       } else {
         for (let x = 0; x < gameState.level.size; x++) {
           if (gameState.bricks[redRowReach * gameState.level.size + x])
-            gameState.combo++;
+            comboGain+=gameState.perks.reach;
         }
       }
     }
@@ -536,7 +513,7 @@ export function explodeBrick(
         color
       ) {
         if (wasPickyEaterPossible) {
-          resetCombo(gameState, ball.x, ball.y);
+          resetComboNeeeded=true
         }
         schedulGameSound(gameState, "colorChange", ball.x, 0.8);
         // gameState.lastExplosion = gameState.levelTime;
@@ -550,8 +527,20 @@ export function explodeBrick(
         schedulGameSound(gameState, "comboIncreaseMaybe", ball.x, 1);
       }
     }
-    // makeLight(gameState, x, y, color, gameState.brickWidth, 40);
 
+    if(resetComboNeeeded){
+      resetCombo(gameState,
+          ball.x,
+          ball.y)
+    }else  {
+      offsetCombo(
+          gameState,
+          comboGain,
+          ball.x,
+          ball.y,
+      );
+    }
+    // Particle effect
     spawnExplosion(gameState, 5 + Math.min(gameState.combo, 30), x, y, color);
   }
 
@@ -639,7 +628,6 @@ export function addToScore(gameState: GameState, coin: Coin) {
       (gameState.canvasWidth - coin.x) / 100,
       -coin.y / 100,
       getCoinRenderColor(gameState, coin),
-
       true,
       gameState.coinSize / 2,
       100 + Math.random() * 50,
@@ -649,9 +637,9 @@ export function addToScore(gameState: GameState, coin: Coin) {
   schedulGameSound(gameState, "coinCatch", coin.x, 1);
   gameState.runStatistics.score += coin.points;
   if (gameState.perks.asceticism) {
-    decreaseCombo(
+    offsetCombo(
       gameState,
-      gameState.perks.asceticism * 3 * coin.points,
+      - gameState.perks.asceticism * 3 * coin.points,
       coin.x,
       coin.y,
     );
@@ -1006,9 +994,9 @@ export function gameStateTick(
       gameState.lastTickDown = gameState.levelTime;
     } else if (gameState.levelTime > gameState.lastTickDown + 1000) {
       gameState.lastTickDown = gameState.levelTime;
-      decreaseCombo(
+      offsetCombo(
         gameState,
-        gameState.perks.hot_start,
+        - gameState.perks.hot_start,
         gameState.puckPosition,
         gameState.gameZoneHeight - 2 * gameState.puckHeight,
       );
@@ -1307,7 +1295,7 @@ export function gameStateTick(
           Math.random() / coin.points <
             (1 / gameState.combo) * gameState.perks.fountain_toss
         ) {
-          increaseCombo(gameState, 1, coin.x, coin.y);
+          offsetCombo(gameState, 1, coin.x, coin.y);
         }
       }
 
@@ -1325,17 +1313,6 @@ export function gameStateTick(
           gameState.bricks[hitBrick] = coin.color;
           coin.metamorphosisPoints--;
           schedulGameSound(gameState, "colorChange", coin.x, 0.3);
-
-          if (gameState.perks.hypnosis) {
-            const closestBall = getClosestBall(gameState, coin.x, coin.y);
-            if (closestBall) {
-              coin.x = closestBall.x;
-              coin.y = closestBall.y;
-              coin.vx = (Math.random() - 0.5) * gameState.baseSpeed;
-              coin.vy = (Math.random() - 0.5) * gameState.baseSpeed;
-              coin.metamorphosisPoints = gameState.perks.metamorphosis;
-            }
-          }
         }
       }
 
@@ -1372,6 +1349,16 @@ export function gameStateTick(
           schedulGameSound(gameState, "coinBounce", coin.x, 0.2);
         }
       }
+
+
+      if (gameState.perks.golden_goose && typeof hitBrick !== "undefined") {
+        const closestBall = getClosestBall(gameState, coin.x, coin.y);
+        if (closestBall) {
+          coin.x = closestBall.x;
+          coin.y = closestBall.y;
+        }
+      }
+
       // remember collision
       coin.collidedLastFrame = !!(typeof hitBrick !== "undefined" || hitBorder);
     });
@@ -1732,7 +1719,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   if (borderHitCode) {
     ball.sidesHitsSinceBounce++;
     if (ball.sidesHitsSinceBounce <= gameState.perks.three_cushion * 3) {
-      increaseCombo(gameState, 1, ball.x, ball.y);
+      offsetCombo(gameState, 1, ball.x, ball.y);
     }
     if (
       gameState.perks.wrap_left &&
@@ -1792,7 +1779,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       resetCombo(gameState, ball.x, ball.y);
     }
     if (gameState.perks.trampoline) {
-      decreaseCombo(gameState, gameState.perks.trampoline, ball.x, ball.y);
+      offsetCombo(gameState, -gameState.perks.trampoline, ball.x, ball.y);
     }
 
     schedulGameSound(gameState, "wallBeep", ball.x, 1);
@@ -1835,7 +1822,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       resetCombo(gameState, ball.x, ball.y);
     }
 
-    increaseCombo(
+    offsetCombo(
       gameState,
       gameState.perks.trampoline +
         gameState.perks.happy_family * Math.max(0, gameState.balls.length - 1),
@@ -1857,7 +1844,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
           (gameState.levelMisses / 10 / gameState.perks.forgiving) *
             (gameState.combo - baseCombo(gameState)),
         );
-        decreaseCombo(gameState, loss, ball.x, ball.y);
+        offsetCombo(gameState, - loss, ball.x, ball.y);
       } else {
         resetCombo(gameState, ball.x, ball.y);
       }
@@ -1928,7 +1915,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       if (ball.hitSinceBounce > gameState.perks.nbricks) {
         resetCombo(gameState, ball.x, ball.y);
       } else {
-        increaseCombo(gameState, gameState.perks.nbricks, ball.x, ball.y);
+        offsetCombo(gameState, gameState.perks.nbricks, ball.x, ball.y);
       }
       // We need to reset at each hit, otherwise it's just an OP version of single puck hit streak
     }
@@ -2314,7 +2301,7 @@ export function zenTick(gameState: GameState) {
   if (!gameState.perks.zen) return;
   if (gameState.levelTime > gameState.lastZenComboIncrease + 3000) {
     gameState.lastZenComboIncrease = gameState.levelTime;
-    increaseCombo(
+    offsetCombo(
       gameState,
       gameState.perks.zen,
       gameState.puckPosition,

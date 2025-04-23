@@ -14,11 +14,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
-- rename hypnosis
 - save global stats locally (sum of broken bricks, paddle hits, misses,)
 
 ## Done
 
+- rename hypnosis to golden_goose, apply when hitting any brick
+- removed comboIncreaseTexts option
 - minefield : +10% coins per bomb on screen
 - extra life are transparent when you have 2+ balls 
 - categorized the icons 

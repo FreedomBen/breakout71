@@ -92,11 +92,6 @@ export const options = {
     name: t("settings.red_miss"),
     help: t("settings.red_miss_help"),
   },
-  comboIncreaseTexts: {
-    default: true,
-    name: t("settings.comboIncreaseTexts"),
-    help: t("settings.comboIncreaseTexts_help"),
-  },
 } as const satisfies { [k: string]: OptionDef };
 
 export function isOptionOn(key: OptionId) {
