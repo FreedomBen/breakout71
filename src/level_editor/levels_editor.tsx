@@ -1,21 +1,17 @@
 import { Level, Palette, RawLevel } from "../types";
 import _backgrounds from "../data/backgrounds.json";
 import _palette from "../data/palette.json";
-// import _allLevels from "../data/levels.json";
-import { getLevelBackground, hashCode } from "../getLevelBackground";
 import { createRoot } from "react-dom/client";
-import { useCallback, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { moveLevel, resizeLevel, setBrick } from "./levels_editor_util";
 import {
   automaticBackgroundColor,
   levelCodeToRawLevel,
 } from "../pure_functions";
 
-const backgrounds = _backgrounds as string[];
 
 const palette = _palette as Palette;
 
-// let allLevels = _allLevels ;
 let allLevels = null;
 
 function App() {
@@ -25,9 +21,15 @@ function App() {
   useEffect(() => {
     fetch("http://localhost:4400/src/data/levels.json")
       .then((r) => r.json())
-      .then((list) => {
-        setLevels(list as RawLevel[]);
-        allLevels = list;
+      .then((lvls) => {
+
+        const cleaned = lvls.map(l=>({name:l.name, size:l.size, bricks:(l.bricks+'_'.repeat(l.size*l.size)).slice(0,l.size*l.size), credit:l.credit||''}))
+        const sorted =  [
+        ...cleaned.filter(l=>l.name.match('icon:')).sort((a,b)=>a.name>b.name ? 1:-1),
+        ...cleaned.filter(l=>!l.name.match('icon:'))
+        ]
+        setLevels(sorted as RawLevel[]) 
+        allLevels = sorted;
       });
   }, []);
 

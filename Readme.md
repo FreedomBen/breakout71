@@ -14,6 +14,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
+- wording of combo per brick *broken* 
 - rename hypnosis
 - more icons
 - save global stats locally (sum of broken bricks, paddle hits, misses,)
@@ -569,4 +570,4 @@ Breakout 71 can be installed and work offline in many ways:
 
 The game should perform well even on low-end devices.  It's very lean and does not take much storage space (Roughly 0.1MB). The web version is supposed to work on iOS safari, Firefox ESR and chrome, on desktop and mobile.
 If the app stutters, turn on "fast mode" in the settings to render a simplified view that should be faster. You can adjust many aspects of the game there, go have a look !
-
+ 
