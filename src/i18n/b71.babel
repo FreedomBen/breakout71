@@ -10931,41 +10931,6 @@
 								<name>extra_life</name>
 								<children>
 									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
 										<name>name</name>
 										<description/>
 										<comment/>
@@ -13861,77 +13826,42 @@
 								<name>sacrifice</name>
 								<children>
 									<concept_node>
-										<name>help_l1</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>help_over</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
 										<name>name</name>
+										<description/>
+										<comment/>
+										<translations>
+											<translation>
+												<language>ar-LB</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>de-DE</language>
+												<approved>true</approved>
+											</translation>
+											<translation>
+												<language>en-US</language>
+												<approved>true</approved>
+											</translation>
+											<translation>
+												<language>es-CL</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>fr-FR</language>
+												<approved>true</approved>
+											</translation>
+											<translation>
+												<language>ru-RU</language>
+												<approved>false</approved>
+											</translation>
+											<translation>
+												<language>tr-TR</language>
+												<approved>false</approved>
+											</translation>
+										</translations>
+									</concept_node>
+									<concept_node>
+										<name>tooltip</name>
 										<description/>
 										<comment/>
 										<translations>
@@ -13988,7 +13918,7 @@
 											</translation>
 											<translation>
 												<language>fr-FR</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 											<translation>
 												<language>ru-RU</language>
@@ -14590,41 +14520,6 @@
 							<folder_node>
 								<name>skip_last</name>
 								<children>
-									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
 									<concept_node>
 										<name>name</name>
 										<description/>
@@ -15505,41 +15400,6 @@
 							<folder_node>
 								<name>telekinesis</name>
 								<children>
-									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
 									<concept_node>
 										<name>name</name>
 										<description/>

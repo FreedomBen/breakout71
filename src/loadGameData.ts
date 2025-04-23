@@ -8,7 +8,9 @@ import { levelIconHTML } from "./levelIcon";
 
 import { automaticBackgroundColor } from "./pure_functions";
 
-export const upgrades = [...rawUpgrades].sort((a, b) => a.category - b.category || a.threshold - b.threshold)  as Upgrade[];
+export const upgrades = [...rawUpgrades].sort(
+  (a, b) => a.category - b.category || a.threshold - b.threshold,
+) as Upgrade[];
 const palette = _palette as Palette;
 
 const rawLevelsList = _rawLevelsList as RawLevel[];
@@ -43,4 +45,3 @@ export const allLevelsAndIcons = rawLevelsList.map(
 export const allLevels = allLevelsAndIcons.filter(
   (l) => !l.name.startsWith("icon:"),
 );
-

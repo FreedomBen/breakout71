@@ -300,6 +300,7 @@ export async function openUpgradesPicker(gameState: GameState) {
       value: PerkId | "reroll";
       help: string;
       className: string;
+      tooltip: string;
     }> = pickRandomUpgrades(gameState, 3 + gameState.perks.one_more_choice);
     if (!actions.length) break;
 
@@ -913,20 +914,20 @@ async function openUnlockedUpgradesList() {
   const ts = getTotalScore();
   const upgradeActions = upgrades
     .sort((a, b) => a.threshold - b.threshold)
-    .map(({ name, id, threshold, icon, help, category, fullHelp }) => ({
+    .map(({ name, id, threshold, help, category, fullHelp }) => ({
       text: name,
       disabled: ts < threshold,
       value: {
         perks: { [id]: 1 },
         level: allLevelsAndIcons.find((l) => l.name === "icon:" + id),
       } as RunParams,
-      icon,
+      icon: icons["icon:" + id],
       category,
       help:
         ts < threshold
           ? t("unlocks.minTotalScore", { score: threshold })
           : help(1),
-      tooltip: ts < threshold ? "" : fullHelp,
+      tooltip: ts < threshold ? "" : fullHelp(1)+ ' [id:'+id+ ']',
     }));
 
   const tryOn = await asyncAlert<RunParams>({

@@ -272,7 +272,7 @@
   {
     "name": "icon:passive_income",
     "size": 8,
-    "bricks": "_ttttt___ttt_t______yW_____________y______________WWW_______y___",
+    "bricks": "_ttttt___ttt_t______yW_____________y______________WWW_______r___",
     "credit": ""
   },
   {
@@ -398,7 +398,7 @@
   {
     "name": "icon:smaller_puck",
     "size": 8,
-    "bricks": "_________bbbbbb__bbbbbb_____________y_____________________yy____",
+    "bricks": "_________tttttt__tttttt_____________W_____________________yy____",
     "credit": ""
   },
   {

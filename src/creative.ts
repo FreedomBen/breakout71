@@ -93,7 +93,7 @@ export async function openCreativeModePerksPicker() {
         ...upgrades
           .filter((u) => !noCreative.includes(u.id))
           .map((u) => ({
-            icon: icons['icon:'+u.id],
+            icon: icons["icon:" + u.id],
             text: u.name,
             help:
               (creativeModePerks[u.id] || 0) +

@@ -608,6 +608,7 @@ export function pickRandomUpgrades(gameState: GameState, count: number) {
     value: u.id as PerkId,
     help: u.help(gameState.perks[u.id] + 1),
     className: "upgrade ",
+    tooltip: u.fullHelp(gameState.perks[u.id] + 1),
   }));
 }
 

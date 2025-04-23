@@ -31,7 +31,7 @@ export async function openStartingPerksEditor() {
   const buttons = avaliable.map((u) => {
     const checked = isStartingPerk(u);
     return {
-      icon: icons['icon:'+u.id],
+      icon: icons["icon:" + u.id],
       text: u.name,
       tooltip: u.help(1),
       value: [u],

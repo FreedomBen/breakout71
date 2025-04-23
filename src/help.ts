@@ -39,14 +39,14 @@ export function helpMenuEntry() {
           ...upgrades.map(
             (u) => `
 <div class="upgrade used">
-            ${icons['icon:'+u.id]}
+            ${icons["icon:" + u.id]}
             <p>
                 <strong>${u.name}</strong><br/>
           ${u.help(1)}
           </p> 
         </div>
         
-          ${miniMarkDown(u.fullHelp)}
+          ${miniMarkDown(u.fullHelp(1))}
 `,
           ),
           "<h2>" + t("help.levels") + "</h2>",

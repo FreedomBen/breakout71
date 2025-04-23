@@ -140,22 +140,8 @@ ${icon}
           if (isOptionOn("mobile-mode")) {
             const helpBtn = document.createElement("button");
             helpBtn.innerText = "?";
-            helpBtn.className = "help";
-            let helpTooltip = document.createElement("div");
-            helpTooltip.textContent = tooltip;
-            helpTooltip.className = "help_button_tooltip";
-            helpBtn.addEventListener("click", (e) => {
-              e.stopPropagation();
-            });
-            helpBtn.addEventListener("touchstart", (e) => {
-              e.stopPropagation();
-              document.body.appendChild(helpTooltip);
-            });
-            helpBtn.addEventListener("touchend", (e) => {
-              document.body.removeChild(helpTooltip);
-            });
-
-            button.appendChild(helpBtn);
+            helpBtn.setAttribute('data-help-content',tooltip);
+            button.appendChild(helpBtn)
           } else {
             button.setAttribute("data-tooltip", tooltip);
           }
@@ -199,3 +185,4 @@ function updateAlertsOpen(delta: number) {
   }
   document.body.classList[alertsOpen ? "add" : "remove"]("has-alert-open");
 }
+

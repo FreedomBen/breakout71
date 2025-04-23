@@ -131,7 +131,7 @@ export function pickedUpgradesHTMl(gameState: GameState) {
         state,
         html: `
         <div class="upgrade ${["??", "used", "banned", "free"][state]}">
-            ${icons['icon:'+u.id]}
+            ${icons["icon:" + u.id]}
             <p>
             <strong>${u.name}</strong>
           ${u.help(Math.max(1, gameState.perks[u.id]))}

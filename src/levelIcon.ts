@@ -7,10 +7,7 @@ const levelIconHTMLCanvasCtx =
     alpha: true,
   }) as CanvasRenderingContext2D);
 
-export function levelIconHTML(
-  bricks: string[],
-  levelSize: number,
-) {
+export function levelIconHTML(bricks: string[], levelSize: number) {
   const size = 46;
   const c = levelIconHTMLCanvas;
   const ctx = levelIconHTMLCanvasCtx;

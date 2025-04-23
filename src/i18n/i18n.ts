@@ -110,6 +110,7 @@ export function t(
 ): string {
   const lang = getCurrentLang();
   let template = languagesMap[lang]?.[key] || languagesMap.en[key];
+  if(typeof template == 'undefined') throw new Error("Missing translation key :"+key)
   for (let key in params) {
     template = template.split("{{" + key + "}}").join(`${params[key]}`);
   }

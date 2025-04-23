@@ -1,5 +1,5 @@
 import { getHistory } from "./gameOver";
-import {appVersion, icons, upgrades} from "./loadGameData";
+import { appVersion, icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { asyncAlert } from "./asyncAlert";
 import { getSettingValue, setSettingValue } from "./settings";
