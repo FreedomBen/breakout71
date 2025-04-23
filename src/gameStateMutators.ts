@@ -216,11 +216,7 @@ export function normalizeGameState(gameState: GameState) {
 }
 
 export function baseCombo(gameState: GameState) {
-  const mineFieldBonus =
-    gameState.perks.minefield &&
-    gameState.bricks.filter((b) => b === "black").length *
-      gameState.perks.minefield;
-  return 1 + gameState.perks.base_combo * 3 + mineFieldBonus;
+  return 1 + gameState.perks.base_combo * 3;
 }
 
 export function resetCombo(
@@ -429,9 +425,6 @@ export function explodeBrick(
 
     setBrick(gameState, index, "");
     explosionAt(gameState, index, x, y, ball, 0);
-    if (gameState.perks.minefield) {
-      decreaseCombo(gameState, gameState.perks.minefield, x, y);
-    }
   } else if (color) {
     // Even if it bounces we don't want to count that as a miss
 
@@ -745,14 +738,7 @@ function setBrick(gameState: GameState, index: number, color: string) {
     (color === "black" && 1) ||
     (color && 1 + gameState.perks.sturdy_bricks) ||
     0;
-  if (gameState.perks.minefield && color === "black") {
-    increaseCombo(
-      gameState,
-      gameState.perks.minefield,
-      brickCenterX(gameState, index),
-      brickCenterY(gameState, index),
-    );
-  }
+
 }
 
 const rainbow = [

@@ -122,7 +122,7 @@
   {
     "name": "icon:double_or_nothing",
     "size": 10,
-    "bricks": "_______________________bbbb____bbbbbbbb__bbbbbbby_bbbbbbbyyybbbbbbyyyy______________________________",
+    "bricks": "_______________________yyyy____yyyyyyyy__yyyyyyyb_yyyyyyybbbyyyyyybbbb______________________________",
     "credit": ""
   },
   {
@@ -272,7 +272,7 @@
   {
     "name": "icon:passive_income",
     "size": 8,
-    "bricks": "_ttttt___ttt_t______yW_____________y______________WWW_______r___",
+    "bricks": "_ttttt___ttt_t________________W_____________________WWW_______r_",
     "credit": ""
   },
   {
@@ -512,13 +512,13 @@
   {
     "name": "icon:wrap_left",
     "size": 7,
-    "bricks": "__W_______b_______b_______b_y_____b_y______WWW___",
+    "bricks": "__W_______b_______b_______b_y_____y_b______WWW___",
     "credit": ""
   },
   {
     "name": "icon:wrap_right",
     "size": 7,
-    "bricks": "___W_____b_____b_____b_____y_____y_____y____WWW__",
+    "bricks": "___W_____b_____b_____y_____y_____b_____b____WWW__",
     "credit": ""
   },
   {

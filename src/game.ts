@@ -913,7 +913,6 @@ async function applyFullScreenChoice() {
 async function openUnlockedUpgradesList() {
   const ts = getTotalScore();
   const upgradeActions = upgrades
-    .sort((a, b) => a.threshold - b.threshold)
     .map(({ name, id, threshold, help, category, fullHelp }) => ({
       text: name,
       disabled: ts < threshold,
@@ -928,7 +927,9 @@ async function openUnlockedUpgradesList() {
           ? t("unlocks.minTotalScore", { score: threshold })
           : help(1),
       tooltip: ts < threshold ? "" : fullHelp(1)+ ' [id:'+id+ ']',
-    }));
+      threshold
+    }))
+    .sort((a, b) => a.threshold - b.threshold);
 
   const tryOn = await asyncAlert<RunParams>({
     title: t("unlocks.title_upgrades", {

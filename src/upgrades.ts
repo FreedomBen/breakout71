@@ -353,10 +353,7 @@ export const rawUpgrades = [
     id: "ball_repulse_ball",
     max: 3,
     name: t("upgrades.ball_repulse_ball.name"),
-    help: (lvl: number) =>
-      lvl == 1
-        ? t("upgrades.ball_repulse_ball.tooltip")
-        : t("upgrades.ball_repulse_ball.help_plural"),
+    help: (lvl: number) => t("upgrades.ball_repulse_ball.tooltip"),
     fullHelp:  (lvl: number) =>t("upgrades.ball_repulse_ball.verbose_description",{lvl}),
   },
   {
@@ -367,10 +364,7 @@ export const rawUpgrades = [
     id: "ball_attract_ball",
     max: 3,
     name: t("upgrades.ball_attract_ball.name"),
-    help: (lvl: number) =>
-      lvl == 1
-        ? t("upgrades.ball_attract_ball.tooltip")
-        : t("upgrades.ball_attract_ball.help_plural"),
+    help: (lvl: number) => t("upgrades.ball_attract_ball.tooltip"),
     fullHelp:  (lvl: number) =>t("upgrades.ball_attract_ball.verbose_description",{lvl}),
   },
   {
@@ -381,10 +375,7 @@ export const rawUpgrades = [
     id: "puck_repulse_ball",
     max: 2,
     name: t("upgrades.puck_repulse_ball.name"),
-    help: (lvl: number) =>
-      lvl == 1
-        ? t("upgrades.puck_repulse_ball.tooltip")
-        : t("upgrades.puck_repulse_ball.help_plural"),
+    help: (lvl: number) =>t("upgrades.puck_repulse_ball.tooltip"),
     fullHelp:  (lvl: number) =>t("upgrades.puck_repulse_ball.verbose_description",{lvl}),
   },
   {
@@ -395,8 +386,7 @@ export const rawUpgrades = [
     id: "wind",
     max: 3,
     name: t("upgrades.wind.name"),
-    help: (lvl: number) =>
-      lvl == 1 ? t("upgrades.wind.tooltip") : t("upgrades.wind.help_plural"),
+    help: (lvl: number) => t("upgrades.wind.tooltip") ,
     fullHelp:  (lvl: number) =>t("upgrades.wind.verbose_description",{lvl}),
   },
   {
@@ -736,10 +726,7 @@ export const rawUpgrades = [
     id: "coin_magnet",
     max: 3,
     name: t("upgrades.coin_magnet.name"),
-    help: (lvl: number) =>
-      lvl == 1
-        ? t("upgrades.coin_magnet.tooltip")
-        : t("upgrades.coin_magnet.help_plural"),
+    help: (lvl: number) => t("upgrades.coin_magnet.tooltip"),
     fullHelp:  (lvl: number) =>t("upgrades.coin_magnet.verbose_description",{lvl}),
   },
   {
@@ -773,10 +760,7 @@ export const rawUpgrades = [
     gift: false,
     max: 7,
     name: t("upgrades.sapper.name"),
-    help: (lvl: number) =>
-      lvl == 1
-        ? t("upgrades.sapper.tooltip")
-        : t("upgrades.sapper.help_plural", { lvl }),
+    help: (lvl: number) => t("upgrades.sapper.tooltip"),
     fullHelp:  (lvl: number) =>t("upgrades.sapper.verbose_description",{lvl}),
   },
   {
@@ -822,8 +806,8 @@ export const rawUpgrades = [
     id: "minefield",
     max: 3,
     name: t("upgrades.minefield.name"),
-    help: (lvl: number) => t("upgrades.minefield.tooltip", { lvl }),
-    fullHelp:  (lvl: number) =>t("upgrades.minefield.verbose_description",{lvl}),
+    help: (lvl: number) => t("upgrades.minefield.tooltip", { percent:10*lvl }),
+    fullHelp:  (lvl: number) =>t("upgrades.minefield.verbose_description",{percent:10*lvl}),
   },
   {
     category: categories.combo_boost,

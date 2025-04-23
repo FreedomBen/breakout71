@@ -19,6 +19,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+- minefield : +10% coins per bomb on screen
 - extra life are transparent when you have 2+ balls 
 - categorized the icons 
 - color coded the icons

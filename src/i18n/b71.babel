@@ -8330,7 +8330,7 @@
 									</translation>
 									<translation>
 										<language>fr-FR</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>ru-RU</language>
@@ -8956,41 +8956,6 @@
 								<name>ball_attract_ball</name>
 								<children>
 									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
 										<name>name</name>
 										<description/>
 										<comment/>
@@ -9210,41 +9175,6 @@
 							<folder_node>
 								<name>ball_repulse_ball</name>
 								<children>
-									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
 									<concept_node>
 										<name>name</name>
 										<description/>
@@ -10125,41 +10055,6 @@
 							<folder_node>
 								<name>coin_magnet</name>
 								<children>
-									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
 									<concept_node>
 										<name>name</name>
 										<description/>
@@ -13241,41 +13136,6 @@
 								<name>puck_repulse_ball</name>
 								<children>
 									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
 										<name>name</name>
 										<description/>
 										<comment/>
@@ -13935,41 +13795,6 @@
 							<folder_node>
 								<name>sapper</name>
 								<children>
-									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
 									<concept_node>
 										<name>name</name>
 										<description/>
@@ -16280,41 +16105,6 @@
 							<folder_node>
 								<name>wind</name>
 								<children>
-									<concept_node>
-										<name>help_plural</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
 									<concept_node>
 										<name>name</name>
 										<description/>
