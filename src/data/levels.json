@@ -1,23 +1,560 @@
 [
   {
+    "name": "icon:addiction",
+    "size": 9,
+    "bricks": "__________________________t__WWWWW_tWWWrrttttr_WWWWW_tr_______t__________________",
+    "credit": ""
+  },
+  {
+    "name": "icon:asceticism",
+    "size": 8,
+    "bricks": "_tttttt__tt__tt_____W_______r______________r_________r_____WWW__",
+    "credit": ""
+  },
+  {
+    "name": "icon:ball_attract_ball",
+    "size": 8,
+    "bricks": "__b__b____b__b__bbW__Wbb________________bbW__Wbb__b__b____b__b__",
+    "credit": ""
+  },
+  {
+    "name": "icon:ball_attracts_coins",
+    "size": 8,
+    "bricks": "WWW_____WWW_y___WWW____y__y_y____y____y_____y_____y____y___y_y__",
+    "credit": ""
+  },
+  {
+    "name": "icon:ball_repulse_ball",
+    "size": 8,
+    "bricks": "Wbb__bbWb______bb______b________________b______bb______bWbb__bbW",
+    "credit": ""
+  },
+  {
+    "name": "icon:base_combo",
+    "size": 7,
+    "bricks": "________ttttt__tytyt__ttttt__tytyt__ttttt________",
+    "credit": ""
+  },
+  {
+    "name": "icon:bigger_explosions",
+    "size": 8,
+    "bricks": "__O__Oy___Oyy_____OyOy__OyyyByOO_OOBBBy___yyByO__yOOy_OO_OO_____",
+    "credit": ""
+  },
+  {
+    "name": "icon:bigger_puck",
+    "size": 8,
+    "bricks": "_________GGGGGG__GGGGGG______________________W___________WWWWWW_",
+    "credit": ""
+  },
+  {
+    "name": "icon:bricks_attract_ball",
+    "size": 8,
+    "bricks": "ttW_____tt_y________y________ytt____y_tt___y____tty_____tt_y____",
+    "credit": ""
+  },
+  {
+    "name": "icon:bricks_attract_coins",
+    "size": 9,
+    "bricks": "______________________________bbbybbbbybbb______bbbybb___y_y______b_b______b_b___",
+    "credit": ""
+  },
+  {
+    "name": "icon:buoy",
+    "size": 7,
+    "bricks": "___y______y_____yyy__tyyyyytttOOOtttttOtttttttttt",
+    "credit": ""
+  },
+  {
+    "name": "icon:checkmark_checked",
+    "size": 6,
+    "bricks": "_ggggbgBBBbbbbBbbggbbbBggBbBBg_gggg_",
+    "credit": ""
+  },
+  {
+    "name": "icon:checkmark_unchecked",
+    "size": 6,
+    "bricks": "_gggg_gBBBBggBBBBggBBBBggBBBBg_gggg_",
+    "credit": ""
+  },
+  {
+    "name": "icon:clairvoyant",
+    "size": 9,
+    "bricks": "__y___y__y__y_y__y_y__t__y____ttt_____tWWWt___tWWgWWt_tttWWWttt__________________",
+    "credit": ""
+  },
+  {
+    "name": "icon:coin_magnet",
+    "size": 8,
+    "bricks": "__y__y_yy_________y_y_y_y________y_y______________y______WWW____",
+    "credit": ""
+  },
+  {
+    "name": "icon:coins",
+    "size": 8,
+    "bricks": "__bbbb___bbggbb_bbggggbbbggggggbbggggggbbbggggbb_bbggbb___bbbb__",
+    "credit": ""
+  },
+  {
+    "name": "icon:compound_interest",
+    "size": 8,
+    "bricks": "_________tttttt__ttt__t_____W________________r___________WWW__r_",
+    "credit": ""
+  },
+  {
+    "name": "icon:concave_puck",
+    "size": 7,
+    "bricks": "___W_____________W__________G__W__GGG___GGGGGGGGG",
+    "credit": ""
+  },
+  {
+    "name": "icon:corner_shot",
+    "size": 9,
+    "bricks": "___W________W________W__WW____W__WW____W________W______W_W_WWW_WW_W_WWWWWW_W_WWWW",
+    "credit": ""
+  },
+  {
+    "name": "icon:creative",
+    "size": 7,
+    "bricks": "bbg_bgg_______bbb_bgg_______bgg_bbg_______bbg_bbb",
+    "credit": ""
+  },
+  {
+    "name": "icon:double_or_nothing",
+    "size": 10,
+    "bricks": "_______________________bbbb____bbbbbbbb__bbbbbbby_bbbbbbbyyybbbbbbyyyy______________________________",
+    "credit": ""
+  },
+  {
+    "name": "icon:download",
+    "size": 8,
+    "bricks": "___bb______bb______bb______bb______bb____bbbbbb___bbbb__gggbbggg",
+    "credit": ""
+  },
+  {
+    "name": "icon:editor",
+    "size": 10,
+    "bricks": "_______ggg______gggg_____ggggg____ggggg____ggggg____ggggg____ggggg____bgggg_____bbgg______bbb_______",
+    "credit": ""
+  },
+  {
+    "name": "icon:etherealcoins",
+    "size": 11,
+    "bricks": "_____y_________yyy________bbb________bbb_______ybbby_____yybbbyy____yybbbyy____yybbbyy____y__y__y________________________",
+    "credit": ""
+  },
+  {
+    "name": "icon:extra_levels",
+    "size": 6,
+    "bricks": "__________t__W_tt_WWW_t__W_ttt______",
+    "credit": ""
+  },
+  {
+    "name": "icon:extra_life",
+    "size": 9,
+    "bricks": "___________GG_WG___GGWWGGW_GGWWGGWWGGWWGGWWGG_WGGWWGG___GWWGG_____WGG_______G____",
+    "credit": ""
+  },
+  {
+    "name": "icon:forgiving",
+    "size": 8,
+    "bricks": "____y______y_y____y___y__y_____yy_____y__y___y____y_y____WWWWW__",
+    "credit": ""
+  },
+  {
+    "name": "icon:fountain_toss",
+    "size": 12,
+    "bricks": "_____________________y_________y______________y______y__y_____WWWWWWWW___WttttttttW_WtytttytyttWWtttyttttttWWWtyttttytWW_WWWWWWWWWW___WWWWWWWWW_",
+    "credit": ""
+  },
+  {
+    "name": "icon:ghost_coins",
+    "size": 7,
+    "bricks": "__bbb___bbbbb_bbybybbbbbbbbbbbyyybbbbbbbbbbb_b_bb",
+    "credit": ""
+  },
+  {
+    "name": "icon:happy_family",
+    "size": 9,
+    "bricks": "__tt_tt____tt_tt____tt_tt____________________W_______W__W_W_W___________rrrWWWrrr",
+    "credit": ""
+  },
+  {
+    "name": "icon:helium",
+    "size": 8,
+    "bricks": "_y____y_yb____bybb___ybbb____b_b_____b____________________WWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:help",
+    "size": 8,
+    "bricks": "___bb_____bbbb___bb__bb__bb__bb_____bb_____bb______________bb___",
+    "credit": ""
+  },
+  {
+    "name": "icon:history",
+    "size": 8,
+    "bricks": "__gggg___ggbggg_gggbgggggggbggggggggbbgggggggggg_gggggg___gggg__",
+    "credit": ""
+  },
+  {
+    "name": "icon:hot_start",
+    "size": 7,
+    "bricks": "tt__ttt__t_trt_t__tttt_____ttttWttt________WWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:hypnosis",
+    "size": 8,
+    "bricks": "_bbby____bbb_y___bbby_y__y_y_y_y__y_y_y____y_y_y____y_y______y_y",
+    "credit": ""
+  },
+  {
+    "name": "icon:implosions",
+    "size": 8,
+    "bricks": "y______b___yb_b__y_Bbb_____Bbbby_bbbB_____bbB___yb_by___b_____y_",
+    "credit": ""
+  },
+  {
+    "name": "icon:left_is_lava",
+    "size": 8,
+    "bricks": "r_______rtttttt_rtttttt_r_______r_______r____W__r_______r_WWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:limitless",
+    "size": 12,
+    "bricks": "_________________________bbb____yyb_bbbbb__yyybbbb_bbbyyy_bbbb__bbby__bbbb_yybbb__bbyyyyyybbbbbb_yyy___bbbb_____________________________________",
+    "credit": ""
+  },
+  {
+    "name": "icon:metamorphosis",
+    "size": 8,
+    "bricks": "yyyyyy__yyyy__________W___________bbyybb__bbbbbb_________WWW____",
+    "credit": ""
+  },
+  {
+    "name": "icon:minefield",
+    "size": 7,
+    "bricks": "tB___Bttt___tt__ByB____yyy__tB___Bttt___tt_______",
+    "credit": ""
+  },
+  {
+    "name": "icon:multiball",
+    "size": 8,
+    "bricks": "_________tttttt__tttttt___________W__W____________________WWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:nbricks",
+    "size": 7,
+    "bricks": "________tttrt__ttr_r____________W__________WWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:new_run",
+    "size": 7,
+    "bricks": "_ggg____gbgg___gbbgg__gbbbg__gbbgg__gbgg___ggg___",
+    "credit": ""
+  },
+  {
+    "name": "icon:one_more_choice",
+    "size": 7,
+    "bricks": "WWW____WGGG___WGWWW__WGWGGG__GWGGG___WGGG____GGG_",
+    "credit": ""
+  },
+  {
+    "name": "icon:ottawa_treaty",
+    "size": 8,
+    "bricks": "BBbyybBBBbbyybbBbyybbbybbbyyyybbbbbyybbbbbyyybbbByybybbBBBbbbyBB",
+    "credit": ""
+  },
+  {
+    "name": "icon:passive_income",
+    "size": 8,
+    "bricks": "_ttttt___ttt_t______yW_____________y______________WWW_______y___",
+    "credit": ""
+  },
+  {
+    "name": "icon:picky_eater",
+    "size": 8,
+    "bricks": "_rrr_______rt_____rtt_____r_t______ttt_______W____________WWWW__",
+    "credit": ""
+  },
+  {
+    "name": "icon:pierce",
+    "size": 6,
+    "bricks": "ttttttttttWtttt__ttt__ttt__ttt__tttt",
+    "credit": ""
+  },
+  {
+    "name": "icon:pierce_color",
+    "size": 8,
+    "bricks": "tt___tttt__t_ttt_____ttt____ttttt____ttttt____ttttt____ttttt____",
+    "credit": ""
+  },
+  {
+    "name": "icon:premium",
+    "size": 11,
+    "bricks": "__g____g___g____g____g_g__gbg__g______g______gg_gbg_gg_gbbgbbbgbbggbbgbbbgbbg_gbgbbbgbg___ggggggg____ggggggg_____________",
+    "credit": ""
+  },
+  {
+    "name": "icon:puck_repulse_ball",
+    "size": 8,
+    "bricks": "__________________W_______b___W___b__b______b____________WWW____",
+    "credit": ""
+  },
+  {
+    "name": "icon:rainbow",
+    "size": 10,
+    "bricks": "yyyyybbb__yyyybbb___yyybbbr___yybbbOrr__ybbbyOOrr_bbbCyyOOrrbbtCCyyOOrb_ttCCyyOO___ttCCyyO____ttCCyy",
+    "credit": ""
+  },
+  {
+    "name": "icon:reach",
+    "size": 8,
+    "bricks": "tttttttttttttttttt____ttrr____rr___________W_____________WWW____",
+    "credit": ""
+  },
+  {
+    "name": "icon:reroll",
+    "size": 8,
+    "bricks": "__llllll_llBlBlelllllleBWWWWWeeeWBWBWeBeWWWWWeeeWBWBWBe_WWWWWe__",
+    "credit": ""
+  },
+  {
+    "name": "icon:reset",
+    "size": 8,
+    "bricks": "bb____bbbbb__bbb_bbbbbb___bbbb____bbbb___bbbbbb_bbb__bbbbb____bb",
+    "credit": ""
+  },
+  {
+    "name": "icon:respawn",
+    "size": 9,
+    "bricks": "tttttytttttttyyytttttttyttt_____________________________W_________________WWW____",
+    "credit": ""
+  },
+  {
+    "name": "icon:right_is_lava",
+    "size": 8,
+    "bricks": "_______r_ttttttr_ttttttr_______r_______r_____W_r_______r__WWW__r",
+    "credit": ""
+  },
+  {
+    "name": "icon:sacrifice",
+    "size": 9,
+    "bricks": "__b___b___bbb_bbb_bbyyyyybbbbybybybbbbyybyybb_bbyyybb___bybyb_____bbb_______b____",
+    "credit": ""
+  },
+  {
+    "name": "icon:sapper",
+    "size": 9,
+    "bricks": "_____WW______W__W_tttWttt_yttgggtt__tgggggt__tgggggt__tgggggt__ttgggtt__ttttttt__",
+    "credit": ""
+  },
+  {
+    "name": "icon:settings",
+    "size": 9,
+    "bricks": "___g_g____g_ggg_g___ggbgg__gggbbbggg_gbb_bbg_gggbbbggg__ggbgg___g_ggg_g____g_g___",
+    "credit": ""
+  },
+  {
+    "name": "icon:shocks",
+    "size": 8,
+    "bricks": "____y_Oy_bbbO_y__bbbOO_O_bbby_yyyyOyyOO_OO_ybbb__yO_bbb_y__ybbb_",
+    "credit": ""
+  },
+  {
+    "name": "icon:shunt",
+    "size": 8,
+    "bricks": "_______y______yy______yy__yttyyy__y__yyy_yy__yyy_yy__yyyyyy__yyy",
+    "credit": ""
+  },
+  {
+    "name": "icon:side_flip",
+    "size": 7,
+    "bricks": "________rtttt__rtttt____________W__________WWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:side_kick",
+    "size": 7,
+    "bricks": "________ttttr__ttttr__________W______________WWW_",
+    "credit": ""
+  },
+  {
+    "name": "icon:skip_last",
+    "size": 5,
+    "bricks": "_GGG_G_G_GGG_GGG_G_G_GGG_",
+    "credit": ""
+  },
+  {
+    "name": "icon:slow_down",
+    "size": 10,
+    "bricks": "_____________kk_______kkkk_____kkkkkkGG__kkkkkkGBG_kkkkkkGGGGkkkkkkGG__GGGGGG____GG__GG_____________",
+    "credit": ""
+  },
+  {
+    "name": "icon:smaller_puck",
+    "size": 8,
+    "bricks": "_________bbbbbb__bbbbbb_____________y_____________________yy____",
+    "credit": ""
+  },
+  {
+    "name": "icon:soft_reset",
+    "size": 9,
+    "bricks": "__yy______yyy_tt__yyyy_ttt_yyyy_tttt_____tttt_tttttttt_tttttttt__tttttt____tttt__",
+    "credit": ""
+  },
+  {
+    "name": "icon:starting_perks",
+    "size": 8,
+    "bricks": "_________b_b_b___________g_g_g_g_________g_g_g_g_________g_g_g_g",
+    "credit": ""
+  },
+  {
+    "name": "icon:sticky_coins",
+    "size": 8,
+    "bricks": "__________yy_yy___bbbby__ybbbb___ybbbb____bbbby______yy_________",
+    "credit": ""
+  },
+  {
+    "name": "icon:streak_shots",
+    "size": 8,
+    "bricks": "_tttttt__ttWttt___W_W____W___W__W_____W__W___W____W_W_____rrr___",
+    "credit": ""
+  },
+  {
+    "name": "icon:sturdy_bricks",
+    "size": 7,
+    "bricks": "tttttttttttttt____y_____y_y___y___y_______WWW____",
+    "credit": ""
+  },
+  {
+    "name": "icon:superhot",
+    "size": 11,
+    "bricks": "____________________________________________W_W_WWW_WWWWWW_W_W__W_W_W_WWW__W_____________________________________________",
+    "credit": ""
+  },
+  {
+    "name": "icon:telekinesis",
+    "size": 8,
+    "bricks": "______WW____GGWW___G______G_______G_______G_______G_____WWWWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:three_cushion",
+    "size": 7,
+    "bricks": "tttttttttttttt____r______r______r______r_____WWW_",
+    "credit": ""
+  },
+  {
+    "name": "icon:top_is_lava",
+    "size": 8,
+    "bricks": "rrrrrrrr_tttttt__tttttt____________________W_______________WWW__",
+    "credit": ""
+  },
+  {
+    "name": "icon:trampoline",
+    "size": 8,
+    "bricks": "_r_r_r_rrtttttt__ttttttrr___________W__rr______________r__WWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:transparency",
+    "size": 9,
+    "bricks": "__t_y_t___________t_y_t_y_t_________y_t_y_t_y_________t_y_t_y_t___________t_y_t__",
+    "credit": ""
+  },
+  {
+    "name": "icon:trickledown",
+    "size": 8,
+    "bricks": "_ybbbbbb_________y_y_y__bbbbbb____________y_y_y___bbbbbb_y______",
+    "credit": ""
+  },
+  {
+    "name": "icon:unbounded",
+    "size": 8,
+    "bricks": "bbyyyybbbbyyyybbbb____bbbb____bbbb____bbbb__y_bbbb____bbbbyyy_bb",
+    "credit": ""
+  },
+  {
+    "name": "icon:unlocked_levels",
+    "size": 9,
+    "bricks": "ggggggggggbbbgbbbggbgggggbggbgbgbgbgggggggggggbgbgbgbggbgggggbggbbbgbbbgggggggggg",
+    "credit": ""
+  },
+  {
+    "name": "icon:unlocked_upgrades",
+    "size": 9,
+    "bricks": "___ggg_____ggbgg___ggbbbgg_ggbbgbbgggbbbgbbbggggbgbggg__gbgbg____gbgbg____ggggg__",
+    "credit": ""
+  },
+  {
+    "name": "icon:upload",
+    "size": 8,
+    "bricks": "gggbbggg__bbbb___bbbbbb____bb______bb______bb______bb______bb___",
+    "credit": ""
+  },
+  {
+    "name": "icon:viscosity",
+    "size": 8,
+    "bricks": "________bb______ttbb__bbttttbbtttbttbtttttbttbtttttyttyttttttttt",
+    "credit": ""
+  },
+  {
+    "name": "icon:wind",
+    "size": 9,
+    "bricks": "_bb______b___yyyy_b_________bbbbbbb___________bbbbbbb_b________b___yyyy__bb______",
+    "credit": ""
+  },
+  {
+    "name": "icon:wrap_left",
+    "size": 7,
+    "bricks": "__W_______b_______b_______b_y_____b_y______WWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:wrap_right",
+    "size": 7,
+    "bricks": "___W_____b_____b_____b_____y_____y_____y____WWW__",
+    "credit": ""
+  },
+  {
+    "name": "icon:yoyo",
+    "size": 8,
+    "bricks": "____W____GGWGGG_GGWGGGGGGWGGGGGG_WWWWWW_GGGGGGGGGGGGGGGG_GGGGGG_",
+    "credit": ""
+  },
+  {
+    "name": "icon:zen",
+    "size": 12,
+    "bricks": "________________tttt_______tttttt_______tttt________BrrB_______tttttt_____tttttttt_____tttttt______BrrrrB_____tttttttt___tttttttttt___tttttttt__",
+    "credit": ""
+  },
+  {
     "name": "71 mini",
     "size": 5,
-    "bricks": "bbb____bt__btt__b_t___ttt"
+    "bricks": "bbb____bt__btt__b_t___ttt",
+    "credit": ""
   },
   {
     "name": "Butterfly",
     "size": 9,
-    "bricks": "_________bb_t_t_bbbbb_t_bbbbbbbtbbbb_bbbtbbb____btb____bbbtbbb__bb_t_bb__________"
+    "bricks": "_________bb_t_t_bbbbb_t_bbbbbbbtbbbb_bbbtbbb____btb____bbbtbbb__bb_t_bb__________",
+    "credit": ""
   },
   {
     "name": "Castle",
     "size": 7,
-    "bricks": "s_s_s_ssssssssssBBBssssBBBssttbbbttttbbbtttbtbtbt"
+    "bricks": "s_s_s_ssssssssssBBBssssBBBssttbbbttttbbbtttbtbtbt",
+    "credit": ""
   },
   {
     "name": "Eyes",
     "size": 9,
-    "bricks": "ttttttt__tWWWWWWW_tWrrWttW_tWWWWWWW_ttttttt_____t______ttttt____ttttt_____t_t",
+    "bricks": "ttttttt__tWWWWWWW_tWrrWttW_tWWWWWWW_ttttttt_____t______ttttt____ttttt_____t_t____",
     "credit": "My favorite character in https://nuclearthrone.com/"
   },
   {
@@ -29,75 +566,85 @@
   {
     "name": "Stairs",
     "size": 8,
-    "bricks": "tt______tt______bbtt____bbtt____vvbbtt__vvbbtt__ppvvbbttppvvbbtt"
+    "bricks": "tt______tt______bbtt____bbtt____vvbbtt__vvbbtt__ppvvbbttppvvbbtt",
+    "credit": ""
   },
   {
     "name": "Dots",
     "size": 9,
-    "bricks": "b_t_a_c_c__________b_t_a_c__________P_b_t_a_c__________P_b_t_a__________P_P_b_t_a"
+    "bricks": "b_t_a_c_c__________b_t_a_c__________P_b_t_a_c__________P_b_t_a__________P_P_b_t_a",
+    "credit": ""
   },
   {
     "name": "Lines",
     "size": 9,
-    "bricks": "aaaaaaaa___________tttttttt_________aaaaaaaa___________tttttttt_________aaaaaaaa"
+    "bricks": "aaaaaaaa___________tttttttt_________aaaaaaaa___________tttttttt_________aaaaaaaa_",
+    "credit": ""
   },
   {
     "name": "Heart",
     "size": 15,
-    "bricks": "__________________RRR___RRR_____RSSSR_RSSSR___RSWWSSRSSSSSR__RSWSSSSSSSSSR__RSSSSSSSSSSSR__RSWSSSSSSSSSR___RSSSSSSSSSR_____RSSSSSSSR_______RSSSSSR_________RSSSR___________RSR_____________R____________________________________",
+    "bricks": "__________________RRR___RRR_____RSSSR_RSSSR___RSWWSSRSSSSSR__RSWSSSSSSSSSR__RSSSSSSSSSSSR__RSWSSSSSSSSSR___RSSSSSSSSSR_____RSSSSSSSR_______RSSSSSR_________RSSSR___________RSR_____________R_____________________________________",
     "credit": "https://www.youtube.com/watch?v=gdWiTfzXb1g"
   },
   {
     "name": "Swiss",
     "size": 7,
-    "bricks": "________RRRRR__RRWRR__RWWWR__RRWRR__RRRRR________"
+    "bricks": "________RRRRR__RRWRR__RWWWR__RRWRR__RRRRR________",
+    "credit": ""
   },
   {
     "name": "Germany",
     "size": 4,
-    "bricks": "____ggggrrrryyyy"
+    "bricks": "____ggggrrrryyyy",
+    "credit": ""
   },
   {
     "name": "France",
     "size": 6,
-    "bricks": "______ttWWrrttWWrrttWWrrttWWrrttWWrr"
+    "bricks": "______ttWWrrttWWrrttWWrrttWWrrttWWrr",
+    "credit": ""
   },
   {
     "name": "Smiley",
     "size": 8,
-    "bricks": "_________yy__yy__yy__yy__________________yyyyyy___yyyy__________"
+    "bricks": "_________yy__yy__yy__yy__________________yyyyyy___yyyy__________",
+    "credit": ""
   },
   {
     "name": "Labyrinthe",
     "size": 11,
-    "bricks": "_______tttS_Stttt_S________t___S__Stt_ttttt____t_____S__ttt_S_S____t___t_tttt_t_S_t____tSt_t_t_Sttt___t_t_____Sttt_tttttS"
+    "bricks": "_______tttS_Stttt_S________t___S__Stt_ttttt____t_____S__ttt_S_S____t___t_tttt_t_S_t____tSt_t_t_Sttt___t_t_____Sttt_tttttS",
+    "credit": ""
   },
   {
     "name": "Temple",
     "size": 11,
-    "bricks": "_______________WWW______WWWWWWW___WWWWWWWWW___b_b_b_b____b_b_b_b____v_v_v_v____P_P_P_P____P_P_P_P____WWWWWWW___WWWWWWWWW_"
+    "bricks": "_______________WWW______WWWWWWW___WWWWWWWWW___b_b_b_b____b_b_b_b____v_v_v_v____P_P_P_P____P_P_P_P____WWWWWWW___WWWWWWWWW_",
+    "credit": ""
   },
   {
     "name": "Pacman",
     "size": 12,
-    "bricks": "____yyyy______yyyyyyyy___yyyyByyyyy__yyyyyyyyy__yyyyyyyy____yyyyyy______yyyyyy___S_Syyyyyyyy_____yyyyyyyyy___yyyyyyyyyy___yyyyyyyy______yyyy",
+    "bricks": "____yyyy______yyyyyyyy___yyyyByyyyy__yyyyyyyyy__yyyyyyyy____yyyyyy______yyyyyy___S_Syyyyyyyy_____yyyyyyyyy___yyyyyyyyyy___yyyyyyyy______yyyy____",
     "credit": "https://en.wikipedia.org/wiki/Pacman"
   },
   {
     "name": "Ship",
     "size": 11,
-    "bricks": "____sWW________sWWW_______sWWW_______s___OOOOOOOOOOOOOO_OBOBOBOBOO__OOOOOOOO_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb___________"
+    "bricks": "____sWW________sWWW_______sWWW_______s___OOOOOOOOOOOOOO_OBOBOBOBOO__OOOOOOOO_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb___________",
+    "credit": ""
   },
   {
     "name": "We come in peace",
     "size": 13,
-    "bricks": "________________a_____a_______a___a_______aaaaaaa_____aaBaaaBaa___aaaaaaaaaaa__aaaaaaaaaaa__a_aaaaaaa_a__a_a_____a_a_____aa_aa_____________________________",
+    "bricks": "________________a_____a_______a___a_______aaaaaaa_____aaBaaaBaa___aaaaaaaaaaa__aaaaaaaaaaa__a_aaaaaaa_a__a_a_____a_a_____aa_aa___________________________________________",
     "credit": "https://en.wikipedia.org/wiki/Space_invaders"
   },
   {
     "name": "Space mushroom",
     "size": 10,
-    "bricks": "______________WW_______WWWW_____WWWWWW___WWBWWBWW__WWWWWWWW____W__W_____W_WW_W___W_W__W_W",
+    "bricks": "______________WW_______WWWW_____WWWWWW___WWBWWBWW__WWWWWWWW____W__W_____W_WW_W___W_W__W_W___________",
     "credit": "https://en.wikipedia.org/wiki/Space_invaders"
   },
   {
@@ -109,17 +656,19 @@
   {
     "name": "Small heart",
     "size": 15,
-    "bricks": "________________________________RRRR___RRRR___RrWWrR_RWWrrR__RWWrrrRWWrrrR__RrrrrrrrrrrrR__RrrrrrrrrrrrR___RrrrrrrrrrR_____RrrrrrrrR_______RrrrrrR_________RrrrR___________RrR_____________R______________________"
+    "bricks": "________________________________RRRR___RRRR___RrWWrR_RWWrrR__RWWrrrRWWrrrR__RrrrrrrrrrrrR__RrrrrrrrrrrrR___RrrrrrrrrrR_____RrrrrrrrR_______RrrrrrR_________RrrrR___________RrR_____________R_____________________________________",
+    "credit": ""
   },
   {
     "name": "Eye",
     "size": 9,
-    "bricks": "____________ggg_____gWWWg___gWbbbWg_gWWbBbWWg_gWbbbWg___gWWWg_____ggg____________"
+    "bricks": "____________ggg_____gWWWg___gWbbbWg_gWWbBbWWg_gWbbbWg___gWWWg_____ggg____________",
+    "credit": ""
   },
   {
     "name": "Enderman",
     "size": 10,
-    "bricks": "___________gggggggg__gggggggg__gggggggg__gggggggg__vvvggvvv__gggggggg__gggggggg__gggggggg_____________________",
+    "bricks": "___________gggggggg__gggggggg__gggggggg__gggggggg__vvvggvvv__gggggggg__gggggggg__gggggggg___________",
     "credit": "https://minecraft.wiki/w/Enderman"
   },
   {
@@ -131,369 +680,259 @@
   {
     "name": "Tulip",
     "size": 11,
-    "bricks": "______________R_R_R______RRRRR______RRRRR______RRRRR_______RRR_________k________k_k_k______k_k_k_______kkk_________k________________"
+    "bricks": "______________R_R_R______RRRRR______RRRRR______RRRRR_______RRR_________k________k_k_k______k_k_k_______kkk_________k_____",
+    "credit": ""
   },
   {
     "name": "Chain",
     "size": 7,
-    "bricks": "yyy____yBy____yyyyy____yBy____yyyyy____yBy____yyy"
+    "bricks": "yyy____yBy____yyyyy____yBy____yyyyy____yBy____yyy",
+    "credit": ""
   },
   {
     "name": "Marion",
     "size": 9,
-    "bricks": "rr_____rr_rr___rr__rrr_rrr__rrrrrrr__rr_r_rr__rr___rr__rr___rr__rr___rr_rrr___rrr"
+    "bricks": "rr_____rr_rr___rr__rrr_rrr__rrrrrrr__rr_r_rr__rr___rr__rr___rr__rr___rr_rrr___rrr",
+    "credit": ""
   },
   {
     "name": "Renan",
     "size": 9,
-    "bricks": "yyyyyyy___yyyyyyy__yy___yy__yy___yy__yyyyyy___yy_yy____yy__yy___yy___yy_yyy___yyy"
+    "bricks": "yyyyyyy___yyyyyyy__yy___yy__yy___yy__yyyyyy___yy_yy____yy__yy___yy___yy_yyy___yyy",
+    "credit": ""
   },
   {
     "name": "Violet Pairs",
     "size": 8,
-    "bricks": "b_b_b_b_b_b_b_b__________t_t_t_t_t_t_t_t________b_b_b_b_b_b_b_b"
+    "bricks": "b_b_b_b_b_b_b_b__________t_t_t_t_t_t_t_t________b_b_b_b_b_b_b_b_",
+    "credit": ""
   },
   {
     "name": "Red Cups",
     "size": 11,
-    "bricks": "___________rBr_rBr_rBrrrr_rrr_rrr___________r_rBr_rBr_rr_rrr_rrr_r___________rBr_rBr_rBrrrr_rrr_rrr__________"
+    "bricks": "___________rBr_rBr_rBrrrr_rrr_rrr___________r_rBr_rBr_rr_rrr_rrr_r___________rBr_rBr_rBrrrr_rrr_rrr______________________",
+    "credit": ""
   },
   {
     "name": "Cactus",
     "size": 10,
-    "bricks": "____G______rG_Gk______G_Gk______kkkk_r_____kkk_G______GkGk_____rGkk_______Gk________kk________kk_____"
+    "bricks": "____G______rG_Gk______G_Gk______kkkk_r_____kkk_G______GkGk_____rGkk_______Gk________kk________kk____",
+    "credit": ""
   },
   {
     "name": "Sunny Face",
     "size": 11,
-    "bricks": "____yyy______yyyyyyy___yyyyyyyyy__yyyyyyyyy_yyyWWyWWyyyyyyyyyyyyyyyyyyyyyyyyy_yyWWWWWyy__yyyWWWyyy___yyyyyyy______yyy"
+    "bricks": "____yyy______yyyyyyy___yyyyyyyyy__yyyyyyyyy_yyyWWyWWyyyyyyyyyyyyyyyyyyyyyyyyy_yyWWWWWyy__yyyWWWyyy___yyyyyyy______yyy____",
+    "credit": ""
   },
   {
     "name": "Mountain",
     "size": 9,
-    "bricks": "_______________W_______WWW______GGWW__W_GGGGG_kkkGGGGG_kkkkGGGGkkkkkGGGGkkkkkkGGG_________"
+    "bricks": "_______________W_______WWW______GGWW__W_GGGGG_kkkGGGGG_kkkkGGGGkkkkkGGGGkkkkkkGGG",
+    "credit": ""
   },
   {
     "name": "Dollar",
     "size": 17,
-    "bricks": "________________________G_G______________G_G____________GGGGGGG_________GGGGGGGGG_______GG__G_G__GG______GG__G_G__GG______GG__G_G___________GGGGGGGG__________GGGGGGGG___________G_G__GG______GG__G_G__GG______GG__G_G__GG_______GGGGGGGGG_________GGGGGGG____________G_G______________G_G________________________"
+    "bricks": "________________________G_G______________G_G____________GGGGGGG_________GGGGGGGGG_______GG__G_G__GG______GG__G_G__GG______GG__G_G___________GGGGGGGG__________GGGGGGGG___________G_G__GG______GG__G_G__GG______GG__G_G__GG_______GGGGGGGGG_________GGGGGGG____________G_G______________G_G_______",
+    "credit": ""
   },
   {
     "name": "Waves",
     "size": 8,
-    "bricks": "___bbb____bbb____bbttbbbbbttbbbbttttaatttttaattttaaaaaaa"
+    "bricks": "___bbb____bbb____bbttbbbbbttbbbbttttaatttttaattttaaaaaaa________",
+    "credit": ""
   },
   {
     "name": "Box",
     "size": 8,
-    "bricks": "yyyyyyyyy______yy_bbbb_yy_b__b_yy_b__b_yy_bbbb_yy______yyyyyyyyy"
+    "bricks": "yyyyyyyyy______yy_bbbb_yy_b__b_yy_b__b_yy_bbbb_yy______yyyyyyyyy",
+    "credit": ""
   },
   {
     "name": "Rose",
     "size": 9,
-    "bricks": "__SS______SSSS_____SSSS_____SSSS______SS_k______k_kk_____kk_k______kk________k"
+    "bricks": "__SS______SSSS_____SSSS_____SSSS______SS_k______k_kk_____kk_k______kk________k___",
+    "credit": ""
   },
   {
     "name": "Time",
     "size": 9,
-    "bricks": "__________WWWWWWW___WWWWW_____yyy_______y________y_______WyW_____WyyyW___yyyyyyy__________"
+    "bricks": "__________WWWWWWW___WWWWW_____yyy_______y________y_______WyW_____WyyyW___yyyyyyy_",
+    "credit": ""
   },
   {
     "name": "Watermelon",
     "size": 8,
-    "bricks": "_____Sk_____SSBk___SBSSk__SSSSSk_SSBSSk_SBSSSSk_kSSSkk___kkk____"
+    "bricks": "_____Sk_____SSBk___SBSSk__SSSSSk_SSBSSk_SBSSSSk_kSSSkk___kkk____",
+    "credit": ""
   },
   {
     "name": "Worms",
     "size": 13,
-    "bricks": "___sssss_______sssssss______WWsWWsss_____WBsBWsss_____WBsBWsss_____WWsWWsss_____sssssss_______ssssss_____WWWWWWss_______WssWs__s_____ssss__sss___sssssssssss__sssssssss_ss",
+    "bricks": "___sssss_______sssssss______WWsWWsss_____WBsBWsss_____WBsBWsss_____WWsWWsss_____sssssss_______ssssss_____WWWWWWss_______WssWs__s_____ssss__sss___sssssssssss__sssssssss_s",
     "credit": "https://en.wikipedia.org/wiki/Worms_(series)"
   },
   {
     "name": "Ocean Sunrise",
     "size": 8,
-    "bricks": "SSSSSSSSSSSyySSSSSyyyySSSyyyyyySbttttttbbbttttbbbbbttbbbbbbbbbbb"
+    "bricks": "SSSSSSSSSSSyySSSSSyyyySSSyyyyyySbttttttbbbttttbbbbbttbbbbbbbbbbb",
+    "credit": ""
   },
   {
     "name": "Crosses",
     "size": 13,
-    "bricks": "b___b___b___b__v___v___v___vvv_vvv_vvv___v___v___v__p___p___p___ppp_ppp_ppp_ppp___p___p___p__P___P___P___PPP_PPP_PPP___P___P___P__p___p___p___ppp_ppp_ppp_ppp___p___p___p"
+    "bricks": "b___b___b___b__v___v___v___vvv_vvv_vvv___v___v___v__p___p___p___ppp_ppp_ppp_ppp___p___p___p__P___P___P___PPP_PPP_PPP___P___P___P__p___p___p___ppp_ppp_ppp_ppp___p___p___p",
+    "credit": ""
   },
   {
     "name": "Negative space",
     "size": 9,
-    "bricks": "tttttttttt_t_t_t_t_________b_b_b_b_bbbbbbbbbb_b_b_b_b___________t_t_t_t_ttttttttt_________"
+    "bricks": "tttttttttt_t_t_t_t_________b_b_b_b_bbbbbbbbbb_b_b_b_b___________t_t_t_t_ttttttttt",
+    "credit": ""
   },
   {
     "name": "UK",
     "size": 11,
-    "bricks": "brbbWrWbbrbbbrbWrWbrbbbbbrWrWrbbbWWWWWrWWWWWrrrrrrrrrrrWWWWWrWWWWWbbbrWrWrbbbbbrbWrWbrbbbrbbWrWbbrb__________"
+    "bricks": "brbbWrWbbrbbbrbWrWbrbbbbbrWrWrbbbWWWWWrWWWWWrrrrrrrrrrrWWWWWrWWWWWbbbrWrWrbbbbbrbWrWbrbbbrbbWrWbbrb______________________",
+    "credit": ""
   },
   {
     "name": "Greece",
     "size": 11,
-    "bricks": "ttWttttttttttWttWWWWWWWWWWWttttttttWttWWWWWWttWttttttttWWWWWWWWWWWtttttttttttWWWWWWWWWWWttttttttttt__________"
+    "bricks": "ttWttttttttttWttWWWWWWWWWWWttttttttWttWWWWWWttWttttttttWWWWWWWWWWWtttttttttttWWWWWWWWWWWttttttttttt______________________",
+    "credit": ""
   },
   {
     "name": "Russia",
     "size": 8,
-    "bricks": "________WWWWWWWWWWWWWWWWttttttttttttttttrrrrrrrrrrrrrrrr________________"
+    "bricks": "________WWWWWWWWWWWWWWWWttttttttttttttttrrrrrrrrrrrrrrrr________",
+    "credit": ""
   },
   {
     "name": "Ukraine",
     "size": 8,
-    "bricks": "________ttttttttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyy________"
+    "bricks": "________ttttttttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyy________",
+    "credit": ""
   },
   {
     "name": "Poland",
     "size": 7,
-    "bricks": "________WWWWW__WWWWW__rrrrr__rrrrr_______________"
+    "bricks": "________WWWWW__WWWWW__rrrrr__rrrrr_______________",
+    "credit": ""
   },
   {
     "name": "Yellow 71",
     "size": 9,
-    "bricks": "_________yyyyy__yyyyyyy_yyy___yy__yy__yyy__yy_yyy___yy_yy____yy_yy____yy__________________"
+    "bricks": "_________yyyyy__yyyyyyy_yyy___yy__yy__yyy__yy_yyy___yy_yy____yy_yy____yy_________",
+    "credit": ""
   },
   {
     "name": "71 on white",
     "size": 6,
-    "bricks": "WWWWWWrrrWWrWWrWrrWrWWWrWrWWWrWWWWWW______"
+    "bricks": "WWWWWWrrrWWrWWrWrrWrWWWrWrWWWrWWWWWW",
+    "credit": ""
   },
   {
     "name": "Blue 71",
     "size": 8,
-    "bricks": "ttttt__bttttt_bb___ttbbb__tt__bb__tt__bb_tt___bb_tt___bb_tt___bb"
+    "bricks": "ttttt__bttttt_bb___ttbbb__tt__bb__tt__bb_tt___bb_tt___bb_tt___bb",
+    "credit": ""
   },
   {
     "name": "Seventy one",
     "size": 21,
-    "bricks": "rr_yy_rrry_yrrry_yrrrr_ry_yr__y_yr_ry_y_r_rr_yy_rr_yy_r_ry_y_r_r_ry_yr__y_yr_ry_y_r_rr_y_yrrry_yrrryyy_r_yyy__________________y______________r_____yyyrrry_yrrryyyrr_y_y__yrr_y_yrr_y_yr__y_yyyyrrr_y_rrry_yrrryyy____________________yrrryyyrrr_________yy_r_ry_yrr_____________rrry_yrrryyyyyyyyyyyy_____________________________________________________________________________________________________________________________"
+    "bricks": "rr_yy_rrry_yrrry_yrrrr_ry_yr__y_yr_ry_y_r_rr_yy_rr_yy_r_ry_y_r_r_ry_yr__y_yr_ry_y_r_rr_y_yrrry_yrrryyy_r_yyy__________________y______________r_____yyyrrry_yrrryyyrr_y_y__yrr_y_yrr_y_yr__y_yyyyrrr_y_rrry_yrrryyy____________________yrrryyyrrr_________yy_r_ry_yrr_____________rrry_yrrryyyyyyyyyyyy___________________________________________________________________________________________________________________________________________________",
+    "credit": ""
   },
   {
     "name": "B71",
     "size": 10,
-    "bricks": "__________bbbtttt_b_b__b__tbb_b__b__t_b_bbb__t__b_b__b_t__b_b__bt___b_bbb_t__bbb__________"
+    "bricks": "__________bbbtttt_b_b__b__tbb_b__b__t_b_bbb__t__b_b__b_t__b_b__bt___b_bbb_t__bbb____________________",
+    "credit": ""
   },
   {
     "name": "Pig",
     "size": 9,
-    "bricks": "__________PP___PP__PPP_PPP__WWPPPWW__WBPPPBW__PPsssPP__PsBsBsP__PPsssPP___________"
+    "bricks": "__________PP___PP__PPP_PPP__WWPPPWW__WBPPPBW__PPsssPP__PsBsBsP__PPsssPP__________",
+    "credit": ""
   },
   {
     "name": "Big Pig",
     "size": 15,
-    "bricks": "________________sss_______sss__ss__sssss__ss____sssssssss_____sWBsssssBWs___ssBBsssssBBss__ssss_____ssss__sss_sssss_sss__sss_sBsBs_sss__sss_sssss_sss___sss_____sss____sssssssssss__GGGsssssssssGGGGGGsGsssssGsGGGGGGssGGGGGssGGG_______________"
+    "bricks": "________________sss_______sss__ss__sssss__ss____sssssssss_____sWBsssssBWs___ssBBsssssBBss__ssss_____ssss__sss_sssss_sss__sss_sBsBs_sss__sss_sssss_sss___sss_____sss____sssssssssss__GGGsssssssssGGGGGGsGsssssGsGGGGGGssGGGGGssGGG",
+    "credit": ""
   },
   {
     "name": "Donkey Kong",
     "size": 9,
-    "bricks": "OOr__a___OOr__a___ppppppp_O______a________a____pppppppr_a______b_a___O__ppppppp__"
+    "bricks": "OOr__a___OOr__a___ppppppp_O______a________a____pppppppr_a______b_a___O__ppppppp__",
+    "credit": ""
   },
   {
     "name": "Banana",
     "size": 12,
-    "bricks": "_________________e__________eee_________eee_________eee_________eeeyy_____yyeeyyyy___yyyyey_yC___yy_yyy___C_____yyyy_________yyyy_________yyyy"
+    "bricks": "_________________e__________eee_________eee_________eee_________eeeyy_____yyeeyyyy___yyyyey_yC___yy_yyy___C_____yyyy_________yyyy_________yyyy__",
+    "credit": ""
   },
   {
     "name": "Fox",
     "size": 8,
-    "bricks": "e______eee_OO_eeeeOOOOeeeOBOOBOeOOOOOOOO_WWBBWW___WWWW_____WW___"
+    "bricks": "e______eee_OO_eeeeOOOOeeeOBOOBOeOOOOOOOO_WWBBWW___WWWW_____WW___",
+    "credit": ""
   },
   {
     "name": "Wiki",
     "size": 10,
-    "bricks": "_______________________GGGG_____GGkkGG___GkggggkG__GgWWWWgG__GkggggkG___GGkkGG_____GGGG_______________________"
+    "bricks": "_______________________GGGG_____GGkkGG___GkggggkG__GgWWWWgG__GkggggkG___GGkkGG_____GGGG_____________",
+    "credit": ""
   },
   {
     "name": "Baby Dog",
     "size": 8,
-    "bricks": "_______W__eeeeWWWWeeWeWWWeBWeBeeeeWWWWee_eWBBWe__eWWWWe____WW___"
+    "bricks": "_______W__eeeeWWWWeeWeWWWeBWeBeeeeWWWWee_eWBBWe__eWWWWe____WW___",
+    "credit": ""
   },
   {
     "name": "dog 21",
     "size": 9,
-    "bricks": "__________O_____O_OOOWWWOOOOOWWWWWOOOOeWWWWOO_eBeWWBW__eBeWWBW___eWBWW_____WRW____________",
+    "bricks": "__________O_____O_OOOWWWOOOOOWWWWWOOOOeWWWWOO_eBeWWBW__eBeWWBW___eWBWW_____WRW___",
     "credit": "https://prohama.com/dog-21-pattern/"
-  },
-  {
-    "name": "icon:extra_life",
-    "size": 9,
-    "bricks": "___________kk_Gk___kkGGkkG_kkGGkkGGkkGGkkGGkk_GkkGGkk___kGGkk_____Gkk_______k____"
-  },
-  {
-    "name": "icon:streak_shots",
-    "size": 8,
-    "bricks": "_tttttt__ttWttt___W_W____W___W__W_____W__W___W____W_W_____rrr___"
-  },
-  {
-    "name": "icon:base_combo",
-    "size": 7,
-    "bricks": "________ttttt__tytyt__ttttt__tytyt__ttttt________"
-  },
-  {
-    "name": "icon:slow_down",
-    "size": 10,
-    "bricks": "_____________kk_______kkkk_____kkkkkkGG__kkkkkkGBG_kkkkkkGGGGkkkkkkGG__GGGGGG____GG__GG_____________"
-  },
-  {
-    "name": "icon:bigger_puck",
-    "size": 8,
-    "bricks": "_________kkkkkk__kkkkkk______________________W___________GGGGGG_"
-  },
-  {
-    "name": "icon:viscosity",
-    "size": 8,
-    "bricks": "________bb______ttbb__bbttttbbtttbttbtttttbttbtttttyttyttttttttt"
-  },
-  {
-    "name": "icon:left_is_lava",
-    "size": 8,
-    "bricks": "r_______rtttttt_rtttttt_r_______r_______r____W__r_______r_WWW___"
-  },
-  {
-    "name": "icon:right_is_lava",
-    "size": 8,
-    "bricks": "_______r_ttttttr_ttttttr_______r_______r_____W_r_______r__WWW__r"
-  },
-  {
-    "name": "icon:telekinesis",
-    "size": 8,
-    "bricks": "_____GW_____G______G______G_______G_______G_______G_____kkkkk___"
-  },
-  {
-    "name": "icon:top_is_lava",
-    "size": 8,
-    "bricks": "rrrrrrrr_tttttt__tttttt____________________W_______________WWW__"
-  },
-  {
-    "name": "icon:coin_magnet",
-    "size": 8,
-    "bricks": "__y__y_yy_________y_y_y_y________y_y______________y______WWW____"
-  },
-  {
-    "name": "icon:skip_last",
-    "size": 5,
-    "bricks": "kGGGkGkGkGGGkGGGkGkGkGGGk"
-  },
-  {
-    "name": "icon:multiball",
-    "size": 8,
-    "bricks": "_________tttttt__tttttt___________W__W____________________WWW___"
-  },
-  {
-    "name": "icon:smaller_puck",
-    "size": 8,
-    "bricks": "_________yyyyyy__yyyyyy_____________W_____________________WW____"
-  },
-  {
-    "name": "icon:pierce",
-    "size": 6,
-    "bricks": "ttttttttttWtttt__ttt__ttt__ttt__tttt"
-  },
-  {
-    "name": "icon:picky_eater",
-    "size": 8,
-    "bricks": "_rrr_______rt_____rtt_____r_t______ttt_______W____________WWWW__"
-  },
-  {
-    "name": "icon:metamorphosis",
-    "size": 8,
-    "bricks": "aaaaaa__aaaa__________W___________ttaatt__tttttt_________WWW"
-  },
-  {
-    "name": "icon:compound_interest",
-    "size": 8,
-    "bricks": "_________tttttt__ttt__t_____W________________r___________WWW__r_"
-  },
-  {
-    "name": "icon:hot_start",
-    "size": 7,
-    "bricks": "tt__ttt__t_trt_t__tttt_____ttttWttt________WWW___"
-  },
-  {
-    "name": "icon:sapper",
-    "size": 9,
-    "bricks": "_____WW______W__W_tttWttt_yttgggtt__tgggggt__tgggggt__tgggggt__ttgggtt__ttttttt___________"
-  },
-  {
-    "name": "icon:bigger_explosions",
-    "size": 8,
-    "bricks": "__O__Oy___Oyy_____OyOy__OyyyByOO_OOBBBy___yyByO__yOOy_OO_OO_____"
-  },
-  {
-    "name": "icon:extra_levels",
-    "size": 6,
-    "bricks": "__________b__t_bb_ttt_b__t_bbb____________"
-  },
-  {
-    "name": "icon:pierce_color",
-    "size": 8,
-    "bricks": "bb___bbbb__b_bbb_____bbb____bbbbb____bbbbb____bbbbb____bbbbb____"
-  },
-  {
-    "name": "icon:soft_reset",
-    "size": 9,
-    "bricks": "__gg______ggg_yy__gggg_yyy_gggg_yyyy_____yyyy_yyyyyyyy_yyyyyyyy__yyyyyy____yyyy__"
-  },
-  {
-    "name": "icon:ball_repulse_ball",
-    "size": 8,
-    "bricks": "WsP__PsWs______sP______P________________P______Ps______sWsP__PsW"
-  },
-  {
-    "name": "icon:ball_attract_ball",
-    "size": 8,
-    "bricks": "__P__P____s__s__PsW__WsP________________PsW__WsP__s__s____P__P__"
-  },
-  {
-    "name": "icon:puck_repulse_ball",
-    "size": 8,
-    "bricks": "__________________W_______s___W___P__s______P____________WWW__"
   },
   {
     "name": "A",
     "size": 7,
-    "bricks": "__ttt___ttttt_ttt_ttttt___ttttttttttt___tttt___tt"
+    "bricks": "__ttt___ttttt_ttt_ttttt___ttttttttttt___tttt___tt",
+    "credit": ""
   },
   {
     "name": "B",
     "size": 9,
-    "bricks": "_bbbbb_____bb_bb____bb_bb____bb_bb____bbbb_____bb_bb____bb_bb____bb_bb___bbbbb____"
+    "bricks": "_bbbbb_____bb_bb____bb_bb____bb_bb____bbbb_____bb_bb____bb_bb____bb_bb___bbbbb___",
+    "credit": ""
   },
   {
     "name": "C",
     "size": 8,
-    "bricks": "__rrrr___rrrrrr_rrr___rrrr______rr______rrr___rr_rrrrrr___rrrr"
+    "bricks": "__rrrr___rrrrrr_rrr___rrrr______rr______rrr___rr_rrrrrr___rrrr__",
+    "credit": ""
   },
   {
     "name": "D",
     "size": 8,
-    "bricks": "_GGGGG____GG__G___GG__GG__GG__GG__GG__GG__GG__GG__GG__G__GGGGG"
+    "bricks": "_GGGGG____GG__G___GG__GG__GG__GG__GG__GG__GG__GG__GG__G__GGGGG__",
+    "credit": ""
   },
   {
     "name": "e",
     "size": 8,
-    "bricks": "__tttt___tttttt_tt____tttt____tttttttttttt_______tt__tt___tttt_"
-  },
-  {
-    "name": "icon:wind",
-    "size": 9,
-    "bricks": "_ss______s___PPPP_s_________sssssss___________sssssss_s________s___PPPP__ss"
-  },
-  {
-    "name": "icon:sturdy_bricks",
-    "size": 7,
-    "bricks": "yyyyyyyyyyyyyy____W_____W_W___W___W_______WWW____"
-  },
-  {
-    "name": "icon:respawn",
-    "size": 9,
-    "bricks": "tttt___ttttt__t__tttt_ttt_t_____________________________W_________________WWW____"
+    "bricks": "__tttt___tttttt_tt____tttt____tttttttttttt_______tt__tt___tttt__",
+    "credit": ""
   },
   {
     "name": "Elephant",
     "size": 18,
-    "bricks": "_________________________llll_________lll_llllll_lll___lsssllllllllsssl__lsssllllllllsssl__lsssllBllBllsssl__lssllWllllWllssl___ll__llllll__ll_________llll_______________ll______________llll______________ll________________________________________________________________________________________________________________________________________",
+    "bricks": "_________________________llll_________lll_llllll_lll___lsssllllllllsssl__lsssllllllllsssl__lsssllBllBllsssl__lssllWllllWllssl___ll__llllll__ll_________llll_______________ll______________llll______________ll______________________________________________________________________________________________________________________",
     "credit": "https://prohama.com/elephant-5-pattern/"
   },
   {
@@ -523,237 +962,122 @@
   {
     "name": "Armenia",
     "size": 6,
-    "bricks": "_______rrrr__bbbb__yyyy_____________"
+    "bricks": "_______rrrr__bbbb__yyyy_____________",
+    "credit": ""
   },
   {
     "name": "Austria",
     "size": 6,
-    "bricks": "_______rrrr__WWWW__rrrr______"
+    "bricks": "_______rrrr__WWWW__rrrr_____________",
+    "credit": ""
   },
   {
     "name": "Benin",
     "size": 8,
-    "bricks": "_________kkyyyy__kkyyyy__kkrrrr__kkrrrr__________________________"
+    "bricks": "_________kkyyyy__kkyyyy__kkrrrr__kkrrrr_________________________",
+    "credit": ""
   },
   {
     "name": "Botswana",
     "size": 10,
-    "bricks": "___________tttttttt__tttttttt__tttttttt__WWWWWWWW__BBBBBBBB__WWWWWWWW__tttttttt__tttttttt__tttttttt___________"
+    "bricks": "___________tttttttt__tttttttt__tttttttt__WWWWWWWW__BBBBBBBB__WWWWWWWW__tttttttt__tttttttt__tttttttt_",
+    "credit": ""
   },
   {
     "name": "Bulgaria",
     "size": 6,
-    "bricks": "_______WWWW__cccc__rrrr_____________"
+    "bricks": "_______WWWW__cccc__rrrr_____________",
+    "credit": ""
   },
   {
     "name": "Canada",
     "size": 7,
-    "bricks": "________rWWWr__rWrWr__rWWWr______________________"
+    "bricks": "________rWWWr__rWrWr__rWWWr______________________",
+    "credit": ""
   },
   {
     "name": "Chad",
     "size": 8,
-    "bricks": "_________bbyyRR__bbyyRR__bbyyRR"
+    "bricks": "_________bbyyRR__bbyyRR__bbyyRR_________________________________",
+    "credit": ""
   },
   {
     "name": "China",
     "size": 6,
-    "bricks": "______RRyRRRRyRyRRRRyRRRRRRRRR______"
+    "bricks": "______RRyRRRRyRyRRRRyRRRRRRRRR______",
+    "credit": ""
   },
   {
     "name": "Colombia",
     "size": 7,
-    "bricks": "________yyyyy__yyyyy__bbbbb__RRRRR_______________"
+    "bricks": "________yyyyy__yyyyy__bbbbb__RRRRR_______________",
+    "credit": ""
   },
   {
     "name": "Republic of the Congo",
     "size": 7,
-    "bricks": "________kkkyy__kkyyr__kyyrr__yyrrr_______________"
+    "bricks": "________kkkyy__kkyyr__kyyrr__yyrrr_______________",
+    "credit": ""
   },
   {
     "name": "Côte d'Ivoire",
     "size": 8,
-    "bricks": "_________OOWWGG__OOWWGG__OOWWGG"
+    "bricks": "_________OOWWGG__OOWWGG__OOWWGG_________________________________",
+    "credit": ""
   },
   {
     "name": "Denmark",
     "size": 8,
-    "bricks": "_________rrWrrr__rrWrrr__WWWWWW__rrWrrr__rrWrrr"
+    "bricks": "_________rrWrrr__rrWrrr__WWWWWW__rrWrrr__rrWrrr_________________",
+    "credit": ""
   },
   {
     "name": "El Salvador",
     "size": 8,
-    "bricks": "_________bbbbbb__bbbbbb__WWWkWW__WWkWWW__bbbbbb__bbbbbb"
+    "bricks": "_________bbbbbb__bbbbbb__WWWkWW__WWkWWW__bbbbbb__bbbbbb_________",
+    "credit": ""
   },
   {
     "name": "Egypt",
     "size": 8,
-    "bricks": "_________RRRRRR__RRRRRR__WWWyWW__WWyWWW__gggggg__gggggg"
+    "bricks": "_________RRRRRR__RRRRRR__WWWyWW__WWyWWW__gggggg__gggggg_________",
+    "credit": ""
   },
   {
     "name": "Estonia",
     "size": 8,
-    "bricks": "_________tttttt__tttttt__gggggg__gggggg__WWWWWW__WWWWWW"
+    "bricks": "_________tttttt__tttttt__gggggg__gggggg__WWWWWW__WWWWWW_________",
+    "credit": ""
   },
   {
     "name": "Finland",
     "size": 6,
-    "bricks": "_______WtWW__tttt__WtWW_____________"
+    "bricks": "_______WtWW__tttt__WtWW_____________",
+    "credit": ""
   },
   {
     "name": "Gabon",
     "size": 5,
-    "bricks": "______CCC__yyy__ttt______"
+    "bricks": "______CCC__yyy__ttt______",
+    "credit": ""
   },
   {
     "name": "Georgia",
     "size": 9,
-    "bricks": "__________WrWrWrW__WWWrWWW__rrrrrrr__WWWrWWW__WrWrWrW__________________"
+    "bricks": "__________WrWrWrW__WWWrWWW__rrrrrrr__WWWrWWW__WrWrWrW____________________________",
+    "credit": ""
   },
   {
     "name": "Guinea",
     "size": 8,
-    "bricks": "_________rryycc__rryycc__rryycc"
+    "bricks": "_________rryycc__rryycc__rryycc_________________________________",
+    "credit": ""
   },
   {
     "name": "Indonesia",
     "size": 6,
-    "bricks": "_______rrrr__rrrr__WWWW__WWWW_______"
-  },
-  {
-    "name": "icon:one_more_choice",
-    "size": 7,
-    "bricks": "ttt____tbbb___tbttt__tbtbbb__btbbb___tbbb____bbb_"
-  },
-  {
-    "name": "icon:checkmark_checked",
-    "size": 6,
-    "bricks": "_ggggbgBBBbbbbBbbggbbbBggBbBBg_gggg_"
-  },
-  {
-    "name": "icon:checkmark_unchecked",
-    "size": 6,
-    "bricks": "_gggg_gBBBBggBBBBggBBBBggBBBBg_gggg_"
-  },
-  {
-    "name": "icon:concave_puck",
-    "size": 7,
-    "bricks": "___G_____________G__________k__G__kkk___kkkkkkkkk"
-  },
-  {
-    "name": "icon:helium",
-    "size": 8,
-    "bricks": "_y____y_yP____PyPP___yPPP____P_P_____P____________________WWW___"
-  },
-  {
-    "name": "icon:asceticism",
-    "size": 8,
-    "bricks": "_tttttt__tt__tt_____W_______r______________r_________r_____WWW__"
-  },
-  {
-    "name": "icon:unbounded",
-    "size": 8,
-    "bricks": "ggttttggggttttggggttttgggg____gggg____gggg__W_gggg____ggggWWW_gg"
-  },
-  {
-    "name": "icon:shunt",
-    "size": 8,
-    "bricks": "_______y______yy______yy__yttyyy__y__yyy_yy__yyy_yy__yyyyyy__yyy"
-  },
-  {
-    "name": "icon:yoyo",
-    "size": 8,
-    "bricks": "_GGGGGG_kkkkkkkkGGGGGGGG_WWWWWW_GWGGGGGGkkWkkkkk_GGWGGG_____W___"
-  },
-  {
-    "name": "icon:nbricks",
-    "size": 7,
-    "bricks": "________tttrt__ttr_r____________W__________WWW___"
-  },
-  {
-    "name": "icon:etherealcoins",
-    "size": 11,
-    "bricks": "_____y_________yyy________ttt________ttt_______yttty_____yytttyy____yytttyy____yytttyy____y__y__y________________________"
-  },
-  {
-    "name": "icon:shocks",
-    "size": 8,
-    "bricks": "____y_Oy_WWWO_y__WWWOO_O_WWWy_yyyyOyyOO_OO_yWWW__yO_WWW_y__yWWW_"
-  },
-  {
-    "name": "icon:zen",
-    "size": 12,
-    "bricks": "________________WWWW_______WWWWWW_______WWWW________BrrB_______tttttt_____tttttttt_____tttttt______BrrrrB_____WWWWWWWW___WWWWWWWWWW___WWWWWWWW__"
-  },
-  {
-    "name": "icon:sacrifice",
-    "size": 9,
-    "bricks": "__t___t___ttt_ttt_ttWWWWWttttWtWtWttttWWtWWtt_ttWWWtt___tWtWt_____ttt_______t____"
-  },
-  {
-    "name": "icon:trampoline",
-    "size": 8,
-    "bricks": "_r_r_r_rrtttttt__ttttttrr___________W__rr______________r__WWW___"
-  },
-  {
-    "name": "icon:ghost_coins",
-    "size": 7,
-    "bricks": "__yyy___yyyyy_yy_y_yyyyyyyyyyy___yyyyyyyyyyy_y_yy"
-  },
-  {
-    "name": "icon:forgiving",
-    "size": 8,
-    "bricks": "____y______y_y____y___y__y_____yy_____y__y___y____y_y____WWWWW__"
-  },
-  {
-    "name": "icon:ball_attracts_coins",
-    "size": 8,
-    "bricks": "WWW_____WWW_y___WWW____y__y_y____y____y_____y_____y____y___y_y__"
-  },
-  {
-    "name": "icon:reach",
-    "size": 8,
-    "bricks": "tttttttttttttttttt____ttrr____rr___________W_____________WWW____"
-  },
-  {
-    "name": "icon:passive_income",
-    "size": 8,
-    "bricks": "_ttttt___ttt_t______yW_____________y______________ggg_______y___"
-  },
-  {
-    "name": "icon:clairvoyant",
-    "size": 9,
-    "bricks": "__y___y__y__y_y__y_y__t__y____ttt_____tWWWt___tWWgWWt_tttWWWttt__________________"
-  },
-  {
-    "name": "icon:implosions",
-    "size": 8,
-    "bricks": "y______W___yW_W__y_BWW_____BWWWy_WWWB_____WWB___yW_Wy___W_____y_"
-  },
-  {
-    "name": "icon:corner_shot",
-    "size": 9,
-    "bricks": "___W____y___W_y______W___y____W_y______W___y____W______W_W_WWW_WW_W_WWWWWW_W_WWWW"
-  },
-  {
-    "name": "icon:premium",
-    "size": 11,
-    "bricks": "__g____g___g____g____g_g__gbg__g______g______gg_gbg_gg_gbbgbbbgbbggbbgbbbgbbg_gbgbbbgbg___ggggggg____ggggggg_____________"
-  },
-  {
-    "name": "icon:reroll",
-    "size": 8,
-    "bricks": "__llllll_llBlBlelllllleBWWWWWeeeWBWBWeBeWWWWWeeeWBWBWBe_WWWWWe__"
-  },
-  {
-    "name": "icon:addiction",
-    "size": 9,
-    "bricks": "__________________________t__WWWWW_tWWWrrttttr_WWWWW_tr_______t__________________"
-  },
-  {
-    "name": "icon:help",
-    "size": 8,
-    "bricks": "___bb_____bbbb___bb__bb__bb__bb_____bb_____bb______________bb___"
+    "bricks": "_______rrrr__rrrr__WWWW__WWWW_______",
+    "credit": ""
   },
   {
     "name": "Pingwin",
@@ -782,152 +1106,116 @@
   {
     "name": "Opening",
     "size": 14,
-    "bricks": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbyyyyyyyyyyyybbyB___BB___Bybby__________ybbyyy______yyybbbbyyB__Byybbbbbbbyy__yybbbbbbbbby__ybbbbbyyyyby__ybyyyy___yby__yby______yby__yby______yBy__yBy______yyy__yyy___"
+    "bricks": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbyyyyyyyyyyyybbyB___BB___Bybby__________ybbyyy______yyybbbbyyB__Byybbbbbbbyy__yybbbbbbbbby__ybbbbbyyyyby__ybyyyy___yby__yby______yby__yby______yBy__yBy______yyy__yyy___",
+    "credit": ""
   },
   {
     "name": "Stripes",
     "size": 17,
-    "bricks": "bbb______tttttt________tttttt________tttttt______bbtttttt______bbbbbttt______bbbbbb________bbbbbb________bbbbbb______ttbbbbbb______tttttbbb______tttttt________tttttt________tttttt______bbtttttt______bbbbbttt______bbbbbb________bbbbbb________bbbbbb________bbbbbb___________bbb______________"
-  },
-  {
-    "name": "icon:starting_perks",
-    "size": 8,
-    "bricks": "_________b_b_b___________g_g_g_g_________g_g_g_g_________g_g_g_g"
-  },
-  {
-    "name": "icon:download",
-    "size": 8,
-    "bricks": "___bb______bb______bb______bb______bb____bbbbbb___bbbb__gggbbggg"
-  },
-  {
-    "name": "icon:upload",
-    "size": 8,
-    "bricks": "gggbbggg__bbbb___bbbbbb____bb______bb______bb______bb______bb___"
-  },
-  {
-    "name": "icon:coins",
-    "size": 8,
-    "bricks": "__bbbb___bbggbb_bbggggbbbggggggbbggggggbbbggggbb_bbggbb___bbbb__"
-  },
-  {
-    "name": "icon:reset",
-    "size": 8,
-    "bricks": "bb____bbbbb__bbb_bbbbbb___bbbb____bbbb___bbbbbb_bbb__bbbbb____bb"
-  },
-  {
-    "name": "icon:fountain_toss",
-    "size": 12,
-    "bricks": "_____________________y_________y______________y______y__y_____WWWWWWWW___WttttttttW_WtytttytyttWWtttyttttttWlWtyttttytWl_lWWWWWWWWl___llllllll__"
+    "bricks": "bbb______tttttt________tttttt________tttttt______bbtttttt______bbbbbttt______bbbbbb________bbbbbb________bbbbbb______ttbbbbbb______tttttbbb______tttttt________tttttt________tttttt______bbtttttt______bbbbbttt______bbbbbb________bbbbbb________bbbbbb________bbbbbb___________bbb______________",
+    "credit": ""
   },
   {
     "name": "You are here",
     "size": 13,
-    "bricks": "_____rrr_________rrrrr_______rrr_rrr______rr___rr______rr___rr_______rr_rr________rrrrr_________rrr__________rrr_________WWrWW_______WWWrWWW______WWWWWWW_______WWWWW____"
+    "bricks": "_____rrr_________rrrrr_______rrr_rrr______rr___rr______rr___rr_______rr_rr________rrrrr_________rrr__________rrr_________WWrWW_______WWWrWWW______WWWWWWW_______WWWWW____",
+    "credit": ""
   },
   {
     "name": "Gear",
     "size": 13,
-    "bricks": "_________________l_l_l______l_lllll_l_____lllllll____lllll_lllll___lll___lll___lll_____lll___lll___lll___lllll_lllll____lllllll_____l_lllll_l______l_l_l_________________"
+    "bricks": "_________________l_l_l______l_lllll_l_____lllllll____lllll_lllll___lll___lll___lll_____lll___lll___lll___lllll_lllll____lllllll_____l_lllll_l______l_l_l_________________",
+    "credit": ""
   },
   {
     "name": "Play",
     "size": 15,
-    "bricks": "_________________rrrrrrrrrrr___rrrrWWrrrrrrr__rrrrWWWrrrrrr__rrrrWWWWrrrrr__rrrrWWWWWrrrr__rrrrWWWWWWrrr__rrrrWWWWWrrrr__rrrrWWWWrrrrr__rrrrWWWrrrrrr__rrrrWWrrrrrrr___rrrrrrrrrrr_______________________________________________"
+    "bricks": "_________________rrrrrrrrrrr___rrrrWWrrrrrrr__rrrrWWWrrrrrr__rrrrWWWWrrrrr__rrrrWWWWWrrrr__rrrrWWWWWWrrr__rrrrWWWWWrrrr__rrrrWWWWrrrrr__rrrrWWWrrrrrr__rrrrWWrrrrrrr___rrrrrrrrrrr_______________________________________________",
+    "credit": ""
   },
   {
     "name": "City",
     "size": 18,
-    "bricks": "_______yyy___bbbbb________yyy__ybyyb________yyy__ybyyb__tt___yyy_b_ybbbb_tttt______bbbbbbbtttttt_______ybyybbbbbbb_______ybyybbyybyb_____b_ybbbbbyybyb_____bbbbbbbbbbbbb__bb___bbbbbbybyyb_bbbb__ybyybbybyybbbbbbb_ybyybbbbbbbtttttt_ybbbbbyybybtyyyyt_bbbbbbyybybtyyyyt_bbbbbbbbbbbtttttt_byybybybyybtytyyt_byybybybyybtttttt_byybb"
+    "bricks": "_______yyy___bbbbb________yyy__ybyyb________yyy__ybyyb__tt___yyy_b_ybbbb_tttt______bbbbbbbtttttt_______ybyybbbbbbb_______ybyybbyybyb_____b_ybbbbbyybyb_____bbbbbbbbbbbbb__bb___bbbbbbybyyb_bbbb__ybyybbybyybbbbbbb_ybyybbbbbbbtttttt_ybbbbbyybybtyyyyt_bbbbbbyybybtyyyyt_bbbbbbbbbbbtttttt_byybybybyybtytyyt_byybybybyybtttttt_byybb",
+    "credit": ""
   },
   {
     "name": "Wiggle",
     "size": 17,
-    "bricks": "__________________cccccc_ccc_cccc__c____c_c_c_c__c__ccc_cc_c_ccc_cc____c_c__c_____c___ccc_cccc_ccc_cc__c________c_c__c__ccc_ccc_cc_cccc____c_c_c_c________ccc_c_c_ccccccc__c___c_________c__ccc_ccccccccccc____c______________ccc_ccc_ccc_ccc__c___c_c_c_c_c_c__ccccc_ccc_ccc_c__________________"
+    "bricks": "__________________cccccc_ccc_cccc__c____c_c_c_c__c__ccc_cc_c_ccc_cc____c_c__c_____c___ccc_cccc_ccc_cc__c________c_c__c__ccc_ccc_cc_cccc____c_c_c_c________ccc_c_c_ccccccc__c___c_________c__ccc_ccccccccccc____c______________ccc_ccc_ccc_ccc__c___c_c_c_c_c_c__ccccc_ccc_ccc_c__________________",
+    "credit": ""
   },
   {
     "name": "Graph",
     "size": 18,
-    "bricks": "_______________________yy________________yyt__yytttt______tt_tttyy___t____yyt____t_____t____yy____tt_____t____t_____t______yy___t_____t______yy__tt_____yytttttt___tt___ttyy_____t___t____t__t_____t___yytttt__t_____t___yy______tt____t____t_______yy___t____ttt_____yyttyy______tyy___t___yy_______yytttt_________________________"
+    "bricks": "_______________________yy________________yyt__yytttt______tt_tttyy___t____yyt____t_____t____yy____tt_____t____t_____t______yy___t_____t______yy__tt_____yytttttt___tt___ttyy_____t___t____t__t_____t___yytttt__t_____t___yy______tt____t____t_______yy___t____ttt_____yyttyy______tyy___t___yy_______yytttt_________________________",
+    "credit": ""
   },
   {
     "name": "Lightbulb",
     "size": 14,
-    "bricks": "_______________y__yyyyy___y____yyyyyyy______yyyyyyyyy_____yyyyyyyyy___y_yyyyyyyyy__y__yyyyyyyyy_____yyyyyyyyy_____yyyBBByyy___y__yyByByy___y____yByBy_________lllll______y___lll___y_______lll______"
+    "bricks": "_______________y__yyyyy___y____yyyyyyy______yyyyyyyyy_____yyyyyyyyy___y_yyyyyyyyy__y__yyyyyyyyy_____yyyyyyyyy_____yyyBBByyy___y__yyByByy___y____yByBy_________lllll______y___lll___y_______lll______",
+    "credit": ""
   },
   {
     "name": "Note",
     "size": 16,
-    "bricks": "_____________WWW__________WWWWWW_______WWWWWW__W____WWWWWW_____W____WWW________W____W__________W____W__________W____W__________W____W__________W____W________WWW____W_______WWWW____W_______WWW___WWW____________WWWW____________WWW____________________________"
+    "bricks": "_____________WWW__________WWWWWW_______WWWWWW__W____WWWWWW_____W____WWW________W____W__________W____W__________W____W__________W____W__________W____W________WWW____W_______WWWW____W_______WWW___WWW____________WWWW____________WWW____________________________",
+    "credit": ""
   },
   {
     "name": "Rocket",
     "size": 13,
-    "bricks": "______b___________bbb_________bbBbb________btttb________ttBtt________ttttt________ttBtt________ttttt________ttBtt_______bbtttbb_____bbbyyybbb____bbbyyybbb____bb_ByB_bb__"
+    "bricks": "______b___________bbb_________bbBbb________btttb________ttBtt________ttttt________ttBtt________ttttt________ttBtt_______bbtttbb_____bbbyyybbb____bbbyyybbb____bb_ByB_bb__",
+    "credit": ""
   },
   {
     "name": "Abstract",
     "size": 16,
-    "bricks": "________________aaaaa_cccc_aaaaaaaaaa_cccc_aaaaa________________aaaa_cccc_aaaaaaaaaa_cccc_aaaaaa________________aaa_cccc_aaaaaaaaaa_cccc_aaaaaaa________________aa_cccc_aaaaaaaaaa_cccc_aaaaaaaa________________a_cccc_aaaaaaaaaa_cccc_aaaaaaaaa________________"
+    "bricks": "________________aaaaa_cccc_aaaaaaaaaa_cccc_aaaaa________________aaaa_cccc_aaaaaaaaaa_cccc_aaaaaa________________aaa_cccc_aaaaaaaaaa_cccc_aaaaaaa________________aa_cccc_aaaaaaaaaa_cccc_aaaaaaaa________________a_cccc_aaaaaaaaaa_cccc_aaaaaaaaa________________",
+    "credit": ""
   },
   {
     "name": "Fingerprint",
     "size": 15,
-    "bricks": "___SSSSSSSS______S_______SS____S__SSSSS__SS__S__S____SS__S____S__SS__SS_S___S__S_SS__S__S_S__S___SS_SS__SS_S_____S___S__S_S__SS__S__SS_S_S_SS_S__S__S_S_S_S___S_S__S_S_S_S___S_S__S___S_S___S_S__S__S__S___S_S__S__S__S__S___S_S_"
+    "bricks": "___SSSSSSSS______S_______SS____S__SSSSS__SS__S__S____SS__S____S__SS__SS_S___S__S_SS__S__S_S__S___SS_SS__SS_S_____S___S__S_S__SS__S__SS_S_S_SS_S__S__S_S_S_S___S_S__S_S_S_S___S_S__S___S_S___S_S__S__S__S___S_S__S__S__S__S___S_S_",
+    "credit": ""
   },
   {
     "name": "Leaf",
     "size": 14,
-    "bricks": "____________________________________________________________GGkGG________GGkGGkGG_____GGkGGkGGkkG_kkkkkkkkkkkGGG__GGkGGkGGkkG____GGkGGkGG_______GGkGG_______________________________________________"
+    "bricks": "____________________________________________________________GGkGG________GGkGGkGG_____GGkGGkGGkkG_kkkkkkkkkkkGGG__GGkGGkGGkkG____GGkGGkGG_______GGkGG_______________________________________________",
+    "credit": ""
   },
   {
     "name": "Abstract 2",
     "size": 14,
-    "bricks": "______________yyyy______yyyy______________bbb_bbbbbb_bbbbb___bbbb___bbb__y__bb__y__b______________bbb_bbbbbb_bbbbb___bbbb___bbb__y__bb__y__b______________bbb_bbbbbb_bbbbb___bbbb___bbb__y__bb__y__b"
+    "bricks": "______________yyyy______yyyy______________bbb_bbbbbb_bbbbb___bbbb___bbb__y__bb__y__b______________bbb_bbbbbb_bbbbb___bbbb___bbb__y__bb__y__b______________bbb_bbbbbb_bbbbb___bbbb___bbb__y__bb__y__b",
+    "credit": ""
   },
   {
     "name": "Abstract 3",
     "size": 13,
-    "bricks": "______________p_aaa_ppp_a__p___a_p___a__ppp_a_p_aaa_______________aaa_p_a_ppp__a___p_a___p__a_ppp_aaa_p_______________p_aaa_ppp_a__p___a_p___a__ppp_a_p_aaa______________"
+    "bricks": "______________p_aaa_ppp_a__p___a_p___a__ppp_a_p_aaa_______________aaa_p_a_ppp__a___p_a___p__a_ppp_aaa_p_______________p_aaa_ppp_a__p___a_p___a__ppp_a_p_aaa______________",
+    "credit": ""
   },
   {
     "name": "Abstract 4",
     "size": 13,
-    "bricks": "______________y_y_y_y_y_y__y_y_y_y_y_y__y_y_y_y_y_y_______________bbb_bbb_bbb_______________bbb_bbb_bbb_______________y_y_y_y_y_y__y_y_y_y_y_y__y_y_y_y_y_y______________"
+    "bricks": "______________y_y_y_y_y_y__y_y_y_y_y_y__y_y_y_y_y_y_______________bbb_bbb_bbb_______________bbb_bbb_bbb_______________y_y_y_y_y_y__y_y_y_y_y_y__y_y_y_y_y_y______________",
+    "credit": ""
   },
   {
     "name": "Abstract 5",
     "size": 13,
-    "bricks": "______________ccc_ccc_ccc__c_a_c_c_a_c__caa_aaa_aac_______________cca_aaa_acc__c_a_a_a_a_c__cca_aaa_acc_______________caa_aaa_aac__c_a_c_c_a_c__ccc_ccc_ccc______________"
+    "bricks": "______________ccc_ccc_ccc__c_a_c_c_a_c__caa_aaa_aac_______________cca_aaa_acc__c_a_a_a_a_c__cca_aaa_acc_______________caa_aaa_aac__c_a_c_c_a_c__ccc_ccc_ccc______________",
+    "credit": ""
   },
   {
     "name": "Abstract 6",
     "size": 13,
-    "bricks": "_vvvvv_vvvvv__v___v_v___v__v_bbbbbbb_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_vvv_b_v__v_b_____b_v__vvvvvvvvvvv_bbbb_____bbbb"
-  },
-  {
-    "name": "icon:new_run",
-    "size": 7,
-    "bricks": "_ggg____gbgg___gbbgg__gbbbg__gbbgg__gbgg___ggg___"
-  },
-  {
-    "name": "icon:settings",
-    "size": 9,
-    "bricks": "___g_g____g_ggg_g___ggbgg__gggbbbggg_gbb_bbg_gggbbbggg__ggbgg___g_ggg_g____g_g___"
-  },
-  {
-    "name": "icon:creative",
-    "size": 7,
-    "bricks": "bbg_bgg_______bbb_bgg_______bgg_bbg_______bbg_bbb"
-  },
-  {
-    "name": "icon:limitless",
-    "size": 12,
-    "bricks": "_________________________bbb____ttb_bbbbb__tttbbbb_bbbttt_bbbb__bbbt__bbbb_ttbbb__bbttttttbbbbbb_ttt___bbbb_____________________________________"
-  },
-  {
-    "name": "icon:history",
-    "size": 8,
-    "bricks": "__gggg___ggbggg_gggbgggggggbggggggggbbgggggggggg_gggggg___gggg__"
+    "bricks": "_vvvvv_vvvvv__v___v_v___v__v_bbbbbbb_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_v_v_b_v__v_b_vvv_b_v__v_b_____b_v__vvvvvvvvvvv_bbbb_____bbbb",
+    "credit": ""
   },
   {
     "name": "Hemiola",
@@ -954,257 +1242,159 @@
     "credit": "Did some nice bug reports"
   },
   {
-    "name": "icon:minefield",
-    "size": 7,
-    "bricks": "yB___Byyy___yy__ByB____yyy__yB___Byyy___yy_______"
-  },
-  {
-    "name": "icon:side_flip",
-    "size": 7,
-    "bricks": "________rtttt__rtttt____________W__________WWW___"
-  },
-  {
-    "name": "icon:side_kick",
-    "size": 7,
-    "bricks": "________ttttr__ttttr__________W______________WWW_"
-  },
-  {
     "name": "Lebanon",
     "size": 9,
-    "bricks": "_________rrrrrrrrrWWWWkWWWWWWWkkkWWWWWkkkkkWWWWWWkWWWWrrrrrrrrr__________________"
+    "bricks": "_________rrrrrrrrrWWWWkWWWWWWWkkkWWWWWkkkkkWWWWWWkWWWWrrrrrrrrr__________________",
+    "credit": ""
   },
   {
     "name": "Spain",
     "size": 9,
-    "bricks": "_________rrrrrrrrryyyyyyyyyyWrWyyyyyyrWryyyyyyWrWyyyyyyyyyyyyyyrrrrrrrrr_________"
+    "bricks": "_________rrrrrrrrryyyyyyyyyyWrWyyyyyyrWryyyyyyWrWyyyyyyyyyyyyyyrrrrrrrrr_________",
+    "credit": ""
   },
   {
     "name": "Uzbekistan",
     "size": 8,
-    "bricks": "tWtttWttWtttWttttWtWtWttWWWWWWWWWWWWWWWWGGGGGGGGGGGGGGGGGGGGGGGG"
+    "bricks": "tWtttWttWtttWttttWtWtWttWWWWWWWWWWWWWWWWGGGGGGGGGGGGGGGGGGGGGGGG",
+    "credit": ""
   },
   {
     "name": "Pakistan",
     "size": 8,
-    "bricks": "________WWkkkkkkWWkkWkWkWWkWkkkkWWkWkkWkWWkkWWkkWWkkkkkk________"
+    "bricks": "________WWkkkkkkWWkkWkWkWWkWkkkkWWkWkkWkWWkkWWkkWWkkkkkk________",
+    "credit": ""
   },
   {
     "name": "Korea",
     "size": 10,
-    "bricks": "__________WWWWWWWWWWWgWWWWWWgWWgWrrrrWgWWWWrrbbWWWWWWrrbbWWWWgWbbbbWgWWgWWWWWWgWWWWWWWWWWW__________"
-  },
-  {
-    "name": "icon:trickledown",
-    "size": 8,
-    "bricks": "_ytttttt_________y___y__tttttt____________y___y___tttttt_y______"
-  },
-  {
-    "name": "icon:transparency",
-    "size": 9,
-    "bricks": "__W_W_W___________W_y_y_y_W_________W_y_y_y_W_________W_y_y_y_W___________W_W_W__"
-  },
-  {
-    "name": "icon:superhot",
-    "size": 11,
-    "bricks": "____________________________________________W_W_WWW_WWWWWW_W_W__W_W_W_WWW__W_____________________________________________"
-  },
-  {
-    "name": "icon:bricks_attract_coins",
-    "size": 7,
-    "bricks": "_y__y___ttttt__ttttt__ttttt__ttttty_ttttt______y_"
-  },
-  {
-    "name": "icon:rainbow",
-    "size": 6,
-    "bricks": "__rOyC_rOyCa_rOyCarOyCatrOyCatrOyCat"
-  },
-  {
-    "name": "icon:hypnosis",
-    "size": 8,
-    "bricks": "__________WW______WWy______y_y______y_y______y________y_________"
-  },
-  {
-    "name": "icon:bricks_attract_ball",
-    "size": 8,
-    "bricks": "ttW_____tt_P________P________Ptt____P_tt___P____ttP_____tt_P____"
+    "bricks": "__________WWWWWWWWWWWgWWWWWWgWWgWrrrrWgWWWWrrbbWWWWWWrrbbWWWWgWbbbbWgWWgWWWWWWgWWWWWWWWWWW__________",
+    "credit": ""
   },
   {
     "name": "Chile",
     "size": 9,
-    "bricks": "_________tttWWWWWWtWtWWWWWWtttWWWWWWrrrrrrrrrrrrrrrrrrrrrrrrrrr__________________"
+    "bricks": "_________tttWWWWWWtWtWWWWWWtttWWWWWWrrrrrrrrrrrrrrrrrrrrrrrrrrr__________________",
+    "credit": ""
   },
   {
     "name": "Türkiye",
     "size": 12,
-    "bricks": "____________rrrrrrrrrrrrrrrWWWrrrrrrrrWWrrrrrrrrrWWrrWrWrrrrrWWrrrWrrrrrrWWrrWrWrrrrrrWWrrrrrrrrrrrWWWrrrrrrrrrrrrrrrrrr________________________"
+    "bricks": "____________rrrrrrrrrrrrrrrWWWrrrrrrrrWWrrrrrrrrrWWrrWrWrrrrrWWrrrWrrrrrrWWrrWrWrrrrrrWWrrrrrrrrrrrWWWrrrrrrrrrrrrrrrrrr________________________",
+    "credit": ""
   },
   {
-    "name": "icon:editor",
-    "size": 10,
-    "bricks": "_______ggg______gggg_____ggggg____ggggg____ggggg____ggggg____ggggg____bgggg_____bbgg______bbb_______"
-  },
-  {
+    "name": "Taj Mahal",
     "size": 11,
     "bricks": "_____e________WWWWW_____WWWWWWW____WWWWWWW____WWWWWWW__W__lllll__WWWeeeeeeeWWeeeeeWeeeeeeleeWWWeeleeeeWWWWWeeeeleWWlWWele",
-    "name": "Taj Mahal",
     "credit": "An approximative reproduction "
   },
   {
+    "name": "Abstract 7",
     "size": 9,
     "bricks": "__________SS_t_SS__S_____S____t_t____t_____t____t_t____S_____S__SS_t_SS__________",
-    "name": "Abstract 7",
     "credit": ""
   },
   {
+    "name": "Abstract 9",
     "size": 8,
     "bricks": "PP_vv_PP_P__v__P________vv_PP_vvv__P__v_________PP_vv_PP_P__v__P",
-    "name": "Abstract 9",
     "credit": ""
   },
   {
+    "name": "Crosshair",
     "size": 9,
     "bricks": "____W_____WWWWWWW__WB_W_BW__W_____W_WWW_B_WWW_W_____W__WB_W_BW__WWWWWWW_____W____",
-    "name": "Crosshair",
     "credit": ""
   },
   {
+    "name": "Abstract 10",
     "size": 15,
     "bricks": "bbbB_ttttt_BbbbbBbb_ttBtt_bbBbb____tt_tt____bbbbb_tt_tt_bbbb_______________ttttt_b_b_tttttt_____b_b_____tt_ttt_b_b_ttt_ttBtBt_bBb_tBtBtttt_t_bbb_t_ttt________________bb_ttttttt_bb__Bb_tB___Bt_bB__Bb_ttt_ttt_bB_bbb_________bbb",
-    "name": "Abstract 10",
     "credit": ""
   },
   {
+    "name": "Face",
     "size": 6,
     "bricks": "SSSSSSSOOOOSSBOOBSSOOOOSSOOOOS_OSSO_",
-    "name": "Face",
     "credit": ""
   },
   {
+    "name": "Eiffel tower",
     "size": 11,
     "bricks": "_____O__________O__________O__________O_________OOO________OOO____k___O_O___kkk_OO_OO_kkkkkOOOOOkkkkkOOO_OOOkkkOOO___OOOk",
-    "name": "Eiffel tower",
     "credit": ""
   },
   {
+    "name": "Abstract 11",
     "size": 9,
     "bricks": "P_t_s_t_PP_t___t_PP_ttttt_PP_______PPPPPPPPPPP_______PP_sssss_PP_s___s_PP_s_t_s_P",
-    "name": "Abstract 11",
     "credit": ""
   },
   {
+    "name": "Abstract 12",
     "size": 8,
     "bricks": "BbBb____bbbb____BbBb____bbbb________tBtB____tttt____tBtB____tttt",
-    "name": "Abstract 12",
     "credit": ""
   },
   {
+    "name": "Abstract 13",
     "size": 9,
     "bricks": "SSSSbSSSSSbbSbSbbSSbbS_SbbSSSSS_SSSSbb_____bbSSSS_SSSSSbbS_SbbSSbbSbSbbSSSSSbSSSS",
-    "name": "Abstract 13",
     "credit": ""
   },
   {
+    "name": "Abstract 14",
     "size": 11,
     "bricks": "aa_tt_aa_ttaa_tt_aa_tt__B__B__B__bb_aa_bb_aabb_aa_bb_aa__B__B__B__aa_bb_tt_bbaa_bb_tt_bb__B__B__B__tt_aa_bb_aatt_aa_bb_aa",
-    "name": "Abstract 14",
     "credit": ""
   },
   {
+    "name": "S",
     "size": 10,
     "bricks": "___________Oyyyyyyy__Oyyyyyyy__Oyy__Oyy__Oyy_______Oyyyyyyy_______Oyy__Oyy__Oyy__Oyyyyyyy__Oyyyyyyy_",
-    "name": "S",
     "credit": ""
   },
   {
+    "name": "Abstract 15",
     "size": 11,
     "bricks": "____________S_vvv_SSS__S___v___S__SSS_vvv_S__________S__S_vvv_SSS__S___v______SSS_vvv_S____S_____S__v_SSS_SSS____________",
-    "name": "Abstract 15",
     "credit": "Just random strokes"
   },
   {
+    "name": "Mario!",
     "size": 11,
     "bricks": "________________________RRRRR_____RRRRRRRRR__kkkOOkO___kOkOOOkOOO_kOkkOOOkOOOkkOOOOkkkk___OOOOOOO________________________",
-    "name": "Mario!",
     "credit": "Suggested by Nicolas03. A Mario level ! Sprite taken from https://art.pixilart.com/sr2d5c0683c82aws3.png . The sprite belongs to Nintendo"
   },
   {
+    "name": "Minesweeper",
     "size": 16,
     "bricks": "___llltCCttBC______lllCBBttCB______lttbBbtltt______ltBrBClttt______lttCCCttBt______llttCBtttt______ltCBCttlll______ltBCCtCtCt______lttCCBCBrB______llltBCCtrB______ttttttlltt______CBrttlllll______CBrBCttttl______ttCCBttBtl______tttCCCtCCt______tBttBtltBt___",
-    "name": "Minesweeper",
     "credit": "Suggested by Noodlemire. For once, you'll want to trigger as many mines as possible."
   },
   {
+    "name": "Target",
     "size": 19,
     "bricks": "__________________________________________________________________________________________________________________________WWW_______________WrrrW_____________WrWWWrW____________WrWBWrW____________WrWWWrW_____________WrrrW_______________WWW__________________________________________________________________________________________________________________________",
-    "name": "Target",
     "credit": "Suggested by Noodlemire. Unusually small level, with lots of room to miss your shots. Acts as decent aim practice."
   },
   {
+    "name": "The Boys",
     "size": 10,
     "bricks": "__________rrrrr_____WWrWWrrrrrWWrWWWWrWWWWrWWWWrWWrWrWWWWrWWWrWWWrWrWW_____WrWWW____________________",
-    "name": "The Boys",
     "credit": "Suggested by Bearded-Axe. My boys initals"
   },
   {
+    "name": "A Very Dangerous High-Five",
     "size": 21,
     "bricks": "__________________________________________________yy_______________yy__yy__yy___________yy__yy__yy____________yy__yy_yy_________y__yy__yy_yy________yyy_yyy_yy_yy_________yy__yy_yyyyy__________yy_yyyyyyyy___yyy____yyyyygggyyy__yyy______yyygBBBgyy_yyy________ygBBBBBgyyyy__W______ygBBBBBgyyy__________yygBBBgyyyy___________yygBgyyyy____________yyyByyyy_____________yyyyByy_______________yyByy_________________r_________________________________",
-    "name": "A Very Dangerous High-Five",
     "credit": "Suggested by Noodlemire. A unique shape, fun to bounce the ball between fingers. The palm was initially boring on its own, so I gave it a big bomb. It adds a distinct feeling between the top and bottom halves."
   },
   {
-    "name": "icon:buoy",
-    "size": 7,
-    "bricks": "___y______y_____yyy__tyyyyytttOOOtttttOtttttttttt"
-  },
-  {
-    "name": "icon:ottawa_treaty",
-    "size": 8,
-    "bricks": "BBtWWtBBBttWWttBtWWtttWtttWWWWtttttWWtttttWWWtttBWWtWttBBBtttWBB"
-  },
-  {
-    "name": "icon:three_cushion",
-    "size": 7,
-    "bricks": "tttttttttttttt____r______r______r______r__B__WWW_"
-  },
-  {
-    "name": "icon:sticky_coins",
-    "size": 8,
-    "bricks": "__________yy_yy___tttty__ytttt___ytttt____tttty______yy_________"
-  },
-  {
-    "name": "icon:double_or_nothing",
-    "size": 7,
-    "bricks": "__yyy___yyyyy_yyyyggyyyygggyyyggggy_ygggy___yyy__"
-  },
-  {
-    "name": "icon:wrap_left",
-    "size": 8,
-    "bricks": "WWWWWWWWW_W____WW__v___WW___v__WW____v_WWp____pWW_v____W__WWW___"
-  },
-  {
-    "name": "icon:wrap_right",
-    "size": 8,
-    "bricks": "WWWWWWWWW___W__WW__v___WW_v____WWp____pWW____v_WW___v__W__WWW___"
-  },
-  {
-    "name": "icon:unlocked_upgrades",
-    "size": 9,
-    "bricks": "___ggg_____ggbgg___ggbbbgg_ggbbgbbgggbbbgbbbggggbgbggg__gbgbg____gbgbg____ggggg__"
-  },
-  {
-    "name": "icon:unlocked_levels",
-    "size": 9,
-    "bricks": "ggggggggggbbbgbbbggbgggggbggbgbgbgbgggggggggggbgbgbgbggbgggggbggbbbgbbbgggggggggg"
-  },
-  {
-    "name": "icon:happy_family",
-    "size": 9,
-    "bricks": "__tt_tt____tt_tt____tt_tt____________________W_______W__W_W_W___________rrrWWWrrr"
-  },
-  {
+    "name": "Blinky",
     "size": 20,
     "bricks": "____________________________gggg______________ggrrrrgg___________grrrrrrrrg_________grrrrrrrrrrg_______grrrWWrrrrWWrg______grrWWWWrrWWWWg______grrWWbbrrWWbbg_____grrrWWbbrrWWbbrg____grrrrWWrrrrWWrrg____grrrrrrrrrrrrrrg____grrrrrrrrrrrrrrg____grrrrrrrrrrrrrrg____grrrrrrrrrrrrrrg____grrgrrrggrrrgrrg____grg_grg__grg_grg_____g___g____g___g_______________________________________________________________",
-    "name": "Blinky",
     "credit": "Suggested by Big Goober. The red ghost, Blinky, from the arcade game \"Pac Man\""
   }
 ]

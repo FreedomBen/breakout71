@@ -110,7 +110,7 @@ export function automaticBackgroundColor(bricks: string[]) {
   return bricks.filter((b) => b === "g").length >
     bricks.filter((b) => b !== "_").length * 0.05
     ? "#115988"
-    : "";
+    : "#000000";
 }
 
 export function levelCodeToRawLevel(code: string) {

@@ -28,7 +28,7 @@ function App() {
         ...cleaned.filter(l=>l.name.match('icon:')).sort((a,b)=>a.name>b.name ? 1:-1),
         ...cleaned.filter(l=>!l.name.match('icon:'))
         ]
-        setLevels(sorted as RawLevel[]) 
+        setLevels(sorted as RawLevel[])
         allLevels = sorted;
       });
   }, []);

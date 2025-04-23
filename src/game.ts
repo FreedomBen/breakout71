@@ -80,7 +80,7 @@ import {
   catchRateGood,
   clamp,
   levelTimeBest,
-  levelTimeGood,
+  levelTimeGood, miniMarkDown,
   missesBest,
   missesGood,
   wallBouncedBest,
@@ -97,6 +97,7 @@ import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
 import { getNearestUnlockHTML, openScorePanel } from "./openScorePanel";
 import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
+import {categories} from "./upgrades";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -909,10 +910,9 @@ async function applyFullScreenChoice() {
 
 async function openUnlockedUpgradesList() {
   const ts = getTotalScore();
-  const hintField = isOptionOn("mobile-mode") ? "help" : "tooltip";
   const upgradeActions = upgrades
     .sort((a, b) => a.threshold - b.threshold)
-    .map(({ name, id, threshold, icon, help }) => ({
+    .map(({ name, id, threshold, icon, help ,category, fullHelp}) => ({
       text: name,
       disabled: ts < threshold,
       value: {
@@ -920,10 +920,12 @@ async function openUnlockedUpgradesList() {
         level: allLevelsAndIcons.find((l) => l.name === "icon:" + id),
       } as RunParams,
       icon,
-      [hintField]:
+      category,
+      help:
         ts < threshold
           ? t("unlocks.minTotalScore", { score: threshold })
           : help(1),
+      tooltip:ts < threshold ? '':  fullHelp,
     }));
 
   const tryOn = await asyncAlert<RunParams>({
@@ -932,12 +934,21 @@ async function openUnlockedUpgradesList() {
       out_of: upgradeActions.length,
     }),
     content: [
-      `<p>${t("unlocks.intro", { ts })}
-   ${upgradeActions.find((u) => u.disabled) ? t("unlocks.greyed_out_help") : ""}</p>  `,
-      ...upgradeActions,
+     t("unlocks.intro", { ts }),
+      upgradeActions.find((u) => u.disabled) ? t("unlocks.greyed_out_help") : "",
+         miniMarkDown(t("unlocks.category.beginner")),
+      ...upgradeActions.filter(u=>u.category==categories.beginner),
+          miniMarkDown(t("unlocks.category.combo")),
+      ...upgradeActions.filter(u=>u.category==categories.combo),
+          miniMarkDown(t("unlocks.category.combo_boost")),
+      ...upgradeActions.filter(u=>u.category==categories.combo_boost),
+          miniMarkDown(t("unlocks.category.simple")),
+      ...upgradeActions.filter(u=>u.category==categories.simple),
+          miniMarkDown(t("unlocks.category.advanced")),
+      ...upgradeActions.filter(u=>u.category==categories.advanced),
     ],
     allowClose: true,
-    className: "actionsAsGrid large",
+    // className: "actionsAsGrid large",
   });
   if (tryOn) {
     if (await confirmRestart(gameState)) {

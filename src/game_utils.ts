@@ -323,9 +323,8 @@ export function getLevelUnlockCondition(levelIndex: number) {
     minScore = Math.max(-1000 + 100 * levelIndex, 0);
 
   if (levelIndex > 20) {
-    const possibletargets = rawUpgrades
+    const possibletargets = [...rawUpgrades]
       .slice(0, Math.floor(levelIndex / 2))
-      .map((u) => u)
       .filter((u) => !isExcluded(u.id))
       .sort(
         (a, b) => hashCode(levelIndex + a.id) - hashCode(levelIndex + b.id),

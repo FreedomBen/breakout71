@@ -28,6 +28,7 @@ export type Upgrade = {
   gift: boolean;
   id: PerkId;
   name: string;
+  category: string;
   icon: string;
   max: number;
   help: (lvl: number) => string;
