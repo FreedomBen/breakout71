@@ -436,7 +436,7 @@
   {
     "name": "icon:smaller_puck",
     "size": 8,
-    "bricks": "_________tttttt__tttttt_____________W_____________________WW____"
+    "bricks": "_________yyyyyy__yyyyyy_____________W_____________________WW____"
   },
   {
     "name": "icon:pierce",
@@ -446,7 +446,7 @@
   {
     "name": "icon:picky_eater",
     "size": 8,
-    "bricks": "_rrr_______ry_____ryy_____r_y______yyy______________y_____WWWW__"
+    "bricks": "_rrr_______rt_____rtt_____r_t______ttt_______W____________WWWW__"
   },
   {
     "name": "icon:metamorphosis",
@@ -456,12 +456,12 @@
   {
     "name": "icon:compound_interest",
     "size": 8,
-    "bricks": "_________tttttt__ttt__t______y_____________W__y_________rrWWWrrr"
+    "bricks": "_________tttttt__ttt__t_____W________________r___________WWW__r_"
   },
   {
     "name": "icon:hot_start",
     "size": 7,
-    "bricks": "_______rry_rrryyr_ryryry_ryryyr_ryrrry_rrr_______"
+    "bricks": "tt__ttt__t_trt_t__tttt_____ttttWttt________WWW___"
   },
   {
     "name": "icon:sapper",
@@ -472,7 +472,7 @@
   {
     "name": "icon:bigger_explosions",
     "size": 8,
-    "bricks": "__O_______Oy_OO___OyOy__OyyyWBOO_OOWyyy__ByOyOO__yOOyBOO_OO_____"
+    "bricks": "__O__Oy___Oyy_____OyOy__OyyyByOO_OOBBBy___yyByO__yOOy_OO_OO_____"
   },
   {
     "name": "icon:extra_levels",
@@ -537,12 +537,12 @@
   {
     "name": "icon:sturdy_bricks",
     "size": 7,
-    "bricks": "ttbttttbtttbtt____W_____W_W___W___W_______WWW____"
+    "bricks": "yyyyyyyyyyyyyy____W_____W_W___W___W_______WWW____"
   },
   {
     "name": "icon:respawn",
     "size": 9,
-    "bricks": "tttt___ttttt__t__ttta_ttt_______________________________W_________________WWW"
+    "bricks": "tttt___ttttt__t__tttt_ttt_t_____________________________W_________________WWW____"
   },
   {
     "name": "Elephant",
@@ -723,13 +723,13 @@
   {
     "name": "icon:helium",
     "size": 8,
-    "bricks": "_y____y_yP____PyPP___yPPP____P_P_____P____y_y______y______WWW___",
+    "bricks": "_y____y_yP____PyPP___yPPP____P_P_____P____________________WWW___",
     "color": ""
   },
   {
     "name": "icon:asceticism",
     "size": 8,
-    "bricks": "_yyyyyy__yy__yy_____W_______r_________r____r_________r__WWW___r_",
+    "bricks": "_tttttt__tt__tt_____W_______r______________r_________r_____WWW__",
     "color": ""
   },
   {
@@ -741,7 +741,7 @@
   {
     "name": "icon:shunt",
     "size": 8,
-    "bricks": "_______y______yy______yy__yyyyyy__y__yyy_yy__yyy_yy__yyyyyy__yyy",
+    "bricks": "_______y______yy______yy__yttyyy__y__yyy_yy__yyy_yy__yyyyyy__yyy",
     "color": ""
   },
   {
@@ -752,14 +752,14 @@
   },
   {
     "name": "icon:nbricks",
-    "size": 6,
-    "bricks": "yy__rryyy_yyyyyyyyyyyyyyyy_yyyrr__yy",
+    "size": 7,
+    "bricks": "________tttrt__ttr_r____________W__________WWW___",
     "color": ""
   },
   {
     "name": "icon:etherealcoins",
     "size": 11,
-    "bricks": "_____y_________yyy________WWW________WWW_______yWWWy_____yyWWWyy____yyWWWyy____yyWWWyy____y_WyW_y_______W________________",
+    "bricks": "_____y_________yyy________ttt________ttt_______yttty_____yytttyy____yytttyy____yytttyy____y__y__y________________________",
     "color": ""
   },
   {
@@ -771,25 +771,25 @@
   {
     "name": "icon:zen",
     "size": 12,
-    "bricks": "________________bbbb_______bbbbbb_______bbbb________BrrB_______tttttt_____tttttttt_____tttttt______BrrrrB_____bbbbbbbb___bbbbbbbbbb___bbbbbbbb__",
+    "bricks": "________________WWWW_______WWWWWW_______WWWW________BrrB_______tttttt_____tttttttt_____tttttt______BrrrrB_____WWWWWWWW___WWWWWWWWWW___WWWWWWWW__",
     "color": ""
   },
   {
     "name": "icon:sacrifice",
     "size": 9,
-    "bricks": "__t___t___ttt_ttt_ttWWWWWttttWbWbWttttWWbWWtt_ttWWWtt___tWtWt_____ttt_______t____",
+    "bricks": "__t___t___ttt_ttt_ttWWWWWttttWtWtWttttWWtWWtt_ttWWWtt___tWtWt_____ttt_______t____",
     "color": ""
   },
   {
     "name": "icon:trampoline",
     "size": 8,
-    "bricks": "rrrrrrrrrttttttrrttttttrr______rr___W__rr______rr______r__yyy___",
+    "bricks": "_r_r_r_rrtttttt__ttttttrr___________W__rr______________r__WWW___",
     "color": ""
   },
   {
     "name": "icon:ghost_coins",
     "size": 7,
-    "bricks": "__yyy___yyyyy_yyOyOyyyyyyyyyyyOOOyyyyyyyyyyy_y_yy",
+    "bricks": "__yyy___yyyyy_yy_y_yyyyyyyyyyy___yyyyyyyyyyy_y_yy",
     "color": ""
   },
   {
@@ -812,8 +812,8 @@
   },
   {
     "name": "icon:passive_income",
-    "size": 7,
-    "bricks": "_ttttt__ttt_t______W____y____________y_____rgggr_",
+    "size": 8,
+    "bricks": "_ttttt___ttt_t______yW_____________y______________ggg_______y___",
     "color": ""
   },
   {
@@ -849,7 +849,7 @@
   {
     "name": "icon:addiction",
     "size": 9,
-    "bricks": "__________________________l__WWWWW_lWWWrrllllr_WWWWW_lr_______l__________________",
+    "bricks": "__________________________t__WWWWW_tWWWrrttttr_WWWWW_tr_______t__________________",
     "color": ""
   },
   {
@@ -931,7 +931,7 @@
   {
     "name": "icon:fountain_toss",
     "size": 12,
-    "bricks": "WWWWW_______WWWWW____y_________y______________y______y__y_____WWWWWWWW___WttttttttW_WtytttytyttWWtttyttttttWlWtyttttytWl_lWWWWWWWWl___llllllll__",
+    "bricks": "_____________________y_________y______________y______y__y_____WWWWWWWW___WttttttttW_WtytttytyttWWtttyttttttWlWtyttttytWl_lWWWWWWWWl___llllllll__",
     "color": ""
   },
   {
@@ -1097,19 +1097,19 @@
   {
     "name": "icon:minefield",
     "size": 7,
-    "bricks": "W__B__WWWBBBWWB__W__BBBWWWBBW__B__WWWBBBWW_______",
+    "bricks": "yB___Byyy___yy__ByB____yyy__yB___Byyy___yy_______",
     "color": ""
   },
   {
     "name": "icon:side_flip",
     "size": 7,
-    "bricks": "________ttttt__rttty__rttty__rttty__ttttt________",
+    "bricks": "________rtttt__rtttt____________W__________WWW___",
     "color": ""
   },
   {
     "name": "icon:side_kick",
     "size": 7,
-    "bricks": "________ttttt__ytttr__ytttr__ytttr__ttttt________",
+    "bricks": "________ttttr__ttttr__________W______________WWW_",
     "color": ""
   },
   {
@@ -1145,13 +1145,13 @@
   {
     "name": "icon:trickledown",
     "size": 8,
-    "bricks": "_ytttttt_________y_y_y__tttttt____________y_y_y___tttttt_y______",
+    "bricks": "_ytttttt_________y___y__tttttt____________y___y___tttttt_y______",
     "color": ""
   },
   {
     "name": "icon:transparency",
     "size": 9,
-    "bricks": "__W_W_W___________W_W_W_W_W_________W_W_W_W_W_________W_W_W_W_W___________W_W_W__",
+    "bricks": "__W_W_W___________W_y_y_y_W_________W_y_y_y_W_________W_y_y_y_W___________W_W_W__",
     "color": ""
   },
   {
@@ -1163,7 +1163,7 @@
   {
     "name": "icon:bricks_attract_coins",
     "size": 7,
-    "bricks": "_y__y___tttttyyttttt__ttttt_yttttty_ttttt___y__y_",
+    "bricks": "_y__y___ttttt__ttttt__ttttt__ttttty_ttttt______y_",
     "color": ""
   },
   {
@@ -1175,13 +1175,13 @@
   {
     "name": "icon:hypnosis",
     "size": 8,
-    "bricks": "___WW______WW_______ay_____c__a______c______y_______a_c____c_y_a",
+    "bricks": "__________WW______WWy______y_y______y_y______y________y_________",
     "color": ""
   },
   {
     "name": "icon:bricks_attract_ball",
     "size": 8,
-    "bricks": "llW_____ll_P________P________Pll____P_ll___P____llP_____ll_P____",
+    "bricks": "ttW_____tt_P________P________Ptt____P_tt___P____ttP_____tt_P____",
     "color": ""
   },
   {
@@ -1331,7 +1331,7 @@
   {
     "name": "icon:buoy",
     "size": 7,
-    "bricks": "___b______b_____bbb__abbbbbaaatttaaaaataaaaaaaaaa",
+    "bricks": "___y______y_____yyy__tyyyyytttOOOtttttOtttttttttt",
     "svg": null,
     "color": ""
   },
@@ -1344,8 +1344,8 @@
   },
   {
     "name": "icon:three_cushion",
-    "size": 8,
-    "bricks": "BkkkkkkBk___W__kk__W_W_kk_W___WkkW___y_kk_W____kk__W___kBkkkkkkB",
+    "size": 7,
+    "bricks": "tttttttttttttt____r______r______r______r__B__WWW_",
     "svg": null,
     "color": ""
   },
@@ -1359,7 +1359,7 @@
   {
     "name": "icon:double_or_nothing",
     "size": 7,
-    "bricks": "__yyy___yrrry_yOOOrOyyOOrOOyyOOOOOy_yOrOy___yyy__",
+    "bricks": "__yyy___yyyyy_yyyyggyyyygggyyyggggy_ygggy___yyy__",
     "svg": null,
     "color": ""
   },
@@ -1394,8 +1394,15 @@
   {
     "name": "icon:happy_family",
     "size": 9,
-    "bricks": "___________tt_tt____tt_tt____tt_tt__W_tt_tt_W__________W_____W____W_W____________",
+    "bricks": "__tt_tt____tt_tt____tt_tt____________________W_______W__W_W_W___________rrrWWWrrr",
     "svg": null,
     "color": ""
+  },
+  {
+    "color": "#115988",
+    "size": 20,
+    "bricks": "____________________________gggg______________ggrrrrgg___________grrrrrrrrg_________grrrrrrrrrrg_______grrrWWrrrrWWrg______grrWWWWrrWWWWg______grrWWbbrrWWbbg_____grrrWWbbrrWWbbrg____grrrrWWrrrrWWrrg____grrrrrrrrrrrrrrg____grrrrrrrrrrrrrrg____grrrrrrrrrrrrrrg____grrrrrrrrrrrrrrg____grrgrrrggrrrgrrg____grg_grg__grg_grg_____g___g____g___g_______________________________________________________________",
+    "name": "Blinky",
+    "credit": "Suggested by Big Goober. The red ghost, Blinky, from the arcade game \"Pac Man\""
   }
 ]

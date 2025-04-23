@@ -6,7 +6,10 @@ import { getLevelBackground, hashCode } from "../getLevelBackground";
 import { createRoot } from "react-dom/client";
 import { useCallback, useEffect, useState } from "react";
 import { moveLevel, resizeLevel, setBrick } from "./levels_editor_util";
-import {levelCodeToRawLevel} from "../pure_functions";
+import {
+  automaticBackgroundColor,
+  levelCodeToRawLevel,
+} from "../pure_functions";
 
 const backgrounds = _backgrounds as string[];
 
@@ -91,11 +94,12 @@ function App() {
                     height: 40,
                     position: "absolute",
                   }}
-                >{ (color=="black" && '💣')||' '}</button>,
+                >
+                  {(palette[bricks[index]] == "black" && "💣") || " "}
+                </button>,
               );
             }
           }
-
 
           return (
             <div key={li}>
@@ -141,7 +145,8 @@ function App() {
                 className="level-bricks-preview"
                 style={{
                   width: size * 40,
-                  height: size * 40
+                  height: size * 40,
+                  background: automaticBackgroundColor(bricks.split("")),
                 }}
               >
                 {brickButtons}
@@ -163,7 +168,9 @@ function App() {
               border: "1px solid black",
             }}
             onClick={() => setSelected(code)}
-          >{(color=='' && 'x') || (color=="black" && '💣')||' '}</button>
+          >
+            {(color == "" && "x") || (color == "black" && "💣") || " "}
+          </button>
         ))}
       </div>
       <button
@@ -191,13 +198,10 @@ function App() {
         id="import-level"
         onClick={() => {
           const code = prompt("Level Code ? ");
-          if(!code) return;
-          const l=levelCodeToRawLevel(code)
-           if(!l)return;
-          setLevels((list) => [
-            ...list,
-             l
-          ]);
+          if (!code) return;
+          const l = levelCodeToRawLevel(code);
+          if (!l) return;
+          setLevels((list) => [...list, l]);
         }}
       >
         import

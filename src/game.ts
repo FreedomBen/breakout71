@@ -297,11 +297,8 @@ export async function openUpgradesPicker(gameState: GameState) {
       icon: string;
       value: PerkId | "reroll";
       help: string;
-      className:string;
-    }> = pickRandomUpgrades(
-      gameState,
-      3 + gameState.perks.one_more_choice ,
-    );
+      className: string;
+    }> = pickRandomUpgrades(gameState, 3 + gameState.perks.one_more_choice);
     if (!actions.length) break;
 
     if (gameState.rerolls)

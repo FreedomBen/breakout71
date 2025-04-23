@@ -607,8 +607,7 @@ export function pickRandomUpgrades(gameState: GameState, count: number) {
     icon: icons["icon:" + u.id],
     value: u.id as PerkId,
     help: u.help(gameState.perks[u.id] + 1),
-    className: 'upgrade '
-
+    className: "upgrade ",
   }));
 }
 
@@ -1183,7 +1182,10 @@ export function gameStateTick(
         Math.abs(coin.x - gameState.puckPosition) * 2 >
           gameState.puckWidth + coin.size;
       let dvy =
-        frames * coin.weight * 0.8 * (flip ? 1-gameState.perks.helium*0.6 : 1);
+        frames *
+        coin.weight *
+        0.8 *
+        (flip ? 1 - gameState.perks.helium * 0.6 : 1);
 
       if (gameState.perks.etherealcoins) {
         if (gameState.perks.helium) {

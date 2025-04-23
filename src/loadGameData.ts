@@ -6,7 +6,7 @@ import { rawUpgrades } from "./upgrades";
 import { getLevelBackground } from "./getLevelBackground";
 import { levelIconHTML } from "./levelIcon";
 
-import {automaticBackgroundColor} from "./pure_functions";
+import { automaticBackgroundColor } from "./pure_functions";
 
 const palette = _palette as Palette;
 
@@ -17,8 +17,7 @@ export const appVersion = _appVersion as string;
 export const icons = {} as { [k: string]: string };
 
 export function transformRawLevel(level: RawLevel) {
-  const splitBricks=level.bricks
-    .split("")
+  const splitBricks = level.bricks.split("");
   const bricks = splitBricks
     .map((c) => palette[c])
     .slice(0, level.size * level.size);
@@ -30,7 +29,7 @@ export function transformRawLevel(level: RawLevel) {
     bricks,
     bricksCount,
     icon,
-    color:     automaticBackgroundColor(splitBricks) ,
+    color: automaticBackgroundColor(splitBricks),
     svg: getLevelBackground(level),
     sortKey: ((Math.random() + 3) / 3.5) * bricksCount,
   };

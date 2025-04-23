@@ -14,10 +14,13 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
+- rename hypnosis
+- more icons
+- save global stats locally (sum of broken bricks, paddle hits, misses,)
 
 ## Done
 
-- 
+- new level : Blinky by Big Goober 
 - color coded perks (green = noob friendly, red = combo with reset condition)
 - removed : instant_upgrade
 - nerfed : helium : now need to be level 3 to have the same effect of keeping coins up

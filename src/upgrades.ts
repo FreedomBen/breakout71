@@ -10,14 +10,11 @@ export const noCreative: PerkId[] = [
   "one_more_choice",
 ];
 
-
 export const rawUpgrades = [
   {
-
     requires: "",
     threshold: 0,
     gift: false,
-
     id: "extra_life",
     max: 7,
     name: t("upgrades.extra_life.name"),
@@ -27,26 +24,20 @@ export const rawUpgrades = [
         : t("upgrades.extra_life.help_plural", { lvl }),
     fullHelp: t("upgrades.extra_life.verbose_description"),
   },
-
   {
-
     requires: "",
-    threshold: 0,
-    id: "base_combo",
-    gift: true,
-
-    max: 7,
-    name: t("upgrades.base_combo.name"),
-    help: (lvl: number) =>
-      t("upgrades.base_combo.tooltip", { coins: 1 + lvl * 3 }),
-    fullHelp: t("upgrades.base_combo.verbose_description"),
+    threshold: 60000,
+    gift: false,
+    id: "concave_puck",
+    max: 1,
+    name: t("upgrades.concave_puck.name"),
+    help: (lvl: number) => t("upgrades.concave_puck.tooltip"),
+    fullHelp: t("upgrades.concave_puck.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 0,
     gift: false,
-
     id: "slow_down",
     max: 2,
     name: t("upgrades.slow_down.name"),
@@ -54,36 +45,43 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.slow_down.verbose_description"),
   },
   {
-
+    requires: "",
+    threshold: 500,
+    id: "telekinesis",
+    gift: true,
+    max: 1,
+    name: t("upgrades.telekinesis.name"),
+    help: (lvl: number) =>
+      lvl == 1
+        ? t("upgrades.telekinesis.tooltip")
+        : t("upgrades.telekinesis.help_plural"),
+    fullHelp: t("upgrades.telekinesis.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 85000,
+    gift: false,
+    id: "yoyo",
+    max: 1,
+    name: t("upgrades.yoyo.name"),
+    help: (lvl: number) => t("upgrades.yoyo.tooltip"),
+    fullHelp: t("upgrades.yoyo.verbose_description"),
+  },
+  {
     requires: "",
     threshold: 0,
     gift: false,
-
     id: "bigger_puck",
     max: 2,
     name: t("upgrades.bigger_puck.name"),
     help: () => t("upgrades.bigger_puck.tooltip"),
     fullHelp: t("upgrades.bigger_puck.verbose_description"),
   },
+
   {
-
-    requires: "",
-    threshold: 0,
-    gift: false,
-
-    id: "viscosity",
-    max: 3,
-
-    name: t("upgrades.viscosity.name"),
-    help: () => t("upgrades.viscosity.tooltip"),
-    fullHelp: t("upgrades.viscosity.verbose_description"),
-  },
-  {
-
     requires: "",
     threshold: 50,
     gift: false,
-
     id: "skip_last",
     max: 7,
     name: t("upgrades.skip_last.name"),
@@ -94,12 +92,10 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.skip_last.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 100,
     id: "streak_shots",
     gift: true,
-
     max: 1,
     name: t("upgrades.streak_shots.name"),
     help: (lvl: number) => t("upgrades.streak_shots.tooltip", { lvl }),
@@ -107,161 +103,40 @@ export const rawUpgrades = [
   },
 
   {
-
     requires: "",
-
     threshold: 200,
     id: "left_is_lava",
     gift: true,
-
     max: 1,
-
     name: t("upgrades.left_is_lava.name"),
     help: (lvl: number) => t("upgrades.left_is_lava.tooltip", { lvl }),
     fullHelp: t("upgrades.left_is_lava.verbose_description"),
   },
   {
-
     requires: "",
-
     threshold: 300,
     id: "right_is_lava",
     gift: true,
-
     max: 1,
     name: t("upgrades.right_is_lava.name"),
     help: (lvl: number) => t("upgrades.right_is_lava.tooltip", { lvl }),
     fullHelp: t("upgrades.right_is_lava.verbose_description"),
   },
   {
-
     requires: "",
-
     threshold: 400,
     id: "top_is_lava",
     gift: true,
-
     max: 1,
     name: t("upgrades.top_is_lava.name"),
     help: (lvl: number) => t("upgrades.top_is_lava.tooltip", { lvl }),
     fullHelp: t("upgrades.top_is_lava.verbose_description"),
   },
   {
-
-    requires: "",
-
-    threshold: 500,
-    id: "telekinesis",
-    gift: true,
-
-    max: 1,
-    name: t("upgrades.telekinesis.name"),
-    help: (lvl: number) =>
-      lvl == 1
-        ? t("upgrades.telekinesis.tooltip")
-        : t("upgrades.telekinesis.help_plural"),
-    fullHelp: t("upgrades.telekinesis.verbose_description"),
-  },
-  {
-
-    requires: "",
-    threshold: 700,
-    gift: false,
-
-    id: "coin_magnet",
-    max: 3,
-    name: t("upgrades.coin_magnet.name"),
-    help: (lvl: number) =>
-      lvl == 1
-        ? t("upgrades.coin_magnet.tooltip")
-        : t("upgrades.coin_magnet.help_plural"),
-    fullHelp: t("upgrades.coin_magnet.verbose_description"),
-  },
-  {
-
-    requires: "",
-
-    threshold: 800,
-    id: "multiball",
-    gift: true,
-
-    max: 6,
-    name: t("upgrades.multiball.name"),
-    help: (lvl: number) => t("upgrades.multiball.tooltip", { count: lvl + 1 }),
-    fullHelp: t("upgrades.multiball.verbose_description"),
-  },
-  {
-
-    requires: "",
-
-    threshold: 1000,
-    gift: false,
-
-    id: "smaller_puck",
-    max: 2,
-    name: t("upgrades.smaller_puck.name"),
-    help: (lvl: number) =>
-      t("upgrades.smaller_puck.tooltip", { percent: 50 * lvl }),
-    fullHelp: t("upgrades.smaller_puck.verbose_description"),
-  },
-  {
-
-    requires: "",
-    threshold: 1500,
-    id: "pierce",
-    gift: false,
-
-    max: 3,
-    name: t("upgrades.pierce.name"),
-    help: (lvl: number) => t("upgrades.pierce.tooltip", { count: 3 * lvl }),
-    fullHelp: t("upgrades.pierce.verbose_description"),
-  },
-  {
-
-    requires: "",
-
-    threshold: 2000,
-    id: "picky_eater",
-    gift: true,
-
-    max: 1,
-    name: t("upgrades.picky_eater.name"),
-    help: (lvl: number) => t("upgrades.picky_eater.tooltip", { lvl }),
-    fullHelp: t("upgrades.picky_eater.verbose_description"),
-  },
-  {
-
-    requires: "",
-
-    threshold: 2500,
-    gift: false,
-
-    id: "metamorphosis",
-    max: 1,
-    name: t("upgrades.metamorphosis.name"),
-    help: (lvl: number) => t("upgrades.metamorphosis.tooltip", { lvl }),
-    fullHelp: t("upgrades.metamorphosis.verbose_description"),
-  },
-  {
-
-    requires: "",
-
-    threshold: 3000,
-    id: "compound_interest",
-    gift: true,
-
-    max: 1,
-    name: t("upgrades.compound_interest.name"),
-    help: (lvl: number) => t("upgrades.compound_interest.tooltip", { lvl }),
-    fullHelp: t("upgrades.compound_interest.verbose_description"),
-  },
-  {
-
     requires: "",
     threshold: 4000,
     id: "hot_start",
     gift: true,
-
     max: 3,
     name: t("upgrades.hot_start.name"),
     help: (lvl: number) =>
@@ -271,57 +146,141 @@ export const rawUpgrades = [
       }),
     fullHelp: t("upgrades.hot_start.verbose_description"),
   },
+
   {
-
     requires: "",
-
-    threshold: 6000,
-    id: "sapper",
-    gift: false,
-
-    max: 7,
-    name: t("upgrades.sapper.name"),
-    help: (lvl: number) =>
-      lvl == 1
-        ? t("upgrades.sapper.tooltip")
-        : t("upgrades.sapper.help_plural", { lvl }),
-    fullHelp: t("upgrades.sapper.verbose_description"),
-  },
-  {
-
-    requires: "",
-
-    threshold: 9000,
-    id: "bigger_explosions",
-    gift: false,
-
+    threshold: 2000,
+    id: "picky_eater",
+    gift: true,
     max: 1,
-    name: t("upgrades.bigger_explosions.name"),
-    help: (lvl: number) => t("upgrades.bigger_explosions.tooltip"),
-    fullHelp: t("upgrades.bigger_explosions.verbose_description"),
+    name: t("upgrades.picky_eater.name"),
+    help: (lvl: number) => t("upgrades.picky_eater.tooltip", { lvl }),
+    fullHelp: t("upgrades.picky_eater.verbose_description"),
+  },
+
+  {
+    requires: "",
+    threshold: 3000,
+    id: "compound_interest",
+    gift: true,
+    max: 1,
+    name: t("upgrades.compound_interest.name"),
+    help: (lvl: number) => t("upgrades.compound_interest.tooltip", { lvl }),
+    fullHelp: t("upgrades.compound_interest.verbose_description"),
   },
   {
-
     requires: "",
-
-    threshold: 13000,
-    gift: false,
-
-    adventure: false,
-    id: "extra_levels",
+    threshold: 150000,
+    gift: true,
+    id: "side_kick",
     max: 3,
-    name: t("upgrades.extra_levels.name"),
+    name: t("upgrades.side_kick.name"),
     help: (lvl: number) =>
-      t("upgrades.extra_levels.tooltip", { count: lvl + 7 }),
-    fullHelp: t("upgrades.extra_levels.verbose_description"),
+      t("upgrades.side_kick.tooltip", { lvl, loss: lvl * 2 }),
+    fullHelp: t("upgrades.side_kick.verbose_description"),
   },
   {
-
     requires: "",
+    threshold: 135000,
+    // a bit too hard when starting up
+    gift: false,
+    id: "reach",
+    max: 1,
+    name: t("upgrades.reach.name"),
+    help: (lvl: number) => t("upgrades.reach.tooltip", { lvl }),
+    fullHelp: t("upgrades.reach.verbose_description"),
+  },
+  {
+    requires: "multiball",
+    threshold: 245000,
+    gift: false,
+    id: "happy_family",
+    max: 1,
+    name: t("upgrades.happy_family.name"),
+    help: () => t("upgrades.happy_family.tooltip"),
+    fullHelp: t("upgrades.happy_family.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 150000,
+    gift: true,
+    id: "side_flip",
+    max: 3,
+    name: t("upgrades.side_flip.name"),
+    help: (lvl: number) =>
+      t("upgrades.side_flip.tooltip", { lvl, loss: lvl * 2 }),
+    fullHelp: t("upgrades.side_flip.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 165000,
+    gift: false,
+    id: "addiction",
+    max: 7,
+    name: t("upgrades.addiction.name"),
+    help: (lvl: number) =>
+      t("upgrades.addiction.tooltip", { lvl, delay: (5 / lvl).toFixed(2) }),
+    fullHelp: t("upgrades.addiction.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 90000,
+    gift: true,
+    id: "nbricks",
+    max: 3,
+    name: t("upgrades.nbricks.name"),
+    help: (lvl: number) => t("upgrades.nbricks.tooltip", { lvl }),
+    fullHelp: t("upgrades.nbricks.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 230000,
+    gift: false,
+    id: "three_cushion",
+    max: 1,
+    name: t("upgrades.three_cushion.name"),
+    help: (lvl: number) =>
+      t("upgrades.three_cushion.tooltip", { max: lvl * 3 }),
+    fullHelp: t("upgrades.three_cushion.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 115000,
+    gift: true,
+    id: "trampoline",
+    max: 1,
+    name: t("upgrades.trampoline.name"),
+    help: (lvl: number) => t("upgrades.trampoline.tooltip", { lvl }),
+    fullHelp: t("upgrades.trampoline.verbose_description"),
+  },
 
+  {
+    requires: "",
+    threshold: 105000,
+    gift: true,
+
+    id: "zen",
+    max: 1,
+    name: t("upgrades.zen.name"),
+    help: (lvl: number) => t("upgrades.zen.tooltip", { lvl }),
+    fullHelp: t("upgrades.zen.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 70000,
+    gift: true,
+    id: "asceticism",
+    max: 1,
+    name: t("upgrades.asceticism.name"),
+    help: (lvl: number) => t("upgrades.asceticism.tooltip", { combo: lvl * 3 }),
+    fullHelp: t("upgrades.asceticism.verbose_description"),
+  },
+  //   Regular
+
+  {
+    requires: "",
     threshold: 15000,
     gift: false,
-
     id: "pierce_color",
     max: 4,
     name: t("upgrades.pierce_color.name"),
@@ -329,26 +288,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.pierce_color.verbose_description"),
   },
   {
-
-    requires: "",
-    threshold: 18000,
-    gift: false,
-
-    id: "soft_reset",
-    max: 3,
-    name: t("upgrades.soft_reset.name"),
-    help: (lvl: number) =>
-      t("upgrades.soft_reset.tooltip", {
-        percent: Math.round(comboKeepingRate(lvl) * 100),
-      }),
-    fullHelp: t("upgrades.soft_reset.verbose_description"),
-  },
-  {
-
     requires: "multiball",
     threshold: 21000,
     gift: false,
-
     id: "ball_repulse_ball",
     max: 3,
     name: t("upgrades.ball_repulse_ball.name"),
@@ -359,11 +301,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.ball_repulse_ball.verbose_description"),
   },
   {
-
     requires: "multiball",
     threshold: 25000,
     gift: false,
-
     id: "ball_attract_ball",
     max: 3,
     name: t("upgrades.ball_attract_ball.name"),
@@ -374,12 +314,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.ball_attract_ball.verbose_description"),
   },
   {
-
     requires: "",
-
     threshold: 30000,
     gift: false,
-
     id: "puck_repulse_ball",
     max: 2,
     name: t("upgrades.puck_repulse_ball.name"),
@@ -390,12 +327,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.puck_repulse_ball.verbose_description"),
   },
   {
-
     requires: "",
-
     threshold: 35000,
     gift: false,
-
     id: "wind",
     max: 3,
     name: t("upgrades.wind.name"),
@@ -404,29 +338,50 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.wind.verbose_description"),
   },
   {
-
     requires: "",
-
-    threshold: 40000,
+    threshold: 65000,
     gift: false,
-
-    id: "sturdy_bricks",
-    max: 4,
-    name: t("upgrades.sturdy_bricks.name"),
-    help: (lvl: number) =>
-      // lvl == 1
-      t("upgrades.sturdy_bricks.tooltip", { lvl, percent: lvl * 50 }),
-    // ?
-    // : t("upgrades.sturdy_bricks.help_plural"),
-    fullHelp: t("upgrades.sturdy_bricks.verbose_description"),
+    id: "helium",
+    max: 3,
+    name: t("upgrades.helium.name"),
+    help: (lvl: number) => t("upgrades.helium.tooltip"),
+    fullHelp: t("upgrades.helium.verbose_description"),
   },
   {
-
     requires: "",
+    threshold: 200000,
+    gift: false,
+    id: "bricks_attract_coins",
+    max: 3,
+    name: t("upgrades.bricks_attract_coins.name"),
+    help: (lvl: number) => t("upgrades.bricks_attract_coins.tooltip", { lvl }),
+    fullHelp: t("upgrades.bricks_attract_coins.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 240000,
+    gift: false,
+    id: "wrap_left",
+    max: 1,
+    name: t("upgrades.wrap_left.name"),
+    help: () => t("upgrades.wrap_left.tooltip"),
+    fullHelp: t("upgrades.wrap_left.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 245000,
+    gift: false,
+    id: "wrap_right",
+    max: 1,
+    name: t("upgrades.wrap_right.name"),
+    help: () => t("upgrades.wrap_right.tooltip"),
+    fullHelp: t("upgrades.wrap_right.verbose_description"),
+  },
 
+  {
+    requires: "",
     threshold: 45000,
     gift: false,
-
     id: "respawn",
     max: 4,
     name: t("upgrades.respawn.name"),
@@ -438,11 +393,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.respawn.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 50000,
     gift: false,
-
     id: "one_more_choice",
     max: 3,
     name: t("upgrades.one_more_choice.name"),
@@ -450,7 +403,6 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.one_more_choice.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 55000,
     gift: false,
@@ -464,103 +416,22 @@ export const rawUpgrades = [
       }),
     fullHelp: t("upgrades.double_or_nothing.verbose_description"),
   },
+
   {
-
-    requires: "",
-    threshold: 60000,
-    gift: false,
-
-    id: "concave_puck",
-    max: 1,
-    name: t("upgrades.concave_puck.name"),
-    help: (lvl: number) => t("upgrades.concave_puck.tooltip"),
-    fullHelp: t("upgrades.concave_puck.verbose_description"),
-  },
-  {
-
-    requires: "",
-    threshold: 65000,
-    gift: false,
-
-    id: "helium",
-    max: 3,
-    name: t("upgrades.helium.name"),
-    help: (lvl: number) => t("upgrades.helium.tooltip"),
-    fullHelp: t("upgrades.helium.verbose_description"),
-  },
-  {
-
-    requires: "",
-    threshold: 70000,
-    gift: true,
-
-    id: "asceticism",
-    max: 1,
-    name: t("upgrades.asceticism.name"),
-    help: (lvl: number) => t("upgrades.asceticism.tooltip", { combo: lvl * 3 }),
-    fullHelp: t("upgrades.asceticism.verbose_description"),
-  },
-  {
-
     requires: "",
     threshold: 75000,
     gift: false,
-
     id: "unbounded",
     max: 3,
     name: t("upgrades.unbounded.name"),
     help: (lvl: number) => t("upgrades.unbounded.tooltip", { lvl }),
     fullHelp: t("upgrades.unbounded.verbose_description"),
   },
+
   {
-
     requires: "",
-
-    threshold: 80000,
-    gift: false,
-
-    id: "shunt",
-    max: 3,
-    name: t("upgrades.shunt.name"),
-    help: (lvl: number) =>
-      t("upgrades.shunt.tooltip", {
-        percent: Math.round(comboKeepingRate(lvl) * 100),
-      }),
-    fullHelp: t("upgrades.shunt.verbose_description"),
-  },
-  {
-
-    requires: "",
-
-    threshold: 85000,
-    gift: false,
-
-    id: "yoyo",
-    max: 1,
-    name: t("upgrades.yoyo.name"),
-    help: (lvl: number) => t("upgrades.yoyo.tooltip"),
-    fullHelp: t("upgrades.yoyo.verbose_description"),
-  },
-  {
-
-    requires: "",
-
-    threshold: 90000,
-    gift: true,
-
-    id: "nbricks",
-    max: 3,
-    name: t("upgrades.nbricks.name"),
-    help: (lvl: number) => t("upgrades.nbricks.tooltip", { lvl }),
-    fullHelp: t("upgrades.nbricks.verbose_description"),
-  },
-  {
-
-    requires: "",
-
     threshold: 95000,
     gift: false,
-
     id: "etherealcoins",
     max: 1,
     name: t("upgrades.etherealcoins.name"),
@@ -568,11 +439,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.etherealcoins.verbose_description"),
   },
   {
-
     requires: "multiball",
     threshold: 100000,
     gift: false,
-
     id: "shocks",
     max: 1,
     name: t("upgrades.shocks.name"),
@@ -580,23 +449,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.shocks.verbose_description"),
   },
   {
-
-    requires: "",
-    threshold: 105000,
-    gift: true,
-
-    id: "zen",
-    max: 1,
-    name: t("upgrades.zen.name"),
-    help: (lvl: number) => t("upgrades.zen.tooltip", { lvl }),
-    fullHelp: t("upgrades.zen.verbose_description"),
-  },
-  {
-
     requires: "extra_life",
     threshold: 110000,
     gift: false,
-
     id: "sacrifice",
     max: 1,
     name: t("upgrades.sacrifice.name"),
@@ -608,24 +463,9 @@ export const rawUpgrades = [
   },
 
   {
-
     requires: "",
-    threshold: 115000,
-    gift: true,
-
-    id: "trampoline",
-    max: 1,
-    name: t("upgrades.trampoline.name"),
-    help: (lvl: number) => t("upgrades.trampoline.tooltip", { lvl }),
-    fullHelp: t("upgrades.trampoline.verbose_description"),
-  },
-  {
-
-    requires: "",
-
     threshold: 120000,
     gift: false,
-
     id: "ghost_coins",
     max: 3,
     name: t("upgrades.ghost_coins.name"),
@@ -633,11 +473,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.ghost_coins.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 125000,
     gift: false,
-
     id: "forgiving",
     max: 1,
     name: t("upgrades.forgiving.name"),
@@ -645,12 +483,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.forgiving.verbose_description"),
   },
   {
-
     requires: "",
-
     threshold: 130000,
     gift: false,
-
     id: "ball_attracts_coins",
     max: 3,
     name: t("upgrades.ball_attracts_coins.name"),
@@ -658,78 +493,20 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.ball_attracts_coins.verbose_description"),
   },
   {
-
-    requires: "",
-    threshold: 135000,
-    // a bit too hard when starting up
-    gift: false,
-
-    id: "reach",
-    max: 1,
-    name: t("upgrades.reach.name"),
-    help: (lvl: number) => t("upgrades.reach.tooltip", { lvl }),
-    fullHelp: t("upgrades.reach.verbose_description"),
-  },
-  {
-
-    requires: "",
-
-    threshold: 140000,
-    gift: true,
-
-    id: "passive_income",
-    max: 4,
-    name: t("upgrades.passive_income.name"),
-    help: (lvl: number) =>
-      t("upgrades.passive_income.tooltip", { time: lvl * 0.25, lvl }),
-    fullHelp: t("upgrades.passive_income.verbose_description"),
-  },
-  {
-
     requires: "",
     threshold: 145000,
     gift: false,
-
     id: "clairvoyant",
     max: 1,
     name: t("upgrades.clairvoyant.name"),
     help: (lvl: number) => t("upgrades.clairvoyant.tooltip"),
     fullHelp: t("upgrades.clairvoyant.verbose_description"),
   },
+
   {
-
-    requires: "",
-
-    threshold: 150000,
-    gift: true,
-
-    id: "side_kick",
-    max: 3,
-    name: t("upgrades.side_kick.name"),
-    help: (lvl: number) =>
-      t("upgrades.side_kick.tooltip", { lvl, loss: lvl * 2 }),
-    fullHelp: t("upgrades.side_kick.verbose_description"),
-  },
-  {
-
-    requires: "",
-
-    threshold: 150000,
-    gift: true,
-
-    id: "side_flip",
-    max: 3,
-    name: t("upgrades.side_flip.name"),
-    help: (lvl: number) =>
-      t("upgrades.side_flip.tooltip", { lvl, loss: lvl * 2 }),
-    fullHelp: t("upgrades.side_flip.verbose_description"),
-  },
-  {
-
     requires: "",
     threshold: 155000,
     gift: false,
-
     id: "implosions",
     max: 1,
     name: t("upgrades.implosions.name"),
@@ -737,11 +514,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.implosions.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 160000,
     gift: false,
-
     id: "corner_shot",
     max: 1,
     name: t("upgrades.corner_shot.name"),
@@ -749,32 +524,6 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.corner_shot.verbose_description"),
   },
   {
-
-    requires: "",
-    threshold: 165000,
-    gift: false,
-
-    id: "addiction",
-    max: 7,
-    name: t("upgrades.addiction.name"),
-    help: (lvl: number) =>
-      t("upgrades.addiction.tooltip", { lvl, delay: (5 / lvl).toFixed(2) }),
-    fullHelp: t("upgrades.addiction.verbose_description"),
-  },
-  {
-
-    requires: "",
-    threshold: 170000,
-    gift: false,
-
-    id: "fountain_toss",
-    max: 7,
-    name: t("upgrades.fountain_toss.name"),
-    help: () => t("upgrades.fountain_toss.tooltip"),
-    fullHelp: t("upgrades.fountain_toss.verbose_description"),
-  },
-  {
-
     requires: "",
     threshold: 175000,
     gift: false,
@@ -785,23 +534,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.limitless.verbose_description"),
   },
   {
-
-    requires: "",
-    threshold: 180000,
-    gift: false,
-
-    id: "minefield",
-    max: 3,
-    name: t("upgrades.minefield.name"),
-    help: (lvl: number) => t("upgrades.minefield.tooltip", { lvl }),
-    fullHelp: t("upgrades.minefield.verbose_description"),
-  },
-  {
-
     requires: "",
     threshold: 185000,
     gift: false,
-
     id: "trickledown",
     max: 1,
     name: t("upgrades.trickledown.name"),
@@ -809,11 +544,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.trickledown.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 190000,
     gift: false,
-
     id: "transparency",
     max: 3,
     name: t("upgrades.transparency.name"),
@@ -822,11 +555,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.transparency.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 195000,
     gift: false,
-
     id: "superhot",
     max: 3,
     name: t("upgrades.superhot.name"),
@@ -834,23 +565,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.superhot.verbose_description"),
   },
   {
-
-    requires: "",
-    threshold: 200000,
-    gift: false,
-
-    id: "bricks_attract_coins",
-    max: 3,
-    name: t("upgrades.bricks_attract_coins.name"),
-    help: (lvl: number) => t("upgrades.bricks_attract_coins.tooltip", { lvl }),
-    fullHelp: t("upgrades.bricks_attract_coins.verbose_description"),
-  },
-  {
-
     requires: "",
     threshold: 205000,
     gift: false,
-
     id: "rainbow",
     max: 7,
     name: t("upgrades.rainbow.name"),
@@ -858,11 +575,9 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.rainbow.verbose_description"),
   },
   {
-
     requires: "metamorphosis",
     threshold: 210000,
     gift: false,
-
     id: "hypnosis",
     max: 1,
     name: t("upgrades.hypnosis.name"),
@@ -870,7 +585,6 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.hypnosis.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 215000,
     gift: false,
@@ -882,7 +596,6 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.bricks_attract_ball.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 220000,
     gift: false,
@@ -893,7 +606,6 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.buoy.verbose_description"),
   },
   {
-
     requires: "",
     threshold: 225000,
     gift: false,
@@ -903,20 +615,8 @@ export const rawUpgrades = [
     help: () => t("upgrades.ottawa_treaty.tooltip"),
     fullHelp: t("upgrades.ottawa_treaty.verbose_description"),
   },
-  {
 
-    requires: "",
-    threshold: 230000,
-    gift: false,
-    id: "three_cushion",
-    max: 1,
-    name: t("upgrades.three_cushion.name"),
-    help: (lvl: number) =>
-      t("upgrades.three_cushion.tooltip", { max: lvl * 3 }),
-    fullHelp: t("upgrades.three_cushion.verbose_description"),
-  },
   {
-
     requires: "",
     threshold: 235000,
     gift: false,
@@ -927,36 +627,182 @@ export const rawUpgrades = [
     fullHelp: t("upgrades.sticky_coins.verbose_description"),
   },
   {
-
     requires: "",
-    threshold: 240000,
-    gift: false,
-    id: "wrap_left",
-    max: 1,
-    name: t("upgrades.wrap_left.name"),
-    help: () => t("upgrades.wrap_left.tooltip"),
-    fullHelp: t("upgrades.wrap_left.verbose_description"),
+    threshold: 0,
+    id: "base_combo",
+    gift: true,
+    max: 7,
+    name: t("upgrades.base_combo.name"),
+    help: (lvl: number) =>
+      t("upgrades.base_combo.tooltip", { coins: 1 + lvl * 3 }),
+    fullHelp: t("upgrades.base_combo.verbose_description"),
   },
   {
-
     requires: "",
-    threshold: 245000,
+    threshold: 0,
     gift: false,
-    id: "wrap_right",
-    max: 1,
-    name: t("upgrades.wrap_right.name"),
-    help: () => t("upgrades.wrap_right.tooltip"),
-    fullHelp: t("upgrades.wrap_right.verbose_description"),
+    id: "viscosity",
+    max: 3,
+    name: t("upgrades.viscosity.name"),
+    help: () => t("upgrades.viscosity.tooltip"),
+    fullHelp: t("upgrades.viscosity.verbose_description"),
   },
   {
-
-    requires: "multiball",
-    threshold: 245000,
+    requires: "",
+    threshold: 700,
     gift: false,
-    id: "happy_family",
+    id: "coin_magnet",
+    max: 3,
+    name: t("upgrades.coin_magnet.name"),
+    help: (lvl: number) =>
+      lvl == 1
+        ? t("upgrades.coin_magnet.tooltip")
+        : t("upgrades.coin_magnet.help_plural"),
+    fullHelp: t("upgrades.coin_magnet.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 800,
+    id: "multiball",
+    gift: true,
+    max: 6,
+    name: t("upgrades.multiball.name"),
+    help: (lvl: number) => t("upgrades.multiball.tooltip", { count: lvl + 1 }),
+    fullHelp: t("upgrades.multiball.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 1000,
+    gift: false,
+    id: "smaller_puck",
+    max: 2,
+    name: t("upgrades.smaller_puck.name"),
+    help: (lvl: number) =>
+      t("upgrades.smaller_puck.tooltip", { percent: 50 * lvl }),
+    fullHelp: t("upgrades.smaller_puck.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 1500,
+    id: "pierce",
+    gift: false,
+    max: 3,
+    name: t("upgrades.pierce.name"),
+    help: (lvl: number) => t("upgrades.pierce.tooltip", { count: 3 * lvl }),
+    fullHelp: t("upgrades.pierce.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 2500,
+    gift: false,
+    id: "metamorphosis",
     max: 1,
-    name: t("upgrades.happy_family.name"),
-    help: () => t("upgrades.happy_family.tooltip"),
-    fullHelp: t("upgrades.happy_family.verbose_description"),
+    name: t("upgrades.metamorphosis.name"),
+    help: (lvl: number) => t("upgrades.metamorphosis.tooltip", { lvl }),
+    fullHelp: t("upgrades.metamorphosis.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 6000,
+    id: "sapper",
+    gift: false,
+    max: 7,
+    name: t("upgrades.sapper.name"),
+    help: (lvl: number) =>
+      lvl == 1
+        ? t("upgrades.sapper.tooltip")
+        : t("upgrades.sapper.help_plural", { lvl }),
+    fullHelp: t("upgrades.sapper.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 9000,
+    id: "bigger_explosions",
+    gift: false,
+    max: 1,
+    name: t("upgrades.bigger_explosions.name"),
+    help: (lvl: number) => t("upgrades.bigger_explosions.tooltip"),
+    fullHelp: t("upgrades.bigger_explosions.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 13000,
+    gift: false,
+    adventure: false,
+    id: "extra_levels",
+    max: 3,
+    name: t("upgrades.extra_levels.name"),
+    help: (lvl: number) =>
+      t("upgrades.extra_levels.tooltip", { count: lvl + 7 }),
+    fullHelp: t("upgrades.extra_levels.verbose_description"),
+  },
+  //   Combo boosters
+  {
+    requires: "",
+    threshold: 170000,
+    gift: false,
+    id: "fountain_toss",
+    max: 7,
+    name: t("upgrades.fountain_toss.name"),
+    help: () => t("upgrades.fountain_toss.tooltip"),
+    fullHelp: t("upgrades.fountain_toss.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 180000,
+    gift: false,
+    id: "minefield",
+    max: 3,
+    name: t("upgrades.minefield.name"),
+    help: (lvl: number) => t("upgrades.minefield.tooltip", { lvl }),
+    fullHelp: t("upgrades.minefield.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 18000,
+    gift: false,
+    id: "soft_reset",
+    max: 3,
+    name: t("upgrades.soft_reset.name"),
+    help: (lvl: number) =>
+      t("upgrades.soft_reset.tooltip", {
+        percent: Math.round(comboKeepingRate(lvl) * 100),
+      }),
+    fullHelp: t("upgrades.soft_reset.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 80000,
+    gift: false,
+    id: "shunt",
+    max: 3,
+    name: t("upgrades.shunt.name"),
+    help: (lvl: number) =>
+      t("upgrades.shunt.tooltip", {
+        percent: Math.round(comboKeepingRate(lvl) * 100),
+      }),
+    fullHelp: t("upgrades.shunt.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 140000,
+    gift: true,
+    id: "passive_income",
+    max: 4,
+    name: t("upgrades.passive_income.name"),
+    help: (lvl: number) =>
+      t("upgrades.passive_income.tooltip", { time: lvl * 0.25, lvl }),
+    fullHelp: t("upgrades.passive_income.verbose_description"),
+  },
+  {
+    requires: "",
+    threshold: 40000,
+    gift: false,
+    id: "sturdy_bricks",
+    max: 4,
+    name: t("upgrades.sturdy_bricks.name"),
+    help: (lvl: number) =>
+      t("upgrades.sturdy_bricks.tooltip", { lvl, percent: lvl * 50 }),
+    fullHelp: t("upgrades.sturdy_bricks.verbose_description"),
   },
 ] as const;
