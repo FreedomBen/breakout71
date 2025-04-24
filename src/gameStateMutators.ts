@@ -284,7 +284,7 @@ export function offsetCombo(
 }
 
 
-export function spawnExplosion(
+export function spawnParticlesExplosion(
     gameState: GameState,
     count: number,
     x: number,
@@ -311,7 +311,7 @@ export function spawnExplosion(
     }
 }
 
-export function spawnImplosion(
+export function spawnParticlesImplosion(
     gameState: GameState,
     count: number,
     x: number,
@@ -375,9 +375,9 @@ export function explosionAt(
     gameState.lastExplosion = gameState.levelTime;
 
     if (gameState.perks.implosions) {
-        spawnImplosion(gameState, 7 * size, x, y, "#FFFFFF");
+        spawnParticlesImplosion(gameState, 7 * size, x, y, "#FFFFFF");
     } else {
-        spawnExplosion(gameState, 7 * size, x, y, "#FFFFFF");
+        spawnParticlesExplosion(gameState, 7 * size, x, y, "#FFFFFF");
     }
 
     gameState.runStatistics.bricks_broken++;
@@ -513,11 +513,9 @@ export function explodeBrick(
                 schedulGameSound(gameState, "colorChange", ball.x, 0.8);
                 // gameState.lastExplosion = gameState.levelTime;
                 gameState.ballsColor = color;
-                if (!isOptionOn("basic")) {
-                    gameState.balls.forEach((ball) => {
-                        spawnExplosion(gameState, 7, ball.previousX, ball.previousY, color);
-                    });
-                }
+                gameState.balls.forEach((ball) => {
+                    spawnParticlesExplosion(gameState, 7, ball.previousX, ball.previousY, color);
+                });
             } else {
                 schedulGameSound(gameState, "comboIncreaseMaybe", ball.x, 1);
             }
@@ -536,7 +534,7 @@ export function explodeBrick(
             );
         }
         // Particle effect
-        spawnExplosion(gameState, 5 + Math.min(gameState.combo, 30), x, y, color);
+        spawnParticlesExplosion(gameState, 5 + Math.min(gameState.combo, 30), x, y, color);
     }
 
     if (
@@ -731,7 +729,7 @@ const rainbow = [
     "#70ff33",
     "#33ffa7",
     "#38acff",
-    "#7038ff",
+    "#6262EA",
     "#ff3de5",
 ];
 
@@ -953,9 +951,9 @@ export function gameStateTick(
 ) {
 
     // Going to the next level or getting a game over in a previous sub-tick would pause the game
-  if(!gameState.running) {
-      return
-  }
+    if (!gameState.running) {
+        return
+    }
     // Ai movement of puck
     if (gameState.startParams.computer_controlled) computerControl(gameState);
 
@@ -1206,16 +1204,14 @@ export function gameStateTick(
                 if (coin.vx > 0) {
                     coin.vx *= -1;
                 }
-                if (!isOptionOn("basic")) {
-                    spawnExplosion(gameState, 3, coin.x, coin.y, "#6262EA");
-                    spawnImplosion(
-                        gameState,
-                        3,
-                        coin.previousX,
-                        coin.previousY,
-                        "#6262EA",
-                    );
-                }
+                spawnParticlesExplosion(gameState, 3, coin.x, coin.y, "#6262EA");
+                spawnParticlesImplosion(
+                    gameState,
+                    3,
+                    coin.previousX,
+                    coin.previousY,
+                    "#6262EA",
+                );
             }
 
             if (
@@ -1229,16 +1225,14 @@ export function gameStateTick(
                 if (coin.vx < 0) {
                     coin.vx *= -1;
                 }
-                if (!isOptionOn("basic")) {
-                    spawnExplosion(gameState, 3, coin.x, coin.y, "#6262EA");
-                    spawnImplosion(
-                        gameState,
-                        3,
-                        coin.previousX,
-                        coin.previousY,
-                        "#6262EA",
-                    );
-                }
+                spawnParticlesExplosion(gameState, 3, coin.x, coin.y, "#6262EA");
+                spawnParticlesImplosion(
+                    gameState,
+                    3,
+                    coin.previousX,
+                    coin.previousY,
+                    "#6262EA",
+                );
             }
 
             if (
@@ -1352,9 +1346,14 @@ export function gameStateTick(
             }
 
 
-            if (gameState.perks.golden_goose && typeof hitBrick !== "undefined") {
+            if ((gameState.perks.golden_goose && typeof hitBrick !== "undefined") || (gameState.perks.golden_goose > 1 && hitBorder)) {
                 const closestBall = getClosestBall(gameState, coin.x, coin.y);
                 if (closestBall) {
+                    spawnParticlesExplosion(gameState, 3, coin.x, coin.y, "#6262EA");
+                    spawnParticlesImplosion(gameState, 3, closestBall.x,
+                        closestBall.y,
+                        "#6262EA",
+                    );
                     coin.x = closestBall.x;
                     coin.y = closestBall.y;
                 }
@@ -1734,10 +1733,10 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
                 ball.vx *= -1;
             }
 
-            if (!isOptionOn("basic")) {
-                spawnExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
-                spawnImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
-            }
+
+            spawnParticlesExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
+            spawnParticlesImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
+
         }
 
         if (
@@ -1752,10 +1751,10 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
             if (ball.vx < 0) {
                 ball.vx *= -1;
             }
-            if (!isOptionOn("basic")) {
-                spawnExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
-                spawnImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
-            }
+
+            spawnParticlesExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
+            spawnParticlesImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
+
         }
 
         if (

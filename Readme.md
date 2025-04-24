@@ -18,7 +18,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
-- rename hypnosis to golden_goose, apply when hitting any brick
+- rename hypnosis to golden_goose, apply when hitting any brick, any side at level 2
 - removed comboIncreaseTexts option
 - minefield : +10% coins per bomb on screen
 - extra life are transparent when you have 2+ balls 
