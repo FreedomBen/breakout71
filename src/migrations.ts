@@ -156,7 +156,10 @@ migrate("set_user_id", () => {
   if (!localStorage.getItem("breakout_71_user_id")) {
     localStorage.setItem(
       "breakout_71_user_id",
-      JSON.stringify(self?.crypto?.randomUUID() || "user_" + Math.random()),
+      JSON.stringify(
+        (self?.crypto?.randomUUID && self?.crypto?.randomUUID()) ||
+          "user_" + Math.random(),
+      ),
     );
   }
 });

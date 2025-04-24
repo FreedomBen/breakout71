@@ -31,12 +31,12 @@ export function coinsBoostedCombo(gameState: GameState) {
     });
     boost += (min * gameState.perks.transparency) / 2;
   }
-  if(gameState.perks.minefield){
-    gameState.bricks.forEach(brick=>{
-      if(brick === 'black'){
-        boost+=0.1 * gameState.perks.minefield
+  if (gameState.perks.minefield) {
+    gameState.bricks.forEach((brick) => {
+      if (brick === "black") {
+        boost += 0.1 * gameState.perks.minefield;
       }
-    })
+    });
   }
   return Math.ceil(Math.max(gameState.combo, gameState.lastCombo) * boost);
 }

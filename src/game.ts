@@ -113,7 +113,6 @@ export async function play() {
 }
 
 export function pause(playerAskedForPause: boolean) {
-
   if (!gameState.running) return;
   if (gameState.pauseTimeout) return;
   if (gameState.startParams.computer_controlled) {
@@ -251,8 +250,7 @@ setInterval(() => {
 
 export async function openUpgradesPicker(gameState: GameState) {
   const catchRate =
-    (gameState.score - gameState.levelStartScore) /
-    (gameState.levelSpawnedCoins || 1);
+    gameState.levelCoughtCoins / (gameState.levelSpawnedCoins || 1);
 
   let repeats = 1;
 
@@ -329,7 +327,7 @@ export async function openUpgradesPicker(gameState: GameState) {
         (repeats ? " (" + (repeats + 1) + ")" : ""),
       content: [
         `<p>${t("level_up.before_buttons", {
-          score: gameState.score - gameState.levelStartScore,
+          score: gameState.levelCoughtCoins,
           catchGain,
           levelSpawnedCoins: gameState.levelSpawnedCoins,
           time: Math.round(gameState.levelTime / 1000),
@@ -459,8 +457,7 @@ export function tick() {
       ) * frames;
     const steps = Math.ceil(maxBallSpeed / 8);
     for (let i = 0; i < steps; i++) {
-        gameStateTick(gameState, frames / steps);
-
+      gameStateTick(gameState, frames / steps);
     }
   }
 
@@ -538,7 +535,6 @@ setInterval(() => {
 setInterval(() => {
   monitorLevelsUnlocks(gameState);
 }, 500);
-
 
 scoreDisplay.addEventListener("click", (e) => {
   e.preventDefault();
@@ -925,8 +921,8 @@ async function openUnlockedUpgradesList() {
         ts < threshold
           ? t("unlocks.minTotalScore", { score: threshold })
           : help(1),
-      tooltip: ts < threshold ? "" : fullHelp(1)+ ' [id:'+id+ ']',
-      threshold
+      tooltip: ts < threshold ? "" : fullHelp(1) + " [id:" + id + "]",
+      threshold,
     }))
     .sort((a, b) => a.threshold - b.threshold);
 

@@ -76,8 +76,7 @@ export function render(gameState: GameState) {
   }
 
   const catchRate = gameState.levelSpawnedCoins
-    ? (gameState.score - gameState.levelStartScore) /
-      (gameState.levelSpawnedCoins || 1)
+    ? gameState.levelCoughtCoins / (gameState.levelSpawnedCoins || 1)
     : // (gameState.levelSpawnedCoins - gameState.levelLostCoins) /
       // gameState.levelSpawnedCoins
       1;
@@ -366,7 +365,7 @@ export function render(gameState: GameState) {
 
   startWork("render:extra_life");
   if (gameState.perks.extra_life) {
-    ctx.globalAlpha = gameState.balls.length>1 ? 0.2:1;
+    ctx.globalAlpha = gameState.balls.length > 1 ? 0.2 : 1;
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = gameState.puckColor;
     for (let i = 0; i < gameState.perks.extra_life; i++) {

@@ -15,9 +15,19 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 ## To do
 
 - save global stats locally (sum of broken bricks, paddle hits, misses,)
+- rewoks perks choices : 
+  - remove rerolls
+  - offer to pick 1 upgrade out of 3 choices
+  - playing well adds 1 upgrade and 1 choice
+  - playing even better adds 1 choice
+  - more choices add 1 choice
+  - you can skip the upgrades and they'll be saved for later
+  - you can take pick one choice multiple time to level it up
+  - when you don't play well enough, the choice you would have had are shown greyed out with unlock condition.
 
 ## Done
 
+- all or nothing : don't show negative number of coins cought, don't reduce score if no combo was lost
 - rename hypnosis to golden_goose, apply when hitting any brick, any side at level 2
 - removed comboIncreaseTexts option
 - minefield : +10% coins per bomb on screen
@@ -30,6 +40,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - removed : instant_upgrade
 - nerfed : helium : now need to be level 3 to have the same effect of keeping coins up
 - new level : Blinky by Big Goober 
+- game over screen : perk list at the bottom, after unlocks and stats 
 
 ## 29088680
 

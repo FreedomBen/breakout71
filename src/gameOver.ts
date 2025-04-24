@@ -98,9 +98,9 @@ export function gameOver(title: string, intro: string) {
       },
       `<div id="level-recording-container"></div>`,
 
-      pickedUpgradesHTMl(gameState),
       unlocksInfo,
       getHistograms(gameState),
+      pickedUpgradesHTMl(gameState),
     ],
   }).then(() =>
     restart({
