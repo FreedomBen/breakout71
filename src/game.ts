@@ -113,6 +113,7 @@ export async function play() {
 }
 
 export function pause(playerAskedForPause: boolean) {
+
   if (!gameState.running) return;
   if (gameState.pauseTimeout) return;
   if (gameState.startParams.computer_controlled) {
@@ -457,7 +458,10 @@ export function tick() {
         Math.max(0, ...gameState.balls.map(({ vx, vy }) => vx * vx + vy * vy)),
       ) * frames;
     const steps = Math.ceil(maxBallSpeed / 8);
-    for (let i = 0; i < steps; i++) gameStateTick(gameState, frames / steps);
+    for (let i = 0; i < steps; i++) {
+        gameStateTick(gameState, frames / steps);
+
+    }
   }
 
   if (gameState.running || gameState.needsRender) {
@@ -535,11 +539,6 @@ setInterval(() => {
   monitorLevelsUnlocks(gameState);
 }, 500);
 
-window.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
-    pause(true);
-  }
-});
 
 scoreDisplay.addEventListener("click", (e) => {
   e.preventDefault();

@@ -230,7 +230,7 @@
   "unlocks.category.advanced": "## Advanced upgrades\n\nThose are typically not very useful by themselves, but will can become very powerful when combined with the right combo upgrade. ",
   "unlocks.category.beginner": "## Beginner friendly upgrades\n\nThose upgrades are very helpful for beginners, they help you play longer and miss the ball less.\n",
   "unlocks.category.combo": "## Combo upgrades\n\nThose upgrades help increase your combo progressively, but also add a combo reset condition. Taking one is a good idea, taking more increases the risk and reward.",
-  "unlocks.category.combo_boost": "## Combo boosters\n\nThose upgrades increase the combo or combo multiplier without adding a reset condition. ",
+  "unlocks.category.combo_boost": "## Combo booster upgrades\n\nThose upgrades increase the combo or combo multiplier without adding a reset condition. ",
   "unlocks.category.simple": "## Helper upgrades\n\nThose upgrades are useful in almost any build.\n",
   "unlocks.greyed_out_help": "The grayed out upgrades can be unlocked by increasing your total score. The total score increases every time you score in game.",
   "unlocks.intro": "Your total score is {{ts}}. Click an upgrade below to start a game with it.",

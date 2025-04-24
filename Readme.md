@@ -356,8 +356,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 # Ideas and features 
 
-## Easy perks ideas  
- 
+## Easy perk ideas  
+
+- square coins : coins loose all horizontal momentum when hitting something.
 - ball turns following puck motion
 - "+1  coin for each ball within a small radius of the broken brick" ? 
 - two for one : add a 2 for one upgrade combo to the choice lists
@@ -389,6 +390,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - fan : paddle motion creates upward draft that lifts coins and balls
 
 ## Medium difficulty perks ideas 
+- coins combine when they hit (into one coin with the sum of the values, but need a way to represent that)
 - balls collision split them into 4 smaller balls, lvl times (requires rework)
 - offer next level choice after upgrade pick
 - [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
