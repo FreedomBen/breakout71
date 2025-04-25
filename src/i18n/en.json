@@ -364,7 +364,7 @@
   "upgrades.pierce.verbose_description": "The ball normally bounces as soon as it touches something. With this perk, it will continue its trajectory for up to 3 bricks broken. \n\nAfter that, it will bounce on the 4th brick, and you'll need to touch the paddle to reset the counter.",
   "upgrades.pierce_color.name": "Color pierce",
   "upgrades.pierce_color.tooltip": "The ball goes through bricks of the same color",
-  "upgrades.pierce_color.verbose_description": "+{{lvl}} damage to bricks of the ball's color.\n\nWhenever a ball hits a brick of the same color, it will just go through unimpeded. \n\nOnce it reaches a brick of a different color, it will break it, take its color and bounce.\n\nIf you have sturdy bricks, the ball might still bounce off a brick of the same color.",
+  "upgrades.pierce_color.verbose_description": "Normally, balls do 1 damage and bricks have 1 health point (HP). S\nEach level of this perk increase the damage balls do to bricks of their color. \nWhen a ball does more damage than the brick's health points, it will continue straight instead of bouncing;\n\nWhenever a ball hits a brick of the same color, it will just go through unimpeded. \nOnce it reaches a brick of a different color, it will break it, take its color and bounce.\nIf you have sturdy bricks, the ball might still bounce off a brick of the same color.",
   "upgrades.puck_repulse_ball.name": "Soft landing",
   "upgrades.puck_repulse_ball.tooltip": "Paddle repulses balls",
   "upgrades.puck_repulse_ball.verbose_description": "When a ball gets close to the paddle, it will start slowing down, and even potentially bouncing without touching the paddle.",

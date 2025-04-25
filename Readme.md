@@ -14,19 +14,24 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
-- save global stats locally (sum of broken bricks, paddle hits, misses,)
-- rewoks perks choices : 
+- rewoks perks choices 
+  - goal : limit perk fatigue, avoid wall of texts, clarify challenges, allow users to skip
   - remove rerolls
   - offer to pick 1 upgrade out of 3 choices
   - playing well adds 1 upgrade and 1 choice
   - playing even better adds 1 choice
-  - more choices add 1 choice
+  - "more choices" perk adds 1 choice
   - you can skip the upgrades and they'll be saved for later
-  - you can take pick one choice multiple time to level it up
-  - when you don't play well enough, the choice you would have had are shown greyed out with unlock condition.
+  - you can pick an upgrade multiple time to level it up
+  - missed challenges show as greyed out choices (with unlock condition).
 
 ## Done
 
+- better default value for mobile mode
+
+## 29092809
+
+- fixed:  crash when running out of levels (i think, i didn't try)
 - fixed: context menu and tooltip stuck on windows
 
 ## 29091656
