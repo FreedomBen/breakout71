@@ -2,7 +2,7 @@ import { RunHistoryItem } from "./types";
 
 import _appVersion from "./data/version.json";
 import { generateSaveFileContent } from "./generateSaveFileContent";
-import { getLevelUnlockCondition, reasonLevelIsLocked } from "./game_utils";
+import { reasonLevelIsLocked } from "./game_utils";
 import { allLevels } from "./loadGameData";
 import { toast } from "./toast";
 

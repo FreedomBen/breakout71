@@ -27,16 +27,19 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+- fixed: context menu and tooltip stuck on windows
+
+## 29091656
+
+- categorized the icons 
+- color coded the icons
+- changed the wording of perks help to be shorter
+- added tooltips on perks with full help, and a help button on mobile
 - all or nothing : don't show negative number of coins cought, don't reduce score if no combo was lost
 - rename hypnosis to golden_goose, apply when hitting any brick, any side at level 2
 - removed comboIncreaseTexts option
 - minefield : +10% coins per bomb on screen
 - extra life are transparent when you have 2+ balls 
-- categorized the icons 
-- color coded the icons
-- changed the wording of perks help to be shorter
-- added tooltips on perks with full help, and a help button on mobile
-- wording of "combo per brick *broken*" 
 - removed : instant_upgrade
 - nerfed : helium : now need to be level 3 to have the same effect of keeping coins up
 - new level : Blinky by Big Goober 
@@ -369,6 +372,8 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Easy perk ideas  
 
+- b71 tooltip stays stuck
+- allow dropping balls that are about to miss. 
 - square coins : coins loose all horizontal momentum when hitting something.
 - ball turns following puck motion
 - "+1  coin for each ball within a small radius of the broken brick" ? 

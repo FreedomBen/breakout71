@@ -89,7 +89,7 @@ import {
 } from "./pure_functions";
 import { helpMenuEntry } from "./help";
 import { creativeMode } from "./creative";
-import { setupTooltips } from "./tooltip";
+import { hideAnyTooltip, setupTooltips } from "./tooltip";
 import { startingPerkMenuButton } from "./startingPerks";
 import "./migrations";
 import { getHistory } from "./gameOver";
@@ -109,6 +109,7 @@ export async function play() {
   startRecordingGame(gameState);
   getAudioContext()?.resume();
   resumeRecording();
+  hideAnyTooltip();
   // document.body.classList[gameState.running ? 'add' : 'remove']('running')
 }
 
@@ -121,7 +122,6 @@ export function pause(playerAskedForPause: boolean) {
     }
     return;
   }
-
   const stop = () => {
     gameState.running = false;
 
@@ -150,6 +150,7 @@ export function pause(playerAskedForPause: boolean) {
   if (document.exitPointerLock) {
     document.exitPointerLock();
   }
+  hideAnyTooltip();
 }
 
 export const fitSize = (gameState: GameState) => {

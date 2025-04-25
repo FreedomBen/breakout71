@@ -7,6 +7,9 @@ export function setupTooltips() {
     setupDesktopTooltips(tooltip);
   }
 }
+export function hideAnyTooltip() {
+  tooltip.style.display = "none";
+}
 
 const tooltip = document.getElementById("tooltip") as HTMLDivElement;
 
@@ -35,7 +38,7 @@ function setupMobileTooltips(tooltip: HTMLDivElement) {
 
     e.stopPropagation();
     e.preventDefault();
-    tooltip.style.display = "none";
+    hideAnyTooltip();
   }
 
   document.body.addEventListener("touchend", closeTooltip, true);
@@ -51,6 +54,7 @@ function setupMobileTooltips(tooltip: HTMLDivElement) {
     e.preventDefault();
   }
   document.body.addEventListener("click", ignoreClick, true);
+  document.body.addEventListener("contextmenu", ignoreClick, true);
 }
 
 function setupDesktopTooltips(tooltip: HTMLDivElement) {
@@ -59,7 +63,7 @@ function setupDesktopTooltips(tooltip: HTMLDivElement) {
   }
 
   function closeToolTip() {
-    tooltip.style.display = "none";
+    hideAnyTooltip();
     hovering = null;
   }
 

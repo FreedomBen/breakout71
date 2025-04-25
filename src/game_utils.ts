@@ -147,12 +147,16 @@ export function pickedUpgradesHTMl(gameState: GameState) {
   return ` <p>${t("score_panel.upgrades_picked")}</p>` + upgradesList.join("");
 }
 
-export function levelsListHTMl(gameState: GameState, level: number) {
+export function levelsListHTMl(
+  gameState: GameState,
+  currentLevelIndex: number,
+) {
   if (!gameState.perks.clairvoyant) return "";
   if (gameState.creative) return "";
   let list = "";
   for (let i = 0; i < max_levels(gameState); i++) {
-    list += `<span style="opacity: ${i >= level ? 1 : 0.2}" title="${gameState.runLevels[i].name}">${icons[gameState.runLevels[i].name]}</span>`;
+    let level = gameState.runLevels[i % gameState.runLevels.length];
+    list += `<span style="opacity: ${i >= currentLevelIndex ? 1 : 0.2}" title="${level.name}">${icons[level.name]}</span>`;
   }
   return `<p>${t("score_panel.upcoming_levels")}</p><p>${list}</p>`;
 }

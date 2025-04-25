@@ -1,5 +1,6 @@
 import { t } from "./i18n/i18n";
 import { isOptionOn } from "./options";
+import { hideAnyTooltip } from "./tooltip";
 
 export let alertsOpen = 0,
   closeModal: null | (() => void) = null;
@@ -45,6 +46,7 @@ export async function asyncAlert<t>({
   allowClose?: boolean;
   className?: string;
 }): Promise<t | void> {
+  hideAnyTooltip();
   updateAlertsOpen(+1);
   return new Promise((resolve) => {
     popupWrap.className = className;
