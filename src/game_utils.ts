@@ -1,19 +1,9 @@
-import {
-  Ball,
-  Coin,
-  GameState,
-  Level,
-  PerkId,
-  PerksMap,
-  RunHistoryItem,
-  UpgradeLike,
-} from "./types";
-import { icons, upgrades } from "./loadGameData";
-import { t } from "./i18n/i18n";
-import { clamp } from "./pure_functions";
-import { hashCode } from "./getLevelBackground";
-import { getSettingValue, getTotalScore } from "./settings";
-import { isOptionOn } from "./options";
+import {Ball, Coin, GameState, Level, PerkId, PerksMap,} from "./types";
+import {icons, upgrades} from "./loadGameData";
+import {t} from "./i18n/i18n";
+import {clamp} from "./pure_functions";
+import {getSettingValue, getTotalScore} from "./settings";
+import {isOptionOn} from "./options";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -298,97 +288,6 @@ export function highScoreText() {
     return t("main_menu.high_score", { score: getHighScore() });
   }
   return "";
-}
-
-let excluded: Set<PerkId>;
-function isExcluded(id: PerkId) {
-  if (!excluded) {
-    excluded = new Set([
-      "extra_levels",
-      "extra_life",
-      "one_more_choice",
-      "shunt",
-      "slow_down",
-    ]);
-    // Avoid excluding a perk that's needed for the required one
-    upgrades.forEach((u) => {
-      if (u.requires) excluded.add(u.requires);
-    });
-  }
-  return excluded.has(id);
-}
-
-export function getLevelUnlockCondition(levelIndex: number) {
-  let required: UpgradeLike[] = [],
-    forbidden: UpgradeLike[] = [],
-    minScore = Math.max(-1000 + 100 * levelIndex, 0);
-
-  if (levelIndex > 20) {
-    const possibletargets = [...upgrades]
-      .slice(0, Math.floor(levelIndex / 2))
-      .filter((u) => !isExcluded(u.id))
-      .sort(
-        (a, b) => hashCode(levelIndex + a.id) - hashCode(levelIndex + b.id),
-      );
-
-    const length = Math.min(3, Math.ceil(levelIndex / 30));
-    required = possibletargets.slice(0, length);
-    forbidden = possibletargets.slice(length, length + length);
-  }
-  return {
-    required,
-    forbidden,
-    minScore,
-  };
-}
-
-export function getBestScoreMatching(
-  history: RunHistoryItem[],
-  required: UpgradeLike[] = [],
-  forbidden: UpgradeLike[] = [],
-) {
-  return Math.max(
-    0,
-    ...history
-      .filter(
-        (r) =>
-          !required.find((u) => !r?.perks?.[u.id]) &&
-          !forbidden.find((u) => r?.perks?.[u.id]),
-      )
-      .map((r) => r.score),
-  );
-}
-
-export function reasonLevelIsLocked(
-  levelIndex: number,
-  history: RunHistoryItem[],
-  mentionBestScore: boolean,
-): null | { reached: number; minScore: number; text: string } {
-  const { required, forbidden, minScore } = getLevelUnlockCondition(levelIndex);
-
-  const reached = getBestScoreMatching(history, required, forbidden);
-  let reachedText =
-    reached && mentionBestScore ? t("unlocks.reached", { reached }) : "";
-  if (reached >= minScore) {
-    return null;
-  } else if (!required.length && !forbidden.length) {
-    return {
-      reached,
-      minScore,
-      text: t("unlocks.minScore", { minScore }) + reachedText,
-    };
-  } else {
-    return {
-      reached,
-      minScore,
-      text:
-        t("unlocks.minScoreWithPerks", {
-          minScore,
-          required: required.map((u) => u.name).join(", "),
-          forbidden: forbidden.map((u) => u.name).join(", "),
-        }) + reachedText,
-    };
-  }
 }
 
 export function getCoinRenderColor(gameState: GameState, coin: Coin) {

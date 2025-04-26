@@ -5,7 +5,6 @@ import {
   getHighScore,
   getPossibleUpgrades,
   highScoreText,
-  reasonLevelIsLocked,
   makeEmptyPerksMap,
   sumOfValues,
 } from "./game_utils";
@@ -14,6 +13,7 @@ import { isOptionOn } from "./options";
 import { getHistory } from "./gameOver";
 import { getSettingValue, getTotalScore } from "./settings";
 import { isBlackListedForStart, isStartingPerk } from "./startingPerks";
+import {isLevelLocked, reasonLevelIsLocked} from "./get_level_unlock_condition";
 
 export function getRunLevels(
   params: RunParams,
@@ -26,7 +26,7 @@ export function getRunLevels(
   const history = getHistory();
   const unlocked = allLevels.filter(
     (l, li) =>
-      unlockedBefore.has(l.name) || !reasonLevelIsLocked(li, history, false),
+      unlockedBefore.has(l.name) || !isLevelLocked(li, l.name, history),
   );
   const firstLevel = params?.level
     ? [params.level]

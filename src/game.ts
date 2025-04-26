@@ -27,7 +27,6 @@ import {
   levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,
-  reasonLevelIsLocked,
   sample,
   sumOfValues,
 } from "./game_utils";
@@ -99,6 +98,7 @@ import { getNearestUnlockHTML, openScorePanel } from "./openScorePanel";
 import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
 import { categories } from "./upgrades";
+import {reasonLevelIsLocked} from "./get_level_unlock_condition";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -967,7 +967,7 @@ async function openUnlockedLevelsList() {
   const levelActions = allLevels.map((l, li) => {
     const lockedBecause = unlockedBefore.has(l.name)
       ? null
-      : reasonLevelIsLocked(li, getHistory(), true);
+      : reasonLevelIsLocked(li, l.name, getHistory(), true);
     const percentUnlocked = lockedBecause?.reached
       ? `<span class="progress-inline"><span style="transform: scale(${Math.floor((lockedBecause.reached / lockedBecause.minScore) * 100) / 100},1)"></span></span>`
       : "";

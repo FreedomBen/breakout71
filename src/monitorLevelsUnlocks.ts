@@ -1,22 +1,26 @@
-import { GameState, UpgradeLike } from "./types";
+import {GameState, PerkId} from "./types";
 import { getSettingValue, setSettingValue } from "./settings";
 import { allLevels, icons } from "./loadGameData";
-import { getLevelUnlockCondition } from "./game_utils";
 
 import { t } from "./i18n/i18n";
 import { toast } from "./toast";
 import { schedulGameSound } from "./gameStateMutators";
+import {getLevelUnlockCondition} from "./get_level_unlock_condition";
 
 let list: {
   minScore: number;
-  forbidden: UpgradeLike[];
-  required: UpgradeLike[];
+  forbidden: PerkId[];
+  required: PerkId[];
 }[];
-let unlocked = new Set(
-  getSettingValue("breakout_71_unlocked_levels", []) as string[],
-);
+let unlocked : Set<string> |null = null
 
 export function monitorLevelsUnlocks(gameState: GameState) {
+  if(!unlocked){
+   unlocked = new Set(
+      getSettingValue("breakout_71_unlocked_levels", []) as string[],
+    );
+  }
+
   if (gameState.creative) return;
 
   if (!list) {
@@ -24,13 +28,13 @@ export function monitorLevelsUnlocks(gameState: GameState) {
       name: l.name,
       li,
       l,
-      ...getLevelUnlockCondition(li),
+      ...getLevelUnlockCondition(li, l.name),
     }));
   }
 
   list.forEach(({ name, minScore, forbidden, required, l }) => {
     // Already unlocked
-    if (unlocked.has(name)) return;
+    if (unlocked!.has(name)) return;
     // Score not reached yet
     if (gameState.score < minScore) return;
     if (!minScore) return;
@@ -41,7 +45,7 @@ export function monitorLevelsUnlocks(gameState: GameState) {
     // We have a forbidden perk
     if (forbidden.find((id) => gameState.perks[id])) return;
     // Level just got unlocked
-    unlocked.add(name);
+    unlocked!.add(name);
     setSettingValue(
       "breakout_71_unlocked_levels",
       getSettingValue("breakout_71_unlocked_levels", []).concat([name]),

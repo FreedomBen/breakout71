@@ -1,5 +1,5 @@
-import { rawUpgrades } from "./upgrades";
-import { options } from "./options";
+import {rawUpgrades} from "./upgrades";
+import {options} from "./options";
 
 export type colorString = string;
 
@@ -307,3 +307,8 @@ export type UpgradeLike = {
   requires: string;
   threshold: number;
 };
+export type UnlockCondition = {
+    required: PerkId[];
+    forbidden: PerkId[];
+    minScore: number;
+}

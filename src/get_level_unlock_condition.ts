@@ -1,0 +1,113 @@
+import {PerkId, RunHistoryItem, UnlockCondition} from "./types";
+import {upgrades} from "./loadGameData";
+import {hashCode} from "./getLevelBackground";
+import {t} from "./i18n/i18n";
+
+import _hardCodedCondition from './data/unlockConditions.json'
+
+const hardCodedCondition = _hardCodedCondition as Record<string, UnlockCondition>
+
+let excluded: Set<PerkId>;
+
+function isExcluded(id: PerkId) {
+    if (!excluded) {
+        excluded = new Set([
+            "extra_levels",
+            "extra_life",
+            "one_more_choice",
+            "shunt",
+            "slow_down",
+        ]);
+        // Avoid excluding a perk that's needed for the required one
+        upgrades.forEach((u) => {
+            if (u.requires) excluded.add(u.requires);
+        });
+    }
+    return excluded.has(id);
+}
+
+export function getLevelUnlockCondition(levelIndex: number, levelName:string):UnlockCondition {
+
+    if(hardCodedCondition[levelName]) return hardCodedCondition[levelName]
+    const result :UnlockCondition = {
+        required:[],
+        forbidden:[],
+        minScore : Math.max(-1000 + 100 * levelIndex, 0)
+    }
+
+    if (levelIndex > 20) {
+        const possibletargets = [...upgrades]
+            .slice(0, Math.floor(levelIndex / 2))
+            .filter((u) => !isExcluded(u.id))
+            .sort(
+                (a, b) => hashCode(levelIndex + a.id) - hashCode(levelIndex + b.id),
+            ).map(u => u.id);
+
+        const length = Math.min(3, Math.ceil(levelIndex / 30));
+        result.required = possibletargets.slice(0, length);
+        result.forbidden = possibletargets.slice(length, length + length);
+    }
+    return result
+}
+
+export function getBestScoreMatching(
+    history: RunHistoryItem[],
+    required: PerkId[] = [],
+    forbidden: PerkId[] = [],
+) {
+    return Math.max(
+        0,
+        ...history
+            .filter(
+                (r) =>
+                    !required.find((id) => !r?.perks?.[id]) &&
+                    !forbidden.find((id) => r?.perks?.[id]),
+            )
+            .map((r) => r.score),
+    );
+}
+
+export function isLevelLocked(
+    levelIndex: number,
+    levelName:string,
+    history: RunHistoryItem[]){
+    const {required, forbidden, minScore} = getLevelUnlockCondition(levelIndex, levelName);
+    return getBestScoreMatching(history, required, forbidden) < minScore
+
+}
+
+export function reasonLevelIsLocked(
+    levelIndex: number,levelName:string,
+    history: RunHistoryItem[],
+    mentionBestScore: boolean,
+): null | { reached: number; minScore: number; text: string } {
+
+    const {required, forbidden, minScore} = getLevelUnlockCondition(levelIndex, levelName);
+    const reached = getBestScoreMatching(history, required, forbidden);
+    let reachedText =
+        reached && mentionBestScore ? t("unlocks.reached", {reached}) : "";
+    if (reached >= minScore) {
+        return null;
+    } else if (!required.length && !forbidden.length) {
+        return {
+            reached,
+            minScore,
+            text: t("unlocks.minScore", {minScore}) + reachedText,
+        };
+    } else {
+        return {
+            reached,
+            minScore,
+            text:
+                t("unlocks.minScoreWithPerks", {
+                    minScore,
+                    required: required.map((u) => upgradeName(u)).join(", "),
+                    forbidden: forbidden.map((u) => upgradeName(u)).join(", "),
+                }) + reachedText,
+        };
+    }
+}
+
+export function upgradeName(id:PerkId){
+    return upgrades.find(u=>u.id==id)!.name
+}
