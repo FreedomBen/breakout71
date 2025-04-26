@@ -24,10 +24,14 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
   - you can skip the upgrades and they'll be saved for later
   - you can pick an upgrade multiple time to level it up
   - missed challenges show as greyed out choices (with unlock condition).
+  - bigger "level X or Y cleared", continue to level X/Y as button
 
+- make menu and score button more "button like" when you just installed the game.
+- 
 ## Done
 
-- better default value for mobile mode
+- passive income : paddle transparent for a much shorter time
+- better default value for mobile mode detection
 
 ## 29092809
 

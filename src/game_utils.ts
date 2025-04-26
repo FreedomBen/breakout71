@@ -202,12 +202,10 @@ export function telekinesisEffectRate(gameState: GameState, ball: Ball) {
 }
 
 export function yoyoEffectRate(gameState: GameState, ball: Ball) {
-  return (
-    (gameState.perks.yoyo &&
-      ball.vy > 0 &&
-      clamp(1 - (ball.y / gameState.gameZoneHeight) * 1.1 + 0.1, 0, 1)) ||
-    0
-  );
+  if(ball.vy < 0) return 0
+  if(!gameState.perks.yoyo) return  0
+  return Math.abs(gameState.puckPosition - ball.x)/gameState.gameZoneWidth * gameState.perks.yoyo/2
+
 }
 
 export function findLast<T>(
@@ -284,7 +282,7 @@ export function isMovingWhilePassiveIncome(gameState: GameState) {
     gameState.lastPuckMove &&
     gameState.perks.passive_income &&
     gameState.lastPuckMove >
-      gameState.levelTime - 250 * gameState.perks.passive_income
+      gameState.levelTime - (100 * gameState.perks.passive_income - 50)
   );
 }
 

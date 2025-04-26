@@ -2672,11 +2672,11 @@ const rawUpgrades = [
         max: 4,
         name: (0, _i18N.t)("upgrades.passive_income.name"),
         help: (lvl)=>(0, _i18N.t)("upgrades.passive_income.tooltip", {
-                time: lvl * 0.25,
+                time: lvl * 0.10 - 0.05,
                 lvl
             }),
         fullHelp: (lvl)=>(0, _i18N.t)("upgrades.passive_income.verbose_description", {
-                time: lvl * 0.25,
+                time: lvl * 0.10 - 0.05,
                 lvl
             })
     },
@@ -3583,7 +3583,9 @@ function telekinesisEffectRate(gameState, ball) {
     return gameState.perks.telekinesis && ball.vy < 0 && (0, _pureFunctions.clamp)(ball.y / gameState.gameZoneHeight * 1.1 + 0.1, 0, 1) || 0;
 }
 function yoyoEffectRate(gameState, ball) {
-    return gameState.perks.yoyo && ball.vy > 0 && (0, _pureFunctions.clamp)(1 - ball.y / gameState.gameZoneHeight * 1.1 + 0.1, 0, 1) || 0;
+    if (ball.vy < 0) return 0;
+    if (!gameState.perks.yoyo) return 0;
+    return Math.abs(gameState.puckPosition - ball.x) / gameState.gameZoneWidth * gameState.perks.yoyo / 2;
 }
 function findLast(arr, predicate) {
     let i = arr.length;
@@ -3645,7 +3647,7 @@ function shouldPierceByColor(gameState, vhit, hhit, chit) {
     return true;
 }
 function isMovingWhilePassiveIncome(gameState) {
-    return !!(gameState.lastPuckMove && gameState.perks.passive_income && gameState.lastPuckMove > gameState.levelTime - 250 * gameState.perks.passive_income);
+    return !!(gameState.lastPuckMove && gameState.perks.passive_income && gameState.lastPuckMove > gameState.levelTime - (100 * gameState.perks.passive_income - 50));
 }
 function getHighScore() {
     try {
@@ -4398,8 +4400,9 @@ frames = 1) {
             }
             if (coin.previousY < gameState.gameZoneHeight && coin.y > gameState.gameZoneHeight && coin.vy > 0 && speed > 20 && !coin.floatingTime) {
                 schedulGameSound(gameState, "plouf", coin.x, (0, _pureFunctions.clamp)(speed, 20, 100) / 100 * 0.2);
-                if (gameState.perks.compound_interest) resetCombo(gameState, coin.x, coin.y);
                 if (!(0, _options.isOptionOn)("basic")) makeParticle(gameState, coin.x, gameState.gameZoneHeight, -coin.vx / 5, -coin.vy / 5, (0, _gameUtils.getCoinRenderColor)(gameState, coin), false);
+                if (gameState.perks.compound_interest && !gameState.perks.buoy) // If you dont have buoy, we directly declare the coin "lost" to make it clear
+                resetCombo(gameState, coin.x, coin.y);
             }
             if (coin.y > gameState.gameZoneHeight - coinRadius - gameState.puckHeight && coin.y < gameState.gameZoneHeight + gameState.puckHeight + coin.vy && Math.abs(coin.x - gameState.puckPosition) < coinRadius + gameState.puckWidth / 2 + // a bit of margin to be nice , negative in case it's a negative coin
             gameState.puckHeight * (coin.points ? 1 : -1) && !(0, _gameUtils.isMovingWhilePassiveIncome)(gameState)) {
@@ -4408,6 +4411,8 @@ frames = 1) {
             } else if (coin.y > gameState.canvasHeight + coinRadius * 10 || coin.y < -coinRadius * 10 || coin.x < -coinRadius * 10 || coin.x > gameState.canvasWidth + coinRadius * 10) {
                 gameState.levelLostCoins += coin.points;
                 destroy(gameState.coins, coinIndex);
+                if (gameState.perks.compound_interest && gameState.perks.buoy) // If you have buoy, we wait a bit more before declaring a coin "lost"
+                resetCombo(gameState, coin.x, coin.y);
                 if (gameState.combo < gameState.perks.fountain_toss * 30 && Math.random() / coin.points < 1 / gameState.combo * gameState.perks.fountain_toss) offsetCombo(gameState, 1, coin.x, coin.y);
             }
             const positionBeforeBrickBounceX = coin.x;
@@ -4545,7 +4550,7 @@ function ballTick(gameState, ball, frames) {
     }
     if ((0, _gameUtils.yoyoEffectRate)(gameState, ball) > 0) {
         speedLimitDampener += 3;
-        ball.vx += (gameState.puckPosition - ball.x) / 1000 * frames * gameState.perks.yoyo * (0, _gameUtils.yoyoEffectRate)(gameState, ball);
+        ball.vx += (gameState.puckPosition > ball.x ? 1 : -1) * frames * (0, _gameUtils.yoyoEffectRate)(gameState, ball);
     }
     if (ball.hitSinceBounce < gameState.perks.bricks_attract_ball * 3) goToNearestBrick(gameState, ball, gameState.perks.bricks_attract_ball * frames * 0.2, 2 + gameState.perks.bricks_attract_ball, Math.random() < 0.5 * frames);
     if (ball.vx * ball.vx + ball.vy * ball.vy < gameState.baseSpeed * gameState.baseSpeed * 2) {
@@ -5130,7 +5135,7 @@ function render(gameState) {
         if ((0, _gameUtils.telekinesisEffectRate)(gameState, ball) || (0, _gameUtils.yoyoEffectRate)(gameState, ball)) {
             ctx.beginPath();
             ctx.moveTo(gameState.puckPosition, gameState.gameZoneHeight);
-            ctx.globalAlpha = Math.max((0, _gameUtils.telekinesisEffectRate)(gameState, ball), (0, _gameUtils.yoyoEffectRate)(gameState, ball)) * ballAlpha;
+            ctx.globalAlpha = (0, _pureFunctions.clamp)(Math.max((0, _gameUtils.telekinesisEffectRate)(gameState, ball), (0, _gameUtils.yoyoEffectRate)(gameState, ball)) * ballAlpha, 0, 1);
             ctx.strokeStyle = gameState.puckColor;
             ctx.bezierCurveTo(gameState.puckPosition, gameState.gameZoneHeight, gameState.puckPosition, ball.y, ball.x, ball.y);
             ctx.stroke();
@@ -5939,7 +5944,7 @@ function updateAlertsOpen(delta) {
     document.body.classList[alertsOpen ? "add" : "remove"]("has-alert-open");
 }
 
-},{"./i18n/i18n":"eNPRm","./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./tooltip":"3RWxb"}],"3RWxb":[function(require,module,exports,__globalThis) {
+},{"./i18n/i18n":"eNPRm","./options":"d5NoS","./tooltip":"3RWxb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3RWxb":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "setupTooltips", ()=>setupTooltips);

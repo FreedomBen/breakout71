@@ -1249,9 +1249,6 @@ export function gameStateTick(
           coin.x,
           (clamp(speed, 20, 100) / 100) * 0.2,
         );
-        if (gameState.perks.compound_interest) {
-          resetCombo(gameState, coin.x, coin.y);
-        }
         if (!isOptionOn("basic")) {
           makeParticle(
             gameState,
@@ -1263,6 +1260,12 @@ export function gameStateTick(
             false,
           );
         }
+
+        if (gameState.perks.compound_interest && !gameState.perks.buoy) {
+          // If you dont have buoy, we directly declare the coin "lost" to make it clear
+          resetCombo(gameState, coin.x, coin.y);
+        }
+
       }
 
       if (
@@ -1285,6 +1288,10 @@ export function gameStateTick(
       ) {
         gameState.levelLostCoins += coin.points;
         destroy(gameState.coins, coinIndex);
+        if (gameState.perks.compound_interest && gameState.perks.buoy) {
+          // If you have buoy, we wait a bit more before declaring a coin "lost"
+          resetCombo(gameState, coin.x, coin.y);
+        }
 
         if (
           gameState.combo < gameState.perks.fountain_toss * 30 &&
@@ -1652,9 +1659,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     speedLimitDampener += 3;
 
     ball.vx +=
-      ((gameState.puckPosition - ball.x) / 1000) *
+      (gameState.puckPosition > ball.x ? 1 :-1) *
       frames *
-      gameState.perks.yoyo *
       yoyoEffectRate(gameState, ball);
   }
 
