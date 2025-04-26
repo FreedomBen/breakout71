@@ -14,7 +14,9 @@ export function hideAnyTooltip() {
 const tooltip = document.getElementById("tooltip") as HTMLDivElement;
 
 function setupMobileTooltips(tooltip: HTMLDivElement) {
+  tooltip.className='mobile'
   function openTooltip(e: Event) {
+    hideAnyTooltip()
     const hovering = e.target as HTMLElement;
     if (!hovering?.hasAttribute("data-help-content")) {
       return;
@@ -23,8 +25,9 @@ function setupMobileTooltips(tooltip: HTMLDivElement) {
     e.preventDefault();
     tooltip.innerHTML = hovering.getAttribute("data-help-content") || "";
     tooltip.style.display = "";
-    const { left, top, height } = hovering.getBoundingClientRect();
-    tooltip.style.transform = `translate(${left}px,${top}px) translate(${left > window.innerWidth / 2 ? "-100%" : "0"},${top > window.innerHeight / 3 ? "-100%" : height + "px"})`;
+    const {  top } = hovering.getBoundingClientRect();
+    tooltip.style.transform = `translate(0,${top}px) translate(0,-100%)`;
+
   }
 
   document.body.addEventListener("touchstart", openTooltip, true);
@@ -43,6 +46,7 @@ function setupMobileTooltips(tooltip: HTMLDivElement) {
 
   document.body.addEventListener("touchend", closeTooltip, true);
   document.body.addEventListener("mouseup", closeTooltip, true);
+  document.addEventListener("scroll", hideAnyTooltip);
 
   function ignoreClick(e: Event) {
     const hovering = e.target as HTMLElement;
@@ -58,6 +62,7 @@ function setupMobileTooltips(tooltip: HTMLDivElement) {
 }
 
 function setupDesktopTooltips(tooltip: HTMLDivElement) {
+  tooltip.className='desktop'
   function updateTooltipPosition(e: { clientX: number; clientY: number }) {
     tooltip.style.transform = `translate(${e.clientX}px,${e.clientY}px) translate(${e.clientX > window.innerWidth / 2 ? "-100%" : "0"},${e.clientY > (window.innerHeight * 2) / 3 ? "-100%" : "20px"})`;
   }

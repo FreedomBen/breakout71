@@ -26,10 +26,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
   - missed challenges show as greyed out choices (with unlock condition).
   - bigger "level X or Y cleared", continue to level X/Y as button
 
-- make menu and score button more "button like" when you just installed the game.
-- 
+- Can't press ? buttons in Creative Menu.
+
 ## Done
 
+- hide any tooltip on page scroll
+- added a "display level code" button in editor
 - passive income : paddle transparent for a much shorter time
 - better default value for mobile mode detection
 
@@ -483,6 +485,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## UX / gameplay
 
+- make menu and score button more "button like" when you just installed the game.
 - chill game mode, to just relax your mind :
   - no 7 levels limit
   - no upgrades offered at the end of the level 

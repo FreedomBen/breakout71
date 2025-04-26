@@ -14,6 +14,7 @@ import {
   MAX_LEVEL_SIZE,
   MIN_LEVEL_SIZE,
 } from "./pure_functions";
+import {toast} from "./toast";
 
 const palette = _palette as Palette;
 
@@ -147,6 +148,11 @@ export async function editRawLevelList(nth: number, color = "W") {
         help: t("editor.editing.copy_help"),
       },
       {
+        text: t("editor.editing.show_code"),
+        value: "show_code",
+        help: t("editor.editing.show_code_help"),
+      },
+      {
         text: t("editor.editing.bigger"),
         value: "size:+1",
         disabled: level.size >= MAX_LEVEL_SIZE,
@@ -228,7 +234,7 @@ export async function editRawLevelList(nth: number, color = "W") {
       });
       return;
     }
-    if (action === "copy") {
+    if (action === "copy" || action ==='show_code') {
       let text =
         "```\n[" +
         (level.name || "unnamed level")?.replace(/\[|\]/gi, " ") +
@@ -241,7 +247,24 @@ export async function editRawLevelList(nth: number, color = "W") {
         "\n[" +
         (level.credit?.replace(/\[|\]/gi, " ") || "Missing credits") +
         "]\n```";
-      navigator.clipboard.writeText(text);
+
+      if (action === "copy") {
+        try{
+        await navigator.clipboard.writeText(text);
+        toast(t('editor.editing.copied'))
+        }catch (e){
+          if('message' in e) {
+            toast(e.message)
+          }
+        }
+      }else{
+       await asyncAlert({
+          title:t('editor.editing.show_code'),
+          content:[`
+          <pre>${text}</pre>
+          `]
+        })
+      }
       // return
     }
     if (action === "rename") {

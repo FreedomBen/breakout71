@@ -1,5 +1,4 @@
-import { Level, Palette, RawLevel } from "../types";
-import _backgrounds from "../data/backgrounds.json";
+import {  Palette, RawLevel } from "../types";
 import _palette from "../data/palette.json";
 import { createRoot } from "react-dom/client";
 import { useEffect, useState } from "react";
