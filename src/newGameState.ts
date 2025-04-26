@@ -13,7 +13,10 @@ import { isOptionOn } from "./options";
 import { getHistory } from "./gameOver";
 import { getSettingValue, getTotalScore } from "./settings";
 import { isBlackListedForStart, isStartingPerk } from "./startingPerks";
-import {isLevelLocked, reasonLevelIsLocked} from "./get_level_unlock_condition";
+import {
+  isLevelLocked,
+  reasonLevelIsLocked,
+} from "./get_level_unlock_condition";
 
 export function getRunLevels(
   params: RunParams,

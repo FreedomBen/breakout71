@@ -1,5 +1,5 @@
-import {rawUpgrades} from "./upgrades";
-import {options} from "./options";
+import { rawUpgrades } from "./upgrades";
+import { options } from "./options";
 
 export type colorString = string;
 
@@ -301,14 +301,9 @@ export type OptionDef = {
   help: string;
 };
 export type OptionId = keyof typeof options;
-export type UpgradeLike = {
-  id: PerkId;
-  name: string;
-  requires: string;
-  threshold: number;
-};
+
 export type UnlockCondition = {
-    required: PerkId[];
-    forbidden: PerkId[];
-    minScore: number;
-}
+  required: PerkId[];
+  forbidden: PerkId[];
+  minScore: number;
+};

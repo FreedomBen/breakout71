@@ -926,10 +926,10 @@ export const rawUpgrades = [
     max: 4,
     name: t("upgrades.passive_income.name"),
     help: (lvl: number) =>
-      t("upgrades.passive_income.tooltip", { time: lvl * 0.10-0.05, lvl }),
+      t("upgrades.passive_income.tooltip", { time: lvl * 0.1 - 0.05, lvl }),
     fullHelp: (lvl: number) =>
       t("upgrades.passive_income.verbose_description", {
-        time: lvl * 0.10-0.05,
+        time: lvl * 0.1 - 0.05,
         lvl,
       }),
   },

@@ -9,15 +9,11 @@ import {
   restart,
 } from "./game";
 import { asyncAlert, requiredAsyncAlert } from "./asyncAlert";
-import {
-  describeLevel,
-  highScoreText,
-  sumOfValues,
-} from "./game_utils";
+import { describeLevel, highScoreText, sumOfValues } from "./game_utils";
 import { getHistory } from "./gameOver";
 import { noCreative } from "./upgrades";
 import { levelIconHTML } from "./levelIcon";
-import {reasonLevelIsLocked} from "./get_level_unlock_condition";
+import { reasonLevelIsLocked } from "./get_level_unlock_condition";
 
 export function creativeMode(gameState: GameState) {
   return {
@@ -46,7 +42,8 @@ export async function openCreativeModePerksPicker() {
   while (true) {
     const levelOptions = [
       ...allLevels.map((l, li) => {
-        const problem = reasonLevelIsLocked(li, l.name,getHistory(), true)?.text || "";
+        const problem =
+          reasonLevelIsLocked(li, l.name, getHistory(), true)?.text || "";
         return {
           icon: icons[l.name],
           text: l.name,

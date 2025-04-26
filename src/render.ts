@@ -19,7 +19,8 @@ import { isOptionOn } from "./options";
 import {
   ballTransparency,
   catchRateBest,
-  catchRateGood, clamp,
+  catchRateGood,
+  clamp,
   coinsBoostedCombo,
   levelTimeBest,
   levelTimeGood,
@@ -401,11 +402,14 @@ export function render(gameState: GameState) {
     ) {
       ctx.beginPath();
       ctx.moveTo(gameState.puckPosition, gameState.gameZoneHeight);
-      ctx.globalAlpha =clamp(
+      ctx.globalAlpha = clamp(
         Math.max(
           telekinesisEffectRate(gameState, ball),
           yoyoEffectRate(gameState, ball),
-        ) * ballAlpha,0,1);
+        ) * ballAlpha,
+        0,
+        1,
+      );
       ctx.strokeStyle = gameState.puckColor;
       ctx.bezierCurveTo(
         gameState.puckPosition,

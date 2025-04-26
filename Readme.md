@@ -30,6 +30,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+- hardcoded the levels unlock conditions so that they wouldn't change at each update
 - hide any tooltip on page scroll
 - added a "display level code" button in editor
 - passive income : paddle transparent for a much shorter time
@@ -573,6 +574,7 @@ Here are a few interesting games in the breakout genre :
 - Wizorb : https://store.steampowered.com/app/207420/Wizorb/
 - Ricochet infinity : https://www.myabandonware.com/game/ricochet-infinity-dxm
 - Whackerball : https://store.steampowered.com/app/2192170/Whackerball/
+- Arkanoid Archive lists many, many more https://www.youtube.com/@ArkanoidGame
 
 # PC game suggestions
 

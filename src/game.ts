@@ -98,7 +98,7 @@ import { getNearestUnlockHTML, openScorePanel } from "./openScorePanel";
 import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
 import { categories } from "./upgrades";
-import {reasonLevelIsLocked} from "./get_level_unlock_condition";
+import { reasonLevelIsLocked } from "./get_level_unlock_condition";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;

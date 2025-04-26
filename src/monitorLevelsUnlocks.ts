@@ -1,22 +1,22 @@
-import {GameState, PerkId} from "./types";
+import { GameState, PerkId } from "./types";
 import { getSettingValue, setSettingValue } from "./settings";
 import { allLevels, icons } from "./loadGameData";
 
 import { t } from "./i18n/i18n";
 import { toast } from "./toast";
 import { schedulGameSound } from "./gameStateMutators";
-import {getLevelUnlockCondition} from "./get_level_unlock_condition";
+import { getLevelUnlockCondition } from "./get_level_unlock_condition";
 
 let list: {
   minScore: number;
   forbidden: PerkId[];
   required: PerkId[];
 }[];
-let unlocked : Set<string> |null = null
+let unlocked: Set<string> | null = null;
 
 export function monitorLevelsUnlocks(gameState: GameState) {
-  if(!unlocked){
-   unlocked = new Set(
+  if (!unlocked) {
+    unlocked = new Set(
       getSettingValue("breakout_71_unlocked_levels", []) as string[],
     );
   }

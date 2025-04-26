@@ -6,7 +6,6 @@ import {
   currentLevelInfo,
   describeLevel,
   pickedUpgradesHTMl,
-
 } from "./game_utils";
 import {
   askForPersistentStorage,
@@ -18,7 +17,10 @@ import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
 import { editRawLevelList } from "./levelEditor";
 import { openCreativeModePerksPicker } from "./creative";
-import {isLevelLocked, reasonLevelIsLocked} from "./get_level_unlock_condition";
+import {
+  isLevelLocked,
+  reasonLevelIsLocked,
+} from "./get_level_unlock_condition";
 
 export function addToTotalPlayTime(ms: number) {
   setSettingValue(
@@ -140,7 +142,7 @@ export function getHistograms(gameState: GameState) {
       .map((l, li) => ({
         li,
         l,
-        r: reasonLevelIsLocked(li,l.name,  runsHistory, false)?.text,
+        r: reasonLevelIsLocked(li, l.name, runsHistory, false)?.text,
       }))
       .filter((l) => l.r);
 
@@ -160,7 +162,7 @@ export function getHistograms(gameState: GameState) {
     });
 
     const unlocked = locked.filter(
-      ({ li ,l}) => !isLevelLocked(li, l.name, runsHistory),
+      ({ li, l }) => !isLevelLocked(li, l.name, runsHistory),
     );
     if (unlocked.length) {
       unlockedLevels = `

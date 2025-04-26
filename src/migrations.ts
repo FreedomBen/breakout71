@@ -4,7 +4,10 @@ import _appVersion from "./data/version.json";
 import { generateSaveFileContent } from "./generateSaveFileContent";
 import { allLevels } from "./loadGameData";
 import { toast } from "./toast";
-import {isLevelLocked, reasonLevelIsLocked} from "./get_level_unlock_condition";
+import {
+  isLevelLocked,
+  reasonLevelIsLocked,
+} from "./get_level_unlock_condition";
 
 // The page will be reloaded if any migrations were run
 let migrationsRun = 0;
@@ -128,7 +131,7 @@ migrate("set_breakout_71_unlocked_levels" + _appVersion, () => {
   ) as string[];
 
   allLevels
-    .filter((l, li) => !isLevelLocked(li,l.name,  runsHistory))
+    .filter((l, li) => !isLevelLocked(li, l.name, runsHistory))
     .forEach((l) => {
       if (!breakout_71_unlocked_levels.includes(l.name)) {
         breakout_71_unlocked_levels.push(l.name);

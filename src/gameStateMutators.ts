@@ -1265,7 +1265,6 @@ export function gameStateTick(
           // If you dont have buoy, we directly declare the coin "lost" to make it clear
           resetCombo(gameState, coin.x, coin.y);
         }
-
       }
 
       if (
@@ -1659,7 +1658,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     speedLimitDampener += 3;
 
     ball.vx +=
-      (gameState.puckPosition > ball.x ? 1 :-1) *
+      (gameState.puckPosition > ball.x ? 1 : -1) *
       frames *
       yoyoEffectRate(gameState, ball);
   }

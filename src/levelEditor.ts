@@ -14,7 +14,7 @@ import {
   MAX_LEVEL_SIZE,
   MIN_LEVEL_SIZE,
 } from "./pure_functions";
-import {toast} from "./toast";
+import { toast } from "./toast";
 
 const palette = _palette as Palette;
 
@@ -234,7 +234,7 @@ export async function editRawLevelList(nth: number, color = "W") {
       });
       return;
     }
-    if (action === "copy" || action ==='show_code') {
+    if (action === "copy" || action === "show_code") {
       let text =
         "```\n[" +
         (level.name || "unnamed level")?.replace(/\[|\]/gi, " ") +
@@ -249,21 +249,23 @@ export async function editRawLevelList(nth: number, color = "W") {
         "]\n```";
 
       if (action === "copy") {
-        try{
-        await navigator.clipboard.writeText(text);
-        toast(t('editor.editing.copied'))
-        }catch (e){
-          if('message' in e) {
-            toast(e.message)
+        try {
+          await navigator.clipboard.writeText(text);
+          toast(t("editor.editing.copied"));
+        } catch (e) {
+          if ("message" in e) {
+            toast(e.message);
           }
         }
-      }else{
-       await asyncAlert({
-          title:t('editor.editing.show_code'),
-          content:[`
+      } else {
+        await asyncAlert({
+          title: t("editor.editing.show_code"),
+          content: [
+            `
           <pre>${text}</pre>
-          `]
-        })
+          `,
+          ],
+        });
       }
       // return
     }

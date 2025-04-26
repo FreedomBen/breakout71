@@ -12,8 +12,10 @@ export const options = {
     help: t("settings.sounds_help"),
   },
   "mobile-mode": {
-    default: window.innerHeight > window.innerWidth ||('ontouchstart' in window) ||
-     (navigator.maxTouchPoints > 0) ,
+    default:
+      window.innerHeight > window.innerWidth ||
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0,
     name: t("settings.mobile"),
     help: t("settings.mobile_help"),
   },

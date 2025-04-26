@@ -1,9 +1,9 @@
-import {Ball, Coin, GameState, Level, PerkId, PerksMap,} from "./types";
-import {icons, upgrades} from "./loadGameData";
-import {t} from "./i18n/i18n";
-import {clamp} from "./pure_functions";
-import {getSettingValue, getTotalScore} from "./settings";
-import {isOptionOn} from "./options";
+import { Ball, Coin, GameState, Level, PerkId, PerksMap } from "./types";
+import { icons, upgrades } from "./loadGameData";
+import { t } from "./i18n/i18n";
+import { clamp } from "./pure_functions";
+import { getSettingValue, getTotalScore } from "./settings";
+import { isOptionOn } from "./options";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -192,10 +192,13 @@ export function telekinesisEffectRate(gameState: GameState, ball: Ball) {
 }
 
 export function yoyoEffectRate(gameState: GameState, ball: Ball) {
-  if(ball.vy < 0) return 0
-  if(!gameState.perks.yoyo) return  0
-  return Math.abs(gameState.puckPosition - ball.x)/gameState.gameZoneWidth * gameState.perks.yoyo/2
-
+  if (ball.vy < 0) return 0;
+  if (!gameState.perks.yoyo) return 0;
+  return (
+    ((Math.abs(gameState.puckPosition - ball.x) / gameState.gameZoneWidth) *
+      gameState.perks.yoyo) /
+    2
+  );
 }
 
 export function findLast<T>(
