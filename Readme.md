@@ -30,11 +30,13 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+## 29095000
+
 - hardcoded the levels unlock conditions so that they wouldn't change at each update
-- hide any tooltip on page scroll
-- added a "display level code" button in editor
-- passive income : paddle transparent for a much shorter time
-- better default value for mobile mode detection
+- added a "display level code" button in level editor
+- passive income : paddle will be transparent for a much shorter time
+- better mobile mode detection
+- clear tooltip on page scroll
 
 ## 29092809
 

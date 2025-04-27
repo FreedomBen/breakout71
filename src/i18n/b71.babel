@@ -11385,7 +11385,7 @@
 											</translation>
 											<translation>
 												<language>en-US</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 											<translation>
 												<language>es-CL</language>
@@ -11420,7 +11420,7 @@
 											</translation>
 											<translation>
 												<language>en-US</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 											<translation>
 												<language>es-CL</language>
@@ -11455,7 +11455,7 @@
 											</translation>
 											<translation>
 												<language>en-US</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 											<translation>
 												<language>es-CL</language>
@@ -13836,11 +13836,11 @@
 											</translation>
 											<translation>
 												<language>de-DE</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 											<translation>
 												<language>en-US</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 											<translation>
 												<language>es-CL</language>
@@ -13848,7 +13848,7 @@
 											</translation>
 											<translation>
 												<language>fr-FR</language>
-												<approved>true</approved>
+												<approved>false</approved>
 											</translation>
 											<translation>
 												<language>ru-RU</language>
