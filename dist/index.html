@@ -3100,6 +3100,7 @@ parcelHelpers.export(exports, "sounds", ()=>sounds);
 parcelHelpers.export(exports, "getAudioContext", ()=>getAudioContext);
 parcelHelpers.export(exports, "getAudioRecordingTrack", ()=>getAudioRecordingTrack);
 var _options = require("./options");
+var _game = require("./game");
 let lastPlay = Date.now();
 function playPendingSounds(gameState) {
     if (lastPlay > Date.now() - 60) return;
@@ -3170,8 +3171,15 @@ const sounds = {
     }
 };
 // How to play the code on the leftconst context = new window.AudioContext();
-let audioContext, audioRecordingTrack;
+let audioContext, audioContextForMenus, audioRecordingTrack;
 function getAudioContext() {
+    if (!(0, _game.gameState).running) {
+        if (!audioContextForMenus) {
+            if (!(0, _options.isOptionOn)("sound")) return null;
+            audioContextForMenus = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        return audioContextForMenus;
+    }
     if (!audioContext) {
         if (!(0, _options.isOptionOn)("sound")) return null;
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -3195,7 +3203,7 @@ function createSingleBounceSound(baseFreq = 800, pan = 0.5, volume = 1, duration
     panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime);
     gainNode.connect(panner);
     panner.connect(context.destination);
-    panner.connect(audioRecordingTrack);
+    if ((0, _game.gameState).running) panner.connect(audioRecordingTrack);
     // Set up the gain envelope to simulate the impact and quick decay
     gainNode.gain.setValueAtTime(0.8 * volume, context.currentTime); // Initial impact
     gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + duration); // Quick decay
@@ -3236,7 +3244,7 @@ function createExplosionSound(pan = 0.5) {
     // Connect filter to panner and then to the destination (speakers)
     filter.connect(panner);
     panner.connect(context.destination);
-    panner.connect(audioRecordingTrack);
+    if ((0, _game.gameState).running) panner.connect(audioRecordingTrack);
     // Ramp down the gain to simulate the explosion's fade-out
     gainNode.gain.setValueAtTime(1, context.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 1);
@@ -3292,7 +3300,7 @@ function createShatteredGlassSound(pan) {
     panner.pan.setValueAtTime(pan * 2 - 1, context.currentTime);
     gainNode.connect(panner);
     panner.connect(context.destination);
-    panner.connect(audioRecordingTrack);
+    if ((0, _game.gameState).running) panner.connect(audioRecordingTrack);
     gainNode.connect(panner);
 }
 // Helper function to create an oscillator with a specific frequency
@@ -3303,7 +3311,7 @@ function createOscillator(context, frequency, type) {
     return oscillator;
 }
 
-},{"./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d5NoS":[function(require,module,exports,__globalThis) {
+},{"./options":"d5NoS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./game":"edeGs"}],"d5NoS":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "options", ()=>options);

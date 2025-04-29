@@ -396,7 +396,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Easy perk ideas  
 
-- b71 tooltip stays stuck
+- teleport ball to puck as soon as it hits something (% chance)
 - allow dropping balls that are about to miss. 
 - square coins : coins loose all horizontal momentum when hitting something.
 - ball turns following puck motion
