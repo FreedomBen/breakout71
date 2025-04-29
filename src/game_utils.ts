@@ -105,16 +105,6 @@ export function pickedUpgradesHTMl(gameState: GameState) {
     .map((u) => {
       const newMax = Math.max(0, u.max + gameState.perks.limitless);
 
-      let bars = [];
-      for (let i = 0; i < Math.max(u.max, newMax, gameState.perks[u.id]); i++) {
-        if (i < gameState.perks[u.id]) {
-          bars.push('<span class="used"></span>');
-        } else if (i < newMax) {
-          bars.push('<span class="free"></span>');
-        } else {
-          bars.push('<span class="banned"></span>');
-        }
-      }
 
       const state = (gameState.perks[u.id] && 1) || (!newMax && 2) || 3;
       return {
@@ -124,9 +114,9 @@ export function pickedUpgradesHTMl(gameState: GameState) {
             ${icons["icon:" + u.id]}
             <p>
             <strong>${u.name}</strong>
+            <span class="level"><span>${gameState.perks[u.id]}</span><span>${newMax}</span></span>
           ${u.help(Math.max(1, gameState.perks[u.id]))}
-          </p> 
-            ${bars.reverse().join("")}
+          </p>  
         </div>
         `,
       };

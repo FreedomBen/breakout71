@@ -60,8 +60,9 @@ canvas:not(#game) {
 }
 
 #score:hover, #menu:hover, #score:focus, #menu:focus {
+  color: #000;
   cursor: pointer;
-  background: #0000004d;
+  background: #fff;
 }
 
 #score {
@@ -383,26 +384,48 @@ h2.histogram-title strong {
   color: #fff;
 }
 
-.upgrade > span {
-  flex-grow: 0;
-  flex-shrink: 0;
-  align-self: center;
-  width: 5px;
-  height: 32px;
+.upgrade .level {
+  color: #000;
+  background: #fff;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 12px;
   display: inline-block;
+  position: relative;
+  top: -3px;
+  overflow: hidden;
 }
 
-.upgrade > span.used {
+.upgrade .level > span {
+  display: inline-block;
+  position: relative;
+}
+
+.upgrade .level > span:first-child {
+  color: #000;
   background: #fff;
+  padding: 3px 6px 0 2px;
 }
 
-.upgrade > span.free {
-  opacity: .25;
-  background: #fff;
+.upgrade .level > span:last-child {
+  color: #fff;
+  background: #000;
+  padding: 3px 3px 0 2px;
 }
 
-.upgrade > span.banned {
-  background: red;
+.upgrade .level > span:last-child:before {
+  content: "";
+  background: #000;
+  width: 4px;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -2px;
+  transform: skewX(-10deg);
 }
 
 .upgrade.used {
@@ -1084,13 +1107,15 @@ setInterval(()=>{
 setInterval(()=>{
     (0, _monitorLevelsUnlocks.monitorLevelsUnlocks)(gameState);
 }, 500);
-(0, _render.scoreDisplay).addEventListener("click", (e)=>{
-    e.preventDefault();
-    if (!(0, _asyncAlert.alertsOpen)) (0, _openScorePanel.openScorePanel)(gameState);
-});
 document.addEventListener("visibilitychange", ()=>{
     if (document.hidden) pause(true);
 });
+function scoreOpen(e) {
+    e.preventDefault();
+    if (!(0, _asyncAlert.alertsOpen)) (0, _openScorePanel.openScorePanel)(gameState);
+}
+(0, _render.scoreDisplay).addEventListener("click", scoreOpen);
+(0, _render.scoreDisplay).addEventListener("mousedown", scoreOpen);
 document.getElementById("menu").addEventListener("click", (e)=>{
     e.preventDefault();
     if (!(0, _asyncAlert.alertsOpen)) openMainMenu();
@@ -3523,12 +3548,6 @@ function max_levels(gameState) {
 function pickedUpgradesHTMl(gameState) {
     const upgradesList = getPossibleUpgrades(gameState).filter((u)=>gameState.perks[u.id]).map((u)=>{
         const newMax = Math.max(0, u.max + gameState.perks.limitless);
-        let bars = [];
-        for(let i = 0; i < Math.max(u.max, newMax, gameState.perks[u.id]); i++){
-            if (i < gameState.perks[u.id]) bars.push('<span class="used"></span>');
-            else if (i < newMax) bars.push('<span class="free"></span>');
-            else bars.push('<span class="banned"></span>');
-        }
         const state = gameState.perks[u.id] && 1 || !newMax && 2 || 3;
         return {
             state,
@@ -3542,9 +3561,9 @@ function pickedUpgradesHTMl(gameState) {
             ${(0, _loadGameData.icons)["icon:" + u.id]}
             <p>
             <strong>${u.name}</strong>
+            <span class="level"><span>${gameState.perks[u.id]}</span><span>${newMax}</span></span>
           ${u.help(Math.max(1, gameState.perks[u.id]))}
-          </p> 
-            ${bars.reverse().join("")}
+          </p>  
         </div>
         `
         };
@@ -5896,17 +5915,17 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "setupTooltips", ()=>setupTooltips);
 parcelHelpers.export(exports, "hideAnyTooltip", ()=>hideAnyTooltip);
 var _options = require("./options");
+const tooltip = document.getElementById("tooltip");
 function setupTooltips() {
-    if ((0, _options.isOptionOn)("mobile-mode")) setupMobileTooltips(tooltip);
-    else setupDesktopTooltips(tooltip);
+    return;
 }
 function hideAnyTooltip() {
     tooltip.style.display = "none";
 }
-const tooltip = document.getElementById("tooltip");
 function setupMobileTooltips(tooltip) {
     tooltip.className = "mobile";
     function openTooltip(e) {
+        console.log('openTooltip', e);
         hideAnyTooltip();
         const hovering = e.target;
         if (!hovering?.hasAttribute("data-help-content")) return;
@@ -5917,26 +5936,8 @@ function setupMobileTooltips(tooltip) {
         const { top } = hovering.getBoundingClientRect();
         tooltip.style.transform = `translate(0,${top}px) translate(0,-100%)`;
     }
-    document.body.addEventListener("touchstart", openTooltip, true);
-    document.body.addEventListener("mousedown", openTooltip, true);
-    function closeTooltip(e) {
-        const hovering = e.target;
-        if (!hovering?.hasAttribute("data-help-content")) return;
-        e.stopPropagation();
-        e.preventDefault();
-        hideAnyTooltip();
-    }
-    document.body.addEventListener("touchend", closeTooltip, true);
-    document.body.addEventListener("mouseup", closeTooltip, true);
+    document.body.addEventListener("click", openTooltip, true);
     document.addEventListener("scroll", hideAnyTooltip);
-    function ignoreClick(e) {
-        const hovering = e.target;
-        if (!hovering?.hasAttribute("data-help-content")) return;
-        e.stopPropagation();
-        e.preventDefault();
-    }
-    document.body.addEventListener("click", ignoreClick, true);
-    document.body.addEventListener("contextmenu", ignoreClick, true);
 }
 function setupDesktopTooltips(tooltip) {
     tooltip.className = "desktop";

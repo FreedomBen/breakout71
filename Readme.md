@@ -26,9 +26,18 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
   - missed challenges show as greyed out choices (with unlock condition).
   - bigger "level X or Y cleared", continue to level X/Y as button
 
-- Can't press ? buttons in Creative Menu.
 
 ## Done
+
+- somehow score clicks didn't register while the game was playing, that's solved
+- upgrades list now uses numbers instead of bars, looks better with limitless
+- Fix : click tooltip to open on mobile, click anywhere to close
+- Can't press help buttons in Creative Menu
+
+
+## 29097764
+
+- Added levels :  Fish, Spider, GlidersLone island,Spacewyrm Jon, Taijitu, Egg pan, Inception, Chess
 
 ## 29095000
 

@@ -537,18 +537,21 @@ setInterval(() => {
   monitorLevelsUnlocks(gameState);
 }, 500);
 
-scoreDisplay.addEventListener("click", (e) => {
-  e.preventDefault();
-  if (!alertsOpen) {
-    openScorePanel(gameState);
-  }
-});
 
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
     pause(true);
   }
 });
+
+function scoreOpen(e){
+    e.preventDefault();
+  if (!alertsOpen) {
+    openScorePanel(gameState);
+  }
+}
+scoreDisplay.addEventListener("click",scoreOpen);
+scoreDisplay.addEventListener("mousedown", scoreOpen);
 
 (document.getElementById("menu") as HTMLButtonElement).addEventListener(
   "click",

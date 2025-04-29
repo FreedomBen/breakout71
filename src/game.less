@@ -1,10 +1,9 @@
 * {
-  font-family:
-    Courier New,
-    Courier,
-    Lucida Sans Typewriter,
-    Lucida Typewriter,
-    monospace;
+  font-family: Courier New,
+  Courier,
+  Lucida Sans Typewriter,
+  Lucida Typewriter,
+  monospace;
   box-sizing: border-box;
 }
 
@@ -56,7 +55,8 @@ canvas:not(#game) {
 
   &:hover,
   &:focus {
-    background: rgba(0, 0, 0, 0.3);
+    background: white;
+    color: black;
     cursor: pointer;
   }
 
@@ -399,27 +399,52 @@ h2.histogram-title strong {
     color: white;
   }
 
-  & > span {
-    flex-grow: 0;
-
-    flex-shrink: 0;
-    width: 5px;
+  .level {
+    color: #000;
+    background: #FFF;
+    border-radius: 3px;
+    overflow: hidden;
+    font-size: 12px;
+    font-style: normal;
+    line-height: 12px;
     display: inline-block;
-    height: 32px;
-    align-self: center;
+    position: relative;
+    top: -3px;
+    font-weight: bold;
+    border: 1px solid #FFF;
 
-    &.used {
-      background: #fff;
+    > span {
+      display: inline-block;
+      position: relative;
+
+      &:first-child {
+
+      padding: 3px 6px 0 2px;
+        color: #000;
+        background: #FFF;
+      }
+
+      &:last-child {
+
+      padding: 3px 3px 0 2px;
+        color: #FFF;
+        background: #000;
+
+        &:before {
+          content: "";
+          display: block;
+          background: black;;
+          position: absolute;
+          left: -2px;
+          top: 0;
+          bottom: 0;
+          width: 4px;
+          transform: skewX(-10deg)
+        }
+      }
+
     }
 
-    &.free {
-      background: #fff;
-      opacity: 0.25;
-    }
-
-    &.banned {
-      background: red;
-    }
   }
 
   &.used {
@@ -450,9 +475,11 @@ h2.histogram-title strong {
   user-select: none;
   opacity: 1;
   border: 1px solid white;
+
   &.desktop {
     max-width: 300px;
   }
+
   &.mobile {
     width: 95vw;
     left: 2.5vw;
@@ -523,9 +550,8 @@ h2.histogram-title strong {
   border-radius: 2px;
   padding-right: 10px;
   pointer-events: none;
-  transition:
-    opacity 200ms,
-    transform 200ms;
+  transition: opacity 200ms,
+  transform 200ms;
   z-index: 7;
 
   &.hidden {

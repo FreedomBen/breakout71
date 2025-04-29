@@ -1,6 +1,9 @@
 import { isOptionOn } from "./options";
 
+const tooltip = document.getElementById("tooltip") as HTMLDivElement;
+
 export function setupTooltips() {
+  return
   if (isOptionOn("mobile-mode")) {
     setupMobileTooltips(tooltip);
   } else {
@@ -11,11 +14,11 @@ export function hideAnyTooltip() {
   tooltip.style.display = "none";
 }
 
-const tooltip = document.getElementById("tooltip") as HTMLDivElement;
 
 function setupMobileTooltips(tooltip: HTMLDivElement) {
   tooltip.className = "mobile";
   function openTooltip(e: Event) {
+    console.log('openTooltip',e)
     hideAnyTooltip();
     const hovering = e.target as HTMLElement;
     if (!hovering?.hasAttribute("data-help-content")) {
@@ -29,35 +32,9 @@ function setupMobileTooltips(tooltip: HTMLDivElement) {
     tooltip.style.transform = `translate(0,${top}px) translate(0,-100%)`;
   }
 
-  document.body.addEventListener("touchstart", openTooltip, true);
-  document.body.addEventListener("mousedown", openTooltip, true);
-
-  function closeTooltip(e: Event) {
-    const hovering = e.target as HTMLElement;
-    if (!hovering?.hasAttribute("data-help-content")) {
-      return;
-    }
-
-    e.stopPropagation();
-    e.preventDefault();
-    hideAnyTooltip();
-  }
-
-  document.body.addEventListener("touchend", closeTooltip, true);
-  document.body.addEventListener("mouseup", closeTooltip, true);
+  document.body.addEventListener("click", openTooltip, true);
   document.addEventListener("scroll", hideAnyTooltip);
 
-  function ignoreClick(e: Event) {
-    const hovering = e.target as HTMLElement;
-    if (!hovering?.hasAttribute("data-help-content")) {
-      return;
-    }
-
-    e.stopPropagation();
-    e.preventDefault();
-  }
-  document.body.addEventListener("click", ignoreClick, true);
-  document.body.addEventListener("contextmenu", ignoreClick, true);
 }
 
 function setupDesktopTooltips(tooltip: HTMLDivElement) {
