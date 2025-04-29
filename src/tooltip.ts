@@ -3,7 +3,6 @@ import { isOptionOn } from "./options";
 const tooltip = document.getElementById("tooltip") as HTMLDivElement;
 
 export function setupTooltips() {
-  return
   if (isOptionOn("mobile-mode")) {
     setupMobileTooltips(tooltip);
   } else {

@@ -6,7 +6,6 @@ import {
   GameState,
   LightFlash,
   ParticleFlash,
-  PerkId,
   ReusableArray,
   TextFlash,
 } from "./types";
@@ -21,7 +20,6 @@ import {
   getCoinRenderColor,
   getCornerOffset,
   getMajorityValue,
-  getPossibleUpgrades,
   getRowColIndex,
   isMovingWhilePassiveIncome,
   isPickyEatingPossible,
@@ -31,32 +29,18 @@ import {
   telekinesisEffectRate,
   yoyoEffectRate,
 } from "./game_utils";
-import { t } from "./i18n/i18n";
-import { icons } from "./loadGameData";
+import {t} from "./i18n/i18n";
 
-import { getCurrentMaxCoins, getCurrentMaxParticles } from "./settings";
-import { background } from "./render";
-import { gameOver } from "./gameOver";
-import {
-  brickIndex,
-  fitSize,
-  gameState,
-  hasBrick,
-  hitsSomething,
-  openUpgradesPicker,
-  pause,
-  startComputerControlledGame,
-} from "./game";
-import { stopRecording } from "./recording";
-import { isOptionOn } from "./options";
-import {
-  ballTransparency,
-  clamp,
-  coinsBoostedCombo,
-  comboKeepingRate,
-} from "./pure_functions";
-import { addToTotalScore } from "./addToTotalScore";
-import { hashCode } from "./getLevelBackground";
+import {getCurrentMaxCoins, getCurrentMaxParticles} from "./settings";
+import {background} from "./render";
+import {gameOver} from "./gameOver";
+import {brickIndex, fitSize, gameState, hasBrick, hitsSomething, pause, startComputerControlledGame,} from "./game";
+import {stopRecording} from "./recording";
+import {isOptionOn} from "./options";
+import {ballTransparency, clamp, coinsBoostedCombo, comboKeepingRate,} from "./pure_functions";
+import {addToTotalScore} from "./addToTotalScore";
+import {hashCode} from "./getLevelBackground";
+import {openUpgradesPicker} from "./openUpgradesPicker";
 
 export function setMousePos(gameState: GameState, x: number) {
   if (gameState.startParams.computer_controlled) return;
@@ -556,41 +540,6 @@ export function explodeBrick(
   }
 }
 
-export function dontOfferTooSoon(gameState: GameState, id: PerkId) {
-  gameState.lastOffered[id] = Math.round(Date.now() / 1000);
-}
-
-export function pickRandomUpgrades(gameState: GameState, count: number) {
-  let list = getPossibleUpgrades(gameState)
-    .map((u) => ({
-      ...u,
-      score: Math.random() + (gameState.lastOffered[u.id] || 0),
-    }))
-    .sort((a, b) => a.score - b.score)
-    .filter((u) => gameState.perks[u.id] < u.max + gameState.perks.limitless)
-    .slice(0, count)
-    .sort((a, b) => (a.id > b.id ? 1 : -1));
-
-  list.forEach((u) => {
-    dontOfferTooSoon(gameState, u.id);
-  });
-
-  return list.map((u) => ({
-    text:
-      u.name +
-      (gameState.perks[u.id]
-        ? t("level_up.upgrade_perk_to_level", {
-            level: gameState.perks[u.id] + 1,
-          })
-        : ""),
-    icon: icons["icon:" + u.id],
-    value: u.id as PerkId,
-    help: u.help(gameState.perks[u.id] + 1),
-    className: "upgrade ",
-    tooltip: u.fullHelp(gameState.perks[u.id] + 1),
-  }));
-}
-
 export function schedulGameSound(
   gameState: GameState,
   sound: keyof GameState["aboutToPlaySound"],
@@ -654,12 +603,13 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.upgradesOfferedFor = l;
   stopRecording();
 
+  gameState.currentLevel = l;
+  gameState.level = gameState.runLevels[l % gameState.runLevels.length];
+
+
   if (l > 0) {
     await openUpgradesPicker(gameState);
   }
-  gameState.currentLevel = l;
-
-  gameState.level = gameState.runLevels[l % gameState.runLevels.length];
 
   gameState.levelTime = 0;
   gameState.winAt = 0;
@@ -667,6 +617,7 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.lastPuckMove = 0;
   gameState.lastZenComboIncrease = 0;
   gameState.autoCleanUses = 0;
+
   gameState.lastTickDown = gameState.levelTime;
   gameState.levelStartScore = gameState.score;
   gameState.levelSpawnedCoins = 0;
@@ -1005,8 +956,8 @@ export function gameStateTick(
     }
   }
 
-  if (
-    remainingBricks <= gameState.perks.skip_last &&
+  if (( window.location.search.includes("skipplaying") ||
+    remainingBricks <= gameState.perks.skip_last) &&
     !gameState.autoCleanUses
   ) {
     gameState.bricks.forEach((type, index) => {
@@ -1819,7 +1770,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.vy > 0 &&
     (ballIsUnderPuck ||
       (gameState.balls.length < 2 &&
-        gameState.perks.extra_life &&
+        gameState.extra_lives &&
         ball.y > ylimit + gameState.puckHeight / 2))
   ) {
     if (ballIsUnderPuck) {
@@ -2038,9 +1989,9 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
 }
 
 function justLostALife(gameState: GameState, ball: Ball, x: number, y: number) {
-  gameState.perks.extra_life -= 1;
-  if (gameState.perks.extra_life < 0) {
-    gameState.perks.extra_life = 0;
+  gameState.extra_lives -= 1;
+  if (gameState.extra_lives < 0) {
+    gameState.extra_lives = 0;
   } else if (gameState.perks.sacrifice) {
     gameState.combo *= gameState.perks.sacrifice;
     gameState.bricks.forEach(

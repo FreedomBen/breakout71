@@ -1,17 +1,13 @@
-import { GameState } from "./types";
-import { asyncAlert } from "./asyncAlert";
-import { t } from "./i18n/i18n";
-import { levelsListHTMl, max_levels, pickedUpgradesHTMl } from "./game_utils";
-import { getCreativeModeWarning, getHistory } from "./gameOver";
-import { pause } from "./game";
-import { allLevels, icons } from "./loadGameData";
-import { firstWhere } from "./pure_functions";
-import { getSettingValue, getTotalScore } from "./settings";
-import {
-  getLevelUnlockCondition,
-  reasonLevelIsLocked,
-  upgradeName,
-} from "./get_level_unlock_condition";
+import {GameState} from "./types";
+import {asyncAlert} from "./asyncAlert";
+import {t} from "./i18n/i18n";
+import {levelsListHTMl, max_levels, pickedUpgradesHTMl} from "./game_utils";
+import {getCreativeModeWarning, getHistory} from "./gameOver";
+import {pause} from "./game";
+import {allLevels, icons} from "./loadGameData";
+import {firstWhere} from "./pure_functions";
+import {getSettingValue, getTotalScore} from "./settings";
+import {getLevelUnlockCondition, reasonLevelIsLocked, upgradeName,} from "./get_level_unlock_condition";
 
 export async function openScorePanel(gameState: GameState) {
   pause(true);
@@ -28,8 +24,8 @@ export async function openScorePanel(gameState: GameState) {
       pickedUpgradesHTMl(gameState),
       levelsListHTMl(gameState, gameState.currentLevel),
       getNearestUnlockHTML(gameState),
-      gameState.rerolls
-        ? t("score_panel.rerolls_count", { rerolls: gameState.rerolls })
+      gameState.extra_lives
+        ? t("score_panel.extra_lives_count", { count: gameState.extra_lives })
         : "",
     ],
     allowClose: true,
@@ -100,3 +96,4 @@ export function getNearestUnlockHTML(gameState: GameState) {
   
   `;
 }
+

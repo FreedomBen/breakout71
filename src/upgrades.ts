@@ -47,18 +47,6 @@ export const rawUpgrades = [
   {
     category: categories.beginner,
     requires: "",
-    threshold: 0,
-    gift: false,
-    id: "extra_life",
-    max: 7,
-    name: t("upgrades.extra_life.name"),
-    help: (lvl: number) => t("upgrades.extra_life.tooltip"),
-    fullHelp: (lvl: number) =>
-      t("upgrades.extra_life.verbose_description", { lvl }),
-  },
-  {
-    category: categories.beginner,
-    requires: "",
     threshold: 50,
     gift: false,
     id: "skip_last",
@@ -548,7 +536,7 @@ export const rawUpgrades = [
   },
   {
     category: categories.advanced,
-    requires: "extra_life",
+    requires: "",
     threshold: 110000,
     gift: false,
     id: "sacrifice",

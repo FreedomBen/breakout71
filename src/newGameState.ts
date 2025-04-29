@@ -8,7 +8,7 @@ import {
   makeEmptyPerksMap,
   sumOfValues,
 } from "./game_utils";
-import { dontOfferTooSoon, resetBalls } from "./gameStateMutators";
+import { resetBalls } from "./gameStateMutators";
 import { isOptionOn } from "./options";
 import { getHistory } from "./gameOver";
 import { getSettingValue, getTotalScore } from "./settings";
@@ -17,6 +17,7 @@ import {
   isLevelLocked,
   reasonLevelIsLocked,
 } from "./get_level_unlock_condition";
+import {dontOfferTooSoon} from "./openUpgradesPicker";
 
 export function getRunLevels(
   params: RunParams,
@@ -143,7 +144,7 @@ export function newGameState(params: RunParams): GameState {
     needsRender: true,
     autoCleanUses: 0,
     ...defaultSounds(),
-    rerolls: 0,
+    extra_lives: 0,
     creative:
       params?.computer_controlled ||
       sumOfValues(params.perks) > 1 ||

@@ -102,6 +102,9 @@ export async function asyncAlert<t>({
           popup.appendChild(addto);
         }
 
+        const buttonWrap = document.createElement("div")
+          addto.appendChild(buttonWrap)
+
         const {
           text,
           value,
@@ -134,16 +137,16 @@ ${icon}
         }
 
         button.className =
-          className + (lastClickedItemIndex === index ? " needs-focus" : "");
+          className + (lastClickedItemIndex === index ? " needs-focus" : "")+' choice-button';
 
-        addto.appendChild(button);
+        buttonWrap.appendChild(button);
 
         if (tooltip) {
           if (isOptionOn("mobile-mode")) {
             const helpBtn = document.createElement("button");
             helpBtn.innerText = "?";
             helpBtn.setAttribute("data-help-content", tooltip);
-            button.appendChild(helpBtn);
+            buttonWrap.appendChild(helpBtn);
           } else {
             button.setAttribute("data-tooltip", tooltip);
           }

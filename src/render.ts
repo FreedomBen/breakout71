@@ -108,10 +108,9 @@ export function render(gameState: GameState) {
       : "") +
     `<span class="score" data-tooltip="${t("play.score_tooltip")}">$${gameState.score}</span>`;
 
-  scoreDisplay.className =
-    (gameState.startParams.computer_controlled && "computer_controlled") ||
-    (gameState.lastScoreIncrease > gameState.levelTime - 500 && "active") ||
-    "";
+  scoreDisplay.classList[gameState.startParams.computer_controlled ? 'add':'remove']('computer_controlled');
+  scoreDisplay.classList[gameState.lastScoreIncrease > gameState.levelTime - 500 ? 'add':'remove']('active');
+
   // Clear
   if (!isOptionOn("basic") && level.svg && level.color === "#000000") {
     const skipN =
@@ -363,13 +362,13 @@ export function render(gameState: GameState) {
     ctx.globalCompositeOperation = "screen";
     drawBall(ctx, color, size, x, y);
   });
-
+  //
   startWork("render:extra_life");
-  if (gameState.perks.extra_life) {
+  if (gameState.extra_lives) {
     ctx.globalAlpha = gameState.balls.length > 1 ? 0.2 : 1;
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = gameState.puckColor;
-    for (let i = 0; i < gameState.perks.extra_life; i++) {
+    for (let i = 0; i < gameState.extra_lives; i++) {
       ctx.fillRect(
         gameState.offsetXRoundedDown,
         gameState.gameZoneHeight - gameState.puckHeight / 2 + 2 * i,

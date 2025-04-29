@@ -55,12 +55,25 @@ canvas:not(#game) {
 
   &:hover,
   &:focus {
-    background: white;
-    color: black;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
     cursor: pointer;
   }
 
   text-shadow: 0 0 4px var(--level-background);
+
+  &.button-look {
+    //  Look more like buttons for begginer to understand they are clickable
+    text-shadow: none;
+    background: #000000d6;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 0 6px;
+    line-height: 20px;
+    box-shadow: 0 2px #fff;
+  }
+
 }
 
 #score {
@@ -142,59 +155,68 @@ body:not(.has-alert-open) #popup {
       flex-direction: column;
       align-items: stretch;
 
-      > button {
-        font: inherit;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 10px;
-        cursor: pointer;
-        border: 1px solid white;
-        text-align: left;
+      > div {
         display: flex;
-        gap: 10px;
-        margin-top: -1px;
 
-        &:not([disabled]):hover,
-        &:not([disabled]):focus {
-          border-color: #f1d33b;
-          position: relative;
-          z-index: 1;
-        }
-
-        &[disabled] {
-          opacity: 0.5;
-          filter: saturate(0);
-          //pointer-events: none;
-          cursor: not-allowed;
-        }
-
-        & > div {
+        & > button.choice-button {
           flex-grow: 1;
-        }
+          font: inherit;
+          background: rgba(0, 0, 0, 0.8);
+          color: white;
+          padding: 10px;
+          cursor: pointer;
+          border: 1px solid white;
+          text-align: left;
+          display: flex;
+          gap: 10px;
+          margin-top: -1px;
 
-        & > div > em {
-          display: block;
-          opacity: 0.8;
-        }
+          &:not([disabled]):hover,
+          &:not([disabled]):focus {
+            border-color: #f1d33b;
+            position: relative;
+            z-index: 1;
+          }
 
-        &.grey-out-unless-hovered {
-          &:not(:hover) {
-            opacity: 0.6;
+          &[disabled]:not(.no-border) {
+            opacity: 0.5;
+            filter: saturate(0);
+            cursor: not-allowed;
+          }
 
-            img {
-              filter: saturate(0);
+          &.no-border{
+            border-color: transparent;
+          }
+
+          & > div {
+            flex-grow: 1;
+          }
+
+          & > div > em {
+            display: block;
+            opacity: 0.8;
+          }
+
+          &.grey-out-unless-hovered {
+            &:not(:hover) {
+              opacity: 0.6;
+
+              img {
+                filter: saturate(0);
+              }
+            }
+
+            &[disabled] {
+              opacity: 0.2;
             }
           }
 
-          &[disabled] {
-            opacity: 0.2;
-          }
         }
 
-        button[data-help-content] {
+        > button[data-help-content] {
           border-radius: 4px;
           outline: none;
-          align-self: flex-start;
+          align-self: center;
           width: 30px;
           height: 30px;
           background: #5da3ea;
@@ -205,6 +227,7 @@ body:not(.has-alert-open) #popup {
           flex-shrink: 0;
           font-weight: bold;
           font-size: 22px;
+          margin: 5px;
         }
       }
     }
@@ -412,6 +435,7 @@ h2.histogram-title strong {
     top: -3px;
     font-weight: bold;
     border: 1px solid #FFF;
+    margin-left: 5px;
 
     > span {
       display: inline-block;
@@ -419,14 +443,14 @@ h2.histogram-title strong {
 
       &:first-child {
 
-      padding: 3px 6px 0 2px;
+        padding: 3px 6px 0 2px;
         color: #000;
         background: #FFF;
       }
 
       &:last-child {
 
-      padding: 3px 3px 0 2px;
+        padding: 3px 3px 0 2px;
         color: #FFF;
         background: #000;
 
@@ -442,9 +466,21 @@ h2.histogram-title strong {
           transform: skewX(-10deg)
         }
       }
-
     }
 
+    &.capped {
+      > span:first-child {
+
+        color: #FFF;
+        background: #000;
+
+      }
+
+      > span:last-child::before {
+        width: 1px;
+        background: white;
+      }
+    }
   }
 
   &.used {

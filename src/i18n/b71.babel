@@ -2493,7 +2493,42 @@
 						<name>level_up</name>
 						<children>
 							<concept_node>
-								<name>after_buttons</name>
+								<name>go</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>ar-LB</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>de-DE</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>en-US</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>es-CL</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>ru-RU</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>tr-TR</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
+								<name>instructions</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -2528,7 +2563,7 @@
 								</translations>
 							</concept_node>
 							<concept_node>
-								<name>before_buttons</name>
+								<name>maxed_upgrade</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -2538,11 +2573,11 @@
 									</translation>
 									<translation>
 										<language>de-DE</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>en-US</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>es-CL</language>
@@ -2550,7 +2585,7 @@
 									</translation>
 									<translation>
 										<language>fr-FR</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>ru-RU</language>
@@ -2563,7 +2598,7 @@
 								</translations>
 							</concept_node>
 							<concept_node>
-								<name>compliment_advice</name>
+								<name>no_points</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -2573,11 +2608,11 @@
 									</translation>
 									<translation>
 										<language>de-DE</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>en-US</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>es-CL</language>
@@ -2585,7 +2620,7 @@
 									</translation>
 									<translation>
 										<language>fr-FR</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>ru-RU</language>
@@ -2598,7 +2633,7 @@
 								</translations>
 							</concept_node>
 							<concept_node>
-								<name>compliment_good</name>
+								<name>pick_upgrade</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -2608,11 +2643,11 @@
 									</translation>
 									<translation>
 										<language>de-DE</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>en-US</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>es-CL</language>
@@ -2620,7 +2655,7 @@
 									</translation>
 									<translation>
 										<language>fr-FR</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>ru-RU</language>
@@ -2633,182 +2668,7 @@
 								</translations>
 							</concept_node>
 							<concept_node>
-								<name>compliment_perfect</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>ar-LB</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>de-DE</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>es-CL</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>ru-RU</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>tr-TR</language>
-										<approved>false</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>pick_upgrade_title</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>ar-LB</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>de-DE</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>es-CL</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>ru-RU</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>tr-TR</language>
-										<approved>false</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>plus_one_upgrade</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>ar-LB</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>de-DE</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>es-CL</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>ru-RU</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>tr-TR</language>
-										<approved>false</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>plus_one_upgrade_and_reroll</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>ar-LB</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>de-DE</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>es-CL</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>ru-RU</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>tr-TR</language>
-										<approved>false</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>reroll</name>
-								<description/>
-								<comment/>
-								<translations>
-									<translation>
-										<language>ar-LB</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>de-DE</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>en-US</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>es-CL</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>fr-FR</language>
-										<approved>true</approved>
-									</translation>
-									<translation>
-										<language>ru-RU</language>
-										<approved>false</approved>
-									</translation>
-									<translation>
-										<language>tr-TR</language>
-										<approved>false</approved>
-									</translation>
-								</translations>
-							</concept_node>
-							<concept_node>
-								<name>reroll_help</name>
+								<name>title</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -5768,7 +5628,7 @@
 								</translations>
 							</concept_node>
 							<concept_node>
-								<name>get_upgrades_to_unlock</name>
+								<name>extra_lives_count</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -5778,11 +5638,11 @@
 									</translation>
 									<translation>
 										<language>de-DE</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>en-US</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>es-CL</language>
@@ -5790,7 +5650,7 @@
 									</translation>
 									<translation>
 										<language>fr-FR</language>
-										<approved>true</approved>
+										<approved>false</approved>
 									</translation>
 									<translation>
 										<language>ru-RU</language>
@@ -5803,7 +5663,7 @@
 								</translations>
 							</concept_node>
 							<concept_node>
-								<name>rerolls_count</name>
+								<name>get_upgrades_to_unlock</name>
 								<description/>
 								<comment/>
 								<translations>
@@ -10819,116 +10679,6 @@
 							</folder_node>
 							<folder_node>
 								<name>extra_levels</name>
-								<children>
-									<concept_node>
-										<name>name</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>tooltip</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-									<concept_node>
-										<name>verbose_description</name>
-										<description/>
-										<comment/>
-										<translations>
-											<translation>
-												<language>ar-LB</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>de-DE</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>en-US</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>es-CL</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>fr-FR</language>
-												<approved>true</approved>
-											</translation>
-											<translation>
-												<language>ru-RU</language>
-												<approved>false</approved>
-											</translation>
-											<translation>
-												<language>tr-TR</language>
-												<approved>false</approved>
-											</translation>
-										</translations>
-									</concept_node>
-								</children>
-							</folder_node>
-							<folder_node>
-								<name>extra_life</name>
 								<children>
 									<concept_node>
 										<name>name</name>

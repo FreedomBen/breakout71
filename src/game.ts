@@ -1,38 +1,18 @@
-import {
-  allLevels,
-  allLevelsAndIcons,
-  appVersion,
-  icons,
-  upgrades,
-} from "./loadGameData";
-import {
-  Ball,
-  Coin,
-  GameState,
-  LightFlash,
-  OptionId,
-  ParticleFlash,
-  PerkId,
-  PerksMap,
-  RunParams,
-  TextFlash,
-} from "./types";
-import { getAudioContext, playPendingSounds } from "./sounds";
+import {allLevels, allLevelsAndIcons, appVersion, icons, upgrades,} from "./loadGameData";
+import {Ball, Coin, GameState, LightFlash, OptionId, ParticleFlash, PerksMap, RunParams, TextFlash,} from "./types";
+import {getAudioContext, playPendingSounds} from "./sounds";
 import {
   currentLevelInfo,
   describeLevel,
   getRowColIndex,
   highScoreText,
   hoursSpentPlaying,
-  levelsListHTMl,
-  max_levels,
-  pickedUpgradesHTMl,
   sample,
   sumOfValues,
 } from "./game_utils";
 
 import "./PWA/sw_loader";
-import { getCurrentLang, languages, t } from "./i18n/i18n";
+import {getCurrentLang, languages, t} from "./i18n/i18n";
 import {
   commitSettingsChangesToLocalStorage,
   cycleMaxCoins,
@@ -47,58 +27,28 @@ import {
   gameStateTick,
   liveCount,
   normalizeGameState,
-  pickRandomUpgrades,
   setLevel,
   setMousePos,
 } from "./gameStateMutators";
-import {
-  backgroundCanvas,
-  gameCanvas,
-  getHaloScale,
-  haloCanvas,
-  render,
-  scoreDisplay,
-} from "./render";
-import {
-  pauseRecording,
-  recordOneFrame,
-  resumeRecording,
-  startRecordingGame,
-} from "./recording";
-import { newGameState } from "./newGameState";
-import {
-  alertsOpen,
-  asyncAlert,
-  AsyncAlertAction,
-  closeModal,
-  requiredAsyncAlert,
-} from "./asyncAlert";
-import { isOptionOn, options, toggleOption } from "./options";
-import {
-  catchRateBest,
-  catchRateGood,
-  clamp,
-  levelTimeBest,
-  levelTimeGood,
-  miniMarkDown,
-  missesBest,
-  missesGood,
-  wallBouncedBest,
-  wallBouncedGood,
-} from "./pure_functions";
-import { helpMenuEntry } from "./help";
-import { creativeMode } from "./creative";
-import { hideAnyTooltip, setupTooltips } from "./tooltip";
-import { startingPerkMenuButton } from "./startingPerks";
+import {backgroundCanvas, gameCanvas, getHaloScale, haloCanvas, render, scoreDisplay,} from "./render";
+import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} from "./recording";
+import {newGameState} from "./newGameState";
+import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal,} from "./asyncAlert";
+import {isOptionOn, options, toggleOption} from "./options";
+import {clamp, miniMarkDown,} from "./pure_functions";
+import {helpMenuEntry} from "./help";
+import {creativeMode} from "./creative";
+import {hideAnyTooltip, setupTooltips} from "./tooltip";
+import {startingPerkMenuButton} from "./startingPerks";
 import "./migrations";
-import { getHistory } from "./gameOver";
-import { generateSaveFileContent } from "./generateSaveFileContent";
-import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
-import { getNearestUnlockHTML, openScorePanel } from "./openScorePanel";
-import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
-import { levelEditorMenuEntry } from "./levelEditor";
-import { categories } from "./upgrades";
-import { reasonLevelIsLocked } from "./get_level_unlock_condition";
+import {getHistory} from "./gameOver";
+import {generateSaveFileContent} from "./generateSaveFileContent";
+import {runHistoryViewerMenuEntry} from "./runHistoryViewer";
+import {openScorePanel} from "./openScorePanel";
+import {monitorLevelsUnlocks} from "./monitorLevelsUnlocks";
+import {levelEditorMenuEntry} from "./levelEditor";
+import {categories} from "./upgrades";
+import {reasonLevelIsLocked} from "./get_level_unlock_condition";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -131,8 +81,6 @@ export function pause(playerAskedForPause: boolean) {
 
     pauseRecording();
     gameState.pauseTimeout = null;
-    // document.body.className = gameState.running ? " running " : " paused ";
-    scoreDisplay.className = "";
     gameState.needsRender = true;
   };
 
@@ -248,122 +196,6 @@ setInterval(() => {
   if (width !== gameState.canvasWidth || height !== gameState.canvasHeight)
     fitSize(gameState);
 }, 1000);
-
-export async function openUpgradesPicker(gameState: GameState) {
-  const catchRate =
-    gameState.levelCoughtCoins / (gameState.levelSpawnedCoins || 1);
-
-  let repeats = 1;
-
-  let timeGain = "",
-    catchGain = "",
-    wallHitsGain = "",
-    missesGain = "";
-
-  if (gameState.levelWallBounces < wallBouncedBest) {
-    repeats++;
-    gameState.rerolls++;
-    wallHitsGain = t("level_up.plus_one_upgrade_and_reroll");
-  } else if (gameState.levelWallBounces < wallBouncedGood) {
-    repeats++;
-    wallHitsGain = t("level_up.plus_one_upgrade");
-  }
-  if (gameState.levelTime < levelTimeBest * 1000) {
-    repeats++;
-    gameState.rerolls++;
-    timeGain = t("level_up.plus_one_upgrade_and_reroll");
-  } else if (gameState.levelTime < levelTimeGood * 1000) {
-    repeats++;
-    timeGain = t("level_up.plus_one_upgrade");
-  }
-  if (catchRate > catchRateBest / 100) {
-    repeats++;
-    gameState.rerolls++;
-    catchGain = t("level_up.plus_one_upgrade_and_reroll");
-  } else if (catchRate > catchRateGood / 100) {
-    repeats++;
-    catchGain = t("level_up.plus_one_upgrade");
-  }
-  if (gameState.levelMisses < missesBest) {
-    repeats++;
-    gameState.rerolls++;
-    missesGain = t("level_up.plus_one_upgrade_and_reroll");
-  } else if (gameState.levelMisses < missesGood) {
-    repeats++;
-    missesGain = t("level_up.plus_one_upgrade");
-  }
-
-  while (repeats--) {
-    const actions: Array<{
-      text: string;
-      icon: string;
-      value: PerkId | "reroll";
-      help: string;
-      className: string;
-      tooltip: string;
-    }> = pickRandomUpgrades(gameState, 3 + gameState.perks.one_more_choice);
-    if (!actions.length) break;
-
-    if (gameState.rerolls)
-      actions.push({
-        text: t("level_up.reroll", { count: gameState.rerolls }),
-        help: t("level_up.reroll_help"),
-        value: "reroll" as const,
-        icon: icons["icon:reroll"],
-      });
-
-    const compliment =
-      (timeGain &&
-        catchGain &&
-        missesGain &&
-        wallHitsGain &&
-        t("level_up.compliment_perfect")) ||
-      ((timeGain || catchGain || missesGain || wallHitsGain) &&
-        t("level_up.compliment_good")) ||
-      t("level_up.compliment_advice");
-
-    const upgradeId = await requiredAsyncAlert<PerkId | "reroll">({
-      title:
-        t("level_up.pick_upgrade_title") +
-        (repeats ? " (" + (repeats + 1) + ")" : ""),
-      content: [
-        `<p>${t("level_up.before_buttons", {
-          score: gameState.levelCoughtCoins,
-          catchGain,
-          levelSpawnedCoins: gameState.levelSpawnedCoins,
-          time: Math.round(gameState.levelTime / 1000),
-          timeGain,
-          levelMisses: gameState.levelMisses,
-          missesGain,
-          levelWallBounces: gameState.levelWallBounces,
-          wallHitsGain,
-          compliment,
-        })}
-        </p>
-  <p>${t("level_up.after_buttons", {
-    level: gameState.currentLevel + 1,
-    max: max_levels(gameState),
-  })} </p>
-        <p>${levelsListHTMl(gameState, gameState.currentLevel + 1)}</p>
-`,
-        ...actions,
-
-        pickedUpgradesHTMl(gameState),
-        getNearestUnlockHTML(gameState),
-
-        `<div id="level-recording-container"></div>`,
-      ],
-    });
-
-    if (upgradeId === "reroll") {
-      repeats++;
-      gameState.rerolls--;
-    } else {
-      gameState.perks[upgradeId]++;
-      gameState.runStatistics.upgrades_picked++;
-    }
-  }
-}
 
 gameCanvas.addEventListener("mouseup", (e) => {
   if (e.button !== 0) return;
@@ -543,21 +375,33 @@ document.addEventListener("visibilitychange", () => {
     pause(true);
   }
 });
+if(getSettingValue('score-opened',0 )<3){
+  scoreDisplay.classList.add('button-look')
+}
+const menuDisplay = document.getElementById("menu") as HTMLButtonElement;
+if(getSettingValue('menu-opened',0 )<3){
+  menuDisplay.classList.add('button-look')
+}
 
 function scoreOpen(e){
     e.preventDefault();
   if (!alertsOpen) {
+    setSettingValue('score-opened',getSettingValue('score-opened',0 )+1 )
     openScorePanel(gameState);
   }
 }
+
+
 scoreDisplay.addEventListener("click",scoreOpen);
 scoreDisplay.addEventListener("mousedown", scoreOpen);
 
-(document.getElementById("menu") as HTMLButtonElement).addEventListener(
+menuDisplay.addEventListener(
   "click",
   (e) => {
     e.preventDefault();
     if (!alertsOpen) {
+
+    setSettingValue('menu-opened',getSettingValue('menu-opened',0 )+1 )
       openMainMenu();
     }
   },

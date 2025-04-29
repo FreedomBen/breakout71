@@ -1,9 +1,9 @@
-import { Ball, Coin, GameState, Level, PerkId, PerksMap } from "./types";
-import { icons, upgrades } from "./loadGameData";
-import { t } from "./i18n/i18n";
-import { clamp } from "./pure_functions";
-import { getSettingValue, getTotalScore } from "./settings";
-import { isOptionOn } from "./options";
+import {Ball, Coin, GameState, Level, PerkId, PerksMap, Upgrade} from "./types";
+import {icons, upgrades} from "./loadGameData";
+import {t} from "./i18n/i18n";
+import {clamp} from "./pure_functions";
+import {getSettingValue, getTotalScore} from "./settings";
+import {isOptionOn} from "./options";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -99,6 +99,12 @@ export function max_levels(gameState: GameState) {
   return 7 + gameState.perks.extra_levels;
 }
 
+export function upgradeLevelAndMaxDisplay(upgrade: Upgrade, gameState: GameState) {
+  const lvl = gameState.perks[upgrade.id];
+  const max = upgrade.max + gameState.perks.limitless
+  return `<span class="level ${lvl < max ? 'can-upgrade' : 'capped'}"><span>${lvl}</span><span>${max}</span></span>`
+}
+
 export function pickedUpgradesHTMl(gameState: GameState) {
   const upgradesList = getPossibleUpgrades(gameState)
     .filter((u) => gameState.perks[u.id])
@@ -114,7 +120,7 @@ export function pickedUpgradesHTMl(gameState: GameState) {
             ${icons["icon:" + u.id]}
             <p>
             <strong>${u.name}</strong>
-            <span class="level"><span>${gameState.perks[u.id]}</span><span>${newMax}</span></span>
+            ${upgradeLevelAndMaxDisplay(u, gameState)} 
           ${u.help(Math.max(1, gameState.perks[u.id]))}
           </p>  
         </div>

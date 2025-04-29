@@ -16,7 +16,6 @@ function isExcluded(id: PerkId) {
   if (!excluded) {
     excluded = new Set([
       "extra_levels",
-      "extra_life",
       "one_more_choice",
       "shunt",
       "slow_down",
