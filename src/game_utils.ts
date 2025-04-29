@@ -319,3 +319,7 @@ export function hoursSpentPlaying() {
     return 0;
   }
 }
+
+export function escapeAttribute(str:String){
+  return str.replace(/&/gi,'&amp;').replace(/</gi,'&lt;').replace(/"/gi,'&quot;').replace(/'/gi,'&#39;')
+}
