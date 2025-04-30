@@ -280,7 +280,7 @@ export type GameState = {
     plouf: { vol: number; x: number };
     colorChange: { vol: number; x: number };
   };
-  extra_lives: number;
+  upgrade_points: number;
   creative: boolean;
   startParams: RunParams;
 };

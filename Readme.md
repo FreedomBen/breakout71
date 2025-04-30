@@ -396,6 +396,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Easy perk ideas  
 
+- when the ball teleport, probability that it's duplicated instead
+- combo resets on teleport
+- combo resets when hitting puck without a teleport
 - teleport ball to puck as soon as it hits something (% chance)
 - allow dropping balls that are about to miss. 
 - square coins : coins loose all horizontal momentum when hitting something.
@@ -418,7 +421,6 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [colin] golden corners - catch coins at the sides of the puck to double their value
 - [colin] varied diet - your combo grows by 2 when your ball changes color, but decreses by one when a brick is broken ?  
 - [colin] trickle up - inverse of reach more or less 
-- Dividends — +1 combo per 10 coins lost (band-aid for players who struggle, useful addition when choosing Ascetism)
 - +lvl combo per bricks / resets after 5/lvl seconds without explosion ?
 - +lvl combo per bricks / resets after 5/lvl seconds without coin catch  ?
 - +lvl combo per bricks / resets after 5/lvl seconds without ball color change   ?

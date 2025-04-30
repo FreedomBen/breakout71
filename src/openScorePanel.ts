@@ -28,8 +28,10 @@ export async function openScorePanel(gameState: GameState) {
       pickedUpgradesHTMl(gameState),
       levelsListHTMl(gameState, gameState.currentLevel),
       getNearestUnlockHTML(gameState),
-      gameState.extra_lives
-        ? t("score_panel.extra_lives_count", { count: gameState.extra_lives })
+      gameState.upgrade_points
+        ? t("score_panel.upgrade_point_count", {
+            count: gameState.upgrade_points,
+          })
         : "",
     ],
     allowClose: true,
@@ -90,7 +92,7 @@ export function getNearestUnlockHTML(gameState: GameState) {
 
   return `
     <p>${t("score_panel.close_to_unlock")}</p>
-    <div class="upgrade used">
+    <div class="upgrade">
           ${icons[firstUnlockable.l.name]}
           <p>
           <strong>${title}</strong>

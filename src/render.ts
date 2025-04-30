@@ -368,11 +368,11 @@ export function render(gameState: GameState) {
   });
   //
   startWork("render:extra_life");
-  if (gameState.extra_lives) {
+  if (gameState.perks.extra_life) {
     ctx.globalAlpha = gameState.balls.length > 1 ? 0.2 : 1;
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = gameState.puckColor;
-    for (let i = 0; i < gameState.extra_lives; i++) {
+    for (let i = 0; i < gameState.perks.extra_life; i++) {
       ctx.fillRect(
         gameState.offsetXRoundedDown,
         gameState.gameZoneHeight - gameState.puckHeight / 2 + 2 * i,

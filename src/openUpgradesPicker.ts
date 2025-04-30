@@ -11,7 +11,7 @@ import {
 } from "./pure_functions";
 import { t } from "./i18n/i18n";
 import { icons, upgrades } from "./loadGameData";
-import { asyncAlert } from "./asyncAlert";
+import { asyncAlert, requiredAsyncAlert } from "./asyncAlert";
 import {
   escapeAttribute,
   getPossibleUpgrades,
@@ -26,100 +26,82 @@ export async function openUpgradesPicker(gameState: GameState) {
     gameState.levelCoughtCoins / (gameState.levelSpawnedCoins || 1);
 
   let choices = 3;
-  let livesWon = 1;
-  let missedOpportunities = [];
-  const good = ""; // '<strong>'+t('level_up.missed.good')+'</strong>: '
-  const best = ""; //'<strong>'+t('level_up.missed.best')+'</strong>: '
-
-  if (gameState.levelWallBounces < wallBouncedGood) {
-    choices++;
-    livesWon++;
-  } else {
-    missedOpportunities.push(
-      good +
-        t("level_up.missed.levelWallBounces.good", {
-          target: wallBouncedGood,
-        }),
-    );
-  }
-  if (gameState.levelWallBounces < wallBouncedBest) {
-    choices++;
-  } else {
-    missedOpportunities.push(
-      best +
-        t("level_up.missed.levelWallBounces.best", {
-          target: wallBouncedBest,
-        }),
-    );
+  let upgradesWon = 1;
+  let medals = [];
+  function challengeResult(
+    name: String,
+    description: String,
+    medal: "gold" | "silver" | "no",
+  ) {
+    if (medal === "gold") {
+      choices++;
+      upgradesWon++;
+    }
+    if (medal === "silver") {
+      upgradesWon++;
+    }
+    medals.push(`<div  class="upgrade" data-tooltip="${escapeAttribute(description)}">
+                        ${icons["icon:" + medal + "_medal"]}
+                        <p>
+                        <strong>${name}</strong><br/>
+                        ${{gold:t('level_up.gold'),silver:t('level_up.silver'),no:t('level_up.no'),}[medal]  }
+                        </p> 
+                    </div>`);
   }
 
-  if (gameState.levelTime < levelTimeGood * 1000) {
-    choices++;
-    livesWon++;
-  } else {
-    missedOpportunities.push(
-      good +
-        t("level_up.missed.levelTime.good", {
-          target: levelTimeGood,
-        }),
-    );
-  }
-  if (gameState.levelTime < levelTimeBest * 1000) {
-    choices++;
-  } else {
-    missedOpportunities.push(
-      best +
-        t("level_up.missed.levelTime.best", {
-          target: levelTimeBest,
-        }),
-    );
-  }
+  challengeResult(
+    t("level_up.challenges.levelWallBounces.name", {
+      value: gameState.levelWallBounces,
+    }),
+    t("level_up.challenges.levelWallBounces.description", {
+      silver: wallBouncedGood,
+      gold: wallBouncedBest,
+    }),
+    (gameState.levelWallBounces < wallBouncedBest && "gold") ||
+      (gameState.levelWallBounces < wallBouncedGood && "silver") ||
+      "no",
+  );
 
-  if (catchRate > catchRateGood / 100) {
-    choices++;
-    livesWon++;
-  } else {
-    missedOpportunities.push(
-      good +
-        t("level_up.missed.catchRate.good", {
-          target: catchRateGood,
-        }),
-    );
-  }
-  if (catchRate > catchRateBest / 100) {
-    choices++;
-  } else {
-    missedOpportunities.push(
-      best +
-        t("level_up.missed.catchRate.best", {
-          target: catchRateBest,
-        }),
-    );
-  }
+  challengeResult(
+    t("level_up.challenges.levelTime.name", {
+      value: Math.ceil(gameState.levelTime / 1000),
+    }),
+    t("level_up.challenges.levelTime.description", {
+      silver: levelTimeGood,
+      gold: levelTimeBest,
+    }),
+    (gameState.levelTime < levelTimeBest * 1000 && "gold") ||
+      (gameState.levelTime < levelTimeGood * 1000 && "silver") ||
+      "no",
+  );
 
-  if (gameState.levelMisses < missesGood) {
-    choices++;
-    livesWon++;
-  } else {
-    missedOpportunities.push(
-      good +
-        t("level_up.missed.levelMisses.good", {
-          target: missesGood,
-        }),
-    );
-  }
-  if (gameState.levelMisses < missesBest) {
-    choices++;
-  } else {
-    missedOpportunities.push(
-      best +
-        t("level_up.missed.levelMisses.best", {
-          target: missesBest,
-        }),
-    );
-  }
+  challengeResult(
+    t("level_up.challenges.catchRateGood.name", {
+      value: Math.floor(catchRate * 100),
+    }),
+    t("level_up.challenges.catchRateGood.description", {
+      silver: catchRateGood,
+      gold: catchRateBest,
+      caught: gameState.levelCoughtCoins,
+      total: gameState.levelSpawnedCoins,
+    }),
+    (catchRate > catchRateBest / 100 && "gold") ||
+      (catchRate > catchRateGood / 100 && "silver") ||
+      "no",
+  );
 
-  gameState.extra_lives += livesWon;
+  challengeResult(
+    t("level_up.challenges.levelMisses.name", { value: gameState.levelMisses }),
+    t("level_up.challenges.levelMisses.description", {
+      silver: missesGood,
+      gold: missesBest,
+    }),
+    (gameState.levelMisses < missesBest && "gold") ||
+      (gameState.levelMisses < missesGood && "silver") ||
+      "no",
+  );
+
+  gameState.upgrade_points += upgradesWon;
 
   let offered: PerkId[] = getPossibleUpgrades(gameState)
     .map((u) => ({
@@ -150,60 +132,68 @@ export async function openUpgradesPicker(gameState: GameState) {
       dontOfferTooSoon(gameState, u.id);
     });
 
-    const upgradeId = await asyncAlert<PerkId | null>({
+    const actions = list.map((u) => {
+      const max = u.max + gameState.perks.limitless;
+      const lvl = gameState.perks[u.id];
+
+      const button =
+        !gameState.upgrade_points || gameState.perks[u.id] >= max
+          ? ""
+          : ` <button data-resolve-to="${u.id}">${
+              lvl ? t("level_up.upgrade") : t("level_up.pick")
+            }</button>`;
+
+      const lvlInfo = lvl ? upgradeLevelAndMaxDisplay(u, gameState) : "";
+      const help =u.help(Math.max(1, lvl))
+
+      return {
+        u,button,
+        html: `<div  class="upgrade choice ${
+          (!lvl && gameState.upgrade_points && " ") ||
+          (lvl && "used") ||
+          "greyed-out"
+        }" >
+                        ${icons["icon:" + u.id]}
+                        <p data-tooltip="${escapeAttribute(lvl ? help: u.fullHelp(Math.max(1, lvl)))}">
+                        <strong>${u.name}</strong> ${lvlInfo}
+                        ${lvl ? '':help}
+                        </p>
+                       ${button}
+                    </div>`,
+      };
+    });
+
+    const forcePick = gameState.upgrade_points>0 && !!actions.find(a=>a.button!=='')
+
+    const upgradeId = await requiredAsyncAlert<PerkId | null>({
       title: t("level_up.title", {
         level: gameState.currentLevel,
         max: max_levels(gameState),
       }),
       content: [
         {
+          disabled:forcePick,
           text: t("level_up.go", { name: gameState.level.name }),
+          help: forcePick
+            ? t("level_up.go_with_upgrades", {
+                count: gameState.upgrade_points,
+              })
+            : "",
           icon: icons[gameState.level.name],
           value: null,
         },
 
-        gameState.extra_lives
-          ? `<p>${t("level_up.instructions", {
-              count: gameState.extra_lives,
-              gain: livesWon,
-            })}</p>`
-          : `<p>${t("level_up.no_points")}</p>`,
-        ...list.map((u) => {
-          const max = u.max + gameState.perks.limitless;
-          const lvl = gameState.perks[u.id];
+        t("level_up.upgrade_perks"),
 
-          const button =
-            !gameState.extra_lives || gameState.perks[u.id] >= max
-              ? ""
-              : ` <button data-resolve-to="${u.id}">${
-                  lvl ? t("level_up.upgrade") : t("level_up.pick")
-                }</button>`;
+        ...actions.filter((a) => gameState.perks[a.u.id]).map((a) => a.html),
 
-          const lvlInfo = lvl ? upgradeLevelAndMaxDisplay(u, gameState) : "";
-          return `<div  class="upgrade choice ${
-            (!lvl && gameState.extra_lives && "free") ||
-            (lvl && "used") ||
-            "greyed-out"
-          }" >
-                        ${icons["icon:" + u.id]}
-                        <p data-tooltip="${escapeAttribute(u.fullHelp(Math.max(1, lvl)))}">
-                        <strong>${u.name}</strong> ${lvlInfo}
-                        ${u.help(Math.max(1, lvl))}
-                        </p>
-                       ${button}
-                    </div>`;
-        }),
-        ...missedOpportunities.map(
-          (reason) =>
-            `<div  class="upgrade choice greyed-out" >
-                        ${icons["icon:locked"]}
-                        <p> 
-                        ${reason}
-                        </p>
-                    </div>`,
-        ),
-        levelsListHTMl(gameState, gameState.currentLevel),
+        t("level_up.add_perks"),
+        ...actions.filter((a) => !gameState.perks[a.u.id]).map((a) => a.html),
+
+        t("level_up.challenges.intro"),
+        ...medals,
         getNearestUnlockHTML(gameState),
+        levelsListHTMl(gameState, gameState.currentLevel),
         `<div id="level-recording-container"></div>`,
       ],
     });
@@ -211,7 +201,7 @@ export async function openUpgradesPicker(gameState: GameState) {
     if (upgradeId) {
       gameState.perks[upgradeId]++;
       gameState.runStatistics.upgrades_picked++;
-      gameState.extra_lives--;
+      gameState.upgrade_points--;
     } else {
       return;
     }

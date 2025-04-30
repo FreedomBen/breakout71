@@ -36,6 +36,19 @@ export const rawUpgrades = [
     requires: "",
     threshold: 0,
     gift: false,
+    id: "extra_life",
+    max: 7,
+    name: t("upgrades.extra_life.name"),
+    help: (lvl: number) => t("upgrades.extra_life.tooltip"),
+    fullHelp: (lvl: number) =>
+      t("upgrades.extra_life.verbose_description", { lvl }),
+  },
+
+  {
+    category: categories.beginner,
+    requires: "",
+    threshold: 0,
+    gift: false,
     id: "bigger_puck",
     max: 2,
     name: t("upgrades.bigger_puck.name"),

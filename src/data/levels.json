@@ -150,6 +150,12 @@
     "credit": ""
   },
   {
+    "name": "icon:extra_life",
+    "size": 8,
+    "bricks": "_________WW__WW_WGGWWGGWWGGGGGGWWGGGGGGW_WGGGGW___WGGW_____WW___",
+    "credit": ""
+  },
+  {
     "name": "icon:forgiving",
     "size": 8,
     "bricks": "____y______y_y____y___y__y_____yy_____y__y___y____y_y____WWWWW__",
@@ -165,6 +171,12 @@
     "name": "icon:ghost_coins",
     "size": 7,
     "bricks": "__bbb___bbbbb_bbybybbbbbbbbbbbyyybbbbbbbbbbb_b_bb",
+    "credit": ""
+  },
+  {
+    "name": "icon:gold_medal",
+    "size": 10,
+    "bricks": "tttttttttttttttttttttt______ttttt____ttt_tttggttt___tgyygt____gyyyyg____gyyyyg_____gyyg_______gg____",
     "credit": ""
   },
   {
@@ -249,6 +261,12 @@
     "name": "icon:new_run",
     "size": 7,
     "bricks": "_ggg____gbgg___gbbgg__gbbbg__gbbgg__gbgg___ggg___",
+    "credit": ""
+  },
+  {
+    "name": "icon:no_medal",
+    "size": 10,
+    "bricks": "gggggggggggggggggggggg______ggggg____ggg_g_gggg_g___gg__gg____g____g____g____g_____g__g_______gg____",
     "credit": ""
   },
   {
@@ -375,6 +393,12 @@
     "name": "icon:side_kick",
     "size": 7,
     "bricks": "________ttttr__ttttr__________W______________WWW_",
+    "credit": ""
+  },
+  {
+    "name": "icon:silver_medal",
+    "size": 10,
+    "bricks": "bbbbbbbbbbbbbbbbbbbbbb______bbbbb____bbb_bbbggbbb___bgllgb____gllllg____gllllg_____gllg_______gg____",
     "credit": ""
   },
   {
@@ -1446,17 +1470,9 @@
     "credit": "White n black by Topenvy"
   },
   {
-    "name": "icon:locked",
-    "size": 8,
-    "bricks": "__eeee____e__e____e__e____e__e___llllll__llllll__llllll__llllll_",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "color": "#000000",
+    "name": "italy",
     "size": 8,
     "bricks": "_________GGWWrr__GGWWrr__GGWWrr__GGWWrr_________________________",
-    "name": "italy",
     "credit": "italia by Topenvy"
   }
 ]

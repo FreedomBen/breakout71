@@ -467,6 +467,7 @@ h2.histogram-title strong {
     }
 
     &.capped {
+      opacity: 0.5;
       > span:first-child {
         color: #fff;
         background: #000;
@@ -501,24 +502,28 @@ h2.histogram-title strong {
 
   button {
     color: #fff;
-    background: gold;
-    align-self: flex-start;
-    font-weight: bold;
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow:
-      0 4px 0 gold,
-      0 4px 10px black;
-    border: 2px solid white;
     cursor: pointer;
-    text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 0 2px #185fa8;
     user-select: none;
+    background: linear-gradient(#5da3ea, #3e86ce);
+    border: 2px solid #fff;
+    border-radius: 5px;
+    align-self: flex-start;
+    padding: 5px;
+    font-weight: bold;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+      box-shadow: 0 1px 0 black inset, 0 2px #5da3ea, 0 4px white;
+  &:hover{
+
+    background: #5da3ea;
+  }
     &:active {
       transform: translate(0, 4px);
-      box-shadow:
-        0 0px 0 gold,
-        0 0px 10px black;
+      box-shadow: 0 1px 0 black inset, 0 0px #5da3ea, 0 0px white;
     }
+
     transition:
       transform 0.2s,
       box-shadow 0.2s;

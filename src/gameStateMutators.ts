@@ -1783,7 +1783,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.vy > 0 &&
     (ballIsUnderPuck ||
       (gameState.balls.length < 2 &&
-        gameState.extra_lives &&
+        gameState.perks.extra_life &&
         ball.y > ylimit + gameState.puckHeight / 2))
   ) {
     if (ballIsUnderPuck) {
@@ -2002,9 +2002,9 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
 }
 
 function justLostALife(gameState: GameState, ball: Ball, x: number, y: number) {
-  gameState.extra_lives -= 1;
-  if (gameState.extra_lives < 0) {
-    gameState.extra_lives = 0;
+  gameState.perks.extra_life -= 1;
+  if (gameState.perks.extra_life < 0) {
+    gameState.perks.extra_life = 0;
   } else if (gameState.perks.sacrifice) {
     gameState.combo *= gameState.perks.sacrifice;
     gameState.bricks.forEach(
