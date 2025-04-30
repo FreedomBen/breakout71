@@ -13,11 +13,10 @@ export function hideAnyTooltip() {
   tooltip.style.display = "none";
 }
 
-
 function setupMobileTooltips(tooltip: HTMLDivElement) {
   tooltip.className = "mobile";
   function openTooltip(e: Event) {
-    console.log('openTooltip',e)
+    console.log("openTooltip", e);
     hideAnyTooltip();
     const hovering = e.target as HTMLElement;
     if (!hovering?.hasAttribute("data-help-content")) {
@@ -33,7 +32,6 @@ function setupMobileTooltips(tooltip: HTMLDivElement) {
 
   document.body.addEventListener("click", openTooltip, true);
   document.addEventListener("scroll", hideAnyTooltip);
-
 }
 
 function setupDesktopTooltips(tooltip: HTMLDivElement) {

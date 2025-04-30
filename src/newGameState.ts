@@ -17,7 +17,7 @@ import {
   isLevelLocked,
   reasonLevelIsLocked,
 } from "./get_level_unlock_condition";
-import {dontOfferTooSoon} from "./openUpgradesPicker";
+import { dontOfferTooSoon } from "./openUpgradesPicker";
 
 export function getRunLevels(
   params: RunParams,

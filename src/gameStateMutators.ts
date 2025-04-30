@@ -29,18 +29,31 @@ import {
   telekinesisEffectRate,
   yoyoEffectRate,
 } from "./game_utils";
-import {t} from "./i18n/i18n";
+import { t } from "./i18n/i18n";
 
-import {getCurrentMaxCoins, getCurrentMaxParticles} from "./settings";
-import {background} from "./render";
-import {gameOver} from "./gameOver";
-import {brickIndex, fitSize, gameState, hasBrick, hitsSomething, pause, startComputerControlledGame,} from "./game";
-import {stopRecording} from "./recording";
-import {isOptionOn} from "./options";
-import {ballTransparency, clamp, coinsBoostedCombo, comboKeepingRate,} from "./pure_functions";
-import {addToTotalScore} from "./addToTotalScore";
-import {hashCode} from "./getLevelBackground";
-import {openUpgradesPicker} from "./openUpgradesPicker";
+import { getCurrentMaxCoins, getCurrentMaxParticles } from "./settings";
+import { background } from "./render";
+import { gameOver } from "./gameOver";
+import {
+  brickIndex,
+  fitSize,
+  gameState,
+  hasBrick,
+  hitsSomething,
+  pause,
+  startComputerControlledGame,
+} from "./game";
+import { stopRecording } from "./recording";
+import { isOptionOn } from "./options";
+import {
+  ballTransparency,
+  clamp,
+  coinsBoostedCombo,
+  comboKeepingRate,
+} from "./pure_functions";
+import { addToTotalScore } from "./addToTotalScore";
+import { hashCode } from "./getLevelBackground";
+import { openUpgradesPicker } from "./openUpgradesPicker";
 
 export function setMousePos(gameState: GameState, x: number) {
   if (gameState.startParams.computer_controlled) return;
@@ -606,7 +619,6 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.currentLevel = l;
   gameState.level = gameState.runLevels[l % gameState.runLevels.length];
 
-
   if (l > 0) {
     await openUpgradesPicker(gameState);
   }
@@ -956,8 +968,9 @@ export function gameStateTick(
     }
   }
 
-  if (( window.location.search.includes("skipplaying") ||
-    remainingBricks <= gameState.perks.skip_last) &&
+  if (
+    (window.location.search.includes("skipplaying") ||
+      remainingBricks <= gameState.perks.skip_last) &&
     !gameState.autoCleanUses
   ) {
     gameState.bricks.forEach((type, index) => {

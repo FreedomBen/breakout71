@@ -1,9 +1,17 @@
-import {Ball, Coin, GameState, Level, PerkId, PerksMap, Upgrade} from "./types";
-import {icons, upgrades} from "./loadGameData";
-import {t} from "./i18n/i18n";
-import {clamp} from "./pure_functions";
-import {getSettingValue, getTotalScore} from "./settings";
-import {isOptionOn} from "./options";
+import {
+  Ball,
+  Coin,
+  GameState,
+  Level,
+  PerkId,
+  PerksMap,
+  Upgrade,
+} from "./types";
+import { icons, upgrades } from "./loadGameData";
+import { t } from "./i18n/i18n";
+import { clamp } from "./pure_functions";
+import { getSettingValue, getTotalScore } from "./settings";
+import { isOptionOn } from "./options";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -99,10 +107,13 @@ export function max_levels(gameState: GameState) {
   return 7 + gameState.perks.extra_levels;
 }
 
-export function upgradeLevelAndMaxDisplay(upgrade: Upgrade, gameState: GameState) {
+export function upgradeLevelAndMaxDisplay(
+  upgrade: Upgrade,
+  gameState: GameState,
+) {
   const lvl = gameState.perks[upgrade.id];
-  const max = upgrade.max + gameState.perks.limitless
-  return `<span class="level ${lvl < max ? 'can-upgrade' : 'capped'}"><span>${lvl}</span><span>${max}</span></span>`
+  const max = upgrade.max + gameState.perks.limitless;
+  return `<span class="level ${lvl < max ? "can-upgrade" : "capped"}"><span>${lvl}</span><span>${max}</span></span>`;
 }
 
 export function pickedUpgradesHTMl(gameState: GameState) {
@@ -110,7 +121,6 @@ export function pickedUpgradesHTMl(gameState: GameState) {
     .filter((u) => gameState.perks[u.id])
     .map((u) => {
       const newMax = Math.max(0, u.max + gameState.perks.limitless);
-
 
       const state = (gameState.perks[u.id] && 1) || (!newMax && 2) || 3;
       return {
@@ -320,6 +330,10 @@ export function hoursSpentPlaying() {
   }
 }
 
-export function escapeAttribute(str:String){
-  return str.replace(/&/gi,'&amp;').replace(/</gi,'&lt;').replace(/"/gi,'&quot;').replace(/'/gi,'&#39;')
+export function escapeAttribute(str: String) {
+  return str
+    .replace(/&/gi, "&amp;")
+    .replace(/</gi, "&lt;")
+    .replace(/"/gi, "&quot;")
+    .replace(/'/gi, "&#39;");
 }

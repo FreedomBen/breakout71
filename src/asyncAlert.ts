@@ -101,8 +101,8 @@ export async function asyncAlert<t>({
           popup.appendChild(addto);
         }
 
-        const buttonWrap = document.createElement("div")
-          addto.appendChild(buttonWrap)
+        const buttonWrap = document.createElement("div");
+        addto.appendChild(buttonWrap);
 
         const {
           text,
@@ -136,7 +136,9 @@ ${icon}
         }
 
         button.className =
-          className + (lastClickedItemIndex === index ? " needs-focus" : "")+' choice-button';
+          className +
+          (lastClickedItemIndex === index ? " needs-focus" : "") +
+          " choice-button";
 
         buttonWrap.appendChild(button);
 

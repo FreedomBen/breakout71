@@ -767,5 +767,10 @@
     "required": ["respawn", "wrap_left", "sapper"],
     "forbidden": ["shocks", "metamorphosis", "pierce"],
     "minScore": 14200
+  },
+  "italy": {
+    "required": ["sticky_coins", "pierce_color", "left_is_lava"],
+    "forbidden": ["transparency", "etherealcoins", "three_cushion"],
+    "minScore": 14300
   }
 }

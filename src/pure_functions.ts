@@ -20,17 +20,11 @@ export function ballTransparency(ball: Ball, gameState: GameState) {
 
 export function coinsBoostedCombo(gameState: GameState) {
   let boost =
-    1 + gameState.perks.sturdy_bricks / 2 + gameState.perks.smaller_puck / 2;
-  if (gameState.perks.transparency) {
-    let min = 1;
-    gameState.balls.forEach((ball) => {
-      const bt = ballTransparency(ball, gameState);
-      if (bt < min) {
-        min = bt;
-      }
-    });
-    boost += (min * gameState.perks.transparency) / 2;
-  }
+    1 +
+    gameState.perks.sturdy_bricks / 2 +
+    gameState.perks.smaller_puck / 2 +
+    gameState.perks.transparency / 2;
+
   if (gameState.perks.minefield) {
     gameState.bricks.forEach((brick) => {
       if (brick === "black") {
@@ -101,13 +95,13 @@ export function firstWhere<Input, Output>(
   }
 }
 
-export const wallBouncedBest = 3,
-  wallBouncedGood = 10,
-  levelTimeBest = 30,
-  levelTimeGood = 60,
-  catchRateBest = 95,
+export const wallBouncedBest = 2,
+  wallBouncedGood = 7,
+  levelTimeBest = 10,
+  levelTimeGood = 45,
+  catchRateBest = 99,
   catchRateGood = 90,
-  missesBest = 3,
+  missesBest = 1,
   missesGood = 6;
 
 export const MAX_LEVEL_SIZE = 21;

@@ -1,6 +1,22 @@
-import {allLevels, allLevelsAndIcons, appVersion, icons, upgrades,} from "./loadGameData";
-import {Ball, Coin, GameState, LightFlash, OptionId, ParticleFlash, PerksMap, RunParams, TextFlash,} from "./types";
-import {getAudioContext, playPendingSounds} from "./sounds";
+import {
+  allLevels,
+  allLevelsAndIcons,
+  appVersion,
+  icons,
+  upgrades,
+} from "./loadGameData";
+import {
+  Ball,
+  Coin,
+  GameState,
+  LightFlash,
+  OptionId,
+  ParticleFlash,
+  PerksMap,
+  RunParams,
+  TextFlash,
+} from "./types";
+import { getAudioContext, playPendingSounds } from "./sounds";
 import {
   currentLevelInfo,
   describeLevel,
@@ -12,7 +28,7 @@ import {
 } from "./game_utils";
 
 import "./PWA/sw_loader";
-import {getCurrentLang, languages, t} from "./i18n/i18n";
+import { getCurrentLang, languages, t } from "./i18n/i18n";
 import {
   commitSettingsChangesToLocalStorage,
   cycleMaxCoins,
@@ -30,25 +46,42 @@ import {
   setLevel,
   setMousePos,
 } from "./gameStateMutators";
-import {backgroundCanvas, gameCanvas, getHaloScale, haloCanvas, render, scoreDisplay,} from "./render";
-import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} from "./recording";
-import {newGameState} from "./newGameState";
-import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal,} from "./asyncAlert";
-import {isOptionOn, options, toggleOption} from "./options";
-import {clamp, miniMarkDown,} from "./pure_functions";
-import {helpMenuEntry} from "./help";
-import {creativeMode} from "./creative";
-import {hideAnyTooltip, setupTooltips} from "./tooltip";
-import {startingPerkMenuButton} from "./startingPerks";
+import {
+  backgroundCanvas,
+  gameCanvas,
+  getHaloScale,
+  haloCanvas,
+  render,
+  scoreDisplay,
+} from "./render";
+import {
+  pauseRecording,
+  recordOneFrame,
+  resumeRecording,
+  startRecordingGame,
+} from "./recording";
+import { newGameState } from "./newGameState";
+import {
+  alertsOpen,
+  asyncAlert,
+  AsyncAlertAction,
+  closeModal,
+} from "./asyncAlert";
+import { isOptionOn, options, toggleOption } from "./options";
+import { clamp, miniMarkDown } from "./pure_functions";
+import { helpMenuEntry } from "./help";
+import { creativeMode } from "./creative";
+import { hideAnyTooltip, setupTooltips } from "./tooltip";
+import { startingPerkMenuButton } from "./startingPerks";
 import "./migrations";
-import {getHistory} from "./gameOver";
-import {generateSaveFileContent} from "./generateSaveFileContent";
-import {runHistoryViewerMenuEntry} from "./runHistoryViewer";
-import {openScorePanel} from "./openScorePanel";
-import {monitorLevelsUnlocks} from "./monitorLevelsUnlocks";
-import {levelEditorMenuEntry} from "./levelEditor";
-import {categories} from "./upgrades";
-import {reasonLevelIsLocked} from "./get_level_unlock_condition";
+import { getHistory } from "./gameOver";
+import { generateSaveFileContent } from "./generateSaveFileContent";
+import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
+import { openScorePanel } from "./openScorePanel";
+import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
+import { levelEditorMenuEntry } from "./levelEditor";
+import { categories } from "./upgrades";
+import { reasonLevelIsLocked } from "./get_level_unlock_condition";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -369,43 +402,37 @@ setInterval(() => {
   monitorLevelsUnlocks(gameState);
 }, 500);
 
-
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
     pause(true);
   }
 });
-if(getSettingValue('score-opened',0 )<3){
-  scoreDisplay.classList.add('button-look')
+if (getSettingValue("score-opened", 0) < 3) {
+  scoreDisplay.classList.add("button-look");
 }
 const menuDisplay = document.getElementById("menu") as HTMLButtonElement;
-if(getSettingValue('menu-opened',0 )<3){
-  menuDisplay.classList.add('button-look')
+if (getSettingValue("menu-opened", 0) < 3) {
+  menuDisplay.classList.add("button-look");
 }
 
-function scoreOpen(e){
-    e.preventDefault();
+function scoreOpen(e) {
+  e.preventDefault();
   if (!alertsOpen) {
-    setSettingValue('score-opened',getSettingValue('score-opened',0 )+1 )
+    setSettingValue("score-opened", getSettingValue("score-opened", 0) + 1);
     openScorePanel(gameState);
   }
 }
 
-
-scoreDisplay.addEventListener("click",scoreOpen);
+scoreDisplay.addEventListener("click", scoreOpen);
 scoreDisplay.addEventListener("mousedown", scoreOpen);
 
-menuDisplay.addEventListener(
-  "click",
-  (e) => {
-    e.preventDefault();
-    if (!alertsOpen) {
-
-    setSettingValue('menu-opened',getSettingValue('menu-opened',0 )+1 )
-      openMainMenu();
-    }
-  },
-);
+menuDisplay.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (!alertsOpen) {
+    setSettingValue("menu-opened", getSettingValue("menu-opened", 0) + 1);
+    openMainMenu();
+  }
+});
 
 export const creativeModeThreshold = Math.max(
   ...upgrades.map((u) => u.threshold),

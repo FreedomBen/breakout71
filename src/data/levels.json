@@ -1392,66 +1392,71 @@
     "credit": "Suggested by Big Goober. The red ghost, Blinky, from the arcade game \"Pac Man\""
   },
   {
-    "color": "#000000",
+    "name": "Fish",
     "size": 11,
     "bricks": "______________________________________________bbbb______tttttt___btgttbttt_bbtttttbtttb___ttbttt_bb_tttttt___b___________",
-    "name": "Fish",
     "credit": "A fish based on the fish discord emoji. Suggested by Big Goober. "
   },
   {
-    "color": "#115988",
+    "name": "Spider",
     "size": 7,
     "bricks": "_l_____Sgg____ggSgBB_gSgBBBBSgggggg_gg___g_g_g_g_",
-    "name": "Spider",
     "credit": "Suggested by obigre."
   },
   {
-    "color": "#115988",
+    "name": "Gliders",
     "size": 8,
     "bricks": "g_g______gg___l__g__l_l______ll__c________cc__W__cc____W_____WWW",
-    "name": "Gliders",
     "credit": "iSuggested by obigre. Inspired by Conway's gliders"
   },
   {
-    "color": "#000000",
+    "name": "Lone island",
     "size": 8,
     "bricks": "C__________kkk____kkOkk___kkkO_k_k_k_O_______O______CC__tttCCCCt",
-    "name": "Lone island",
     "credit": "Suggested by obigre. Which game would you take there ?"
   },
   {
-    "color": "#000000",
+    "name": "Spacewyrm Jon",
     "size": 8,
     "bricks": "___PPP____PPPP____SSSP____WPWP_P__PPP_PP___PP_____yPPy__bWWyyWWb",
-    "name": "Spacewyrm Jon",
     "credit": "Suggested by obigre. The invertebrate hero with a gun"
   },
   {
-    "color": "#115988",
+    "name": "Taijitu",
     "size": 7,
     "bricks": "_WWWWW_W__WWWWgg__WBWggg_WWWgBg__WWgggg__g_ggggg_",
-    "name": "Taijitu",
     "credit": "Suggested by obigre. Yin and yang fishes"
   },
   {
-    "color": "#115988",
+    "name": "Egg pan",
     "size": 5,
     "bricks": "WWWWgWWyWggWWWggggg____g_",
-    "name": "Egg pan",
     "credit": "Suggested by obigre. Fried and tasty"
   },
   {
-    "color": "#000000",
+    "name": "Inception",
     "size": 20,
     "bricks": "____llllllllllll________lbbbbbb____l________lbbbbbb____l________l____bbtt__l________l____bbtt__l________l__bbtttt__l________l__bbtttt__l________l______tt__l________l____y_tt__l________l______ttttl________l_____yttttl________l__W_______l________l_____y____l________l__y_y_____l________l_y___y_y__l________l__________l________l___WWW____l________llllllllllll____________________________________________",
-    "name": "Inception",
     "credit": "Breakout 71 within Breakout 71. By Noodlemire"
   },
   {
-    "color": "#000000",
+    "name": "Chess",
     "size": 21,
     "bricks": "_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_W_",
-    "name": "Chess",
     "credit": "White n black by Topenvy"
+  },
+  {
+    "name": "icon:locked",
+    "size": 8,
+    "bricks": "__eeee____e__e____e__e____e__e___llllll__llllll__llllll__llllll_",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "color": "#000000",
+    "size": 8,
+    "bricks": "_________GGWWrr__GGWWrr__GGWWrr__GGWWrr_________________________",
+    "name": "italy",
+    "credit": "italia by Topenvy"
   }
 ]

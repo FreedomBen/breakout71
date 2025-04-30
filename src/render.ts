@@ -108,8 +108,12 @@ export function render(gameState: GameState) {
       : "") +
     `<span class="score" data-tooltip="${t("play.score_tooltip")}">$${gameState.score}</span>`;
 
-  scoreDisplay.classList[gameState.startParams.computer_controlled ? 'add':'remove']('computer_controlled');
-  scoreDisplay.classList[gameState.lastScoreIncrease > gameState.levelTime - 500 ? 'add':'remove']('active');
+  scoreDisplay.classList[
+    gameState.startParams.computer_controlled ? "add" : "remove"
+  ]("computer_controlled");
+  scoreDisplay.classList[
+    gameState.lastScoreIncrease > gameState.levelTime - 500 ? "add" : "remove"
+  ]("active");
 
   // Clear
   if (!isOptionOn("basic") && level.svg && level.color === "#000000") {

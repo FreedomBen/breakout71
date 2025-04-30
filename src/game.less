@@ -1,9 +1,10 @@
 * {
-  font-family: Courier New,
-  Courier,
-  Lucida Sans Typewriter,
-  Lucida Typewriter,
-  monospace;
+  font-family:
+    Courier New,
+    Courier,
+    Lucida Sans Typewriter,
+    Lucida Typewriter,
+    monospace;
   box-sizing: border-box;
 }
 
@@ -73,7 +74,6 @@ canvas:not(#game) {
     line-height: 20px;
     box-shadow: 0 2px #fff;
   }
-
 }
 
 #score {
@@ -210,7 +210,6 @@ body:not(.has-alert-open) #popup {
               opacity: 0.2;
             }
           }
-
         }
 
         > button[data-help-content] {
@@ -425,7 +424,7 @@ h2.histogram-title strong {
 
   .level {
     color: #000;
-    background: #FFF;
+    background: #fff;
     border-radius: 3px;
     overflow: hidden;
     font-size: 12px;
@@ -435,7 +434,7 @@ h2.histogram-title strong {
     position: relative;
     //top: -3px;
     font-weight: bold;
-    border: 1px solid #FFF;
+    border: 1px solid #fff;
     //margin-left: 5px;
 
     > span {
@@ -443,38 +442,34 @@ h2.histogram-title strong {
       position: relative;
 
       &:first-child {
-
         padding: 3px 6px 0 2px;
         color: #000;
-        background: #FFF;
+        background: #fff;
       }
 
       &:last-child {
-
         padding: 3px 3px 0 2px;
-        color: #FFF;
+        color: #fff;
         background: #000;
 
         &:before {
           content: "";
           display: block;
-          background: black;;
+          background: black;
           position: absolute;
           left: -2px;
           top: 0;
           bottom: 0;
           width: 4px;
-          transform: skewX(-10deg)
+          transform: skewX(-10deg);
         }
       }
     }
 
     &.capped {
       > span:first-child {
-
-        color: #FFF;
+        color: #fff;
         background: #000;
-
       }
 
       > span:last-child::before {
@@ -511,16 +506,22 @@ h2.histogram-title strong {
     font-weight: bold;
     padding: 5px;
     border-radius: 5px;
-    box-shadow: 0 4px 0 gold, 0 4px 10px black;
+    box-shadow:
+      0 4px 0 gold,
+      0 4px 10px black;
     border: 2px solid white;
     cursor: pointer;
     text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-          user-select: none;
-    &:active{
-      transform: translate(0,4px);
-    box-shadow: 0 0px 0 gold, 0 0px 10px black;
+    user-select: none;
+    &:active {
+      transform: translate(0, 4px);
+      box-shadow:
+        0 0px 0 gold,
+        0 0px 10px black;
     }
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
   }
 }
 
@@ -614,8 +615,9 @@ h2.histogram-title strong {
   border-radius: 2px;
   padding-right: 10px;
   pointer-events: none;
-  transition: opacity 200ms,
-  transform 200ms;
+  transition:
+    opacity 200ms,
+    transform 200ms;
   z-index: 7;
 
   &.hidden {

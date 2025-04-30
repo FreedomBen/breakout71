@@ -1,13 +1,17 @@
-import {GameState} from "./types";
-import {asyncAlert} from "./asyncAlert";
-import {t} from "./i18n/i18n";
-import {levelsListHTMl, max_levels, pickedUpgradesHTMl} from "./game_utils";
-import {getCreativeModeWarning, getHistory} from "./gameOver";
-import {pause} from "./game";
-import {allLevels, icons} from "./loadGameData";
-import {firstWhere} from "./pure_functions";
-import {getSettingValue, getTotalScore} from "./settings";
-import {getLevelUnlockCondition, reasonLevelIsLocked, upgradeName,} from "./get_level_unlock_condition";
+import { GameState } from "./types";
+import { asyncAlert } from "./asyncAlert";
+import { t } from "./i18n/i18n";
+import { levelsListHTMl, max_levels, pickedUpgradesHTMl } from "./game_utils";
+import { getCreativeModeWarning, getHistory } from "./gameOver";
+import { pause } from "./game";
+import { allLevels, icons } from "./loadGameData";
+import { firstWhere } from "./pure_functions";
+import { getSettingValue, getTotalScore } from "./settings";
+import {
+  getLevelUnlockCondition,
+  reasonLevelIsLocked,
+  upgradeName,
+} from "./get_level_unlock_condition";
 
 export async function openScorePanel(gameState: GameState) {
   pause(true);
@@ -96,4 +100,3 @@ export function getNearestUnlockHTML(gameState: GameState) {
   
   `;
 }
-
