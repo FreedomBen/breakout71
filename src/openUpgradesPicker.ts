@@ -44,7 +44,7 @@ export async function openUpgradesPicker(gameState: GameState) {
                         ${icons["icon:" + medal + "_medal"]}
                         <p>
                         <strong>${name}</strong><br/>
-                        ${{gold:t('level_up.gold'),silver:t('level_up.silver'),no:t('level_up.no'),}[medal]  }
+                        ${{ gold: t("level_up.gold"), silver: t("level_up.silver"), no: t("level_up.no") }[medal]}
                         </p> 
                     </div>`);
   }
@@ -144,26 +144,28 @@ export async function openUpgradesPicker(gameState: GameState) {
             }</button>`;
 
       const lvlInfo = lvl ? upgradeLevelAndMaxDisplay(u, gameState) : "";
-      const help =u.help(Math.max(1, lvl))
+      const help = u.help(Math.max(1, lvl));
 
       return {
-        u,button,
+        u,
+        button,
         html: `<div  class="upgrade choice ${
           (!lvl && gameState.upgrade_points && " ") ||
           (lvl && "used") ||
           "greyed-out"
         }" >
                         ${icons["icon:" + u.id]}
-                        <p data-tooltip="${escapeAttribute(lvl ? help: u.fullHelp(Math.max(1, lvl)))}">
+                        <p data-tooltip="${escapeAttribute(lvl ? help : u.fullHelp(Math.max(1, lvl)))}">
                         <strong>${u.name}</strong> ${lvlInfo}
-                        ${lvl ? '':help}
+                        ${lvl ? "" : help}
                         </p>
                        ${button}
                     </div>`,
       };
     });
 
-    const forcePick = gameState.upgrade_points>0 && !!actions.find(a=>a.button!=='')
+    const forcePick =
+      gameState.upgrade_points > 0 && !!actions.find((a) => a.button !== "");
 
     const upgradeId = await requiredAsyncAlert<PerkId | null>({
       title: t("level_up.title", {
@@ -172,7 +174,7 @@ export async function openUpgradesPicker(gameState: GameState) {
       }),
       content: [
         {
-          disabled:forcePick,
+          disabled: forcePick,
           text: t("level_up.go", { name: gameState.level.name }),
           help: forcePick
             ? t("level_up.go_with_upgrades", {
