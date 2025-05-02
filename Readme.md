@@ -16,20 +16,20 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - instead of bouncing the ball,loosing a life pauses the game (with coins still in the air)
 
 ## Done
+
 - rewoked perks choices to limit perk fatigue, avoid wall of texts,  allow users to skip
-  - removed rerolls
-  - offer to pick 1 upgrade out of 3 choices
-  - playing well adds 1 upgrade and 1 choice
-  - playing even better adds 1 choice
-  - "more choices" perk adds 1 choice
-  - you can skip the upgrades and they'll be saved for later as extra lives
-  - you can pick an upgrade multiple time to level it up 
-  - bigger "level X of Y cleared"
-  - continue to level X/Y as button
-  - lives = upgrade points
-  - clarify challenges
-  - missed challenges show as greyed out choices (with unlock condition).
-  
+- removed rerolls
+- offer to pick 1 upgrade out of 3 choices
+- playing well adds 1 upgrade and 1 choice
+- playing even better adds 1 choice
+- "more choices" perk adds 1 choice
+- you can skip the upgrades and they'll be saved for later as extra lives
+- you can pick an upgrade multiple time to level it up 
+- bigger "level X of Y cleared"
+- continue to level X/Y as button
+- lives = upgrade points
+- clarify challenges
+- removed the "sides bounce" challenge 
 - upgrades list now uses numbers instead of bars, looks better with limitless
 - somehow score clicks didn't register while the game was playing, that's solved
 - Fix : click tooltip to open on mobile, click anywhere to close

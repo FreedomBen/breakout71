@@ -97,9 +97,6 @@ export function render(gameState: GameState) {
         </span><span> / </span>
         <span class="${(gameState.levelTime < levelTimeBest * 1000 && "great") || (gameState.levelTime < levelTimeGood * 1000 && "good") || ""}" data-tooltip="${t("play.stats.levelTime")}">
         ${Math.ceil(gameState.levelTime / 1000)}s 
-        </span><span> / </span>
-        <span class="${(gameState.levelWallBounces < wallBouncedBest && "great") || (gameState.levelWallBounces < wallBouncedGood && "good") || ""}" data-tooltip="${t("play.stats.levelWallBounces")}">
-        ${gameState.levelWallBounces} B 
         </span><span> / </span>  
         <span class="${(gameState.levelMisses < missesBest && "great") || (gameState.levelMisses < missesGood && "good") || ""}" data-tooltip="${t("play.stats.levelMisses")}">
         ${gameState.levelMisses} M

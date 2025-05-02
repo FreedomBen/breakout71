@@ -1,10 +1,9 @@
 * {
-  font-family:
-    Courier New,
-    Courier,
-    Lucida Sans Typewriter,
-    Lucida Typewriter,
-    monospace;
+  font-family: Courier New,
+  Courier,
+  Lucida Sans Typewriter,
+  Lucida Typewriter,
+  monospace;
   box-sizing: border-box;
 }
 
@@ -422,63 +421,6 @@ h2.histogram-title strong {
     color: white;
   }
 
-  .level {
-    color: #000;
-    background: #fff;
-    border-radius: 3px;
-    overflow: hidden;
-    font-size: 12px;
-    font-style: normal;
-    line-height: 12px;
-    display: inline-block;
-    position: relative;
-    //top: -3px;
-    font-weight: bold;
-    border: 1px solid #fff;
-    //margin-left: 5px;
-
-    > span {
-      display: inline-block;
-      position: relative;
-
-      &:first-child {
-        padding: 3px 6px 0 2px;
-        color: #000;
-        background: #fff;
-      }
-
-      &:last-child {
-        padding: 3px 3px 0 2px;
-        color: #fff;
-        background: #000;
-
-        &:before {
-          content: "";
-          display: block;
-          background: black;
-          position: absolute;
-          left: -2px;
-          top: 0;
-          bottom: 0;
-          width: 4px;
-          transform: skewX(-10deg);
-        }
-      }
-    }
-
-    &.capped {
-      opacity: 0.5;
-      > span:first-child {
-        color: #fff;
-        background: #000;
-      }
-
-      > span:last-child::before {
-        width: 1px;
-        background: white;
-      }
-    }
-  }
 
   &.used {
     opacity: 1;
@@ -511,27 +453,84 @@ h2.histogram-title strong {
     align-self: flex-start;
     padding: 5px;
     font-weight: bold;
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
-    box-shadow:
-      0 1px 0 black inset,
-      0 2px #5da3ea,
-      0 4px white;
+    transition: transform 0.2s,
+    box-shadow 0.2s;
+    box-shadow: 0 1px 0 black inset,
+    0 2px #5da3ea,
+    0 4px white;
+
     &:hover {
       background: #5da3ea;
     }
+
     &:active {
       transform: translate(0, 4px);
-      box-shadow:
-        0 1px 0 black inset,
-        0 0px #5da3ea,
-        0 0px white;
+      box-shadow: 0 1px 0 black inset,
+      0 0px #5da3ea,
+      0 0px white;
     }
 
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
+    transition: transform 0.2s,
+    box-shadow 0.2s;
+  }
+}
+
+.level {
+  color: #000;
+  background: #fff;
+  border-radius: 3px;
+  overflow: hidden;
+  font-size: 12px;
+  font-style: normal;
+  line-height: 12px;
+  display: inline-block;
+  position: relative;
+  //top: -3px;
+  font-weight: bold;
+  border: 1px solid #fff;
+  //margin-left: 5px;
+
+  > span {
+    display: inline-block;
+    position: relative;
+
+    &:first-child {
+      padding: 3px 6px 0 2px;
+      color: #000;
+      background: #fff;
+    }
+
+    &:last-child {
+      padding: 3px 3px 0 2px;
+      color: #fff;
+      background: #000;
+
+      &:before {
+        content: "";
+        display: block;
+        background: black;
+        position: absolute;
+        left: -2px;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        transform: skewX(-10deg);
+      }
+    }
+  }
+
+  &.capped {
+    opacity: 0.5;
+
+    > span:first-child {
+      color: #fff;
+      background: #000;
+    }
+
+    > span:last-child::before {
+      width: 1px;
+      background: white;
+    }
   }
 }
 
@@ -625,9 +624,8 @@ h2.histogram-title strong {
   border-radius: 2px;
   padding-right: 10px;
   pointer-events: none;
-  transition:
-    opacity 200ms,
-    transform 200ms;
+  transition: opacity 200ms,
+  transform 200ms;
   z-index: 7;
 
   &.hidden {

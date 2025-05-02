@@ -113,7 +113,7 @@ export function upgradeLevelAndMaxDisplay(
 ) {
   const lvl = gameState.perks[upgrade.id];
   const max = upgrade.max + gameState.perks.limitless;
-  return `<span class="level ${lvl < max ? "can-upgrade" : "capped"}"><span>${lvl}</span><span>${max}</span></span>`;
+  return ` <span class="level ${lvl < max ? "can-upgrade" : "capped"}"><span>${lvl}</span><span>${max}</span></span>`;
 }
 
 export function pickedUpgradesHTMl(gameState: GameState) {
