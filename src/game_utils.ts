@@ -12,7 +12,6 @@ import { t } from "./i18n/i18n";
 import { clamp } from "./pure_functions";
 import { getSettingValue, getTotalScore } from "./settings";
 import { isOptionOn } from "./options";
-import {gameCanvas} from "./render";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -347,13 +346,12 @@ export function escapeAttribute(str: String) {
     .replace(/'/gi, "&#39;");
 }
 
-export function canvasCenterX(gameState:GameState){
-  return gameState.canvasWidth/2
+export function canvasCenterX(gameState: GameState) {
+  return gameState.canvasWidth / 2;
 }
-export function zoneLeftBorderX(gameState:GameState){
-
-  return gameState.offsetXRoundedDown - 1
+export function zoneLeftBorderX(gameState: GameState) {
+  return gameState.offsetXRoundedDown - 1;
 }
-export function zoneRightBorderX(gameState:GameState){
-  return gameCanvas.width - gameState.offsetXRoundedDown + 1
+export function zoneRightBorderX(gameState: GameState) {
+  return gameState.canvasWidth - gameState.offsetXRoundedDown + 1;
 }

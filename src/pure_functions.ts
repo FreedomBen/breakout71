@@ -95,9 +95,7 @@ export function firstWhere<Input, Output>(
   }
 }
 
-export const wallBouncedBest = 2,
-  wallBouncedGood = 7,
-  levelTimeBest = 25,
+export const levelTimeBest = 25,
   levelTimeGood = 45,
   catchRateBest = 98,
   catchRateGood = 90,

@@ -254,34 +254,34 @@ let timers = [];
 function startPlayCountDown() {
   stopPlayCountDown();
 
+  gameState.startCountDown = 3;
+  gameState.needsRender = true;
 
-  gameState.startCountDown = 3
-  gameState.needsRender = true
-
-  timers.push(setTimeout(() => {
-    gameState.startCountDown = 2
-  gameState.needsRender = true
-  }, 1000));
-  timers.push(setTimeout(() => {
-    gameState.startCountDown = 1
-  gameState.needsRender = true
-  }, 2000));
   timers.push(
     setTimeout(() => {
-      gameState.startCountDown = 0
+      gameState.startCountDown = 2;
+      gameState.needsRender = true;
+    }, 1000),
+  );
+  timers.push(
+    setTimeout(() => {
+      gameState.startCountDown = 1;
+      gameState.needsRender = true;
+    }, 2000),
+  );
+  timers.push(
+    setTimeout(() => {
+      gameState.startCountDown = 0;
       play();
     }, 3000),
   );
-
-
 }
 function stopPlayCountDown() {
-  if(!timers.length) return
+  if (!timers.length) return;
 
-  gameState.startCountDown = 0
+  gameState.startCountDown = 0;
   timers.forEach((id) => clearTimeout(id));
   timers.length = 0;
-
 }
 gameCanvas.addEventListener("touchstart", (e) => {
   e.preventDefault();

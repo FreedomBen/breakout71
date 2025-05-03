@@ -10,7 +10,9 @@ import {
   max_levels,
   reachRedRowIndex,
   telekinesisEffectRate,
-  yoyoEffectRate, zoneLeftBorderX, zoneRightBorderX,
+  yoyoEffectRate,
+  zoneLeftBorderX,
+  zoneRightBorderX,
 } from "./game_utils";
 import { colorString, GameState } from "./types";
 import { t } from "./i18n/i18n";
@@ -26,8 +28,6 @@ import {
   levelTimeGood,
   missesBest,
   missesGood,
-  wallBouncedBest,
-  wallBouncedGood,
 } from "./pure_functions";
 
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
@@ -642,21 +642,36 @@ export function render(gameState: GameState) {
     );
   }
 
-
   startWork("render:timeout");
-  if(gameState.winAt || gameState.startCountDown){
-    const remaining = gameState.startCountDown || Math.ceil((gameState.winAt-gameState.levelTime)/1000)
-    if(remaining>0 && remaining<5){
-      ctx.globalAlpha=1
-      ctx.globalCompositeOperation="destination-out";
-      drawText(ctx, remaining.toString(), 'white', 65, gameState.canvasWidth/2, gameState.canvasHeight/2)
+  if (gameState.winAt || gameState.startCountDown) {
+    const remaining =
+      gameState.startCountDown ||
+      Math.ceil((gameState.winAt - gameState.levelTime) / 1000);
+    if (remaining > 0 && remaining < 5) {
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "destination-out";
+      drawText(
+        ctx,
+        remaining.toString(),
+        "white",
+        65,
+        gameState.canvasWidth / 2,
+        gameState.canvasHeight / 2,
+      );
 
-      ctx.globalCompositeOperation="screen";
-      ctx.globalAlpha=1/remaining
-      drawText(ctx, remaining.toString(), 'white', 60, gameState.canvasWidth/2, gameState.canvasHeight/2)
+      ctx.globalCompositeOperation = "screen";
+      ctx.globalAlpha = 1 / remaining;
+      drawText(
+        ctx,
+        remaining.toString(),
+        "white",
+        60,
+        gameState.canvasWidth / 2,
+        gameState.canvasHeight / 2,
+      );
     }
   }
-ctx.globalAlpha=1
+  ctx.globalAlpha = 1;
 
   startWork("render:askForWakeLock");
   askForWakeLock(gameState);

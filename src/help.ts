@@ -9,8 +9,6 @@ import {
   levelTimeGood,
   missesBest,
   missesGood,
-  wallBouncedBest,
-  wallBouncedGood,
 } from "./pure_functions";
 
 export function helpMenuEntry() {
