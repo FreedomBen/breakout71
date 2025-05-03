@@ -142,9 +142,9 @@ export async function openUpgradesPicker(gameState: GameState) {
 
     const unlockable = getFirstUnlockable(gameState);
     let unlockRelatedUpgradesOffered = 0;
-    let unlockHint = "";
 
     const upgradesActions = offered.map((u) => {
+      let unlockHint = "";
       let className = "";
       if (isOptionOn("level_unlocks_hints")) {
         if (unlockable?.forbidden?.includes(u.id) && !gameState.perks[u.id]) {

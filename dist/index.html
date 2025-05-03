@@ -606,18 +606,6 @@ h2.histogram-title strong {
   transform: none;
 }
 
-.toast.big {
-  opacity: .8;
-  text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
-  background: none;
-  border: none;
-  font-size: 60px;
-  font-weight: bold;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
-}
-
 .gridEdit > div > span, .palette > span {
   cursor: pointer;
   border: 1px solid;
@@ -905,7 +893,6 @@ var _monitorLevelsUnlocks = require("./monitorLevelsUnlocks");
 var _levelEditor = require("./levelEditor");
 var _upgrades = require("./upgrades");
 var _getLevelUnlockCondition = require("./get_level_unlock_condition");
-var _toast = require("./toast");
 async function play() {
     if (await applyFullScreenChoice()) return;
     if (gameState.running) return;
@@ -1007,18 +994,24 @@ setInterval(()=>{
 let timers = [];
 function startPlayCountDown() {
     stopPlayCountDown();
-    (0, _toast.toast)("3", "big");
-    timers.push(setTimeout(()=>(0, _toast.toast)("2", "big"), 1000));
-    timers.push(setTimeout(()=>(0, _toast.toast)("1", "big"), 2000));
+    gameState.startCountDown = 3;
+    gameState.needsRender = true;
     timers.push(setTimeout(()=>{
-        (0, _toast.toast)("GO", "big");
+        gameState.startCountDown = 2;
+        gameState.needsRender = true;
+    }, 1000));
+    timers.push(setTimeout(()=>{
+        gameState.startCountDown = 1;
+        gameState.needsRender = true;
+    }, 2000));
+    timers.push(setTimeout(()=>{
+        gameState.startCountDown = 0;
         play();
     }, 3000));
-    timers.push(setTimeout(()=>(0, _toast.clearToasts)(), 3500));
 }
 function stopPlayCountDown() {
     if (!timers.length) return;
-    (0, _toast.clearToasts)();
+    gameState.startCountDown = 0;
     timers.forEach((id)=>clearTimeout(id));
     timers.length = 0;
 }
@@ -1645,7 +1638,7 @@ tick();
 (0, _tooltip.setupTooltips)();
 document.getElementById("menu")?.setAttribute("data-tooltip", (0, _i18N.t)("play.menu_tooltip"));
 
-},{"./loadGameData":"l1B4x","./sounds":"dQKPV","./game_utils":"cEeac","./PWA/sw_loader":"2n0gK","./i18n/i18n":"eNPRm","./settings":"5blfu","./gameStateMutators":"9ZeQl","./render":"9AS2t","./recording":"godmD","./newGameState":"aQN6X","./asyncAlert":"rSqLY","./options":"d5NoS","./pure_functions":"6pQh7","./help":"bqkdF","./creative":"63kYJ","./tooltip":"3RWxb","./startingPerks":"lv30m","./migrations":"a9qdY","./gameOver":"caCAf","./generateSaveFileContent":"iEcoB","./runHistoryViewer":"b80Ki","./openScorePanel":"aHTmD","./monitorLevelsUnlocks":"jjD0P","./levelEditor":"cirX1","./upgrades":"1u3Dx","./get_level_unlock_condition":"a0fq0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./toast":"nAuvo"}],"l1B4x":[function(require,module,exports,__globalThis) {
+},{"./loadGameData":"l1B4x","./sounds":"dQKPV","./game_utils":"cEeac","./PWA/sw_loader":"2n0gK","./i18n/i18n":"eNPRm","./settings":"5blfu","./gameStateMutators":"9ZeQl","./render":"9AS2t","./recording":"godmD","./newGameState":"aQN6X","./asyncAlert":"rSqLY","./options":"d5NoS","./pure_functions":"6pQh7","./help":"bqkdF","./creative":"63kYJ","./tooltip":"3RWxb","./startingPerks":"lv30m","./migrations":"a9qdY","./gameOver":"caCAf","./generateSaveFileContent":"iEcoB","./runHistoryViewer":"b80Ki","./openScorePanel":"aHTmD","./monitorLevelsUnlocks":"jjD0P","./levelEditor":"cirX1","./upgrades":"1u3Dx","./get_level_unlock_condition":"a0fq0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l1B4x":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "upgrades", ()=>upgrades);
@@ -4118,6 +4111,19 @@ function render(gameState) {
     ctx.globalAlpha = 1;
     if ((0, _options.isOptionOn)("mobile-mode") && gameState.startParams.computer_controlled) drawText(ctx, "breakout.lecaro.me?autoplay", gameState.puckColor, gameState.puckHeight, gameState.canvasWidth / 2, gameState.gameZoneHeight + (gameState.canvasHeight - gameState.gameZoneHeight) / 2);
     if ((0, _options.isOptionOn)("mobile-mode") && !gameState.running) drawText(ctx, (0, _i18N.t)("play.mobile_press_to_play"), gameState.puckColor, gameState.puckHeight, gameState.canvasWidth / 2, gameState.gameZoneHeight + (gameState.canvasHeight - gameState.gameZoneHeight) / 2);
+    (0, _game.startWork)("render:timeout");
+    if (gameState.winAt || gameState.startCountDown) {
+        const remaining = gameState.startCountDown || Math.ceil((gameState.winAt - gameState.levelTime) / 1000);
+        if (remaining > 0 && remaining < 5) {
+            ctx.globalAlpha = 1;
+            ctx.globalCompositeOperation = "destination-out";
+            drawText(ctx, remaining.toString(), 'white', 65, gameState.canvasWidth / 2, gameState.canvasHeight / 2);
+            ctx.globalCompositeOperation = "screen";
+            ctx.globalAlpha = 1 / remaining;
+            drawText(ctx, remaining.toString(), 'white', 60, gameState.canvasWidth / 2, gameState.canvasHeight / 2);
+        }
+    }
+    ctx.globalAlpha = 1;
     (0, _game.startWork)("render:askForWakeLock");
     askForWakeLock(gameState);
     (0, _game.startWork)("render:resetTransform");
@@ -4915,7 +4921,8 @@ frames = 1) {
     if (!remainingBricks && !hasPendingBricks) {
         if (!gameState.winAt) gameState.winAt = gameState.levelTime + 5000;
     } else gameState.winAt = 0;
-    if (// Delayed win when coins are still flying
+    if (// Lost ball while waiting to win, will level up for fairness
+    gameState.winAt && !gameState.balls.find((b)=>!b.destroyed) || // Delayed win when coins are still flying
     gameState.winAt && gameState.levelTime > gameState.winAt || //   instant win condition
     gameState.levelTime && !remainingBricks && !hasPendingBricks && !liveCount(gameState.coins)) {
         if (gameState.startParams.computer_controlled) (0, _game.startComputerControlledGame)(gameState.startParams.stress);
@@ -5251,7 +5258,9 @@ function ballTick(gameState, ball, frames) {
         ball.destroyed = true;
         gameState.runStatistics.balls_lost++;
         if (gameState.perks.happy_family) resetCombo(gameState, ball.x, ball.y);
-        if (!gameState.balls.find((b)=>!b.destroyed)) {
+        // If you loose a ball while waiting to level up, setLevel is called and pauses the game
+        // In that case it's ok to not have any ball, don't game over
+        if (!gameState.balls.find((b)=>!b.destroyed) && gameState.running && !gameState.winAt) {
             if (gameState.startParams.computer_controlled) (0, _game.startComputerControlledGame)(gameState.startParams.stress);
             else (0, _gameOver.gameOver)((0, _i18N.t)("gameOver.lost.title"), (0, _i18N.t)("gameOver.lost.summary", {
                 score: gameState.score
@@ -6552,8 +6561,8 @@ async function openUpgradesPicker(gameState) {
         });
         const unlockable = (0, _openScorePanel.getFirstUnlockable)(gameState);
         let unlockRelatedUpgradesOffered = 0;
-        let unlockHint = "";
         const upgradesActions = offered.map((u)=>{
+            let unlockHint = "";
             let className = "";
             if ((0, _options.isOptionOn)("level_unlocks_hints")) {
                 if (unlockable?.forbidden?.includes(u.id) && !gameState.perks[u.id]) {

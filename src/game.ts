@@ -82,7 +82,6 @@ import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
 import { categories } from "./upgrades";
 import { reasonLevelIsLocked } from "./get_level_unlock_condition";
-import {clearToasts, toast} from "./toast";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -254,23 +253,35 @@ gameCanvas.addEventListener("mousemove", (e) => {
 let timers = [];
 function startPlayCountDown() {
   stopPlayCountDown();
-  toast("3", "big");
-  timers.push(setTimeout(() => toast("2", "big"), 1000));
-  timers.push(setTimeout(() => toast("1", "big"), 2000));
+
+
+  gameState.startCountDown = 3
+  gameState.needsRender = true
+
+  timers.push(setTimeout(() => {
+    gameState.startCountDown = 2
+  gameState.needsRender = true
+  }, 1000));
+  timers.push(setTimeout(() => {
+    gameState.startCountDown = 1
+  gameState.needsRender = true
+  }, 2000));
   timers.push(
     setTimeout(() => {
-      toast("GO", "big");
+      gameState.startCountDown = 0
       play();
     }, 3000),
   );
-  timers.push(setTimeout(() => clearToasts(), 3500));
+
 
 }
 function stopPlayCountDown() {
   if(!timers.length) return
-  clearToasts()
+
+  gameState.startCountDown = 0
   timers.forEach((id) => clearTimeout(id));
   timers.length = 0;
+
 }
 gameCanvas.addEventListener("touchstart", (e) => {
   e.preventDefault();

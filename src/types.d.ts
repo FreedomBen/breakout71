@@ -283,6 +283,7 @@ export type GameState = {
   rerolls: number;
   creative: boolean;
   startParams: RunParams;
+  startCountDown:number;
 };
 
 export type RunParams = {

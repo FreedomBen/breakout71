@@ -14,11 +14,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
-- loosing ball is ok if in win timeout period
-- 
+
 ## Done
 
-- delayed start on mobile
+- level end countdown (on mobile and desktop)
+- level start countdown (on mobile)
+- loosing ball is ok during level end countdown
 - new perk : steering
 - reworked level up screen : 
   - bigger "level X / Y cleared"

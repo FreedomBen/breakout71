@@ -642,6 +642,22 @@ export function render(gameState: GameState) {
     );
   }
 
+
+  startWork("render:timeout");
+  if(gameState.winAt || gameState.startCountDown){
+    const remaining = gameState.startCountDown || Math.ceil((gameState.winAt-gameState.levelTime)/1000)
+    if(remaining>0 && remaining<5){
+      ctx.globalAlpha=1
+      ctx.globalCompositeOperation="destination-out";
+      drawText(ctx, remaining.toString(), 'white', 65, gameState.canvasWidth/2, gameState.canvasHeight/2)
+
+      ctx.globalCompositeOperation="screen";
+      ctx.globalAlpha=1/remaining
+      drawText(ctx, remaining.toString(), 'white', 60, gameState.canvasWidth/2, gameState.canvasHeight/2)
+    }
+  }
+ctx.globalAlpha=1
+
   startWork("render:askForWakeLock");
   askForWakeLock(gameState);
 
