@@ -12,7 +12,7 @@ import {
 
 import {
   brickCenterX,
-  brickCenterY,
+  brickCenterY, canvasCenterX,
   currentLevelInfo,
   distance2,
   distanceBetween,
@@ -27,7 +27,7 @@ import {
   reachRedRowIndex,
   shouldPierceByColor,
   telekinesisEffectRate,
-  yoyoEffectRate,
+  yoyoEffectRate, zoneLeftBorderX, zoneRightBorderX,
 } from "./game_utils";
 import { t } from "./i18n/i18n";
 
@@ -1184,7 +1184,7 @@ export function gameStateTick(
       if (
         gameState.perks.wrap_right > 1 &&
         hitBorder % 2 &&
-        coin.previousX > gameState.offsetX + gameState.gameZoneWidth / 2
+        coin.previousX > canvasCenterX(gameState)
       ) {
         schedulGameSound(gameState, "plouf", coin.x, 1);
         coin.x = gameState.offsetX + gameState.coinSize;
@@ -1395,7 +1395,7 @@ export function gameStateTick(
     if (gameState.perks.wind) {
       const windD =
         ((gameState.puckPosition -
-          (gameState.offsetX + gameState.gameZoneWidth / 2)) /
+          canvasCenterX(gameState)) /
           gameState.gameZoneWidth) *
         2 *
         gameState.perks.wind;
@@ -1529,7 +1529,7 @@ export function gameStateTick(
   ) {
     makeParticle(
       gameState,
-      gameState.offsetXRoundedDown,
+      zoneLeftBorderX(gameState),
       Math.random() * gameState.gameZoneHeight,
       5,
       (Math.random() - 0.5) * 10,
@@ -1546,7 +1546,7 @@ export function gameStateTick(
   ) {
     makeParticle(
       gameState,
-      gameState.offsetXRoundedDown + gameState.gameZoneWidth,
+      zoneRightBorderX(gameState),
       Math.random() * gameState.gameZoneHeight,
       -5,
       (Math.random() - 0.5) * 10,
@@ -1694,20 +1694,21 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
 
   if (gameState.perks.steering) {
     const delta = gameState.puckPosition - gameState.lastPuckPosition;
-    const angle =
-      Math.atan2(ball.vy, ball.vx) +
-      ((((delta / gameState.gameZoneWidth) * Math.PI) / 2) *
-        gameState.perks.steering *
-        frames) /
-        2;
-    const d = Math.sqrt(ball.vy * ball.vy + ball.vx * ball.vx);
-    ball.vy = Math.sin(angle) * d;
-    ball.vx = Math.cos(angle) * d;
-    console.log({
-      delta,
-      angle,
-      d,
-    });
+    if(Math.abs(delta)>1) {
+      const angle =
+          Math.atan2(ball.vy, ball.vx) +
+          ((((delta / gameState.gameZoneWidth) * Math.PI) / 2) *
+              gameState.perks.steering *
+              frames) /
+          2;
+      const d = Math.sqrt(ball.vy * ball.vy + ball.vx * ball.vx);
+      ball.vy = Math.sin(angle) * d;
+      ball.vx = Math.cos(angle) * d;
+      if (Math.random() < frames && !isOptionOn('basic')) {
+        makeParticle(gameState, ball.x, ball.y, -ball.vx / 10, -ball.vy / 10,
+           '#6262EA', true, 8, 500)
+      }
+    }
   }
 
   // Bounces

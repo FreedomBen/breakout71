@@ -10,7 +10,7 @@ import {
   max_levels,
   reachRedRowIndex,
   telekinesisEffectRate,
-  yoyoEffectRate,
+  yoyoEffectRate, zoneLeftBorderX, zoneRightBorderX,
 } from "./game_utils";
 import { colorString, GameState } from "./types";
 import { t } from "./i18n/i18n";
@@ -517,9 +517,9 @@ export function render(gameState: GameState) {
         ctx,
         gameState,
         (redLeftSide && "#FF0000") || "#FFFFFF",
-        gameState.offsetXRoundedDown - 1,
+        zoneLeftBorderX(gameState),
         0,
-        gameState.offsetXRoundedDown - 1,
+        zoneLeftBorderX(gameState),
         height,
         1,
       );
@@ -528,9 +528,9 @@ export function render(gameState: GameState) {
         ctx,
         gameState,
         (redRightSide && "#FF0000") || "#FFFFFF",
-        width - gameState.offsetXRoundedDown + 1,
+        zoneRightBorderX(gameState),
         0,
-        width - gameState.offsetXRoundedDown + 1,
+        zoneRightBorderX(gameState),
         height,
         1,
       );
@@ -565,9 +565,9 @@ export function render(gameState: GameState) {
       ctx,
       gameState,
       "#FF0000",
-      gameState.offsetXRoundedDown,
+      zoneLeftBorderX(gameState),
       1,
-      width - gameState.offsetXRoundedDown,
+      zoneRightBorderX(gameState),
       1,
       1,
     );

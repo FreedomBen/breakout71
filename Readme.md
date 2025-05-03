@@ -14,6 +14,8 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
+- loosing ball is ok if in win timeout period
+- 
 ## Done
 
 - delayed start on mobile

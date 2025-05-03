@@ -82,7 +82,7 @@ import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
 import { categories } from "./upgrades";
 import { reasonLevelIsLocked } from "./get_level_unlock_condition";
-import { toast } from "./toast";
+import {clearToasts, toast} from "./toast";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -263,8 +263,12 @@ function startPlayCountDown() {
       play();
     }, 3000),
   );
+  timers.push(setTimeout(() => clearToasts(), 3500));
+
 }
 function stopPlayCountDown() {
+  if(!timers.length) return
+  clearToasts()
   timers.forEach((id) => clearTimeout(id));
   timers.length = 0;
 }

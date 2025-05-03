@@ -8,7 +8,6 @@
   box-sizing: border-box;
 }
 
-@purple: #6262ea;
 
 body {
   margin: 0;
@@ -648,8 +647,12 @@ h2.histogram-title strong {
     left: 50vw;
     top: 50vh;
     font-size: 60px;
-    opacity: 0.9;
+    font-weight: bold;
+    opacity: 0.8;
     background: none;
+    text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000,
+             1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
+    transform: translate(-50%,-50%);
   }
 }
 
@@ -709,7 +712,7 @@ h2.histogram-title strong {
     position: relative;
 
     > div {
-      background: @purple;
+      background: @palette_b;
       position: absolute;
       inset: 0;
       transform-origin: top left;
@@ -729,7 +732,7 @@ h2.histogram-title strong {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(-45deg, @purple, transparent);
+    background: linear-gradient(-45deg, @palette_b, transparent);
     mix-blend-mode: screen;
     opacity: 0.3;
   }
@@ -739,3 +742,25 @@ h2.histogram-title strong {
   opacity: 0.8;
   color: #8a8a8a;
 }
+
+@palette_B:black;
+@palette_W:#FFFFFF;
+@palette_g:#231f20;
+@palette_y:#FFD300;
+@palette_b:#6262EA;
+@palette_t:#5DA3EA;
+@palette_s:#E67070;
+@palette_r:#e32119;
+@palette_R:#ab0c0c;
+@palette_c:#59EEA3;
+@palette_G:#A1F051;
+@palette_v:#A664E8;
+@palette_p:#E869E8;
+@palette_a:#5BECEC;
+@palette_C:#53EE53;
+@palette_S:#F44848;
+@palette_P:#E66BA8;
+@palette_O:#F29E4A;
+@palette_k:#618227;
+@palette_e:#e1c8b4;
+@palette_l:#9b9fa;
