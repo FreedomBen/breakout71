@@ -16,6 +16,8 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+- delayed start on mobile
+- new perk : steering
 - reworked level up screen : 
   - bigger "level X / Y cleared"
   - upgardes need to all be spent on the same list of perks (to avoid reading too much) 

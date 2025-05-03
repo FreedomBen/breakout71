@@ -425,7 +425,10 @@ export function render(gameState: GameState) {
       ctx.setLineDash(emptyArray);
     }
     ctx.globalAlpha = 1;
-    if (gameState.perks.clairvoyant && gameState.ballStickToPuck) {
+    if (
+      (gameState.perks.clairvoyant && gameState.ballStickToPuck) ||
+      (gameState.perks.steering > 1 && !gameState.ballStickToPuck)
+    ) {
       ctx.strokeStyle = gameState.ballsColor;
       ctx.beginPath();
       ctx.moveTo(ball.x, ball.y);

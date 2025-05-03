@@ -1474,5 +1474,12 @@
     "size": 8,
     "bricks": "_________GGWWrr__GGWWrr__GGWWrr__GGWWrr_________________________",
     "credit": "italia by Topenvy"
+  },
+  {
+    "name": "icon:steering",
+    "size": 9,
+    "bricks": "_bb__bb_____b___b_____b___bWWW_b___bWWW_WWWWWWWW_b___b____b___b___b___b__bb__bb__",
+    "svg": null,
+    "color": ""
   }
 ]

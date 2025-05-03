@@ -209,7 +209,6 @@ export function normalizeGameState(gameState: GameState) {
   ) {
     gameState.lastPuckMove = gameState.levelTime;
   }
-  gameState.lastPuckPosition = gameState.puckPosition;
 }
 
 export function baseCombo(gameState: GameState) {
@@ -1613,6 +1612,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     gameState.perks.puck_repulse_ball +
     gameState.perks.ball_attract_ball;
 
+  // Speed changes
+
   if (telekinesisEffectRate(gameState, ball) > 0) {
     speedLimitDampener += 3;
     ball.vx +=
@@ -1650,6 +1651,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.vx *= 1 - 0.02 / speedLimitDampener;
     ball.vy *= 1 - 0.02 / speedLimitDampener;
   }
+
   // Ball could get stuck horizontally because of ball-ball interactions in repulse/attract
   if (Math.abs(ball.vy) < 0.2 * gameState.baseSpeed) {
     ball.vy += ((ball.vy > 0 ? 1 : -1) * 0.02) / speedLimitDampener;
@@ -1662,6 +1664,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       repulse(gameState, ball, b2, gameState.perks.ball_repulse_ball, true);
     }
   }
+
   if (gameState.perks.ball_attract_ball) {
     for (let b2 of gameState.balls) {
       // avoid computing this twice, and repulsing itself
@@ -1669,6 +1672,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       attract(gameState, ball, b2, gameState.perks.ball_attract_ball);
     }
   }
+
   if (
     gameState.perks.puck_repulse_ball &&
     !isMovingWhilePassiveIncome(gameState) &&
@@ -1687,6 +1691,26 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       false,
     );
   }
+
+  if (gameState.perks.steering) {
+    const delta = gameState.puckPosition - gameState.lastPuckPosition;
+    const angle =
+      Math.atan2(ball.vy, ball.vx) +
+      ((((delta / gameState.gameZoneWidth) * Math.PI) / 2) *
+        gameState.perks.steering *
+        frames) /
+        2;
+    const d = Math.sqrt(ball.vy * ball.vy + ball.vx * ball.vx);
+    ball.vy = Math.sin(angle) * d;
+    ball.vx = Math.cos(angle) * d;
+    console.log({
+      delta,
+      angle,
+      d,
+    });
+  }
+
+  // Bounces
 
   const borderHitCode = bordersHitCheck(
     gameState,

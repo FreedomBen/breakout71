@@ -952,4 +952,15 @@ export const rawUpgrades = [
         percent: lvl * 50,
       }),
   },
+  {
+    category: categories.advanced,
+    requires: "",
+    threshold: 250000,
+    gift: false,
+    id: "steering",
+    max: 4,
+    name: t("upgrades.steering.name"),
+    help: (lvl: number) => t("upgrades.steering.tooltip"),
+    fullHelp: (lvl: number) => t("upgrades.steering.verbose_description"),
+  },
 ] as const;

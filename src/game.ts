@@ -82,6 +82,7 @@ import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
 import { categories } from "./upgrades";
 import { reasonLevelIsLocked } from "./get_level_unlock_condition";
+import { toast } from "./toast";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -250,19 +251,42 @@ gameCanvas.addEventListener("mousemove", (e) => {
   }
 });
 
+let timers = [];
+function startPlayCountDown() {
+  stopPlayCountDown();
+  toast("3", "big");
+  timers.push(setTimeout(() => toast("2", "big"), 1000));
+  timers.push(setTimeout(() => toast("1", "big"), 2000));
+  timers.push(
+    setTimeout(() => {
+      toast("GO", "big");
+      play();
+    }, 3000),
+  );
+}
+function stopPlayCountDown() {
+  timers.forEach((id) => clearTimeout(id));
+  timers.length = 0;
+}
 gameCanvas.addEventListener("touchstart", (e) => {
   e.preventDefault();
   if (!e.touches?.length) return;
-
   setMousePos(gameState, e.touches[0].pageX);
   normalizeGameState(gameState);
-  play();
+  if (gameState.levelTime || !isOptionOn("touch_delayed_start")) {
+    play();
+  } else {
+    //   start play sequence
+    startPlayCountDown();
+  }
 });
 gameCanvas.addEventListener("touchend", (e) => {
+  stopPlayCountDown();
   e.preventDefault();
   pause(true);
 });
 gameCanvas.addEventListener("touchcancel", (e) => {
+  stopPlayCountDown();
   e.preventDefault();
   pause(true);
 });
@@ -326,6 +350,7 @@ export function tick() {
       gameStateTick(gameState, frames / steps);
     }
   }
+  gameState.lastPuckPosition = gameState.puckPosition;
 
   if (gameState.running || gameState.needsRender) {
     gameState.needsRender = false;

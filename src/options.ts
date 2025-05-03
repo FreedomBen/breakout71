@@ -19,6 +19,11 @@ export const options = {
     name: t("settings.mobile"),
     help: t("settings.mobile_help"),
   },
+  touch_delayed_start: {
+    default: true,
+    name: t("settings.touch_delayed_start"),
+    help: t("settings.touch_delayed_start_help"),
+  },
   basic: {
     default: false,
     name: t("settings.basic"),
