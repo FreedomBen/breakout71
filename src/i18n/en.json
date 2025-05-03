@@ -79,6 +79,8 @@
   "level_up.challenges.levelTime.description": "You'll get a gold medal under {{gold}}s and a silver medal under {{silver}}s.  ",
   "level_up.challenges.levelTime.name": "{{value}}s play time",
   "level_up.challenges.no_gain": "No gain",
+  "level_up.forbidden": "Picking this perk will prevent you from unlocking the level \"{{levelName}}\" in this game run.",
+  "level_up.required": "Picking this perk may allow you to unlock level \"{{levelName}}\" in this game run.",
   "level_up.title": "Level {{level}}/{{max}} cleared",
   "level_up.upgrade_perks": "You caught {{coins}} coins. Pick {{count}} upgrade(s) below. ",
   "main_menu.basic": "",

@@ -79,6 +79,8 @@
   "level_up.challenges.levelTime.description": "",
   "level_up.challenges.levelTime.name": "",
   "level_up.challenges.no_gain": "",
+  "level_up.forbidden": "",
+  "level_up.required": "",
   "level_up.title": "Du hast gerade Level {{level}}/{{max}} beendet.",
   "level_up.upgrade_perks": "",
   "main_menu.basic": "",

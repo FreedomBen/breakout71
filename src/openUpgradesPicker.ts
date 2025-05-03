@@ -2,12 +2,12 @@ import { GameState, PerkId } from "./types";
 import {
   catchRateBest,
   catchRateGood,
+  choicePerGold,
+  choicePerSilver,
   levelTimeBest,
   levelTimeGood,
   missesBest,
   missesGood,
-  choicePerGold,
-  choicePerSilver,
   upPerGold,
   upPerSilver,
 } from "./pure_functions";
@@ -122,34 +122,44 @@ export async function openUpgradesPicker(gameState: GameState) {
     );
   }
 
-  const unlockable = getFirstUnlockable(gameState);
-
-  let offered = getPossibleUpgrades(gameState)
+  let sorted = getPossibleUpgrades(gameState)
     .map((u) => ({
       ...u,
       score: Math.random() + (gameState.lastOffered[u.id] || 0),
     }))
     .sort((a, b) => a.score - b.score)
-    .filter((u) => gameState.perks[u.id] < u.max + gameState.perks.limitless)
-    .slice(0, 3 + extraChoices + gameState.perks.one_more_choice);
-
-  offered.forEach((u) => {
-    dontOfferTooSoon(gameState, u.id);
-  });
+    .filter((u) => gameState.perks[u.id] < u.max + gameState.perks.limitless);
 
   while (true) {
+    // refresh the list if you pick extra one_more_choice
+    const offered = sorted.slice(
+      0,
+      3 + extraChoices + gameState.perks.one_more_choice,
+    );
+    offered.forEach((u) => {
+      dontOfferTooSoon(gameState, u.id);
+    });
+
+    const unlockable = getFirstUnlockable(gameState);
     let unlockRelatedUpgradesOffered = 0;
+    let unlockHint = "";
 
     const upgradesActions = offered.map((u) => {
       let className = "";
       if (isOptionOn("level_unlocks_hints")) {
-        if (unlockable?.forbidden?.includes(u.id)) {
+        if (unlockable?.forbidden?.includes(u.id) && !gameState.perks[u.id]) {
           unlockRelatedUpgradesOffered++;
           className += " forbidden";
+          unlockHint = t("level_up.forbidden", {
+            levelName: unlockable?.l.name || "",
+          });
         }
         if (unlockable?.required?.includes(u.id)) {
           unlockRelatedUpgradesOffered++;
           className += " required";
+          unlockHint = t("level_up.required", {
+            levelName: unlockable?.l.name || "",
+          });
         }
       }
       return {
@@ -161,9 +171,10 @@ export async function openUpgradesPicker(gameState: GameState) {
             ? upgradeLevelAndMaxDisplay(u, gameState)
             : ""),
         icon: icons["icon:" + u.id],
-        help: u.help(gameState.perks[u.id] || 1),
+        help: unlockHint || u.help(gameState.perks[u.id] || 1),
         tooltip: u.fullHelp(gameState.perks[u.id] || 1),
         className,
+        actionLabel: gameState.perks[u.id] ? "upgrade" : "pick",
       };
     });
 

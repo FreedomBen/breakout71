@@ -19,12 +19,14 @@ function setupMobileTooltips(tooltip: HTMLDivElement) {
     console.log("openTooltip", e);
     hideAnyTooltip();
     const hovering = e.target as HTMLElement;
-    if (!hovering?.hasAttribute("data-help-content")) {
+    const tooltipContent =
+      hovering?.getAttribute("data-help-content")?.trim() || "";
+    if (!tooltipContent) {
       return;
     }
     e.stopPropagation();
     e.preventDefault();
-    tooltip.innerHTML = hovering.getAttribute("data-help-content") || "";
+    tooltip.innerHTML = tooltipContent;
     tooltip.style.display = "";
     const { top } = hovering.getBoundingClientRect();
     tooltip.style.transform = `translate(0,${top}px) translate(0,-100%)`;

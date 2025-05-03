@@ -13,25 +13,27 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
  
 # Changelog
 ## To do
-- +1 upgrade per gold medal, but they are all applied to the selected perk
-
 
 ## Done
 
+- reworked level up screen : 
+  - bigger "level X / Y cleared"
+  - upgardes need to all be spent on the same list of perks (to avoid reading too much) 
+  - instead of rerolls, you get a longer list of choices to pick from with gold medals
+  - clarified challenges, only show them when you pass one of them
+  - removed the "sides bounce" challenge, bouncing on sides shouldn't be punished
+  - once you reach high score of 1000, level unlock hints appear, and required / forbidden upgrades and colored gold/red
+  - added tooltip on most items on that screen, that can be triggered on mobile by tapping the text
 
-- when you earn multiple upgrade points, they all need to be put on the same perk
-- wait for bricks to respawn before leveling up
-- creative mode : removed tooltips for perks as they were getting in the way on mobile 
 - unlocked upgrades and levels : split item description (with tooltip) and "try" button
-- unlocked level: removed progress bars  as there's no real progress
-- bigger "level X of Y cleared"
-- clarify challenges but only show them when you pass one of them
-- removed the "sides bounce" challenge, bouncing on sides shouldn't be punished
-- upgrades list now uses numbers instead of bars, looks better with limitless
-- somehow score clicks didn't register while the game was playing, that's solved
+- creative mode : removed tooltips for perks as they were getting in the way on mobile 
+- Fix: removed progress bars from unlocked level as there's no real progress
+- Fix :upgrades list now uses numbers instead of bars, looks better with limitless
+- Fix :somehow score clicks didn't register while the game was playing, that's solved
 - Fix : click tooltip to open on mobile, click anywhere to close
-- Can't press help buttons in Creative Menu
-
+- Fix: Can't press help buttons in Creative Menu
+- Fix: wait for bricks to respawn before leveling up
+- UX : score and menu button look extra clickable until you tap them 3 times and restart the app
 
 ## 29097764
 

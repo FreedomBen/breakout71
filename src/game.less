@@ -211,16 +211,15 @@ body:not(.has-alert-open) #popup {
               opacity: 0.2;
             }
           }
-
-          &.forbidden {
-            background: linear-gradient(45deg, darkred, transparent);
-          }
-
-          &.required {
-            background: linear-gradient(45deg, gold, transparent);
-          }
         }
 
+        &.forbidden {
+          background: linear-gradient(-45deg, #0000, #ff00004a, #0000);
+        }
+
+        &.required {
+          background: linear-gradient(-45deg, #0000, #ffd3005c, #0000);
+        }
         > button[data-help-content] {
           user-select: none;
           border-radius: 4px;
@@ -414,8 +413,9 @@ h2.histogram-title strong {
 .upgrade {
   display: flex;
   gap: 2px;
-  margin: 0 0 10px 0;
-
+  padding: 5px 5px;
+  margin: 0 -5px;
+  width: calc(100% + 10px);
   img {
     width: 32px;
     height: 32px;

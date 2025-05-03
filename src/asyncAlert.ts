@@ -12,6 +12,7 @@ export type AsyncAlertAction<t> = {
   disabled?: boolean;
   icon?: string;
   className?: string;
+  actionLabel?: string;
 };
 
 const popupWrap = document.getElementById("popup") as HTMLDivElement;
@@ -163,7 +164,7 @@ function addButton<t>(
   addto.appendChild(buttonWrap);
 
   if (actionLabel) {
-    buttonWrap.className = className;
+    buttonWrap.className = className + " upgrade";
 
     buttonWrap.innerHTML = icon;
 
