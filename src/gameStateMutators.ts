@@ -2026,6 +2026,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       );
     }
   }
+
 }
 
 function justLostALife(gameState: GameState, ball: Ball, x: number, y: number) {
