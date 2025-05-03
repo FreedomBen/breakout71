@@ -798,6 +798,8 @@ async function openUnlockedUpgradesList() {
           : help(1),
       tooltip: ts < threshold ? "" : fullHelp(1) + " [id:" + id + "]",
       threshold,
+      className: "upgrade choice " + (ts > threshold ? "used" : ""),
+      actionLabel: t("unlocks.use"),
     }))
     .sort((a, b) => a.threshold - b.threshold);
 
@@ -833,7 +835,7 @@ async function openUnlockedUpgradesList() {
 }
 
 async function openUnlockedLevelsList() {
-  const hintField = isOptionOn("mobile-mode") ? "help" : "tooltip";
+  // const hintField = isOptionOn("mobile-mode") ? "help" : "tooltip";
 
   const unlockedBefore = new Set(
     getSettingValue("breakout_71_unlocked_levels", []),
@@ -842,16 +844,16 @@ async function openUnlockedLevelsList() {
     const lockedBecause = unlockedBefore.has(l.name)
       ? null
       : reasonLevelIsLocked(li, l.name, getHistory(), true);
-    const percentUnlocked = lockedBecause?.reached
-      ? `<span class="progress-inline"><span style="transform: scale(${Math.floor((lockedBecause.reached / lockedBecause.minScore) * 100) / 100},1)"></span></span>`
-      : "";
 
     return {
-      text: l.name + percentUnlocked,
+      text: l.name,
       disabled: !!lockedBecause,
       value: { level: l } as RunParams,
       icon: icons[l.name],
-      [hintField]: lockedBecause?.text || describeLevel(l),
+      help: lockedBecause?.text || describeLevel(l),
+      className: "upgrade choice " + (!lockedBecause ? "used" : ""),
+      tooltip: l.credit,
+      actionLabel: t("unlocks.try"),
     };
   });
 

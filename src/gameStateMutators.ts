@@ -995,7 +995,10 @@ export function gameStateTick(
     // Delayed win when coins are still flying
     (gameState.winAt && gameState.levelTime > gameState.winAt) ||
     //   instant win condition
-    (gameState.levelTime && !remainingBricks && !liveCount(gameState.coins))
+    (gameState.levelTime &&
+      !remainingBricks &&
+      !hasPendingBricks &&
+      !liveCount(gameState.coins))
   ) {
     if (gameState.startParams.computer_controlled) {
       startComputerControlledGame(gameState.startParams.stress);
@@ -1967,8 +1970,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   ) {
     const remainingPierce = ball.piercePoints;
     const remainingSapper = ball.sapperUses < gameState.perks.sapper;
-    const willMiss =
-      isOptionOn("red_miss") && ball.vy > 0 && !ball.hitSinceBounce;
+    const willMiss = ball.vy > 0 && !ball.hitSinceBounce;
     const extraCombo = gameState.combo - 1;
 
     if (

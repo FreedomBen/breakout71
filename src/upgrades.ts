@@ -856,8 +856,7 @@ export const rawUpgrades = [
     name: t("upgrades.extra_levels.name"),
     help: (lvl: number) =>
       t("upgrades.extra_levels.tooltip", { count: lvl + 7 }),
-    fullHelp: (lvl: number) =>
-      t("upgrades.extra_levels.verbose_description", { lvl }),
+    fullHelp: (lvl: number) => t("upgrades.extra_levels.verbose_description"),
   },
   {
     category: categories.combo_boost,

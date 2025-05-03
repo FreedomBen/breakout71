@@ -97,12 +97,16 @@ export function firstWhere<Input, Output>(
 
 export const wallBouncedBest = 2,
   wallBouncedGood = 7,
-  levelTimeBest = 10,
+  levelTimeBest = 25,
   levelTimeGood = 45,
-  catchRateBest = 99,
+  catchRateBest = 98,
   catchRateGood = 90,
   missesBest = 1,
-  missesGood = 6;
+  missesGood = 6,
+  choicePerSilver = 1,
+  choicePerGold = 2,
+  upPerSilver = 1,
+  upPerGold = 1;
 
 export const MAX_LEVEL_SIZE = 21;
 export const MIN_LEVEL_SIZE = 2;

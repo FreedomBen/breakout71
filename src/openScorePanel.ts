@@ -1,10 +1,10 @@
-import { GameState } from "./types";
+import { GameState, PerkId } from "./types";
 import { asyncAlert } from "./asyncAlert";
 import { t } from "./i18n/i18n";
 import { levelsListHTMl, max_levels, pickedUpgradesHTMl } from "./game_utils";
 import { getCreativeModeWarning, getHistory } from "./gameOver";
 import { pause } from "./game";
-import { allLevels, icons } from "./loadGameData";
+import { allLevels, icons, upgrades } from "./loadGameData";
 import { firstWhere } from "./pure_functions";
 import { getSettingValue, getTotalScore } from "./settings";
 import {
@@ -12,6 +12,7 @@ import {
   reasonLevelIsLocked,
   upgradeName,
 } from "./get_level_unlock_condition";
+import { isOptionOn } from "./options";
 
 export async function openScorePanel(gameState: GameState) {
   pause(true);
@@ -28,9 +29,9 @@ export async function openScorePanel(gameState: GameState) {
       pickedUpgradesHTMl(gameState),
       levelsListHTMl(gameState, gameState.currentLevel),
       getNearestUnlockHTML(gameState),
-      gameState.upgrade_points
+      gameState.rerolls
         ? t("score_panel.upgrade_point_count", {
-            count: gameState.upgrade_points,
+            count: gameState.rerolls,
           })
         : "",
     ],
@@ -38,10 +39,10 @@ export async function openScorePanel(gameState: GameState) {
   });
 }
 
-export function getNearestUnlockHTML(gameState: GameState) {
-  if (gameState.creative) return "";
+export function getFirstUnlockable(gameState: GameState) {
+  if (gameState.creative) return undefined;
   const unlocked = new Set(getSettingValue("breakout_71_unlocked_levels", []));
-  const firstUnlockable = firstWhere(allLevels, (l, li) => {
+  return firstWhere(allLevels, (l, li) => {
     if (unlocked.has(l.name)) return;
     const reason = reasonLevelIsLocked(li, l.name, getHistory(), false);
     if (!reason) return;
@@ -50,14 +51,18 @@ export function getNearestUnlockHTML(gameState: GameState) {
       li,
       l.name,
     );
-    const missing = required.filter((id) => !gameState?.perks?.[id]);
+    const missing: PerkId[] = required.filter((id) => !gameState?.perks?.[id]);
     // we can't have a forbidden perk
     if (forbidden.find((id) => gameState?.perks?.[id])) {
       return;
     }
 
     // All required upgrades need to be unlocked
-    if (missing.find((u) => u.threshold > getTotalScore())) {
+    if (
+      missing.find(
+        (id) => upgrades.find((u) => u.id === id)!.threshold > getTotalScore(),
+      )
+    ) {
       return;
     }
 
@@ -71,6 +76,11 @@ export function getNearestUnlockHTML(gameState: GameState) {
       reason,
     };
   });
+}
+
+export function getNearestUnlockHTML(gameState: GameState) {
+  if (!isOptionOn("level_unlocks_hints")) return "";
+  const firstUnlockable = getFirstUnlockable(gameState);
 
   if (!firstUnlockable) return "";
   let missingPoints = Math.max(0, firstUnlockable.minScore - gameState.score);

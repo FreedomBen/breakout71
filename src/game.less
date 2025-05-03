@@ -1,9 +1,10 @@
 * {
-  font-family: Courier New,
-  Courier,
-  Lucida Sans Typewriter,
-  Lucida Typewriter,
-  monospace;
+  font-family:
+    Courier New,
+    Courier,
+    Lucida Sans Typewriter,
+    Lucida Typewriter,
+    monospace;
   box-sizing: border-box;
 }
 
@@ -155,6 +156,7 @@ body:not(.has-alert-open) #popup {
       align-items: stretch;
 
       > div {
+        position: relative;
         display: flex;
 
         & > button.choice-button {
@@ -209,6 +211,14 @@ body:not(.has-alert-open) #popup {
               opacity: 0.2;
             }
           }
+
+          &.forbidden {
+            background: linear-gradient(45deg, darkred, transparent);
+          }
+
+          &.required {
+            background: linear-gradient(45deg, gold, transparent);
+          }
         }
 
         > button[data-help-content] {
@@ -234,6 +244,7 @@ body:not(.has-alert-open) #popup {
 
   &.actionsAsGrid.large > div > section {
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-gap: 20px;
   }
 
   &.actionsAsGrid > div {
@@ -413,14 +424,12 @@ h2.histogram-title strong {
   p {
     flex-grow: 1;
     color: rgba(255, 255, 255, 0.6);
-
     margin: 0 20px;
   }
 
   &.used p strong {
     color: white;
   }
-
 
   &.used {
     opacity: 1;
@@ -453,11 +462,13 @@ h2.histogram-title strong {
     align-self: flex-start;
     padding: 5px;
     font-weight: bold;
-    transition: transform 0.2s,
-    box-shadow 0.2s;
-    box-shadow: 0 1px 0 black inset,
-    0 2px #5da3ea,
-    0 4px white;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+    box-shadow:
+      0 1px 0 black inset,
+      0 2px #5da3ea,
+      0 4px white;
 
     &:hover {
       background: #5da3ea;
@@ -465,13 +476,25 @@ h2.histogram-title strong {
 
     &:active {
       transform: translate(0, 4px);
-      box-shadow: 0 1px 0 black inset,
-      0 0px #5da3ea,
-      0 0px white;
+      box-shadow:
+        0 1px 0 black inset,
+        0 0px #5da3ea,
+        0 0px white;
     }
 
-    transition: transform 0.2s,
-    box-shadow 0.2s;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+    &[disabled] {
+      pointer-events: none;
+      background: #222;
+      box-shadow: 0 1px 0 black inset;
+      transform: translate(0, 4px);
+      color: #666;
+
+      text-shadow: 0 0 2px black;
+      border-color: #666;
+    }
   }
 }
 
@@ -593,24 +616,6 @@ h2.histogram-title strong {
   }
 }
 
-.progress-inline {
-  position: absolute;
-  display: block;
-  background: grey;
-  left: 62px;
-  right: 2px;
-  height: 7px;
-  bottom: 2px;
-  border-radius: 2px;
-
-  span {
-    position: absolute;
-    inset: 1px;
-    transform-origin: top left;
-    background: white;
-  }
-}
-
 .toast {
   position: fixed;
   left: 0;
@@ -624,8 +629,9 @@ h2.histogram-title strong {
   border-radius: 2px;
   padding-right: 10px;
   pointer-events: none;
-  transition: opacity 200ms,
-  transform 200ms;
+  transition:
+    opacity 200ms,
+    transform 200ms;
   z-index: 7;
 
   &.hidden {

@@ -13,23 +13,20 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
  
 # Changelog
 ## To do
-- instead of bouncing the ball,loosing a life pauses the game (with coins still in the air)
+- +1 upgrade per gold medal, but they are all applied to the selected perk
+
 
 ## Done
 
-- rewoked perks choices to limit perk fatigue, avoid wall of texts,  allow users to skip
-- removed rerolls
-- offer to pick 1 upgrade out of 3 choices
-- playing well adds 1 upgrade and 1 choice
-- playing even better adds 1 choice
-- "more choices" perk adds 1 choice
-- you can skip the upgrades and they'll be saved for later as extra lives
-- you can pick an upgrade multiple time to level it up 
+
+- when you earn multiple upgrade points, they all need to be put on the same perk
+- wait for bricks to respawn before leveling up
+- creative mode : removed tooltips for perks as they were getting in the way on mobile 
+- unlocked upgrades and levels : split item description (with tooltip) and "try" button
+- unlocked level: removed progress bars  as there's no real progress
 - bigger "level X of Y cleared"
-- continue to level X/Y as button
-- lives = upgrade points
-- clarify challenges
-- removed the "sides bounce" challenge 
+- clarify challenges but only show them when you pass one of them
+- removed the "sides bounce" challenge, bouncing on sides shouldn't be punished
 - upgrades list now uses numbers instead of bars, looks better with limitless
 - somehow score clicks didn't register while the game was playing, that's solved
 - Fix : click tooltip to open on mobile, click anywhere to close
@@ -396,6 +393,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Easy perk ideas  
 
+- chill : no perks gain, no level limit,+20 base combo 
 - when the ball teleport, probability that it's duplicated instead
 - combo resets on teleport
 - combo resets when hitting puck without a teleport
@@ -501,12 +499,6 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 ## UX / gameplay
 
 - make menu and score button more "button like" when you just installed the game.
-- chill game mode, to just relax your mind :
-  - no 7 levels limit
-  - no upgrades offered at the end of the level 
-  - get a  random perk
-  - every 7 level it's replaced by another random perk
-  - every 7 levels, +10 base combo and +1 piece
 - avoid showing a +1 and -1 at the same time when a combo increase is reset
 - explain to iOS users how to add the app to home screen to get fullscreen
 - delayed start on mobile to let users place the puck where they want

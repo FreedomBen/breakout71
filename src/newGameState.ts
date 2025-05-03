@@ -144,7 +144,7 @@ export function newGameState(params: RunParams): GameState {
     needsRender: true,
     autoCleanUses: 0,
     ...defaultSounds(),
-    upgrade_points: 0,
+    rerolls: 0,
     creative:
       params?.computer_controlled ||
       sumOfValues(params.perks) > 1 ||

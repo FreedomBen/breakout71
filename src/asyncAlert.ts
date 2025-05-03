@@ -1,6 +1,7 @@
 import { t } from "./i18n/i18n";
 import { isOptionOn } from "./options";
 import { hideAnyTooltip } from "./tooltip";
+
 export let alertsOpen = 0,
   closeModal: null | (() => void) = null;
 
@@ -100,58 +101,7 @@ export async function asyncAlert<t>({
           addto.className = "actions";
           popup.appendChild(addto);
         }
-
-        const buttonWrap = document.createElement("div");
-        addto.appendChild(buttonWrap);
-
-        const {
-          text,
-          value,
-          help,
-          disabled,
-          className = "",
-          icon = "",
-          tooltip,
-        } = entry;
-
-        const button = document.createElement("button");
-
-        button.innerHTML = `
-${icon}
-<div>
-                    <strong>${text}</strong>
-                    <em>${help || ""}</em>
-            </div>`;
-
-        if (disabled) {
-          button.setAttribute("disabled", "disabled");
-        } else {
-          button.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            closeWithResult(value);
-            // Focus "same" button if it's still there
-            lastClickedItemIndex = index;
-          });
-        }
-
-        button.className =
-          className +
-          (lastClickedItemIndex === index ? " needs-focus" : "") +
-          " choice-button";
-
-        buttonWrap.appendChild(button);
-
-        if (tooltip) {
-          if (isOptionOn("mobile-mode")) {
-            const helpBtn = document.createElement("button");
-            helpBtn.innerText = "?";
-            helpBtn.setAttribute("data-help-content", tooltip);
-            buttonWrap.appendChild(helpBtn);
-          } else {
-            button.setAttribute("data-tooltip", tooltip);
-          }
-        }
+        addButton(entry, index, addto, closeWithResult);
       });
 
     popup.addEventListener(
@@ -190,4 +140,97 @@ function updateAlertsOpen(delta: number) {
     alert("Two alerts where opened at once");
   }
   document.body.classList[alertsOpen ? "add" : "remove"]("has-alert-open");
+}
+
+function addButton<t>(
+  entry: AsyncAlertAction<t>,
+  index: number,
+  addto: HTMLElement,
+  closeWithResult: (r: t) => void,
+) {
+  const {
+    text = "",
+    value = null,
+    help = "",
+    disabled = false,
+    className = "",
+    icon = "",
+    tooltip = "",
+    actionLabel = "",
+  } = entry;
+
+  const buttonWrap = document.createElement("div");
+  addto.appendChild(buttonWrap);
+
+  if (actionLabel) {
+    buttonWrap.className = className;
+
+    buttonWrap.innerHTML = icon;
+
+    const description = document.createElement("p");
+    description.innerHTML = `
+              <strong>${text}</strong>
+             ${help}
+             `;
+    description.setAttribute("data-tooltip", tooltip);
+    description.setAttribute("data-help-content", tooltip);
+    buttonWrap.appendChild(description);
+
+    const button = document.createElement("button");
+    button.textContent = actionLabel;
+    button.disabled = disabled;
+    if (!disabled)
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeWithResult(value);
+        // Focus "same" button if it's still there
+        lastClickedItemIndex = index;
+      });
+
+    button.className = lastClickedItemIndex === index ? " needs-focus" : "";
+
+    buttonWrap.appendChild(button);
+    return;
+  }
+
+  const button = document.createElement("button");
+
+  button.innerHTML = `
+${icon}
+<div>
+                    <strong>${text}</strong>
+                    <em>${help || ""}</em>
+            </div>`;
+
+  if (disabled) {
+    button.setAttribute("disabled", "disabled");
+  } else {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeWithResult(value);
+      // Focus "same" button if it's still there
+      lastClickedItemIndex = index;
+    });
+  }
+
+  button.className =
+    className +
+    (lastClickedItemIndex === index ? " needs-focus" : "") +
+    " choice-button";
+
+  buttonWrap.appendChild(button);
+
+  if (tooltip) {
+    button.setAttribute("data-tooltip", tooltip);
+    // if (!isOptionOn("mobile-mode")) {
+    // //     const helpBtn = document.createElement("button");
+    // //     helpBtn.innerText = "?";
+    // //     helpBtn.setAttribute("data-help-content", tooltip);
+    // //     buttonWrap.appendChild(helpBtn);
+    // // } else {
+    //     button.setAttribute("data-tooltip", tooltip);
+    // }
+  }
 }

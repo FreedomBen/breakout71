@@ -9,7 +9,12 @@ import {
   restart,
 } from "./game";
 import { asyncAlert, requiredAsyncAlert } from "./asyncAlert";
-import { describeLevel, highScoreText, sumOfValues } from "./game_utils";
+import {
+  describeLevel,
+  highScoreText,
+  levelAndMaxBadge,
+  sumOfValues,
+} from "./game_utils";
 import { getHistory } from "./gameOver";
 import { noCreative } from "./upgrades";
 import { levelIconHTML } from "./levelIcon";
@@ -92,15 +97,16 @@ export async function openCreativeModePerksPicker() {
           .map((u) => ({
             icon: icons["icon:" + u.id],
             text: u.name,
-            help:
-              (creativeModePerks[u.id] || 0) +
-              "/" +
-              (u.max + (creativeModePerks.limitless || 0)),
+            help: levelAndMaxBadge(
+              creativeModePerks[u.id] || 0,
+              u.max + (creativeModePerks.limitless || 0),
+            ),
             value: u,
             className:
               " upgrade " +
               (creativeModePerks[u.id] ? " highlight" : " not-highlighed"),
-            tooltip: u.help(creativeModePerks[u.id] || 1),
+            // tooltip: u.help(creativeModePerks[u.id] || 1),
+            // actionLabel: (creativeModePerks[u.id] || 0) + ' / '+( u.max + (creativeModePerks.limitless || 0))
           })),
         t("lab.select_level"),
         ...levelOptions,

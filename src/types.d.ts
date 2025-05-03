@@ -280,7 +280,7 @@ export type GameState = {
     plouf: { vol: number; x: number };
     colorChange: { vol: number; x: number };
   };
-  upgrade_points: number;
+  rerolls: number;
   creative: boolean;
   startParams: RunParams;
 };
