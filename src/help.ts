@@ -21,9 +21,7 @@ export function helpMenuEntry() {
         title: t("help.title"),
         allowClose: true,
         content: [
-          miniMarkDown(
-            t("help.content"),
-          ),
+          miniMarkDown(t("help.content")),
           miniMarkDown(t("help.upgrades")),
           ...upgrades.map(
             (u) => `

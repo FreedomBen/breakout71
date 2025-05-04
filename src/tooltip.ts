@@ -16,7 +16,6 @@ export function hideAnyTooltip() {
 function setupMobileTooltips(tooltip: HTMLDivElement) {
   tooltip.className = "mobile";
   function openTooltip(e: Event) {
-    console.log("openTooltip", e);
     hideAnyTooltip();
     const hovering = e.target as HTMLElement;
     const tooltipContent =

@@ -171,7 +171,7 @@ export async function openUpgradesPicker(gameState: GameState) {
             ? upgradeLevelAndMaxDisplay(u, gameState)
             : ""),
         icon: icons["icon:" + u.id],
-        help:  u.help(gameState.perks[u.id] || 1),
+        help: u.help(gameState.perks[u.id] || 1),
         tooltip: unlockHint + u.fullHelp(gameState.perks[u.id] || 1),
         className,
         actionLabel: gameState.perks[u.id] ? "upgrade" : "pick",

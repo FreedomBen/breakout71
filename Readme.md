@@ -16,14 +16,6 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 
 ## Done
-
-- boosted perk : stronger foundation (+3 combo, then +4, then +5..)
-- easy cleanup special effect (and X made of particles)
-- added a few levels
-- level end countdown (on mobile and desktop)
-- level start countdown (on mobile)
-- loosing ball is ok during level end countdown
-- new perk : steering
 - reworked level up screen : 
   - bigger "level X / Y cleared"
   - upgardes need to all be spent on the same list of perks (to avoid reading too much) 
@@ -32,6 +24,14 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
   - removed the "sides bounce" challenge, bouncing on sides shouldn't be punished
   - once you reach high score of 1000, level unlock hints appear, and required / forbidden upgrades and colored gold/red
   - added tooltip on most items on that screen, that can be triggered on mobile by tapping the text
+
+- new perk : steering
+- boosted perk : stronger foundation (+3 combo, then +4, then +5..)
+- easy cleanup special effect (and X made of particles)
+- added a few levels
+- level end countdown (on mobile and desktop)
+- level start countdown (on mobile)
+- loosing ball is ok during level end countdown
 
 - unlocked upgrades and levels : split item description (with tooltip) and "try" button
 - creative mode : removed tooltips for perks as they were getting in the way on mobile 

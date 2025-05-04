@@ -4,10 +4,6 @@ export function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(value, max));
 }
 
-export function comboKeepingRate(level: number) {
-  return clamp(1 - (1 / (1 + level)) * 1.5, 0, 1);
-}
-
 export function ballTransparency(ball: Ball, gameState: GameState) {
   if (!gameState.perks.transparency) return 0;
   return clamp(
@@ -137,4 +133,16 @@ export function levelCodeToRawLevel(code: string) {
       name,
       credit,
     };
+}
+
+export function comboKeepingRate(level: number) {
+  return clamp(1 - (1 / (1 + level)) * 1.5, 0, 1);
+}
+
+export function base_combo_from_stronger_foundation(perkLevel: number) {
+  let base = 1;
+  for (let i = 0; i < perkLevel; i++) {
+    base += 3 + i;
+  }
+  return base;
 }
