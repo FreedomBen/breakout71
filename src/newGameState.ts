@@ -61,7 +61,7 @@ export function newGameState(params: RunParams): GameState {
     }
 
     randomGift =
-      (isOptionOn("easy") && "slow_down") ||
+      (isOptionOn("kid") && "slow_down") ||
       giftable[Math.floor(Math.random() * giftable.length)].id;
 
     perks[randomGift] = 1;

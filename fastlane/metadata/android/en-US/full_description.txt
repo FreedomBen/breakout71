@@ -14,7 +14,6 @@ Oh, and don't miss the ball, you don't have extra lives.
 The app should work offline and perform well even on low-end devices.
 It's very lean and does not take much storage space (Roughly 0.1MB).
 If the app stutters, turn on "fast mode" in the settings.
-If the game is too fast, enable "kid mode" in the settings.
 </p>
 
 <p>

@@ -102,7 +102,7 @@ export const levelTimeBest = 25,
   missesBest = 1,
   missesGood = 6,
   choicePerSilver = 1,
-  choicePerGold = 2,
+  choicePerGold = 3,
   upPerSilver = 1,
   upPerGold = 1;
 

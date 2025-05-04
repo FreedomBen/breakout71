@@ -7,7 +7,7 @@ import { isOptionOn } from "./options";
 
 export function startingPerkMenuButton() {
   return {
-    disabled: isOptionOn("easy"),
+    disabled: isOptionOn("kid"),
     icon: icons["icon:starting_perks"],
     text: t("starting_perks.title"),
     help: t("starting_perks.help"),

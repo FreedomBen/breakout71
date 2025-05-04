@@ -432,6 +432,12 @@
     "credit": ""
   },
   {
+    "name": "icon:steering",
+    "size": 9,
+    "bricks": "_bb__bb_____b___b_____b___bWWW_b___bWWW_WWWWWWWW_b___b____b___b___b___b__bb__bb__",
+    "credit": ""
+  },
+  {
     "name": "icon:sticky_coins",
     "size": 8,
     "bricks": "__________yy_yy___bbbby__ybbbb___ybbbb____bbbby______yy_________",
@@ -570,10 +576,10 @@
     "credit": ""
   },
   {
-    "name": "Eyes",
+    "name": "Nuclear Throne",
     "size": 9,
     "bricks": "ttttttt__tWWWWWWW_tWrrWttW_tWWWWWWW_ttttttt_____t______ttttt____ttttt_____t_t____",
-    "credit": "My favorite character in https://nuclearthrone.com/"
+    "credit": "https://nuclearthrone.com/"
   },
   {
     "name": "Creeper",
@@ -1476,10 +1482,87 @@
     "credit": "italia by Topenvy"
   },
   {
-    "name": "icon:steering",
-    "size": 9,
-    "bricks": "_bb__bb_____b___b_____b___bWWW_b___bWWW_WWWWWWWW_b___b____b___b___b___b__bb__bb__",
+    "name": "utc",
+    "size": 8,
+    "bricks": "_________yyyyyy__yyllllllllll____l___yy___yyyyy__yyyyyy_________",
+    "credit": "https://www.utc.fr"
+  },
+  {
+    "name": "Bzh",
+    "size": 8,
+    "bricks": "________WgWggggggWgWWWWWWgWgggggWWWWWWWWggggggggWWWWWWWWgggggggg",
+    "credit": "https://fr.wikipedia.org/wiki/Drapeau_de_la_Bretagne"
+  },
+  {
+    "name": "FTL",
+    "size": 10,
+    "bricks": "WWW_WWW_W_W____W__W_WW___W__W_W____W__WW__O_______gOaOOOOOOa_OOaaaaaaO_gOOOOOOO___Oa________________",
     "svg": null,
-    "color": ""
+    "color": "",
+    "credit": "https://www.gog.com/en/game/faster_than_light"
+  },
+  {
+    "name": "Nova drift",
+    "size": 9,
+    "bricks": "___WWW_____WWgWW___pWgggWp_pWgggggWppWBBgBBWpvpBBgBBpvvBBWWWBBvvvvpWpvvvvvvvpvvvv",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.gog.com/fr/game/nova_drift"
+  },
+  {
+    "name": "Heat Signature",
+    "size": 19,
+    "bricks": "__ggg________________ggg________________ggg________________ggg_______________WWgWWWWWWWWWWBBBW__WgggWgggWaggWrrrW__WggggggaWaggggBrW__WgagWgggWaggWggrW__WWWWWWgWWWWWWWgWW__WgggWrgrWgaaWaggW__WagggggggggaWaagW__WgggWrgrWgggWaggW__WWgWWWgWWWgWWWgWW__WagaWrgrWgggWggrB__WagaWgBgWaggggBrB__WaaaWrgrWgggWrrrB__WWWWWBBBWWWWWWWWW_______________________________________",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.humblebundle.com/store/heat-signature"
+  },
+  {
+    "name": "Noita",
+    "size": 8,
+    "bricks": "_B_______l_vvv___l_BBv___l_vvv___leeev___l_vvv___l_vvvv_eeeeeeee",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.gog.com/en/game/noita"
+  },
+  {
+    "name": "Enter the gungeon",
+    "size": 11,
+    "bricks": "________ll___lll__l__l_lllll__l___yyyyy_rrr__yyyyy_rrr__yyyyy_rrr__yyyyy_rrr__yByBy_rrr__yyyyy_rrr__y___y_rrr____________",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.gog.com/en/game/enter_the_gungeon"
+  },
+  {
+    "name": "ZERO Sievert",
+    "size": 10,
+    "bricks": "___________yyyyyy____yyaaaa____yyaaaa____yyaaaa____yyyyyy_____OOgggggg__yyygyyg___OOOO_____O___O____",
+    "svg": null,
+    "color": "",
+    "credit": "https://store.steampowered.com/app/1782120/ZERO_Sievert/"
+  },
+  {
+    "name": "Factorio",
+    "size": 8,
+    "bricks": "________yyyy_ylly__Byy__y____yll_yB_______y______yyy____y___y___",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.factorio.com"
+  },
+  {
+    "name": "Brigador",
+    "size": 13,
+    "bricks": "__________g________BBgggg__________yy__BBggggggggyy_____yglygggl_____yglygggl_______llllll_____ggllggll_____gg__gg________Bg__Bg_______gg__gg________B___B_______ggg_ggg_",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.gog.com/en/game/brigador"
+  },
+  {
+    "name": "Teleglitch",
+    "size": 11,
+    "bricks": "___l___l______lB__l____l__l_lB____l__l_l_____BllOOOB_______OOOyyyy___lOOOB____Bl__l_l__k_l___l_l__k_l__lB_Bl______l___l__",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.gog.com/en/game/teleglitch_die_more_edition"
   }
 ]

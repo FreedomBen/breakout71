@@ -484,7 +484,8 @@ h2.histogram-title strong {
       transform 0.2s,
       box-shadow 0.2s;
     &[disabled] {
-      pointer-events: none;
+      //Having pointer events make the user select work
+      //pointer-events: none;
       background: #222;
       box-shadow: 0 1px 0 black inset;
       transform: translate(0, 4px);

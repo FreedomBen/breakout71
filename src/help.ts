@@ -28,9 +28,7 @@ export function helpMenuEntry() {
               levelTimeBest,
               levelTimeGood,
               missesBest,
-              missesGood,
-              wallBouncedBest,
-              wallBouncedGood,
+              missesGood
             }),
           ),
           miniMarkDown(t("help.upgrades")),

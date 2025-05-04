@@ -74,7 +74,7 @@ export const options = {
     name: t("settings.pointer_lock"),
     help: t("settings.pointer_lock_help"),
   },
-  easy: {
+  kid: {
     default: false,
     name: t("settings.kid"),
     help: t("settings.kid_help"),
