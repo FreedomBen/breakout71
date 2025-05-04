@@ -82,6 +82,7 @@ import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
 import { categories } from "./upgrades";
 import { reasonLevelIsLocked } from "./get_level_unlock_condition";
+import { frameStarted, getWorstFPSAndReset, startWork } from "./fps";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -332,6 +333,7 @@ export function hitsSomething(x: number, y: number, radius: number) {
 }
 
 export function tick() {
+  frameStarted();
   startWork("physics");
   const currentTick = performance.now();
   const timeDeltaMs = currentTick - gameState.lastTick;
@@ -382,61 +384,7 @@ export function tick() {
   startWork("idle");
 
   requestAnimationFrame(tick);
-  FPSCounter++;
 }
-
-const stats = document.getElementById("stats") as HTMLDivElement;
-let total = {};
-let lastTick = performance.now();
-let doing = "idle";
-let FPSCounter = 0;
-export let lastMeasuredFPS = 60;
-export function startWork(what) {
-  if (!gameState.startParams.stress) return;
-  const newNow = performance.now();
-  if (doing) {
-    total[doing] = (total[doing] || 0) + (newNow - lastTick);
-  }
-  lastTick = newNow;
-  doing = what;
-}
-setInterval(() => {
-  lastMeasuredFPS = FPSCounter;
-  FPSCounter = 0;
-
-  if (!gameState.startParams.stress) {
-    stats.style.display = "none";
-    return;
-  }
-
-  stats.style.display = "block";
-  const totalTime = sumOfValues(total);
-  stats.innerHTML =
-    `
-    <div> 
-    ${lastMeasuredFPS} FPS -
-    ${liveCount(gameState.coins)} / ${getCurrentMaxCoins()} Coins - 
-     ${liveCount(gameState.particles) + liveCount(gameState.lights) + liveCount(gameState.texts)} / ${getCurrentMaxParticles() * 3} particles 
-    </div>  
-    
-     
-   
-    
-    ` +
-    Object.entries(total)
-      // .sort((a, b) => b[1] - a[1])
-      .map(
-        (t) =>
-          `  <div> 
-           <div style="transform: scale(${clamp(t[1] / totalTime, 0, 1)},1)"></div> 
-  <strong>${t[0]} : ${Math.floor(t[1])} ms</strong> 
-  </div>
-        `,
-      )
-      .join("\n");
-
-  total = {};
-}, 1000);
 
 setInterval(() => {
   monitorLevelsUnlocks(gameState);
@@ -1013,6 +961,7 @@ document.addEventListener("keyup", async (e) => {
 export const gameState = newGameState({});
 
 export function restart(params: RunParams) {
+  getWorstFPSAndReset();
   Object.assign(gameState, newGameState(params));
   // Recompute brick size according to level
   fitSize(gameState);
@@ -1033,7 +982,7 @@ export function startComputerControlledGame(stress: boolean = false) {
   const perks: Partial<PerksMap> = { base_combo: 20, pierce: 3 };
   if (stress) {
     Object.assign(perks, {
-      base_combo: 5000,
+      base_combo: 150,
       pierce: 20,
       rainbow: 3,
       sapper: 2,
@@ -1045,6 +994,9 @@ export function startComputerControlledGame(stress: boolean = false) {
     for (let i = 0; i < 10; i++) {
       const u = sample(upgrades);
       perks[u.id] ||= Math.floor(Math.random() * u.max) + 1;
+      if (u.requires) {
+        perks[u.requires] ||= 1;
+      }
     }
     perks.superhot = 0;
   }

@@ -8,8 +8,8 @@ bash ./build.sh $versionCode
 
 # we don't add a version tag to let fdroid ignore this build
 
-# upload to breakout-v3-staging.lecaro.me
-DOMAIN="breakout-v3-staging.lecaro.me"
+# upload to b72.lecaro.me
+DOMAIN="b72.lecaro.me"
 PUBLIC_CONTENT="./build/*"
 
 ssh staging "mkdir -p /opt/mup-nginx-proxy/config/html/static_sites/$DOMAIN"

@@ -21,6 +21,11 @@ import {
   isLevelLocked,
   reasonLevelIsLocked,
 } from "./get_level_unlock_condition";
+import { getWorstFPSAndReset } from "./fps";
+import {
+  applySettingsChangeReco,
+  settingsChangeRecommendations,
+} from "./openUpgradesPicker";
 
 export function addToTotalPlayTime(ms: number) {
   setSettingValue(
@@ -29,13 +34,14 @@ export function addToTotalPlayTime(ms: number) {
   );
 }
 
-export function gameOver(title: string, intro: string) {
+export async function gameOver(title: string, intro: string) {
   if (!gameState.running) return;
 
   // Ignore duplicated calls, can happen when ticking is split in multiple updates because the ball goes fast
   if (gameState.isGameOver) return;
 
   gameState.isGameOver = true;
+
   pause(false);
   askForPersistentStorage();
   stopRecording();
@@ -84,7 +90,7 @@ export function gameOver(title: string, intro: string) {
   // Avoid the sad sound right as we restart a new games
   gameState.combo = 1;
 
-  asyncAlert({
+  const choice = await asyncAlert({
     allowClose: true,
     title,
     content: [
@@ -93,6 +99,7 @@ export function gameOver(title: string, intro: string) {
         <p>${intro}</p>
         <p>${t("gameOver.cumulative_total", { startTs, endTs })}</p> 
         `,
+      settingsChangeRecommendations(),
       {
         icon: icons["icon:new_run"],
         value: null,
@@ -105,11 +112,11 @@ export function gameOver(title: string, intro: string) {
       getHistograms(gameState),
       pickedUpgradesHTMl(gameState),
     ],
-  }).then(() =>
-    restart({
-      levelToAvoid: currentLevelInfo(gameState).name,
-    }),
-  );
+  });
+  applySettingsChangeReco(choice);
+  restart({
+    levelToAvoid: currentLevelInfo(gameState).name,
+  });
 }
 
 export function getCreativeModeWarning(gameState: GameState) {

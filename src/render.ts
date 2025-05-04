@@ -16,7 +16,7 @@ import {
 } from "./game_utils";
 import { colorString, GameState } from "./types";
 import { t } from "./i18n/i18n";
-import { gameState, lastMeasuredFPS, startWork } from "./game";
+import { gameState } from "./game";
 import { isOptionOn } from "./options";
 import {
   ballTransparency,
@@ -29,6 +29,7 @@ import {
   missesBest,
   missesGood,
 } from "./pure_functions";
+import { lastMeasuredFPS, startWork } from "./fps";
 
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
 export const ctx = gameCanvas.getContext("2d", {

@@ -2178,6 +2178,9 @@ function makeParticle(
   size = 8,
   duration = 150,
 ) {
+  if (!color.match(/^#[a-f0-9]{6}$/gi)) {
+    throw new Error("Particle creation ignored, invalid color : " + color);
+  }
   append(gameState.particles, (p: Partial<ParticleFlash>) => {
     p.time = gameState.levelTime;
     p.x = x;

@@ -1,4 +1,4 @@
-import { GameState, PerkId } from "./types";
+import { GameState, OptionId, PerkId } from "./types";
 import {
   catchRateBest,
   catchRateGood,
@@ -24,6 +24,13 @@ import {
 } from "./game_utils";
 import { getFirstUnlockable, getNearestUnlockHTML } from "./openScorePanel";
 import { isOptionOn } from "./options";
+import { getWorstFPSAndReset } from "./fps";
+import {
+  getCurrentMaxCoins,
+  getSettingValue,
+  setSettingValue,
+} from "./settings";
+import { toast } from "./toast";
 
 export async function openUpgradesPicker(gameState: GameState) {
   const catchRate =
@@ -129,7 +136,7 @@ export async function openUpgradesPicker(gameState: GameState) {
     }))
     .sort((a, b) => a.score - b.score)
     .filter((u) => gameState.perks[u.id] < u.max + gameState.perks.limitless);
-
+  let recommendation = settingsChangeRecommendations();
   while (true) {
     // refresh the list if you pick extra one_more_choice
     const offered = sorted.slice(
@@ -178,7 +185,9 @@ export async function openUpgradesPicker(gameState: GameState) {
       };
     });
 
-    const upgradeId = await requiredAsyncAlert<PerkId>({
+    const choice = await requiredAsyncAlert<
+      PerkId | { changeSettings: Record<string, any> }
+    >({
       title: t("level_up.title", {
         level: gameState.currentLevel,
         max: max_levels(gameState),
@@ -191,21 +200,106 @@ export async function openUpgradesPicker(gameState: GameState) {
         ...upgradesActions,
         levelsListHTMl(gameState, gameState.currentLevel),
         unlockRelatedUpgradesOffered ? getNearestUnlockHTML(gameState) : "",
-
+        recommendation,
         ...medals,
         pickedUpgradesHTMl(gameState),
         `<div id="level-recording-container"></div>`,
       ],
     });
-    upgradePoints--;
-    gameState.perks[upgradeId]++;
-    gameState.runStatistics.upgrades_picked++;
-    if (!upgradePoints) {
-      return;
+
+    if (applySettingsChangeReco(choice)) {
+      recommendation = "";
+    } else {
+      upgradePoints--;
+      gameState.perks[choice]++;
+      gameState.runStatistics.upgrades_picked++;
+      if (!upgradePoints) {
+        return;
+      }
     }
   }
 }
 
 export function dontOfferTooSoon(gameState: GameState, id: PerkId) {
   gameState.lastOffered[id] = Math.round(Date.now() / 1000);
+}
+
+export function applySettingsChangeReco(choice: unknown) {
+  if (!choice) return;
+  if (typeof choice == "object" && "changeSettings" in choice) {
+    for (let key in choice.changeSettings) {
+      setSettingValue(key, choice.changeSettings[key]);
+    }
+    toast(t("settings.suggestions.applied"));
+    return true;
+  }
+  return false;
+}
+export function settingsChangeRecommendations() {
+  const { worstFPS, coinsForLag } = getWorstFPSAndReset();
+  const maxCoinsSetting = getSettingValue("max_coins", 2);
+
+  if (worstFPS > 55) return "";
+  if (coinsForLag > 200 && getCurrentMaxCoins() > 200) {
+    // Limit the coins
+    const limit = Math.floor(Math.log2(coinsForLag / 200));
+    if (limit < maxCoinsSetting) {
+      return {
+        icon: icons["icon:slow"],
+        text: t("settings.suggestions.reduce_coins", {
+          max: Math.pow(2, limit) * 200,
+        }),
+        value: {
+          changeSettings: { max_coins: limit },
+        },
+      };
+    }
+  }
+
+  if (isOptionOn("record"))
+    return {
+      icon: icons["icon:slow"],
+      text: t("settings.suggestions.record"),
+      value: {
+        changeSettings: { "breakout-settings-enable-record": false },
+      },
+    };
+
+  if (isOptionOn("basic")) return "";
+
+  if (
+    isOptionOn("smooth_lighting") ||
+    isOptionOn("precise_lighting") ||
+    !isOptionOn("probabilistic_lighting") ||
+    isOptionOn("contrast")
+  )
+    return {
+      icon: icons["icon:slow"],
+      text: t("settings.suggestions.simpler_lights"),
+      value: {
+        changeSettings: {
+          "breakout-settings-enable-smooth_lighting": false,
+          "breakout-settings-enable-precise_lighting": false,
+          "breakout-settings-enable-probabilistic_lighting": true,
+          "breakout-settings-enable-contrast": false,
+        },
+      },
+    };
+
+  if (isOptionOn("extra_bright"))
+    return {
+      icon: icons["icon:slow"],
+      text: t("settings.suggestions.reduce_brightness"),
+      value: {
+        changeSettings: { "breakout-settings-enable-extra_bright": false },
+      },
+    };
+
+  return {
+    icon: icons["icon:slow"],
+    text: t("settings.suggestions.basic_mode"),
+    value: {
+      changeSettings: { "breakout-settings-enable-basic": true },
+    },
+  };
 }
