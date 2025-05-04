@@ -14,10 +14,11 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
-- easy cleanup special effect
 
 ## Done
 
+- boosted perk : stronger foundation (+3 combo, then +4, then +5..)
+- easy cleanup special effect (and X made of particles)
 - added a few levels
 - level end countdown (on mobile and desktop)
 - level start countdown (on mobile)

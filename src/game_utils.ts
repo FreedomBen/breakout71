@@ -355,3 +355,11 @@ export function zoneLeftBorderX(gameState: GameState) {
 export function zoneRightBorderX(gameState: GameState) {
   return gameState.canvasWidth - gameState.offsetXRoundedDown + 1;
 }
+
+export function base_combo_from_stronger_foundation(perkLevel:number){
+  let base = 1
+  for(let i = 0;i<perkLevel;i++){
+    base+=3+i
+  }
+  return base
+}

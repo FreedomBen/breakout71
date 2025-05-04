@@ -2,6 +2,7 @@ import { t } from "./i18n/i18n";
 
 import { comboKeepingRate } from "./pure_functions";
 import { PerkId, Upgrade } from "./types";
+import {base_combo_from_stronger_foundation} from "./game_utils";
 
 // Those perks are excluded from creative mode
 export const noCreative: PerkId[] = [
@@ -768,7 +769,7 @@ export const rawUpgrades = [
     max: 7,
     name: t("upgrades.base_combo.name"),
     help: (lvl: number) =>
-      t("upgrades.base_combo.tooltip", { coins: 1 + lvl * 3 }),
+      t("upgrades.base_combo.tooltip", { coins: base_combo_from_stronger_foundation(lvl) }),
     fullHelp: (lvl: number) =>
       t("upgrades.base_combo.verbose_description", { lvl }),
   },
