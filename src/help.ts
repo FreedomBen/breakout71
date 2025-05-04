@@ -22,14 +22,7 @@ export function helpMenuEntry() {
         allowClose: true,
         content: [
           miniMarkDown(
-            t("help.content", {
-              catchRateBest,
-              catchRateGood,
-              levelTimeBest,
-              levelTimeGood,
-              missesBest,
-              missesGood
-            }),
+            t("help.content"),
           ),
           miniMarkDown(t("help.upgrades")),
           ...upgrades.map(

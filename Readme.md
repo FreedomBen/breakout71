@@ -14,9 +14,11 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
+- easy cleanup special effect
 
 ## Done
 
+- added a few levels
 - level end countdown (on mobile and desktop)
 - level start countdown (on mobile)
 - loosing ball is ok during level end countdown
