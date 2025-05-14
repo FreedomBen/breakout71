@@ -320,7 +320,7 @@ export function spawnXShapedParticlesExplosion(
   color: string,
 ) {
   if (!!isOptionOn("basic")) return;
-
+  if (color == "black") return;
   if (liveCount(gameState.particles) > getCurrentMaxParticles()) {
     // Avoid freezing when lots of explosion happen at once
     return;
@@ -1015,6 +1015,7 @@ export function gameStateTick(
   }
 
   if (
+    gameState.perks.skip_last &&
     (window.location.search.includes("skipplaying") ||
       remainingBricks <= gameState.perks.skip_last) &&
     !gameState.autoCleanUses
@@ -1730,7 +1731,6 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
 
   if (
     gameState.perks.puck_repulse_ball &&
-    !isMovingWhilePassiveIncome(gameState) &&
     Math.abs(ball.x - gameState.puckPosition) <
       gameState.puckWidth / 2 +
         (gameState.ballSize * (9 + gameState.perks.puck_repulse_ball)) / 10

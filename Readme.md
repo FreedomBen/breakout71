@@ -14,9 +14,15 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
-
 ## Done
 
+
+- soft landing applies when passive income is active
+- sapper last brick
+
+## 29106448
+
+- slight improvement to https://breakout.lecaro.me/?autoplay
 - performance tweaks suggestions
 
 ## 29106110
