@@ -150,12 +150,6 @@
     "credit": ""
   },
   {
-    "name": "icon:extra_life",
-    "size": 8,
-    "bricks": "_________WW__WW_WGGWWGGWWGGGGGGWWGGGGGGW_WGGGGW___WGGW_____WW___",
-    "credit": ""
-  },
-  {
     "name": "icon:forgiving",
     "size": 8,
     "bricks": "____y______y_y____y___y__y_____yy_____y__y___y____y_y____WWWWW__",
@@ -170,7 +164,7 @@
   {
     "name": "icon:ghost_coins",
     "size": 7,
-    "bricks": "__bbb___bbbbb_bbybybbbbbbbbbbbyyybbbbbbbbbbb_b_bb",
+    "bricks": "__bbb___bbbbb__bybyb__bbbbb__byyyb__bbbbb__b_b_b_",
     "credit": ""
   },
   {
@@ -270,12 +264,6 @@
     "credit": ""
   },
   {
-    "name": "icon:one_more_choice",
-    "size": 7,
-    "bricks": "WWW____WGGG___WGWWW__WGWGGG__GWGGG___WGGG____GGG_",
-    "credit": ""
-  },
-  {
     "name": "icon:ottawa_treaty",
     "size": 8,
     "bricks": "BBbyybBBBbbyybbBbyybbbybbbyyyybbbbbyybbbbbyyybbbByybybbBBBbbbyBB",
@@ -302,7 +290,7 @@
   {
     "name": "icon:pierce_color",
     "size": 8,
-    "bricks": "tt___tttt__t_ttt_____ttt____ttttt____ttttt____ttttt____ttttt____",
+    "bricks": "ttttttttttttyyytttty_yyttty___ytty___ytty___yttt___ytttt__yttttt",
     "credit": ""
   },
   {
@@ -408,7 +396,13 @@
     "credit": ""
   },
   {
-    "name": "icon:slow_down",
+    "name": "icon:slow",
+    "size": 8,
+    "bricks": "___________gg____Sggggg_gSSgggggggSSgggggggSSggg________________",
+    "credit": ""
+  },
+  {
+    "name": "Big turtle",
     "size": 10,
     "bricks": "_____________kk_______kkkk_____kkkkkkGG__kkkkkkGBG_kkkkkkGGGGkkkkkkGG__GGGGGG____GG__GG_____________",
     "credit": ""
@@ -546,15 +540,9 @@
     "credit": ""
   },
   {
-    "name": "icon:yoyo",
+    "name": "Big yoyo",
     "size": 8,
-    "bricks": "____W____GGWGGG_GGWGGGGGGWGGGGGG_WWWWWW_GGGGGGGGGGGGGGGG_GGGGGG_",
-    "credit": ""
-  },
-  {
-    "name": "icon:zen",
-    "size": 12,
-    "bricks": "________________tttt_______tttttt_______tttt________BrrB_______tttttt_____tttttttt_____tttttt______BrrrrB_____tttttttt___tttttttttt___tttttttt__",
+    "bricks": "____W____rrWrrr_rrWrrrrrrWrrrrrr_WWWWWW_rrrrrrrrrrrrrrrr_rrrrrr_",
     "credit": ""
   },
   {
@@ -1412,7 +1400,7 @@
   {
     "name": "A Very Dangerous High-Five",
     "size": 21,
-    "bricks": "__________________________________________________yy_______________yy__yy__yy___________yy__yy__yy____________yy__yy_yy_________y__yy__yy_yy________yyy_yyy_yy_yy_________yy__yy_yyyyy__________yy_yyyyyyyy___yyy____yyyyygggyyy__yyy______yyygBBBgyy_yyy________ygBBBBBgyyyy__W______ygBBBBBgyyy__________yygBBBgyyyy___________yygBgyyyy____________yyyByyyy_____________yyyyByy_______________yyByy_________________r_________________________________",
+    "bricks": "__________________________________________________yy_______________yy__yy__yy___________yy__yy__yy____________yy__yy_yy_________y__yy__yy_yy________yyy_yyy_yy_yy_________yy__yy_yyyyy__________yy_yyyyyyyy___yyy____yyyyygggyyy__yyy______yyygBBBgyy_yyy________ygBBBBBgyyyy_________ygBBBBBgyyy__________yygBBBgyyyy___________yygBgyyyy____________yyyByyyy_____________yyyyByy_______________yyByy_________________r_________________________________",
     "credit": "Suggested by Noodlemire. A unique shape, fun to bounce the ball between fingers. The palm was initially boring on its own, so I gave it a big bomb. It adds a distinct feeling between the top and bottom halves."
   },
   {
@@ -1544,14 +1532,63 @@
   {
     "name": "Teleglitch",
     "size": 11,
-    "bricks": "___l___l______lB__l____l__l_lB____l__l_l_____BllOOOB_______OOOyyyy___lOOOB____Bl__l_l__k_l___l_l__k_l__lB_Bl______l___l__",
+    "bricks": "___l___l______lB__l____l__l_lB____l__l_l_____BllOOOB_______OOOyyyy___lOOOB____Bl__l_l____l___l_l____l__lB_Bl______l___l__",
     "credit": "https://www.gog.com/en/game/teleglitch_die_more_edition"
   },
   {
-    "name": "icon:slow",
-    "size": 8,
-    "bricks": "___________gg____Sggggg_gSSgggggggSSgggggggSSggg________________",
-    "svg": null,
-    "color": ""
+    "color": "#000000",
+    "size": 11,
+    "bricks": "____OOO______OSOBOSO___SOO___OOS__OSS_b_SSO___O_y_b_O____b___y__y____y____y___y_b__y_b___b___b____yy__y___y_b___b___b____",
+    "name": "Piñata",
+    "credit": "By Obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 7,
+    "bricks": "_ee__B__ee_B_BOOOO_e_SOOOOO_SSeO___OOSSS__SSSSO__",
+    "name": "Zen monk",
+    "credit": "By Obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 7,
+    "bricks": "___t___t_btb_tbtbtbtbtbtbtbtttbrbtt_trBrt____r___",
+    "name": "icon:zen",
+    "credit": "By Noodlemire"
+  },
+  {
+    "color": "#000000",
+    "size": 9,
+    "bricks": "____t_____tBbtbBt__tbtttbt_bbbtttbbbBbbtttbbBtttbtbttt___RBR_______R________R____",
+    "name": "Lotus flower",
+    "credit": "A little bit bigger than the Zen icon, by Obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 6,
+    "bricks": "________k_G__kkkBG_kkkGGGGGG___G_G__",
+    "name": "icon:slow_down",
+    "credit": "By Noodlemire"
+  },
+  {
+    "color": "#000000",
+    "size": 5,
+    "bricks": "_W_W_WGWGWWGGGW_WGW___W__",
+    "name": "icon:extra_life",
+    "credit": "By Noodlemire"
+  },
+  {
+    "color": "#000000",
+    "size": 5,
+    "bricks": "_GGG_GGGGG_WWW_GWGGG_GWG_",
+    "name": "icon:yoyo",
+    "credit": "By Noodlemire"
+  },
+  {
+    "color": "#000000",
+    "size": 6,
+    "bricks": "WW____WGG___WGWW___GWGG___WGG____GG_",
+    "name": "icon:one_more_choice",
+    "credit": "By Noodlemire"
   }
 ]

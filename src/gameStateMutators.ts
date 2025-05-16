@@ -987,6 +987,8 @@ export function gameStateTick(
       gameState.puckPosition,
       gameState.gameZoneHeight - gameState.puckHeight * 2,
     );
+    // In case you have soft reset, we shouldn't immediately reset it again next frame
+    gameState.lastBrickBroken = gameState.levelTime;
   }
 
   gameState.balls = gameState.balls.filter((ball) => !ball.destroyed);
@@ -1015,9 +1017,9 @@ export function gameStateTick(
   }
 
   if (
-    gameState.perks.skip_last &&
     (window.location.search.includes("skipplaying") ||
-      remainingBricks <= gameState.perks.skip_last) &&
+      (gameState.perks.skip_last &&
+        remainingBricks <= gameState.perks.skip_last)) &&
     !gameState.autoCleanUses
   ) {
     gameState.bricks.forEach((type, index) => {

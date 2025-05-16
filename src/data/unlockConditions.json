@@ -827,5 +827,22 @@
     "required": ["happy_family", "skip_last", "ball_attracts_coins"],
     "forbidden": ["side_flip", "side_kick", "corner_shot"],
     "minScore": 15400
+  },
+  "Big turtle": { "required": [], "forbidden": [], "minScore": 0 },
+  "Big yoyo": { "required": [], "forbidden": [], "minScore": 0 },
+  "Piñata": {
+    "required": ["bricks_attract_ball", "wrap_right", "corner_shot"],
+    "forbidden": ["clairvoyant", "fountain_toss", "picky_eater"],
+    "minScore": 15700
+  },
+  "Zen monk": {
+    "required": ["respawn", "rainbow", "golden_goose"],
+    "forbidden": ["clairvoyant", "extra_life", "picky_eater"],
+    "minScore": 15800
+  },
+  "Lotus flower": {
+    "required": ["picky_eater", "bricks_attract_coins", "ghost_coins"],
+    "forbidden": ["clairvoyant", "golden_goose", "compound_interest"],
+    "minScore": 15900
   }
 }

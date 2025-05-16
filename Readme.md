@@ -14,8 +14,15 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
+- picky eater : +1 combo per color on screen per brick
+- 
 ## Done
+- updated icons for pierce_color,slow_down,extra_life,yoyo, one_more_choice,zen, ghost coin
+- added levels Lotus flower,Zen monk, Piñata
+- fixed level A Very Dangerous High Five
+- with soft reset and addiction, the addiction combo reset also resets the addiction countdown 
 
+## 29120032
 
 - soft landing applies when passive income is active
 - sapper last brick
