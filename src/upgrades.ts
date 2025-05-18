@@ -12,6 +12,7 @@ export const noCreative: PerkId[] = [
   "extra_levels",
   "shunt",
   "one_more_choice",
+  "chill",
 ];
 
 export const categories = {
@@ -979,5 +980,16 @@ export const rawUpgrades = [
     name: t("upgrades.wrap_up.name"),
     help: (lvl: number) => t("upgrades.wrap_up.tooltip"),
     fullHelp: (lvl: number) => t("upgrades.wrap_up.verbose_description"),
+  },
+  {
+    category: categories.beginner,
+    requires: "",
+    threshold: 5000,
+    gift: false,
+    id: "chill",
+    max: 1,
+    name: t("upgrades.chill.name"),
+    help: (lvl: number) => t("upgrades.chill.tooltip"),
+    fullHelp: (lvl: number) => t("upgrades.chill.verbose_description"),
   },
 ] as const;

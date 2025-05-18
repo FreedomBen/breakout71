@@ -9,6 +9,7 @@ import {
   isPickyEatingPossible,
   max_levels,
   reachRedRowIndex,
+  renderMaxLevel,
   telekinesisEffectRate,
   yoyoEffectRate,
   zoneLeftBorderX,
@@ -71,7 +72,7 @@ export function render(gameState: GameState) {
   if (gameState.currentLevel || gameState.levelTime) {
     menuLabel.innerText = t("play.current_lvl", {
       level: gameState.currentLevel + 1,
-      max: max_levels(gameState),
+      max: renderMaxLevel(gameState),
     });
   } else {
     menuLabel.innerText = t("play.menu_label");

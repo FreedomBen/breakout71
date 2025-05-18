@@ -102,8 +102,12 @@ export function getPossibleUpgrades(gameState: GameState) {
     .filter((u) => !u?.requires || gameState.perks[u?.requires]);
 }
 
+export function renderMaxLevel(gameState: GameState) {
+  return gameState.perks.chill ? "∞" : max_levels(gameState);
+}
 export function max_levels(gameState: GameState) {
   if (gameState.creative) return 1;
+  if (gameState.perks.chill) return gameState.currentLevel + 2;
   return 7 + gameState.perks.extra_levels;
 }
 

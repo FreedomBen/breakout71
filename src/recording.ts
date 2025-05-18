@@ -1,5 +1,5 @@
 import { gameCanvas } from "./render";
-import { isInWebView, max_levels } from "./game_utils";
+import { isInWebView, max_levels, renderMaxLevel } from "./game_utils";
 import { getAudioRecordingTrack } from "./sounds";
 import { t } from "./i18n/i18n";
 import { GameState } from "./types";
@@ -53,7 +53,7 @@ export function drawMainCanvasOnSmallCanvas(gameState: GameState) {
 
   recordCanvasCtx.textAlign = "left";
   recordCanvasCtx.fillText(
-    "Level " + (gameState.currentLevel + 1) + "/" + max_levels(gameState),
+    "Level " + (gameState.currentLevel + 1) + "/" + renderMaxLevel(gameState),
     12,
     12,
   );

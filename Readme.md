@@ -16,6 +16,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 
 ## Done
+## 29126551
 
 - picky eater : +1 combo per color on screen per brick
 - New perk : wrap up - balls touching the top of the screen teleport just above your paddle, aiming upward 

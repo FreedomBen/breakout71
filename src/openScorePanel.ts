@@ -1,7 +1,11 @@
 import { GameState, PerkId } from "./types";
 import { asyncAlert } from "./asyncAlert";
 import { t } from "./i18n/i18n";
-import { levelsListHTMl, max_levels, pickedUpgradesHTMl } from "./game_utils";
+import {
+  levelsListHTMl,
+  pickedUpgradesHTMl,
+  renderMaxLevel,
+} from "./game_utils";
 import { getCreativeModeWarning, getHistory } from "./gameOver";
 import { pause } from "./game";
 import { allLevels, icons, upgrades } from "./loadGameData";
@@ -21,7 +25,7 @@ export async function openScorePanel(gameState: GameState) {
     title: t("score_panel.title", {
       score: gameState.score,
       level: gameState.currentLevel + 1,
-      max: max_levels(gameState),
+      max: renderMaxLevel(gameState),
     }),
 
     content: [

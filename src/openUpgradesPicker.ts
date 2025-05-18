@@ -20,6 +20,7 @@ import {
   levelsListHTMl,
   max_levels,
   pickedUpgradesHTMl,
+  renderMaxLevel,
   upgradeLevelAndMaxDisplay,
 } from "./game_utils";
 import { getFirstUnlockable, getNearestUnlockHTML } from "./openScorePanel";
@@ -33,6 +34,7 @@ import {
 import { toast } from "./toast";
 
 export async function openUpgradesPicker(gameState: GameState) {
+  if (gameState.perks.chill) return;
   const catchRate =
     gameState.levelCoughtCoins / (gameState.levelSpawnedCoins || 1);
 
@@ -137,7 +139,7 @@ export async function openUpgradesPicker(gameState: GameState) {
     .sort((a, b) => a.score - b.score)
     .filter((u) => gameState.perks[u.id] < u.max + gameState.perks.limitless);
   let recommendation = settingsChangeRecommendations();
-  while (true) {
+  while (true && !gameState.perks.chill) {
     // refresh the list if you pick extra one_more_choice
     const offered = sorted.slice(
       0,
@@ -190,7 +192,7 @@ export async function openUpgradesPicker(gameState: GameState) {
     >({
       title: t("level_up.title", {
         level: gameState.currentLevel,
-        max: max_levels(gameState),
+        max: renderMaxLevel(gameState),
       }),
       content: [
         t("level_up.upgrade_perks", {

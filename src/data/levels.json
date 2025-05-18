@@ -78,6 +78,12 @@
     "credit": ""
   },
   {
+    "name": "icon:chill",
+    "size": 7,
+    "bricks": "__GGG___G_G_G_G__G__GG__G__GG_GGG_G_G_G_G___GGG__",
+    "credit": ""
+  },
+  {
     "name": "icon:clairvoyant",
     "size": 9,
     "bricks": "__y___y__y__y_y__y_y__t__y____ttt_____tWWWt___tWWgWWt_tttWWWttt__________________",
@@ -554,7 +560,7 @@
   {
     "name": "icon:wrap_up",
     "size": 8,
-    "bricks": "___y__b___b__b____b__b___b__b____b__b___b__b____b__y____WWW_____",
+    "bricks": "____y______b______b______b_____Wb_____b__b___b____b_y______WWW__",
     "credit": ""
   },
   {

@@ -179,7 +179,7 @@ export function normalizeGameState(gameState: GameState) {
   gameState.baseSpeed = Math.max(
     3,
     gameState.gameZoneWidth / 12 / 10 +
-      gameState.currentLevel / 3 +
+      gameState.currentLevel / 3 / (1 + gameState.perks.chill * 10) +
       gameState.levelTime / (30 * 1000) -
       gameState.perks.slow_down * 2,
   );
