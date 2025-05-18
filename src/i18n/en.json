@@ -295,7 +295,7 @@
   "upgrades.buoy.tooltip": "Coins float for {{duration}} seconds on the bottom line. ",
   "upgrades.buoy.verbose_description": "Effect is most visible in mobile mode",
   "upgrades.chill.name": "Chill",
-  "upgrades.chill.tooltip": "No upgrades, unlimited levels.",
+  "upgrades.chill.tooltip": "No more upgrades, unlimited levels.",
   "upgrades.chill.verbose_description": "The ball will also accelerates much slower. ",
   "upgrades.clairvoyant.name": "Clairvoyant",
   "upgrades.clairvoyant.tooltip": "See upcoming levels, bricks HP and ball direction",

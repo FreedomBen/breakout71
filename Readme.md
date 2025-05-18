@@ -16,6 +16,10 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 
 ## Done
+
+- fixed wrap up icon
+- added perk : chill : No more upgrades, unlimited levels.
+
 ## 29126551
 
 - picky eater : +1 combo per color on screen per brick
