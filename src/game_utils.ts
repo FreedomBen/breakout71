@@ -355,3 +355,14 @@ export function zoneLeftBorderX(gameState: GameState) {
 export function zoneRightBorderX(gameState: GameState) {
   return gameState.canvasWidth - gameState.offsetXRoundedDown + 1;
 }
+
+let countsCounterSet: Record<string, number> = {};
+export function countBrickColors(gameState: GameState) {
+  for (let key in countsCounterSet) {
+    countsCounterSet[key] = 0;
+  }
+  gameState.bricks.forEach((brick) => {
+    if (brick && brick !== "black") countsCounterSet[brick] = 1;
+  });
+  return sumOfValues(countsCounterSet);
+}

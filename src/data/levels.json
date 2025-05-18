@@ -150,6 +150,12 @@
     "credit": ""
   },
   {
+    "name": "icon:extra_life",
+    "size": 5,
+    "bricks": "_W_W_WGWGWWGGGW_WGW___W__",
+    "credit": "By Noodlemire"
+  },
+  {
     "name": "icon:forgiving",
     "size": 8,
     "bricks": "____y______y_y____y___y__y_____yy_____y__y___y____y_y____WWWWW__",
@@ -262,6 +268,12 @@
     "size": 10,
     "bricks": "gggggggggggggggggggggg______ggggg____ggg_g_gggg_g___gg__gg____g____g____g____g_____g__g_______gg____",
     "credit": ""
+  },
+  {
+    "name": "icon:one_more_choice",
+    "size": 6,
+    "bricks": "WW____WGG___WGWW___GWGG___WGG____GG_",
+    "credit": "By Noodlemire"
   },
   {
     "name": "icon:ottawa_treaty",
@@ -402,10 +414,10 @@
     "credit": ""
   },
   {
-    "name": "Big turtle",
-    "size": 10,
-    "bricks": "_____________kk_______kkkk_____kkkkkkGG__kkkkkkGBG_kkkkkkGGGGkkkkkkGG__GGGGGG____GG__GG_____________",
-    "credit": ""
+    "name": "icon:slow_down",
+    "size": 6,
+    "bricks": "________k_G__kkkBG_kkkGGGGGG___G_G__",
+    "credit": "By Noodlemire"
   },
   {
     "name": "icon:smaller_puck",
@@ -537,6 +549,30 @@
     "name": "icon:wrap_right",
     "size": 7,
     "bricks": "___W_____b_____b_____y_____y_____b_____b____WWW__",
+    "credit": ""
+  },
+  {
+    "name": "icon:wrap_up",
+    "size": 8,
+    "bricks": "___y__b___b__b____b__b___b__b____b__b___b__b____b__y____WWW_____",
+    "credit": ""
+  },
+  {
+    "name": "icon:yoyo",
+    "size": 5,
+    "bricks": "_GGG_GGGGG_WWW_GWGGG_GWG_",
+    "credit": "By Noodlemire"
+  },
+  {
+    "name": "icon:zen",
+    "size": 7,
+    "bricks": "___t___t_btb_tbtbtbtbtbtbtbtttbrbtt_trBrt____r___",
+    "credit": "By Noodlemire"
+  },
+  {
+    "name": "Big turtle",
+    "size": 10,
+    "bricks": "_____________kk_______kkkk_____kkkkkkGG__kkkkkkGBG_kkkkkkGGGGkkkkkkGG__GGGGGG____GG__GG_____________",
     "credit": ""
   },
   {
@@ -1536,59 +1572,21 @@
     "credit": "https://www.gog.com/en/game/teleglitch_die_more_edition"
   },
   {
-    "color": "#000000",
+    "name": "Piñata",
     "size": 11,
     "bricks": "____OOO______OSOBOSO___SOO___OOS__OSS_b_SSO___O_y_b_O____b___y__y____y____y___y_b__y_b___b___b____yy__y___y_b___b___b____",
-    "name": "Piñata",
     "credit": "By Obigre"
   },
   {
-    "color": "#000000",
+    "name": "Zen monk",
     "size": 7,
     "bricks": "_ee__B__ee_B_BOOOO_e_SOOOOO_SSeO___OOSSS__SSSSO__",
-    "name": "Zen monk",
     "credit": "By Obigre"
   },
   {
-    "color": "#000000",
-    "size": 7,
-    "bricks": "___t___t_btb_tbtbtbtbtbtbtbtttbrbtt_trBrt____r___",
-    "name": "icon:zen",
-    "credit": "By Noodlemire"
-  },
-  {
-    "color": "#000000",
+    "name": "Lotus flower",
     "size": 9,
     "bricks": "____t_____tBbtbBt__tbtttbt_bbbtttbbbBbbtttbbBtttbtbttt___RBR_______R________R____",
-    "name": "Lotus flower",
     "credit": "A little bit bigger than the Zen icon, by Obigre"
-  },
-  {
-    "color": "#000000",
-    "size": 6,
-    "bricks": "________k_G__kkkBG_kkkGGGGGG___G_G__",
-    "name": "icon:slow_down",
-    "credit": "By Noodlemire"
-  },
-  {
-    "color": "#000000",
-    "size": 5,
-    "bricks": "_W_W_WGWGWWGGGW_WGW___W__",
-    "name": "icon:extra_life",
-    "credit": "By Noodlemire"
-  },
-  {
-    "color": "#000000",
-    "size": 5,
-    "bricks": "_GGG_GGGGG_WWW_GWGGG_GWG_",
-    "name": "icon:yoyo",
-    "credit": "By Noodlemire"
-  },
-  {
-    "color": "#000000",
-    "size": 6,
-    "bricks": "WW____WGG___WGWW___GWGG___WGG____GG_",
-    "name": "icon:one_more_choice",
-    "credit": "By Noodlemire"
   }
 ]

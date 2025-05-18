@@ -969,4 +969,15 @@ export const rawUpgrades = [
     help: (lvl: number) => t("upgrades.steering.tooltip"),
     fullHelp: (lvl: number) => t("upgrades.steering.verbose_description"),
   },
+  {
+    category: categories.advanced,
+    requires: "",
+    threshold: 255000,
+    gift: false,
+    id: "wrap_up",
+    max: 1,
+    name: t("upgrades.wrap_up.name"),
+    help: (lvl: number) => t("upgrades.wrap_up.tooltip"),
+    fullHelp: (lvl: number) => t("upgrades.wrap_up.verbose_description"),
+  },
 ] as const;

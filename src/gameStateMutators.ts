@@ -14,6 +14,7 @@ import {
   brickCenterX,
   brickCenterY,
   canvasCenterX,
+  countBrickColors,
   currentLevelInfo,
   distance2,
   distanceBetween,
@@ -27,6 +28,7 @@ import {
   max_levels,
   reachRedRowIndex,
   shouldPierceByColor,
+  sumOfValues,
   telekinesisEffectRate,
   yoyoEffectRate,
   zoneLeftBorderX,
@@ -509,7 +511,6 @@ export function explodeBrick(
       gameState.perks.left_is_lava +
       gameState.perks.right_is_lava +
       gameState.perks.top_is_lava +
-      gameState.perks.picky_eater +
       gameState.perks.asceticism * 3 +
       gameState.perks.passive_income +
       gameState.perks.addiction;
@@ -529,6 +530,10 @@ export function explodeBrick(
           comboGain -= gameState.perks.side_flip * 2;
         }
       }
+    }
+
+    if (gameState.perks.picky_eater) {
+      comboGain += gameState.perks.picky_eater * countBrickColors(gameState);
     }
 
     if (redRowReach !== -1) {
@@ -1261,6 +1266,10 @@ export function gameStateTick(
         );
       }
 
+      if (gameState.perks.wrap_up > 1 && hitBorder >= 2) {
+        applyWrapUp(gameState, coin, gameState.coinSize / 2);
+      }
+
       if (
         coin.previousY < gameState.gameZoneHeight &&
         coin.y > gameState.gameZoneHeight &&
@@ -1835,6 +1844,10 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       );
     }
 
+    if (gameState.perks.wrap_up && borderHitCode >= 2) {
+      applyWrapUp(gameState, ball, gameState.ballSize / 2);
+    }
+
     if (
       gameState.perks.left_is_lava &&
       borderHitCode % 2 &&
@@ -1856,6 +1869,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     if (gameState.perks.top_is_lava && borderHitCode >= 2) {
       resetCombo(gameState, ball.x, ball.y);
     }
+
     if (gameState.perks.trampoline) {
       offsetCombo(gameState, -gameState.perks.trampoline, ball.x, ball.y);
     }
@@ -2393,4 +2407,27 @@ export function zenTick(gameState: GameState) {
       gameState.gameZoneHeight - gameState.puckHeight,
     );
   }
+}
+
+function applyWrapUp(gameState: GameState, ball: Ball | Coin, radius) {
+  schedulGameSound(gameState, "plouf", ball.x, 1);
+
+  ball.y = gameState.gameZoneHeight - gameState.puckHeight - radius;
+  ball.x = clamp(
+    gameState.puckPosition,
+    gameState.offsetXRoundedDown + radius,
+    gameState.canvasWidth - gameState.offsetXRoundedDown - radius,
+  );
+  if (ball.vy > 0) {
+    ball.vy *= -1;
+  }
+
+  spawnParticlesExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
+  spawnParticlesImplosion(
+    gameState,
+    7,
+    ball.previousX,
+    ball.previousY,
+    "#6262EA",
+  );
 }

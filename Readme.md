@@ -14,9 +14,15 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
-- picky eater : +1 combo per color on screen per brick
-- 
+
 ## Done
+
+- picky eater : +1 combo per color on screen per brick
+- New perk : wrap up - balls touching the top of the screen teleport just above your paddle, aiming upward 
+- credits for icons levels 
+- transparency makes steering level 2 line transparent too 
+
+## 29123607
 - updated icons for pierce_color,slow_down,extra_life,yoyo, one_more_choice,zen, ghost coin
 - added levels Lotus flower,Zen monk, Piñata
 - fixed level A Very Dangerous High Five

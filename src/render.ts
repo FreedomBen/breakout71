@@ -425,7 +425,8 @@ export function render(gameState: GameState) {
       ctx.lineWidth = 2;
       ctx.setLineDash(emptyArray);
     }
-    ctx.globalAlpha = 1;
+
+    ctx.globalAlpha = ballAlpha;
     if (
       (gameState.perks.clairvoyant && gameState.ballStickToPuck) ||
       (gameState.perks.steering > 1 && !gameState.ballStickToPuck)

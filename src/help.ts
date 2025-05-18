@@ -1,4 +1,4 @@
-import { allLevels, icons, upgrades } from "./loadGameData";
+import { allLevels, allLevelsAndIcons, icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { asyncAlert } from "./asyncAlert";
 import { miniMarkDown } from "./pure_functions";
@@ -37,7 +37,7 @@ export function helpMenuEntry() {
 `,
           ),
           "<h2>" + t("help.levels") + "</h2>",
-          ...allLevels
+          ...allLevelsAndIcons
             .filter((l) => l.credit?.trim())
             .map(
               (l) => `
