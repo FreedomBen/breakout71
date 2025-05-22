@@ -17645,7 +17645,7 @@
 	</editor_configuration>
 	<primary_language>en-US</primary_language>
 	<configuration>
-		<indent>space2</indent>
+		<indent>space4</indent>
 		<format>json</format>
 		<support_arrays>true</support_arrays>
 	</configuration>

@@ -16,6 +16,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 
 ## Done
+## 29126617
 
 - fixed wrap up icon
 - added perk : chill : No more upgrades, unlimited levels.
