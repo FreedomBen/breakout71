@@ -19,7 +19,7 @@
     "editor.editing.rename_prompt": "Please enter a new name for the level",
     "editor.editing.right": "Move all bricks to the right",
     "editor.editing.show_code": "Show level code",
-    "editor.editing.show_code_help": "You can then copy it manually",
+    "editor.editing.show_code_help": "You can then copy it manually.",
     "editor.editing.smaller": "Decrease level size",
     "editor.editing.title": "Editing level : {{name}}",
     "editor.editing.up": "Move up all the bricks",
