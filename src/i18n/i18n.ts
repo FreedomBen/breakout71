@@ -101,5 +101,5 @@ export function t(
   for (let key in params) {
     template = template.split("{{" + key + "}}").join(`${params[key]}`);
   }
-  return template.replace(/</gi,'&lt;').replace(/>/gi,'&gt;');
+  return template.replace(/</gi, "&lt;").replace(/>/gi, "&gt;");
 }
