@@ -226,6 +226,7 @@
     "upgrades.bricks_attract_ball.verbose_description": "تتجه الكرة نحو أول {{count}} طوبة تصطدم بها. يزداد التأثير في المستويات الأعلى. كما يزداد عدد الطوب التي يمكن أن تصطدم بها قبل توقف التأثير. ينشط التأثير مجددًا عندما تصطدم الكرة بالمضرب.",
     "upgrades.bricks_attract_coins.name": "الطوب يجذب العملات المعدنية",
     "upgrades.bricks_attract_coins.tooltip": "يساعدهم على البقاء هناك",
+    "upgrades.bricks_attract_coins.verbose_description": "",
     "upgrades.buoy.name": "عوامة",
     "upgrades.buoy.tooltip": "تطفو العملات المعدنية لمدة {{duration}} ثانية على الخط السفلي.",
     "upgrades.buoy.verbose_description": "يكون التأثير أكثر وضوحًا في الوضع المحمول",

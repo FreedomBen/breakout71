@@ -226,6 +226,7 @@
     "upgrades.bricks_attract_ball.verbose_description": "球会飞向第一个击中的 {{count}} 砖块。级别越高，效果越强。效果停止前能击中的砖块数量也更多。当球击中球拍时，效果重新恢复。",
     "upgrades.bricks_attract_coins.name": "B. 贿赂吸引硬币",
     "upgrades.bricks_attract_coins.tooltip": "帮助他们留在那里",
+    "upgrades.bricks_attract_coins.verbose_description": "硬币会被附近的砖块吸引。级别越高，吸引力越强。",
     "upgrades.buoy.name": "Buoy",
     "upgrades.buoy.tooltip": "硬币在底线上漂浮 {{duration}} 秒。",
     "upgrades.buoy.verbose_description": "在流动模式中,效果最为明显",

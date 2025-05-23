@@ -226,6 +226,7 @@
     "upgrades.bricks_attract_ball.verbose_description": "Ball goes toward the first {{count}} bricks it will hit. The effect is stronger at higher levels. The number of bricks that can hit before the effect stops is also higher. The effect rearms when the ball hits the paddle.",
     "upgrades.bricks_attract_coins.name": "Bricks attract coins",
     "upgrades.bricks_attract_coins.tooltip": "Helps them stay up there",
+    "upgrades.bricks_attract_coins.verbose_description": "Coins will be attracted to nearby bricks. At higher levels the attraction is stronger.",
     "upgrades.buoy.name": "Buoy",
     "upgrades.buoy.tooltip": "Coins float for {{duration}} seconds on the bottom line.",
     "upgrades.buoy.verbose_description": "Effect is most visible in mobile mode",

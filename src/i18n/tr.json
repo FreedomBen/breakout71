@@ -226,6 +226,7 @@
     "upgrades.bricks_attract_ball.verbose_description": "Etkisi daha yüksek seviyelerde daha güçlüdür. Etki durmadan önce vurabilecek tuğla sayısı da daha yüksektir. Etki, top diske çarptığında yeniden silahlanır.",
     "upgrades.bricks_attract_coins.name": "Tuğlalar madeni paraları çeker",
     "upgrades.bricks_attract_coins.tooltip": "Onların orada kalmalarına yardımcı olur",
+    "upgrades.bricks_attract_coins.verbose_description": "Madeni paralar yakındaki tuğlalara çekilecektir. Daha yüksek seviyelerde çekim daha güçlüdür.",
     "upgrades.buoy.name": "Şamandıra",
     "upgrades.buoy.tooltip": "Madeni paralar alt satırda {{duration}} saniye boyunca yüzer.",
     "upgrades.buoy.verbose_description": "Etkisi mobil modda en iyi şekilde görülür",

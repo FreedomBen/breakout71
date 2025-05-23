@@ -226,6 +226,7 @@
     "upgrades.bricks_attract_ball.verbose_description": "Эффект сильнее на более высоких уровнях. Количество кирпичей, которые могут ударить до того, как эффект прекратится, также больше. Эффект возобновляется, когда мяч касается шайбы.",
     "upgrades.bricks_attract_coins.name": "Кирпичи притягивают монеты",
     "upgrades.bricks_attract_coins.tooltip": "Помогает им оставаться на вершине",
+    "upgrades.bricks_attract_coins.verbose_description": "Монеты будут притягиваться к соседним кирпичам. На более высоких уровнях притяжение становится сильнее.",
     "upgrades.buoy.name": "Буй",
     "upgrades.buoy.tooltip": "Монеты плавают в течение {{duration}} секунд на нижней строке.",
     "upgrades.buoy.verbose_description": "Эффект наиболее заметен в мобильном режиме.",

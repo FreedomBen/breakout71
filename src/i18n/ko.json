@@ -226,6 +226,7 @@
     "upgrades.bricks_attract_ball.verbose_description": "공이 처음 부딪히는 {{count}} 개의 벽돌을 향해 갑니다. 이 효과는 높은 레벨에서 더 강해집니다. 효과가 멈추기 전에 맞힐 수 있는 벽돌의 수도 더 많아집니다. 공이 패들을 맞히면 효과가 다시 강화됩니다.",
     "upgrades.bricks_attract_coins.name": "벽돌은 동전을 끌어",
     "upgrades.bricks_attract_coins.tooltip": "그들을 도와주세요",
+    "upgrades.bricks_attract_coins.verbose_description": "동전은 근처의 벽돌에 끌립니다. 레벨이 높을수록 인력이 더 강해집니다.",
     "upgrades.buoy.name": "주 메뉴",
     "upgrades.buoy.tooltip": "아래 줄에 {{duration}} 초에 대한 동전 float.",
     "upgrades.buoy.verbose_description": "효력은 이동할 수 있는 형태에서 가장 눈에 보입니다",

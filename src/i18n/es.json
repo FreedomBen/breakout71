@@ -226,6 +226,7 @@
     "upgrades.bricks_attract_ball.verbose_description": "",
     "upgrades.bricks_attract_coins.name": "Los ladrillos atraen monedas",
     "upgrades.bricks_attract_coins.tooltip": "Les ayuda a permanecer allí arriba.",
+    "upgrades.bricks_attract_coins.verbose_description": "Las monedas serán atraídas por los ladrillos cercanos. En los niveles superiores la atracción es más fuerte.",
     "upgrades.buoy.name": "Boya",
     "upgrades.buoy.tooltip": "Las monedas flotan durante {{duration}} segundos en la línea inferior.",
     "upgrades.buoy.verbose_description": "El efecto es más visible en el modo móvil.",
