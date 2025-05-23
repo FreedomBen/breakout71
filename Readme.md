@@ -10,6 +10,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [F-Droid](https://f-droid.org/en/packages/me.lecaro.breakout/)  
 - [Google Play](https://play.google.com/store/apps/details?id=me.lecaro.breakout)  
 - [GitLab](https://gitlab.com/lecarore/breakout71)  
+- [Weblate](https://hosted.weblate.org/projects/breakout-71/in-app-translations/)
  
 # Changelog
 ## To do
@@ -17,8 +18,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
-- added back some translation choices
+- added back some languages
 - added link to weblate
+- added level: rainbow spiral
 - 
 
 ## 29126617

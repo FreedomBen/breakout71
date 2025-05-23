@@ -533,7 +533,10 @@ export function explodeBrick(
     }
 
     if (gameState.perks.picky_eater) {
-      comboGain += gameState.perks.picky_eater * countBrickColors(gameState);
+      comboGain += Math.max(
+        0,
+        gameState.perks.picky_eater * (countBrickColors(gameState) - 1),
+      );
     }
 
     if (redRowReach !== -1) {

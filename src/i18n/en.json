@@ -377,7 +377,7 @@
   "upgrades.passive_income.verbose_description": "+{{lvl}} combo / brick broken, paddle is immaterial {{time}}s after moving. Some perks can help the balls do what you want without needing to do anything.",
   "upgrades.picky_eater.name": "Picky eater",
   "upgrades.picky_eater.tooltip": "More coins if you break bricks color by color",
-  "upgrades.picky_eater.verbose_description": "Whenever you break a brick the same color as your ball, your combo increases by the number of colors on screen. \nIf it's a different color, the ball takes that new color, but the combo resets, unless there were no bricks left of the ball's color. \nOnce you get a combo higher than your minimum, the bricks of the wrong color will get a red border. \nIf you have more than one ball, they all switch color whenever one of them hits a brick.",
+  "upgrades.picky_eater.verbose_description": "Whenever you break a brick the same color as your ball, your combo increases by the number of colors on screen minus one. \nIf it's a different color, the ball takes that new color, but the combo resets, unless there were no bricks left of the ball's color. \nOnce you get a combo higher than your minimum, the bricks of the wrong color will get a red border. \nIf you have more than one ball, they all switch color whenever one of them hits a brick.",
   "upgrades.pierce.name": "Piercing",
   "upgrades.pierce.tooltip": "Ball pierces {{count}} bricks after a paddle bounce",
   "upgrades.pierce.verbose_description": "The ball normally bounces as soon as it touches something. With this perk, it will continue its trajectory for up to 3 bricks broken. \n\nAfter that, it will bounce on the 4th brick, and you'll need to touch the paddle to reset the counter.",
