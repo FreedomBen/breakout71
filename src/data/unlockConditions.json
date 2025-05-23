@@ -844,5 +844,10 @@
     "required": ["picky_eater", "bricks_attract_coins", "ghost_coins"],
     "forbidden": ["clairvoyant", "golden_goose", "compound_interest"],
     "minScore": 15900
+  },
+  "Rainbow Spiral": {
+    "required": ["bigger_explosions", "trickledown", "transparency"],
+    "forbidden": ["left_is_lava", "pierce_color", "sticky_coins"],
+    "minScore": 16000
   }
 }
