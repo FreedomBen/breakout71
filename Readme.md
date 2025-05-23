@@ -16,6 +16,11 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 
 ## Done
+
+- added back some translation choices
+- added link to weblate
+- 
+
 ## 29126617
 
 - fixed wrap up icon

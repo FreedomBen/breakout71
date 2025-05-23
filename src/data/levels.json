@@ -1594,5 +1594,12 @@
     "size": 9,
     "bricks": "____t_____tBbtbBt__tbtttbt_bbbtttbbbBbbtttbbBtttbtbttt___RBR_______R________R____",
     "credit": "A little bit bigger than the Zen icon, by Obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 21,
+    "bricks": "_____________________B_ttttvvvvrrrryyyyGGGy_G_________________Gy_G_GGttttvvvvrrrry_ty_G_G_____________y_ty_G_G_yyyyGGGGttt_y_tr_y_y_r_________t_y_tr_y_y_r_ttvvvvr_v_G_vr_y_y_r_t_____r_v_G_vr_y_y_r_t_rrr_r_v_G_vv_r_r_v_G_B_r_r_v_G_vv_r_r_v_G___y_y_r_t_rv_r_r_v_GGyyy_y_r_t_rv_r_r_v_______y_r_t_rt_v_v_ttttGGGGy_r_t_rt_v_v___________y_v_yt_v_vvttttGGGGyyy_v_yt_v_______________v_yG_ttttGGGGyyyyrrrrv_yG___________________GGGyyyyrrrrvvvvttttGGG",
+    "name": "Rainbow Spiral",
+    "credit": "By Noodlemire"
   }
 ]

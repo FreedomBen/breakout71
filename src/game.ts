@@ -485,6 +485,7 @@ export async function openMainMenu() {
         <a href="https://play.google.com/store/apps/details?id=me.lecaro.breakout" target="_blank">Google Play</a>
         <a href="https://renanlecaro.itch.io/breakout71" target="_blank">itch.io</a> 
         <a href="https://gitlab.com/lecarore/breakout71" target="_blank">Gitlab</a>
+        <a href="https://hosted.weblate.org/projects/breakout-71/" target="_blank">Weblate</a>
         <a href="https://breakout.lecaro.me/" target="_blank">Web version</a>
         <a href="https://news.ycombinator.com/item?id=43183131" target="_blank">HackerNews</a>
         <a href="https://breakout.lecaro.me/privacy.html" target="_blank">Privacy Policy</a>

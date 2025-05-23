@@ -5,10 +5,8 @@ import ru from "./ru.json";
 import es from "./es.json";
 import tr from "./tr.json";
 import de from "./de.json";
-// import ko from "./ko.json";
-// import ur from "./ur.json";
-// import uz from "./uz.json";
-// import zh from "./zh.json";
+import ko from "./ko.json";
+import zh from "./zh.json";
 
 export const languages = [
   {
@@ -59,33 +57,20 @@ export const languages = [
 
     levelName: "Türkiye",
   },
-  // {
-  //   text: "汉语",
-  //   value: "zh",
-  //   strings: zh,
-  //
-  //   levelName: "China",
-  // },
-  // {
-  //   text: "o'zbek tili",
-  //   value: "uz",
-  //   strings: uz,
-  //   levelName: "Uzbekistan",
-  // },
-  // {
-  //   text: "اردو",
-  //   value: "ur",
-  //   strings: ur,
-  //
-  //   levelName: "Pakistan",
-  // },
-  // {
-  //   text: "한국인",
-  //   value: "ko",
-  //   strings: ko,
-  //
-  //   levelName: "Korea",
-  // },
+  {
+    text: "汉语",
+    value: "zh",
+    strings: zh,
+
+    levelName: "China",
+  },
+  {
+    text: "한국인",
+    value: "ko",
+    strings: ko,
+
+    levelName: "Korea",
+  },
 ];
 
 import { getSettingValue } from "../settings";
