@@ -1,4 +1,14 @@
-// npx nodemon checks.js
+// npx nodemon checks.js --watch checks.js
 const fs= require('fs')
-const english = JSON.parse(fs.readFileSync('./src/i18n/en.json'))
-console.debug(Object.entries(english).sort((a,b)=>a[1].length-b[1].length).slice(-10,-1).map(([k,v])=>k+'\n'+k.split('').map(c=>'=').join('')+'\n\n'+v).join('\n\n'))
+const files = fs.readdirSync('./src/i18n/')
+for(let filename of files){
+    if(!filename.endsWith('.json')) continue
+    const content = JSON.parse(fs.readFileSync(`./src/i18n/${filename}`))
+    for(let key in content){
+        if(content[key].match(/<|>|http|puck|palet|퍽|disco|шайба|冰球|rondelle/gi)){
+            content[key]=''
+            console.log(`Removed ${key} of ${filename}`)
+        }
+    }
+    fs.writeFileSync(`./src/i18n/${filename}`, JSON.stringify(content, null,2))
+}

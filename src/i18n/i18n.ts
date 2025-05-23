@@ -85,6 +85,7 @@ let defaultLang =
     .filter((i) => i)
     .map((i) => i.slice(0, 2).toLowerCase())
     .find((k) => k in languagesMap) || "en";
+
 export function getCurrentLang() {
   return getSettingValue("lang", defaultLang);
 }
@@ -100,5 +101,5 @@ export function t(
   for (let key in params) {
     template = template.split("{{" + key + "}}").join(`${params[key]}`);
   }
-  return template;
+  return template.replace(/</gi,'&lt;').replace(/>/gi,'&gt;');
 }
