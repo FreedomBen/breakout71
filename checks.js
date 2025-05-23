@@ -9,6 +9,8 @@ for(let filename of files){
             content[key]=''
             console.log(`Removed ${key} of ${filename}`)
         }
+        content[key]=content[key].trim()
+
     }
     fs.writeFileSync(`./src/i18n/${filename}`, JSON.stringify(content, null,4)+'\n')
 }

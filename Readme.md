@@ -18,9 +18,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+- added level: rainbow spiral
 - added back some languages
 - added link to weblate
-- added level: rainbow spiral
 - 
 
 ## 29126617
