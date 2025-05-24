@@ -1,4 +1,4 @@
-// npx nodemon checks.js --watch checks.js
+// node checks.js
 const fs= require('fs')
 const files = fs.readdirSync('./src/i18n/')
 for(let filename of files){
@@ -10,7 +10,6 @@ for(let filename of files){
             console.log(`Removed ${key} of ${filename}`)
         }
         content[key]=content[key].trim()
-
     }
     fs.writeFileSync(`./src/i18n/${filename}`, JSON.stringify(content, null,4)+'\n')
 }

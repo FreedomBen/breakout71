@@ -15,13 +15,17 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
+- add check for translation variable present in one language but not english
 
 ## Done
+## 29133862
 
 - added level: rainbow spiral
 - added back some languages
-- added link to weblate
-- 
+- added link to weblate https://hosted.weblate.org/translate/breakout-71/in-app-translations
+- nerfed picky eater : +1 combo per OTHER brick's color (+0 for monochromatic levels)
+- fixed some translations 
+- added checks to catch any spam that would come from weblate
 
 ## 29126617
 

@@ -41,8 +41,8 @@ sed -i -e "s/VERSION = .*/ VERSION = '$versionCode'/"  ./src/PWA/sw-b71.js
 find  -name '*.jp*g' -o -name '*.png' | xargs exiftool -all= -overwrite_original
 
 npx prettier --write src/
-
 npx jest
+node checks.js
 
 # Actual js app build
 npx parcel build src/index.html --dist-dir build
