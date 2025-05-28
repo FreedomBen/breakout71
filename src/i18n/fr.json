@@ -7,7 +7,7 @@
     "editor.editing.color": "Choisissez une couleur dans la liste des couleurs (max 5 par niveau)",
     "editor.editing.copied": "Code de niveau copié",
     "editor.editing.copy": "Copier le code du niveau",
-    "editor.editing.copy_help": "",
+    "editor.editing.copy_help": "Partagez le code du niveau dans notre discord pour qu'il soit inclus dans le jeu.",
     "editor.editing.credit": "Crédits et source",
     "editor.editing.credit_prompt": "Entrez l'url source ou l'explication de votre niveau.",
     "editor.editing.delete": "Supprimer le niveau",

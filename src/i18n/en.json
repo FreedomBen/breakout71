@@ -7,7 +7,7 @@
     "editor.editing.color": "Pick a color in the color list (max 5 per level)",
     "editor.editing.copied": "Level code copied",
     "editor.editing.copy": "Copy level code",
-    "editor.editing.copy_help": "",
+    "editor.editing.copy_help": "Share the level code in our discord for inclusion in the game.",
     "editor.editing.credit": "Credits and source",
     "editor.editing.credit_prompt": "Enter the source url or explanation of your level.",
     "editor.editing.delete": "Delete level",
