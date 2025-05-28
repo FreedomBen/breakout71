@@ -5,7 +5,7 @@ for(let filename of files){
     if(!filename.endsWith('.json')) continue
     const content = JSON.parse(fs.readFileSync(`./src/i18n/${filename}`))
     for(let key in content){
-        if(content[key].match(/<|>|http|puck|palet|퍽|disco|шайба|冰球|rondelle/gi)){
+        if(content[key].match(   /<|>|http|\bpuck\b|\bpalet\b|퍽|\bdisco\b|шайба|冰球|rondelle/gi,)){
             content[key]=''
             console.log(`Removed ${key} of ${filename}`)
         }

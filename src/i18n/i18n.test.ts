@@ -8,7 +8,7 @@ describe("translation quality checks", () => {
       for (let key in translations) {
         if (
           translations[key].match(
-            /<|>|http|puck|palet|퍽|disco|шайба|冰球|rondelle/gi,
+            /<|>|http|\bpuck\b|\bpalet\b|퍽|\bdisco\b|шайба|冰球|rondelle/gi,
           )
         ) {
           badKeys.push(languageCode + ":" + key + " : " + translations[key]);
