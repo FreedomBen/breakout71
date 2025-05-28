@@ -7,6 +7,7 @@
     "editor.editing.color": "색상 목록에서 색상 선택 (최대 5 레벨 당)",
     "editor.editing.copied": "비밀번호",
     "editor.editing.copy": "복사 레벨 코드",
+    "editor.editing.copy_help": "디스코드에서 레벨 코드를 공유하여 게임에 포함할 수 있습니다.",
     "editor.editing.credit": "크레딧 및 소스",
     "editor.editing.credit_prompt": "소스 URL을 입력하거나 레벨의 설명.",
     "editor.editing.delete": "삭제 수준",

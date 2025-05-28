@@ -7,6 +7,7 @@
     "editor.editing.color": "Выберите цвет из списка цветов (максимум 5 на уровень)",
     "editor.editing.copied": "Код уровня скопирован",
     "editor.editing.copy": "Скопировать код уровня",
+    "editor.editing.copy_help": "Поделитесь кодом уровня в нашем дискорде для включения в игру.",
     "editor.editing.credit": "Кредиты и источник",
     "editor.editing.credit_prompt": "Введите исходный URL-адрес или пояснение вашего уровня.",
     "editor.editing.delete": "Удалить уровень",

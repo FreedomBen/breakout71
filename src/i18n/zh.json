@@ -7,6 +7,7 @@
     "editor.editing.color": "在颜色列表中挑选一个颜色（每个关卡最多五个）",
     "editor.editing.copied": "关卡代码已复制",
     "editor.editing.copy": "复制关卡代码",
+    "editor.editing.copy_help": "在我们的讨论区分享关卡代码，以便纳入游戏。",
     "editor.editing.credit": "致谢和来源",
     "editor.editing.credit_prompt": "输入来源URL或者你的关卡的解释。",
     "editor.editing.delete": "删除关卡",

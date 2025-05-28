@@ -7,6 +7,7 @@
     "editor.editing.color": "Renk listesinden bir renk seçin (seviye başına en fazla 5)",
     "editor.editing.copied": "Seviye kodu kopyalandı",
     "editor.editing.copy": "Kopyalama seviyesi kodu",
+    "editor.editing.copy_help": "Oyuna dahil edilmesi için seviye kodunu discord'umuzda paylaşın.",
     "editor.editing.credit": "Krediler ve kaynak",
     "editor.editing.credit_prompt": "Seviyenizin kaynak URL'sini veya açıklamasını girin.",
     "editor.editing.delete": "Seviyeyi Sil",
