@@ -386,7 +386,7 @@
     "upgrades.telekinesis.verbose_description": "当球上升时你可以控制它。球在屏幕下半部分时效果更强。",
     "upgrades.three_cushion.name": "三边克朗球",
     "upgrades.three_cushion.tooltip": "间接击中砖块，获得更多硬币",
-    "upgrades.three_cushion.verbose_description": "击中边界的两侧和顶部 +1 连击，每次桨板弹跳最多 +{{max}} 。\n每次击中一侧，连击加一，最多 +3。\n之后，不会获得连击直到下一次桨板。\n\n当你不先弹跳就击中砖块时连击重置。\n这里采用百度百科的翻译，Three Cushion Billiards 是 Carom billiards 中的一种。",
+    "upgrades.three_cushion.verbose_description": "击中边界的两侧和顶部 +1 连击，每次桨板弹跳最多 +{{max}} 。\n每次击中一侧，连击加一，最多 +3。\n之后，不会获得连击直到下一次桨板弹跳。\n\n当你不先弹跳就击中砖块时连击重置。\n这里采用百度百科的翻译，Three Cushion Billiards 是 Carom billiards 中的一种。",
     "upgrades.top_is_lava.name": "天空是限制",
     "upgrades.top_is_lava.tooltip": "避免击中顶部，获得更多硬币",
     "upgrades.top_is_lava.verbose_description": "每当你打碎一个砖块，连击加一。然而，球击中屏幕顶部，连击重置。\n\n你的连击超过最低值时，顶部会出现一个红条提醒你应该避免击中它。\n\n在等级 2，边界完全移除，你可能失去球和硬币。",
