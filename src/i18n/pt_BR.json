@@ -401,5 +401,6 @@
     "upgrades.left_is_lava.verbose_description": "Sempre que você quebrar um tijolo, sua combinação vai aumentar por um, então você vai ter mais uma moeda de todos os tijolos próximos que você quebrar.\n\nNo entanto, sua combinação irá redefinir assim que sua bola atinge o lado esquerdo.\n\nAssim que sua combinação aumenta, o lado esquerdo fica vermelho para lembrar que você deve evitar bater-lhes.\n\nNo nível 2, a fronteira é completamente removida e suas bolas e moedas podem se perder.",
     "upgrades.limitless.name": "Sem limites",
     "upgrades.metamorphosis.name": "Metamorfose",
-    "upgrades.metamorphosis.tooltip": "Cada moeda pode manchar {{lvl}} tijolo(s) com sua cor"
+    "upgrades.metamorphosis.tooltip": "Cada moeda pode manchar {{lvl}} tijolo(s) com sua cor",
+    "confirmRestart.no": "Cancelar"
 }
