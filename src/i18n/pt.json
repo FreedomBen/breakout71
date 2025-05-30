@@ -1,1 +1,8 @@
-{}
+{
+    "confirmRestart.no": "Cancelar",
+    "confirmRestart.text": "Você irá começar um novo jogo. Quer continuar?",
+    "confirmRestart.title": "Começar um novo jogo?",
+    "confirmRestart.yes": "Reiniciar jogo",
+    "editor.editing.bigger": "Aumentar o tamanho do nível",
+    "editor.editing.color": "Escolha uma cor da lista (máximo 5 por nível)"
+}
