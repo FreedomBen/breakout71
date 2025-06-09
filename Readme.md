@@ -18,6 +18,12 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - add check for translation variable present in one language but not english
 
 ## Done
+
+## 29141056
+
+- added chinese translation, no idea how good it is yet, thanks "heretic43" for taking the time to clean it up. 
+- fixed issue with level editor
+
 ## 29133862
 
 - added level: rainbow spiral
