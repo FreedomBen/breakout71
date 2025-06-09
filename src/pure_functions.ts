@@ -133,6 +133,13 @@ export function levelCodeToRawLevel(code: string) {
       name,
       credit,
     };
+  console.warn("Invalid level", {
+    code,
+    name,
+    credit,
+    bricks,
+    size,
+  });
 }
 
 export function comboKeepingRate(level: number) {

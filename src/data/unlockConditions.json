@@ -849,5 +849,15 @@
     "required": ["bigger_explosions", "trickledown", "transparency"],
     "forbidden": ["left_is_lava", "pierce_color", "sticky_coins"],
     "minScore": 16000
+  },
+  "GNU": {
+    "required": ["extra_life", "superhot", "trickledown"],
+    "forbidden": ["etherealcoins", "transparency", "left_is_lava"],
+    "minScore": 16100
+  },
+  "Pipe": {
+    "required": ["fountain_toss", "happy_family", "puck_repulse_ball"],
+    "forbidden": ["ball_repulse_ball", "trickledown", "hot_start"],
+    "minScore": 16200
   }
 }
