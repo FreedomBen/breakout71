@@ -16,8 +16,16 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 ## To do
 
 - add check for translation variable present in one language but not english
+- remove mentions of "puck" from store descriptions : fdroid, play store, itchio
+- 
 
 ## Done
+## 29158270
+
+- imported new levels : gnu and pipe
+- updated chinese flag
+- updated translations
+- pushing to fdroid and google play
 
 ## 29141056
 
@@ -448,7 +456,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Ideas and features 
 
 ## Easy perk ideas  
-
+- inverse coins velocity at spawn
 - chill : no perks gain, no level limit,+20 base combo 
 - when the ball teleport, probability that it's duplicated instead
 - combo resets on teleport
