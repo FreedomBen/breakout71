@@ -20,6 +20,9 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - 
 
 ## Done
+
+- imported brazilian translation
+
 ## 29158270
 
 - imported new levels : gnu and pipe
