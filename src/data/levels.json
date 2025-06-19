@@ -1602,17 +1602,22 @@
     "credit": "By Noodlemire"
   },
   {
-    "color": "#115988",
+    "name": "GNU",
     "size": 11,
     "bricks": "__gg___gg___gg_____gg_gg_ggggg_ggggggglgggggggglllllggg__lllglgll__lellllllel_eellllllle___lllllll____llellgg____llleell_",
-    "name": "GNU",
     "credit": "https://www.gnu.org/ by obigre"
   },
   {
-    "color": "#000000",
+    "name": "Pipe",
     "size": 21,
     "bricks": "WWWWWWWWWWWWWWWWWWWWWW___________________WW___________________WW__WWWWWWWWWWWWWWWWWWW__WWWWWWWWWWWWWWWWWWW___________________WW___________________WWWWWWWWWWWWWWWWWWW__WWWWWWWWWWWWWWWWWWW__WW___________________WW___________________WW__WWWWWWWWWWWWWWWWWWW__WWWWWWWWWWWWWWWWWWW___________________WW___________________WWWWWWWWWWWWWWWWWWW__WWWWWWWWWWWWWWWWWWW__WW___________________WW___________________WW__WWWWWWWWWWWWWWWWWWW__WWWWWWWWWWWWWWWWWW",
-    "name": "Pipe",
     "credit": "By Topenvy"
+  },
+  {
+    "name": "Brazil",
+    "size": 10,
+    "bricks": "__________GGGGGGGGGGGGGGyyGGGGGGyybbyyGGGyyWWbbyyGyybbbWbbyyGyybbbWyyGGGyybbyyGGGGGGyyGGGGGGGGGGGGGG",
+    "svg": null,
+    "color": ""
   }
 ]

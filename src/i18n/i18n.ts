@@ -7,6 +7,7 @@ import tr from "./tr.json";
 import de from "./de.json";
 import ko from "./ko.json";
 import zh from "./zh.json";
+import br from "./pt_BR.json";
 
 export const languages = [
   {
@@ -23,10 +24,21 @@ export const languages = [
     levelName: "France",
   },
   {
+    text: "汉语",
+    value: "zh",
+    strings: zh,
+    levelName: "China",
+  },
+  {
+    text: "Brasil",
+    value: "br",
+    strings: br,
+    levelName: "Brazil",
+  },
+  {
     text: "عربي",
     value: "ar",
     strings: ar,
-
     levelName: "Lebanon",
   },
   {
@@ -56,13 +68,6 @@ export const languages = [
     strings: tr,
 
     levelName: "Türkiye",
-  },
-  {
-    text: "汉语",
-    value: "zh",
-    strings: zh,
-
-    levelName: "China",
   },
   {
     text: "한국인",
