@@ -859,5 +859,10 @@
     "required": ["fountain_toss", "happy_family", "puck_repulse_ball"],
     "forbidden": ["ball_repulse_ball", "trickledown", "hot_start"],
     "minScore": 16200
+  },
+  "Brazil": {
+    "required": ["pierce", "soft_reset", "sapper"],
+    "forbidden": ["shocks", "asceticism", "hot_start"],
+    "minScore": 16300
   }
 }
