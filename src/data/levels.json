@@ -1617,7 +1617,40 @@
     "name": "Brazil",
     "size": 10,
     "bricks": "__________GGGGGGGGGGGGGGyyGGGGGGyybbyyGGGyyWWbbyyGyybbbWbbyyGyybbbWyyGGGyybbyyGGGGGGyyGGGGGGGGGGGGGG",
-    "svg": null,
-    "color": ""
+    "credit": ""
+  },
+  {
+    "name": "Profit motive",
+    "size": 10,
+    "bricks": "_________Bg_____RRR_g______rR_g_____r_R_g____r____g_r_r_____gr_r______r_________g_________ggggggggg_",
+    "credit": "https://en.wikipedia.org/wiki/Profit_motive By Obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 8,
+    "bricks": "__________Wttt___ctWccW__Wtttcc__cctWtt__ccttct___tWWt__________",
+    "name": "Home",
+    "credit": "We don't have a planet B. By Obigre"
+  },
+  {
+    "color": "#115988",
+    "size": 6,
+    "bricks": "g__g___g_gg__gg__kg_g_____g____gg___",
+    "name": "Last leaf",
+    "credit": "https://overshoot.footprintnetwork.org/about-earth-overshoot-day/ By Obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 11,
+    "bricks": "___ll______WWllll_____WWWlll______WWWlll_WW__WWWWllWWWC___WWWWW_C___WWWWW_C___WWWWWW____llWWWW_____WlW_________Wl________",
+    "name": "Peaceful Dove",
+    "credit": "Why do you hate ? By Obigre"
+  },
+  {
+    "color": "#115988",
+    "size": 8,
+    "bricks": "ggWRRWggggWrrWggggWRRWggggWRRWggggWRyWggggWRRWggggWRRWggggWWWWgg",
+    "name": "Corporate dress",
+    "credit": "Modern slave dress, with luxury. By Obigre"
   }
 ]

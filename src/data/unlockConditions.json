@@ -864,5 +864,30 @@
     "required": ["pierce", "soft_reset", "sapper"],
     "forbidden": ["shocks", "asceticism", "hot_start"],
     "minScore": 16300
+  },
+  "Profit motive": {
+    "required": ["ottawa_treaty", "hot_start", "compound_interest"],
+    "forbidden": ["respawn", "rainbow", "bigger_explosions"],
+    "minScore": 16400
+  },
+  "Home": {
+    "required": ["ball_attracts_coins", "steering", "implosions"],
+    "forbidden": ["ball_attract_ball", "base_combo", "right_is_lava"],
+    "minScore": 16500
+  },
+  "Last leaf": {
+    "required": ["wrap_left", "golden_goose", "nbricks"],
+    "forbidden": ["trampoline", "sturdy_bricks", "corner_shot"],
+    "minScore": 16600
+  },
+  "Peaceful Dove": {
+    "required": ["golden_goose", "wrap_right", "bricks_attract_ball"],
+    "forbidden": ["corner_shot", "wrap_left", "clairvoyant"],
+    "minScore": 16700
+  },
+  "Corporate dress": {
+    "required": ["metamorphosis", "helium", "superhot"],
+    "forbidden": ["corner_shot", "passive_income", "pierce"],
+    "minScore": 16800
   }
 }
