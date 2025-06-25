@@ -82,10 +82,12 @@ async function openLevelEditorLevelsList() {
   if (typeof choice == "function") choice();
 }
 
-export async function editRawLevelList(nth: number, color = "W") {
+export async function editRawLevelList(nth: number, color = "") {
   let rawList = getSettingValue("custom_levels", []) as RawLevel[];
   const level = rawList[nth];
   const bricks = level.bricks.split("");
+  color ||= bricks.find((i) => i !== "_") || "W";
+
   let grid = "";
   for (let y = 0; y < level.size; y++) {
     grid += '<div style="background: ' + (level.color || "black") + ';">';

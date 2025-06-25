@@ -17,10 +17,11 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 - add check for translation variable present in one language but not english
 - remove mentions of "puck" from store descriptions : fdroid, play store, itchio
-- 
 
 ## Done
+## 29179087
 
+- added levels from obigre : Profit motive, Home, Last leaf, Peaceful Dove, Corporate dress
 - imported brazilian translation
 
 ## 29158270
