@@ -325,8 +325,8 @@
   },
   {
     "name": "icon:rainbow",
-    "size": 10,
-    "bricks": "yyyyybbb__yyyybbb___yyybbbr___yybbbOrr__ybbbyOOrr_bbbCyyOOrrbbtCCyyOOrb_ttCCyyOO___ttCCyyO____ttCCyy",
+    "size": 7,
+    "bricks": "b_b_b_b_b_b_b_r_O_y_C_r_O_y_r_O_y_C_b_b_b_b_b_b_b",
     "credit": ""
   },
   {
@@ -1626,31 +1626,27 @@
     "credit": "https://en.wikipedia.org/wiki/Profit_motive By Obigre"
   },
   {
-    "color": "#000000",
+    "name": "Home",
     "size": 8,
     "bricks": "__________Wttt___ctWccW__Wtttcc__cctWtt__ccttct___tWWt__________",
-    "name": "Home",
     "credit": "We don't have a planet B. By Obigre"
   },
   {
-    "color": "#115988",
+    "name": "Last leaf",
     "size": 6,
     "bricks": "g__g___g_gg__gg__kg_g_____g____gg___",
-    "name": "Last leaf",
     "credit": "https://overshoot.footprintnetwork.org/about-earth-overshoot-day/ By Obigre"
   },
   {
-    "color": "#000000",
+    "name": "Peaceful Dove",
     "size": 11,
     "bricks": "___ll______WWllll_____WWWlll______WWWlll_WW__WWWWllWWWC___WWWWW_C___WWWWW_C___WWWWWW____llWWWW_____WlW_________Wl________",
-    "name": "Peaceful Dove",
     "credit": "Why do you hate ? By Obigre"
   },
   {
-    "color": "#115988",
+    "name": "Corporate dress",
     "size": 8,
     "bricks": "ggWRRWggggWrrWggggWRRWggggWRRWggggWRyWggggWRRWggggWRRWggggWWWWgg",
-    "name": "Corporate dress",
     "credit": "Modern slave dress, with luxury. By Obigre"
   }
 ]
