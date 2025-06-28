@@ -163,7 +163,7 @@ export async function openUpgradesPicker(gameState: GameState) {
             levelName: unlockable?.l.name || "",
           });
         }
-        if (unlockable?.required?.includes(u.id)) {
+        if (unlockable?.required?.includes(u.id) && !gameState.perks[u.id]) {
           unlockRelatedUpgradesOffered++;
           className += " required";
           unlockHint = t("level_up.required", {
