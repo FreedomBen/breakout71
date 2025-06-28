@@ -1962,12 +1962,26 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.piercePoints = gameState.perks.pierce * 3;
   }
 
-  if (
-    ball.y > gameState.gameZoneHeight + gameState.ballSize / 2 ||
+  const outOfBounds=ball.y > gameState.gameZoneHeight + gameState.ballSize / 2 ||
     ball.y < -gameState.gameZoneHeight ||
     ball.x < -gameState.gameZoneHeight ||
-    ball.x > gameState.canvasWidth + gameState.gameZoneHeight
-  ) {
+    ball.x > gameState.canvasWidth + gameState.gameZoneHeight;
+  if(outOfBounds && gameState.perks.extra_life && gameState.balls.filter((b) => !b.destroyed).length==1){
+    // Rescue the ball using an extra life
+     gameState.balls.forEach(b=>{
+       // there should be just one but just in case
+       b.vx=getBallDefaultVx(gameState)
+       b.previousVX=b.vx
+       b.vy= -gameState.baseSpeed
+       b.previousVY = b.vy
+     })
+      schedulGameSound(gameState, "lifeLost", ball.x, 1);
+      putBallsAtPuck(gameState)
+      gameState.ballStickToPuck = true;
+      pause(false)
+    gameState.perks.extra_life -= 1;
+
+  }else if (outOfBounds) {
     ball.destroyed = true;
     gameState.runStatistics.balls_lost++;
     if (gameState.perks.happy_family) {

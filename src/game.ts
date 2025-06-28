@@ -976,7 +976,8 @@ export function restart(params: RunParams) {
 if (window.location.search.match(/autoplay|stress/)) {
   startComputerControlledGame(window.location.search.includes("stress"));
 } else {
-  restart({});
+  restart({
+  });
 }
 
 export function startComputerControlledGame(stress: boolean = false) {

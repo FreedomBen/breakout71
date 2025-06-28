@@ -66,6 +66,7 @@ export function newGameState(params: RunParams): GameState {
 
     perks[randomGift] = 1;
   }
+
   const runLevels = getRunLevels(params, randomGift);
 
   const gameState: GameState = {
@@ -118,7 +119,6 @@ export function newGameState(params: RunParams): GameState {
     ballSize: 20,
     coinSize: 14,
     puckHeight: 20,
-
     pauseUsesDuringRun: 0,
     keyboardPuckSpeed: 0,
     lastTick: performance.now(),

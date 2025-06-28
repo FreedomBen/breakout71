@@ -16,9 +16,15 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 ## To do
 
 - add check for translation variable present in one language but not english
-- remove mentions of "puck" from store descriptions : fdroid, play store, itchio
+- remove mentions of "paddle" from store descriptions : fdroid, play store, itchio
+- don't show already picked perk in gold
 
 ## Done
+
+- If last ball is out of bound, spend a life to rest it to the paddle location 
+- smaller rainbow icon
+- fixed default color in level editor
+
 ## 29179087
 
 - added levels from obigre : Profit motive, Home, Last leaf, Peaceful Dove, Corporate dress
@@ -151,7 +157,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - zen : now you gain one combo per bomb on screen when breaking a brick (so no bombs, no gain)
 - sticky coins : coins stay stuck when there's an explosion
 - wrap_left / wrap_right : teleport  the ball to the other side of the screen when it hits a border  
-- passive income : now moving the puck makes it transparent to coins and balls, but not reset the combo 
+- passive income : now moving the paddle makes it transparent to coins and balls, but not reset the combo 
 - main menu : split level unlock and perks unlocks
 
 ## 29087252
@@ -460,15 +466,14 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Ideas and features 
 
 ## Easy perk ideas  
-- inverse coins velocity at spawn
-- chill : no perks gain, no level limit,+20 base combo 
+- inverse coins velocity at spawn 
 - when the ball teleport, probability that it's duplicated instead
 - combo resets on teleport
-- combo resets when hitting puck without a teleport
-- teleport ball to puck as soon as it hits something (% chance)
+- combo resets when hitting paddle without a teleport
+- teleport ball to paddle as soon as it hits something (% chance)
 - allow dropping balls that are about to miss. 
 - square coins : coins loose all horizontal momentum when hitting something.
-- ball turns following puck motion
+- ball turns following paddle motion
 - "+1  coin for each ball within a small radius of the broken brick" ? 
 - two for one : add a 2 for one upgrade combo to the choice lists
 - cash out : double last level's gains  
@@ -484,7 +489,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - n% of coins missed respawn at the ball 
 - +1 combo per brick broken after a wall bounce, reset otherwise 
 - combo climbs by 1 every 2 second, unless no coin was caught, then it resets
-- [colin] golden corners - catch coins at the sides of the puck to double their value
+- [colin] golden corners - catch coins at the sides of the paddle to double their value
 - [colin] varied diet - your combo grows by 2 when your ball changes color, but decreses by one when a brick is broken ?  
 - [colin] trickle up - inverse of reach more or less 
 - +lvl combo per bricks / resets after 5/lvl seconds without explosion ?
@@ -494,38 +499,39 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - + lvl x n combo when destroying a brick after bouncing on a side/top n times ?
 - make stats a clairvoyant thing
 - [colin]P ocket money — bricks absorb coins that touch them, which are released on brick destruction (with a bonus?)
-- [colin] turn ball gravity on after a top bar hit, and until bouncing on puck
+- [colin] turn ball gravity on after a top bar hit, and until bouncing on paddle
 - fan : paddle motion creates upward draft that lifts coins and balls
+- +10% coins per reroll stored. 
 
 ## Medium difficulty perks ideas 
 - coins combine when they hit (into one coin with the sum of the values, but need a way to represent that)
 - balls collision split them into 4 smaller balls, lvl times (requires rework)
 - offer next level choice after upgrade pick
-- [colin] mirror puck - a mirrored puck at the top of the screen follows as you move the bottom puck. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow puck so as to not draw too much attention from the main bottom puck.
+- [colin] mirror paddle - a mirrored paddle at the top of the screen follows as you move the bottom paddle. it helps with keeping combos up and preventing the ball from touching the ceiling. it could appear as a hollow paddle so as to not draw too much attention from the main bottom paddle.
 - [colin] Combos extrêmes: lvl2 pour tous les combos, qui fait que le combo rapporte double ou triple, mais si sur un niveau la condition n'est pas respectée alors le perk ne donne plus de combo bonus pour ce niveau.
 - [colin] Mytosis - les blocs bombe n'explosent pas mais relâchent une nouvelle balle à la place (clashes with "shocks" and "sapper")
 - [colin] Juggle - au début du niveau, chaque balle est lancée l'une après au lieu de toutes à la fois (needs some work)
-- SUPER HOT (time moves when puck moves)
+- SUPER HOT (time moves when paddle moves)
 - bricks attract ball
 - bricks attract coins
 - wrap left / right
 - correction : pick one past upgrade to remove and replace by something else 
 - +1 combo when ball goes downward, reset if upward
-- 2x speed after bouncing on puck
+- 2x speed after bouncing on paddle
 - the more balls are close to a brick, the more combo is gained when breaking it. If only one ball, loose one point or reset
 - ball avoids brick of wrong color
-- puck slowly follows desired  position, but +1 combo
+- paddle slowly follows desired  position, but +1 combo
 - knockback : hitting a brick pushes it (requires sturdy bricks)
 
 ## Hard perk ideas
 - accelerometer controls coins and balls
-- [colin] side pucks - same as above but with two side pucks : hard to know where to put them 
-- [colin] Perk: second puck in the middle of the screen
+- [colin] side paddles - same as above but with two side paddles : hard to know where to put them 
+- [colin] Perk: second paddle in the middle of the screen
 - [colin] Sponge Ball : the ball stores coins it collides with, and releases them when bouncing on any border (left, right, top). 
 
 
 ## ideas to sort
-- wind : move coins based on puck movement not position  
+- wind : move coins based on paddle movement not position  
 - double coin value when they hit the sides
 - [colin]Brambles — coins that touch the walls and ceiling get stuck and are thrown back when the last brick is destroyed
 - [colin]Ball of Greed — the ball can collect coins (might be worth dividing into levels: lvl 1, can collect coins only after two bounces on bricks or walls. lvl 2, can collect after 1 bounce. lvl 3, can collect coins anytime)(or change the ball collection radius as the level grows)
@@ -534,7 +540,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [colin]Relative time — ball speed depends on its position: if it's high up on thi screen it's fast, if it's lower it's slower
 
 - ball attracted by bricks of the color of the ball
-- level flips horizontally every time a ball bounces on puck
+- level flips horizontally every time a ball bounces on paddle
 - [colin] close quarters - balle attirée par tous les blocs/par un bloc aléatoire, actif à portée de bloc (+1bloc au lvlup)/proportionnel à une force (+puissance au lvlup)…
 - [colin] plusieurs perks qui déclenchent des effets quand une balle est perdue. par ex: +3 combo à chaque balle perdue, 5 blocs transformés en bombe, balle et coins ralentis, blocs régénérés…
 - [colin] faster style - augmente le combo en fonction de la vitesse de la balle
@@ -569,7 +575,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - make menu and score button more "button like" when you just installed the game.
 - avoid showing a +1 and -1 at the same time when a combo increase is reset
 - explain to iOS users how to add the app to home screen to get fullscreen
-- delayed start on mobile to let users place the puck where they want
+- delayed start on mobile to let users place the paddle where they want
 - experiment with showing the combo somewhere else, maybe top center, maybe instead of score. 
 - display a multiplicator if it's not 100%, have some perks add to it
 
@@ -589,10 +595,10 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [jaceys] Move the restart button out of the menu, so that it is more easily accessible (will allow user to choose starting perk instead)
 - colored coins only (coins should be of the color of the ball to count, otherwise what ? i'd rather avoid negative points)
 - coins avoid ball of different color (pointless)
-- [colin] wormhole - the puck sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect (not sure how that to word that in 1 setence)
-- [colin] Mental charge - the puck is divided into two smaller pucks, then 3 smaller ones at lvl 2 : what's the point ? 
+- [colin] wormhole - the paddle sometimes don't bounce the ball back up but teleports it to the top of the screen as if it fell through from bottom to top. higher levels reduce the times it takes to reload that effect (not sure how that to word that in 1 setence)
+- [colin] Mental charge - the paddle is divided into two smaller paddles, then 3 smaller ones at lvl 2 : what's the point ? 
 - [colin] sturdy ball - does more damage to bricks, to conter sturdy bricks :that's pierce now
-- [colin] plot - plot the ball's trajectory as you position your puck : too hard when you add other perks
+- [colin] plot - plot the ball's trajectory as you position your paddle : too hard when you add other perks
 - [colin] piggy bank - bricks absorb coins that fall onto it, and release them back as they are broken, with added value : equivalent to Asceticism
 - [colin] ball coins - coins share the same physics as coins and bounce on walls and bricks : really hard to balance with speeds and all
 - non brick-shaped bricks, tilted bricks,moving blocks : very difficult because of engine optimisations
@@ -601,20 +607,20 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - russian roulette: 5/6 chances to get a free upgrade, 1/6 chance of game over. Not really fun 
 - [colin] bigger ball - self-explanatory, or is it ? what's the point ? physics would break now if ball bigger than bricks
 - [colin] smaller ball - doable, but why
-- [colin] earthquake - when the puck hits any side of the screen with velocity, the screen shakes and a brick explodes/falls from the level. alternatively, any brick you catch with the puck gives you the coins at the current combo rate. each level lowers the amount of hits before a brick falls. Problem : no limit on how often you can slam the puck around
+- [colin] earthquake - when the paddle hits any side of the screen with velocity, the screen shakes and a brick explodes/falls from the level. alternatively, any brick you catch with the paddle gives you the coins at the current combo rate. each level lowers the amount of hits before a brick falls. Problem : no limit on how often you can slam the paddle around
 - missile goes when you catch coin
 - missile goes when you break a brick 
-- [colin] Batteries - lvl1: recharge les pouvoirs du puck quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le puck). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran : i'll probably just let the second puck replace this
+- [colin] Batteries - lvl1: recharge les pouvoirs du paddle quand la balle touche le haut de l'écran (1 fois par lancer, se recharge en touchant le paddle). lvl2: également après voir détruit 6 blocs. lvl3: également quand elle touche les bords de l'écran : i'll probably just let the second paddle replace this
  - store much more details about run (level by level) as numbers only (instead of json that gets big false)
 - [colin] hitman - hit the marked brick for +5 combo. each level increases the combo you get for it.
-- [colin] sweet spot - place your puck directly below a moving spot at the top of the level to increase your combo
+- [colin] sweet spot - place your paddle directly below a moving spot at the top of the level to increase your combo
 - [colin] reward the player with more choices/perks for breaking a brick while having reached an increasing combo thresholds. 5 combo, then 10, then 20, then 40 etc… once a threshold is reached you aren't rewarded for that threshold again until you start a rew run
-- mobile option: relative movement of the touch would be amplified and added to the puck 
+- mobile option: relative movement of the touch would be amplified and added to the paddle 
 - mobile option: don't pause on mobile when lifting finger
 - translate fastlane presentation texts to french
 - convert captures to mp4 unsing ffmpeg wasm because reddit refuses webm files
 - disable zooming (for ios double tap)
-- Waterline under the puck, coins slow down a lot, reflections
+- Waterline under the paddle, coins slow down a lot, reflections
 - webgl rendering:  background gradient light map, shinier coins, quite hard
 - on mobile, add an element that feels like it can be "grabbed" and make it shine while writing "Push here to play"
 - hard mode : bricks take many hits, perks more rare, missing clears level score, missing coins deducts score..

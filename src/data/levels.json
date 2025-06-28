@@ -325,8 +325,8 @@
   },
   {
     "name": "icon:rainbow",
-    "size": 7,
-    "bricks": "b_b_b_b_b_b_b_r_O_y_C_r_O_y_r_O_y_C_b_b_b_b_b_b_b",
+    "size": 8,
+    "bricks": "_____________bb_____ccb____yyc____SSy____rrS______r_____________",
     "credit": ""
   },
   {
@@ -1648,5 +1648,12 @@
     "size": 8,
     "bricks": "ggWRRWggggWrrWggggWRRWggggWRRWggggWRyWggggWRRWggggWRRWggggWWWWgg",
     "credit": "Modern slave dress, with luxury. By Obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 12,
+    "bricks": "__________________________bbbbbbbb____bbbbkkbb____bkkkkkkk____kkkkkkkk____kBBkkBBk____kkkbbkkb____kkbkkbkb____bbbbkbkb__________________________",
+    "name": "Zombie",
+    "credit": "Minecraft Zombie by CHRISS Vector"
   }
 ]
