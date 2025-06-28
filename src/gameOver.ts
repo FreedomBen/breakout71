@@ -36,12 +36,9 @@ export function addToTotalPlayTime(ms: number) {
 
 export async function gameOver(title: string, intro: string) {
   if (!gameState.running) return;
-
   // Ignore duplicated calls, can happen when ticking is split in multiple updates because the ball goes fast
   if (gameState.isGameOver) return;
-
   gameState.isGameOver = true;
-
   pause(false);
   askForPersistentStorage();
   stopRecording();

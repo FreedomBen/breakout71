@@ -99,7 +99,11 @@ export async function play() {
 
 export function pause(playerAskedForPause: boolean) {
   if (!gameState.running) return;
-  if (gameState.pauseTimeout) return;
+
+  if (gameState.pauseTimeout && playerAskedForPause) {
+    return;
+  }
+
   if (gameState.startParams.computer_controlled) {
     if (gameState.startParams?.computer_controlled) {
       play();
@@ -114,7 +118,11 @@ export function pause(playerAskedForPause: boolean) {
     }, 1000);
 
     pauseRecording();
-    gameState.pauseTimeout = null;
+    if (gameState.pauseTimeout) {
+      // In case an instant pause was requested while a delayed pause was pending
+      clearTimeout(gameState.pauseTimeout);
+      gameState.pauseTimeout = null;
+    }
     gameState.needsRender = true;
   };
 
@@ -976,8 +984,7 @@ export function restart(params: RunParams) {
 if (window.location.search.match(/autoplay|stress/)) {
   startComputerControlledGame(window.location.search.includes("stress"));
 } else {
-  restart({
-  });
+  restart({});
 }
 
 export function startComputerControlledGame(stress: boolean = false) {

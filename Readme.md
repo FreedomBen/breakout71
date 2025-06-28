@@ -15,11 +15,16 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 # Changelog
 ## To do
 
-- add check for translation variable present in one language but not english
-- remove mentions of "pcuk" from store descriptions : fdroid, play store, itchio
+- remove mentions of "puck" from itchio descriptions 
+
 
 ## Done
 
+- fixed a tricky bug where multiple level ups would happen at once
+- add check for unbalanced number of braces in translations
+- add check for translation variable present in one language but not english
+- remove mentions of "puck" from play store descriptions 
+- remove mentions of "puck" from fdroid descriptions 
 - don't show already picked perk in gold
 - If last ball is out of bound, spend a life to rest it to the paddle location 
 - smaller rainbow icon

@@ -889,5 +889,10 @@
     "required": ["metamorphosis", "helium", "superhot"],
     "forbidden": ["corner_shot", "passive_income", "pierce"],
     "minScore": 16800
+  },
+  "Zombie": {
+    "required": ["corner_shot", "respawn", "addiction"],
+    "forbidden": ["minefield", "clairvoyant", "etherealcoins"],
+    "minScore": 16900
   }
 }
