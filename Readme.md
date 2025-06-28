@@ -16,11 +16,11 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 ## To do
 
 - add check for translation variable present in one language but not english
-- remove mentions of "paddle" from store descriptions : fdroid, play store, itchio
-- don't show already picked perk in gold
+- remove mentions of "pcuk" from store descriptions : fdroid, play store, itchio
 
 ## Done
 
+- don't show already picked perk in gold
 - If last ball is out of bound, spend a life to rest it to the paddle location 
 - smaller rainbow icon
 - fixed default color in level editor
