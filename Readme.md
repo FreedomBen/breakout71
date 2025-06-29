@@ -19,6 +19,7 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 
 ## Done
+## 29184940
 
 - fixed a tricky bug where multiple level ups would happen at once
 - add check for unbalanced number of braces in translations

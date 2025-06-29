@@ -1628,7 +1628,7 @@
   {
     "name": "Home",
     "size": 8,
-    "bricks": "__________Wttt___ctWccW__Wtttcc__cctWtt__ccttct___tWWt__________",
+    "bricks": "y_________Wttt___ctWccW__Wtttcc__cctWtt__ccttct___tWWt__________",
     "credit": "We don't have a planet B. By Obigre"
   },
   {
@@ -1650,10 +1650,9 @@
     "credit": "Modern slave dress, with luxury. By Obigre"
   },
   {
-    "color": "#000000",
+    "name": "Zombie",
     "size": 12,
     "bricks": "__________________________bbbbbbbb____bbbbkkbb____bkkkkkkk____kkkkkkkk____kBBkkBBk____kkkbbkkb____kkbkkbkb____bbbbkbkb__________________________",
-    "name": "Zombie",
     "credit": "Minecraft Zombie by CHRISS Vector"
   }
 ]
