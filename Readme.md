@@ -13,12 +13,14 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 - [Weblate](https://hosted.weblate.org/projects/breakout-71/in-app-translations/)
  
 # Changelog
-## To do
-
-- remove mentions of "puck" from itchio descriptions 
 
 ## Done
 
+## 29196430
+
+- added two levels : "Dead Meme" and "Taiwan"
+- updated translations
+- tried to add "chinese traditional" language support, but it's too rough still (lots of invalid automatic translations)
 
 ## 29184940
 
