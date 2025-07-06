@@ -894,5 +894,15 @@
     "required": ["corner_shot", "respawn", "addiction"],
     "forbidden": ["minefield", "clairvoyant", "etherealcoins"],
     "minScore": 16900
+  },
+  "Dead Meme": {
+    "required": ["wrap_right", "minefield", "addiction"],
+    "forbidden": ["sturdy_bricks", "passive_income", "wrap_up"],
+    "minScore": 17000
+  },
+  "Taiwan": {
+    "required": ["pierce", "sacrifice", "extra_life"],
+    "forbidden": ["sapper", "shocks", "happy_family"],
+    "minScore": 17100
   }
 }

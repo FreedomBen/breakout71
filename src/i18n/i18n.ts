@@ -7,6 +7,7 @@ import tr from "./tr.json";
 import de from "./de.json";
 import ko from "./ko.json";
 import zh from "./zh.json";
+// import zh_Hant from "./zh_Hant.json";
 import br from "./pt_BR.json";
 
 export const languages = [
@@ -29,6 +30,12 @@ export const languages = [
     strings: zh,
     levelName: "China",
   },
+  // {
+  //   text: "正體字",
+  //   value: "zh_Hant",
+  //   strings: zh_Hant,
+  //   levelName: "Taiwan",
+  // },
   {
     text: "Brasil",
     value: "br",

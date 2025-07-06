@@ -1654,5 +1654,19 @@
     "size": 12,
     "bricks": "__________________________bbbbbbbb____bbbbkkbb____bkkkkkkk____kkkkkkkk____kBBkkBBk____kkkbbkkb____kkbkkbkb____bbbbkbkb__________________________",
     "credit": "Minecraft Zombie by CHRISS Vector"
+  },
+  {
+    "color": "#000000",
+    "size": 6,
+    "bricks": "_RRRR_RRRaaaRRRaaaRRRRR__RRRR__R__R_",
+    "name": "Dead Meme",
+    "credit": "By SomeRandomAnthony"
+  },
+  {
+    "name": "Taiwan",
+    "size": 8,
+    "bricks": "__tttt___tttttt_tttWWtttttWWWWttttWWWWtttttWWttt_tttttt____ttt__",
+    "svg": null,
+    "color": ""
   }
 ]
