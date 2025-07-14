@@ -136,7 +136,7 @@
     "settings.precise_lighting": "精準照明",
     "settings.precise_lighting_help": "背景照明效果使用更小的網格",
     "settings.probabilistic_lighting": "視覺暫留",
-    "settings.probabilistic_lighting_help": "如果150多只硬币,根据前几条框架重新使用一些镜子,提高性能",
+    "settings.probabilistic_lighting_help": "當硬幣超過 150 枚時，透過重複使用前一幀的部分光線來提高性能",
     "settings.record": "錄製遊玩影片",
     "settings.record_download": "下載影片（{{size}} MB）",
     "settings.record_help": "每一层次的录像.",
