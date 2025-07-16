@@ -16,6 +16,11 @@ Break colourful bricks, catch bouncing coins and select powerful upgrades !
 
 ## Done
 
+## 29210760
+
+- added level toadshield by  Luca Bernd
+- update translations
+
 ## 29196430
 
 - added two levels : "Dead Meme" and "Taiwan"

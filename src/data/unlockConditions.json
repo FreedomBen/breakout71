@@ -909,5 +909,10 @@
     "required": ["trickledown", "sacrifice", "metamorphosis"],
     "forbidden": ["minefield", "happy_family", "addiction"],
     "minScore": 17200
+  },
+  "Tree": {
+    "required": ["asceticism", "three_cushion", "trickledown"],
+    "forbidden": ["soft_reset", "compound_interest", "metamorphosis"],
+    "minScore": 17300
   }
 }
