@@ -904,5 +904,10 @@
     "required": ["pierce", "sacrifice", "extra_life"],
     "forbidden": ["sapper", "shocks", "happy_family"],
     "minScore": 17100
+  },
+  "Toadshield": {
+    "required": ["trickledown", "sacrifice", "metamorphosis"],
+    "forbidden": ["minefield", "happy_family", "addiction"],
+    "minScore": 17200
   }
 }

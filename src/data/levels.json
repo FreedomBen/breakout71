@@ -1666,5 +1666,12 @@
     "size": 8,
     "bricks": "__tttt___tttttt_tttWWtttttWWWWttttWWWWtttttWWttt_tttttt___tttt__",
     "credit": ""
+  },
+  {
+    "color": "#000000",
+    "size": 14,
+    "bricks": "cGaCkcGaC__kk_GakkcGaCk_kkakaC________kkkkC__GGkGkC_kk____GGaccaGGkk_a_GCkGkGGcGC__C_kGCGakaacC_CkkkGakkckcGG_kck__CGGCCGG__cG___kk___kk_cGa_Gakk_G_kkkGaCGaC__Ga___kaCkaCkcGaCkcGaCkcCkcGaCkcGaCkcc",
+    "name": "Toadshield",
+    "credit": "By Luca Bernd "
   }
 ]
