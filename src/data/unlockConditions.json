@@ -914,5 +914,10 @@
     "required": ["asceticism", "three_cushion", "trickledown"],
     "forbidden": ["soft_reset", "compound_interest", "metamorphosis"],
     "minScore": 17300
+  },
+  "missle": {
+    "required": ["double_or_nothing", "ball_attract_ball", "etherealcoins"],
+    "forbidden": ["trampoline", "forgiving", "golden_goose"],
+    "minScore": 17400
   }
 }
