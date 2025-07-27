@@ -68,7 +68,6 @@ export function newGameState(params: RunParams): GameState {
   }
 
   const runLevels = getRunLevels(params, randomGift);
-
   const gameState: GameState = {
     startParams: params,
     runLevels,
@@ -150,6 +149,8 @@ export function newGameState(params: RunParams): GameState {
       sumOfValues(params.perks) > 1 ||
       (params.level && !params.level.name.startsWith("icon:")),
   };
+
+  window.gameState=gameState;
   resetBalls(gameState);
 
   for (let perk of upgrades) {

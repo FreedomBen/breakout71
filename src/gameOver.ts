@@ -62,6 +62,14 @@ export async function gameOver(title: string, intro: string) {
   const unlockedPerks = upgrades.filter(
     (o) => o.threshold > startTs && o.threshold < endTs,
   );
+   const levelStats= t("gameOver.lastLevelSummary", {
+          catchRate:Math.floor(gameState.levelCoughtCoins / (gameState.levelSpawnedCoins||1) * 100),
+          levelCoughtCoins: gameState.levelCoughtCoins,
+          levelSpawnedCoins: gameState.levelSpawnedCoins,
+          duration:Math.ceil(gameState.levelTime / 1000),
+          levelMisses: gameState.levelMisses ,
+          level:(gameState.currentLevel+1)
+        })
 
   let unlocksInfo = unlockedPerks.length
     ? `
@@ -92,10 +100,11 @@ export async function gameOver(title: string, intro: string) {
     title,
     content: [
       getCreativeModeWarning(gameState) ||
-        `
-        <p>${intro}</p>
-        <p>${t("gameOver.cumulative_total", { startTs, endTs })}</p> 
-        `,
+
+        levelStats ,
+        intro,
+       startTs != endTs ? t("gameOver.cumulative_total", { startTs, endTs }):'',
+
       settingsChangeRecommendations(),
       {
         icon: icons["icon:new_run"],

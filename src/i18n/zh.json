@@ -31,6 +31,7 @@
     "editor.title": "关卡编辑器",
     "gameOver.creative": "这把游戏不会被录制。",
     "gameOver.cumulative_total": "你的总累计分数从 {{startTs}} 升至 {{endTs}}。",
+    "gameOver.lastLevelSummary": "",
     "gameOver.lost.summary": "你在抓到 {{score}} 枚硬币后掉了球。",
     "gameOver.lost.title": "游戏结束",
     "gameOver.stats.balls_lost": "失去的球",

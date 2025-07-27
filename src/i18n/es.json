@@ -31,6 +31,7 @@
     "editor.title": "Editor de niveles",
     "gameOver.creative": "Esta parte de la prueba no se grabará.",
     "gameOver.cumulative_total": "Su puntuación total acumulada ha pasado de {{startTs}} a {{endTs}}.",
+    "gameOver.lastLevelSummary": "",
     "gameOver.lost.summary": "Se te ha caído la bola después de coger {{score}} monedas.",
     "gameOver.lost.title": "Pelota perdida",
     "gameOver.stats.balls_lost": "Balas perdidas",
