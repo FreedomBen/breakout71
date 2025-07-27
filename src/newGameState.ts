@@ -150,7 +150,7 @@ export function newGameState(params: RunParams): GameState {
       (params.level && !params.level.name.startsWith("icon:")),
   };
 
-  window.gameState=gameState;
+  window.gameState = gameState;
   resetBalls(gameState);
 
   for (let perk of upgrades) {
