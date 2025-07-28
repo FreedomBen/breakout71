@@ -422,5 +422,6 @@
     "upgrades.reach.tooltip": "Mais moedas se você evitar a linha mais baixa de tijolos",
     "upgrades.respawn.verbose_description": "Algum efeito de partícula irá informá-lo onde os tijolos aparecerão.",
     "upgrades.shunt.tooltip": "Mantenha {{percent}}% de sua combinação entre níveis",
-    "upgrades.smaller_puck.verbose_description": "Isso torna o remo menor, o que, em teoria, torna alguns tiros de canto mais fácil, mas realmente apenas aumenta a dificuldade.\n\nÉ por isso que você também obter um bom bônus de + 50% moedas desova."
+    "upgrades.smaller_puck.verbose_description": "Isso torna o remo menor, o que, em teoria, torna alguns tiros de canto mais fácil, mas realmente apenas aumenta a dificuldade.\n\nÉ por isso que você também obter um bom bônus de + 50% moedas desova.",
+    "gameOver.lastLevelSummary": "No nível {{level}} você pegou {{levelCoughtCoins}} moedas de {{levelSpawnedCoins}} ({{catchRate}}%) em {{duration}} segundos. A bola perdeu os tijolos {{levelMisses}} tempo(s)"
 }
