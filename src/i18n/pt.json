@@ -110,7 +110,7 @@
     "editor.title": "Editor de nível",
     "gameOver.creative": "Esta corrida não será gravada.",
     "gameOver.cumulative_total": "Sua pontuação total cumulativa foi de {{start Ts}} a {{endTs}}.",
-    "gameOver.lost.summary": "Você caiu a bola depois de pegar {{score}} moedas.",
+    "gameOver.lost.summary": "Você caiu a bola depois de pegar {{score}} moedas. ",
     "gameOver.lost.title": "Game Over",
     "gameOver.stats.balls_lost": "Bolas perdidas",
     "gameOver.stats.bricks_broken": "Tijolos quebrados",
