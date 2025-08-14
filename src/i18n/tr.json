@@ -31,7 +31,7 @@
     "editor.title": "Seviye Editörü",
     "gameOver.creative": "Bu koşu kaydedilmeyecek.",
     "gameOver.cumulative_total": "Toplam kümülatif puanınız {{startTs}} 'dan {{endTs}}'e çıktı.",
-    "gameOver.lastLevelSummary": " {{level}} . seviyede {{duration}} saniyede {{levelSpawnedCoins}} jetondan {{levelCoughtCoins}} jeton yakaladınız ({{catchRate}}%). Top, tuğlaları {{levelMisses}} kez ıskaladı.",
+    "gameOver.lastLevelSummary": "{{level}} . seviyede {{duration}} saniyede {{levelSpawnedCoins}} jetondan {{levelCoughtCoins}} jeton yakaladınız ({{catchRate}}%). Top, tuğlaları {{levelMisses}} kez ıskaladı.",
     "gameOver.lost.summary": "{{score}} jeton yakaladıktan sonra topu düşürdün.",
     "gameOver.lost.title": "Oyun bitti",
     "gameOver.stats.balls_lost": "Kaybedilen toplar",

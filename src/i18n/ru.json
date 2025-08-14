@@ -32,7 +32,7 @@
     "gameOver.creative": "Этот забег не будет записываться.",
     "gameOver.cumulative_total": "Ваш общий суммарный балл увеличился с {{startTs}} до {{endTs}}.",
     "gameOver.lastLevelSummary": "На уровне {{level}} вы поймали {{levelCoughtCoins}} монет из {{levelSpawnedCoins}} ({{catchRate}}%) за {{duration}} секунды. Мяч промахнулся мимо кирпичей {{levelMisses}} раз(а).",
-    "gameOver.lost.summary": "Вы уронили мяч, завершив с результатом {{score}} монет. ",
+    "gameOver.lost.summary": "Вы уронили мяч, завершив с результатом {{score}} монет.",
     "gameOver.lost.title": "Игра окончена",
     "gameOver.stats.balls_lost": "Мячи потеряны",
     "gameOver.stats.bricks_broken": "Кирпичи разбиты",

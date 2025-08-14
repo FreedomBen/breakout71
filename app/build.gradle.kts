@@ -1,5 +1,5 @@
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -23,14 +23,14 @@ android {
     }
 
     namespace = "me.lecaro.breakout"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "me.lecaro.breakout"
         minSdk = 21
-        targetSdk = 34
-        versionCode = 29227497
-        versionName = "29227497"
+        targetSdk = 36
+        versionCode = 29253151
+        versionName = "29253151"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true

@@ -332,6 +332,10 @@ bubble : pops and ball goes through
 
 ## Done
 
+### Android target version upgrade
+
+To be allowed on the play store
+
 ## 29210760
 
 ### added level toadshield by  Luca Bernd

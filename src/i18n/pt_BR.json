@@ -32,7 +32,7 @@
     "gameOver.creative": "Esta partida não será salva.",
     "gameOver.cumulative_total": "Sua pontuação total foi de {{startTs}} para {{endTs}}.",
     "gameOver.lastLevelSummary": "No nível {{level}} , você pegou {{levelCoughtCoins}} moedas de {{levelSpawnedCoins}} ({{catchRate}}%) em {{duration}} segundos. A bola errou os blocos {{levelMisses}} vez(es)",
-    "gameOver.lost.summary": "Você deixou cair a bola, terminando a partida com um pontuação total de {{score}} moedas. ",
+    "gameOver.lost.summary": "Você deixou cair a bola, terminando a partida com um pontuação total de {{score}} moedas.",
     "gameOver.lost.title": "Fim de Jogo",
     "gameOver.stats.balls_lost": "Bolas perdidas",
     "gameOver.stats.bricks_broken": "Blocos quebrados",
