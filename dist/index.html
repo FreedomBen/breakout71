@@ -3983,6 +3983,7 @@ function resetBalls(gameState) {
             hitSinceBounce: 0,
             brokenSinceBounce: 0,
             sidesHitsSinceBounce: 0,
+            wrapsSinceBounce: 0,
             sapperUses: 0
         });
     }
@@ -4002,6 +4003,7 @@ function putBallsAtPuck(gameState) {
         ball.hitSinceBounce = 0;
         ball.brokenSinceBounce = 0;
         ball.sidesHitsSinceBounce = 0;
+        ball.wrapsSinceBounce = 0;
         ball.piercePoints = gameState.perks.pierce * 3;
     });
 }
@@ -4694,26 +4696,26 @@ function ballTick(gameState, ball, frames) {
     if (borderHitCode) {
         ball.sidesHitsSinceBounce++;
         if (ball.sidesHitsSinceBounce <= gameState.perks.three_cushion * 3) offsetCombo(gameState, 1, ball.x, ball.y);
-        if (gameState.perks.wrap_left && borderHitCode % 2 && //   x might be moved by wrap so we rely on previousX
-        ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2) {
+        if (gameState.perks.wrap_left && borderHitCode % 2 && // x might be moved by wrap, so we rely on previousX
+        ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2 && underWrapLimit(gameState, ball)) {
             schedulGameSound(gameState, "plouf", ball.x, 1);
             ball.x = gameState.offsetX + gameState.gameZoneWidth - gameState.ballSize;
             if (ball.vx > 0) ball.vx *= -1;
             spawnParticlesExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
             spawnParticlesImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
         }
-        if (gameState.perks.wrap_right && borderHitCode % 2 && //   x might be moved by wrap so we rely on previousX
-        ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2) {
+        if (gameState.perks.wrap_right && borderHitCode % 2 && // x might be moved by wrap, so we rely on previousX
+        ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2 && underWrapLimit(gameState, ball)) {
             schedulGameSound(gameState, "plouf", ball.x, 1);
             ball.x = gameState.offsetX + gameState.ballSize;
             if (ball.vx < 0) ball.vx *= -1;
             spawnParticlesExplosion(gameState, 7, ball.x, ball.y, "#6262EA");
             spawnParticlesImplosion(gameState, 7, ball.previousX, ball.previousY, "#6262EA");
         }
-        if (gameState.perks.wrap_up && borderHitCode >= 2) applyWrapUp(gameState, ball, gameState.ballSize / 2);
-        if (gameState.perks.left_is_lava && borderHitCode % 2 && //   x might be moved by wrap so we rely on previousX
+        if (gameState.perks.wrap_up && borderHitCode >= 2 && underWrapLimit(gameState, ball)) applyWrapUp(gameState, ball, gameState.ballSize / 2);
+        if (gameState.perks.left_is_lava && borderHitCode % 2 && // x might be moved by wrap, so we rely on previousX
         ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(gameState, ball.x, ball.y);
-        if (gameState.perks.right_is_lava && borderHitCode % 2 && //   x might be moved by wrap so we rely on previousX
+        if (gameState.perks.right_is_lava && borderHitCode % 2 && // x might be moved by wrap, so we rely on previousX
         ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2) resetCombo(gameState, ball.x, ball.y);
         if (gameState.perks.top_is_lava && borderHitCode >= 2) resetCombo(gameState, ball.x, ball.y);
         if (gameState.perks.trampoline) offsetCombo(gameState, -gameState.perks.trampoline, ball.x, ball.y);
@@ -4751,6 +4753,7 @@ function ballTick(gameState, ball, frames) {
         ball.hitSinceBounce = 0;
         ball.brokenSinceBounce = 0;
         ball.sidesHitsSinceBounce = 0;
+        ball.wrapsSinceBounce = 0;
         ball.sapperUses = 0;
         ball.piercePoints = gameState.perks.pierce * 3;
     }
@@ -5006,6 +5009,14 @@ function zenTick(gameState) {
         gameState.lastZenComboIncrease = gameState.levelTime;
         offsetCombo(gameState, gameState.perks.zen, gameState.puckPosition, gameState.gameZoneHeight - gameState.puckHeight);
     }
+}
+function underWrapLimit(gameState, ball) {
+    ball.wrapsSinceBounce++;
+    if (ball.wrapsSinceBounce > 10) {
+        ball.wrapsSinceBounce = 0;
+        return false;
+    }
+    return true;
 }
 function applyWrapUp(gameState, ball, radius) {
     schedulGameSound(gameState, "plouf", ball.x, 1);

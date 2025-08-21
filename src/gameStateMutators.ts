@@ -147,6 +147,7 @@ export function resetBalls(gameState: GameState) {
       hitSinceBounce: 0,
       brokenSinceBounce: 0,
       sidesHitsSinceBounce: 0,
+      wrapsSinceBounce: 0,
       sapperUses: 0,
     });
   }
@@ -169,6 +170,7 @@ export function putBallsAtPuck(gameState: GameState) {
     ball.hitSinceBounce = 0;
     ball.brokenSinceBounce = 0;
     ball.sidesHitsSinceBounce = 0;
+    ball.wrapsSinceBounce = 0;
     ball.piercePoints = gameState.perks.pierce * 3;
   });
 }
@@ -1791,7 +1793,6 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   }
 
   // Bounces
-
   const borderHitCode = bordersHitCheck(
     gameState,
     ball,
@@ -1806,8 +1807,9 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     if (
       gameState.perks.wrap_left &&
       borderHitCode % 2 &&
-      //   x might be moved by wrap so we rely on previousX
-      ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2
+      // x might be moved by wrap, so we rely on previousX
+      ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2 &&
+        underWrapLimit(gameState, ball)
     ) {
       schedulGameSound(gameState, "plouf", ball.x, 1);
       ball.x = gameState.offsetX + gameState.gameZoneWidth - gameState.ballSize;
@@ -1828,8 +1830,9 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     if (
       gameState.perks.wrap_right &&
       borderHitCode % 2 &&
-      //   x might be moved by wrap so we rely on previousX
-      ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2
+      // x might be moved by wrap, so we rely on previousX
+      ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2 &&
+        underWrapLimit(gameState, ball)
     ) {
       schedulGameSound(gameState, "plouf", ball.x, 1);
       ball.x = gameState.offsetX + gameState.ballSize;
@@ -1848,14 +1851,14 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       );
     }
 
-    if (gameState.perks.wrap_up && borderHitCode >= 2) {
+    if (gameState.perks.wrap_up && borderHitCode >= 2 && underWrapLimit(gameState, ball)) {
       applyWrapUp(gameState, ball, gameState.ballSize / 2);
     }
 
     if (
       gameState.perks.left_is_lava &&
       borderHitCode % 2 &&
-      //   x might be moved by wrap so we rely on previousX
+      // x might be moved by wrap, so we rely on previousX
       ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2
     ) {
       resetCombo(gameState, ball.x, ball.y);
@@ -1864,7 +1867,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     if (
       gameState.perks.right_is_lava &&
       borderHitCode % 2 &&
-      //   x might be moved by wrap so we rely on previousX
+      // x might be moved by wrap, so we rely on previousX
       ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2
     ) {
       resetCombo(gameState, ball.x, ball.y);
@@ -1959,6 +1962,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.hitSinceBounce = 0;
     ball.brokenSinceBounce = 0;
     ball.sidesHitsSinceBounce = 0;
+    ball.wrapsSinceBounce = 0;
     ball.sapperUses = 0;
     ball.piercePoints = gameState.perks.pierce * 3;
   }
@@ -2429,6 +2433,15 @@ export function zenTick(gameState: GameState) {
       gameState.gameZoneHeight - gameState.puckHeight,
     );
   }
+}
+
+function underWrapLimit(gameState:GameState, ball:Ball){
+  ball.wrapsSinceBounce++
+  if(ball.wrapsSinceBounce>10){
+    ball.wrapsSinceBounce=0
+    return false
+  }
+  return true
 }
 
 function applyWrapUp(gameState: GameState, ball: Ball | Coin, radius) {
