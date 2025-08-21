@@ -31,6 +31,7 @@
     "editor.title": "ویرایشگر سطح",
     "gameOver.creative": "این دست ثبت نخواهد شد.",
     "gameOver.cumulative_total": "امتیاز کل شما از {{startTs}} به {{endTs}} رسید.",
+    "gameOver.lastLevelSummary": "در مرحله {{level}} شما {{levelCoughtCoins}} سکه از {{levelSpawnedCoins}} ({{catchRate}}%) را در {{duration}} ثانیه گرفتید. توپ {{levelMisses}} بار به آجرها برخورد نکرد.",
     "gameOver.lost.summary": "پس از گرفتن {{score}} سکه، توپ را از دست دادید.",
     "gameOver.lost.title": "پایان بازی",
     "gameOver.stats.balls_lost": "توپ‌های از دست رفته",
@@ -422,6 +423,5 @@
     "upgrades.yoyo.verbose_description": "برعکس تله‌کینزی است، توپ را وقتی به پایین برمی‌گردد کنترل کنید.",
     "upgrades.zen.name": "ذن",
     "upgrades.zen.tooltip": "سکه‌های بیشتر اگر بمب‌ها را فعال نکنید",
-    "upgrades.zen.verbose_description": "+{{lvl}} ترکیب هر ۳ ثانیه، با انفجار بازنشانی می‌شود",
-    "gameOver.lastLevelSummary": "در سطح {سطح} شما سکه ها را از سکه های کاشته شده خارج می کنید (catchRate}}٪ در چند ثانیه. توپ، آجرها را از دست داد (s)"
+    "upgrades.zen.verbose_description": "+{{lvl}} ترکیب هر ۳ ثانیه، با انفجار بازنشانی می‌شود"
 }
