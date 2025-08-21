@@ -332,9 +332,13 @@ bubble : pops and ball goes through
 
 ## Done
 
+### Limit wraps to 10 to avoid softlock
+
 ### Android target version upgrade
 
 To be allowed on the play store
+
+### Persian language
 
 ## 29210760
 
@@ -1026,4 +1030,6 @@ To be allowed on the play store
 ### Warn about unbounded
 
 ### Red border dashes
+
+## Nouvelle liste
 

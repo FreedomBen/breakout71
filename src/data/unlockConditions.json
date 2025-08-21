@@ -919,5 +919,10 @@
     "required": ["double_or_nothing", "ball_attract_ball", "etherealcoins"],
     "forbidden": ["trampoline", "forgiving", "golden_goose"],
     "minScore": 17400
+  },
+  "Iran": {
+    "required": ["forgiving", "golden_goose", "viscosity"],
+    "forbidden": ["implosions", "limitless", "fountain_toss"],
+    "minScore": 17500
   }
 }

@@ -1809,7 +1809,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       borderHitCode % 2 &&
       // x might be moved by wrap, so we rely on previousX
       ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2 &&
-        underWrapLimit(gameState, ball)
+      underWrapLimit(gameState, ball)
     ) {
       schedulGameSound(gameState, "plouf", ball.x, 1);
       ball.x = gameState.offsetX + gameState.gameZoneWidth - gameState.ballSize;
@@ -1832,7 +1832,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       borderHitCode % 2 &&
       // x might be moved by wrap, so we rely on previousX
       ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2 &&
-        underWrapLimit(gameState, ball)
+      underWrapLimit(gameState, ball)
     ) {
       schedulGameSound(gameState, "plouf", ball.x, 1);
       ball.x = gameState.offsetX + gameState.ballSize;
@@ -1851,7 +1851,11 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       );
     }
 
-    if (gameState.perks.wrap_up && borderHitCode >= 2 && underWrapLimit(gameState, ball)) {
+    if (
+      gameState.perks.wrap_up &&
+      borderHitCode >= 2 &&
+      underWrapLimit(gameState, ball)
+    ) {
       applyWrapUp(gameState, ball, gameState.ballSize / 2);
     }
 
@@ -2435,13 +2439,13 @@ export function zenTick(gameState: GameState) {
   }
 }
 
-function underWrapLimit(gameState:GameState, ball:Ball){
-  ball.wrapsSinceBounce++
-  if(ball.wrapsSinceBounce>10){
-    ball.wrapsSinceBounce=0
-    return false
+function underWrapLimit(gameState: GameState, ball: Ball) {
+  ball.wrapsSinceBounce++;
+  if (ball.wrapsSinceBounce > 10) {
+    ball.wrapsSinceBounce = 0;
+    return false;
   }
-  return true
+  return true;
 }
 
 function applyWrapUp(gameState: GameState, ball: Ball | Coin, radius) {
