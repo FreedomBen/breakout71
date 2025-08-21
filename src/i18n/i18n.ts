@@ -7,6 +7,7 @@ import tr from "./tr.json";
 import de from "./de.json";
 import ko from "./ko.json";
 import zh from "./zh.json";
+import fa from "./fa.json";
 import zh_Hant from "./zh_Hant.json";
 import br from "./pt_BR.json";
 
@@ -80,8 +81,13 @@ export const languages = [
     text: "한국인",
     value: "ko",
     strings: ko,
-
     levelName: "Korea",
+  },
+  {
+    text: "فارسی",
+    value: "fa",
+    strings: fa,
+    levelName: "Iran",
   },
 ];
 
