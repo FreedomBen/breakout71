@@ -1689,7 +1689,20 @@
     "name": "Iran",
     "size": 9,
     "bricks": "CCCCCCCCCCCCCCCCCCCCCCCCCCCWWWWSWWWWWWWSWSWWWWWWWSWWWWSSSSSSSSSSSSSSSSSSSSSSSSSSS",
-    "svg": null,
-    "color": ""
+    "credit": ""
+  },
+  {
+    "color": "#115988",
+    "size": 6,
+    "bricks": "____y____l___gggg__gBBg__gBBg__gggg_",
+    "name": "bomb",
+    "credit": "By Den1251"
+  },
+  {
+    "color": "#000000",
+    "size": 9,
+    "bricks": "___RRR_____RRRRR____R___R_______RR______RR_______R_________________R_____________",
+    "name": "Question mark",
+    "credit": "Why? By Den1251"
   }
 ]

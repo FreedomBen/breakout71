@@ -924,5 +924,15 @@
     "required": ["forgiving", "golden_goose", "viscosity"],
     "forbidden": ["implosions", "limitless", "fountain_toss"],
     "minScore": 17500
+  },
+  "bomb": {
+    "required": ["unbounded", "limitless", "helium"],
+    "forbidden": ["viscosity", "pierce", "forgiving"],
+    "minScore": 17600
+  },
+  "Question mark": {
+    "required": ["ottawa_treaty", "skip_last", "bricks_attract_coins"],
+    "forbidden": ["unbounded", "limitless", "wrap_right"],
+    "minScore": 17700
   }
 }

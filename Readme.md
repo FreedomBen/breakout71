@@ -340,6 +340,8 @@ To be allowed on the play store
 
 ### Persian language
 
+### Added bomb and question mark levels
+
 ## 29210760
 
 ### added level toadshield by  Luca Bernd
