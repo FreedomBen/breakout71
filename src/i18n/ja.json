@@ -1,8 +1,8 @@
 {
-    "confirmRestart.text": "新しいゲームを始めるには 続行したいですか?",
+    "confirmRestart.text": "新しくゲームを始めようとしています。このまま続けてもよろしいですか？",
     "confirmRestart.no": "キャンセル",
-    "confirmRestart.title": "新しいゲームを始める?",
-    "confirmRestart.yes": "ゲームを再起動する",
+    "confirmRestart.title": "新しいゲーム始めますか？",
+    "confirmRestart.yes": "最初から始める",
     "editor.editing.bigger": "レベル サイズを増加して下さい",
     "editor.editing.color": "カラーリスト(最大5/レベル)",
     "editor.editing.copied": "コピーされたレベルコード",
@@ -343,5 +343,16 @@
     "upgrades.yoyo.verbose_description": "テレキネシスの反対側でボールをコントロールし、転倒します.",
     "upgrades.zen.name": "ログイン",
     "upgrades.zen.tooltip": "爆弾をトリガーしない場合は、より多くのコイン",
-    "upgrades.zen.verbose_description": "+{{lvl}}コンボ3秒ごとに、爆発があるときにリセット"
+    "upgrades.zen.verbose_description": "+{{lvl}}コンボ3秒ごとに、爆発があるときにリセット",
+    "gameOver.stats.combo_max": "最大コンボ",
+    "gameOver.stats.duration_per_level": "レベルごとの時間",
+    "gameOver.stats.hit_rate": "ヒットレート",
+    "gameOver.stats.level_reached": "到達レベル",
+    "gameOver.stats.total_score": "合計スコア",
+    "gameOver.stats.upgrades_applied": "取得アップグレード",
+    "gameOver.stats_intro": "あなたのゲーム統計を、あなたのベスト {{count}} ゲームと比較したものを以下からご覧ください。",
+    "gameOver.unlocked_perk": "解禁したアップグレード",
+    "gameOver.unlocked_perk_plural": "{{count}}個の特典が解禁されました",
+    "gameOver.win.summary": "ゲームオーバー。あなたは合計で{{score}}コインを獲得しました。",
+    "gameOver.win.title": "このゲームをクリアしました"
 }
