@@ -155,7 +155,7 @@
     "settings.save_file_error": "오류 로딩 파일",
     "settings.save_file_loaded": "파일 저장",
     "settings.save_file_loaded_help": "앱은 이제 저장소를 적용하기 위해 다시로드됩니다",
-    "settings.save_file_loaded_ok": "·",
+    "settings.save_file_loaded_ok": "괜찮아요",
     "settings.show_fps": "FPS 카운터",
     "settings.show_fps_help": "앱의 성능 모니터링",
     "settings.show_stats": "실시간 통계보기",
