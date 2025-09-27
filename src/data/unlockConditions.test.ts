@@ -33,7 +33,7 @@ describe("conditions", () => {
       });
     if (Object.keys(toAdd).length) {
       console.debug(
-        "Missing hardcoded conditons\n\n" +
+        "Missing hardcoded conditions\n\n" +
           JSON.stringify(toAdd).slice(1, -1) +
           "\n\n",
       );

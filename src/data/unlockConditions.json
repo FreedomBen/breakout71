@@ -926,13 +926,43 @@
     "minScore": 17500
   },
   "bomb": {
-    "required": ["unbounded", "limitless", "helium"],
+    "required": ["sapper", "implosions"],
     "forbidden": ["viscosity", "pierce", "forgiving"],
     "minScore": 17600
   },
   "Question mark": {
-    "required": ["ottawa_treaty", "skip_last", "bricks_attract_coins"],
-    "forbidden": ["unbounded", "limitless", "wrap_right"],
-    "minScore": 17700
+    "required": ["asceticism", "compound_interest"],
+    "forbidden": ["buoy", "zen", "base_combo"],
+    "minScore": 2000
+  },
+  "apple": {
+    "required": ["bricks_attract_ball", "bricks_attract_coins", "superhot"],
+    "forbidden": ["right_is_lava", "sturdy_bricks", "skip_last"],
+    "minScore": 17800
+  },
+  "Crosshair 2": {
+    "required": ["sapper", "ottawa_treaty", "bigger_explosions"],
+    "forbidden": ["pierce_color", "pierce", "bricks_attract_ball"],
+    "minScore": 2000
+  },
+  "Tomato & Basil": {
+    "required": ["fountain_toss", "trickledown", "golden_goose"],
+    "forbidden": ["telekinesis", "reach", "coin_magnet"],
+    "minScore": 18000
+  },
+  "Bad tooth": {
+    "required": ["shocks", "ball_attract_ball", "respawn"],
+    "forbidden": ["bigger_puck", "ball_repulse_ball", "ottawa_treaty"],
+    "minScore": 18100
+  },
+  "Cloud sun and birds": {
+    "required": ["rainbow", "ghost_coins", "trampoline"],
+    "forbidden": ["bricks_attract_coins", "metamorphosis", "slow_down"],
+    "minScore": 18200
+  },
+  "Palestine": {
+    "required": ["smaller_puck", "compound_interest", "superhot"],
+    "forbidden": ["coin_magnet", "bigger_puck", "helium"],
+    "minScore": 18300
   }
 }

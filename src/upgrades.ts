@@ -29,7 +29,7 @@ export const rawUpgrades = [
     requires: "",
     threshold: 0,
     gift: false,
-    id: "slow_down",
+    id: "slow_down", // slow ball
     max: 2,
     name: t("upgrades.slow_down.name"),
     help: (lvl: number) => t("upgrades.slow_down.tooltip", { lvl }),
@@ -54,7 +54,7 @@ export const rawUpgrades = [
     requires: "",
     threshold: 0,
     gift: false,
-    id: "bigger_puck",
+    id: "bigger_puck", // bigger paddle
     max: 2,
     name: t("upgrades.bigger_puck.name"),
     help: () => t("upgrades.bigger_puck.tooltip"),
@@ -385,7 +385,7 @@ export const rawUpgrades = [
     requires: "multiball",
     threshold: 21000,
     gift: false,
-    id: "ball_repulse_ball",
+    id: "ball_repulse_ball", // personal space
     max: 3,
     name: t("upgrades.ball_repulse_ball.name"),
     help: (lvl: number) => t("upgrades.ball_repulse_ball.tooltip"),
@@ -397,7 +397,7 @@ export const rawUpgrades = [
     requires: "multiball",
     threshold: 25000,
     gift: false,
-    id: "ball_attract_ball",
+    id: "ball_attract_ball", // gravity
     max: 3,
     name: t("upgrades.ball_attract_ball.name"),
     help: (lvl: number) => t("upgrades.ball_attract_ball.tooltip"),
@@ -768,7 +768,7 @@ export const rawUpgrades = [
     category: categories.combo_boost,
     requires: "",
     threshold: 0,
-    id: "base_combo",
+    id: "base_combo", //strong foundations
     gift: true,
     max: 7,
     name: t("upgrades.base_combo.name"),
@@ -844,7 +844,7 @@ export const rawUpgrades = [
     category: categories.simple,
     requires: "",
     threshold: 9000,
-    id: "bigger_explosions",
+    id: "bigger_explosions", // kaboom
     gift: false,
     max: 1,
     name: t("upgrades.bigger_explosions.name"),

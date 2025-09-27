@@ -49,6 +49,8 @@ the ball phases through 2 bricks then becomes solid (lvl2: through 6 bricks, lvl
 
 ### [colin]Relative time — ball speed depends on its position: if it's high up on thi screen it's fast, if it's lower it's slower
 
+### [colin]Relative time — ball speed depends on its position: if it's high up on thi screen it's fast, if it's lower it's slower
+
 ### ball attracted by bricks of the color of the ball
 
 ### level flips horizontally every time a ball bounces on paddle
@@ -157,6 +159,10 @@ store much more details about run (level by level) as numbers only (instead of j
 ### add lab mode where you need to make three builds (complex, lots of clicking, not fun)
 
 ## UX / gameplay / Engine
+
+### unlock levels by earning coins while matching condition
+
+not by reaching score only, cumulate unlocks across runs
 
 ### other block types
 

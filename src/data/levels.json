@@ -1692,10 +1692,9 @@
     "credit": ""
   },
   {
-    "color": "#115988",
+    "name": "bomb",
     "size": 6,
     "bricks": "____y____l___gggg__gBBg__gBBg__gggg_",
-    "name": "bomb",
     "credit": "By Den1251"
   },
   {
@@ -1703,6 +1702,48 @@
     "size": 9,
     "bricks": "___RRR_____RRRRR____R___R_______RR______RR_______R_________________R_____________",
     "name": "Question mark",
-    "credit": "Why? By Den1251"
+    "credit": "Why? Den1251"
+  },
+  {
+    "color": "#000000",
+    "size": 7,
+    "bricks": "____C_____C____RRRRR__RRRRr__RRRrr__RRrrr__Rrrrr_",
+    "name": "apple",
+    "credit": "Just an apple. Not yet fully red, but it's an apple! Den1251"
+  },
+  {
+    "color": "#115988",
+    "size": 11,
+    "bricks": "ggggggggggggggg_l_gggggg___l___gggg___l___ggg____l____ggllllBllllgg____l____ggg___l___gggg___l___gggggg_l_ggggggggggggggg",
+    "name": "Crosshair 2",
+    "credit": "Den1251"
+  },
+  {
+    "color": "#000000",
+    "size": 8,
+    "bricks": "__________rrrr___rSSrSr__rSRRrr__rrrrRrk_rRrSSk___rrrrkk_____k__",
+    "name": "Tomato & Basil",
+    "credit": "make a soup :ok_hand: By obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 8,
+    "bricks": "__eWWWW____BWWW___eWWWW_________WWWWe__rWWWB____WWWeS_r________r",
+    "name": "Bad tooth",
+    "credit": "Eat some yeast and it'll go away !~ By obigre"
+  },
+  {
+    "color": "#115988",
+    "size": 8,
+    "bricks": "_g______g__g________yy____WWWy__WWaWWWWaaWWaaWaa_aWW____________",
+    "name": "Cloud sun and birds",
+    "credit": "We still have the sky. By obigre"
+  },
+  {
+    "color": "#115988",
+    "size": 8,
+    "bricks": "gggggggWRgggggggRRRWWWWWRRRRWWWWRRRWWWWWRkkkkkkkkkkkkkkk________",
+    "name": "Palestine",
+    "credit": "https://en.wikipedia.org/wiki/Palestine By obigre"
   }
 ]
