@@ -964,5 +964,10 @@
     "required": ["smaller_puck", "compound_interest", "superhot"],
     "forbidden": ["coin_magnet", "bigger_puck", "helium"],
     "minScore": 18300
+  },
+  "Never Gonna Give You Up": {
+    "required": ["respawn", "superhot", "sturdy_bricks"],
+    "forbidden": ["multiball", "pierce", "pierce_color"],
+    "minScore": 19877
   }
 }
