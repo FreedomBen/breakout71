@@ -1736,14 +1736,13 @@
   {
     "name": "Palestine",
     "size": 8,
-    "bricks": "gggggggWRgggggggRRRWWWWWRRRRWWWWRRRWWWWWRkkkkkkkkkkkkkkk________",
+    "bricks": "ggggggggRgggggggRRRWWWWWRRRRWWWWRRRWWWWWRkkkkkkkkkkkkkkk________",
     "credit": "https://en.wikipedia.org/wiki/Palestine By obigre"
   },
   {
-    "color": "#000000",
+    "name": "Never Gonna Give You Up",
     "size": 19,
     "bricks": "_____W______W_W_____WWW_W_W_WWWW__W_W_W___W_W__WW_WW___WW_WWWW__WW___WW__WW__WWW__W_W__W_W___W__W________________WWWWW__WWWWWWW_W_WW_W_W___W_____W___W__W__WW_W_WWW_W___WW__W_W__W_W_W_W__WW___W_WW_W_WWW_W_W__W__WWWW_W_____W_W__WW____W_WWWWWWW__WWW_W___W__________WWW__W_WWWW_W_W__WW_WWWWWW____W_____W_W_W_WWW__W_WW__W__WW_WW_W_WW_W_____WW_____W_W_W_W_W__W_WWW_W_",
-    "name": "Never Gonna Give You Up",
     "credit": "https://youtu.be/dQw4w9WgXcQ Spidapida"
   }
 ]
