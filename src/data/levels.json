@@ -1746,45 +1746,39 @@
     "credit": "https://youtu.be/dQw4w9WgXcQ Spidapida"
   },
   {
-    "color": "#000000",
+    "name": "Pumpkin",
     "size": 15,
     "bricks": "____kkkk__________k____k__________OOOkkOOs_____OOOOOOOOOOsO__OOOOOOOOOOOsO__OOOB_OOOB_OsOsOOOO__OOO__OOOsOOOOOOOOOOOOOOsOO_OOOOOOOO_OOsOO_O_O_O_O_OOOsOOO________OsOR_OOOO_O_O_OOsOR_OOOOOOOOsOsRR____OOsssRRRRR_________________",
-    "name": "Pumpkin",
     "credit": "Made for 2025 Halloween Community Challenge - By Sopha"
   },
   {
-    "color": "#000000",
+    "name": "Potion of Addiction",
     "size": 13,
     "bricks": "_____sss_________WWWWW________WsssW_________W_l__________W_l_________W___l_______WklCCkl_____WklCCCCkl____WklCCCCkl____WkkCCCkkl____lkkkkkkkl_____lkkkkkl_______lllll____",
-    "name": "Potion of Addiction",
     "credit": "https://minecraft.wiki/w/Potion_of_Poison - by Spidapida"
   },
   {
-    "color": "#115988",
+    "name": "Huginn & Muninn",
     "size": 8,
     "bricks": "_gggggg_gglWWgggglggltlggbggglWggbgggglggltlgglggggtblgglgggggg_",
-    "name": "Huginn & Muninn",
-    "credit": "Halloween Community Challenge 2025 - https://en.https://wikipedia.org/wiki/Huginn_and_Muninn by obigre"
+    "credit": "Halloween Community Challenge 2025 - https://wikipedia.org/wiki/Huginn_and_Muninn by obigre"
   },
   {
-    "color": "#000000",
+    "name": "Rosie the Dog",
     "size": 14,
     "bricks": "___________________O__________OO_O___________OOO_________BOOBO___Oee___eeeOOG___Oe___s_GGGOO__OOe____eyOOOO__Oe_____eeOOOO_Oe_____OeOOOOOOe_____O_O_OOee_____O_O_OO_________________________________",
-    "name": "Rosie the Dog",
     "credit": "My dog Rosie, born in 2017 in Romania - by Beirifu"
   },
   {
-    "color": "#000000",
+    "name": "Lockpicking",
     "size": 8,
     "bricks": "____ee_____e__e___O____e_OOO___eOOOOO___OOBOOO___gOOO_____OO____",
-    "name": "Lockpicking",
     "credit": "https://en.wikipedia.org/wiki/Lock_picking by obigre"
   },
   {
-    "color": "#115988",
+    "name": "Eruption",
     "size": 11,
     "bricks": "______O_______O____O___O_SO_O_S______OOOS_______OOS_____OO__OO______SO_OO________SOS_______gOOOBg____ggBSOOgg__gggggOggg_",
-    "name": "Eruption",
     "credit": "https://en.wikipedia.org/wiki/Volcanic_eruption by obigre"
   }
 ]
