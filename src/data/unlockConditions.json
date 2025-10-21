@@ -969,5 +969,35 @@
     "required": ["respawn", "superhot", "sturdy_bricks"],
     "forbidden": ["multiball", "pierce", "pierce_color"],
     "minScore": 19877
+  },
+  "Potion of Addiction": {
+    "required": ["addiction", "helium", "limitless", "rainbow", "slow_down"],
+    "forbidden": [],
+    "minScore": 420
+  },
+  "Lockpicking": {
+    "required": ["ghost_coins", "telekinesis", "smaller_puck"],
+    "forbidden": ["puck_repulse_ball", "bigger_puck", "pierce"],
+    "minScore": 20000
+  },
+  "Eruption": {
+    "required": ["implosions", "happy_family", "golden_goose"],
+    "forbidden": ["bigger_explosions", "bigger_puck", "telekinesis"],
+    "minScore": 20100
+  },
+  "Pumpkin": {
+    "required": ["trickledown", "ball_repulse_ball", "chill"],
+    "forbidden": ["puck_repulse_ball", "reach", "implosions"],
+    "minScore": 18500
+  },
+  "Huginn & Muninn": {
+    "required": ["concave_puck", "hot_start", "bigger_explosions"],
+    "forbidden": ["etherealcoins", "chill", "reach"],
+    "minScore": 18700
+  },
+  "Rosie the Dog": {
+    "required": ["streak_shots", "soft_reset", "fountain_toss"],
+    "forbidden": ["hot_start", "bricks_attract_ball", "wrap_left"],
+    "minScore": 18800
   }
 }

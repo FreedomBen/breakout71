@@ -1744,5 +1744,47 @@
     "size": 19,
     "bricks": "_____W______W_W_____WWW_W_W_WWWW__W_W_W___W_W__WW_WW___WW_WWWW__WW___WW__WW__WWW__W_W__W_W___W__W________________WWWWW__WWWWWWW_W_WW_W_W___W_____W___W__W__WW_W_WWW_W___WW__W_W__W_W_W_W__WW___W_WW_W_WWW_W_W__W__WWWW_W_____W_W__WW____W_WWWWWWW__WWW_W___W__________WWW__W_WWWW_W_W__WW_WWWWWW____W_____W_W_W_WWW__W_WW__W__WW_WW_W_WW_W_____WW_____W_W_W_W_W__W_WWW_W_",
     "credit": "https://youtu.be/dQw4w9WgXcQ Spidapida"
+  },
+  {
+    "color": "#000000",
+    "size": 15,
+    "bricks": "____kkkk__________k____k__________OOOkkOOs_____OOOOOOOOOOsO__OOOOOOOOOOOsO__OOOB_OOOB_OsOsOOOO__OOO__OOOsOOOOOOOOOOOOOOsOO_OOOOOOOO_OOsOO_O_O_O_O_OOOsOOO________OsOR_OOOO_O_O_OOsOR_OOOOOOOOsOsRR____OOsssRRRRR_________________",
+    "name": "Pumpkin",
+    "credit": "Made for 2025 Halloween Community Challenge - By Sopha"
+  },
+  {
+    "color": "#000000",
+    "size": 13,
+    "bricks": "_____sss_________WWWWW________WsssW_________W_l__________W_l_________W___l_______WklCCkl_____WklCCCCkl____WklCCCCkl____WkkCCCkkl____lkkkkkkkl_____lkkkkkl_______lllll____",
+    "name": "Potion of Addiction",
+    "credit": "https://minecraft.wiki/w/Potion_of_Poison - by Spidapida"
+  },
+  {
+    "color": "#115988",
+    "size": 8,
+    "bricks": "_gggggg_gglWWgggglggltlggbggglWggbgggglggltlgglggggtblgglgggggg_",
+    "name": "Huginn & Muninn",
+    "credit": "Halloween Community Challenge 2025 - https://en.wikipedia.org/wiki/Huginn_and_Muninn by obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 14,
+    "bricks": "___________________O__________OO_O___________OOO_________BOOBO___Oee___eeeOOG___Oe___s_GGGOO__OOe____eyOOOO__Oe_____eeOOOO_Oe_____OeOOOOOOe_____O_O_OOee_____O_O_OO_________________________________",
+    "name": "Rosie the Dog",
+    "credit": "My dog Rosie, born in 2017 in Romania - by Beirifu"
+  },
+  {
+    "color": "#000000",
+    "size": 8,
+    "bricks": "____ee_____e__e___O____e_OOO___eOOOOO___OOBOOO___gOOO_____OO____",
+    "name": "Lockpicking",
+    "credit": "en.wikipedia.org/wiki/Lock_picking by obigre"
+  },
+  {
+    "color": "#115988",
+    "size": 11,
+    "bricks": "______O_______O____O___O_SO_O_S______OOOS_______OOS_____OO__OO______SO_OO________SOS_______gOOOBg____ggBSOOgg__gggggOggg_",
+    "name": "Eruption",
+    "credit": "https://en.wikipedia.org/wiki/Volcanic_eruption by obigre"
   }
 ]
