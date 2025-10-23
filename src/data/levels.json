@@ -1780,5 +1780,26 @@
     "size": 11,
     "bricks": "______O_______O____O___O_SO_O_S______OOOS_______OOS_____OO__OO______SO_OO________SOS_______gOOOBg____ggBSOOgg__gggggOggg_",
     "credit": "https://en.wikipedia.org/wiki/Volcanic_eruption by obigre"
+  },
+  {
+    "color": "#115988",
+    "size": 21,
+    "bricks": "__________g___________________ggg___________________g__________________ggggg_______________ggggggg_______________ggggg________________ggggg_________________ggg_______________________________________ggg__________________ggg__________________ggg__________________ggg_________________ggggg________________ggggg_______________ggggggg_____________ggggggggg_________________________________ggggggggg___________ggggggggggg__________ggggggggggg_____",
+    "name": "Chess - King Piece",
+    "credit": "By Spidapida - https://www.chess.com/news/view/grandmaster-daniel-naroditsky-dies-at-29"
+  },
+  {
+    "color": "#000000",
+    "size": 9,
+    "bricks": "yyysPsPPPyyyyyyysPyyryyryysySsyyysSy_Ss__SsS__Sr___sS__SS___SS_srrsrsrssSSSSSSSSS",
+    "name": "L'Angélus",
+    "credit": "https://en.wikipedia.org/wiki/The_Angelus_(painting) by obigre"
+  },
+  {
+    "color": "#115988",
+    "size": 14,
+    "bricks": "g_______g_____gg_____gg_____ggggggggg_____ggGgggGgg_____ggGgggGgg_____ggggpgggg_G____ggggggg__G_____gggggOOOOOO__gggggOOgOOgOO_gggggOggOOggOggggggOOOOOOOOggggggOOggggOOggggggOOOggOOOgggggggOOOOOO_",
+    "name": "Cat and Pumkin",
+    "credit": "https://youtu.be/GGMiszoJ5nI"
   }
 ]

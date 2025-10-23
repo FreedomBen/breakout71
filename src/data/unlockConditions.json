@@ -978,12 +978,12 @@
   "Lockpicking": {
     "required": ["ghost_coins", "telekinesis", "smaller_puck"],
     "forbidden": ["puck_repulse_ball", "bigger_puck", "pierce"],
-    "minScore": 20000
+    "minScore": 18300
   },
   "Eruption": {
     "required": ["implosions", "happy_family", "golden_goose"],
     "forbidden": ["bigger_explosions", "bigger_puck", "telekinesis"],
-    "minScore": 20100
+    "minScore": 18400
   },
   "Pumpkin": {
     "required": ["trickledown", "ball_repulse_ball", "chill"],
@@ -999,5 +999,20 @@
     "required": ["streak_shots", "soft_reset", "fountain_toss"],
     "forbidden": ["hot_start", "bricks_attract_ball", "wrap_left"],
     "minScore": 18800
+  },
+  "Chess - King Piece": {
+    "required": ["nbricks", "smaller_puck"],
+    "forbidden": [],
+    "minScore": 18900
+  },
+  "L'Angélus": {
+    "required": ["steering", "rainbow", "ghost_coins"],
+    "forbidden": ["hot_start", "addiction", "base_combo"],
+    "minScore": 19000
+  },
+  "Cat and Pumkin": {
+    "required": ["hot_start", "metamorphosis", "superhot"],
+    "forbidden": ["transparency", "left_is_lava", "pierce_color"],
+    "minScore": 19300
   }
 }
