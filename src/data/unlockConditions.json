@@ -1010,7 +1010,7 @@
     "forbidden": ["hot_start", "addiction", "base_combo"],
     "minScore": 19000
   },
-  "Cat and Pumkin": {
+  "Pumpkinhead and Black Cat": {
     "required": ["hot_start", "metamorphosis", "superhot"],
     "forbidden": ["transparency", "left_is_lava", "pierce_color"],
     "minScore": 19300

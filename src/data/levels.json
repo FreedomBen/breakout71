@@ -168,6 +168,12 @@
     "credit": ""
   },
   {
+    "name": "icon:fountain_toss",
+    "size": 8,
+    "bricks": "_____y_____y________________y____WWWWWW_WtyttytWWttytttW_WWWWWW_",
+    "credit": "Icon by pedr01gb"
+  },
+  {
     "name": "icon:ghost_coins",
     "size": 7,
     "bricks": "__bbb___bbbbb__bybyb__bbbbb__byyyb__bbbbb__b_b_b_",
@@ -1788,44 +1794,33 @@
     "credit": "https://en.wikipedia.org/wiki/The_Angelus_(painting) by obigre"
   },
   {
-    "name": "Cat and Pumkin",
+    "name": "Pumpkinhead and Black Cat",
     "size": 14,
     "bricks": "g_______g_____gg_____gg_____ggggggggg_____ggGgggGgg_____ggGgggGgg_____ggggpgggg_G____ggggggg__G_____gggggOOOOOO__gggggOOgOOgOO_gggggOggOOggOggggggOOOOOOOOggggggOOggggOOggggggOOOggOOOgggggggOOOOOO_",
     "credit": "https://youtu.be/GGMiszoJ5nI"
   },
   {
-    "color": "#000000",
-    "size": 8,
-    "bricks": "_____y_____y________________y____WWWWWW_WtyttytWWttytttW_WWWWWW_",
-    "name": "icon:fountain_toss",
-    "credit": "Icon by pedr01gb"
-  },
-  {
-    "color": "#000000",
+    "name": "christmas tree",
     "size": 12,
     "bricks": "_________________yy__________yy__________kk__________kS_________kkkk________kSkk_______kkkkkk_____kkGkkykk____kkkkkkkk_______OO__________OO_____",
-    "name": "christmas tree",
     "credit": "By Den1251"
   },
   {
-    "color": "#000000",
+    "name": "Mountain Climber",
     "size": 9,
     "bricks": "__________rrrrrrr_rrrrrrrrrreeeerrrrrbeeberrr_eeeeerr___kkkkr____W__W____________",
-    "name": "Mountain Climber",
     "credit": "She is a friend of my mother's. Sometimes she visits us and brings strawberry pie.  - by pedr01gb"
   },
   {
-    "color": "#000000",
+    "name": "Floaty Ghost",
     "size": 7,
     "bricks": "___WWWW__WW_W___WWWWW_WWW___WWWWW_W_lWWWWW__WlWWl",
-    "name": "Floaty Ghost",
     "credit": "My kid sometimes loves to pretend they're a little ghost!   …Wait, I can't see their legs…  by pedr01gb"
   },
   {
-    "color": "#000000",
+    "name": "The Skull",
     "size": 10,
     "bricks": "___WWWWW____WWWWWWW__WW__WWW___WWW__W_____WWWW_WW_____WWWWW___W__W_W____WW_________WW_W_W_____WWWWW_",
-    "name": "The Skull",
     "credit": "By a friend of pedr01gb"
   }
 ]
