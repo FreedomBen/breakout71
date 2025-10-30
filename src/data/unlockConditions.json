@@ -1014,5 +1014,25 @@
     "required": ["hot_start", "metamorphosis", "superhot"],
     "forbidden": ["transparency", "left_is_lava", "pierce_color"],
     "minScore": 19300
+  },
+  "Floaty Ghost": {
+    "required": ["sacrifice", "extra_life", "transparency"],
+    "forbidden": ["respawn"],
+    "minScore": 4139
+  },
+  "christmas tree": {
+    "required": ["wrap_right", "wrap_up", "nbricks"],
+    "forbidden": ["three_cushion", "shocks", "sapper"],
+    "minScore": 19400
+  },
+  "Mountain Climber": {
+    "required": ["happy_family", "wrap_left", "extra_life"],
+    "forbidden": ["fountain_toss", "bricks_attract_coins", "passive_income"],
+    "minScore": 19500
+  },
+  "The Skull": {
+    "required": ["ball_attracts_coins", "asceticism", "addiction"],
+    "forbidden": ["bricks_attract_coins", "rainbow", "soft_reset"],
+    "minScore": 19700
   }
 }

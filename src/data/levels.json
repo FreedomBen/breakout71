@@ -168,12 +168,6 @@
     "credit": ""
   },
   {
-    "name": "icon:fountain_toss",
-    "size": 12,
-    "bricks": "_____________________y_________y______________y______y__y_____WWWWWWWW___WttttttttW_WtytttytyttWWtttyttttttWWWtyttttytWW_WWWWWWWWWW___WWWWWWWWW_",
-    "credit": ""
-  },
-  {
     "name": "icon:ghost_coins",
     "size": 7,
     "bricks": "__bbb___bbbbb__bybyb__bbbbb__byyyb__bbbbb__b_b_b_",
@@ -1782,24 +1776,56 @@
     "credit": "https://en.wikipedia.org/wiki/Volcanic_eruption by obigre"
   },
   {
-    "color": "#115988",
+    "name": "Chess - King Piece",
     "size": 21,
     "bricks": "__________g___________________ggg___________________g__________________ggggg_______________ggggggg_______________ggggg________________ggggg_________________ggg_______________________________________ggg__________________ggg__________________ggg__________________ggg_________________ggggg________________ggggg_______________ggggggg_____________ggggggggg_________________________________ggggggggg___________ggggggggggg__________ggggggggggg_____",
-    "name": "Chess - King Piece",
     "credit": "By Spidapida - https://www.chess.com/news/view/grandmaster-daniel-naroditsky-dies-at-29"
+  },
+  {
+    "name": "L'Angélus",
+    "size": 9,
+    "bricks": "yyysPsPPPyyyyyyysPyyryyryysySsyyysSy_Ss__SsS__Sr___sS__SS___SS_srrsrsrssSSSSSSSSS",
+    "credit": "https://en.wikipedia.org/wiki/The_Angelus_(painting) by obigre"
+  },
+  {
+    "name": "Cat and Pumkin",
+    "size": 14,
+    "bricks": "g_______g_____gg_____gg_____ggggggggg_____ggGgggGgg_____ggGgggGgg_____ggggpgggg_G____ggggggg__G_____gggggOOOOOO__gggggOOgOOgOO_gggggOggOOggOggggggOOOOOOOOggggggOOggggOOggggggOOOggOOOgggggggOOOOOO_",
+    "credit": "https://youtu.be/GGMiszoJ5nI"
+  },
+  {
+    "color": "#000000",
+    "size": 8,
+    "bricks": "_____y_____y________________y____WWWWWW_WtyttytWWttytttW_WWWWWW_",
+    "name": "icon:fountain_toss",
+    "credit": "Icon by pedr01gb"
+  },
+  {
+    "color": "#000000",
+    "size": 12,
+    "bricks": "_________________yy__________yy__________kk__________kS_________kkkk________kSkk_______kkkkkk_____kkGkkykk____kkkkkkkk_______OO__________OO_____",
+    "name": "christmas tree",
+    "credit": "By Den1251"
   },
   {
     "color": "#000000",
     "size": 9,
-    "bricks": "yyysPsPPPyyyyyyysPyyryyryysySsyyysSy_Ss__SsS__Sr___sS__SS___SS_srrsrsrssSSSSSSSSS",
-    "name": "L'Angélus",
-    "credit": "https://en.wikipedia.org/wiki/The_Angelus_(painting) by obigre"
+    "bricks": "__________rrrrrrr_rrrrrrrrrreeeerrrrrbeeberrr_eeeeerr___kkkkr____W__W____________",
+    "name": "Mountain Climber",
+    "credit": "She is a friend of my mother's. Sometimes she visits us and brings strawberry pie.  - by pedr01gb"
   },
   {
-    "color": "#115988",
-    "size": 14,
-    "bricks": "g_______g_____gg_____gg_____ggggggggg_____ggGgggGgg_____ggGgggGgg_____ggggpgggg_G____ggggggg__G_____gggggOOOOOO__gggggOOgOOgOO_gggggOggOOggOggggggOOOOOOOOggggggOOggggOOggggggOOOggOOOgggggggOOOOOO_",
-    "name": "Cat and Pumkin",
-    "credit": "https://youtu.be/GGMiszoJ5nI"
+    "color": "#000000",
+    "size": 7,
+    "bricks": "___WWWW__WW_W___WWWWW_WWW___WWWWW_W_lWWWWW__WlWWl",
+    "name": "Floaty Ghost",
+    "credit": "My kid sometimes loves to pretend they're a little ghost!   …Wait, I can't see their legs…  by pedr01gb"
+  },
+  {
+    "color": "#000000",
+    "size": 10,
+    "bricks": "___WWWWW____WWWWWWW__WW__WWW___WWW__W_____WWWW_WW_____WWWWW___W__W_W____WW_________WW_W_W_____WWWWW_",
+    "name": "The Skull",
+    "credit": "By a friend of pedr01gb"
   }
 ]
