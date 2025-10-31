@@ -193,7 +193,7 @@
     "unlocks.levels": "Kilidi açılmış seviyeler",
     "unlocks.minScore": "Kilidi açmak için bir koşuda ${{minScore}} 'a ulaşın.",
     "unlocks.minScoreWithPerks": "{{required}} ile ancak {{forbidden}} olmadan bir koşuda ${{minScore}} 'a ulaşın.",
-    "unlocks.minScoreWithPerksNoForbidden": "",
+    "unlocks.minScoreWithPerksNoForbidden": "Kilidini açmak için {{required}} ile çalışan {{minScore}} $ 'a ulaşmak.",
     "unlocks.minTotalScore": "Toplam ${{score}}biriktirin",
     "unlocks.reached": "En iyi skorunuz {{reached}}idi.",
     "unlocks.title_upgrades": "{{out_of}}yükseltmeden {{unlocked}} tanesinin kilidini açtınız",
