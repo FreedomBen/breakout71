@@ -403,5 +403,6 @@
     "upgrades.yoyo.verbose_description": "Jest to przeciwieństwo telekinezy, kontroluje piłkę, podczas gdy spada.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Więcej monet, jeśli nie wybuchnie bomby",
-    "upgrades.zen.verbose_description": "+ (lvl}} combo co 3s, ponownie się rozwiązał, gdy wybuchła eksplozja"
+    "upgrades.zen.verbose_description": "+ (lvl}} combo co 3s, ponownie się rozwiązał, gdy wybuchła eksplozja",
+    "unlocks.minScoreWithPerksNoForbidden": "Reach ${{minScore}} w biegu z {{required}} do odblokowania."
 }
