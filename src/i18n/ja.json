@@ -423,5 +423,6 @@
     "upgrades.clairvoyant.name": "Clairvoyant, オーストラリア",
     "upgrades.clairvoyant.tooltip": "今後のレベルを見る, レンガHPとボールの方向",
     "upgrades.clairvoyant.verbose_description": "適切なアップグレードを選択し、頑丈なレンガで何が起こっているかを理解するのに役立ちます。 レベル2と3は、dubiousユーティリティ(ループモードで到達可能)の追加知識をもたらす",
-    "upgrades.coin_magnet.name": "コインマグネット"
+    "upgrades.coin_magnet.name": "コインマグネット",
+    "unlocks.minScoreWithPerksNoForbidden": "${{minScore}} を {{required}} で実行してロック解除します."
 }
