@@ -193,7 +193,7 @@
     "unlocks.levels": "سطوح بازشده",
     "unlocks.minScore": "به امتیاز {{minScore}} در یک دست برسید تا باز شود.",
     "unlocks.minScoreWithPerks": "به امتیاز {{minScore}} در یک دست با {{required}} اما بدون {{forbidden}} برسید تا باز شود.",
-    "unlocks.minScoreWithPerksNoForbidden": "",
+    "unlocks.minScoreWithPerksNoForbidden": "برای باز کردن {minScore} در یک اجرا با {باید}.",
     "unlocks.minTotalScore": "در کل {{score}} امتیاز به‌دست آورید",
     "unlocks.reached": "بهترین امتیاز شما {{reached}} بود.",
     "unlocks.title_upgrades": "{{unlocked}} / {{out_of}} قدرت بازشده",
