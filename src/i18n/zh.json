@@ -193,6 +193,7 @@
     "unlocks.levels": "已解锁关卡",
     "unlocks.minScore": "在一场游戏中达到 ${{minScore}} 来解锁。",
     "unlocks.minScoreWithPerks": "在一场游戏中有 {{required}} 但没有 {{forbidden}} 达到 ${{minScore}} 来解锁。",
+    "unlocks.minScoreWithPerksNoForbidden": "",
     "unlocks.minTotalScore": "累计总分 {{score}}",
     "unlocks.reached": "你的最好分数是 {{reached}}。",
     "unlocks.title_upgrades": "{{unlocked}} / {{out_of}} 升级已经解锁",

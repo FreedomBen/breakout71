@@ -193,6 +193,7 @@
     "unlocks.levels": "Niveles desbloqueados",
     "unlocks.minScore": "Alcanza una puntuación de ${{minScore}} en una partida para desbloquearla.",
     "unlocks.minScoreWithPerks": "Alcanzar ${{minScore}} en un juego con {{required}} pero sin {{forbidden}}.",
+    "unlocks.minScoreWithPerksNoForbidden": "Alcanzar ${{minScore}} en un juego con {{required}}.",
     "unlocks.minTotalScore": "Acumula un total de ${{score}}",
     "unlocks.reached": "Tu mejor puntuación hasta ahora es {{reached}}.",
     "unlocks.title_upgrades": "Has desbloqueado {{unlocked}} mejoras en {{out_of}}.",

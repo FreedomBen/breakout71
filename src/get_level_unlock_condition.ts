@@ -104,15 +104,18 @@ export function reasonLevelIsLocked(
       text: t("unlocks.minScore", { minScore }) + reachedText,
     };
   } else {
+    const tparams = {
+      minScore,
+      required: required.map((u) => upgradeName(u)).join(", "),
+      forbidden: forbidden.map((u) => upgradeName(u)).join(", "),
+    };
     return {
       reached,
       minScore,
       text:
-        t("unlocks.minScoreWithPerks", {
-          minScore,
-          required: required.map((u) => upgradeName(u)).join(", "),
-          forbidden: forbidden.map((u) => upgradeName(u)).join(", "),
-        }) + reachedText,
+        (forbidden.length
+          ? t("unlocks.minScoreWithPerks", tparams)
+          : t("unlocks.minScoreWithPerksNoForbidden", tparams)) + reachedText,
     };
   }
 }

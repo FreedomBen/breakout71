@@ -193,6 +193,7 @@
     "unlocks.levels": "Freigeschaltete Level",
     "unlocks.minScore": "Erreiche ${{minScore}} in einem Lauf zum freischalten.",
     "unlocks.minScoreWithPerks": "Erreiche ${{minScore}} in einem Spiel mit {{required}} , aber ohne {{forbidden}} freizuschalten.",
+    "unlocks.minScoreWithPerksNoForbidden": "Erreiche ${{minScore}} in einem Spiel mit {{required}} freizuschalten.",
     "unlocks.minTotalScore": "Summiert ein Punktstand von ${{score}}",
     "unlocks.reached": "Ihr bester Punktstand war {{reached}}.",
     "unlocks.title_upgrades": "Du hast {{unlocked}} Upgrades von {{out_of}} freigeschaltet.",

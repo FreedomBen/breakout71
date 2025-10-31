@@ -193,6 +193,7 @@
     "unlocks.levels": "Unlocked levels",
     "unlocks.minScore": "Reach ${{minScore}} in a run to unlock.",
     "unlocks.minScoreWithPerks": "Reach ${{minScore}} in a run with {{required}} but without {{forbidden}} to unlock.",
+    "unlocks.minScoreWithPerksNoForbidden": "Reach ${{minScore}} in a run with {{required}}  to unlock.",
     "unlocks.minTotalScore": "Accumulate a total of ${{score}}",
     "unlocks.reached": "Your best score was {{reached}}.",
     "unlocks.title_upgrades": "{{unlocked}} /  {{out_of}} upgrades unlocked",

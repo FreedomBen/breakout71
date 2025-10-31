@@ -10813,6 +10813,61 @@
 								</translations>
 							</concept_node>
 							<concept_node>
+								<name>minScoreWithPerksNoForbidden</name>
+								<description/>
+								<comment/>
+								<translations>
+									<translation>
+										<language>ar-LB</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>de-DE</language>
+										<approved>true</approved>
+									</translation>
+									<translation>
+										<language>en-US</language>
+										<approved>true</approved>
+									</translation>
+									<translation>
+										<language>es-CL</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fa-IR</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>fr-FR</language>
+										<approved>true</approved>
+									</translation>
+									<translation>
+										<language>ko-KR</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>pt-BR</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>ru-RU</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>tr-TR</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>zh-CHT</language>
+										<approved>false</approved>
+									</translation>
+									<translation>
+										<language>zh-CN</language>
+										<approved>false</approved>
+									</translation>
+								</translations>
+							</concept_node>
+							<concept_node>
 								<name>minTotalScore</name>
 								<description/>
 								<comment/>

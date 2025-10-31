@@ -193,6 +193,7 @@
     "unlocks.levels": "Разблокированные уровни",
     "unlocks.minScore": "Достигните ${{minScore}} в беге, чтобы разблокировать игру.",
     "unlocks.minScoreWithPerks": "Достигните ${{minScore}} в беге с {{required}} , но без {{forbidden}} для разблокировки.",
+    "unlocks.minScoreWithPerksNoForbidden": "Достигните ${{minScore}} в беге с {{required}} для разблокировки.",
     "unlocks.minTotalScore": "Накопите в общей сложности ${{score}}",
     "unlocks.reached": "Ваш лучший результат - {{reached}}.",
     "unlocks.title_upgrades": "Вы разблокировали {{unlocked}} обновлений из {{out_of}}",

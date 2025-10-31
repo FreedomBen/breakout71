@@ -193,6 +193,7 @@
     "unlocks.levels": "잠금 해제",
     "unlocks.minScore": "달리기에서 ${{minScore}} 에 도달하면 잠금이 해제됩니다.",
     "unlocks.minScoreWithPerks": "잠금을 해제하려면 {{required}} 을 사용하지만 {{forbidden}} 을 사용하지 않고 실행하여{{minScore}} 달러에 도달하세요.",
+    "unlocks.minScoreWithPerksNoForbidden": "",
     "unlocks.minTotalScore": "총{{score}}달러 적립",
     "unlocks.reached": "최고 점수는 {{reached}}입니다.",
     "unlocks.title_upgrades": "{{out_of}}에서 {{unlocked}} 개의 업그레이드를 잠금 해제했습니다.",

@@ -193,6 +193,7 @@
     "unlocks.levels": "المستويات المفتوحة",
     "unlocks.minScore": "احصل على ${{minScore}} في جولة لفتح القفل.",
     "unlocks.minScoreWithPerks": "احصل على ${{minScore}} في جولة مع {{required}} ولكن بدون {{forbidden}} لفتح القفل.",
+    "unlocks.minScoreWithPerksNoForbidden": "",
     "unlocks.minTotalScore": "تجميع إجمالي قدره{{score}}دولار",
     "unlocks.reached": "أفضل نتيجة حصلت عليها كانت {{reached}}.",
     "unlocks.title_upgrades": "لقد قمت بفتح {{unlocked}} ترقيات من أصل {{out_of}}",
