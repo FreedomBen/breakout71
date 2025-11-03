@@ -1034,5 +1034,30 @@
     "required": ["ball_attracts_coins", "asceticism", "addiction"],
     "forbidden": ["bricks_attract_coins", "rainbow", "soft_reset"],
     "minScore": 19700
+  },
+  "Japan": {
+    "required": ["addiction", "minefield", "trampoline"],
+    "forbidden": ["ottawa_treaty", "right_is_lava", "ball_repulse_ball"],
+    "minScore": 19800
+  },
+  "Portugal": {
+    "required": ["sapper", "shocks", "golden_goose"],
+    "forbidden": ["wrap_up", "pierce", "sturdy_bricks"],
+    "minScore": 19900
+  },
+  "Banana Peel": {
+    "required": ["clairvoyant", "sacrifice", "fountain_toss"],
+    "forbidden": ["soft_reset", "asceticism", "nbricks"],
+    "minScore": 20000
+  },
+  "Emoji Cry": {
+    "required": ["ball_attract_ball", "picky_eater", "double_or_nothing"],
+    "forbidden": ["transparency", "left_is_lava", "pierce_color"],
+    "minScore": 20100
+  },
+  "Emoji wink": {
+    "required": ["ghost_coins", "implosions", "ottawa_treaty"],
+    "forbidden": ["picky_eater", "base_combo", "shocks"],
+    "minScore": 20200
   }
 }

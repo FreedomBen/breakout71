@@ -639,7 +639,7 @@
     "name": "Heart",
     "size": 15,
     "bricks": "__________________RRR___RRR_____RSSSR_RSSSR___RSWWSSRSSSSSR__RSWSSSSSSSSSR__RSSSSSSSSSSSR__RSWSSSSSSSSSR___RSSSSSSSSSR_____RSSSSSSSR_______RSSSSSR_________RSSSR___________RSR_____________R_____________________________________",
-    "credit": "https://www.youtube.com/watch?v=gdWiTfzXb1g"
+    "credit": "Pixel Art by Garbi KW https://garbikw.com"
   },
   {
     "name": "Swiss",
@@ -1797,7 +1797,7 @@
     "name": "Pumpkinhead and Black Cat",
     "size": 14,
     "bricks": "g_______g_____gg_____gg_____ggggggggg_____ggGgggGgg_____ggGgggGgg_____ggggpgggg_G____ggggggg__G_____gggggOOOOOO__gggggOOgOOgOO_gggggOggOOggOggggggOOOOOOOOggggggOOggggOOggggggOOOggOOOgggggggOOOOOO_",
-    "credit": "https://youtu.be/GGMiszoJ5nI"
+    "credit": "Pixel Art by Garbi KW https://garbikw.com"
   },
   {
     "name": "christmas tree",
@@ -1822,5 +1822,43 @@
     "size": 10,
     "bricks": "___WWWWW____WWWWWWW__WW__WWW___WWW__W_____WWWW_WW_____WWWWW___W__W_W____WW_________WW_W_W_____WWWWW_",
     "credit": "By a friend of pedr01gb"
+  },
+  {
+    "name": "Japan",
+    "size": 8,
+    "bricks": "________WWWWWWWWWWWrrWWWWWrrrrWWWWrrrrWWWWWrrWWWWWWWWWWW________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "Portugal",
+    "size": 9,
+    "bricks": "_________kkkrrrrrrkkyyrrrrrkyWryrrrrkyrWyrrrrkkyyrrrrrkkkrrrrrr__________________",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "Banana Peel",
+    "size": 15,
+    "bricks": "_______g_____________gWg___________gWyyg_________gWyyyyg________gWyyyyg________gWgygyg________gWgygyg________gWgygyg________gWyyyyg_____g__gWyyyyg__g_gyggWyygyyyggyggyyyyyygyyyyyyg_gyyyyg_gyyyyg___gggg___gggg_________________",
+    "svg": null,
+    "color": "",
+    "credit": "Pixel Art by Garbi KW https://garbikw.com"
+  },
+  {
+    "name": "Emoji Cry",
+    "size": 11,
+    "bricks": "___yyyyy____yyyyyyyyy__y_yyyyy_y_y_yyyyyyy_yyy___y___yyyytyyyyytyyyttyyyyyttyttyWWWWWytttty_____ytt_yyy___yyy____yyyyy___",
+    "svg": null,
+    "color": "",
+    "credit": "Pixel Art by Garbi KW https://garbikw.com"
+  },
+  {
+    "name": "Emoji wink",
+    "size": 11,
+    "bricks": "___yyyyy____yyyyyyyyy__yyyyyWWWy_yyy__yW_Wyyyy_yyyWWWyyyyyyyyyyyyyyyyyyyyyyyyyy_______yy_yy_sss_yy__yyysssyyy____ysssy___",
+    "svg": null,
+    "color": "",
+    "credit": "Pixel Art by Garbi KW https://garbikw.com"
   }
 ]

@@ -8,8 +8,10 @@ import de from "./de.json";
 import ko from "./ko.json";
 import zh from "./zh.json";
 import fa from "./fa.json";
+import ja from "./ja.json";
 import zh_Hant from "./zh_Hant.json";
 import br from "./pt_BR.json";
+import pt from "./pt.json";
 
 export const languages = [
   {
@@ -22,7 +24,6 @@ export const languages = [
     text: "Français",
     value: "fr",
     strings: fr,
-
     levelName: "France",
   },
   {
@@ -42,6 +43,12 @@ export const languages = [
     value: "br",
     strings: br,
     levelName: "Brazil",
+  },
+  {
+    text: "Portuges",
+    value: "pt",
+    strings: pt,
+    levelName: "Portugal",
   },
   {
     text: "عربي",
@@ -88,6 +95,12 @@ export const languages = [
     value: "fa",
     strings: fa,
     levelName: "Iran",
+  },
+  {
+    text: "日本語",
+    value: "ja",
+    strings: ja,
+    levelName: "Japan",
   },
 ];
 
