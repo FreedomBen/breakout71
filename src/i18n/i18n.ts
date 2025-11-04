@@ -45,7 +45,7 @@ export const languages = [
     levelName: "Brazil",
   },
   {
-    text: "Portuges",
+    text: "Português",
     value: "pt",
     strings: pt,
     levelName: "Portugal",
