@@ -188,6 +188,10 @@ bubble : pops and ball goes through
 
 ### display a multiplicator if it's not 100%, have some perks add to it
 
+### Read android app language settings
+
+The language selector in the app is kind of a legacy UI - now that Android supports per-app language settings (`System Settings` → `System` → `Languages` → `App languages`), we should support that and eventually get rid of the in-app language selector
+
 ## extra levels
 
 ### Good games
@@ -335,6 +339,8 @@ bubble : pops and ball goes through
 ### +10% coins per reroll stored.
 
 ## To do
+
+### Svg Favicon does not make ddg happy 🟥
 
 ## Doing
 
