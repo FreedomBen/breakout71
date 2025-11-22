@@ -1,0 +1,17 @@
+<p>
+To jest roguelike'owe podejście do klasycznej formuły "Breakout"﻿:
+Celem jest złapanie jak największej liczby monet podczas 7 poziomów.
+Monety pojawiają się, gdy niszczysz cegły.
+One latają, odbijają się i toczą po ekranie, a Twoim zadaniem jest złapać je za pomocą paletki.
+Na końcu poziomu wybierasz ulepszenia.
+Jest ponad 50 różnych ulepszeń, które w różny sposób wpływają na rozgrywkę.
+Wiele z nich wpływa na "combo"﻿, czyli liczbę monet pojawiających się za każdy zniszczony klocek.
+Twoje "combo"﻿ jest wyświetlane na paletce﻿, a wynik znajduje się w prawym górnym rogu ekranu.
+I uważaj, aby nie przegapić piłki, bo nie masz dodatkowych żyć.
+<p>
+Aplikacja działa offline i dobrze wydajnościowo nawet na słabszych urządzeniach.
+Jest bardzo lekka i zajmuje około 0,1 MB.
+Jeśli gra działa wolno, w ustawieniach można włączyć "fast mode"﻿.
+<p>
+Pomoc w grze wyjaśni więcej o mechanice. Miłej zabawy i podziel się swoimi wynikami na Discordzie!
+<p>
