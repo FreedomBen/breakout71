@@ -1059,5 +1059,10 @@
     "required": ["ghost_coins", "implosions", "ottawa_treaty"],
     "forbidden": ["picky_eater", "base_combo", "shocks"],
     "minScore": 20200
+  },
+  "Santa Claus": {
+    "required": ["rainbow", "superhot", "right_is_lava"],
+    "forbidden": ["happy_family", "ghost_coins", "sturdy_bricks"],
+    "minScore": 20300
   }
 }

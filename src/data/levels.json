@@ -1827,38 +1827,37 @@
     "name": "Japan",
     "size": 8,
     "bricks": "________WWWWWWWWWWWrrWWWWWrrrrWWWWrrrrWWWWWrrWWWWWWWWWWW________",
-    "svg": null,
-    "color": ""
+    "credit": ""
   },
   {
     "name": "Portugal",
     "size": 9,
     "bricks": "_________kkkrrrrrrkkyyrrrrrkyWryrrrrkyrWyrrrrkkyyrrrrrkkkrrrrrr__________________",
-    "svg": null,
-    "color": ""
+    "credit": ""
   },
   {
     "name": "Banana Peel",
     "size": 15,
     "bricks": "_______g_____________gWg___________gWyyg_________gWyyyyg________gWyyyyg________gWgygyg________gWgygyg________gWgygyg________gWyyyyg_____g__gWyyyyg__g_gyggWyygyyyggyggyyyyyygyyyyyyg_gyyyyg_gyyyyg___gggg___gggg_________________",
-    "svg": null,
-    "color": "",
     "credit": "Pixel Art by Garbi KW https://garbikw.com"
   },
   {
     "name": "Emoji Cry",
     "size": 11,
     "bricks": "___yyyyy____yyyyyyyyy__y_yyyyy_y_y_yyyyyyy_yyy___y___yyyytyyyyytyyyttyyyyyttyttyWWWWWytttty_____ytt_yyy___yyy____yyyyy___",
-    "svg": null,
-    "color": "",
     "credit": "Pixel Art by Garbi KW https://garbikw.com"
   },
   {
     "name": "Emoji wink",
     "size": 11,
     "bricks": "___yyyyy____yyyyyyyyy__yyyyyWWWy_yyy__yW_Wyyyy_yyyWWWyyyyyyyyyyyyyyyyyyyyyyyyyy_______yy_yy_sss_yy__yyysssyyy____ysssy___",
-    "svg": null,
-    "color": "",
     "credit": "Pixel Art by Garbi KW https://garbikw.com"
+  },
+  {
+    "color": "#115988",
+    "size": 9,
+    "bricks": "__________Wrrrrr___rWWWWW____egeeg____WWWWWW__rrrrrrr__eggyyge___rrrrr____g___g__",
+    "name": "Santa Claus",
+    "credit": "https://opengameart.org/content/santa-sprite-sheet-8-bit"
   }
 ]
