@@ -1064,5 +1064,10 @@
     "required": ["rainbow", "superhot", "right_is_lava"],
     "forbidden": ["happy_family", "ghost_coins", "sturdy_bricks"],
     "minScore": 20300
+  },
+  "Michaelsoft Binbows": {
+    "required": ["sturdy_bricks", "respawn"],
+    "forbidden": ["one_more_choice", "zen", "ottawa_treaty"],
+    "minScore": 19960
   }
 }

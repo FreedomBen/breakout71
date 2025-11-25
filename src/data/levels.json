@@ -1854,10 +1854,16 @@
     "credit": "Pixel Art by Garbi KW https://garbikw.com"
   },
   {
-    "color": "#115988",
+    "name": "Santa Claus",
     "size": 9,
     "bricks": "__________Wrrrrr___rWWWWW____egeeg____WWWWWW__rrrrrrr__eggyyge___rrrrr____g___g__",
-    "name": "Santa Claus",
     "credit": "https://opengameart.org/content/santa-sprite-sheet-8-bit"
+  },
+  {
+    "color": "#115988",
+    "size": 11,
+    "bricks": "_____________ggggg__gggg__ggggggg__GGgGgggSgGG__gGGgSSg__yyggGgSggyy__gygggtg__gggyygttggg__ggygtgg_____ggggg____________",
+    "name": "Michaelsoft Binbows",
+    "credit": "激安 中古パソコン＆パーツSHOP  Michaelsoft Binbows  マイケルソフト  "
   }
 ]
