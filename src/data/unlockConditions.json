@@ -1069,5 +1069,30 @@
     "required": ["sturdy_bricks", "respawn"],
     "forbidden": ["one_more_choice", "zen", "ottawa_treaty"],
     "minScore": 19960
+  },
+  "Snowglobe": {
+    "required": ["wind", "viscosity", "ghost_coins"],
+    "forbidden": ["rainbow", "buoy", "coin_magnet"],
+    "minScore": 10000
+  },
+  "Freddie Mercury": {
+    "required": ["rainbow", "bigger_explosions", "double_or_nothing"],
+    "forbidden": [],
+    "minScore": 15000
+  },
+  "European Robin": {
+    "required": ["wrap_up", "smaller_puck", "happy_family"],
+    "forbidden": ["bigger_puck", "pierce"],
+    "minScore": 10000
+  },
+  "Wild Cat": {
+    "required": ["asceticism", "sapper", "sticky_coins"],
+    "forbidden": ["golden_goose"],
+    "minScore": 10000
+  },
+  "Bigoudène": {
+    "required": ["picky_eater", "sturdy_bricks"],
+    "forbidden": ["metamorphosis"],
+    "minScore": 10000
   }
 }

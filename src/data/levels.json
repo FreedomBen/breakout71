@@ -1860,10 +1860,44 @@
     "credit": "https://opengameart.org/content/santa-sprite-sheet-8-bit"
   },
   {
-    "color": "#115988",
+    "name": "Michaelsoft Binbows",
     "size": 11,
     "bricks": "_____________ggggg__gggg__ggggggg__GGgGgggSgGG__gGGgSSg__yyggGgSggyy__gygggtg__gggyygttggg__ggygtgg_____ggggg____________",
-    "name": "Michaelsoft Binbows",
     "credit": "激安 中古パソコン＆パーツSHOP  Michaelsoft Binbows  マイケルソフト  "
+  },
+  {
+    "color": "#115988",
+    "size": 12,
+    "bricks": "_______________WWWWWW_____W___W__W___W__W_____W__W___W__W_W_W_kW_______WW_k____rrrWWWkWkW_rarrrWWkkkr_agagaWWWkkg_WWaWaWgggggggggggg____________",
+    "name": "Snowglobe",
+    "credit": "by Obigre for the Early Xmas Event 2025"
+  },
+  {
+    "color": "#000000",
+    "size": 14,
+    "bricks": "_____e_____________y_____________ye___________yye__________yyWWyy________yyWyyy__________WWyy__________Wey___________WWW___________W_W__________W___W_________W___W________W_____W_______W_____W____",
+    "name": "Freddie Mercury",
+    "credit": "https://wikipedia.org/wiki/Freddie_Mercury"
+  },
+  {
+    "color": "#115988",
+    "size": 14,
+    "bricks": "_______________OOss_________gOgOsss______s_OOOsssss___ss_OOOOsssss_ss___OOOsssssss_____Oesssssssss___eeesssesss______eeeg___________g_g________ccgcgcccccccccccccccccc__cc__________________________",
+    "name": "European Robin",
+    "credit": "https://allaboutbirds.org/guide/European_Robin/overview"
+  },
+  {
+    "color": "#115988",
+    "size": 13,
+    "bricks": "___________gg___________gg_____ggg__gg_____ggggg_gg_____ggggg_g__g_g_ggggggg__gggggggggg___WgWggg_ggg_____gggg_gg_____Bg_gg__gg_______gg__gg_______gg__gg______g_g_g_g___",
+    "name": "Wild Cat",
+    "credit": "https://en.wikipedia.org/wiki/Black_cat#Anarcho-syndicalism"
+  },
+  {
+    "color": "#115988",
+    "size": 9,
+    "bricks": "___aWa______WWW______WWW______aWa______WaW______aWa____aagee____Wgeeee___W_gee___",
+    "name": "Bigoudène",
+    "credit": "https://en.wikipedia.org/wiki/Bigoud%C3%A8ne"
   }
 ]
