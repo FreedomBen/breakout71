@@ -1094,5 +1094,10 @@
     "required": ["picky_eater", "sturdy_bricks"],
     "forbidden": ["metamorphosis"],
     "minScore": 10000
+  },
+  "67": {
+    "required": ["bricks_attract_ball", "asceticism", "double_or_nothing"],
+    "forbidden": ["reach", "ball_attract_ball", "chill"],
+    "minScore": 6767
   }
 }
