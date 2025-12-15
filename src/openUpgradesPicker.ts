@@ -201,13 +201,13 @@ export async function openUpgradesPicker(gameState: GameState) {
         }),
         ...upgradesActions,
         levelsListHTMl(gameState, gameState.currentLevel),
-          // Close to upgrades if particularly relevant
+        // Close to upgrades if particularly relevant
         unlockRelatedUpgradesOffered ? getNearestUnlockHTML(gameState) : "",
         recommendation,
         ...medals,
         pickedUpgradesHTMl(gameState),
-          // Otherwise, at the bottom
-          unlockRelatedUpgradesOffered ? "" : getNearestUnlockHTML(gameState),
+        // Otherwise, at the bottom
+        unlockRelatedUpgradesOffered ? "" : getNearestUnlockHTML(gameState),
         `<div id="level-recording-container"></div>`,
       ],
     });
