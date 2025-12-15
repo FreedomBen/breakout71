@@ -6880,10 +6880,13 @@ async function openUpgradesPicker(gameState) {
                 }),
                 ...upgradesActions,
                 (0, _gameUtils.levelsListHTMl)(gameState, gameState.currentLevel),
+                // Close to upgrades if particularly relevant
                 unlockRelatedUpgradesOffered ? (0, _openScorePanel.getNearestUnlockHTML)(gameState) : "",
                 recommendation,
                 ...medals,
                 (0, _gameUtils.pickedUpgradesHTMl)(gameState),
+                // Otherwise, at the bottom
+                unlockRelatedUpgradesOffered ? "" : (0, _openScorePanel.getNearestUnlockHTML)(gameState),
                 `<div id="level-recording-container"></div>`
             ]
         });
