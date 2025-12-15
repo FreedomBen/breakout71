@@ -158,7 +158,7 @@ export type ReusableArray<T> = {
   // All items below that index should not be destroyed
   indexMin: number;
   total: number;
-  list: T[];
+  list: Array<T>;
 };
 
 export type RunHistoryItem = RunStats & {

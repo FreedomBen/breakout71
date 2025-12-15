@@ -1896,10 +1896,16 @@
     "credit": "https://en.wikipedia.org/wiki/Bigoud%C3%A8ne"
   },
   {
-    "color": "#000000",
+    "name": "67",
     "size": 15,
     "bricks": "_________________________________________________a____OOOO_____a_________OB__a_________O___a_________O____aaaa_____O_____aBBBa___O_______aaa___O_________________________________________________________________________________",
-    "name": "67",
     "credit": "The meme 67!"
+  },
+  {
+    "color": "#000000",
+    "size": 21,
+    "bricks": "_______________rrryyy____________rrryyyCCC__________rryyyCCCttt________rryyCCCtttvvv_______ryyCCtttvvv_________ryCCttvvv___________ryCttvv_____________ryCtvv_______________ryCtv_______________ryCtv________________ryCtv_______________ryCtv________________ryCtv________________ryCtv_______________ryCtv________________ryCtv________________ryCtv_______________ryCtv________________ryCtv________________ryCtv________________ryCtv________________",
+    "name": "Rainbow",
+    "credit": "By LonelySettler's son"
   }
 ]

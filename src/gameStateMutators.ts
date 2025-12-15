@@ -917,7 +917,7 @@ export function bordersHitCheck(
   radius: number,
   delta: number,
 ) {
-  if (coin.destroyed) return;
+  if (coin.destroyed) return 0;
   coin.previousX = coin.x;
   coin.previousY = coin.y;
   coin.x += coin.vx * delta;
@@ -1300,11 +1300,6 @@ export function gameStateTick(
             false,
           );
         }
-
-        if (gameState.perks.compound_interest && !gameState.perks.buoy) {
-          // If you dont have buoy, we directly declare the coin "lost" to make it clear
-          resetCombo(gameState, coin.x, coin.y);
-        }
       }
 
       if (
@@ -1339,6 +1334,18 @@ export function gameStateTick(
         ) {
           offsetCombo(gameState, 1, coin.x, coin.y);
         }
+      } else if (
+        gameState.perks.compound_interest &&
+        coin.previousY < gameState.gameZoneHeight &&
+        coin.y > gameState.gameZoneHeight &&
+        coin.vy > 0 &&
+        speed > 20 &&
+        !coin.floatingTime &&
+        !gameState.perks.buoy
+      ) {
+        // Prematurely reset combo as soon as coin is missed
+        // If you don't have buoy, we directly declare the coin "lost" to make it clear
+        resetCombo(gameState, coin.x, coin.y);
       }
 
       const positionBeforeBrickBounceX = coin.x;
@@ -2110,7 +2117,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ballTransparency(ball, gameState) < Math.random()
   ) {
     const remainingPierce = ball.piercePoints;
-    const remainingSapper = ball.sapperUses < gameState.perks.sapper;
+    const remainingSapper = ball.sapperUses < gameState.perks.sapper ? 1 : 0;
     const willMiss = ball.vy > 0 && !ball.hitSinceBounce;
     const extraCombo = gameState.combo - 1;
 
@@ -2343,7 +2350,7 @@ export function forEachLiveOne<T>(
 function goToNearestBrick(
   gameState: GameState,
   coin: Ball | Coin,
-  strength,
+  strength: number,
   size = 2,
   particle = false,
 ) {

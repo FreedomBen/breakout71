@@ -1099,5 +1099,10 @@
     "required": ["bricks_attract_ball", "asceticism", "double_or_nothing"],
     "forbidden": ["reach", "ball_attract_ball", "chill"],
     "minScore": 6767
+  },
+  "Rainbow": {
+    "required": ["corner_shot", "reach", "chill"],
+    "forbidden": ["three_cushion", "happy_family", "clairvoyant"],
+    "minScore": 21100
   }
 }
