@@ -255,7 +255,7 @@ gameCanvas.addEventListener("mousemove", (e) => {
   if (document.pointerLockElement === gameCanvas) {
     setMousePos(gameState, gameState.puckPosition + e.movementX);
   } else {
-    setMousePos(gameState, e.x);
+    setMousePos(gameState, e.clientX);
   }
 });
 

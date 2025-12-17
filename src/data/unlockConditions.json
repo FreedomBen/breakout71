@@ -1104,5 +1104,10 @@
     "required": ["corner_shot", "reach", "chill"],
     "forbidden": ["three_cushion", "happy_family", "clairvoyant"],
     "minScore": 21100
+  },
+  "Couple": {
+    "required": ["multiball", "ball_attract_ball", "happy_family"],
+    "forbidden": ["bigger_puck", "telekinesis"],
+    "minScore": 14020
   }
 }
