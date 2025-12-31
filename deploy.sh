@@ -32,8 +32,9 @@ bash ./build.sh $versionCode
 git add .
 git commit -m "Build $versionCode"
 git push
-# Auto tagging created random releases on fdroid, not great.
-# git tag -a $versionCode -m $versionCode
+
+# Now that fdroid builds daily, we can deploy there systematically
+git tag -a $versionCode -m $versionCode
 
 # upload to breakout.lecaro.me
 DOMAIN="breakout.lecaro.me"

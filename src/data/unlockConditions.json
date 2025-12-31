@@ -1109,5 +1109,15 @@
     "required": ["multiball", "ball_attract_ball", "happy_family"],
     "forbidden": ["bigger_puck", "telekinesis"],
     "minScore": 14020
+  },
+  "Abstract maze": {
+    "required": ["reach", "fountain_toss", "picky_eater"],
+    "forbidden": ["chill", "clairvoyant", "ghost_coins"],
+    "minScore": 21300
+  },
+  "Better half": {
+    "required": ["rainbow", "reach", "chill"],
+    "forbidden": ["ghost_coins", "picky_eater", "respawn"],
+    "minScore": 21400
   }
 }

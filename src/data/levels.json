@@ -1908,10 +1908,25 @@
     "credit": "By LonelySettler's son"
   },
   {
-    "color": "#115988",
+    "name": "Couple",
     "size": 9,
     "bricks": "_rrr_rrr_rggrrrggrrgg_r_ggrrg_____grggg___ggggggg_gggggggrgrgggg_grrrg_gg_g_r_g_g",
-    "name": "Couple",
     "credit": "Two people fallen in love with each other (ʃƪ＾3＾) Early Valentines Day Level Theme - by Pedr01gb"
+  },
+  {
+    "name": "Abstract maze",
+    "size": 8,
+    "bricks": "yy_y__yyy__yy__y________yy_yy_y_y___y_yy_________y_y___yyy_yy_yy",
+    "svg": null,
+    "color": "",
+    "credit": "Just a small monochrome level"
+  },
+  {
+    "name": "Better half",
+    "size": 8,
+    "bricks": "___ry____rrryyy__ryyyyy_rryryyyyrrrryryy_rrrrry__rrryyy____ry___",
+    "svg": null,
+    "color": "",
+    "credit": "Ils sont inséparables"
   }
 ]
