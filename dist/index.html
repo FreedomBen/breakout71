@@ -3981,6 +3981,9 @@ function computerControl(gameState) {
     gameState.puckPosition += (0, _pureFunctions.clamp)((targetX - gameState.puckPosition) / 10, -10, 10);
     if (gameState.levelTime > 30000) (0, _game.startComputerControlledGame)(gameState.startParams.stress);
 }
+function isBounceToEmptyLevel(gameState) {
+    return gameState.bricks.filter((i)=>i).length < gameState.balls.filter((b)=>!b.destroyed).length;
+}
 function resetBalls(gameState) {
     // Always compute speed first
     normalizeGameState(gameState);
@@ -4006,7 +4009,8 @@ function resetBalls(gameState) {
             brokenSinceBounce: 0,
             sidesHitsSinceBounce: 0,
             wrapsSinceBounce: 0,
-            sapperUses: 0
+            sapperUses: 0,
+            bouncedToEmptyLevel: false
         });
     }
     gameState.ballStickToPuck = true;
@@ -4023,6 +4027,7 @@ function putBallsAtPuck(gameState) {
         ball.y = gameState.gameZoneHeight - 1.5 * gameState.ballSize;
         ball.previousY = ball.y;
         ball.hitSinceBounce = 0;
+        ball.bouncedToEmptyLevel = isBounceToEmptyLevel(gameState);
         ball.brokenSinceBounce = 0;
         ball.sidesHitsSinceBounce = 0;
         ball.wrapsSinceBounce = 0;
@@ -4761,8 +4766,8 @@ function ballTick(gameState, ball, frames) {
         }
         if (gameState.perks.streak_shots) resetCombo(gameState, ball.x, ball.y);
         offsetCombo(gameState, gameState.perks.trampoline + gameState.perks.happy_family * Math.max(0, gameState.balls.length - 1), ball.x, ball.y);
-        if (gameState.perks.nbricks && ball.hitSinceBounce < gameState.perks.nbricks) resetCombo(gameState, ball.x, ball.y);
-        if (!ball.hitSinceBounce && gameState.bricks.find((i)=>i)) {
+        if (gameState.perks.nbricks && ball.hitSinceBounce < gameState.perks.nbricks && !ball.bouncedToEmptyLevel) resetCombo(gameState, ball.x, ball.y);
+        if (!ball.hitSinceBounce && gameState.bricks.find((i)=>i) && !ball.bouncedToEmptyLevel) {
             gameState.runStatistics.misses++;
             if (gameState.perks.forgiving) {
                 const loss = Math.floor(gameState.levelMisses / 10 / gameState.perks.forgiving * (gameState.combo - baseCombo(gameState)));
@@ -4773,6 +4778,7 @@ function ballTick(gameState, ball, frames) {
         }
         gameState.runStatistics.puck_bounces++;
         ball.hitSinceBounce = 0;
+        ball.bouncedToEmptyLevel = isBounceToEmptyLevel(gameState);
         ball.brokenSinceBounce = 0;
         ball.sidesHitsSinceBounce = 0;
         ball.wrapsSinceBounce = 0;
@@ -4861,7 +4867,7 @@ function ballTick(gameState, ball, frames) {
     if (!(0, _options.isOptionOn)("basic") && (0, _pureFunctions.ballTransparency)(ball, gameState) < Math.random()) {
         const remainingPierce = ball.piercePoints;
         const remainingSapper = ball.sapperUses < gameState.perks.sapper ? 1 : 0;
-        const willMiss = ball.vy > 0 && !ball.hitSinceBounce;
+        const willMiss = ball.vy > 0 && !ball.hitSinceBounce && !ball.bouncedToEmptyLevel;
         const extraCombo = gameState.combo - 1;
         if (willMiss || extraCombo && Math.random() > 0.1 / (1 + extraCombo) || remainingSapper && Math.random() > 0.1 / (1 + remainingSapper) || extraCombo && Math.random() > 0.1 / (1 + extraCombo)) {
             const color = remainingSapper && (Math.random() > 0.5 ? "#ffb92a" : "#FF0000") || willMiss && "#FF0000" || gameState.ballsColor;
