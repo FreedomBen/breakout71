@@ -1119,5 +1119,10 @@
     "required": ["rainbow", "reach", "chill"],
     "forbidden": ["ghost_coins", "picky_eater", "respawn"],
     "minScore": 21400
+  },
+  "Minesweeper 2": {
+    "required": ["zen", "minefield", "bigger_explosions"],
+    "forbidden": [],
+    "minScore": 19920
   }
 }

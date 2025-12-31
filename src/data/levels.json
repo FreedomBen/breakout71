@@ -1917,16 +1917,19 @@
     "name": "Abstract maze",
     "size": 8,
     "bricks": "yy_y__yyy__yy__y________yy_yy_y_y___y_yy_________y_y___yyy_yy_yy",
-    "svg": null,
-    "color": "",
     "credit": "Just a small monochrome level"
   },
   {
     "name": "Better half",
     "size": 8,
     "bricks": "___ry____rrryyy__ryyyyy_rryryyyyrrrryryy_rrrrry__rrryyy____ry___",
-    "svg": null,
-    "color": "",
     "credit": "Ils sont inséparables"
+  },
+  {
+    "color": "#000000",
+    "size": 9,
+    "bricks": "bbblllbBbbBkbblbbbbbkBbllllllbbblllllllllllllllbbblbkkbkvBklkBBbBBBklkBSbkSkblbbb",
+    "name": "Minesweeper 2",
+    "credit": "https://en.wikipedia.org/wiki/Microsoft_Minesweeper by Pedr01gb"
   }
 ]
