@@ -118,8 +118,11 @@ function computerControl(gameState: GameState) {
   }
 }
 
-function isBounceToEmptyLevel(gameState: GameState){
-    return gameState.bricks.filter(i=>i).length < gameState.balls.filter(b=>!b.destroyed).length
+function isBounceToEmptyLevel(gameState: GameState) {
+  return (
+    gameState.bricks.filter((i) => i).length <
+    gameState.balls.filter((b) => !b.destroyed).length
+  );
 }
 
 export function resetBalls(gameState: GameState) {
@@ -173,7 +176,7 @@ export function putBallsAtPuck(gameState: GameState) {
     ball.y = gameState.gameZoneHeight - 1.5 * gameState.ballSize;
     ball.previousY = ball.y;
     ball.hitSinceBounce = 0;
-    ball.bouncedToEmptyLevel = isBounceToEmptyLevel(gameState)
+    ball.bouncedToEmptyLevel = isBounceToEmptyLevel(gameState);
     ball.brokenSinceBounce = 0;
     ball.sidesHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
@@ -1948,12 +1951,16 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
 
     if (
       gameState.perks.nbricks &&
-      ball.hitSinceBounce < gameState.perks.nbricks &&  !ball.bouncedToEmptyLevel
+      ball.hitSinceBounce < gameState.perks.nbricks &&
+      !ball.bouncedToEmptyLevel
     ) {
       resetCombo(gameState, ball.x, ball.y);
     }
 
-    if (!ball.hitSinceBounce && gameState.bricks.find((i) => i) && !ball.bouncedToEmptyLevel
+    if (
+      !ball.hitSinceBounce &&
+      gameState.bricks.find((i) => i) &&
+      !ball.bouncedToEmptyLevel
     ) {
       gameState.runStatistics.misses++;
       if (gameState.perks.forgiving) {
@@ -1979,7 +1986,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
 
     gameState.runStatistics.puck_bounces++;
     ball.hitSinceBounce = 0;
-    ball.bouncedToEmptyLevel=isBounceToEmptyLevel(gameState)
+    ball.bouncedToEmptyLevel = isBounceToEmptyLevel(gameState);
     ball.brokenSinceBounce = 0;
     ball.sidesHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
@@ -2127,7 +2134,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   ) {
     const remainingPierce = ball.piercePoints;
     const remainingSapper = ball.sapperUses < gameState.perks.sapper ? 1 : 0;
-    const willMiss = ball.vy > 0 && !ball.hitSinceBounce && !ball.bouncedToEmptyLevel;
+    const willMiss =
+      ball.vy > 0 && !ball.hitSinceBounce && !ball.bouncedToEmptyLevel;
     const extraCombo = gameState.combo - 1;
 
     if (
