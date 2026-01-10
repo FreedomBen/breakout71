@@ -1926,10 +1926,37 @@
     "credit": "Ils sont inséparables"
   },
   {
-    "color": "#000000",
+    "name": "Minesweeper 2",
     "size": 9,
     "bricks": "bbblllbBbbBkbblbbbbbkBbllllllbbblllllllllllllllbbblbkkbkvBklkBBbBBBklkBSbkSkblbbb",
-    "name": "Minesweeper 2",
     "credit": "https://en.wikipedia.org/wiki/Microsoft_Minesweeper by Pedr01gb"
+  },
+  {
+    "color": "#000000",
+    "size": 6,
+    "bricks": "______apWWpaapWWpaapWWpaapWWpa______",
+    "name": "Trans Flag",
+    "credit": "transfox"
+  },
+  {
+    "color": "#000000",
+    "size": 8,
+    "bricks": "_bb_W_____bb_W___b_kc____bbkk_y___ckyk_____ycy_____kk______ck___",
+    "name": "Bouquet",
+    "credit": "https://en.wikipedia.org/wiki/Flower_bouquet - by obigre"
+  },
+  {
+    "color": "#115988",
+    "size": 8,
+    "bricks": "______e__g____r_ge__y_rrgr___rrrkkkkkkkk_er__gerkekkkkek_egg__eg",
+    "name": "Bench proposal",
+    "credit": "https://en.wikipedia.org/wiki/Marriage_proposal  - by obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 12,
+    "bricks": "_e_W__e__Be___eWWW___W___WWWyy________eWyyWW_______WWWe_e_____Wke__e_______k__________k___________k____WB____k______We___k__________k___________",
+    "name": "Effeuiller la marguerite",
+    "credit": "https://en.wikipedia.org/wiki/He_loves_me..._he_loves_me_not  - by obigre"
   }
 ]

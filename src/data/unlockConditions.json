@@ -1124,5 +1124,25 @@
     "required": ["zen", "minefield", "bigger_explosions"],
     "forbidden": [],
     "minScore": 19920
+  },
+  "Bouquet": {
+    "required": ["fountain_toss", "unbounded"],
+    "forbidden": ["yoyo", "extra_levels"],
+    "minScore": 805
+  },
+  "Bench proposal": {
+    "required": ["golden_goose", "wind", "sturdy_bricks"],
+    "forbidden": ["asceticism"],
+    "minScore": 8000
+  },
+  "Effeuiller la marguerite": {
+    "required": ["nbricks", "fountain_toss", "slow_down"],
+    "forbidden": ["clairvoyant"],
+    "minScore": 12345
+  },
+  "Trans Flag": {
+    "required": ["chill", "reach", "nbricks"],
+    "forbidden": ["puck_repulse_ball", "right_is_lava", "hot_start"],
+    "minScore": 21600
   }
 }
