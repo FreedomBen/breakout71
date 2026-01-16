@@ -1932,31 +1932,41 @@
     "credit": "https://en.wikipedia.org/wiki/Microsoft_Minesweeper by Pedr01gb"
   },
   {
-    "color": "#000000",
+    "name": "Trans Flag",
     "size": 6,
     "bricks": "______apWWpaapWWpaapWWpaapWWpa______",
-    "name": "Trans Flag",
     "credit": "transfox"
   },
   {
-    "color": "#000000",
+    "name": "Bouquet",
     "size": 8,
     "bricks": "_bb_W_____bb_W___b_kc____bbkk_y___ckyk_____ycy_____kk______ck___",
-    "name": "Bouquet",
     "credit": "https://en.wikipedia.org/wiki/Flower_bouquet - by obigre"
   },
   {
-    "color": "#115988",
+    "name": "Bench proposal",
     "size": 8,
     "bricks": "______e__g____r_ge__y_rrgr___rrrkkkkkkkk_er__gerkekkkkek_egg__eg",
-    "name": "Bench proposal",
     "credit": "https://en.wikipedia.org/wiki/Marriage_proposal  - by obigre"
   },
   {
-    "color": "#000000",
+    "name": "Effeuiller la marguerite",
     "size": 12,
     "bricks": "_e_W__e__Be___eWWW___W___WWWyy________eWyyWW_______WWWe_e_____Wke__e_______k__________k___________k____WB____k______We___k__________k___________",
-    "name": "Effeuiller la marguerite",
     "credit": "https://en.wikipedia.org/wiki/He_loves_me..._he_loves_me_not  - by obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 21,
+    "bricks": "___________________________________________G_________________G___GGGGGGGGGGGGGGGGG____GGGGWGGGGGGGWGGGG____GGGGGGGGGGGGGGGGG____ttttttttttttttttt____tttttttbbbttttttt____tttttbbtttbbttttt____ttttbtttttttbtttt____tttbtttbbbtttbttt____tttbttbtttbttbttt____tttbttttttbttbttt____tttbttbtttbttbttt____tttbtttbbbtttbttt____ttttbtttttttbtttt____tttttbbtttbbttttt____tttttttbbbttttttt____ttttttttttttttttt____________________________________________",
+    "name": "f-droid",
+    "credit": "By Topenvy"
+  },
+  {
+    "color": "#000000",
+    "size": 6,
+    "bricks": "G____G_GGGG__WGGW__tbbt__ttbt__tbbt_",
+    "name": "Mini fdroid",
+    "credit": ""
   }
 ]

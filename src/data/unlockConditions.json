@@ -1144,5 +1144,15 @@
     "required": ["chill", "reach", "nbricks"],
     "forbidden": ["puck_repulse_ball", "right_is_lava", "hot_start"],
     "minScore": 21600
+  },
+  "f-droid": {
+    "required": ["happy_family", "respawn", "wrap_left"],
+    "forbidden": ["asceticism", "right_is_lava", "bricks_attract_ball"],
+    "minScore": 22000
+  },
+  "Mini fdroid": {
+    "required": ["trampoline", "ball_repulse_ball", "sturdy_bricks"],
+    "forbidden": ["puck_repulse_ball", "bricks_attract_ball", "addiction"],
+    "minScore": 22100
   }
 }
