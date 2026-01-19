@@ -304,7 +304,7 @@
     "upgrades.multiball.verbose_description": "在 Breakout 71 中，你掉了球就输了。\n\n有了这个被动技能，你得到两个球，因此你可以承受失去一个球。\n\n失去的球在下一关卡回来。\n\n拥有一个以上的球使更多被动技能可用，当然清理关卡更快。",
     "upgrades.nbricks.name": "严格的样本量",
     "upgrades.nbricks.tooltip": "逐个击中砖块，获得更多硬币。",
-    "upgrades.nbricks.verbose_description": "每一次弹跳击中恰好 {{lvl}} 个砖块，得到 +{{lvl}} 连击，否则重置。你没有必要摧毁这些砖块，但你需要击中它们。爆炸摧毁的砖块不计数",
+    "upgrades.nbricks.verbose_description": "每一次桨板弹跳精确地击中 {{lvl}} 个砖块，得到 +{{lvl}} 连击，否则重置。你没有必要摧毁这些砖块，但你需要击中它们。爆炸摧毁的砖块不计数。",
     "upgrades.one_more_choice.name": "额外选择",
     "upgrades.one_more_choice.tooltip": "更多升级选择",
     "upgrades.one_more_choice.verbose_description": "每个升级菜单会多一个选项。不增加你可以挑选升级的次数。",
