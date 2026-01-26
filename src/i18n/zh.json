@@ -9,7 +9,7 @@
     "editor.editing.copy": "复制关卡代码",
     "editor.editing.copy_help": "在我们的 discord 中分享关卡代码以纳入游戏。",
     "editor.editing.credit": "致谢和来源",
-    "editor.editing.credit_prompt": "输入来源URL或者你的关卡的解释。",
+    "editor.editing.credit_prompt": "输入来源 url 或者你的关卡的解释。",
     "editor.editing.delete": "删除关卡",
     "editor.editing.down": "下移所有砖块",
     "editor.editing.help": "然后点击一个瓷砖给它上色。",
