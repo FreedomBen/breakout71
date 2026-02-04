@@ -1154,5 +1154,8 @@
     "required": ["trampoline", "ball_repulse_ball", "sturdy_bricks"],
     "forbidden": ["puck_repulse_ball", "bricks_attract_ball", "addiction"],
     "minScore": 22100
-  }
+  } ,
+  "haskell":{"required":["addiction","steering","minefield"],"forbidden":["nbricks","implosions","corner_shot"],"minScore":22200},
+  "skibidi toilet":{"required":["passive_income","minefield","bigger_explosions"],"forbidden":["shocks","sapper","corner_shot"],"minScore":22300}
+
 }
