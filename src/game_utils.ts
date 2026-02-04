@@ -299,14 +299,16 @@ export function isMovingWhilePassiveIncome(gameState: GameState) {
 
 export function getHighScore() {
   try {
-    return BigInt(parseFloat(localStorage.getItem("breakout-3-hs-short") || "0"));
+    return BigInt(
+      parseFloat(localStorage.getItem("breakout-3-hs-short") || "0"),
+    );
   } catch (e) {}
   return BigInt(0);
 }
 
 export function highScoreText() {
   if (getHighScore()) {
-    return t("main_menu.high_score", { score: getHighScore().toString()});
+    return t("main_menu.high_score", { score: getHighScore().toString() });
   }
   return "";
 }
