@@ -153,5 +153,3 @@ export function base_combo_from_stronger_foundation(perkLevel: number) {
   }
   return base;
 }
-
-

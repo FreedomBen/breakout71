@@ -33,7 +33,8 @@ import {
   commitSettingsChangesToLocalStorage,
   cycleMaxCoins,
   getCurrentMaxCoins,
-  getCurrentMaxParticles, getSettingValue,
+  getCurrentMaxParticles,
+  getSettingValue,
   getTotalScore,
   setSettingValue,
 } from "./settings";
@@ -66,7 +67,7 @@ import {
   AsyncAlertAction,
   closeModal,
 } from "./asyncAlert";
-import {getPixelRatio, isOptionOn, options, toggleOption} from "./options";
+import { getPixelRatio, isOptionOn, options, toggleOption } from "./options";
 import { clamp, miniMarkDown } from "./pure_functions";
 import { helpMenuEntry } from "./help";
 import { creativeMode } from "./creative";
@@ -148,8 +149,8 @@ export const fitSize = (gameState: GameState) => {
     past_width = gameState.gameZoneWidthRoundedUp,
     past_heigh = gameState.gameZoneHeight;
 
-  const width = Math.floor(window.innerWidth*getPixelRatio()),
-    height = Math.floor(window.innerHeight*getPixelRatio());
+  const width = Math.floor(window.innerWidth * getPixelRatio()),
+    height = Math.floor(window.innerHeight * getPixelRatio());
 
   gameState.canvasWidth = width;
   gameState.canvasHeight = height;
@@ -176,9 +177,9 @@ export const fitSize = (gameState: GameState) => {
   );
 
   // in case getPixelRatio changed value
-  gameState.ballSize= Math.ceil(20*getPixelRatio());
-  gameState.coinSize= Math.ceil(14*getPixelRatio());
-  gameState.puckHeight= Math.ceil(20*getPixelRatio());
+  gameState.ballSize = Math.ceil(20 * getPixelRatio());
+  gameState.coinSize = Math.ceil(14 * getPixelRatio());
+  gameState.puckHeight = Math.ceil(20 * getPixelRatio());
 
   gameState.brickWidth =
     Math.floor(
@@ -236,8 +237,8 @@ window.addEventListener("fullscreenchange", () => fitSize(gameState));
 setInterval(() => {
   // Sometimes, the page changes size without triggering the event (when switching to fullscreen, closing debug panel...)
 
-  const width = Math.floor(window.innerWidth*getPixelRatio()),
-    height = Math.floor(window.innerHeight*getPixelRatio());
+  const width = Math.floor(window.innerWidth * getPixelRatio()),
+    height = Math.floor(window.innerHeight * getPixelRatio());
 
   if (width !== gameState.canvasWidth || height !== gameState.canvasHeight)
     fitSize(gameState);
@@ -257,9 +258,12 @@ gameCanvas.addEventListener("mouseup", (e) => {
 
 gameCanvas.addEventListener("mousemove", (e) => {
   if (document.pointerLockElement === gameCanvas) {
-    setMousePos(gameState, gameState.puckPosition + e.movementX*getPixelRatio());
+    setMousePos(
+      gameState,
+      gameState.puckPosition + e.movementX * getPixelRatio(),
+    );
   } else {
-    setMousePos(gameState, e.clientX*getPixelRatio());
+    setMousePos(gameState, e.clientX * getPixelRatio());
   }
 });
 
@@ -299,7 +303,7 @@ function stopPlayCountDown() {
 gameCanvas.addEventListener("touchstart", (e) => {
   e.preventDefault();
   if (!e.touches?.length) return;
-  setMousePos(gameState, e.touches[0].pageX*getPixelRatio());
+  setMousePos(gameState, e.touches[0].pageX * getPixelRatio());
   normalizeGameState(gameState);
   if (gameState.levelTime || !isOptionOn("touch_delayed_start")) {
     play();
@@ -320,7 +324,7 @@ gameCanvas.addEventListener("touchcancel", (e) => {
 });
 gameCanvas.addEventListener("touchmove", (e) => {
   if (!e.touches?.length) return;
-  setMousePos(gameState, e.touches[0].pageX*getPixelRatio());
+  setMousePos(gameState, e.touches[0].pageX * getPixelRatio());
 });
 
 export function brickIndex(x: number, y: number) {
@@ -536,7 +540,9 @@ async function openSettingsMenu() {
   const actions: AsyncAlertAction<() => void>[] = [startingPerkMenuButton()];
 
   actions.push({
-    icon: icons[languages.find((l) => l.value === getCurrentLang())?.levelName||''],
+    icon: icons[
+      languages.find((l) => l.value === getCurrentLang())?.levelName || ""
+    ],
     text: t("settings.language"),
     help: t("settings.language_help"),
     async value() {
@@ -561,7 +567,7 @@ async function openSettingsMenu() {
   });
   for (const key of Object.keys(options) as OptionId[]) {
     // Skip displaying option if it does nothing
-    if(window.devicePixelRatio===1 && key=='match_pixel_ratio') continue
+    if (window.devicePixelRatio === 1 && key == "match_pixel_ratio") continue;
     if (options[key]) {
       actions.push({
         icon: isOptionOn(key)

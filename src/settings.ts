@@ -1,6 +1,6 @@
 // Settings
 
-import {toast} from "./toast";
+import { toast } from "./toast";
 
 let cachedSettings: { [key: string]: unknown } = {};
 let warnedUserAboutLSIssue = false;

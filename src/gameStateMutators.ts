@@ -63,7 +63,7 @@ import { openUpgradesPicker } from "./openUpgradesPicker";
 
 export function setMousePos(gameState: GameState, x: number) {
   if (gameState.startParams.computer_controlled) return;
-  gameState.puckPosition = Math.round(x) ;
+  gameState.puckPosition = Math.round(x);
 
   // Sets the puck position, and updates the ball position if they are supposed to follow it
   gameState.needsRender = true;

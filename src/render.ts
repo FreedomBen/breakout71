@@ -17,7 +17,7 @@ import {
 import { colorString, GameState } from "./types";
 import { t } from "./i18n/i18n";
 import { gameState } from "./game";
-import {getPixelRatio, isOptionOn} from "./options";
+import { getPixelRatio, isOptionOn } from "./options";
 import {
   ballTransparency,
   catchRateBest,
@@ -47,7 +47,7 @@ bombSVG.onload = () => (gameState.needsRender = true);
 export const background = document.createElement("img");
 background.onload = () => {
   gameState.needsRender = true;
-}
+};
 export const backgroundCanvas = document.createElement("canvas");
 
 export const haloCanvas = document.createElement("canvas");
@@ -216,7 +216,7 @@ export function render(gameState: GameState) {
         const bgctx = backgroundCanvas.getContext(
           "2d",
         ) as CanvasRenderingContext2D;
-        bgctx.scale(getPixelRatio(),getPixelRatio());
+        bgctx.scale(getPixelRatio(), getPixelRatio());
         bgctx.globalCompositeOperation = "source-over";
         bgctx.fillStyle = level.color || "#000";
         bgctx.fillRect(0, 0, gameState.canvasWidth, gameState.canvasHeight);
@@ -707,7 +707,7 @@ function drawStraightLine(
   if (mode == "#FF0000") {
     ctx.strokeStyle = "red";
     ctx.lineDashOffset = getDashOffset(gameState);
-    ctx.lineWidth = Math.ceil(2*getPixelRatio());
+    ctx.lineWidth = Math.ceil(2 * getPixelRatio());
     ctx.setLineDash(redBorderDash);
     ctx.beginPath();
     ctx.moveTo(x1, y1);
@@ -716,7 +716,7 @@ function drawStraightLine(
     ctx.setLineDash(emptyArray);
     ctx.lineWidth = 1;
   } else {
-    const width=Math.ceil(getPixelRatio())
+    const width = Math.ceil(getPixelRatio());
     ctx.fillStyle = mode;
     ctx.fillRect(
       Math.min(x1, x2),
@@ -1077,8 +1077,10 @@ export function drawBrick(
 ) {
   const tlx = Math.ceil(x - gameState.brickWidth / 2);
   const tly = Math.ceil(y - gameState.brickWidth / 2);
-  const brx = Math.ceil(x + gameState.brickWidth / 2) - Math.ceil(getPixelRatio());
-  const bry = Math.ceil(y + gameState.brickWidth / 2) - Math.ceil(getPixelRatio());
+  const brx =
+    Math.ceil(x + gameState.brickWidth / 2) - Math.ceil(getPixelRatio());
+  const bry =
+    Math.ceil(y + gameState.brickWidth / 2) - Math.ceil(getPixelRatio());
 
   const width = brx - tlx,
     height = bry - tly;
@@ -1219,7 +1221,7 @@ export const scoreDisplay = document.getElementById(
 ) as HTMLButtonElement;
 const menuLabel = document.getElementById("menuLabel") as HTMLButtonElement;
 
-const emptyArray :Number[]= [];
+const emptyArray: Number[] = [];
 const redBorderDash = [5, 5];
 
 export function getDashOffset(gameState: GameState) {
