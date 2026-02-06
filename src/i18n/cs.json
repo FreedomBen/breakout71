@@ -404,5 +404,7 @@
     "gameOver.stats.bricks_broken": "Cihla rozbité",
     "gameOver.stats.bricks_per_minute": "Cihla rozbité za minutu",
     "gameOver.stats.catch_rate": "Chytit rychlost",
-    "gameOver.stats.combo_avg": "Průměrná combo"
+    "gameOver.stats.combo_avg": "Průměrná combo",
+    "settings.match_pixel_ratio": "Render v nativním rozlišení zobrazení",
+    "settings.match_pixel_ratio_help": "Sharper, ale pomalejší na render"
 }
