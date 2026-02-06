@@ -12,6 +12,7 @@ import ja from "./ja.json";
 import zh_Hant from "./zh_Hant.json";
 import br from "./pt_BR.json";
 import pt from "./pt.json";
+import sk from "./sk.json";
 
 export const languages = [
   {
@@ -67,7 +68,6 @@ export const languages = [
     text: "Русский",
     value: "ru",
     strings: ru,
-
     levelName: "Russia",
   },
 
@@ -101,6 +101,12 @@ export const languages = [
     value: "ja",
     strings: ja,
     levelName: "Japan",
+  },
+  {
+    text: "Slovenčina",
+    value: "sk",
+    strings: sk,
+    levelName: "Slovakia",
   },
 ];
 

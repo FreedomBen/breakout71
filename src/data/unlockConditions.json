@@ -1164,5 +1164,15 @@
     "required": ["passive_income", "minefield", "bigger_explosions"],
     "forbidden": ["shocks", "sapper", "corner_shot"],
     "minScore": 22300
+  },
+  "Czech Republic": {
+    "required": ["golden_goose", "corner_shot", "sacrifice"],
+    "forbidden": ["clairvoyant", "three_cushion", "metamorphosis"],
+    "minScore": 22400
+  },
+  "Slovakia": {
+    "required": ["respawn", "soft_reset", "clairvoyant"],
+    "forbidden": ["rainbow", "picky_eater", "etherealcoins"],
+    "minScore": 22500
   }
 }

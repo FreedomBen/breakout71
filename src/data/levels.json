@@ -378,6 +378,12 @@
     "credit": ""
   },
   {
+    "name": "icon:sharpness",
+    "size": 9,
+    "bricks": "____b_______bbb_____OOOOO___OOOOOOO__OOOOOOO__bbOOObb__bbbbbbb__bbbbbbb__bbbbbbb_",
+    "credit": ""
+  },
+  {
     "name": "icon:shocks",
     "size": 8,
     "bricks": "____y_Oy_bbbO_y__bbbOO_O_bbby_yyyyOyyOO_OO_ybbb__yO_bbb_y__ybbb_",
@@ -1980,9 +1986,15 @@
     "credit": "By Greg1415"
   },
   {
-    "name": "icon:sharpness",
-    "size": 9,
-    "bricks": "____b_______bbb_____OOOOO___OOOOOOO__OOOOOOO__bbOOObb__bbbbbbb__bbbbbbb__bbbbbbb_",
+    "name": "Czech Republic",
+    "size": 8,
+    "bricks": "________tWWWWWWWttWWWWWWtttWWWWWtttrrrrrttrrrrrrtrrrrrrr________",
+    "credit": ""
+  },
+  {
+    "name": "Slovakia",
+    "size": 11,
+    "bricks": "___________WWWWWWWWWWWWWWWWWWWWWWWrWrWWWWWWWtWWWttttttttrWrttttttttrrrtttttttrtttrrrrrrrrrtrrrrrrrrrrrrrrrrrrr___________",
     "svg": null,
     "color": ""
   }
