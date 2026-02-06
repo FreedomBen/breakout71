@@ -1,3 +1,5 @@
+import {getPixelRatio} from "./options";
+
 let levelIconHTMLCanvas = document.createElement("canvas");
 
 const levelIconHTMLCanvasCtx =
@@ -8,7 +10,9 @@ const levelIconHTMLCanvasCtx =
   }) as CanvasRenderingContext2D);
 
 export function levelIconHTML(bricks: string[], levelSize: number) {
-  const size = 46;
+  // For these icons, let's just keep using the pixel ratio no matter what the setting say,
+  // because they can't update and are not impacting performance much
+  const size = 46*(window.devicePixelRatio||1);
   const c = levelIconHTMLCanvas;
   const ctx = levelIconHTMLCanvasCtx;
 
@@ -34,5 +38,5 @@ export function levelIconHTML(bricks: string[], levelSize: number) {
     }
   }
 
-  return `<img alt="" width="${size}" height="${size}" src="${c.toDataURL()}"/>`;
+  return `<img alt="" width="${size/window.devicePixelRatio}" height="${size/window.devicePixelRatio}" src="${c.toDataURL()}"/>`;
 }

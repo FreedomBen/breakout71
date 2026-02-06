@@ -140,7 +140,6 @@ interface LightFlash extends BaseFlash {
 export type RunStats = {
   started: number;
   levelsPlayed: number;
-  loops: number;
   runTime: number;
   coins_spawned: number;
   score: number;

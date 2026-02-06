@@ -1968,17 +1968,22 @@
     "credit": ""
   },
   {
-    "color": "#000000",
+    "name": "haskell",
     "size": 17,
     "bricks": "vvv_ppp___________vv__pp___________vvv_ppp___________vv__pp___________vvv_ppp___________vv__pp___________vvv_ppp_PPPPPP____vv__pp__PPPPP____vvv_ppp__________vv__ppp__PPPP___vvv_ppppp_PPPP___vv__pp_pp_______vvv_ppp_ppp______vv__pp___pp_____vvv_ppp___ppp____vv__pp_____pp___vvv_ppp_____ppp__",
-    "name": "haskell",
     "credit": "https://www.haskell.org/ - By Greg1415"
   },
   {
-    "color": "#115988",
+    "name": "skibidi toilet",
     "size": 20,
     "bricks": "________WWWW______________WWWWWWWW_________WWWggggggggWWW______llWgOOggOOgWWW______WWWOOOOOOOOWWW______WWWOggOOggOWWW______WWWOWtOOtWOWWW______WWWOOOOOOOOWWW______WWWgOOOOOOgWWW______WWWOggWWggOWWW______WWWOOgWWgOOWWW______WWWWOOOOOOWWWW____WWWWWWWWWWWWWWWWWW__llllllllllllllllll__WWWWWWWWWWWWWWWWWW___WWWWWWWWWWWWWWWW_____WWWWWWWWWWWWWW_______WWWWWWWWWWWW_________WWWWWWWWWW__________WWWWWWWWWW_____",
-    "name": "skibidi toilet",
     "credit": "By Greg1415"
+  },
+  {
+    "name": "icon:sharpness",
+    "size": 9,
+    "bricks": "____b_______bbb_____OOOOO___OOOOOOO__OOOOOOO__bbOOObb__bbbbbbb__bbbbbbb__bbbbbbb_",
+    "svg": null,
+    "color": ""
   }
 ]

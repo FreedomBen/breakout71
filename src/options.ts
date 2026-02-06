@@ -1,9 +1,9 @@
-import { t } from "./i18n/i18n";
+import {t} from "./i18n/i18n";
 
-import { OptionDef, OptionId } from "./types";
-import { getSettingValue, setSettingValue } from "./settings";
+import {OptionDef, OptionId} from "./types";
+import {getSettingValue, setSettingValue} from "./settings";
 
-import { getHighScore, hoursSpentPlaying } from "./game_utils";
+import {getHighScore, hoursSpentPlaying} from "./game_utils";
 
 export const options = {
   sound: {
@@ -28,6 +28,11 @@ export const options = {
     default: false,
     name: t("settings.basic"),
     help: t("settings.basic_help"),
+  },
+  match_pixel_ratio: {
+    default: false,
+    name: t("settings.match_pixel_ratio"),
+    help: t("settings.match_pixel_ratio_help"),
   },
   colorful_coins: {
     default: false,
@@ -111,4 +116,8 @@ export function isOptionOn(key: OptionId) {
 
 export function toggleOption(key: OptionId) {
   setSettingValue("breakout-settings-enable-" + key, !isOptionOn(key));
+}
+
+export function getPixelRatio() {
+  return isOptionOn('match_pixel_ratio')? window.devicePixelRatio || 1 : 1
 }
