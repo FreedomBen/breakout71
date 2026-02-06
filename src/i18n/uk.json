@@ -404,5 +404,7 @@
     "upgrades.zen.name": "З",
     "upgrades.zen.tooltip": "Більше монет, якщо ви не запускати бомби",
     "upgrades.zen.verbose_description": "+{lvl}} combo кожен 3s, скидання коли є вибух",
-    "unlocks.minScoreWithPerksNoForbidden": "Перевірити ${minScore}} в режимі з {{required}} для розблокування."
+    "unlocks.minScoreWithPerksNoForbidden": "Перевірити ${minScore}} в режимі з {{required}} для розблокування.",
+    "settings.match_pixel_ratio": "Рендер на локальній роздільній здатності дисплея",
+    "settings.match_pixel_ratio_help": "Заточка, але повільніше рендерити"
 }
