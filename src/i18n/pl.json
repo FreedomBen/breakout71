@@ -404,5 +404,7 @@
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Więcej monet, jeśli nie wybuchnie bomby",
     "upgrades.zen.verbose_description": "+ (lvl}} combo co 3s, ponownie się rozwiązał, gdy wybuchła eksplozja",
-    "unlocks.minScoreWithPerksNoForbidden": "Reach ${{minScore}} w biegu z {{required}} do odblokowania."
+    "unlocks.minScoreWithPerksNoForbidden": "Reach ${{minScore}} w biegu z {{required}} do odblokowania.",
+    "settings.match_pixel_ratio": "Render w rodzimej rozdzielczości wyświetlaczy",
+    "settings.match_pixel_ratio_help": "Sharper, ale powolny od renderowania"
 }
