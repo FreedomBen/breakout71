@@ -1174,5 +1174,10 @@
     "required": ["respawn", "soft_reset", "clairvoyant"],
     "forbidden": ["rainbow", "picky_eater", "etherealcoins"],
     "minScore": 22500
+  },
+  "5 min less": {
+    "required": ["picky_eater", "fountain_toss", "ghost_coins"],
+    "forbidden": ["clairvoyant", "passive_income", "corner_shot"],
+    "minScore": 22600
   }
 }

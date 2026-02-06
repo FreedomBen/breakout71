@@ -1997,5 +1997,12 @@
     "bricks": "___________WWWWWWWWWWWWWWWWWWWWWWWrWrWWWWWWWtWWWttttttttrWrttttttttrrrtttttttrtttrrrrrrrrrtrrrrrrrrrrrrrrrrrrr___________",
     "svg": null,
     "color": ""
+  },
+  {
+    "color": "#000000",
+    "size": 6,
+    "bricks": "__________t____tt_WWW_t____ttt______",
+    "name": "5 min less",
+    "credit": "opposite of 5 min more  - by Greg1415"
   }
 ]
