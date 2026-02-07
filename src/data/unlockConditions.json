@@ -1179,5 +1179,7 @@
     "required": ["picky_eater", "fountain_toss", "ghost_coins"],
     "forbidden": ["clairvoyant", "passive_income", "corner_shot"],
     "minScore": 22600
-  }
+  },
+  "Weezevent":{"required":["base_combo","ghost_coins","compound_interest"],"forbidden":["nbricks","forgiving","picky_eater"],"minScore":22700},"Dots 2":{"required":["viscosity","concave_puck","pierce"],"forbidden":["limitless","ottawa_treaty","sapper"],"minScore":22800}
+
 }

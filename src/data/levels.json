@@ -1995,14 +1995,27 @@
     "name": "Slovakia",
     "size": 11,
     "bricks": "___________WWWWWWWWWWWWWWWWWWWWWWWrWrWWWWWWWtWWWttttttttrWrttttttttrrrtttttttrtttrrrrrrrrrtrrrrrrrrrrrrrrrrrrr___________",
+    "credit": ""
+  },
+  {
+    "name": "5 min less",
+    "size": 6,
+    "bricks": "__________t____tt_WWW_t____ttt______",
+    "credit": "opposite of 5 min more  - by Greg1415"
+  },
+  {
+    "name": "Weezevent",
+    "size": 9,
+    "bricks": "b_b__bbbbb_b_b____b_b_bbbbbb_b_b_____bbb_bbbbb_______bbbbb__bb_b____b___bbbb_bbbb",
     "svg": null,
-    "color": ""
+    "color": "",
+    "credit": "https://weezevent.com - The company I work at has a very pixel arty logo - Renan"
   },
   {
     "color": "#000000",
-    "size": 6,
-    "bricks": "__________t____tt_WWW_t____ttt______",
-    "name": "5 min less",
-    "credit": "opposite of 5 min more  - by Greg1415"
+    "size": 10,
+    "bricks": "___P____P_P____P______s____s______s____s_S____S______S____S_r____r______r____r______R____R_R____R___",
+    "name": "Dots 2",
+    "credit": "By Greg1415"
   }
 ]
