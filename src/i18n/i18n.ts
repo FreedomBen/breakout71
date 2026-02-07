@@ -13,6 +13,7 @@ import zh_Hant from "./zh_Hant.json";
 import br from "./pt_BR.json";
 import pt from "./pt.json";
 import sk from "./sk.json";
+import it from "./it.json";
 
 export const languages = [
   {
@@ -107,6 +108,12 @@ export const languages = [
     value: "sk",
     strings: sk,
     levelName: "Slovakia",
+  },
+  {
+    text: "Italiano",
+    value: "it",
+    strings: it,
+    levelName: "Italia",
   },
 ];
 

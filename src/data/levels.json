@@ -2017,5 +2017,12 @@
     "bricks": "___P____P_P____P______s____s______s____s_S____S______S____S_r____r______r____r______R____R_R____R___",
     "name": "Dots 2",
     "credit": "By Greg1415"
+  },
+  {
+    "name": "Italia",
+    "size": 6,
+    "bricks": "______kkWWrrkkWWrrkkWWrrkkWWrr______",
+    "svg": null,
+    "color": ""
   }
 ]

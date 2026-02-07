@@ -1189,5 +1189,10 @@
     "required": ["viscosity", "concave_puck", "pierce"],
     "forbidden": ["limitless", "ottawa_treaty", "sapper"],
     "minScore": 22800
+  },
+  "Italia": {
+    "required": ["wrap_right", "streak_shots", "right_is_lava"],
+    "forbidden": ["unbounded", "limitless", "sturdy_bricks"],
+    "minScore": 22900
   }
 }
