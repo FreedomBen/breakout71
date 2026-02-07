@@ -1,5 +1,5 @@
-body{
-  margin:0;
+body {
+  margin: 0;
   background: #333;
 }
 #editor {
@@ -8,36 +8,34 @@ body{
   display: grid;
   gap: 10px;
   grid-template-areas:
-          "list name palette"
-          "list credit palette"
-          "list tools palette"
+    "list name palette"
+    "list credit palette"
+    "list tools palette"
     "list bricks palette"
-    "new bricks palette"
-
-;
+    "new bricks palette";
   height: 100vh;
   grid-template-columns: auto 1fr auto;
   grid-template-rows: repeat(auto, 5);
 }
 
-#list{
+#list {
   grid-area: list;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  button{
+  button {
     text-align: left;
     padding: 10px;
     border: none;
     border-bottom: 1px solid #222;
-    background:#333;
-    color:white;
+    background: #333;
+    color: white;
     cursor: pointer;
-    &.active,&:hover{
+    &.active,
+    &:hover {
       background: black;
     }
   }
-
 }
 #palette {
   grid-area: palette;
@@ -48,11 +46,19 @@ body{
   }
 }
 
-#level-bricks-preview{
+#level-bricks-preview {
   grid-area: bricks;
-    position: relative;
+  position: relative;
 }
-#name{grid-area: name;}
-#credit{grid-area: credit;}
-#tools{grid-area: tools;}
-#new{grid-area: new;}
+#name {
+  grid-area: name;
+}
+#credit {
+  grid-area: credit;
+}
+#tools {
+  grid-area: tools;
+}
+#new {
+  grid-area: new;
+}
