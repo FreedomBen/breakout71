@@ -306,7 +306,7 @@
     "upgrades.multiball.verbose_description": "En cuanto sueltas la bola en Breakout 71, pierdes.\n\nCon esta ventaja, tienes dos bolas, así que puedes permitirte perder una.\n\nLas bolas perdidas vuelven al siguiente nivel.\n\nTener más de una bala te permite obtener otras ventajas y, por supuesto, completar el nivel más rápidamente.",
     "upgrades.nbricks.name": "Domiciliación bancaria",
     "upgrades.nbricks.tooltip": "Golpea exactamente {{lvl}} ladrillos por rebote para +{{lvl}} combo, de lo contrario combo perdido",
-    "upgrades.nbricks.verbose_description": "Si tu bola rebota sin romper ningún ladrillo, cuenta como golpe.  Los ladrillos destruidos por explosiones no cuentan.",
+    "upgrades.nbricks.verbose_description": "Si tu bola rebota sin romper ningún ladrillo, cuenta como golpe. Los ladrillos destruidos por explosiones no cuentan.",
     "upgrades.one_more_choice.name": "La respuesta D",
     "upgrades.one_more_choice.tooltip": "1 opción de mejora adicional disponible hasta el final del juego",
     "upgrades.one_more_choice.verbose_description": "Cada menú de mejoras tendrá una opción adicional.  Esto no aumenta el número de mejoras que puede elegir, pero le ayuda a crear el perfil ideal. \"Respuesta D\" es una referencia a un sketch clásico.",
