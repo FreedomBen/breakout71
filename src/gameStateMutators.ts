@@ -49,7 +49,7 @@ import {
   startComputerControlledGame,
 } from "./game";
 import { stopRecording } from "./recording";
-import { isOptionOn } from "./options";
+import { getPixelRatio, isOptionOn } from "./options";
 import {
   ballTransparency,
   base_combo_from_stronger_foundation,
@@ -655,7 +655,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
       -coin.y / 100,
       getCoinRenderColor(gameState, coin),
       true,
-      gameState.coinSize / 2,
+      8,
       100 + Math.random() * 50,
     );
   }
@@ -809,7 +809,7 @@ export function repulse(
     -dy * speed + a.vy + (Math.random() - 0.5) * rand,
     rainbowColor(),
     true,
-    gameState.coinSize / 2,
+    8,
     100,
   );
   if (
@@ -825,7 +825,7 @@ export function repulse(
       dy * speed + b.vy + (Math.random() - 0.5) * rand,
       rainbowColor(),
       true,
-      gameState.coinSize / 2,
+      8,
       100,
     );
   }
@@ -859,7 +859,7 @@ export function attract(gameState: GameState, a: Ball, b: Ball, power: number) {
     dy * speed + a.vy + (Math.random() - 0.5) * rand,
     rainbowColor(),
     true,
-    gameState.coinSize / 2,
+    8,
     100,
   );
   makeParticle(
@@ -870,7 +870,7 @@ export function attract(gameState: GameState, a: Ball, b: Ball, power: number) {
     -dy * speed + b.vy + (Math.random() - 0.5) * rand,
     rainbowColor(),
     true,
-    gameState.coinSize / 2,
+    8,
     100,
   );
 }
@@ -1150,7 +1150,7 @@ export function gameStateTick(
                 dy * 2,
                 rainbowColor(),
                 true,
-                gameState.coinSize / 2,
+                8,
                 100,
               );
             }
@@ -1499,7 +1499,7 @@ export function gameStateTick(
             0,
             rainbowColor(),
             true,
-            gameState.coinSize / 2,
+            8,
             150,
           );
         }
@@ -1534,7 +1534,7 @@ export function gameStateTick(
         5,
         "#FF0000",
         true,
-        gameState.coinSize / 2,
+        8,
         100 * (Math.random() + 1),
       );
     }
@@ -1548,7 +1548,7 @@ export function gameStateTick(
         (Math.random() - 0.5) * 10,
         "#FF0000",
         true,
-        gameState.coinSize / 2,
+        8,
         100 * (Math.random() + 1),
       );
     }
@@ -1562,7 +1562,7 @@ export function gameStateTick(
         (Math.random() - 0.5) * 10,
         "#FF0000",
         true,
-        gameState.coinSize / 2,
+        8,
         100 * (Math.random() + 1),
       );
     }
@@ -1588,7 +1588,7 @@ export function gameStateTick(
         -5,
         "#FF0000",
         true,
-        gameState.coinSize / 2,
+        8,
         100 * (Math.random() + 1),
       );
     }
@@ -1605,7 +1605,7 @@ export function gameStateTick(
         -5,
         "#FF0000",
         true,
-        gameState.coinSize / 2,
+        8,
         100 * (Math.random() + 1),
       );
     }
@@ -1624,7 +1624,7 @@ export function gameStateTick(
       (Math.random() - 0.5) * 10,
       "#6262EA",
       true,
-      gameState.coinSize / 2,
+      8,
       100 * (Math.random() + 1),
     );
   }
@@ -1641,7 +1641,7 @@ export function gameStateTick(
       (Math.random() - 0.5) * 10,
       "#6262EA",
       true,
-      gameState.coinSize / 2,
+      8,
       100 * (Math.random() + 1),
     );
   }
@@ -1667,7 +1667,7 @@ export function gameStateTick(
         vertical ? -dy * gameState.baseSpeed : 0,
         color,
         true,
-        gameState.coinSize / 2,
+        8,
         250,
       );
     }
@@ -2161,7 +2161,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
           : (Math.random() - 0.5) * gameState.baseSpeed,
         color,
         true,
-        gameState.coinSize / 2,
+        8,
         100,
       );
     }
@@ -2191,7 +2191,7 @@ function justLostALife(gameState: GameState, ball: Ball, x: number, y: number) {
         gameState.baseSpeed * 3,
         "#FF0000",
         false,
-        gameState.coinSize / 2,
+        8,
         150,
       );
   }
@@ -2258,7 +2258,7 @@ function makeParticle(
     p.vx = vx;
     p.vy = vy;
     p.color = color;
-    p.size = size;
+    p.size = size * getPixelRatio();
     p.duration = duration;
     p.ethereal = ethereal;
   });
@@ -2282,7 +2282,7 @@ function makeText(
       gameState.gameZoneHeight - gameState.puckHeight - gameState.ballSize,
     );
     p.color = color;
-    p.size = size;
+    p.size = size * getPixelRatio();
     p.duration = clamp(duration, 400, 2000);
     p.text = text;
   });
