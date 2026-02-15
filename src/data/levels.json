@@ -2007,22 +2007,46 @@
     "name": "Weezevent",
     "size": 9,
     "bricks": "b_b__bbbbb_b_b____b_b_bbbbbb_b_b_____bbb_bbbbb_______bbbbb__bb_b____b___bbbb_bbbb",
-    "svg": null,
-    "color": "",
     "credit": "https://weezevent.com - The company I work at has a very pixel arty logo - Renan"
   },
   {
-    "color": "#000000",
+    "name": "Dots 2",
     "size": 10,
     "bricks": "___P____P_P____P______s____s______s____s_S____S______S____S_r____r______r____r______R____R_R____R___",
-    "name": "Dots 2",
     "credit": "By Greg1415"
   },
   {
     "name": "Italia",
     "size": 6,
     "bricks": "______kkWWrrkkWWrrkkWWrrkkWWrr______",
-    "svg": null,
-    "color": ""
+    "credit": ""
+  },
+  {
+    "color": "#115988",
+    "size": 18,
+    "bricks": "______________________g____O___g________ggOO_OO_gg________OOOOOOOgWg_______OOOOOOOgWWg______OOOOOOOrOWWg______OOOOOOrrOOWg_____OOOOOORWBrOgOO_____OOORRWWgrrrOO________rrWWWrrrOO______rrrrrrrrrWrr_____BgWWWWWWWWrrrr____ggWWgWWWWrrrO_____rWggWWWWrrrrr___________RRR_OOO___________RRR__OOO_______ggrrrrggg________ggggggggggg___",
+    "name": "xenia",
+    "credit": "https://atl.wiki/Xenia - by tubs "
+  },
+  {
+    "color": "#000000",
+    "size": 9,
+    "bricks": "___a_______atb_______bvb_a___bBpBbta_bvpvpvb_atbBpBb___a_bvb_______bta_______a___",
+    "name": "Cyclone Thing",
+    "credit": "tbh i mostly just like symmetry and gradients that's about all i can do to explain my thought process - by Nibiri"
+  },
+  {
+    "color": "#000000",
+    "size": 10,
+    "bricks": "___OOOO____OOOBeOOO__eBOBOOBO_OeOOOOOOeOOOOBOeOOBOROOOOOeOBRRBOBBOOOOR_RRBOOOBR__RRRRRORR____RRRR___",
+    "name": "Chocolate chip cookie",
+    "credit": "An explosion of flavor! - by Greg1415"
+  },
+  {
+    "color": "#000000",
+    "size": 20,
+    "bricks": "__________________________________________llllllllllllllll____llllllllllllllll____llllBlllllllBBll____lllllllBBlllllll____llllllllllllllll____lllllBBlllBBllll____lllBBBBBllBBllll____llllllllllllllll____lBBlllllBBllllll____lllllllBBBBlllll____llllBlllllllllll____lllllllllllBBlll____llllllllBBBBBBll____lllBBllllBBlllll____llllllllllllllll____llllllllllllllll__________________________________________",
+    "name": "Coal",
+    "credit": "Set it alight! - by Greg1415"
   }
 ]

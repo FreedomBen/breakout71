@@ -56,7 +56,7 @@ const haloCanvasCtx = haloCanvas.getContext("2d", {
 }) as CanvasRenderingContext2D;
 
 export function getHaloScale() {
-  return 16 * (isOptionOn("precise_lighting") ? 1 : 2);
+  return 16 * (isOptionOn("precise_lighting") ? 1 : 2) * getPixelRatio();
 }
 
 let framesCounter = 0;
@@ -206,8 +206,6 @@ export function render(gameState: GameState) {
     ctx.imageSmoothingEnabled = false;
 
     startWork("render:halo:pattern");
-    ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation = "multiply";
     if (level.svg && background.width && background.complete) {
       if (backgroundCanvas.title !== level.name) {
         backgroundCanvas.title = level.name;
@@ -244,14 +242,20 @@ export function render(gameState: GameState) {
           if (pattern) {
             bgctx.globalCompositeOperation = "screen";
             bgctx.fillStyle = pattern;
+            // screen it twice to get thicker white lines, as we multiply later
+            bgctx.fillRect(0, 0, width, height);
             bgctx.fillRect(0, 0, width, height);
           }
         }
       }
 
-      ctx.globalCompositeOperation = "darken";
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "multiply";
+      // ctx.globalCompositeOperation = "darken";
       ctx.drawImage(backgroundCanvas, 0, 0);
     } else {
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "multiply";
       // Background not loaded yes
       ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, width, height);

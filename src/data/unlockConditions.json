@@ -1194,5 +1194,26 @@
     "required": ["wrap_right", "streak_shots", "right_is_lava"],
     "forbidden": ["unbounded", "limitless", "sturdy_bricks"],
     "minScore": 22900
+  },
+
+  "xenia": {
+    "required": ["puck_repulse_ball", "ball_repulse_ball", "unbounded"],
+    "forbidden": ["skip_last", "fountain_toss", "limitless"],
+    "minScore": 23000
+  },
+  "Cyclone Thing": {
+    "required": ["bricks_attract_ball", "skip_last", "trampoline"],
+    "forbidden": ["shocks", "sapper", "respawn"],
+    "minScore": 23100
+  },
+  "Chocolate chip cookie": {
+    "required": ["steering", "golden_goose", "bigger_explosions"],
+    "forbidden": ["compound_interest", "side_flip", "side_kick"],
+    "minScore": 23200
+  },
+  "Coal": {
+    "required": ["extra_life", "side_kick", "side_flip"],
+    "forbidden": ["right_is_lava", "bricks_attract_coins", "ottawa_treaty"],
+    "minScore": 23300
   }
 }
