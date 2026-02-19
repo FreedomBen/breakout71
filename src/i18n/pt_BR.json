@@ -240,7 +240,7 @@
     "upgrades.chill.verbose_description": "A bola também acelera muito mais devagar.",
     "upgrades.clairvoyant.name": "Clarividência",
     "upgrades.clairvoyant.tooltip": "Veja os próximos níveis, HP dos blocos e direção da bola",
-    "upgrades.clairvoyant.verbose_description": "Te ajuda a escolher as melhores atualizações e entender a vida restante dos blocos resistentes. Níveis 2 e 3 trazem conhecimentos adicionais de uso duvidoso (acessível no modo loop)",
+    "upgrades.clairvoyant.verbose_description": "Te ajuda a escolher as melhores atualizações e ver a vida restante de blocos resistentes. Níveis 2 e 3 trazem conhecimentos adicionais de uso duvidoso (acessível no modo loop)",
     "upgrades.coin_magnet.name": "Imã de moedas",
     "upgrades.coin_magnet.tooltip": "A raquete atrai moedas",
     "upgrades.coin_magnet.verbose_description": "Direciona as moedas para a raquete. O efeito é mais forte se a moeda já estiver perto.",
