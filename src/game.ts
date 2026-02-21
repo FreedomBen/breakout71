@@ -180,7 +180,7 @@ export const fitSize = (gameState: GameState) => {
   gameState.ballSize = Math.ceil(20 * getPixelRatio());
   gameState.coinSize = Math.ceil(14 * getPixelRatio());
   gameState.puckHeight = Math.ceil(20 * getPixelRatio());
-  forEachLiveOne(gameState.coins, b=>b.size=gameState.coinSize)
+  forEachLiveOne(gameState.coins, (b) => (b.size = gameState.coinSize));
 
   gameState.brickWidth =
     Math.floor(
