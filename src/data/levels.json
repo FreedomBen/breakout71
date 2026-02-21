@@ -2022,31 +2022,61 @@
     "credit": ""
   },
   {
-    "color": "#115988",
+    "name": "xenia",
     "size": 18,
     "bricks": "______________________g____O___g________ggOO_OO_gg________OOOOOOOgWg_______OOOOOOOgWWg______OOOOOOOrOWWg______OOOOOOrrOOWg_____OOOOOORWBrOgOO_____OOORRWWgrrrOO________rrWWWrrrOO______rrrrrrrrrWrr_____BgWWWWWWWWrrrr____ggWWgWWWWrrrO_____rWggWWWWrrrrr___________RRR_OOO___________RRR__OOO_______ggrrrrggg________ggggggggggg___",
-    "name": "xenia",
     "credit": "https://atl.wiki/Xenia - by tubs "
   },
   {
-    "color": "#000000",
+    "name": "Cyclone Thing",
     "size": 9,
     "bricks": "___a_______atb_______bvb_a___bBpBbta_bvpvpvb_atbBpBb___a_bvb_______bta_______a___",
-    "name": "Cyclone Thing",
     "credit": "tbh i mostly just like symmetry and gradients that's about all i can do to explain my thought process - by Nibiri"
   },
   {
-    "color": "#000000",
+    "name": "Chocolate chip cookie",
     "size": 10,
     "bricks": "___OOOO____OOOBeOOO__eBOBOOBO_OeOOOOOOeOOOOBOeOOBOROOOOOeOBRRBOBBOOOOR_RRBOOOBR__RRRRRORR____RRRR___",
-    "name": "Chocolate chip cookie",
     "credit": "An explosion of flavor! - by Greg1415"
   },
   {
-    "color": "#000000",
+    "name": "Coal",
     "size": 20,
     "bricks": "__________________________________________llllllllllllllll____llllllllllllllll____llllBlllllllBBll____lllllllBBlllllll____llllllllllllllll____lllllBBlllBBllll____lllBBBBBllBBllll____llllllllllllllll____lBBlllllBBllllll____lllllllBBBBlllll____llllBlllllllllll____lllllllllllBBlll____llllllllBBBBBBll____lllBBllllBBlllll____llllllllllllllll____llllllllllllllll__________________________________________",
-    "name": "Coal",
     "credit": "Set it alight! - by Greg1415"
+  },
+  {
+    "name": "Break an Egg",
+    "size": 13,
+    "bricks": "_______S_______S_S___SOO____SSS___OOOO___pSv__OOOOOO_pvSpp_OOOSB__vvSpv_OB_S___SSSSS____SOO_ppSvp___S__O_pvSpp_OOOOB___vSp__OOOOO_______S_OOO_______S_____________SS_____",
+    "credit": "What do you mean it's not chocolate?! - by obigre"
+  },
+  {
+    "color": "#115988",
+    "size": 15,
+    "bricks": "____t_____t_______tt_____tt______tt_____tt______tt_____tt______tt_____tt_______tt___tt________tt___tt________tt___tt________tt_t_tt_________ttttt_________gggtggg______tttaktkattt_____aaaataaaa_______WgWaWWW_________aggaa_____",
+    "name": "E. Aster Bunnymund",
+    "credit": "https://www.youtube.com/watch?v=7H1bViUPstU - by obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 13,
+    "bricks": "_yyc_________yycyyy_______ycyycyyyycy___yyyccyycyOy__ycyyyycyOy____ccyycyOy__P__yyycyOy_______ycyOyO_______cyOy_OO_t____yOy__OO_______y__t______________P________P_____t_",
+    "name": "Easter bell",
+    "credit": "https://en.wikipedia.org/wiki/Easter_traditions#The_Netherlands,_Belgium_and_France - by obigre"
+  },
+  {
+    "color": "#115988",
+    "size": 16,
+    "bricks": "_________WW____________WWll_____________gWWWW___________gee____________WWa____________WWWaW___________lWWaW__________W_Waa_W________W_WWaa_W_______e_WWWWWWW________WWWWWWe__________WWaWW__________WWa____________lla____________WWa_____________gggg__________",
+    "name": "Anti-Gravity Lean",
+    "credit": "https://en.wikipedia.org/wiki/Smooth_Criminal#Music_video - obigre"
+  },
+  {
+    "color": "#000000",
+    "size": 13,
+    "bricks": "______________________________yy_______llyyWWyyyyyyyll__OO_O_O_W_____yl_____W_____ly_____W_____yy_____B_____ly___________yl___________yy__yyyyW____ll___yyOO___OyyO__l__l",
+    "name": "Construction site",
+    "credit": "https://en.wikipedia.org/wiki/Crane_(machine)#Construction - obigre"
   }
 ]
