@@ -189,7 +189,7 @@ function App() {
           </button>
         ))}
       </div>
-      <div id={"levels"}>{content}</div>
+      <>{content}</>
       <div id={"palette"}>
         {Object.entries(palette).map(([code, color]) => (
           <button
@@ -239,6 +239,7 @@ function App() {
             const l = levelCodeToRawLevel(code);
             if (!l) return;
             setLevels((list) => [...list, l]);
+            setEditingIndex(levels.length)
           }}
         >
           import
