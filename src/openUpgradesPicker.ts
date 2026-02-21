@@ -183,7 +183,7 @@ export async function openUpgradesPicker(gameState: GameState) {
         help: u.help(gameState.perks[u.id] || 1),
         tooltip: unlockHint + u.fullHelp(gameState.perks[u.id] || 1),
         className,
-        actionLabel: gameState.perks[u.id] ? "upgrade" : "pick",
+        actionLabel: t(gameState.perks[u.id] ? "level_up.upgrade" : "level_up.pick"),
       };
     });
 
