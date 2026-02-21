@@ -14,6 +14,7 @@ import br from "./pt_BR.json";
 import pt from "./pt.json";
 import sk from "./sk.json";
 import it from "./it.json";
+import cs from "./cs.json";
 
 export const languages = [
   {
@@ -114,6 +115,12 @@ export const languages = [
     value: "it",
     strings: it,
     levelName: "Italia",
+  },
+  {
+    text: "čeština",
+    value: "cs",
+    strings: cs,
+    levelName: "Czech Republic",
   },
 ];
 
