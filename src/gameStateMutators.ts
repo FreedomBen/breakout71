@@ -239,6 +239,8 @@ export function resetCombo(
 ) {
   const prev = gameState.combo;
   gameState.combo = baseCombo(gameState);
+  // skip combo reset when no brick on screen
+  if(!gameState.bricks.find(Boolean)) return
 
   if (gameState.perks.double_or_nothing && prev > gameState.combo) {
     gameState.score = Math.floor(
