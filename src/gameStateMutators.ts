@@ -188,7 +188,7 @@ export function normalizeGameState(gameState: GameState) {
   // This function resets most parameters on the state to correct values, and should be used even when the game is paused
 
   gameState.baseSpeed = Math.max(
-    3,
+   3 *getPixelRatio(),
     gameState.gameZoneWidth / 12 / 10 +
       gameState.currentLevel / 3 / (1 + gameState.perks.chill * 10) +
       gameState.levelTime / (30 * 1000) -
