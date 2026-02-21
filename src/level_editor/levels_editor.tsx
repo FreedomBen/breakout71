@@ -239,7 +239,7 @@ function App() {
             const l = levelCodeToRawLevel(code);
             if (!l) return;
             setLevels((list) => [...list, l]);
-            setEditingIndex(levels.length)
+            setEditingIndex(levels.length);
           }}
         >
           import

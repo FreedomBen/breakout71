@@ -1217,25 +1217,28 @@
     "minScore": 23300
   },
   "Break an Egg": {
-    "required": ["nbricks","picky_eater"],
-      "forbidden": [],
-      "minScore": 8000
-  },"E. Aster Bunnymund": {
-    "required": ["wrap_up","yoyo","shocks","sturdy_bricks"],
-    "forbidden": ["slow_down","pierce"],
+    "required": ["nbricks", "picky_eater"],
+    "forbidden": [],
+    "minScore": 8000
+  },
+  "E. Aster Bunnymund": {
+    "required": ["wrap_up", "yoyo", "shocks", "sturdy_bricks"],
+    "forbidden": ["slow_down", "pierce"],
     "minScore": 12000
-},"Easter bell": {
-    "required": ["ball_attracts_coins","bigger_explosions","bigger_puck"],
-    "forbidden": ["hot_start","pierce","limitless"],
+  },
+  "Easter bell": {
+    "required": ["ball_attracts_coins", "bigger_explosions", "bigger_puck"],
+    "forbidden": ["hot_start", "pierce", "limitless"],
     "minScore": 12000
-},"Anti-Gravity Lean": {
-    "required": ["viscosity","hot_start", "double_or_nothing"],
-    "forbidden": ["forgiving","limitless"],
+  },
+  "Anti-Gravity Lean": {
+    "required": ["viscosity", "hot_start", "double_or_nothing"],
+    "forbidden": ["forgiving", "limitless"],
     "minScore": 12000
-},
+  },
   "Construction site": {
-    "required": ["ball_attract_ball","hot_start", "steering"],
-    "forbidden": ["one_more_choice","pierce_color"],
+    "required": ["ball_attract_ball", "hot_start", "steering"],
+    "forbidden": ["one_more_choice", "pierce_color"],
     "minScore": 12000
-}
+  }
 }
