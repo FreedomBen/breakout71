@@ -1241,7 +1241,9 @@
     "forbidden": ["one_more_choice", "pierce_color"],
     "minScore": 12000
   },
-  "Flags and bonfire":{"required":["ghost_coins","ball_attracts_coins","passive_income"],"forbidden":["fountain_toss","smaller_puck","picky_eater"],"minScore":23900}
-
-
+  "Flags and bonfire": {
+    "required": ["ghost_coins", "ball_attracts_coins", "passive_income"],
+    "forbidden": ["fountain_toss", "smaller_puck", "picky_eater"],
+    "minScore": 23900
+  }
 }
