@@ -2076,10 +2076,16 @@
     "credit": "https://en.wikipedia.org/wiki/Crane_(machine)#Construction - obigre"
   },
   {
-    "color": "#000000",
+    "name": "Flags and bonfire",
     "size": 13,
     "bricks": "_ttt_rrr_yyy__ttt_rrr_yyy__t_t_r_r_y_y_________________________________y__________y_y_y________yyyyy________yrrry________yyryy_________RyR_________RRRRR_______RR_R_RR___",
-    "name": "Flags and bonfire",
     "credit": "https://en.wikipedia.org/wiki/Festa_Junina - by Pedr01gb"
+  },
+  {
+    "color": "#000000",
+    "size": 7,
+    "bricks": "____C_____C____OOOOO__OORRR__ORRRR__ORRRr__RRRrr_",
+    "name": "rotten apple",
+    "credit": "The apple is rotten now :( - by Den1251"
   }
 ]

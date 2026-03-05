@@ -1245,5 +1245,10 @@
     "required": ["ghost_coins", "ball_attracts_coins", "passive_income"],
     "forbidden": ["fountain_toss", "smaller_puck", "picky_eater"],
     "minScore": 23900
+  },
+  "rotten apple": {
+    "required": ["base_combo", "trickledown", "golden_goose"],
+    "forbidden": ["hot_start", "implosions", "superhot"],
+    "minScore": 24000
   }
 }
