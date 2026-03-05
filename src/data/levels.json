@@ -2052,31 +2052,34 @@
     "credit": "What do you mean it's not chocolate?! - by obigre"
   },
   {
-    "color": "#115988",
+    "name": "E. Aster Bunnymund",
     "size": 15,
     "bricks": "____t_____t_______tt_____tt______tt_____tt______tt_____tt______tt_____tt_______tt___tt________tt___tt________tt___tt________tt_t_tt_________ttttt_________gggtggg______tttaktkattt_____aaaataaaa_______WgWaWWW_________aggaa_____",
-    "name": "E. Aster Bunnymund",
     "credit": "https://www.youtube.com/watch?v=7H1bViUPstU - by obigre"
   },
   {
-    "color": "#000000",
+    "name": "Easter bell",
     "size": 13,
     "bricks": "_yyc_________yycyyy_______ycyycyyyycy___yyyccyycyOy__ycyyyycyOy____ccyycyOy__P__yyycyOy_______ycyOyO_______cyOy_OO_t____yOy__OO_______y__t______________P________P_____t_",
-    "name": "Easter bell",
     "credit": "https://en.wikipedia.org/wiki/Easter_traditions#The_Netherlands,_Belgium_and_France - by obigre"
   },
   {
-    "color": "#115988",
+    "name": "Anti-Gravity Lean",
     "size": 16,
     "bricks": "_________WW____________WWll_____________gWWWW___________gee____________WWa____________WWWaW___________lWWaW__________W_Waa_W________W_WWaa_W_______e_WWWWWWW________WWWWWWe__________WWaWW__________WWa____________lla____________WWa_____________gggg__________",
-    "name": "Anti-Gravity Lean",
     "credit": "https://en.wikipedia.org/wiki/Smooth_Criminal#Music_video - obigre"
+  },
+  {
+    "name": "Construction site",
+    "size": 13,
+    "bricks": "______________________________yy_______llyyWWyyyyyyyll__OO_O_O_W_____yl_____W_____ly_____W_____yy_____B_____ly___________yl___________yy__yyyyW____ll___yyOO___OyyO__l__l",
+    "credit": "https://en.wikipedia.org/wiki/Crane_(machine)#Construction - obigre"
   },
   {
     "color": "#000000",
     "size": 13,
-    "bricks": "______________________________yy_______llyyWWyyyyyyyll__OO_O_O_W_____yl_____W_____ly_____W_____yy_____B_____ly___________yl___________yy__yyyyW____ll___yyOO___OyyO__l__l",
-    "name": "Construction site",
-    "credit": "https://en.wikipedia.org/wiki/Crane_(machine)#Construction - obigre"
+    "bricks": "_ttt_rrr_yyy__ttt_rrr_yyy__t_t_r_r_y_y_________________________________y__________y_y_y________yyyyy________yrrry________yyryy_________RyR_________RRRRR_______RR_R_RR___",
+    "name": "Flags and bonfire",
+    "credit": "https://en.wikipedia.org/wiki/Festa_Junina - by Pedr01gb"
   }
 ]
