@@ -4269,7 +4269,7 @@ function explodeBrick(gameState, index, ball, isExplosion) {
         // Particle effect
         spawnParticlesExplosion(gameState, 5 + Math.min(gameState.combo, 30), x, y, color);
     }
-    if (gameState.perks.respawn && color !== "black" && !gameState.bricks[index]) {
+    if (gameState.perks.respawn && color !== "black" && !gameState.bricks[index] && gameState.bricks.find(Boolean)) {
         if (Math.random() < (0, _pureFunctions.comboKeepingRate)(gameState.perks.respawn)) append(gameState.respawns, (b)=>{
             b.color = color;
             b.index = index;

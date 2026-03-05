@@ -608,7 +608,8 @@ export function explodeBrick(
   if (
     gameState.perks.respawn &&
     color !== "black" &&
-    !gameState.bricks[index]
+    !gameState.bricks[index] &&
+      gameState.bricks.find(Boolean)
   ) {
     if (Math.random() < comboKeepingRate(gameState.perks.respawn)) {
       append(gameState.respawns, (b) => {
