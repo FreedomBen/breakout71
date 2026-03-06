@@ -64,9 +64,9 @@ export async function gameOver(title: string, intro: string) {
   );
   const levelStats = t("gameOver.lastLevelSummary", {
     catchRate: Math.floor(
-      (gameState.levelCoughtCoins / (gameState.levelSpawnedCoins || 1)) * 100,
+      (gameState.levelCaughtCoins / (gameState.levelSpawnedCoins || 1)) * 100,
     ),
-    levelCoughtCoins: gameState.levelCoughtCoins,
+    levelCaughtCoins: gameState.levelCaughtCoins,
     levelSpawnedCoins: gameState.levelSpawnedCoins,
     duration: Math.ceil(gameState.levelTime / 1000),
     levelMisses: gameState.levelMisses,

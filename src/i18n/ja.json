@@ -31,7 +31,7 @@
     "editor.title": "レベルエディタ",
     "gameOver.creative": "このプレイ結果は記録されません。",
     "gameOver.cumulative_total": "累計スコアが{{startTs}}から{{endTs}}になりました。",
-    "gameOver.lastLevelSummary": "レベル{{level}}では、{{duration}}秒間で{{levelSpawnedCoins}}枚のコインのうち{{levelCoughtCoins}}枚（{{catchRate}}%）キャッチしました。ボールは{{levelMisses}}回ブロックを外しました。",
+    "gameOver.lastLevelSummary": "レベル{{level}}では、{{duration}}秒間で{{levelSpawnedCoins}}枚のコインのうち{{levelCaughtCoins}}枚（{{catchRate}}%）キャッチしました。ボールは{{levelMisses}}回ブロックを外しました。",
     "gameOver.lost.summary": "ボールを落としてしまったのでゲームオーバーです。最終スコアは{{score}}コインです。",
     "gameOver.lost.title": "ゲームオーバー",
     "gameOver.stats.balls_lost": "落としたボールの数",

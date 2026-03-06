@@ -80,7 +80,7 @@ export function render(gameState: GameState) {
   }
 
   const catchRate = gameState.levelSpawnedCoins
-    ? gameState.levelCoughtCoins / (gameState.levelSpawnedCoins || 1)
+    ? gameState.levelCaughtCoins / (gameState.levelSpawnedCoins || 1)
     : // (gameState.levelSpawnedCoins - gameState.levelLostCoins) /
       // gameState.levelSpawnedCoins
       1;

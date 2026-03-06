@@ -31,7 +31,7 @@
     "editor.title": "Level Editor",
     "gameOver.creative": "This run will not be recorded.",
     "gameOver.cumulative_total": "Your total cumulative score went from {{startTs}} to {{endTs}}.",
-    "gameOver.lastLevelSummary": "In level {{level}} you caught {{levelCoughtCoins}} coins out of {{levelSpawnedCoins}} ({{catchRate}}%) in {{duration}} seconds. The ball missed the bricks {{levelMisses}} time(s)",
+    "gameOver.lastLevelSummary": "In level {{level}} you caught {{levelCaughtCoins}} coins out of {{levelSpawnedCoins}} ({{catchRate}}%) in {{duration}} seconds. The ball missed the bricks {{levelMisses}} time(s)",
     "gameOver.lost.summary": "You dropped the ball, ending your run with a total score of {{score}} coins.",
     "gameOver.lost.title": "Game Over",
     "gameOver.stats.balls_lost": "Balls lost",

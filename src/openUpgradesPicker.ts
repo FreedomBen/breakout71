@@ -36,7 +36,7 @@ import { toast } from "./toast";
 export async function openUpgradesPicker(gameState: GameState) {
   if (gameState.perks.chill) return;
   const catchRate =
-    gameState.levelCoughtCoins / (gameState.levelSpawnedCoins || 1);
+    gameState.levelCaughtCoins / (gameState.levelSpawnedCoins || 1);
 
   let medals = [];
   let upgradePoints = 1;
@@ -94,7 +94,7 @@ export async function openUpgradesPicker(gameState: GameState) {
   challengeResult(
     t("level_up.challenges.catchRateGood.name", {
       value: Math.floor(catchRate * 100),
-      caught: gameState.levelCoughtCoins,
+      caught: gameState.levelCaughtCoins,
       total: gameState.levelSpawnedCoins,
     }),
     t("level_up.challenges.catchRateGood.description", {
@@ -196,7 +196,7 @@ export async function openUpgradesPicker(gameState: GameState) {
       }),
       content: [
         t("level_up.upgrade_perks", {
-          coins: gameState.levelCoughtCoins,
+          coins: gameState.levelCaughtCoins,
           count: upgradePoints,
         }),
         ...upgradesActions,

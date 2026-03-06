@@ -31,7 +31,7 @@
     "editor.title": "關卡編輯器",
     "gameOver.creative": "此遊玩將不會被記錄。",
     "gameOver.cumulative_total": "你的總累積分數從 {{startTs}} 增加至 {{endTs}}。",
-    "gameOver.lastLevelSummary": "在 {{level}} 關卡中，你在 {{duration}} 秒內接住了總共 {{levelSpawnedCoins}} 枚中的 {{levelCoughtCoins}} 枚硬幣（{{catchRate}}%）。球有 {{levelMisses}} 次沒有擊中磚塊",
+    "gameOver.lastLevelSummary": "在 {{level}} 關卡中，你在 {{duration}} 秒內接住了總共 {{levelSpawnedCoins}} 枚中的 {{levelCaughtCoins}} 枚硬幣（{{catchRate}}%）。球有 {{levelMisses}} 次沒有擊中磚塊",
     "gameOver.lost.summary": "你掉了球，並以總共 {{score}} 枚硬幣結束此遊玩。",
     "gameOver.lost.title": "遊戲結束",
     "gameOver.stats.balls_lost": "損失的球",

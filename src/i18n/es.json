@@ -31,7 +31,7 @@
     "editor.title": "Editor de niveles",
     "gameOver.creative": "Esta parte de la prueba no se grabará.",
     "gameOver.cumulative_total": "Su puntuación total acumulada ha pasado de {{startTs}} a {{endTs}}.",
-    "gameOver.lastLevelSummary": "En el nivel {{level}} atrapaste {{levelCoughtCoins}} monedas de {{levelSpawnedCoins}} ({{catchRate}}%) en {{duration}} segundos. La pelota no tocó los ladrillos {{levelMisses}} veces.",
+    "gameOver.lastLevelSummary": "En el nivel {{level}} atrapaste {{levelCaughtCoins}} monedas de {{levelSpawnedCoins}} ({{catchRate}}%) en {{duration}} segundos. La pelota no tocó los ladrillos {{levelMisses}} veces.",
     "gameOver.lost.summary": "Se te ha caído la bola después de coger {{score}} monedas.",
     "gameOver.lost.title": "Pelota perdida",
     "gameOver.stats.balls_lost": "Balas perdidas",

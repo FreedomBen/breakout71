@@ -640,7 +640,7 @@ export function schedulGameSound(
 export function addToScore(gameState: GameState, coin: Coin) {
   gameState.score += coin.points;
 
-  gameState.levelCoughtCoins += coin.points;
+  gameState.levelCaughtCoins += coin.points;
   gameState.lastScoreIncrease = gameState.levelTime;
   addToTotalScore(gameState, coin.points);
   if (gameState.score > gameState.highScore && !gameState.creative) {
@@ -702,7 +702,7 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.lastTickDown = gameState.levelTime;
   gameState.levelStartScore = gameState.score;
   gameState.levelSpawnedCoins = 0;
-  gameState.levelCoughtCoins = 0;
+  gameState.levelCaughtCoins = 0;
   gameState.levelLostCoins = 0;
   gameState.levelMisses = 0;
   gameState.lastBrickBroken = 0;

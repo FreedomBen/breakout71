@@ -397,7 +397,7 @@
     "editor.title": "Editor úrovní",
     "gameOver.creative": "Tento pokus se nebude zaznamenávat.",
     "gameOver.cumulative_total": "Vaše celkové kumulativní skóre se zvýšilo z {{startTs}} na {{endTs}}.",
-    "gameOver.lastLevelSummary": "Na {{level}}. úrovni jste za {{duration}} sekund chytili {{levelCoughtCoins}} mincí z {{levelSpawnedCoins}} ({{catchRate}} %). Míček minul cihličky {{levelMisses}}krát.",
+    "gameOver.lastLevelSummary": "Na {{level}}. úrovni jste za {{duration}} sekund chytili {{levelCaughtCoins}} mincí z {{levelSpawnedCoins}} ({{catchRate}} %). Míček minul cihličky {{levelMisses}}krát.",
     "gameOver.lost.summary": "Upustili jste míček, čímž pokus skončil s celkovým skóre {{score}} mincí.",
     "gameOver.lost.title": "Konec hry",
     "gameOver.stats.balls_lost": "Ztracené míčky",
