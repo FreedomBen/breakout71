@@ -2082,10 +2082,30 @@
     "credit": "https://en.wikipedia.org/wiki/Festa_Junina - by Pedr01gb"
   },
   {
-    "color": "#000000",
+    "name": "rotten apple",
     "size": 7,
     "bricks": "____C_____C____OOOOO__OORRR__ORRRR__ORRRr__RRRrr_",
-    "name": "rotten apple",
     "credit": "The apple is rotten now :( - by Den1251"
+  },
+  {
+    "color": "#000000",
+    "size": 8,
+    "bricks": "____C______C_____OOOOO___OOOOR_k_OORRkk__ORRRr___RRRrr__________",
+    "name": "Apple with a worm",
+    "credit": "The apple has a worm in it - by Den1251"
+  },
+  {
+    "color": "#000000",
+    "size": 12,
+    "bricks": "_________________rr__________rr__________rr__________rr__________rr__________rr______________________rr__________rr_____________________________",
+    "name": "Exclamation mark",
+    "credit": "Found the combo! - by Den1251"
+  },
+  {
+    "color": "#000000",
+    "size": 6,
+    "bricks": "________SS____SS____SS___SSSS___SS__",
+    "name": "Arrow down",
+    "credit": "are these even perks? - by Den1251"
   }
 ]

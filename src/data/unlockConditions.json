@@ -1250,5 +1250,27 @@
     "required": ["base_combo", "trickledown", "golden_goose"],
     "forbidden": ["hot_start", "implosions", "superhot"],
     "minScore": 24000
+  },
+  "Apple with a worm": {
+    "required": ["metamorphosis", "hot_start", "compound_interest"],
+    "forbidden": ["golden_goose", "bricks_attract_ball", "trampoline"],
+    "minScore": 24100
+  },
+
+  "Exclamation mark": {
+    "required": ["buoy", "coin_magnet", "compound_interest"],
+    "forbidden": ["asceticism", "forgiving", "zen"],
+    "minScore": 11111
+  },
+  "Arrow down": {
+    "required": [
+      "left_is_lava",
+      "right_is_lava",
+      "top_is_lava",
+      "zen",
+      "rainbow"
+    ],
+    "forbidden": ["buoy", "extra_life", "sapper"],
+    "minScore": 100
   }
 }
