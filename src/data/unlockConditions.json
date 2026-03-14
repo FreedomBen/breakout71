@@ -1272,5 +1272,10 @@
     ],
     "forbidden": ["buoy", "extra_life", "sapper"],
     "minScore": 100
+  },
+  "DeBÍ HaCER MáS NIVELeS": {
+    "required": ["shocks", "sapper", "pierce"],
+    "forbidden": ["concave_puck", "wrap_left", "helium"],
+    "minScore": 24400
   }
 }

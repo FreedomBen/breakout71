@@ -2088,24 +2088,28 @@
     "credit": "The apple is rotten now :( - by Den1251"
   },
   {
-    "color": "#000000",
+    "name": "Apple with a worm",
     "size": 8,
     "bricks": "____C______C_____OOOOO___OOOOR_k_OORRkk__ORRRr___RRRrr__________",
-    "name": "Apple with a worm",
     "credit": "The apple has a worm in it - by Den1251"
+  },
+  {
+    "name": "Exclamation mark",
+    "size": 12,
+    "bricks": "_________________rr__________rr__________rr__________rr__________rr__________rr______________________rr__________rr_____________________________",
+    "credit": "Found the combo! - by Den1251"
+  },
+  {
+    "name": "Arrow down",
+    "size": 6,
+    "bricks": "________SS____SS____SS___SSSS___SS__",
+    "credit": "are these even perks? - by Den1251"
   },
   {
     "color": "#000000",
     "size": 12,
-    "bricks": "_________________rr__________rr__________rr__________rr__________rr__________rr______________________rr__________rr_____________________________",
-    "name": "Exclamation mark",
-    "credit": "Found the combo! - by Den1251"
-  },
-  {
-    "color": "#000000",
-    "size": 6,
-    "bricks": "________SS____SS____SS___SSSS___SS__",
-    "name": "Arrow down",
-    "credit": "are these even perks? - by Den1251"
+    "bricks": "ee_ee___kkkkeekeekk_kkkkkekkekkk_kkkekkkekkk_kekekkkekk_kkeee_kWW__WWWeee_WW_W_W__Wee_W_WW_WW_Wee_WWWW_WWWWekkWkkWkWkkWkkkWkkWkWkkkkkkkkkkkkkkkk",
+    "name": "DeBÍ HaCER MáS NIVELeS",
+    "credit": "https://en.wikipedia.org/wiki/Deb%C3%AD_Tirar_M%C3%A1s_Fotos - by Pedr01gb"
   }
 ]
