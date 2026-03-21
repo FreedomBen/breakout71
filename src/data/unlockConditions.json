@@ -1277,5 +1277,10 @@
     "required": ["shocks", "sapper", "pierce"],
     "forbidden": ["concave_puck", "wrap_left", "helium"],
     "minScore": 24400
+  },
+  "Factorio Gear": {
+    "required": ["double_or_nothing"],
+    "forbidden": ["chill"],
+    "minScore": 1000000
   }
 }

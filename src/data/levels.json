@@ -2106,10 +2106,16 @@
     "credit": "are these even perks? - by Den1251"
   },
   {
-    "color": "#000000",
+    "name": "DeBÍ HaCER MáS NIVELeS",
     "size": 12,
     "bricks": "ee_ee___kkkkeekeekk_kkkkkekkekkk_kkkekkkekkk_kekekkkekk_kkeee_kWW__WWWeee_WW_W_W__Wee_W_WW_WW_Wee_WWWW_WWWWekkWkkWkWkkWkkkWkkWkWkkkkkkkkkkkkkkkk",
-    "name": "DeBÍ HaCER MáS NIVELeS",
     "credit": "https://en.wikipedia.org/wiki/Deb%C3%AD_Tirar_M%C3%A1s_Fotos - by Pedr01gb"
+  },
+  {
+    "color": "#000000",
+    "size": 20,
+    "bricks": "____________________________OOOO____________OO__OOOO__OO_______OOOOOOOOOOOOOO______OOOOOyyyyOOOOO______ROOOORRRRyOOOR_____OOOOORRRRRROOOOO____OOOORR____RROOOO____OOOOR______ROOOO____yOOOO______OOOOO____RROOOO____OOOORR____ROOOOOOOOOOOOOOR_____yOOOOOOOOOyOOO______RyyRRyOOORRyyR______RRRRRyyyyRRRRR_______RR__RRRR__RR____________RRRR____________________________________________________________________",
+    "name": "Factorio Gear",
+    "credit": "The gear from the Factorio logo - by Ril"
   }
 ]
