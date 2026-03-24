@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "「テレキネシス」とは逆に、ボールの落下時に軌道を操作できます。",
     "upgrades.zen.name": "禅 （ZEN）",
     "upgrades.zen.tooltip": "ボムが爆発しなければ、より多くのコインを獲得できます",
-    "upgrades.zen.verbose_description": "3秒ごとに +{{lvl}}コンボ、ボムの爆発時にコンボがリセットされる"
+    "upgrades.zen.verbose_description": "3秒ごとに +{{lvl}}コンボ、ボムの爆発時にコンボがリセットされる",
+    "level_up.pick": "ピックアップ",
+    "level_up.upgrade": "アップグレード"
 }
