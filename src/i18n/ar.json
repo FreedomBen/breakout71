@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "إنه عكس التحريك الذهني، أي التحكم بالكرة أثناء سقوطها مرة أخرى إلى الأسفل.",
     "upgrades.zen.name": "زين",
     "upgrades.zen.tooltip": "مزيد من العملات المعدنية إذا لم تقم بتفعيل القنابل",
-    "upgrades.zen.verbose_description": "+{{lvl}} مجموعة كل 3 ثوانٍ، يتم إعادة ضبطها عند حدوث انفجار"
+    "upgrades.zen.verbose_description": "+{{lvl}} مجموعة كل 3 ثوانٍ، يتم إعادة ضبطها عند حدوث انفجار",
+    "level_up.pick": "اختيار",
+    "level_up.upgrade": "الترقية"
 }
