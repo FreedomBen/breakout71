@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "Це протилежність телекінезу, контроль м'яча, в той час як вона падає вниз.",
     "upgrades.zen.name": "З",
     "upgrades.zen.tooltip": "Більше монет, якщо ви не запускати бомби",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo кожен 3s, скидання коли є вибух"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo кожен 3s, скидання коли є вибух",
+    "level_up.pick": "зареєструватися",
+    "level_up.upgrade": "оновлення"
 }
