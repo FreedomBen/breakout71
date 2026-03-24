@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "E' l'opposto della telecinesi, controlla la pallina mentre cade.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Più monete se non si innescano bombe",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo ogni 3s, reset quando c'è un'esplosione"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo ogni 3s, reset quando c'è un'esplosione",
+    "level_up.pick": "scegli",
+    "level_up.upgrade": "aggiornamento"
 }
