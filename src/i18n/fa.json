@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "برعکس تله‌کینزی است، توپ را وقتی به پایین برمی‌گردد کنترل کنید.",
     "upgrades.zen.name": "ذن",
     "upgrades.zen.tooltip": "سکه‌های بیشتر اگر بمب‌ها را فعال نکنید",
-    "upgrades.zen.verbose_description": "+{{lvl}} ترکیب هر ۳ ثانیه، با انفجار بازنشانی می‌شود"
+    "upgrades.zen.verbose_description": "+{{lvl}} ترکیب هر ۳ ثانیه، با انفجار بازنشانی می‌شود",
+    "level_up.pick": "انتخاب",
+    "level_up.upgrade": "ارتقاء"
 }
