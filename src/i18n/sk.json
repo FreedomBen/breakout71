@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "Je to opak telekinézy, ovládať loptu, zatiaľ čo to padá späť.",
     "upgrades.zen.name": "Slovenčina",
     "upgrades.zen.tooltip": "Viac mincí, ak nechcete spúšťať bomby",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo každý 3s, reset, keď je výbuch"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo každý 3s, reset, keď je výbuch",
+    "level_up.pick": "vybrať",
+    "level_up.upgrade": "upgrade"
 }
