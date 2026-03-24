@@ -426,5 +426,7 @@
     "history.columns.score": "Skóre",
     "history.columns.started": "Datum",
     "history.help": "Prohlédněte si svých {{count}} nejlepších her.",
-    "history.include_past_versions": "Zobrazovat i předešlé verze"
+    "history.include_past_versions": "Zobrazovat i předešlé verze",
+    "level_up.pick": "hledat",
+    "level_up.upgrade": "upgrade"
 }
