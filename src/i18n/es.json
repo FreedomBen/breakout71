@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "Es lo contrario de la Telequinesis: controlar la pelota mientras cae hacia la raqueta.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Más monedas si no activas bombas",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo cada 3 s, se reinicia cuando hay una explosión"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo cada 3 s, se reinicia cuando hay una explosión",
+    "level_up.pick": "elige",
+    "level_up.upgrade": "actualización"
 }
