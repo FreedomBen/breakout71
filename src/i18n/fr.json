@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "C'est l'inverse de Télékinésie, contrôlez la balle alors qu'elle redescend vers la raquette.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Plus de pièces si vous ne déclenchez pas de bombes",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo toutes les 3 s, réinitialisé en cas d'explosion"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo toutes les 3 s, réinitialisé en cas d'explosion",
+    "level_up.pick": "choisis",
+    "level_up.upgrade": "mise à niveau"
 }
