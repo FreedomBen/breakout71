@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "É o oposto da telecinesia, controlo a bola enquanto ela está a cair.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Mais moedas se não disparar bombas",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo a cada 3s, reinicia quando acontece uma explosão"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo a cada 3s, reinicia quando acontece uma explosão",
+    "level_up.pick": "escolhe",
+    "level_up.upgrade": "upgrade"
 }
