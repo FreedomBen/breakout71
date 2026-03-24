@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "Это противоположность телекинезу: управляйте мячом, пока он падает обратно.",
     "upgrades.zen.name": "Дзен",
     "upgrades.zen.tooltip": "Больше монет, если не активировать бомбы",
-    "upgrades.zen.verbose_description": "+{{lvl}} комбо каждые 3 с, сбрасывается при взрыве"
+    "upgrades.zen.verbose_description": "+{{lvl}} комбо каждые 3 с, сбрасывается при взрыве",
+    "level_up.pick": "пик",
+    "level_up.upgrade": "обновление"
 }
