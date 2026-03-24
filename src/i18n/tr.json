@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "Telekinezinin tam tersi, topun aşağı düşerken kontrol edilmesi.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Bombaları tetiklemezseniz daha fazla para kazanırsınız",
-    "upgrades.zen.verbose_description": "+{{lvl}} kombo her 3 saniyede bir, patlama olduğunda sıfırlanır"
+    "upgrades.zen.verbose_description": "+{{lvl}} kombo her 3 saniyede bir, patlama olduğunda sıfırlanır",
+    "level_up.pick": "pick",
+    "level_up.upgrade": "yükselt yükseltme yükseltme yükseltme"
 }
