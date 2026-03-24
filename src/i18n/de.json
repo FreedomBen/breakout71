@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "Es ist das Gegenteil von Telekinese, den Ball zu kontrollieren, während er wieder nach unten fällt.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Mehr Münzen, wenn Sie keine Bomben auslösen",
-    "upgrades.zen.verbose_description": "Schließlich handelt es sich um ein gewaltfreies Spiel."
+    "upgrades.zen.verbose_description": "Schließlich handelt es sich um ein gewaltfreies Spiel.",
+    "level_up.pick": "wählen",
+    "level_up.upgrade": "aktualisierung"
 }
