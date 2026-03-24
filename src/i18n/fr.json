@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}}s de temps de jeu",
     "level_up.challenges.no_gain": "Aucun gain",
     "level_up.forbidden": "Choisir cet avantage vous empêchera de débloquer le niveau « {{levelName}} » dans cette partie.",
+    "level_up.pick": "choisir",
     "level_up.required": "Choisir cet avantage peut vous permettre de débloquer le niveau « {{levelName}} » dans ce jeu.",
     "level_up.title": "Vous venez de terminer le niveau {{level}}/{{max}}.",
+    "level_up.upgrade": "améliorer",
     "level_up.upgrade_perks": "Vous avez récupéré {{coins}} pièces. Choisissez {{count}} amélioration(s) ci-dessous.",
     "main_menu.donate": "Vous avez joué {{hours}} heures",
     "main_menu.donate_help": "Pourriez-vous donner quelques euros ? Vous pouvez masquer ce rappel dans les paramètres.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "C'est l'inverse de Télékinésie, contrôlez la balle alors qu'elle redescend vers la raquette.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Plus de pièces si vous ne déclenchez pas de bombes",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo toutes les 3 s, réinitialisé en cas d'explosion",
-    "level_up.pick": "choisis",
-    "level_up.upgrade": "mise à niveau"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo toutes les 3 s, réinitialisé en cas d'explosion"
 }

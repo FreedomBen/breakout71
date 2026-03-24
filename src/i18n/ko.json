@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}} 재생 시간",
     "level_up.challenges.no_gain": "이름 *",
     "level_up.forbidden": "이 퍼크를 선택하면이 게임에서 레벨 \"{{levelName}}\"을 잠금 해제하는 것을 방지합니다.",
+    "level_up.pick": "기타",
     "level_up.required": "이 퍼크를 선택하면이 게임 실행에서 레벨 \"{{levelName}}\"을 잠금 해제 할 수 있습니다.",
     "level_up.title": "레벨 {{level}}/{{max}} 클리어",
+    "level_up.upgrade": "지원하다",
     "level_up.upgrade_perks": "당신은 {{coins}} 동전을 잡았다. 아래에서 {{count}} 업그레이드를 선택합니다.",
     "main_menu.donate": "{{hours}} 시간 동안 플레이했습니다.",
     "main_menu.donate_help": "기부는 어때요? 설정에서 이 알림을 숨길 수 있습니다.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "염력과 반대되는 개념으로, 공이 다시 떨어지는 동안 공을 제어합니다.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "벽돌당 +{{lvl}} 콤보, 폭발 시 초기화됨",
-    "upgrades.zen.verbose_description": "결국, 이 게임은 비폭력적인 게임입니다.",
-    "level_up.pick": "기타",
-    "level_up.upgrade": "지원하다"
+    "upgrades.zen.verbose_description": "결국, 이 게임은 비폭력적인 게임입니다."
 }

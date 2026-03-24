@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}}с игрового времени",
     "level_up.challenges.no_gain": "Никакого выигрыша",
     "level_up.forbidden": "Выбор этого перка не позволит вам разблокировать уровень «{{levelName}}» в этом прохождении игры.",
+    "level_up.pick": "пик",
     "level_up.required": "Выбор этого перка может позволить вам разблокировать уровень «{{levelName}}» в этой игре.",
     "level_up.title": "Вы только что закончили уровень {{level}}/{{max}}.",
+    "level_up.upgrade": "обновление",
     "level_up.upgrade_perks": "Вы поймали {{coins}} монет. Выберите {{count}} улучшений ниже.",
     "main_menu.donate": "Вы играли {{hours}} часов",
     "main_menu.donate_help": "Как насчет пожертвования? Вы можете скрыть это напоминание в настройках.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "Это противоположность телекинезу: управляйте мячом, пока он падает обратно.",
     "upgrades.zen.name": "Дзен",
     "upgrades.zen.tooltip": "Больше монет, если не активировать бомбы",
-    "upgrades.zen.verbose_description": "+{{lvl}} комбо каждые 3 с, сбрасывается при взрыве",
-    "level_up.pick": "пик",
-    "level_up.upgrade": "обновление"
+    "upgrades.zen.verbose_description": "+{{lvl}} комбо каждые 3 с, сбрасывается при взрыве"
 }

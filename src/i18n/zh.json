@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}} 秒游玩时间",
     "level_up.challenges.no_gain": "没有收获",
     "level_up.forbidden": "在这次游玩中挑选这个被动技能会防止你解锁关卡 \"{{levelName}}\"。",
+    "level_up.pick": "页: 1",
     "level_up.required": "在这次游玩中挑选这个被动技能可能允许你解锁关卡 \"{{levelName}}\"。",
     "level_up.title": "{{level}}/{{max}} 关卡已清除",
+    "level_up.upgrade": "升级",
     "level_up.upgrade_perks": "你抓到 {{coins}} 硬币，在下面挑选 {{count}} 个升级。",
     "main_menu.donate": "你已经玩了 {{hours}} 小时",
     "main_menu.donate_help": "捐款如何？你可以在设置中隐藏此提醒。",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "这是意念操控的反面，在球掉下来时控制它。",
     "upgrades.zen.name": "禅",
     "upgrades.zen.tooltip": "不触发炸弹，获得更多硬币",
-    "upgrades.zen.verbose_description": "每三秒 +{{lvl}} 连击，爆炸时重置连击",
-    "level_up.pick": "页: 1",
-    "level_up.upgrade": "升级"
+    "upgrades.zen.verbose_description": "每三秒 +{{lvl}} 连击，爆炸时重置连击"
 }

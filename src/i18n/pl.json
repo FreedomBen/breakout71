@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "obserwacje (ang.)",
     "level_up.challenges.no_gain": "Niestety żadna z zysków",
     "level_up.forbidden": "Wyrażanie tego perku uniemożliwia cię odblokowania poziomu „Name” w tej grze.",
+    "level_up.pick": "pick",
     "level_up.required": "Prosząc to perk może pozwolić na odblokowanie poziomu \"(namo)\" w tym meczu.",
     "level_up.title": "Poziom {{level}}/ (ang.). oczyścić",
+    "level_up.upgrade": "modernizacja",
     "level_up.upgrade_perks": "Znajdował się w nich monety (pol.). Poniższa tabela (pol.).",
     "main_menu.donate": "Grasz w godzinach tygodniowych",
     "main_menu.donate_help": "Jak udawać? Możesz ukryć to przypomnienie w miejscach.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "Jest to przeciwieństwo telekinezy, kontroluje piłkę, podczas gdy spada.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Więcej monet, jeśli nie wybuchnie bomby",
-    "upgrades.zen.verbose_description": "+ (lvl}} combo co 3s, ponownie się rozwiązał, gdy wybuchła eksplozja",
-    "level_up.pick": "pick",
-    "level_up.upgrade": "modernizacja"
+    "upgrades.zen.verbose_description": "+ (lvl}} combo co 3s, ponownie się rozwiązał, gdy wybuchła eksplozja"
 }

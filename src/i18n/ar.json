@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}}ثانية وقت اللعب",
     "level_up.challenges.no_gain": "لا مكسب",
     "level_up.forbidden": "سيؤدي اختيار هذه الميزة إلى منعك من فتح المستوى \"{{levelName}}\" في جولة اللعبة هذه.",
+    "level_up.pick": "اختيار",
     "level_up.required": "قد يسمح لك اختيار هذه الميزة بفتح المستوى \"{{levelName}}\" في جولة اللعبة هذه.",
     "level_up.title": "لقد انتهيت للتو من المستوى {{level}}/{{max}}.",
+    "level_up.upgrade": "الترقية",
     "level_up.upgrade_perks": "لقد جمعت {{coins}} عملة. اختر {{count}} ترقية من أدناه.",
     "main_menu.donate": "لقد لعبت لمدة {{hours}} ساعة",
     "main_menu.donate_help": "ماذا عن التبرع؟ يمكنك إخفاء هذا التذكير في الإعدادات.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "إنه عكس التحريك الذهني، أي التحكم بالكرة أثناء سقوطها مرة أخرى إلى الأسفل.",
     "upgrades.zen.name": "زين",
     "upgrades.zen.tooltip": "مزيد من العملات المعدنية إذا لم تقم بتفعيل القنابل",
-    "upgrades.zen.verbose_description": "+{{lvl}} مجموعة كل 3 ثوانٍ، يتم إعادة ضبطها عند حدوث انفجار",
-    "level_up.pick": "اختيار",
-    "level_up.upgrade": "الترقية"
+    "upgrades.zen.verbose_description": "+{{lvl}} مجموعة كل 3 ثوانٍ، يتم إعادة ضبطها عند حدوث انفجار"
 }

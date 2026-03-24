@@ -2117,5 +2117,19 @@
     "bricks": "____________________________OOOO____________OO__OOOO__OO_______OOOOOOOOOOOOOO______OOOOOyyyyOOOOO______ROOOORRRRyOOOR_____OOOOORRRRRROOOOO____OOOORR____RROOOO____OOOOR______ROOOO____yOOOO______OOOOO____RROOOO____OOOORR____ROOOOOOOOOOOOOOR_____yOOOOOOOOOyOOO______RyyRRyOOORRyyR______RRRRRyyyyRRRRR_______RR__RRRR__RR____________RRRR____________________________________________________________________",
     "name": "Factorio Gear",
     "credit": "The gear from the Factorio logo - by Ril"
+  },
+  {
+    "color": "#000000",
+    "size": 10,
+    "bricks": "______________________OOO______OOeeO_____OOeOOO_____OOOOOO_____OOOeeO_____OOeOO______OOOO_______OO__",
+    "name": "Bread",
+    "credit": "Bread level, somewhat inspired by the Minecraft bread item - by 63CritsInARow"
+  },
+  {
+    "color": "#115988",
+    "size": 18,
+    "bricks": "_______________________________________________________________________________________________________________ttgB____Bgtt_____ttgrgttttgrgtt___ttgrgttttttgrgtt__ttggttttttttggtt__ttt_teetteet_ttt__ttt_tebeebet_ttt__ttt_teteetet_ttt__ttt__eeeeee__ttt__ttt___eeee___ttt__tttt________tttt___ttt________ttt_____t__________t___",
+    "name": "Hatsune Miku",
+    "credit": "MOU IKKAI! MOU IKKAI! - by 63CritsInARow"
   }
 ]

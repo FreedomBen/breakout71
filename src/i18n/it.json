@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}}s giocati",
     "level_up.challenges.no_gain": "Nessun guadagno",
     "level_up.forbidden": "Scegliere questo potenziamento ti impedirà di sbloccare il livello \"{{levelName}}\" in questa partita.",
+    "level_up.pick": "scegli",
     "level_up.required": "Scegliere questo potenziamento ti potrebbe permetterti di sbloccare il livello \"{{levelName}}\" in questa partita.",
     "level_up.title": "Livello {{level}}/{{max}} completato",
+    "level_up.upgrade": "aggiornamento",
     "level_up.upgrade_perks": "Hai raccolto {{coins}} monete. Scegli {{count}} potenziamento(i) tra questi.",
     "main_menu.donate": "Hai giocato per {{hours}} ore",
     "main_menu.donate_help": "Vorresti lasciarci una donazione? Puoi nascondere questo promemoria dalle impostazioni.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "E' l'opposto della telecinesi, controlla la pallina mentre cade.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Più monete se non si innescano bombe",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo ogni 3s, reset quando c'è un'esplosione",
-    "level_up.pick": "scegli",
-    "level_up.upgrade": "aggiornamento"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo ogni 3s, reset quando c'è un'esplosione"
 }

@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "Čas prehrávania:{{value}}s",
     "level_up.challenges.no_gain": "Žiadny zisk",
     "level_up.forbidden": "Picking tento perk vám zabráni odomknutiu úrovne \"{{levelName}}\" v tejto hre beh.",
+    "level_up.pick": "vybrať",
     "level_up.required": "Picking tento perk vám môže umožniť odomknúť úroveň \"{{levelName}}\" v tejto hre beh.",
     "level_up.title": "Úroveň {{level}}/{{max}} Zrušiť",
+    "level_up.upgrade": "upgrade",
     "level_up.upgrade_perks": "Chytili ste {{coins}} mince. Vyberte {{count}} Upgrade(s) nižšie.",
     "main_menu.donate": "Hráte pre {{hours}} hodín",
     "main_menu.donate_help": "Čo sa týka darovania? Túto pripomenutie môžete skryť v nastavení.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "Je to opak telekinézy, ovládať loptu, zatiaľ čo to padá späť.",
     "upgrades.zen.name": "Slovenčina",
     "upgrades.zen.tooltip": "Viac mincí, ak nechcete spúšťať bomby",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo každý 3s, reset, keď je výbuch",
-    "level_up.pick": "vybrať",
-    "level_up.upgrade": "upgrade"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo každý 3s, reset, keď je výbuch"
 }

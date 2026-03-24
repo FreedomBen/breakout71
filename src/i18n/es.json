@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}}s de tiempo de juego",
     "level_up.challenges.no_gain": "Sin ganancia",
     "level_up.forbidden": "Seleccionar esta ventaja evitará que desbloquees el nivel \"{{levelName}}\" en esta partida.",
+    "level_up.pick": "elige",
     "level_up.required": "Seleccionar esta ventaja podría permitirte desbloquear el nivel \"{{levelName}}\" en esta partida.",
     "level_up.title": "Acabas de completar el nivel {{level}}/{{max}}.",
+    "level_up.upgrade": "actualización",
     "level_up.upgrade_perks": "Has conseguido {{coins}} monedas. Elige {{count}} mejora(s) a continuación.",
     "main_menu.donate": "Has jugado {{hours}} horas",
     "main_menu.donate_help": "¿Podrías donar unos euros? Puedes ocultar este recordatorio en los ajustes.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "Es lo contrario de la Telequinesis: controlar la pelota mientras cae hacia la raqueta.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Más monedas si no activas bombas",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo cada 3 s, se reinicia cuando hay una explosión",
-    "level_up.pick": "elige",
-    "level_up.upgrade": "actualización"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo cada 3 s, se reinicia cuando hay una explosión"
 }

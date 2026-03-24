@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}} segundos de jogo",
     "level_up.challenges.no_gain": "Sem ganho",
     "level_up.forbidden": "Escolher esta vantagem irá impedir que desbloqueie o nível \"{{levelName}}\" nesta partida.",
+    "level_up.pick": "escolhe",
     "level_up.required": "Escolher este perk pode permitir que desbloqueie o nível \"{{levelName}}\" nesta execução do jogo.",
     "level_up.title": "Nível {{level}}/{{max}} conluído",
+    "level_up.upgrade": "upgrade",
     "level_up.upgrade_perks": "Apanhou {{coins}} moedas. Escolha {{count}} melhoria(s) abaixo.",
     "main_menu.donate": "Jogou por {{hours}} horas",
     "main_menu.donate_help": "Que tal doar? Pode esconder este lembrete nas configurações.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "É o oposto da telecinesia, controlo a bola enquanto ela está a cair.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Mais moedas se não disparar bombas",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo a cada 3s, reinicia quando acontece uma explosão",
-    "level_up.pick": "escolhe",
-    "level_up.upgrade": "upgrade"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo a cada 3s, reinicia quando acontece uma explosão"
 }

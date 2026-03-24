@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}}s Spielzeit",
     "level_up.challenges.no_gain": "Kein Gewinn",
     "level_up.forbidden": "Wenn Sie diesen Vorteil wählen, können Sie das Level „{{levelName}}“ in diesem Spieldurchlauf nicht freischalten.",
+    "level_up.pick": "wählen",
     "level_up.required": "Durch Auswahl dieses Vorteils können Sie möglicherweise das Level „{{levelName}}“ in diesem Spieldurchlauf freischalten.",
     "level_up.title": "Du hast gerade Level {{level}}/{{max}} beendet.",
+    "level_up.upgrade": "aktualisierung",
     "level_up.upgrade_perks": "Du hast {{coins}} Münzen gefangen. Wähle unten {{count}} Upgrade(s) aus.",
     "main_menu.donate": "Sie haben schon {{hours}} Stunden gespielt",
     "main_menu.donate_help": "Wie wäre es mit einer Spende? Du kannst diese Erinnerung in den Einstellungen ausblenden.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "Es ist das Gegenteil von Telekinese, den Ball zu kontrollieren, während er wieder nach unten fällt.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Mehr Münzen, wenn Sie keine Bomben auslösen",
-    "upgrades.zen.verbose_description": "Schließlich handelt es sich um ein gewaltfreies Spiel.",
-    "level_up.pick": "wählen",
-    "level_up.upgrade": "aktualisierung"
+    "upgrades.zen.verbose_description": "Schließlich handelt es sich um ein gewaltfreies Spiel."
 }

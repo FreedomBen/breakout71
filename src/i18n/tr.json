@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}}s oyun süresi",
     "level_up.challenges.no_gain": "Kazanç yok",
     "level_up.forbidden": "Bu avantajı seçmeniz, bu oyun turunda \"{{levelName}}\" seviyesinin kilidini açmanızı engelleyecektir.",
+    "level_up.pick": "pick",
     "level_up.required": "Bu yeteneği seçmek, bu oyun turunda \"{{levelName}}\" seviyesinin kilidini açmanıza olanak tanıyabilir.",
     "level_up.title": "{{level}}/{{max}}seviyesini yeni bitirdiniz.",
+    "level_up.upgrade": "yükselt yükseltme yükseltme yükseltme",
     "level_up.upgrade_perks": "{{coins}} jeton yakaladınız. Aşağıdan {{count}} yükseltmeyi seçin.",
     "main_menu.donate": "{{hours}} saat oynadınız",
     "main_menu.donate_help": "Bağış yapmaya ne dersiniz? Ayarlardan bu hatırlatıcıyı gizleyebilirsiniz.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "Telekinezinin tam tersi, topun aşağı düşerken kontrol edilmesi.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "Bombaları tetiklemezseniz daha fazla para kazanırsınız",
-    "upgrades.zen.verbose_description": "+{{lvl}} kombo her 3 saniyede bir, patlama olduğunda sıfırlanır",
-    "level_up.pick": "pick",
-    "level_up.upgrade": "yükselt yükseltme yükseltme yükseltme"
+    "upgrades.zen.verbose_description": "+{{lvl}} kombo her 3 saniyede bir, patlama olduğunda sıfırlanır"
 }

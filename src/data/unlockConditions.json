@@ -1282,5 +1282,17 @@
     "required": ["double_or_nothing"],
     "forbidden": ["chill"],
     "minScore": 1000000
+  },
+
+  "Bread": {
+    "required": ["addiction", "minefield", "double_or_nothing"],
+    "forbidden": ["right_is_lava", "trampoline", "streak_shots"],
+    "minScore": 24600
+  },
+
+  "Hatsune Miku": {
+    "required": ["extra_life"],
+    "forbidden": ["bigger_explosions"],
+    "minScore": 39393
   }
 }

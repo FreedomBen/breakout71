@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}} ثانیه زمان بازی",
     "level_up.challenges.no_gain": "بدون سود",
     "level_up.forbidden": "انتخاب این ویژگی مانع باز کردن سطح «{{levelName}}» در این دست می‌شود.",
+    "level_up.pick": "انتخاب",
     "level_up.required": "انتخاب این ویژگی ممکن است سطح «{{levelName}}» را در این دست باز کند.",
     "level_up.title": "سطح {{level}}/{{max}} پاک شد",
+    "level_up.upgrade": "ارتقاء",
     "level_up.upgrade_perks": "شما {{coins}} سکه گرفتید. {{count}} قدرت زیر را انتخاب کنید.",
     "main_menu.donate": "شما {{hours}} ساعت بازی کرده‌اید",
     "main_menu.donate_help": "کمک مالی چطور است؟ می‌توانید این یادآور را در تنظیمات مخفی کنید.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "برعکس تله‌کینزی است، توپ را وقتی به پایین برمی‌گردد کنترل کنید.",
     "upgrades.zen.name": "ذن",
     "upgrades.zen.tooltip": "سکه‌های بیشتر اگر بمب‌ها را فعال نکنید",
-    "upgrades.zen.verbose_description": "+{{lvl}} ترکیب هر ۳ ثانیه، با انفجار بازنشانی می‌شود",
-    "level_up.pick": "انتخاب",
-    "level_up.upgrade": "ارتقاء"
+    "upgrades.zen.verbose_description": "+{{lvl}} ترکیب هر ۳ ثانیه، با انفجار بازنشانی می‌شود"
 }

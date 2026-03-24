@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "{{value}}s час відтворення",
     "level_up.challenges.no_gain": "Немає прибутку",
     "level_up.forbidden": "Підібрати цей норк дозволить запобігти розблокуванню рівня \"{levelName}}\" в цьому режимі гри.",
+    "level_up.pick": "зареєструватися",
     "level_up.required": "Підібрати цей норк може дозволити вам розблокувати рівень \"{levelName}}\" в цьому режимі гри.",
     "level_up.title": "Рівень {{level}}/{{max}} знімний",
+    "level_up.upgrade": "оновлення",
     "level_up.upgrade_perks": "Ви спійманий {{coins}} монети. Виберіть {{count}} Оновлення (s) нижче.",
     "main_menu.donate": "Ви відіграли на {{hours}}",
     "main_menu.donate_help": "Як про пожертвування? Ви можете приховати це нагадування в налаштуваннях.",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "Це протилежність телекінезу, контроль м'яча, в той час як вона падає вниз.",
     "upgrades.zen.name": "З",
     "upgrades.zen.tooltip": "Більше монет, якщо ви не запускати бомби",
-    "upgrades.zen.verbose_description": "+{{lvl}} combo кожен 3s, скидання коли є вибух",
-    "level_up.pick": "зареєструватися",
-    "level_up.upgrade": "оновлення"
+    "upgrades.zen.verbose_description": "+{{lvl}} combo кожен 3s, скидання коли є вибух"
 }

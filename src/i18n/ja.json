@@ -80,8 +80,10 @@
     "level_up.challenges.levelTime.name": "プレイ時間{{value}}秒",
     "level_up.challenges.no_gain": "獲得なし",
     "level_up.forbidden": "この特典を選択すると、今回レベル「{{levelName}}」を解禁できなくなります。",
+    "level_up.pick": "ピックアップ",
     "level_up.required": "この特典を選ぶと、今回レベル「{{levelName}}」を解禁できるかもしれません。",
     "level_up.title": "{{max}}面中{{level}}面クリア",
+    "level_up.upgrade": "アップグレード",
     "level_up.upgrade_perks": "{{coins}}枚のコインを獲得しました。以下から{{count}}個のアップグレードを選択してください。",
     "main_menu.donate": "累計{{hours}}時間プレイしています",
     "main_menu.donate_help": "寄付をお考えください。この通知は設定でオフにできます。",
@@ -426,7 +428,5 @@
     "upgrades.yoyo.verbose_description": "「テレキネシス」とは逆に、ボールの落下時に軌道を操作できます。",
     "upgrades.zen.name": "禅 （ZEN）",
     "upgrades.zen.tooltip": "ボムが爆発しなければ、より多くのコインを獲得できます",
-    "upgrades.zen.verbose_description": "3秒ごとに +{{lvl}}コンボ、ボムの爆発時にコンボがリセットされる",
-    "level_up.pick": "ピックアップ",
-    "level_up.upgrade": "アップグレード"
+    "upgrades.zen.verbose_description": "3秒ごとに +{{lvl}}コンボ、ボムの爆発時にコンボがリセットされる"
 }
