@@ -426,5 +426,7 @@
     "upgrades.yoyo.verbose_description": "염력과 반대되는 개념으로, 공이 다시 떨어지는 동안 공을 제어합니다.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "벽돌당 +{{lvl}} 콤보, 폭발 시 초기화됨",
-    "upgrades.zen.verbose_description": "결국, 이 게임은 비폭력적인 게임입니다."
+    "upgrades.zen.verbose_description": "결국, 이 게임은 비폭력적인 게임입니다.",
+    "level_up.pick": "기타",
+    "level_up.upgrade": "지원하다"
 }
