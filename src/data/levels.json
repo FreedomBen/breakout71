@@ -942,7 +942,7 @@
     "credit": ""
   },
   {
-    "name": "Wiki",
+    "name": "Kiwi",
     "size": 10,
     "bricks": "_______________________GGGG_____GGkkGG___GkggggkG__GgWWWWgG__GkggggkG___GGkkGG_____GGGG_____________",
     "credit": ""
@@ -2112,24 +2112,180 @@
     "credit": "https://en.wikipedia.org/wiki/Deb%C3%AD_Tirar_M%C3%A1s_Fotos - by Pedr01gb"
   },
   {
-    "color": "#000000",
+    "name": "Factorio Gear",
     "size": 20,
     "bricks": "____________________________OOOO____________OO__OOOO__OO_______OOOOOOOOOOOOOO______OOOOOyyyyOOOOO______ROOOORRRRyOOOR_____OOOOORRRRRROOOOO____OOOORR____RROOOO____OOOOR______ROOOO____yOOOO______OOOOO____RROOOO____OOOORR____ROOOOOOOOOOOOOOR_____yOOOOOOOOOyOOO______RyyRRyOOORRyyR______RRRRRyyyyRRRRR_______RR__RRRR__RR____________RRRR____________________________________________________________________",
-    "name": "Factorio Gear",
     "credit": "The gear from the Factorio logo - by Ril"
   },
   {
-    "color": "#000000",
+    "name": "Bread",
     "size": 10,
     "bricks": "______________________OOO______OOeeO_____OOeOOO_____OOOOOO_____OOOeeO_____OOeOO______OOOO_______OO__",
-    "name": "Bread",
     "credit": "Bread level, somewhat inspired by the Minecraft bread item - by 63CritsInARow"
   },
   {
-    "color": "#115988",
+    "name": "Hatsune Miku",
     "size": 18,
     "bricks": "_______________________________________________________________________________________________________________ttgB____Bgtt_____ttgrgttttgrgtt___ttgrgttttttgrgtt__ttggttttttttggtt__ttt_teetteet_ttt__ttt_tebeebet_ttt__ttt_teteetet_ttt__ttt__eeeeee__ttt__ttt___eeee___ttt__tttt________tttt___ttt________ttt_____t__________t___",
-    "name": "Hatsune Miku",
     "credit": "MOU IKKAI! MOU IKKAI! - by 63CritsInARow"
+  },
+  {
+    "color": "#000000",
+    "size": 15,
+    "bricks": "______________________________________________yttttttttttty__tWWWWWWWWWWWt__tWWllWWllllWt__tWWllWWWWWWWt__tWWWWWWlllWWt__tWllllWWWWWWt__tWllllWlllWWt__tWWWWWWWWWWWt__yttttttttttty______________________________________________",
+    "name": "ID",
+    "credit": "https://en.wikipedia.org/wiki/Age_verification_system - by pedr01gb"
+  },
+  {
+    "name": "EFF",
+    "size": 14,
+    "bricks": "__________________________________________rrrr_rrrr_rrrrrrrr_rrrr_rrrrrr___rr___rr__rrrr_rrrr_rrrrrrrr_rrrr_rrrrrr___rr___rr__rrrr_rr___rr__rrrr_rr___rr____________________________________________",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.eff.org - Defending digital privacy, free speech, and innovation "
+  },
+  {
+    "name": "Mastodon",
+    "size": 11,
+    "bricks": "_bbbbbbbb__bbWWbbWWbb_bWWWWWWWWb_bWWbWWbWWb_bWWbWWbWWb_bWWbbbbWWb_bWWbbbbWWb_bbbbbbbbbb_bb_________bbb_________bbbb______",
+    "svg": null,
+    "color": "",
+    "credit": "https://mastodon.social/ - decentralized social network"
+  },
+  {
+    "name": "Syncthing",
+    "size": 13,
+    "bricks": "___ttttttt_____tWWWWWWWt___tWtttttttWt_tWttttttttWWttWttttttttWWttWttttttWWtWttWttttWWtttWttWWWWWWWtttWttWWtttttWttWttWtttttttWWWt_tWttttttWWt___tWWWWWWWt_____ttttttt___",
+    "svg": null,
+    "color": "",
+    "credit": "https://syncthing.net/ an amazing file synchronization tool"
+  },
+  {
+    "name": "Clippy",
+    "size": 13,
+    "bricks": "____llll_______ggg__ggg______l____l______WWW__WWW_____WBW__WBW_____WWW__WWW______l____l_______l____l_______ll___l_______l_lll__l_____l_____l______l_____l_______lllll____",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.youtube.com/watch?v=2_Dtmpe9qaQ"
+  },
+  {
+    "name": "LibreOffice",
+    "size": 9,
+    "bricks": "_gggg_gg__gllWg_g__gllWWg___gllWWWg__glllllg__glllllg__glllllg__glllllg___ggggg__",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.libreoffice.org/"
+  },
+  {
+    "name": "FreeBSD",
+    "size": 10,
+    "bricks": "__R_____R__R_______R_RRRrrrRRR_RRWWrWWRR__RWBrBWR___rrrrrrr___rrrrrrr___rrRRRrr____rrrrr____________",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.freebsd.org/ - The Power To Serve"
+  },
+  {
+    "name": "Text Launcher",
+    "size": 13,
+    "bricks": "______________ggggggggggg_______________ggggggggggg_______________ggggggggggg_______________ggggggggggg_______________ggggggggggg_______________ggggggggggg______________",
+    "svg": null,
+    "color": "",
+    "credit": "https://f-droid.org/en/packages/ademar.textlauncher/ - a really reliable phone launcher for android"
+  },
+  {
+    "name": "Jetbrains",
+    "size": 8,
+    "bricks": "__rrvvv__rrvvvvvr_____vvO_____vvO_____vrO_WW__rrO_____r__OOOOr__",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.jetbrains.com/webstorm/ - The maker of the (proprietary) IDE used to code B71"
+  },
+  {
+    "name": "WebStorm",
+    "size": 14,
+    "bricks": "_tttttttt_____ttttttttttyyy_tt__________y_tt_W___W_WW_y_tt_W_W_W_W__t_tt_W_W_W__W_tttt__W_W__WW_tttt__________tt_t__________tt_y_WWWW_____tt_y__________tt_yyyaaaaaatttt_yyyyaaaaaattt_yyyyaa_______",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.jetbrains.com/webstorm/"
+  },
+  {
+    "name": "i3",
+    "size": 15,
+    "bricks": "_____________________________________WW_____________WW__________WW____W________WW___WWW__________W__WWW____WW__WWW__WW____WW___WWW_WW_______W__WWWW_______WWW__WW_________WWWWW___________WWW____________________________________",
+    "svg": null,
+    "color": "",
+    "credit": "https://i3wm.org/  - tiling window manager for linux"
+  },
+  {
+    "name": "Firefox",
+    "size": 13,
+    "bricks": "_____________________y___________yyy_____S_Sbbbyyy____SSSbbbyyy____SSSSbyyyy____SSSbbbyy_____SSbbbbSS_____SSSbbSSS______SSSSSS________SSSS_______________________________",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.firefox.com - a good browser under questionable management"
+  },
+  {
+    "name": "Sublime Text",
+    "size": 15,
+    "bricks": "___________OO___________OOOO_________OOOOOO_______OOOOOOOO_____OOOOOOOO_______OOOOOO_________OOOOOOOO_______OOOOOOOOOO_______OOOOOOOO_________OOOOOO_______OOOOOOOO_____OOOOOOOO_______OOOOOO_________OOOO___________OO__________",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.sublimetext.com/ - quality software"
+  },
+  {
+    "name": "Kanban Md",
+    "size": 16,
+    "bricks": "________________________________WW______WW______WWWW__WWWW______WWWWWWWWWW______WW_WWWW_WW____WWWW__WW__WW____WWWWW____WWW____WWWW_W__W_WW__WWWWWW__WW__WW_WWWWWWW______WW_WW_WWWW______WW_WWWWWWW______WW__WWWW________________________________________________",
+    "svg": null,
+    "color": "",
+    "credit": "https://kanbanmd.lecaro.me/ - Markdown based Trello alternative"
+  },
+  {
+    "name": "Flameshot",
+    "size": 12,
+    "bricks": "___vvvvvv_____vvvvvvvv___vvyvvvvvvv_vvvyyvvOvvvvvvvyyvOOvvrvvvyyyOOOvrrvvyyyyOOOrrrvvyyyOOOrrrvvvvyyOrrrrvvv_vvyrrrrvvv___vyrvvvvv_____vvvvvv___",
+    "svg": null,
+    "color": "",
+    "credit": "https://flameshot.org/ - Open source screenshot software for desktop"
+  },
+  {
+    "name": "VLC",
+    "size": 11,
+    "bricks": "____OOO________OOO________WWW_______WWWWW______OOOOO______OOOOO______WWWWW_____WWWWWWW____OOOOOOO__OOOOOOOOOOOOOOOOOOOOOO",
+    "svg": null,
+    "color": "",
+    "credit": "https://www.videolan.org/vlc/"
+  },
+  {
+    "name": "Aegis Authenticator",
+    "size": 10,
+    "bricks": "__WWWWWW___WWWbbWWW_WWWbWWbWWWWWWbWWbWWWWWbWWWWbWWWWbWbWWbWWWbWWWbWWbWWbWbWWbWbW_WWWWWWWW___WWWWWW__",
+    "svg": null,
+    "color": "",
+    "credit": "https://f-droid.org/en/packages/com.beemdevelopment.aegis/ - much better than google authenticator"
+  },
+  {
+    "name": "Feeder",
+    "size": 9,
+    "bricks": "kkkkkkkkkkkkkWWWWkkkWWWWWWkkkkWWkkkkkkkWWWWkkkkkWWWWkkkkkWWkkkkkkWWWkkkkkkkkkkkkk",
+    "svg": null,
+    "color": "",
+    "credit": "https://f-droid.org/en/packages/com.nononsenseapps.feeder/"
+  },
+  {
+    "name": "Thumb-Key",
+    "size": 15,
+    "bricks": "____WWBBBWW_______WWWWWWWWW______WWWWWWWWW______WWWWWWWWW______WWWWWWWWW______WWBWBWBWW______WWWWWWWWW______WWBWBWBWW______WWWWWWWWW______WWBWBWBWW______WWWWWWWWW______WWWWWWWWW______WWWWWWWWW______WWWWWWWWW_______WWWWWWW____",
+    "svg": null,
+    "color": "",
+    "credit": "https://f-droid.org/en/packages/com.dessalines.thumbkey/"
+  },
+  {
+    "name": "Xed-Editor",
+    "size": 13,
+    "bricks": "______W_________W__W__W_______W_W_W_____W___WWW___W___W___W___W_____W__W__W___WWWWWWWWWWWWW___W__W__W_____W___W___W___W___WWW___W_____W_W_W_______W__W__W_________W______",
+    "svg": null,
+    "color": "",
+    "credit": "https://f-droid.org/en/packages/com.rk.xededitor/ Pretty cool text editor"
   }
 ]
