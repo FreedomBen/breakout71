@@ -7,6 +7,8 @@ export let alertsOpen = 0,
 
 export type AsyncAlertAction<t> = {
   text?: string;
+  tooltip?: string;
+  link?: string;
   value?: t;
   help?: string;
   disabled?: boolean;
@@ -151,6 +153,7 @@ function addButton<t>(
 ) {
   const {
     text = "",
+    link = "",
     value = null,
     help = "",
     disabled = false,
@@ -169,8 +172,9 @@ function addButton<t>(
     buttonWrap.innerHTML = icon;
 
     const description = document.createElement("p");
+    const name=link ? `<a href="${link}" target="_blank" rel="noopener noreferrer">${text}</a>`:text
     description.innerHTML = `
-              <strong>${text}</strong>
+              <strong>${name}</strong>
              ${help}
              `;
     description.setAttribute("data-tooltip", tooltip);
