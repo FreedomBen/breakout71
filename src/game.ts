@@ -68,7 +68,7 @@ import {
   closeModal,
 } from "./asyncAlert";
 import { getPixelRatio, isOptionOn, options, toggleOption } from "./options";
-import {clamp, extractLinkFromText, miniMarkDown} from "./pure_functions";
+import { clamp, extractLinkFromText, miniMarkDown } from "./pure_functions";
 import { helpMenuEntry } from "./help";
 import { creativeMode } from "./creative";
 import { hideAnyTooltip, setupTooltips } from "./tooltip";
@@ -852,7 +852,6 @@ async function openUnlockedLevelsList() {
       ? null
       : reasonLevelIsLocked(li, l.name, getHistory(), true);
 
-
     return {
       text: l.name,
       disabled: !!lockedBecause,
@@ -860,8 +859,8 @@ async function openUnlockedLevelsList() {
       icon: icons[l.name],
       help: lockedBecause?.text || describeLevel(l),
       className: "upgrade choice " + (!lockedBecause ? "used" : ""),
-      link:extractLinkFromText(l.credit||''),
-      tooltip:l.credit,
+      link: extractLinkFromText(l.credit || ""),
+      tooltip: l.credit,
       actionLabel: t("unlocks.try"),
     };
   });

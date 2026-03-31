@@ -172,7 +172,9 @@ function addButton<t>(
     buttonWrap.innerHTML = icon;
 
     const description = document.createElement("p");
-    const name=link ? `<a href="${link}" target="_blank" rel="noopener noreferrer">${text}</a>`:text
+    const name = link
+      ? `<a href="${link}" target="_blank" rel="noopener noreferrer">${text}</a>`
+      : text;
     description.innerHTML = `
               <strong>${name}</strong>
              ${help}

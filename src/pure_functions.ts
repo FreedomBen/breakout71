@@ -81,8 +81,8 @@ export function miniMarkDown(md: string) {
     .join("\n");
 }
 
-export function extractLinkFromText(md:string){
-  return md.match(          /\bhttps?:\/\/[^\s<>]+/gi        )?.[0]
+export function extractLinkFromText(md: string) {
+  return md.match(/\bhttps?:\/\/[^\s<>]+/gi)?.[0];
 }
 
 export function firstWhere<Input, Output>(
