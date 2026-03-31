@@ -1,88 +1,37 @@
-import {
-  allLevels,
-  allLevelsAndIcons,
-  appVersion,
-  icons,
-  upgrades,
-} from "./loadGameData";
-import {
-  Ball,
-  Coin,
-  GameState,
-  LightFlash,
-  OptionId,
-  ParticleFlash,
-  PerksMap,
-  RunParams,
-  TextFlash,
-} from "./types";
-import { getAudioContext, playPendingSounds } from "./sounds";
-import {
-  currentLevelInfo,
-  describeLevel,
-  getRowColIndex,
-  highScoreText,
-  hoursSpentPlaying,
-  sample,
-  sumOfValues,
-} from "./game_utils";
+import {allLevels, appVersion, icons, upgrades,} from "./loadGameData";
+import {Ball, Coin, GameState, LightFlash, OptionId, ParticleFlash, PerksMap, RunParams, TextFlash,} from "./types";
+import {getAudioContext, playPendingSounds} from "./sounds";
+import {currentLevelInfo, describeLevel, getRowColIndex, highScoreText, hoursSpentPlaying, sample,} from "./game_utils";
 
 import "./PWA/sw_loader";
-import { getCurrentLang, languages, t } from "./i18n/i18n";
+import {getCurrentLang, languages, t} from "./i18n/i18n";
 import {
   commitSettingsChangesToLocalStorage,
   cycleMaxCoins,
   getCurrentMaxCoins,
-  getCurrentMaxParticles,
   getSettingValue,
-  getTotalScore,
   setSettingValue,
 } from "./settings";
-import {
-  forEachLiveOne,
-  gameStateTick,
-  liveCount,
-  normalizeGameState,
-  setLevel,
-  setMousePos,
-} from "./gameStateMutators";
-import {
-  backgroundCanvas,
-  gameCanvas,
-  getHaloScale,
-  haloCanvas,
-  render,
-  scoreDisplay,
-} from "./render";
-import {
-  pauseRecording,
-  recordOneFrame,
-  resumeRecording,
-  startRecordingGame,
-} from "./recording";
-import { newGameState } from "./newGameState";
-import {
-  alertsOpen,
-  asyncAlert,
-  AsyncAlertAction,
-  closeModal,
-} from "./asyncAlert";
-import { getPixelRatio, isOptionOn, options, toggleOption } from "./options";
-import { clamp, extractLinkFromText, miniMarkDown } from "./pure_functions";
-import { helpMenuEntry } from "./help";
-import { creativeMode } from "./creative";
-import { hideAnyTooltip, setupTooltips } from "./tooltip";
-import { startingPerkMenuButton } from "./startingPerks";
+import {forEachLiveOne, gameStateTick, normalizeGameState, setLevel, setMousePos,} from "./gameStateMutators";
+import {backgroundCanvas, gameCanvas, getHaloScale, haloCanvas, render, scoreDisplay,} from "./render";
+import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} from "./recording";
+import {newGameState} from "./newGameState";
+import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal,} from "./asyncAlert";
+import {getPixelRatio, isOptionOn, options, toggleOption} from "./options";
+import {clamp, extractLinkFromText} from "./pure_functions";
+import {helpMenuEntry} from "./help";
+import {creativeMode} from "./creative";
+import {hideAnyTooltip, setupTooltips} from "./tooltip";
 import "./migrations";
-import { getHistory } from "./gameOver";
-import { generateSaveFileContent } from "./generateSaveFileContent";
-import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
-import { openScorePanel } from "./openScorePanel";
-import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
-import { levelEditorMenuEntry } from "./levelEditor";
-import { categories } from "./upgrades";
-import { reasonLevelIsLocked } from "./get_level_unlock_condition";
-import { frameStarted, getWorstFPSAndReset, startWork } from "./fps";
+import {getHistory} from "./gameOver";
+import {generateSaveFileContent} from "./generateSaveFileContent";
+import {runHistoryViewerMenuEntry} from "./runHistoryViewer";
+import {openScorePanel} from "./openScorePanel";
+import {monitorLevelsUnlocks} from "./monitorLevelsUnlocks";
+import {levelEditorMenuEntry} from "./levelEditor";
+import {reasonLevelIsLocked} from "./get_level_unlock_condition";
+import {frameStarted, getWorstFPSAndReset, startWork} from "./fps";
+import {openUnlockedUpgradesList} from "./openUnlockedUpgradesList";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -518,7 +467,7 @@ export async function openMainMenu() {
   }
 }
 
-function donationNag(gameState) {
+function donationNag() {
   if (!isOptionOn("donation_reminder")) return [];
   const hours = hoursSpentPlaying();
   return [
@@ -538,7 +487,7 @@ function donationNag(gameState) {
 async function openSettingsMenu() {
   pause(true);
 
-  const actions: AsyncAlertAction<() => void>[] = [startingPerkMenuButton()];
+  const actions: AsyncAlertAction<() => void>[] = [];
 
   actions.push({
     icon: icons[
@@ -787,60 +736,6 @@ async function applyFullScreenChoice() {
     console.warn(e);
   }
   return false;
-}
-
-async function openUnlockedUpgradesList() {
-  const ts = getTotalScore();
-  const upgradeActions = upgrades
-    .map(({ name, id, threshold, help, category, fullHelp }) => ({
-      text: name,
-      disabled: ts < threshold,
-      value: {
-        perks: { [id]: 1 },
-        level: allLevelsAndIcons.find((l) => l.name === "icon:" + id),
-      } as RunParams,
-      icon: icons["icon:" + id],
-      category,
-      help:
-        ts < threshold
-          ? t("unlocks.minTotalScore", { score: threshold })
-          : help(1),
-      tooltip: ts < threshold ? "" : fullHelp(1) + " [id:" + id + "]",
-      threshold,
-      className: "upgrade choice " + (ts > threshold ? "used" : ""),
-      actionLabel: t("unlocks.use"),
-    }))
-    .sort((a, b) => a.threshold - b.threshold);
-
-  const tryOn = await asyncAlert<RunParams>({
-    title: t("unlocks.title_upgrades", {
-      unlocked: upgradeActions.filter((a) => !a.disabled).length,
-      out_of: upgradeActions.length,
-    }),
-    content: [
-      t("unlocks.intro", { ts }),
-      upgradeActions.find((u) => u.disabled)
-        ? t("unlocks.greyed_out_help")
-        : "",
-      miniMarkDown(t("unlocks.category.beginner")),
-      ...upgradeActions.filter((u) => u.category == categories.beginner),
-      miniMarkDown(t("unlocks.category.combo")),
-      ...upgradeActions.filter((u) => u.category == categories.combo),
-      miniMarkDown(t("unlocks.category.combo_boost")),
-      ...upgradeActions.filter((u) => u.category == categories.combo_boost),
-      miniMarkDown(t("unlocks.category.simple")),
-      ...upgradeActions.filter((u) => u.category == categories.simple),
-      miniMarkDown(t("unlocks.category.advanced")),
-      ...upgradeActions.filter((u) => u.category == categories.advanced),
-    ],
-    allowClose: true,
-    // className: "actionsAsGrid large",
-  });
-  if (tryOn) {
-    if (await confirmRestart(gameState)) {
-      restart({ ...tryOn });
-    }
-  }
 }
 
 async function openUnlockedLevelsList() {

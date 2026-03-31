@@ -3,8 +3,6 @@ import { allLevels, allLevelsAndIcons, upgrades } from "./loadGameData";
 import {
   defaultSounds,
   getHighScore,
-  getPossibleUpgrades,
-  highScoreText,
   makeEmptyPerksMap,
   sumOfValues,
 } from "./game_utils";
@@ -12,10 +10,9 @@ import { resetBalls } from "./gameStateMutators";
 import { getPixelRatio, isOptionOn } from "./options";
 import { getHistory } from "./gameOver";
 import { getSettingValue, getTotalScore } from "./settings";
-import { isBlackListedForStart, isStartingPerk } from "./startingPerks";
+import {isBlackListedForStart, isStartingPerk} from "./startingPerks";
 import {
   isLevelLocked,
-  reasonLevelIsLocked,
 } from "./get_level_unlock_condition";
 import { dontOfferTooSoon } from "./openUpgradesPicker";
 
