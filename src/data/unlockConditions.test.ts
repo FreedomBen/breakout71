@@ -1,8 +1,8 @@
 import conditions from "./unlockConditions.json";
 import levels from "./levels.json";
-import { rawUpgrades } from "../upgrades";
-import { getLevelUnlockCondition } from "../get_level_unlock_condition";
-import { UnlockCondition } from "../types";
+import {rawUpgrades} from "../upgrades";
+import {getLevelUnlockCondition} from "../get_level_unlock_condition";
+import {UnlockCondition} from "../types";
 
 describe("conditions", () => {
   it("defines conditions for existing levels only", () => {

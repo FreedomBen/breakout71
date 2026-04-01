@@ -1,11 +1,8 @@
-import { t } from "./i18n/i18n";
+import {t} from "./i18n/i18n";
 
-import { PerkId } from "./types";
+import {PerkId} from "./types";
 
-import {
-  base_combo_from_stronger_foundation,
-  comboKeepingRate,
-} from "./pure_functions";
+import {base_combo_from_stronger_foundation, comboKeepingRate,} from "./pure_functions";
 
 // Those perks are excluded from creative mode
 export const noCreative: PerkId[] = [

@@ -1,31 +1,15 @@
-import { allLevels, appVersion, icons, upgrades } from "./loadGameData";
-import { t } from "./i18n/i18n";
-import { GameState, RunHistoryItem } from "./types";
-import { gameState, pause, restart } from "./game";
-import {
-  currentLevelInfo,
-  describeLevel,
-  pickedUpgradesHTMl,
-} from "./game_utils";
-import {
-  askForPersistentStorage,
-  getSettingValue,
-  getTotalScore,
-  setSettingValue,
-} from "./settings";
-import { stopRecording } from "./recording";
-import { asyncAlert } from "./asyncAlert";
-import { editRawLevelList } from "./levelEditor";
-import { openCreativeModePerksPicker } from "./creative";
-import {
-  isLevelLocked,
-  reasonLevelIsLocked,
-} from "./get_level_unlock_condition";
-import { getWorstFPSAndReset } from "./fps";
-import {
-  applySettingsChangeReco,
-  settingsChangeRecommendations,
-} from "./openUpgradesPicker";
+import {allLevels, appVersion, upgrades} from "./loadGameData";
+import {t} from "./i18n/i18n";
+import {GameState, RunHistoryItem} from "./types";
+import {gameState, pause, restart} from "./game";
+import {currentLevelInfo, describeLevel, pickedUpgradesHTMl,} from "./game_utils";
+import {askForPersistentStorage, getSettingValue, getTotalScore, setSettingValue,} from "./settings";
+import {stopRecording} from "./recording";
+import {asyncAlert} from "./asyncAlert";
+import {editRawLevelList} from "./levelEditor";
+import {openCreativeModePerksPicker} from "./creative";
+import {isLevelLocked, reasonLevelIsLocked,} from "./get_level_unlock_condition";
+import {applySettingsChangeReco, settingsChangeRecommendations,} from "./openUpgradesPicker";
 import {getIcon} from "./levelIcon";
 
 export function addToTotalPlayTime(ms: number) {

@@ -1,10 +1,10 @@
-import {Level, RunParams, Upgrade} from "./types";
-import {allLevels, allLevelsAndIcons, icons, upgrades} from "./loadGameData";
-import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
-import { asyncAlert } from "./asyncAlert";
-import { miniMarkDown } from "./pure_functions";
-import { t } from "./i18n/i18n";
-import { confirmRestart, gameState, restart } from "./game";
+import {RunParams, Upgrade} from "./types";
+import {allLevelsAndIcons, upgrades} from "./loadGameData";
+import {getSettingValue, getTotalScore, setSettingValue} from "./settings";
+import {asyncAlert} from "./asyncAlert";
+import {miniMarkDown} from "./pure_functions";
+import {t} from "./i18n/i18n";
+import {confirmRestart, gameState, restart} from "./game";
 import {getCheckboxIcon, getIcon} from "./levelIcon";
 
 export async function openUpgradeDetails(

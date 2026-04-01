@@ -1,5 +1,5 @@
-import { isOptionOn } from "./options";
-import { GameState } from "./types";
+import {isOptionOn} from "./options";
+import {GameState} from "./types";
 
 let lastPlay = Date.now();
 

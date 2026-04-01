@@ -1,6 +1,7 @@
-import { RawLevel } from "./types";
+import {RawLevel} from "./types";
 
 import _backgrounds from "./data/backgrounds.json";
+
 const backgrounds = _backgrounds as string[];
 export function getLevelBackground(level: RawLevel) {
   return backgrounds[hashCode(level.name) % backgrounds.length];

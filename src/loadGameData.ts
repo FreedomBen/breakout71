@@ -1,12 +1,11 @@
-import { Level, Palette, RawLevel, Upgrade } from "./types";
+import {Level, Palette, RawLevel, Upgrade} from "./types";
 import _palette from "./data/palette.json";
 import _rawLevelsList from "./data/levels.json";
 import _appVersion from "./data/version.json";
-import { rawUpgrades } from "./upgrades";
-import { getLevelBackground } from "./getLevelBackground";
-import { levelIconHTML } from "./levelIcon";
+import {rawUpgrades} from "./upgrades";
+import {getLevelBackground} from "./getLevelBackground";
 
-import { automaticBackgroundColor } from "./pure_functions";
+import {automaticBackgroundColor} from "./pure_functions";
 
 export const upgrades = [...rawUpgrades].sort(
   (a, b) => a.category - b.category || a.threshold - b.threshold,

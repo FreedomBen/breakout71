@@ -28,28 +28,19 @@ import {
   max_levels,
   reachRedRowIndex,
   shouldPierceByColor,
-  sumOfValues,
   telekinesisEffectRate,
   yoyoEffectRate,
   zoneLeftBorderX,
   zoneRightBorderX,
 } from "./game_utils";
-import { t } from "./i18n/i18n";
+import {t} from "./i18n/i18n";
 
-import { getCurrentMaxCoins, getCurrentMaxParticles } from "./settings";
-import { background } from "./render";
-import { gameOver } from "./gameOver";
-import {
-  brickIndex,
-  fitSize,
-  gameState,
-  hasBrick,
-  hitsSomething,
-  pause,
-  startComputerControlledGame,
-} from "./game";
-import { stopRecording } from "./recording";
-import { getPixelRatio, isOptionOn } from "./options";
+import {getCurrentMaxCoins, getCurrentMaxParticles} from "./settings";
+import {background} from "./render";
+import {gameOver} from "./gameOver";
+import {brickIndex, fitSize, gameState, hasBrick, hitsSomething, pause, startComputerControlledGame,} from "./game";
+import {stopRecording} from "./recording";
+import {getPixelRatio, isOptionOn} from "./options";
 import {
   ballTransparency,
   base_combo_from_stronger_foundation,
@@ -57,9 +48,9 @@ import {
   coinsBoostedCombo,
   comboKeepingRate,
 } from "./pure_functions";
-import { addToTotalScore } from "./addToTotalScore";
-import { hashCode } from "./getLevelBackground";
-import { openUpgradesPicker } from "./openUpgradesPicker";
+import {addToTotalScore} from "./addToTotalScore";
+import {hashCode} from "./getLevelBackground";
+import {openUpgradesPicker} from "./openUpgradesPicker";
 
 export function setMousePos(gameState: GameState, x: number) {
   if (gameState.startParams.computer_controlled) return;

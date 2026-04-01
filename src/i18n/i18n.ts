@@ -15,6 +15,7 @@ import pt from "./pt.json";
 import sk from "./sk.json";
 import it from "./it.json";
 import cs from "./cs.json";
+import {getSettingValue} from "../settings";
 
 export const languages = [
   {
@@ -123,8 +124,6 @@ export const languages = [
     levelName: "Czech Republic",
   },
 ];
-
-import { getSettingValue } from "../settings";
 
 type translationKeys = keyof typeof en;
 type translation = { [key in translationKeys]: string };

@@ -1,5 +1,5 @@
-import { Upgrade } from "./types";
-import { getSettingValue, getTotalScore } from "./settings";
+import {Upgrade} from "./types";
+import {getSettingValue, getTotalScore} from "./settings";
 
 export function isBlackListedForStart(u: Upgrade) {
   return !!(u.requires || u.threshold > getTotalScore());

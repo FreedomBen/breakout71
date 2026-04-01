@@ -1,17 +1,9 @@
-import {
-  Ball,
-  Coin,
-  GameState,
-  Level,
-  PerkId,
-  PerksMap,
-  Upgrade,
-} from "./types";
-import { icons, upgrades } from "./loadGameData";
-import { t } from "./i18n/i18n";
-import { clamp } from "./pure_functions";
-import { getSettingValue, getTotalScore } from "./settings";
-import { isOptionOn } from "./options";
+import {Ball, Coin, GameState, Level, PerkId, PerksMap, Upgrade,} from "./types";
+import {upgrades} from "./loadGameData";
+import {t} from "./i18n/i18n";
+import {clamp} from "./pure_functions";
+import {getSettingValue, getTotalScore} from "./settings";
+import {isOptionOn} from "./options";
 import {getIcon} from "./levelIcon";
 
 export function describeLevel(level: Level) {

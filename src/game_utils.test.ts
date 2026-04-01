@@ -1,9 +1,4 @@
-import {
-  getMajorityValue,
-  makeEmptyPerksMap,
-  sample,
-  sumOfValues,
-} from "./game_utils";
+import {getMajorityValue, makeEmptyPerksMap, sample, sumOfValues,} from "./game_utils";
 
 describe("getMajorityValue", () => {
   it("returns the most common string", () => {

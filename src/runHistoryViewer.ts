@@ -1,8 +1,8 @@
-import { getHistory } from "./gameOver";
-import { appVersion, icons, upgrades } from "./loadGameData";
-import { t } from "./i18n/i18n";
-import { asyncAlert } from "./asyncAlert";
-import { getSettingValue, setSettingValue } from "./settings";
+import {getHistory} from "./gameOver";
+import {appVersion, upgrades} from "./loadGameData";
+import {t} from "./i18n/i18n";
+import {asyncAlert} from "./asyncAlert";
+import {getSettingValue, setSettingValue} from "./settings";
 import {getCheckboxIcon, getIcon} from "./levelIcon";
 
 export function runHistoryViewerMenuEntry() {

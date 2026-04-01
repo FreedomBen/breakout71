@@ -1,4 +1,4 @@
-import { isOptionOn } from "./options";
+import {isOptionOn} from "./options";
 
 const tooltip = document.getElementById("tooltip") as HTMLDivElement;
 

@@ -1,4 +1,3 @@
-import version from "../data/version.json";
 if (
   "serviceWorker" in navigator &&
   window.location.href.endsWith("/index.html?isPWA=true")

@@ -1,4 +1,4 @@
-import { Ball, GameState } from "./types";
+import {Ball, GameState} from "./types";
 
 export function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(value, max));

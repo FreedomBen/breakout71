@@ -1,7 +1,7 @@
-import { PerkId, RunHistoryItem, UnlockCondition } from "./types";
-import { upgrades } from "./loadGameData";
-import { hashCode } from "./getLevelBackground";
-import { t } from "./i18n/i18n";
+import {PerkId, RunHistoryItem, UnlockCondition} from "./types";
+import {upgrades} from "./loadGameData";
+import {hashCode} from "./getLevelBackground";
+import {t} from "./i18n/i18n";
 
 import _hardCodedCondition from "./data/unlockConditions.json";
 

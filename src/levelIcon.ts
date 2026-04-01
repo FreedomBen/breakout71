@@ -1,4 +1,3 @@
-
 import {Level} from "./types";
 import {allLevelsAndIcons} from "./loadGameData";
 

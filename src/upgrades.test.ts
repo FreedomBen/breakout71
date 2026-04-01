@@ -1,5 +1,5 @@
 import _rawLevelsList from "./data/levels.json";
-import { rawUpgrades } from "./upgrades";
+import {rawUpgrades} from "./upgrades";
 
 describe("rawUpgrades", () => {
   it("has an icon for each upgrade", () => {

@@ -1,11 +1,11 @@
-import { GameState, PerkId } from "./types";
-import { getSettingValue, setSettingValue } from "./settings";
-import { allLevels, icons } from "./loadGameData";
+import {GameState, PerkId} from "./types";
+import {getSettingValue, setSettingValue} from "./settings";
+import {allLevels} from "./loadGameData";
 
-import { t } from "./i18n/i18n";
-import { toast } from "./toast";
-import { schedulGameSound } from "./gameStateMutators";
-import { getLevelUnlockCondition } from "./get_level_unlock_condition";
+import {t} from "./i18n/i18n";
+import {toast} from "./toast";
+import {schedulGameSound} from "./gameStateMutators";
+import {getLevelUnlockCondition} from "./get_level_unlock_condition";
 import {getIcon} from "./levelIcon";
 
 let list: {

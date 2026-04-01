@@ -1,5 +1,6 @@
-import { languages } from "./i18n";
+import {languages} from "./i18n";
 import en from "./en.json";
+
 const englishTranslation = en as Record<string, string>;
 
 describe("translation quality checks", () => {

@@ -1,22 +1,14 @@
-import { GameState, PerkId } from "./types";
-import { asyncAlert } from "./asyncAlert";
-import { t } from "./i18n/i18n";
-import {
-  levelsListHTMl,
-  pickedUpgradesHTMl,
-  renderMaxLevel,
-} from "./game_utils";
-import { getCreativeModeWarning, getHistory } from "./gameOver";
-import { pause } from "./game";
-import { allLevels, icons, upgrades } from "./loadGameData";
-import { firstWhere } from "./pure_functions";
-import { getSettingValue, getTotalScore } from "./settings";
-import {
-  getLevelUnlockCondition,
-  reasonLevelIsLocked,
-  upgradeName,
-} from "./get_level_unlock_condition";
-import { isOptionOn } from "./options";
+import {GameState, PerkId} from "./types";
+import {asyncAlert} from "./asyncAlert";
+import {t} from "./i18n/i18n";
+import {levelsListHTMl, pickedUpgradesHTMl, renderMaxLevel,} from "./game_utils";
+import {getCreativeModeWarning, getHistory} from "./gameOver";
+import {pause} from "./game";
+import {allLevels, upgrades} from "./loadGameData";
+import {firstWhere} from "./pure_functions";
+import {getSettingValue, getTotalScore} from "./settings";
+import {getLevelUnlockCondition, reasonLevelIsLocked, upgradeName,} from "./get_level_unlock_condition";
+import {isOptionOn} from "./options";
 import {getIcon} from "./levelIcon";
 
 export async function openScorePanel(gameState: GameState) {

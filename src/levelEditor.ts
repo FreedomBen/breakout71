@@ -1,20 +1,15 @@
-import { icons, transformRawLevel } from "./loadGameData";
-import { t } from "./i18n/i18n";
-import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
-import { asyncAlert } from "./asyncAlert";
-import { Palette, RawLevel } from "./types";
+import {transformRawLevel} from "./loadGameData";
+import {t} from "./i18n/i18n";
+import {getSettingValue, getTotalScore, setSettingValue} from "./settings";
+import {asyncAlert} from "./asyncAlert";
+import {Palette, RawLevel} from "./types";
 import {getIcon, levelIconHTML} from "./levelIcon";
 
 import _palette from "./data/palette.json";
-import { restart } from "./game";
-import { describeLevel } from "./game_utils";
-import {
-  automaticBackgroundColor,
-  levelCodeToRawLevel,
-  MAX_LEVEL_SIZE,
-  MIN_LEVEL_SIZE,
-} from "./pure_functions";
-import { toast } from "./toast";
+import {restart} from "./game";
+import {describeLevel} from "./game_utils";
+import {automaticBackgroundColor, levelCodeToRawLevel, MAX_LEVEL_SIZE, MIN_LEVEL_SIZE,} from "./pure_functions";
+import {toast} from "./toast";
 
 const palette = _palette as Palette;
 

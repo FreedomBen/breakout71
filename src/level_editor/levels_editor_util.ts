@@ -1,4 +1,4 @@
-import { RawLevel } from "../types";
+import {RawLevel} from "../types";
 
 export function resizeLevel(level: RawLevel, sizeDelta: number) {
   const { size, bricks } = level;
