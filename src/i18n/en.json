@@ -205,7 +205,7 @@
     "unlocks.starting_perk_help": "Sometimes pick this upgrade randomly when starting a new game.",
     "unlocks.title_upgrades": "{{unlocked}} /  {{out_of}} upgrades unlocked",
     "unlocks.try": "Try",
-    "unlocks.unlock_condition": "Unlock condition: ",
+    "unlocks.unlock_condition": "Unlock condition:",
     "unlocks.upgrade_choice_perk": "Offered as upgrade",
     "unlocks.upgrade_choice_perk_help": "Include this upgrade in the list offered after a level up",
     "unlocks.upgrade_choice_perk_locked": "You need to keep at least 15 upgrades.",

@@ -1,16 +1,16 @@
-import {getTotalScore} from "./settings";
-import {icons, upgrades} from "./loadGameData";
-import {t} from "./i18n/i18n";
-import {asyncAlert} from "./asyncAlert";
-import {Upgrade} from "./types";
-import {miniMarkDown} from "./pure_functions";
-import {categories} from "./upgrades";
-import {openUpgradeDetails} from "./openUpgradeDetails";
+import { getTotalScore } from "./settings";
+import { icons, upgrades } from "./loadGameData";
+import { t } from "./i18n/i18n";
+import { asyncAlert } from "./asyncAlert";
+import { Upgrade } from "./types";
+import { miniMarkDown } from "./pure_functions";
+import { categories } from "./upgrades";
+import { openUpgradeDetails } from "./openUpgradeDetails";
 
 export async function openUnlockedUpgradesList() {
   const ts = getTotalScore();
   const upgradeActions = upgrades
-    .map(({name, id, threshold, help, category, fullHelp}) => ({
+    .map(({ name, id, threshold, help, category, fullHelp }) => ({
       text: name,
       disabled: ts < threshold,
       value: id,
@@ -18,7 +18,7 @@ export async function openUnlockedUpgradesList() {
       category,
       help:
         ts < threshold
-          ? t("unlocks.minTotalScore", {score: threshold})
+          ? t("unlocks.minTotalScore", { score: threshold })
           : help(1),
       // tooltip: ts < threshold ? "" : fullHelp(1) + " [id:" + id + "]",
       threshold,
@@ -33,7 +33,7 @@ export async function openUnlockedUpgradesList() {
       out_of: upgradeActions.length,
     }),
     content: [
-      t("unlocks.intro", {ts}),
+      t("unlocks.intro", { ts }),
       upgradeActions.find((u) => u.disabled)
         ? t("unlocks.greyed_out_help")
         : "",
@@ -51,6 +51,6 @@ export async function openUnlockedUpgradesList() {
     allowClose: true,
   });
   if (id) {
-    await openUpgradeDetails(id, openUnlockedUpgradesList)
+    await openUpgradeDetails(id, openUnlockedUpgradesList);
   }
 }

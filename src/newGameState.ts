@@ -10,10 +10,8 @@ import { resetBalls } from "./gameStateMutators";
 import { getPixelRatio, isOptionOn } from "./options";
 import { getHistory } from "./gameOver";
 import { getSettingValue, getTotalScore } from "./settings";
-import {isBlackListedForStart, isStartingPerk} from "./startingPerks";
-import {
-  isLevelLocked,
-} from "./get_level_unlock_condition";
+import { isBlackListedForStart, isStartingPerk } from "./startingPerks";
+import { isLevelLocked } from "./get_level_unlock_condition";
 import { dontOfferTooSoon } from "./openUpgradesPicker";
 
 export function getRunLevels(

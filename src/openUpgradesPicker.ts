@@ -132,7 +132,7 @@ export async function openUpgradesPicker(gameState: GameState) {
   }
 
   let sorted = getPossibleUpgrades(gameState)
-    .filter(u=>getSettingValue("offer-upgrade-" + u.id,true))
+    .filter((u) => getSettingValue("offer-upgrade-" + u.id, true))
     .map((u) => ({
       ...u,
       score: Math.random() + (gameState.lastOffered[u.id] || 0),
