@@ -72,7 +72,7 @@ export function miniMarkDown(md: string) {
         ">" +
         h.text.replace(
           /\bhttps?:\/\/[^\s<>]+/gi,
-          (a) => `<a href="${a}">${a}</a>`,
+          (a) => `<a href="${a}" target="_blank">${a}</a>`,
         ) +
         "</" +
         h.tagName +

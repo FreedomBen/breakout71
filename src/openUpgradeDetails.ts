@@ -27,7 +27,8 @@ export async function openUpgradeDetails(id: Upgrade["id"], onClose:()=>void) {
   const action = await asyncAlert<string>({
     title: name,
     content: [
-      icons["icon:" + id],
+      `<div class="full-width-icon">${icons["icon:" + id]}</div>`      ,
+
       help(1),
       miniMarkDown(fullHelp(1)),
       {

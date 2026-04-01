@@ -1,5 +1,16 @@
 import {allLevels, appVersion, icons, upgrades,} from "./loadGameData";
-import {Ball, Coin, GameState, LightFlash, OptionId, ParticleFlash, PerksMap, RunParams, TextFlash,} from "./types";
+import {
+  Ball,
+  Coin,
+  GameState,
+  Level,
+  LightFlash,
+  OptionId,
+  ParticleFlash,
+  PerksMap,
+  RunParams,
+  TextFlash,
+} from "./types";
 import {getAudioContext, playPendingSounds} from "./sounds";
 import {currentLevelInfo, describeLevel, getRowColIndex, highScoreText, hoursSpentPlaying, sample,} from "./game_utils";
 
@@ -18,7 +29,7 @@ import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} fr
 import {newGameState} from "./newGameState";
 import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal,} from "./asyncAlert";
 import {getPixelRatio, isOptionOn, options, toggleOption} from "./options";
-import {clamp, extractLinkFromText} from "./pure_functions";
+import {clamp, extractLinkFromText, miniMarkDown} from "./pure_functions";
 import {helpMenuEntry} from "./help";
 import {creativeMode} from "./creative";
 import {hideAnyTooltip, setupTooltips} from "./tooltip";
@@ -412,7 +423,7 @@ export async function openMainMenu() {
     {
       icon: icons["icon:unlocked_upgrades"],
       text: t("unlocks.upgrades"),
-      help: t("main_menu.unlocks_help"),
+      help: t("unlocks.upgrades_help", {count: upgrades.length}),
       value() {
         openUnlockedUpgradesList();
       },
@@ -420,7 +431,7 @@ export async function openMainMenu() {
     {
       icon: icons["icon:unlocked_levels"],
       text: t("unlocks.levels"),
-      help: t("main_menu.unlocks_help"),
+      help: t("unlocks.levels_help", {count: allLevels.filter(l=>!l.name.startsWith('icon:')).length}),
       value() {
         openUnlockedLevelsList();
       },
@@ -739,41 +750,106 @@ async function applyFullScreenChoice() {
 }
 
 async function openUnlockedLevelsList() {
-  const unlockedBefore = new Set(
+  const unlockedBefore = new Set<string>(
     getSettingValue("breakout_71_unlocked_levels", []),
   );
   const levelActions = allLevels.map((l, li) => {
-    const lockedBecause = unlockedBefore.has(l.name)
-      ? null
-      : reasonLevelIsLocked(li, l.name, getHistory(), true);
+    const locked = !unlockedBefore.has(l.name);
 
     return {
-      text: l.name,
-      disabled: !!lockedBecause,
-      value: { level: l } as RunParams,
+      // text: l.name,
+      // disabled: locked,
+      value: l,
       icon: icons[l.name],
-      help: lockedBecause?.text || describeLevel(l),
-      className: "upgrade choice " + (!lockedBecause ? "used" : ""),
-      link: extractLinkFromText(l.credit || ""),
-      tooltip: l.credit,
-      actionLabel: t("unlocks.try"),
+      // help: locked?.text || describeLevel(l),
+      className: "level choice no-border " + (!locked ? "used" : " grey-out-unless-hovered"),
+      // link: extractLinkFromText(l.credit || ""),
+      tooltip: l.name,
+      locked,
     };
   });
 
-  const tryOn = await asyncAlert<RunParams>({
-    title: t("unlocks.level", {
-      unlocked: levelActions.filter((a) => !a.disabled).length,
+  const level = await asyncAlert<Level>({
+    title: t('unlocks.levels'),
+    content:[
+
+      t("unlocks.level", {
+      unlocked: levelActions.filter((a) => !a.locked).length,
       out_of: levelActions.length,
     }),
-    content: [...levelActions],
+      ...levelActions
+    ],
     allowClose: true,
-    className: "actionsAsGrid large",
+    className: "actionsAsGrid compact",
   });
-  if (tryOn) {
+
+  if(level){
+    await openLevelDetails(level)
+  }
+}
+
+
+export async function openLevelDetails(level:Level){
+
+  const unlockedBefore = new Set<string>(
+    getSettingValue("breakout_71_unlocked_levels", []),
+  );
+
+  const isLocked=!unlockedBefore.has(level.name)
+  const lockReason = isLocked ? reasonLevelIsLocked(allLevels.indexOf(level),
+    level.name, getHistory(), true) : null
+
+  const activeLevels=allLevels
+    .filter((level) => unlockedBefore.has(level.name))
+    .filter(level=>getSettingValue("offer-level-" + level.name,true));
+console.log({activeLevels})
+  const allowedInGame = !isLocked && getSettingValue(
+    "offer-level-" + level.name,
+    true,
+  );
+  const allowDisabling = !allowedInGame || activeLevels?.length >15
+
+  console.log(activeLevels)
+
+
+  const action= await asyncAlert<string>({
+    title: level.name,
+    content: [
+      `<div class="full-width-icon">${icons[level.name]}</div>`      ,
+      miniMarkDown(level.credit||''),
+      describeLevel(level),
+      lockReason ? t('unlocks.unlock_condition')+ lockReason.text:'',
+      {
+        value:'run',
+        icon: icons["icon:new_run"],
+        text: t("unlocks.try"),
+        disabled:isLocked
+      },
+     {
+        icon: allowedInGame && !isLocked ?
+          icons["icon:checkmark_checked"] : icons["icon:checkmark_unchecked"],
+        value: 'toggle-offer-level',
+        text: t('unlocks.include_in_level_pool'),
+        help: allowDisabling ? t('unlocks.include_in_level_pool_help') : t('unlocks.include_in_level_pool_locked'),
+        disabled:isLocked||!allowDisabling
+      }
+    ],
+    allowClose: true,
+  });
+  if(!action) return openUnlockedLevelsList()
+  if (action==='run') {
     if (await confirmRestart(gameState)) {
-      restart({ ...tryOn });
+      restart({ level } as RunParams);
+      return
     }
   }
+  if(action==="toggle-offer-level"){
+      setSettingValue(
+        "offer-level-" + level.name,
+        !allowedInGame,
+      )
+  }
+  await openLevelDetails(level)
 }
 
 export async function confirmRestart(gameState) {

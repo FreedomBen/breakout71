@@ -244,6 +244,10 @@ body:not(.has-alert-open) #popup {
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     grid-gap: 20px;
   }
+  &.actionsAsGrid.compact > div > section {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    grid-gap: 0px;
+  }
 
   &.actionsAsGrid > div {
     max-width: none;
@@ -736,6 +740,15 @@ h2.histogram-title strong {
   opacity: 0.8;
   color: #8a8a8a;
 }
+
+.full-width-icon img{
+    width: 100%;
+  height: auto;
+  max-width: 350px;
+  margin:0 auto 20px auto;  display: block;
+  image-rendering: crisp-edges;
+}
+
 
 @palette_B: black;
 @palette_W: #ffffff;
