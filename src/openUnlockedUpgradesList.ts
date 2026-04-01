@@ -6,6 +6,7 @@ import { Upgrade } from "./types";
 import { miniMarkDown } from "./pure_functions";
 import { categories } from "./upgrades";
 import { openUpgradeDetails } from "./openUpgradeDetails";
+import {getIcon} from "./levelIcon";
 
 export async function openUnlockedUpgradesList() {
   const ts = getTotalScore();
@@ -14,7 +15,7 @@ export async function openUnlockedUpgradesList() {
       text: name,
       disabled: ts < threshold,
       value: id,
-      icon: icons["icon:" + id],
+      icon: getIcon("icon:" + id),
       category,
       help:
         ts < threshold

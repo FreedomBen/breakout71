@@ -17,6 +17,7 @@ import {
   upgradeName,
 } from "./get_level_unlock_condition";
 import { isOptionOn } from "./options";
+import {getIcon} from "./levelIcon";
 
 export async function openScorePanel(gameState: GameState) {
   pause(true);
@@ -107,7 +108,7 @@ export function getNearestUnlockHTML(gameState: GameState) {
   return `
     <p>${t("score_panel.close_to_unlock")}</p>
     <div class="upgrade">
-          ${icons[firstUnlockable.l.name]}
+          ${getIcon(firstUnlockable.l.name)}
           <p>
           <strong>${title}</strong>
         ${firstUnlockable.reason?.text}

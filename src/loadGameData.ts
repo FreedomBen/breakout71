@@ -25,13 +25,11 @@ export function transformRawLevel(level: RawLevel) {
     .map((c) => palette[c])
     .slice(0, level.size * level.size);
   const bricksCount = bricks.filter((i) => i).length;
-  const icon = levelIconHTML(bricks, level.size);
-  icons[level.name] = icon;
+
   return {
     ...level,
     bricks,
     bricksCount,
-    icon,
     color: automaticBackgroundColor(splitBricks),
     svg: getLevelBackground(level),
     sortKey: ((Math.random() + 3) / 3.5) * bricksCount,

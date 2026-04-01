@@ -32,6 +32,7 @@ import {
   setSettingValue,
 } from "./settings";
 import { toast } from "./toast";
+import {getIcon} from "./levelIcon";
 
 export async function openUpgradesPicker(gameState: GameState) {
   if (gameState.perks.chill) return;
@@ -65,7 +66,7 @@ export async function openUpgradesPicker(gameState: GameState) {
     extraChoices += choices;
     upgradePoints += up;
     medals.push(`<div  class="upgrade" data-tooltip="${escapeAttribute(description)}">
-                        ${icons["icon:" + medal + "_medal"]}
+                        ${getIcon("icon:" + medal + "_medal")}
                         <p>
                         <strong>${name}</strong><br/>
                         ${
@@ -180,7 +181,7 @@ export async function openUpgradesPicker(gameState: GameState) {
           (gameState.perks[u.id]
             ? upgradeLevelAndMaxDisplay(u, gameState)
             : ""),
-        icon: icons["icon:" + u.id],
+        icon: getIcon("icon:" + u.id),
         help: u.help(gameState.perks[u.id] || 1),
         tooltip: unlockHint + u.fullHelp(gameState.perks[u.id] || 1),
         className,
@@ -253,7 +254,7 @@ export function settingsChangeRecommendations() {
     const limit = Math.floor(Math.log2(coinsForLag / 200));
     if (limit < maxCoinsSetting) {
       return {
-        icon: icons["icon:slow"],
+        icon: getIcon("icon:slow"),
         text: t("settings.suggestions.reduce_coins", {
           max: Math.pow(2, limit) * 200,
         }),
@@ -266,7 +267,7 @@ export function settingsChangeRecommendations() {
 
   if (isOptionOn("record"))
     return {
-      icon: icons["icon:slow"],
+      icon: getIcon("icon:slow"),
       text: t("settings.suggestions.record"),
       value: {
         changeSettings: { "breakout-settings-enable-record": false },
@@ -282,7 +283,7 @@ export function settingsChangeRecommendations() {
     isOptionOn("contrast")
   )
     return {
-      icon: icons["icon:slow"],
+      icon: getIcon("icon:slow"),
       text: t("settings.suggestions.simpler_lights"),
       value: {
         changeSettings: {
@@ -296,7 +297,7 @@ export function settingsChangeRecommendations() {
 
   if (isOptionOn("extra_bright"))
     return {
-      icon: icons["icon:slow"],
+      icon: getIcon("icon:slow"),
       text: t("settings.suggestions.reduce_brightness"),
       value: {
         changeSettings: { "breakout-settings-enable-extra_bright": false },
@@ -304,7 +305,7 @@ export function settingsChangeRecommendations() {
     };
 
   return {
-    icon: icons["icon:slow"],
+    icon: getIcon("icon:slow"),
     text: t("settings.suggestions.basic_mode"),
     value: {
       changeSettings: { "breakout-settings-enable-basic": true },

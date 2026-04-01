@@ -73,6 +73,7 @@ import { levelEditorMenuEntry } from "./levelEditor";
 import { reasonLevelIsLocked } from "./get_level_unlock_condition";
 import { frameStarted, getWorstFPSAndReset, startWork } from "./fps";
 import { openUnlockedUpgradesList } from "./openUnlockedUpgradesList";
+import {getCheckboxIcon, getIcon} from "./levelIcon";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -438,7 +439,7 @@ export async function openMainMenu() {
 
   const actions: AsyncAlertAction<() => void>[] = [
     {
-      icon: icons["icon:new_run"],
+      icon: getIcon("icon:new_run"),
       text: t("main_menu.normal"),
       help: highScoreText() || t("main_menu.normal_help"),
       value: () => {
@@ -451,7 +452,7 @@ export async function openMainMenu() {
     runHistoryViewerMenuEntry(),
     levelEditorMenuEntry(),
     {
-      icon: icons["icon:unlocked_upgrades"],
+      icon: getIcon("icon:unlocked_upgrades"),
       text: t("unlocks.upgrades"),
       help: t("unlocks.upgrades_help", { count: upgrades.length }),
       value() {
@@ -459,7 +460,7 @@ export async function openMainMenu() {
       },
     },
     {
-      icon: icons["icon:unlocked_levels"],
+      icon: getIcon("icon:unlocked_levels"),
       text: t("unlocks.levels"),
       help: t("unlocks.levels_help", {
         count: allLevels.filter((l) => !l.name.startsWith("icon:")).length,
@@ -473,7 +474,7 @@ export async function openMainMenu() {
     {
       text: t("main_menu.settings_title"),
       help: t("main_menu.settings_help"),
-      icon: icons["icon:settings"],
+      icon: getIcon("icon:settings"),
       value() {
         openSettingsMenu();
       },
@@ -519,7 +520,7 @@ function donationNag() {
       help: t("main_menu.donate_help", {
         suggestion: Math.min(20, Math.max(1, 0.2 * hours)).toFixed(0),
       }),
-      icon: icons["icon:premium"],
+      icon: getIcon("icon:premium"),
       value() {
         window.open("https://paypal.me/renanlecaro", "_blank");
       },
@@ -533,9 +534,9 @@ async function openSettingsMenu() {
   const actions: AsyncAlertAction<() => void>[] = [];
 
   actions.push({
-    icon: icons[
+    icon: getIcon(
       languages.find((l) => l.value === getCurrentLang())?.levelName || ""
-    ],
+    ),
     text: t("settings.language"),
     help: t("settings.language_help"),
     async value() {
@@ -543,7 +544,7 @@ async function openSettingsMenu() {
         title: t("settings.language"),
         content: [
           t("settings.language_help"),
-          ...languages.map((l) => ({ ...l, icon: icons[l.levelName] })),
+          ...languages.map((l) => ({ ...l, icon: getIcon(l.levelName) })),
         ],
         allowClose: true,
       });
@@ -563,9 +564,7 @@ async function openSettingsMenu() {
     if (window.devicePixelRatio === 1 && key == "match_pixel_ratio") continue;
     if (options[key]) {
       actions.push({
-        icon: isOptionOn(key)
-          ? icons["icon:checkmark_checked"]
-          : icons["icon:checkmark_unchecked"],
+        icon: getCheckboxIcon(isOptionOn(key)) ,
         text: options[key].name,
         help: options[key].help,
         disabled:
@@ -588,7 +587,7 @@ async function openSettingsMenu() {
     }
   }
   actions.push({
-    icon: icons["icon:download"],
+    icon: getIcon("icon:download"),
     text: t("settings.download_save_file"),
     help: t("settings.download_save_file_help"),
     async value() {
@@ -620,7 +619,7 @@ async function openSettingsMenu() {
   });
 
   actions.push({
-    icon: icons["icon:upload"],
+    icon: getIcon("icon:upload"),
     text: t("settings.load_save_file"),
     help: t("settings.load_save_file_help"),
     async value() {
@@ -688,7 +687,7 @@ async function openSettingsMenu() {
   });
 
   actions.push({
-    icon: icons["icon:coins"],
+    icon: getIcon("icon:coins"),
     text: t("settings.max_coins", { max: getCurrentMaxCoins() }),
     help: t("settings.max_coins_help"),
     async value() {
@@ -698,7 +697,7 @@ async function openSettingsMenu() {
   });
 
   actions.push({
-    icon: icons["icon:reset"],
+    icon: getIcon("icon:reset"),
     text: t("settings.reset"),
     help: t("settings.reset_help"),
     async value() {
@@ -792,7 +791,7 @@ async function openUnlockedLevelsList() {
       // text: l.name,
       // disabled: locked,
       value: l,
-      icon: icons[l.name],
+      icon: getIcon(l.name),
       // help: locked?.text || describeLevel(l),
       className:
         "level choice no-border " +
@@ -847,21 +846,18 @@ export async function openLevelDetails(level: Level) {
   const action = await asyncAlert<string>({
     title: level.name,
     content: [
-      `<div class="full-width-icon">${icons[level.name]}</div>`,
+      `<div class="full-width-icon">${getIcon(level.name, 350)}</div>`,
       miniMarkDown(level.credit || ""),
       describeLevel(level),
       lockReason ? t("unlocks.unlock_condition") + lockReason.text : "",
       {
         value: "run",
-        icon: icons["icon:new_run"],
+        icon: getIcon("icon:new_run"),
         text: t("unlocks.try"),
         disabled: isLocked,
       },
       {
-        icon:
-          allowedInGame && !isLocked
-            ? icons["icon:checkmark_checked"]
-            : icons["icon:checkmark_unchecked"],
+        icon:getCheckboxIcon(allowedInGame && !isLocked),
         value: "toggle-offer-level",
         text: t("unlocks.include_in_level_pool"),
         help: allowDisabling

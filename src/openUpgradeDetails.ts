@@ -1,11 +1,11 @@
-import { RunParams, Upgrade } from "./types";
-import { allLevelsAndIcons, icons, upgrades } from "./loadGameData";
+import {Level, RunParams, Upgrade} from "./types";
+import {allLevels, allLevelsAndIcons, icons, upgrades} from "./loadGameData";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { asyncAlert } from "./asyncAlert";
 import { miniMarkDown } from "./pure_functions";
 import { t } from "./i18n/i18n";
 import { confirmRestart, gameState, restart } from "./game";
-import { openUnlockedUpgradesList } from "./openUnlockedUpgradesList";
+import {getCheckboxIcon, getIcon} from "./levelIcon";
 
 export async function openUpgradeDetails(
   id: Upgrade["id"],
@@ -25,10 +25,11 @@ export async function openUpgradeDetails(
       .filter((u) => getSettingValue("offer-upgrade-" + u.id, true))?.length >
       15;
 
+
   const action = await asyncAlert<string>({
     title: name,
     content: [
-      `<div class="full-width-icon">${icons["icon:" + id]}</div>`,
+      `<div class="full-width-icon">${getIcon("icon:" + id, 350)}</div>`,
 
       help(1),
       miniMarkDown(fullHelp(1)),
@@ -36,20 +37,16 @@ export async function openUpgradeDetails(
         text: t("unlocks.start_new_game_with"),
         help: t("unlocks.start_new_game_with_help"),
         value: "use",
-        icon: icons["icon:new_run"],
+        icon: getIcon("icon:new_run"),
       },
       {
-        icon: allowedAsStart
-          ? icons["icon:checkmark_checked"]
-          : icons["icon:checkmark_unchecked"],
+        icon: getCheckboxIcon(allowedAsStart),
         value: "toggle-start-with",
         text: t("unlocks.starting_perk"),
         help: t("unlocks.starting_perk_help"),
       },
       {
-        icon: allowedInGame
-          ? icons["icon:checkmark_checked"]
-          : icons["icon:checkmark_unchecked"],
+        icon: getCheckboxIcon(allowedInGame),
         value: "toggle-offer-upgrade",
         text: t("unlocks.upgrade_choice_perk"),
         help: allowDisabling

@@ -6,6 +6,7 @@ import { t } from "./i18n/i18n";
 import { toast } from "./toast";
 import { schedulGameSound } from "./gameStateMutators";
 import { getLevelUnlockCondition } from "./get_level_unlock_condition";
+import {getIcon} from "./levelIcon";
 
 let list: {
   minScore: number;
@@ -51,7 +52,7 @@ export function monitorLevelsUnlocks(gameState: GameState) {
       getSettingValue("breakout_71_unlocked_levels", []).concat([name]),
     );
 
-    toast(icons[name] + "<strong>" + t("unlocks.just_unlocked") + "</strong>");
+    toast(getIcon(name) + "<strong>" + t("unlocks.just_unlocked") + "</strong>");
     schedulGameSound(gameState, "colorChange", 0, 1);
   });
 }

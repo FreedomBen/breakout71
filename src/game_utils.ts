@@ -12,6 +12,7 @@ import { t } from "./i18n/i18n";
 import { clamp } from "./pure_functions";
 import { getSettingValue, getTotalScore } from "./settings";
 import { isOptionOn } from "./options";
+import {getIcon} from "./levelIcon";
 
 export function describeLevel(level: Level) {
   let bricks = 0,
@@ -136,7 +137,7 @@ export function pickedUpgradesHTMl(gameState: GameState) {
         state,
         html: `
         <div class="upgrade ${["??", "used", "banned", "free"][state]}">
-            ${icons["icon:" + u.id]}
+            ${getIcon("icon:" + u.id)}
             <p data-tooltip="${tooltip}"
             data-help-content="${tooltip}"
             >
@@ -164,7 +165,7 @@ export function levelsListHTMl(
   let list = "";
   for (let i = 0; i < max_levels(gameState); i++) {
     let level = gameState.runLevels[i % gameState.runLevels.length];
-    list += `<span style="opacity: ${i >= currentLevelIndex ? 1 : 0.2}" title="${level.name}">${icons[level.name]}</span>`;
+    list += `<span style="opacity: ${i >= currentLevelIndex ? 1 : 0.2}" title="${level.name}">${getIcon(level.name)}</span>`;
   }
   return `<p>${t("score_panel.upcoming_levels")}</p><p>${list}</p>`;
 }

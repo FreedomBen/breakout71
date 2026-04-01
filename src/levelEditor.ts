@@ -3,7 +3,7 @@ import { t } from "./i18n/i18n";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { asyncAlert } from "./asyncAlert";
 import { Palette, RawLevel } from "./types";
-import { levelIconHTML } from "./levelIcon";
+import {getIcon, levelIconHTML} from "./levelIcon";
 
 import _palette from "./data/palette.json";
 import { restart } from "./game";
@@ -22,7 +22,7 @@ export function levelEditorMenuEntry() {
   const min = 10000;
   const disabled = getTotalScore() < min;
   return {
-    icon: icons["icon:editor"],
+    icon: getIcon("icon:editor"),
     text: t("editor.title"),
     disabled,
     help: disabled ? t("editor.locked", { min }) : t("editor.help"),
@@ -49,7 +49,7 @@ async function openLevelEditorLevelsList() {
       })),
       {
         text: t("editor.new_level"),
-        icon: icons["icon:editor"],
+        icon: getIcon("icon:editor"),
         value() {
           rawList.push({
             color: "",
@@ -126,7 +126,7 @@ export async function editRawLevelList(nth: number, color = "") {
       `<div class="gridEdit" style="--grid-size:${level.size};">${grid}</div>`,
 
       {
-        icon: icons["icon:new_run"],
+        icon: getIcon("icon:new_run"),
         text: t("editor.editing.play"),
         value: "play",
       },

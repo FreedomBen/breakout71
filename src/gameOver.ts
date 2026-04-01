@@ -26,6 +26,7 @@ import {
   applySettingsChangeReco,
   settingsChangeRecommendations,
 } from "./openUpgradesPicker";
+import {getIcon} from "./levelIcon";
 
 export function addToTotalPlayTime(ms: number) {
   setSettingValue(
@@ -82,7 +83,7 @@ export async function gameOver(title: string, intro: string) {
         .map(
           (u) => ` 
        <div class="upgrade used">
-          ${icons["icon:" + u.id]}
+          ${getIcon("icon:" + u.id)}
           <p>
           <strong>${u.name}</strong>
            ${u.help(1)}
@@ -109,7 +110,7 @@ export async function gameOver(title: string, intro: string) {
 
       settingsChangeRecommendations(),
       {
-        icon: icons["icon:new_run"],
+        icon: getIcon("icon:new_run"),
         value: null,
         text: t("confirmRestart.yes"),
         help: "",
@@ -188,7 +189,7 @@ export function getHistograms(gameState: GameState) {
           .map(
             ({ l, r }) => ` 
          <div class="upgrade used">
-            ${icons[l.name]}
+            ${getIcon(l.name)}
             <p>
             <strong>${l.name}</strong>
           ${describeLevel(l)}

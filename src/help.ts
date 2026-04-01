@@ -1,19 +1,12 @@
-import { allLevels, allLevelsAndIcons, icons, upgrades } from "./loadGameData";
+import {  allLevelsAndIcons, icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { asyncAlert } from "./asyncAlert";
 import { miniMarkDown } from "./pure_functions";
-import {
-  catchRateBest,
-  catchRateGood,
-  levelTimeBest,
-  levelTimeGood,
-  missesBest,
-  missesGood,
-} from "./pure_functions";
+import {getIcon} from "./levelIcon";
 
 export function helpMenuEntry() {
   return {
-    icon: icons["icon:help"],
+    icon: getIcon("icon:help"),
     text: t("help.title"),
     help: t("help.help"),
     async value() {
@@ -26,7 +19,7 @@ export function helpMenuEntry() {
           ...upgrades.map(
             (u) => `
 <div class="upgrade used">
-            ${icons["icon:" + u.id]}
+            ${getIcon("icon:" + u.id)}
             <p>
                 <strong>${u.name}</strong><br/>
           ${u.help(1)}
@@ -42,7 +35,7 @@ export function helpMenuEntry() {
             .map(
               (l) => `
 <div class="upgrade used">
-            ${icons[l.name]}
+            ${getIcon(l.name)}
             <div>
             <p>
                 <strong>${l.name}</strong> 

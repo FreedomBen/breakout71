@@ -17,12 +17,12 @@ import {
 } from "./game_utils";
 import { getHistory } from "./gameOver";
 import { noCreative } from "./upgrades";
-import { levelIconHTML } from "./levelIcon";
+import {getIcon, levelIconHTML} from "./levelIcon";
 import { reasonLevelIsLocked } from "./get_level_unlock_condition";
 
 export function creativeMode(gameState: GameState) {
   return {
-    icon: icons["icon:creative"],
+    icon: getIcon("icon:creative"),
     text: t("lab.menu_entry"),
     help:
       (getTotalScore() < creativeModeThreshold &&
@@ -50,7 +50,7 @@ export async function openCreativeModePerksPicker() {
         const problem =
           reasonLevelIsLocked(li, l.name, getHistory(), true)?.text || "";
         return {
-          icon: icons[l.name],
+          icon:getIcon(l.name)  ,
           text: l.name,
           value: l,
           disabled: !!problem,
@@ -79,13 +79,13 @@ export async function openCreativeModePerksPicker() {
       className: "actionsAsGrid",
       content: [
         {
-          icon: icons["icon:reset"],
+          icon: getIcon("icon:reset"),
           value: "reset",
           text: t("lab.reset"),
           disabled: !sumOfValues(creativeModePerks),
         },
         {
-          icon: icons["icon:new_run"],
+          icon: getIcon("icon:new_run"),
           value: "play",
           text: t("lab.play"),
           disabled: !sumOfValues(creativeModePerks),
@@ -95,7 +95,7 @@ export async function openCreativeModePerksPicker() {
         ...upgrades
           .filter((u) => !noCreative.includes(u.id))
           .map((u) => ({
-            icon: icons["icon:" + u.id],
+            icon: getIcon("icon:" + u.id),
             text: u.name,
             help: levelAndMaxBadge(
               creativeModePerks[u.id] || 0,

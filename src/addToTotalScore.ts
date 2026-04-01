@@ -1,9 +1,10 @@
 import { GameState } from "./types";
-import { icons, upgrades } from "./loadGameData";
+import {  upgrades } from "./loadGameData";
 import { schedulGameSound } from "./gameStateMutators";
 import { toast } from "./toast";
 import { t } from "./i18n/i18n";
 import { getTotalScore, setSettingValue } from "./settings";
+import {getIcon} from "./levelIcon";
 
 export function addToTotalScore(gameState: GameState, points: number) {
   if (gameState.creative) return;
@@ -15,7 +16,7 @@ export function addToTotalScore(gameState: GameState, points: number) {
     if (u.threshold > pastScore && u.threshold <= newScore) {
       schedulGameSound(gameState, "colorChange", 0, 1);
       toast(
-        icons["icon:" + u.id] +
+        getIcon("icon:" + u.id) +
           "<strong>" +
           t("gameOver.unlocked_perk") +
           "</strong>",

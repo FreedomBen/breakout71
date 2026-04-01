@@ -3,12 +3,13 @@ import { appVersion, icons, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { asyncAlert } from "./asyncAlert";
 import { getSettingValue, setSettingValue } from "./settings";
+import {getCheckboxIcon, getIcon} from "./levelIcon";
 
 export function runHistoryViewerMenuEntry() {
   const history = getHistory();
 
   return {
-    icon: icons["icon:history"],
+    icon: getIcon("icon:history"),
     text: t("history.title"),
     disabled: history.length < 10,
     help:
@@ -31,7 +32,7 @@ export function runHistoryViewerMenuEntry() {
           field: (r) => r.score,
         },
         ...upgrades.map((u) => ({
-          label: icons["icon:" + u.id],
+          label: getIcon("icon:" + u.id),
           tooltip: u.name,
           field: (r) => r.perks?.[u.id] || 0,
           render(v) {
@@ -90,9 +91,7 @@ export function runHistoryViewerMenuEntry() {
                     `,
             hasPastVersion &&
               hasCurrentVersion && {
-                icon: getSettingValue("show_old_versions_in_stats", false)
-                  ? icons["icon:checkmark_checked"]
-                  : icons["icon:checkmark_unchecked"],
+                icon: getCheckboxIcon(getSettingValue("show_old_versions_in_stats", false)),
                 value: "toggle",
                 text: t("history.include_past_versions"),
               },
