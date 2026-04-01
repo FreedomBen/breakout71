@@ -802,16 +802,13 @@ export async function openLevelDetails(level:Level){
   const activeLevels=allLevels
     .filter((level) => unlockedBefore.has(level.name))
     .filter(level=>getSettingValue("offer-level-" + level.name,true));
-console.log({activeLevels})
+
   const allowedInGame = !isLocked && getSettingValue(
     "offer-level-" + level.name,
     true,
   );
   const allowDisabling = !allowedInGame || activeLevels?.length >15
-
-  console.log(activeLevels)
-
-
+  
   const action= await asyncAlert<string>({
     title: level.name,
     content: [

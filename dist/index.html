@@ -1477,12 +1477,8 @@ async function openLevelDetails(level) {
     const isLocked = !unlockedBefore.has(level.name);
     const lockReason = isLocked ? (0, _getLevelUnlockCondition.reasonLevelIsLocked)((0, _loadGameData.allLevels).indexOf(level), level.name, (0, _gameOver.getHistory)(), true) : null;
     const activeLevels = (0, _loadGameData.allLevels).filter((level)=>unlockedBefore.has(level.name)).filter((level)=>(0, _settings.getSettingValue)("offer-level-" + level.name, true));
-    console.log({
-        activeLevels
-    });
     const allowedInGame = !isLocked && (0, _settings.getSettingValue)("offer-level-" + level.name, true);
     const allowDisabling = !allowedInGame || activeLevels?.length > 15;
-    console.log(activeLevels);
     const action = await (0, _asyncAlert.asyncAlert)({
         title: level.name,
         content: [
