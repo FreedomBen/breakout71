@@ -1,11 +1,11 @@
-import {RunParams, Upgrade} from "./types";
-import {allLevelsAndIcons, upgrades} from "./loadGameData";
-import {getSettingValue, getTotalScore, setSettingValue} from "./settings";
-import {asyncAlert} from "./asyncAlert";
-import {miniMarkDown} from "./pure_functions";
-import {t} from "./i18n/i18n";
-import {confirmRestart, gameState, restart} from "./game";
-import {getCheckboxIcon, getIcon} from "./levelIcon";
+import { RunParams, Upgrade } from "./types";
+import { allLevelsAndIcons, upgrades } from "./loadGameData";
+import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
+import { asyncAlert } from "./asyncAlert";
+import { miniMarkDown } from "./pure_functions";
+import { t } from "./i18n/i18n";
+import { confirmRestart, gameState, restart } from "./game";
+import { getCheckboxIcon, getIcon } from "./levelIcon";
 
 export async function openUpgradeDetails(
   id: Upgrade["id"],
@@ -24,7 +24,6 @@ export async function openUpgradeDetails(
       .filter((u) => getTotalScore() >= u.threshold)
       .filter((u) => getSettingValue("offer-upgrade-" + u.id, true))?.length >
       15;
-
 
   const action = await asyncAlert<string>({
     title: name,

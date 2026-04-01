@@ -1,13 +1,18 @@
-import {GameState, PerkId, RunParams} from "./types";
-import {allLevels, allLevelsAndIcons, upgrades} from "./loadGameData";
-import {defaultSounds, getHighScore, makeEmptyPerksMap, sumOfValues,} from "./game_utils";
-import {resetBalls} from "./gameStateMutators";
-import {getPixelRatio, isOptionOn} from "./options";
-import {getHistory} from "./gameOver";
-import {getSettingValue} from "./settings";
-import {isBlackListedForStart, isStartingPerk} from "./startingPerks";
-import {isLevelLocked} from "./get_level_unlock_condition";
-import {dontOfferTooSoon} from "./openUpgradesPicker";
+import { GameState, PerkId, RunParams } from "./types";
+import { allLevels, allLevelsAndIcons, upgrades } from "./loadGameData";
+import {
+  defaultSounds,
+  getHighScore,
+  makeEmptyPerksMap,
+  sumOfValues,
+} from "./game_utils";
+import { resetBalls } from "./gameStateMutators";
+import { getPixelRatio, isOptionOn } from "./options";
+import { getHistory } from "./gameOver";
+import { getSettingValue } from "./settings";
+import { isBlackListedForStart, isStartingPerk } from "./startingPerks";
+import { isLevelLocked } from "./get_level_unlock_condition";
+import { dontOfferTooSoon } from "./openUpgradesPicker";
 
 export function getRunLevels(
   params: RunParams,

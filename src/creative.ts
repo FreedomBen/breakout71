@@ -1,14 +1,19 @@
-import {GameState, Level, PerkId, RawLevel, Upgrade} from "./types";
-import {allLevels, transformRawLevel, upgrades} from "./loadGameData";
-import {t} from "./i18n/i18n";
-import {getSettingValue, getTotalScore, setSettingValue} from "./settings";
-import {confirmRestart, creativeModeThreshold, gameState, restart,} from "./game";
-import {asyncAlert} from "./asyncAlert";
-import {describeLevel, levelAndMaxBadge, sumOfValues,} from "./game_utils";
-import {getHistory} from "./gameOver";
-import {noCreative} from "./upgrades";
-import {getIcon, levelIconHTML} from "./levelIcon";
-import {reasonLevelIsLocked} from "./get_level_unlock_condition";
+import { GameState, Level, PerkId, RawLevel, Upgrade } from "./types";
+import { allLevels, transformRawLevel, upgrades } from "./loadGameData";
+import { t } from "./i18n/i18n";
+import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
+import {
+  confirmRestart,
+  creativeModeThreshold,
+  gameState,
+  restart,
+} from "./game";
+import { asyncAlert } from "./asyncAlert";
+import { describeLevel, levelAndMaxBadge, sumOfValues } from "./game_utils";
+import { getHistory } from "./gameOver";
+import { noCreative } from "./upgrades";
+import { getIcon, levelIconHTML } from "./levelIcon";
+import { reasonLevelIsLocked } from "./get_level_unlock_condition";
 
 export function creativeMode(gameState: GameState) {
   return {
@@ -40,7 +45,7 @@ export async function openCreativeModePerksPicker() {
         const problem =
           reasonLevelIsLocked(li, l.name, getHistory(), true)?.text || "";
         return {
-          icon:getIcon(l.name)  ,
+          icon: getIcon(l.name),
           text: l.name,
           value: l,
           disabled: !!problem,

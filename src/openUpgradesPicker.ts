@@ -1,4 +1,4 @@
-import {GameState, PerkId} from "./types";
+import { GameState, PerkId } from "./types";
 import {
   catchRateBest,
   catchRateGood,
@@ -11,8 +11,8 @@ import {
   upPerGold,
   upPerSilver,
 } from "./pure_functions";
-import {t} from "./i18n/i18n";
-import {requiredAsyncAlert} from "./asyncAlert";
+import { t } from "./i18n/i18n";
+import { requiredAsyncAlert } from "./asyncAlert";
 import {
   escapeAttribute,
   getPossibleUpgrades,
@@ -21,12 +21,16 @@ import {
   renderMaxLevel,
   upgradeLevelAndMaxDisplay,
 } from "./game_utils";
-import {getFirstUnlockable, getNearestUnlockHTML} from "./openScorePanel";
-import {isOptionOn} from "./options";
-import {getWorstFPSAndReset} from "./fps";
-import {getCurrentMaxCoins, getSettingValue, setSettingValue,} from "./settings";
-import {toast} from "./toast";
-import {getIcon} from "./levelIcon";
+import { getFirstUnlockable, getNearestUnlockHTML } from "./openScorePanel";
+import { isOptionOn } from "./options";
+import { getWorstFPSAndReset } from "./fps";
+import {
+  getCurrentMaxCoins,
+  getSettingValue,
+  setSettingValue,
+} from "./settings";
+import { toast } from "./toast";
+import { getIcon } from "./levelIcon";
 
 export async function openUpgradesPicker(gameState: GameState) {
   if (gameState.perks.chill) return;

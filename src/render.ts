@@ -1,4 +1,4 @@
-import {baseCombo, forEachLiveOne, liveCount} from "./gameStateMutators";
+import { baseCombo, forEachLiveOne, liveCount } from "./gameStateMutators";
 import {
   brickCenterX,
   brickCenterY,
@@ -14,10 +14,10 @@ import {
   zoneLeftBorderX,
   zoneRightBorderX,
 } from "./game_utils";
-import {colorString, GameState} from "./types";
-import {t} from "./i18n/i18n";
-import {gameState} from "./game";
-import {getPixelRatio, isOptionOn} from "./options";
+import { colorString, GameState } from "./types";
+import { t } from "./i18n/i18n";
+import { gameState } from "./game";
+import { getPixelRatio, isOptionOn } from "./options";
 import {
   ballTransparency,
   catchRateBest,
@@ -29,7 +29,7 @@ import {
   missesBest,
   missesGood,
 } from "./pure_functions";
-import {lastMeasuredFPS, startWork} from "./fps";
+import { lastMeasuredFPS, startWork } from "./fps";
 
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
 export const ctx = gameCanvas.getContext("2d", {

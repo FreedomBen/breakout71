@@ -1,4 +1,4 @@
-import {moveLevel, resizeLevel, setBrick} from "./levels_editor_util";
+import { moveLevel, resizeLevel, setBrick } from "./levels_editor_util";
 
 const baseLevel = {
   name: "",

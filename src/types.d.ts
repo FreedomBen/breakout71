@@ -1,5 +1,5 @@
-import {rawUpgrades} from "./upgrades";
-import {options} from "./options";
+import { rawUpgrades } from "./upgrades";
+import { options } from "./options";
 
 export type colorString = string;
 

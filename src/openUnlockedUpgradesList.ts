@@ -1,12 +1,12 @@
-import {getTotalScore} from "./settings";
-import {upgrades} from "./loadGameData";
-import {t} from "./i18n/i18n";
-import {asyncAlert} from "./asyncAlert";
-import {Upgrade} from "./types";
-import {miniMarkDown} from "./pure_functions";
-import {categories} from "./upgrades";
-import {openUpgradeDetails} from "./openUpgradeDetails";
-import {getIcon} from "./levelIcon";
+import { getTotalScore } from "./settings";
+import { upgrades } from "./loadGameData";
+import { t } from "./i18n/i18n";
+import { asyncAlert } from "./asyncAlert";
+import { Upgrade } from "./types";
+import { miniMarkDown } from "./pure_functions";
+import { categories } from "./upgrades";
+import { openUpgradeDetails } from "./openUpgradeDetails";
+import { getIcon } from "./levelIcon";
 
 export async function openUnlockedUpgradesList() {
   const ts = getTotalScore();

@@ -1,4 +1,4 @@
-import {allLevels, appVersion, upgrades} from "./loadGameData";
+import { allLevels, appVersion, upgrades } from "./loadGameData";
 import {
   Ball,
   Coin,
@@ -11,11 +11,18 @@ import {
   RunParams,
   TextFlash,
 } from "./types";
-import {getAudioContext, playPendingSounds} from "./sounds";
-import {currentLevelInfo, describeLevel, getRowColIndex, highScoreText, hoursSpentPlaying, sample,} from "./game_utils";
+import { getAudioContext, playPendingSounds } from "./sounds";
+import {
+  currentLevelInfo,
+  describeLevel,
+  getRowColIndex,
+  highScoreText,
+  hoursSpentPlaying,
+  sample,
+} from "./game_utils";
 
 import "./PWA/sw_loader";
-import {getCurrentLang, languages, t} from "./i18n/i18n";
+import { getCurrentLang, languages, t } from "./i18n/i18n";
 import {
   commitSettingsChangesToLocalStorage,
   cycleMaxCoins,
@@ -23,27 +30,50 @@ import {
   getSettingValue,
   setSettingValue,
 } from "./settings";
-import {forEachLiveOne, gameStateTick, normalizeGameState, setLevel, setMousePos,} from "./gameStateMutators";
-import {backgroundCanvas, gameCanvas, getHaloScale, haloCanvas, render, scoreDisplay,} from "./render";
-import {pauseRecording, recordOneFrame, resumeRecording, startRecordingGame,} from "./recording";
-import {newGameState} from "./newGameState";
-import {alertsOpen, asyncAlert, AsyncAlertAction, closeModal,} from "./asyncAlert";
-import {getPixelRatio, isOptionOn, options, toggleOption} from "./options";
-import {clamp, miniMarkDown} from "./pure_functions";
-import {helpMenuEntry} from "./help";
-import {creativeMode} from "./creative";
-import {hideAnyTooltip, setupTooltips} from "./tooltip";
+import {
+  forEachLiveOne,
+  gameStateTick,
+  normalizeGameState,
+  setLevel,
+  setMousePos,
+} from "./gameStateMutators";
+import {
+  backgroundCanvas,
+  gameCanvas,
+  getHaloScale,
+  haloCanvas,
+  render,
+  scoreDisplay,
+} from "./render";
+import {
+  pauseRecording,
+  recordOneFrame,
+  resumeRecording,
+  startRecordingGame,
+} from "./recording";
+import { newGameState } from "./newGameState";
+import {
+  alertsOpen,
+  asyncAlert,
+  AsyncAlertAction,
+  closeModal,
+} from "./asyncAlert";
+import { getPixelRatio, isOptionOn, options, toggleOption } from "./options";
+import { clamp, miniMarkDown } from "./pure_functions";
+import { helpMenuEntry } from "./help";
+import { creativeMode } from "./creative";
+import { hideAnyTooltip, setupTooltips } from "./tooltip";
 import "./migrations";
-import {getHistory} from "./gameOver";
-import {generateSaveFileContent} from "./generateSaveFileContent";
-import {runHistoryViewerMenuEntry} from "./runHistoryViewer";
-import {openScorePanel} from "./openScorePanel";
-import {monitorLevelsUnlocks} from "./monitorLevelsUnlocks";
-import {levelEditorMenuEntry} from "./levelEditor";
-import {reasonLevelIsLocked} from "./get_level_unlock_condition";
-import {frameStarted, getWorstFPSAndReset, startWork} from "./fps";
-import {openUnlockedUpgradesList} from "./openUnlockedUpgradesList";
-import {getCheckboxIcon, getIcon} from "./levelIcon";
+import { getHistory } from "./gameOver";
+import { generateSaveFileContent } from "./generateSaveFileContent";
+import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
+import { openScorePanel } from "./openScorePanel";
+import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
+import { levelEditorMenuEntry } from "./levelEditor";
+import { reasonLevelIsLocked } from "./get_level_unlock_condition";
+import { frameStarted, getWorstFPSAndReset, startWork } from "./fps";
+import { openUnlockedUpgradesList } from "./openUnlockedUpgradesList";
+import { getCheckboxIcon, getIcon } from "./levelIcon";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -505,7 +535,7 @@ async function openSettingsMenu() {
 
   actions.push({
     icon: getIcon(
-      languages.find((l) => l.value === getCurrentLang())?.levelName || ""
+      languages.find((l) => l.value === getCurrentLang())?.levelName || "",
     ),
     text: t("settings.language"),
     help: t("settings.language_help"),
@@ -534,7 +564,7 @@ async function openSettingsMenu() {
     if (window.devicePixelRatio === 1 && key == "match_pixel_ratio") continue;
     if (options[key]) {
       actions.push({
-        icon: getCheckboxIcon(isOptionOn(key)) ,
+        icon: getCheckboxIcon(isOptionOn(key)),
         text: options[key].name,
         help: options[key].help,
         disabled:
@@ -827,7 +857,7 @@ export async function openLevelDetails(level: Level) {
         disabled: isLocked,
       },
       {
-        icon:getCheckboxIcon(allowedInGame && !isLocked),
+        icon: getCheckboxIcon(allowedInGame && !isLocked),
         value: "toggle-offer-level",
         text: t("unlocks.include_in_level_pool"),
         help: allowDisabling

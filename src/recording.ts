@@ -1,10 +1,10 @@
-import {gameCanvas} from "./render";
-import {isInWebView, renderMaxLevel} from "./game_utils";
-import {getAudioRecordingTrack} from "./sounds";
-import {t} from "./i18n/i18n";
-import {GameState} from "./types";
-import {isOptionOn} from "./options";
-import {toast} from "./toast";
+import { gameCanvas } from "./render";
+import { isInWebView, renderMaxLevel } from "./game_utils";
+import { getAudioRecordingTrack } from "./sounds";
+import { t } from "./i18n/i18n";
+import { GameState } from "./types";
+import { isOptionOn } from "./options";
+import { toast } from "./toast";
 
 let mediaRecorder: MediaRecorder | null,
   captureStream: MediaStream,

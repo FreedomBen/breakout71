@@ -1,5 +1,5 @@
-import {t} from "./i18n/i18n";
-import {hideAnyTooltip} from "./tooltip";
+import { t } from "./i18n/i18n";
+import { hideAnyTooltip } from "./tooltip";
 
 export let alertsOpen = 0,
   closeModal: null | (() => void) = null;

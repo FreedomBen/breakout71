@@ -1,4 +1,4 @@
-import {RawLevel} from "./types";
+import { RawLevel } from "./types";
 
 import _backgrounds from "./data/backgrounds.json";
 

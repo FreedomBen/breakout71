@@ -15,7 +15,7 @@ import pt from "./pt.json";
 import sk from "./sk.json";
 import it from "./it.json";
 import cs from "./cs.json";
-import {getSettingValue} from "../settings";
+import { getSettingValue } from "../settings";
 
 export const languages = [
   {

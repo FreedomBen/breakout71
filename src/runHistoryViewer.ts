@@ -1,9 +1,9 @@
-import {getHistory} from "./gameOver";
-import {appVersion, upgrades} from "./loadGameData";
-import {t} from "./i18n/i18n";
-import {asyncAlert} from "./asyncAlert";
-import {getSettingValue, setSettingValue} from "./settings";
-import {getCheckboxIcon, getIcon} from "./levelIcon";
+import { getHistory } from "./gameOver";
+import { appVersion, upgrades } from "./loadGameData";
+import { t } from "./i18n/i18n";
+import { asyncAlert } from "./asyncAlert";
+import { getSettingValue, setSettingValue } from "./settings";
+import { getCheckboxIcon, getIcon } from "./levelIcon";
 
 export function runHistoryViewerMenuEntry() {
   const history = getHistory();
@@ -91,7 +91,9 @@ export function runHistoryViewerMenuEntry() {
                     `,
             hasPastVersion &&
               hasCurrentVersion && {
-                icon: getCheckboxIcon(getSettingValue("show_old_versions_in_stats", false)),
+                icon: getCheckboxIcon(
+                  getSettingValue("show_old_versions_in_stats", false),
+                ),
                 value: "toggle",
                 text: t("history.include_past_versions"),
               },

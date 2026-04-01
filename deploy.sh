@@ -27,6 +27,8 @@ bash ./build.sh $versionCode
 # generate signed bundle for play store
 ./gradlew bundleRelease
 
+# run prettier on src
+npx prettier --write src/*.ts  src/*.less src/*.html src/**/*.ts src/data/unlockConditions.json
 
 # Create a release commit
 git add .

@@ -1,10 +1,10 @@
-import {RunHistoryItem} from "./types";
+import { RunHistoryItem } from "./types";
 
 import _appVersion from "./data/version.json";
-import {generateSaveFileContent} from "./generateSaveFileContent";
-import {allLevels} from "./loadGameData";
-import {toast} from "./toast";
-import {isLevelLocked,} from "./get_level_unlock_condition";
+import { generateSaveFileContent } from "./generateSaveFileContent";
+import { allLevels } from "./loadGameData";
+import { toast } from "./toast";
+import { isLevelLocked } from "./get_level_unlock_condition";
 
 // The page will be reloaded if any migrations were run
 let migrationsRun = 0;

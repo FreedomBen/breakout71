@@ -1,10 +1,10 @@
-import {GameState} from "./types";
-import {upgrades} from "./loadGameData";
-import {schedulGameSound} from "./gameStateMutators";
-import {toast} from "./toast";
-import {t} from "./i18n/i18n";
-import {getTotalScore, setSettingValue} from "./settings";
-import {getIcon} from "./levelIcon";
+import { GameState } from "./types";
+import { upgrades } from "./loadGameData";
+import { schedulGameSound } from "./gameStateMutators";
+import { toast } from "./toast";
+import { t } from "./i18n/i18n";
+import { getTotalScore, setSettingValue } from "./settings";
+import { getIcon } from "./levelIcon";
 
 export function addToTotalScore(gameState: GameState, points: number) {
   if (gameState.creative) return;
