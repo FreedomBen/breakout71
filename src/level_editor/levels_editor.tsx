@@ -1,9 +1,12 @@
-import {Palette, RawLevel} from "../types";
+import { Palette, RawLevel } from "../types";
 import _palette from "../data/palette.json";
-import {createRoot} from "react-dom/client";
-import {useEffect, useState} from "react";
-import {moveLevel, resizeLevel, setBrick} from "./levels_editor_util";
-import {automaticBackgroundColor, levelCodeToRawLevel,} from "../pure_functions";
+import { createRoot } from "react-dom/client";
+import { useEffect, useState } from "react";
+import { moveLevel, resizeLevel, setBrick } from "./levels_editor_util";
+import {
+  automaticBackgroundColor,
+  levelCodeToRawLevel,
+} from "../pure_functions";
 
 const palette = _palette as Palette;
 
