@@ -694,10 +694,10 @@ function drawStraightLine(
   ctx: CanvasRenderingContext2D,
   gameState: GameState,
   mode: "#FFFFFF" | "" | "#FF0000" | string,
-  x1,
-  y1,
-  x2,
-  y2,
+  x1:number,
+  y1:number,
+  x2:number,
+  y2:number,
   alpha = 1,
 ) {
   ctx.globalAlpha = alpha;
@@ -1225,7 +1225,7 @@ export const scoreDisplay = document.getElementById(
 ) as HTMLButtonElement;
 const menuLabel = document.getElementById("menuLabel") as HTMLButtonElement;
 
-const emptyArray: Number[] = [];
+const emptyArray: number[] = [];
 const redBorderDash = [5, 5];
 
 export function getDashOffset(gameState: GameState) {
