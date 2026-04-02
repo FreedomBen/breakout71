@@ -121,7 +121,7 @@ export function render(gameState: GameState) {
       isOptionOn("probabilistic_lighting") && liveCount(gameState.coins) > 150
         ? 3
         : 0;
-    const shouldSkip = (index) =>
+    const shouldSkip = (index:number) =>
       skipN ? (framesCounter + index) % (skipN + 1) !== 0 : false;
 
     const haloScale = getHaloScale();
