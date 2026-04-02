@@ -370,20 +370,18 @@ export function render(gameState: GameState) {
     ctx.globalCompositeOperation = "screen";
     drawBall(ctx, color, size, x, y);
   });
-  //
+
   startWork("render:extra_life");
   if (gameState.perks.extra_life) {
     ctx.globalAlpha = gameState.balls.length > 1 ? 0.2 : 1;
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = gameState.puckColor;
-    for (let i = 0; i < gameState.perks.extra_life; i++) {
-      ctx.fillRect(
-        gameState.offsetXRoundedDown,
-        gameState.gameZoneHeight - gameState.puckHeight / 2 + 2 * i,
-        gameState.gameZoneWidthRoundedUp,
-        1,
-      );
-    }
+    ctx.fillRect(
+      gameState.offsetXRoundedDown,
+      gameState.gameZoneHeight - 4,
+      gameState.gameZoneWidthRoundedUp,
+      1,
+    );
   }
 
   startWork("render:balls");
