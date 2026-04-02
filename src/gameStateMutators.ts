@@ -1915,22 +1915,18 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     Math.abs(ball.x - gameState.puckPosition) <
       gameState.ballSize / 2 + gameState.puckWidth / 2 &&
     !isMovingWhilePassiveIncome(gameState);
-  if (
-    ball.y > ylimit &&
-    ball.vy > 0 &&
-    ballIsUnderPuck
-  ) {
-      const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
-      const angle = Math.atan2(
-        -gameState.puckWidth / 2,
-        (ball.x - gameState.puckPosition) *
-          (gameState.perks.concave_puck
-            ? -1 / (1 + gameState.perks.concave_puck)
-            : 1),
-      );
-      ball.vx = speed * Math.cos(angle);
-      ball.vy = speed * Math.sin(angle);
-      schedulGameSound(gameState, "wallBeep", ball.x, 1);
+  if (ball.y > ylimit && ball.vy > 0 && ballIsUnderPuck) {
+    const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+    const angle = Math.atan2(
+      -gameState.puckWidth / 2,
+      (ball.x - gameState.puckPosition) *
+        (gameState.perks.concave_puck
+          ? -1 / (1 + gameState.perks.concave_puck)
+          : 1),
+    );
+    ball.vx = speed * Math.cos(angle);
+    ball.vy = speed * Math.sin(angle);
+    schedulGameSound(gameState, "wallBeep", ball.x, 1);
 
     if (gameState.perks.streak_shots) {
       resetCombo(gameState, ball.x, ball.y);
@@ -1995,19 +1991,17 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.x < -gameState.gameZoneHeight ||
     ball.x > gameState.canvasWidth + gameState.gameZoneHeight;
 
-  const isLastBall=gameState.balls.filter((b) => !b.destroyed).length == 1
-  if(outOfBounds &&
-      isLastBall &&
-        gameState.perks.extra_life &&
-        ball.y > gameState.gameZoneHeight){
-    // bounce and loose a life
-      ball.vy *= -1;
-      justLostALife(gameState, ball, ball.x, ball.y);
-  }else if (
+  const isLastBall = gameState.balls.filter((b) => !b.destroyed).length == 1;
+  if (
     outOfBounds &&
+    isLastBall &&
     gameState.perks.extra_life &&
-    isLastBall
+    ball.y > gameState.gameZoneHeight
   ) {
+    // bounce and loose a life
+    ball.vy *= -1;
+    justLostALife(gameState, ball, ball.x, ball.y);
+  } else if (outOfBounds && gameState.perks.extra_life && isLastBall) {
     // Rescue the ball using an extra life
     gameState.balls.forEach((b) => {
       // there should be just one but just in case

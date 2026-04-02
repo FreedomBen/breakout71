@@ -121,7 +121,7 @@ export function render(gameState: GameState) {
       isOptionOn("probabilistic_lighting") && liveCount(gameState.coins) > 150
         ? 3
         : 0;
-    const shouldSkip = (index:number) =>
+    const shouldSkip = (index: number) =>
       skipN ? (framesCounter + index) % (skipN + 1) !== 0 : false;
 
     const haloScale = getHaloScale();
@@ -692,10 +692,10 @@ function drawStraightLine(
   ctx: CanvasRenderingContext2D,
   gameState: GameState,
   mode: "#FFFFFF" | "" | "#FF0000" | string,
-  x1:number,
-  y1:number,
-  x2:number,
-  y2:number,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
   alpha = 1,
 ) {
   ctx.globalAlpha = alpha;
@@ -1233,7 +1233,7 @@ export function getDashOffset(gameState: GameState) {
   return Math.floor(((gameState.levelTime % 500) / 500) * 10) % 10;
 }
 
-let wakeLockRunning=false,
+let wakeLockRunning = false,
   wakeLockPending = false;
 
 function askForWakeLock(gameState: GameState) {

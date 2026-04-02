@@ -367,10 +367,15 @@ export function tick() {
     gameState.levelTime += timeDeltaMs * frames;
     gameState.runStatistics.runTime += timeDeltaMs * frames;
     let maxSpeed2 = 0;
-    gameState.balls.forEach(({vx,vy})=>maxSpeed2=Math.max(maxSpeed2,vx * vx + vy * vy ))
-    forEachLiveOne(gameState.coins, ({vx,vy})=>maxSpeed2=Math.max(maxSpeed2,vx * vx + vy * vy ))
-    const steps = Math.ceil(Math.sqrt(maxSpeed2) * frames / 8);
-    
+    gameState.balls.forEach(
+      ({ vx, vy }) => (maxSpeed2 = Math.max(maxSpeed2, vx * vx + vy * vy)),
+    );
+    forEachLiveOne(
+      gameState.coins,
+      ({ vx, vy }) => (maxSpeed2 = Math.max(maxSpeed2, vx * vx + vy * vy)),
+    );
+    const steps = Math.ceil((Math.sqrt(maxSpeed2) * frames) / 8);
+
     for (let i = 0; i < steps; i++) {
       gameStateTick(gameState, frames / steps);
     }
