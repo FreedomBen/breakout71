@@ -1235,23 +1235,23 @@ export function getDashOffset(gameState: GameState) {
   return Math.floor(((gameState.levelTime % 500) / 500) * 10) % 10;
 }
 
-let wakeLock = null,
+let wakeLockRunning=false,
   wakeLockPending = false;
 
 function askForWakeLock(gameState: GameState) {
   if (
     gameState.startParams.computer_controlled &&
-    !wakeLock &&
-    !wakeLockPending
+    !wakeLockPending &&
+    !wakeLockRunning
   ) {
     wakeLockPending = true;
     try {
       navigator.wakeLock.request("screen").then((lock) => {
-        wakeLock = lock;
+        wakeLockRunning = true;
         wakeLockPending = false;
         lock.addEventListener("release", () => {
           // the wake lock has been released
-          wakeLock = null;
+          wakeLockRunning = false;
         });
       });
     } catch (e) {
