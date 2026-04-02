@@ -1918,12 +1918,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   if (
     ball.y > ylimit &&
     ball.vy > 0 &&
-    (ballIsUnderPuck ||
-      (gameState.balls.length < 2 &&
-        gameState.perks.extra_life &&
-        ball.y > ylimit + gameState.puckHeight / 2))
+    ballIsUnderPuck
   ) {
-    if (ballIsUnderPuck) {
       const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
       const angle = Math.atan2(
         -gameState.puckWidth / 2,
@@ -1935,10 +1931,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       ball.vx = speed * Math.cos(angle);
       ball.vy = speed * Math.sin(angle);
       schedulGameSound(gameState, "wallBeep", ball.x, 1);
-    } else {
-      ball.vy *= -1;
-      justLostALife(gameState, ball, ball.x, ball.y);
-    }
+
     if (gameState.perks.streak_shots) {
       resetCombo(gameState, ball.x, ball.y);
     }
@@ -2001,10 +1994,19 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.y < -gameState.gameZoneHeight ||
     ball.x < -gameState.gameZoneHeight ||
     ball.x > gameState.canvasWidth + gameState.gameZoneHeight;
-  if (
+
+  const isLastBall=gameState.balls.filter((b) => !b.destroyed).length == 1
+  if(outOfBounds &&
+      isLastBall &&
+        gameState.perks.extra_life &&
+        ball.y > gameState.gameZoneHeight){
+    // bounce and loose a life
+      ball.vy *= -1;
+      justLostALife(gameState, ball, ball.x, ball.y);
+  }else if (
     outOfBounds &&
     gameState.perks.extra_life &&
-    gameState.balls.filter((b) => !b.destroyed).length == 1
+    isLastBall
   ) {
     // Rescue the ball using an extra life
     gameState.balls.forEach((b) => {
