@@ -38,7 +38,8 @@ async function openLevelEditorLevelsList() {
 
   let choice = await asyncAlert({
     title: t("editor.title"),
-    content: [ {
+    content: [
+      {
         text: t("editor.new_level"),
         icon: getIcon("icon:editor"),
         value() {
