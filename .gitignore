@@ -12,5 +12,5 @@ node_modules
 *.zip
 app/release/
 .parcel-cache/
-dist
+build
 keystore.properties
