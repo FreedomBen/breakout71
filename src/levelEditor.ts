@@ -38,16 +38,7 @@ async function openLevelEditorLevelsList() {
 
   let choice = await asyncAlert({
     title: t("editor.title"),
-    content: [
-      ...customLevels.map((l, li) => ({
-        text: l.name,
-        icon: levelIconHTML(l.bricks, l.size),
-        value() {
-          editRawLevelList(li);
-        },
-        help: l.credit || describeLevel(l),
-      })),
-      {
+    content: [ {
         text: t("editor.new_level"),
         icon: getIcon("icon:editor"),
         value() {
@@ -62,6 +53,15 @@ async function openLevelEditorLevelsList() {
           editRawLevelList(rawList.length - 1);
         },
       },
+      ...customLevels.map((l, li) => ({
+        text: l.name,
+        icon: levelIconHTML(l.bricks, l.size),
+        value() {
+          editRawLevelList(li);
+        },
+        help: l.credit || describeLevel(l),
+      })),
+
       {
         text: t("editor.import"),
         help: t("editor.import_instruction"),
