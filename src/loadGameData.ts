@@ -16,15 +16,12 @@ const rawLevelsList = _rawLevelsList as RawLevel[];
 
 export const appVersion = _appVersion as string;
 
-export const icons = {} as { [k: string]: string };
-
 export function transformRawLevel(level: RawLevel) {
   const splitBricks = level.bricks.split("");
   const bricks = splitBricks
     .map((c) => palette[c])
     .slice(0, level.size * level.size);
   const bricksCount = bricks.filter((i) => i).length;
-
   return {
     ...level,
     bricks,
