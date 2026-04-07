@@ -184,7 +184,7 @@
     "unlocks.category.combo_boost": "## 连击增效器升级\n\n这些升级增加连击或连击乘数而不添加重置条件。",
     "unlocks.category.simple": "## 助手升级\n\n这些升级在几乎任何构建中都很有用。",
     "unlocks.greyed_out_help": "灰色的升级可以通过增加总分来解锁。每次在游戏中得分都会增加总分。",
-    "unlocks.include_in_level_pool": "在游戏中包含的关卡",
+    "unlocks.include_in_level_pool": "在游戏中包含这个关卡",
     "unlocks.include_in_level_pool_help": "你可以取消勾选你不喜欢的关卡",
     "unlocks.include_in_level_pool_locked": "你需要保持最少 15 个关卡。",
     "unlocks.intro": "你的总分是 {{ts}}。点击下面的一个升级来使用它开始游戏。",
