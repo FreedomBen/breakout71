@@ -233,7 +233,7 @@ export function baseCombo(gameState: GameState) {
 
 export function resetCombo(
   gameState: GameState,
-  x: number | undefined,
+  x: number,
   y: number | undefined,
 ) {
   const prev = gameState.combo;
@@ -242,11 +242,14 @@ export function resetCombo(
   if (!gameState.bricks.find(Boolean)) return;
 
   if (gameState.perks.double_or_nothing && prev > gameState.combo) {
-    gameOver(
-        t("gameOver.double_or_nothing.title"),
-        t("gameOver.double_or_nothing.summary", { score: gameState.score, perk:t("upgrades.double_or_nothing.name") }),
-    )
-    schedulGameSound(gameState, "lifeLost", x, 1);
+    if(gameState.perks.extra_life){
+      justLostALife(gameState,null, x,y)
+    }else{
+      gameOver(
+          t("gameOver.double_or_nothing.title"),
+          t("gameOver.double_or_nothing.summary", {   perk:t("upgrades.double_or_nothing.name") }),
+      )
+    }
   }
 
   if (prev > gameState.combo && gameState.perks.soft_reset) {
@@ -2011,11 +2014,10 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       b.vy = -gameState.baseSpeed;
       b.previousVY = b.vy;
     });
-    schedulGameSound(gameState, "lifeLost", ball.x, 1);
+    justLostALife(gameState, ball, ball.x, ball.y);
     putBallsAtPuck(gameState);
     gameState.ballStickToPuck = true;
     pause(false);
-    gameState.perks.extra_life -= 1;
   } else if (outOfBounds) {
     ball.destroyed = true;
     gameState.runStatistics.balls_lost++;
@@ -2167,18 +2169,21 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   }
 }
 
-function justLostALife(gameState: GameState, ball: Ball, x: number, y: number) {
+function justLostALife(gameState: GameState, ball: Ball|null, x: number, y: number) {
+
+  ball||=getClosestBall(gameState, x,y)
   gameState.perks.extra_life -= 1;
+
   if (gameState.perks.extra_life < 0) {
     gameState.perks.extra_life = 0;
-  } else if (gameState.perks.sacrifice) {
+  } else if (gameState.perks.sacrifice && ball) {
     gameState.combo *= gameState.perks.sacrifice;
     gameState.bricks.forEach(
       (color, index) => color && explodeBrick(gameState, index, ball, true),
     );
   }
 
-  schedulGameSound(gameState, "lifeLost", ball.x, 1);
+  schedulGameSound(gameState, "lifeLost", x, 1);
 
   if (!isOptionOn("basic")) {
     for (let i = 0; i < 10; i++)
