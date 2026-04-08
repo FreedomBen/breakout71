@@ -132,7 +132,11 @@ export async function openCreativeModePerksPicker() {
     } else if (choice) {
       creativeModePerks[choice.id] =
         ((creativeModePerks[choice.id] || 0) + 1) %
-        (Math.min(choice.max + (creativeModePerks.limitless || 0), choice.hardLimit) + 1);
+        (Math.min(
+          choice.max + (creativeModePerks.limitless || 0),
+          choice.hardLimit,
+        ) +
+          1);
 
       setSettingValue("creativeModePerks", creativeModePerks);
     }

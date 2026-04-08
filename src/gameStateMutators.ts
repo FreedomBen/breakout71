@@ -233,24 +233,22 @@ export function baseCombo(gameState: GameState) {
   return base_combo_from_stronger_foundation(gameState.perks.base_combo);
 }
 
-export function resetCombo(
-  gameState: GameState,
-  x: number,
-  y: number,
-) {
+export function resetCombo(gameState: GameState, x: number, y: number) {
   const prev = gameState.combo;
   gameState.combo = baseCombo(gameState);
   // skip combo reset when no brick on screen
   if (!gameState.bricks.find(Boolean)) return;
 
   if (gameState.perks.double_or_nothing && prev > gameState.combo) {
-    if(gameState.perks.extra_life){
-      justLostALife(gameState, x,y)
-    }else{
+    if (gameState.perks.extra_life) {
+      justLostALife(gameState, x, y);
+    } else {
       gameOver(
-          t("gameOver.double_or_nothing.title"),
-          t("gameOver.double_or_nothing.summary", {   perk:t("upgrades.double_or_nothing.name") }),
-      )
+        t("gameOver.double_or_nothing.title"),
+        t("gameOver.double_or_nothing.summary", {
+          perk: t("upgrades.double_or_nothing.name"),
+        }),
+      );
     }
   }
 
@@ -420,8 +418,8 @@ export function explosionAt(
           // Study bricks resist explosions too
           gameState.brickHP[i]--;
           if (gameState.brickHP[i] <= 0) {
-            ball.brokenSinceWallOrPaddleBounce++
-            applyNBrickPerk(gameState, ball)
+            ball.brokenSinceWallOrPaddleBounce++;
+            applyNBrickPerk(gameState, ball);
             explodeBrick(gameState, i, ball, true);
           }
         }
@@ -535,11 +533,12 @@ export function explodeBrick(
       gameState.perks.passive_income +
       gameState.perks.addiction;
 
-
-    if(gameState.perks.nbricks && ball.brokenSinceWallOrPaddleBounce<=gameState.perks.nbricks*2){
-      comboGain+=gameState.perks.nbricks*2
+    if (
+      gameState.perks.nbricks &&
+      ball.brokenSinceWallOrPaddleBounce <= gameState.perks.nbricks * 2
+    ) {
+      comboGain += gameState.perks.nbricks * 2;
     }
-
 
     if (Math.abs(ball.y - y) < Math.abs(ball.x - x)) {
       if (gameState.perks.side_kick) {
@@ -1029,10 +1028,10 @@ export function gameStateTick(
 
   gameState.balls = gameState.balls.filter((ball) => !ball.destroyed);
 
-  let remainingBricks = 0
-  for(let b of gameState.bricks) {
+  let remainingBricks = 0;
+  for (let b of gameState.bricks) {
     if (b && b !== "black") {
-      remainingBricks++
+      remainingBricks++;
     }
   }
 
@@ -1103,10 +1102,7 @@ export function gameStateTick(
     } else if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
     } else {
-      gameOver(
-        t("gameOver.win.title"),
-        t("gameOver.win.summary"),
-      );
+      gameOver(t("gameOver.win.title"), t("gameOver.win.summary"));
     }
   } else {
     const coinRadius = Math.round(gameState.coinSize / 2);
@@ -1709,13 +1705,13 @@ export function gameStateTick(
     }
   });
 }
-   function applyNBrickPerk(gameState:GameState,   ball:Ball){
-      if (gameState.perks.nbricks) {
-        if (ball.brokenSinceWallOrPaddleBounce > gameState.perks.nbricks*2) {
-          resetCombo(gameState, ball.x, ball.y);
-        }
-      }
+function applyNBrickPerk(gameState: GameState, ball: Ball) {
+  if (gameState.perks.nbricks) {
+    if (ball.brokenSinceWallOrPaddleBounce > gameState.perks.nbricks * 2) {
+      resetCombo(gameState, ball.x, ball.y);
     }
+  }
+}
 export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   ball.previousVX = ball.vx;
   ball.previousVY = ball.vy;
@@ -1843,7 +1839,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   );
   if (borderHitCode) {
     ball.sidesHitsSinceBounce++;
-    ball.brokenSinceWallOrPaddleBounce = 0
+    ball.brokenSinceWallOrPaddleBounce = 0;
     if (ball.sidesHitsSinceBounce <= gameState.perks.three_cushion * 3) {
       offsetCombo(gameState, 1, ball.x, ball.y);
     }
@@ -1965,15 +1961,12 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       ball.y,
     );
 
-
-
     if (
       !ball.hitSinceBounce &&
       gameState.bricks.find((i) => i) &&
       !ball.bouncedToEmptyLevel
     ) {
-
-      if(gameState.levelMisses<gameState.perks.forgiving){
+      if (gameState.levelMisses < gameState.perks.forgiving) {
         gameState.levelMisses++;
         makeText(
           gameState,
@@ -1984,7 +1977,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
           gameState.puckHeight,
           500,
         );
-      }else{
+      } else {
         gameState.levelMisses++;
         gameState.runStatistics.misses++;
         resetCombo(gameState, ball.x, ball.y);
@@ -2004,7 +1997,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.hitSinceBounce = 0;
     ball.bouncedToEmptyLevel = isBounceToEmptyLevel(gameState);
     ball.brokenSinceBounce = 0;
-    ball.brokenSinceWallOrPaddleBounce = 0
+    ball.brokenSinceWallOrPaddleBounce = 0;
     ball.sidesHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
     ball.sapperUses = 0;
@@ -2026,7 +2019,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   ) {
     // bounce and loose a life
     ball.vy *= -1;
-    justLostALife(gameState,  ball.x, ball.y);
+    justLostALife(gameState, ball.x, ball.y);
   } else if (outOfBounds && gameState.perks.extra_life && isLastBall) {
     // Rescue the ball using an extra life
     gameState.balls.forEach((b) => {
@@ -2036,7 +2029,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       b.vy = -gameState.baseSpeed;
       b.previousVY = b.vy;
     });
-    justLostALife(gameState,  ball.x, ball.y);
+    justLostALife(gameState, ball.x, ball.y);
     putBallsAtPuck(gameState);
     gameState.ballStickToPuck = true;
     pause(false);
@@ -2046,15 +2039,25 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     if (gameState.perks.happy_family) {
       resetCombo(gameState, ball.x, ball.y);
     }
-    if(gameState.perks.thomas){
-      gameState.level.bricks.forEach((brick, index)=>{
-        if(brick && !gameState.bricks[index] && Math.random() > 1/(1+gameState.perks.thomas)){
-          gameState.bricks[index]=gameState.level.bricks[index]
-          if(brick!=='black') {
-            spawnParticlesImplosion(gameState, 10, brickCenterX(gameState, index), brickCenterY(gameState, index), brick)
+    if (gameState.perks.thomas) {
+      gameState.level.bricks.forEach((brick, index) => {
+        if (
+          brick &&
+          !gameState.bricks[index] &&
+          Math.random() > 1 / (1 + gameState.perks.thomas)
+        ) {
+          gameState.bricks[index] = gameState.level.bricks[index];
+          if (brick !== "black") {
+            spawnParticlesImplosion(
+              gameState,
+              10,
+              brickCenterX(gameState, index),
+              brickCenterY(gameState, index),
+              brick,
+            );
           }
         }
-      })
+      });
     }
     // If you loose a ball while waiting to level up, setLevel is called and pauses the game
     // In that case it's ok to not have any ball, don't game over
@@ -2066,10 +2069,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       if (gameState.startParams.computer_controlled) {
         startComputerControlledGame(gameState.startParams.stress);
       } else {
-        gameOver(
-          t("gameOver.lost.title"),
-          t("gameOver.lost.summary"),
-        );
+        gameOver(t("gameOver.lost.title"), t("gameOver.lost.summary"));
       }
     }
   }
@@ -2128,11 +2128,10 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       }
     }
 
-
     if (!gameState.brickHP[hitBrick]) {
       ball.brokenSinceBounce++;
       ball.brokenSinceWallOrPaddleBounce++;
-      applyNBrickPerk(gameState, ball)
+      applyNBrickPerk(gameState, ball);
       applyOttawaTreatyPerk(gameState, hitBrick, ball);
       explodeBrick(gameState, hitBrick, ball, false);
       if (
@@ -2164,7 +2163,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     const remainingSapper = ball.sapperUses < gameState.perks.sapper ? 1 : 0;
     const willMiss =
       ball.vy > 0 && !ball.hitSinceBounce && !ball.bouncedToEmptyLevel;
-    const willBeForgiven=willMiss && gameState.levelMisses<gameState.perks.forgiving
+    const willBeForgiven =
+      willMiss && gameState.levelMisses < gameState.perks.forgiving;
     const extraCombo = gameState.combo - 1;
 
     if (
@@ -2203,8 +2203,8 @@ function justLostALife(gameState: GameState, x: number, y: number) {
 
   if (gameState.perks.extra_life < 0) {
     gameState.perks.extra_life = 0;
-  } else if (gameState.perks.sacrifice ) {
-    offsetCombo(gameState, gameState.combo+1, x,y)
+  } else if (gameState.perks.sacrifice) {
+    offsetCombo(gameState, gameState.combo + 1, x, y);
   }
 
   schedulGameSound(gameState, "lifeLost", x, 1);

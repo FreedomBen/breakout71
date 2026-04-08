@@ -48,7 +48,7 @@
     "gameOver.stats.total_score": "Pontuação total",
     "gameOver.stats.upgrades_applied": "Melhorias usadas",
     "gameOver.stats_intro": "Veja abaixo as estatísticas do jogo em comparação com os seus {{count}} melhores jogos.",
-    "gameOver.total": " Acumulou {{score}} moedas no total.",
+    "gameOver.total": "Acumulou {{score}} moedas no total.",
     "gameOver.unlocked_perk": "Melhoria desbloqueada",
     "gameOver.unlocked_perk_plural": "Acabou de desbloquear {{count}} vantagens",
     "gameOver.win.summary": "Este jogo acabou.",

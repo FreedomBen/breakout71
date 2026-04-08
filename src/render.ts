@@ -350,7 +350,6 @@ export function render(gameState: GameState) {
       -1,
       gameState.perks.clairvoyant >= 2,
       gameState.perks.round_bricks > 0,
-
     );
   });
 
@@ -762,7 +761,7 @@ export function renderAllBricks() {
   const clairVoyance =
     clairvoyant && gameState.brickHP.reduce((a, b) => a + b, 0);
 
-  const round = gameState.perks.round_bricks>0
+  const round = gameState.perks.round_bricks > 0;
   const newKey =
     gameState.gameZoneWidth +
     "_" +
@@ -779,7 +778,8 @@ export function renderAllBricks() {
     "_" +
     clairVoyance +
     "_" +
-    offset+"_" +
+    offset +
+    "_" +
     round;
 
   if (newKey !== cachedBricksRenderKey) {
@@ -819,7 +819,7 @@ export function renderAllBricks() {
         y,
         redBorder ? offset : -1,
         clairvoyant >= 2,
-        round
+        round,
       );
       if (gameState.brickHP[index] > 1 && clairvoyant) {
         canctx.globalCompositeOperation = "source-over";
@@ -1081,7 +1081,7 @@ export function drawBrick(
   y: number,
   offset: number = 0,
   borderOnly: boolean,
-  round:boolean=false
+  round: boolean = false,
 ) {
   const tlx = Math.ceil(x - gameState.brickWidth / 2);
   const tly = Math.ceil(y - gameState.brickWidth / 2);
@@ -1105,7 +1105,7 @@ export function drawBrick(
     offset +
     "_" +
     borderOnly +
-    "_"+
+    "_" +
     round +
     "_";
 
@@ -1124,10 +1124,17 @@ export function drawBrick(
     canctx.strokeStyle = (offset !== -1 && "#FF000033") || color;
     canctx.lineJoin = "round";
     canctx.lineWidth = bord;
-    if(round){
+    if (round) {
       canctx.beginPath();
-      canctx.arc(width/2, height/2, width/2.5-bord, 0, 2 * Math.PI, false);
-    }else{
+      canctx.arc(
+        width / 2,
+        height / 2,
+        width / 2.5 - bord,
+        0,
+        2 * Math.PI,
+        false,
+      );
+    } else {
       roundRect(
         canctx,
         bord / 2,
