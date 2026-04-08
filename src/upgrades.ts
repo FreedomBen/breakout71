@@ -128,6 +128,7 @@ export const rawUpgrades = [
     id: "streak_shots",
     gift: true,
     max: 1,
+    hardLimit:1,
     name: t("upgrades.streak_shots.name"),
     help: (lvl: number) => t("upgrades.streak_shots.tooltip", { lvl }),
     fullHelp: (lvl: number) =>
@@ -141,6 +142,7 @@ export const rawUpgrades = [
     id: "left_is_lava",
     gift: true,
     max: 1,
+    hardLimit:2,
     name: t("upgrades.left_is_lava.name"),
     help: (lvl: number) => t("upgrades.left_is_lava.tooltip", { lvl }),
     fullHelp: (lvl: number) =>
@@ -153,6 +155,7 @@ export const rawUpgrades = [
     id: "right_is_lava",
     gift: true,
     max: 1,
+    hardLimit:2,
     name: t("upgrades.right_is_lava.name"),
     help: (lvl: number) => t("upgrades.right_is_lava.tooltip", { lvl }),
     fullHelp: (lvl: number) =>
@@ -165,6 +168,7 @@ export const rawUpgrades = [
     id: "top_is_lava",
     gift: true,
     max: 1,
+    hardLimit:2,
     name: t("upgrades.top_is_lava.name"),
     help: (lvl: number) => t("upgrades.top_is_lava.tooltip", { lvl }),
     fullHelp: (lvl: number) =>
@@ -197,6 +201,7 @@ export const rawUpgrades = [
     id: "picky_eater",
     gift: true,
     max: 1,
+    hardLimit:1,
     name: t("upgrades.picky_eater.name"),
     help: (lvl: number) => t("upgrades.picky_eater.tooltip", { lvl }),
     fullHelp: (lvl: number) =>
@@ -502,6 +507,7 @@ export const rawUpgrades = [
     gift: false,
     id: "double_or_nothing",
     max: 1,
+    hardLimit:1,
     name: t("upgrades.double_or_nothing.name"),
     help: (lvl: number) =>
       t("upgrades.double_or_nothing.tooltip"),

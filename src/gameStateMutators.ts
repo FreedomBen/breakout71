@@ -1091,7 +1091,7 @@ export function gameStateTick(
     } else {
       gameOver(
         t("gameOver.win.title"),
-        t("gameOver.win.summary", { score: gameState.score }),
+        t("gameOver.win.summary"),
       );
     }
   } else {
@@ -2036,7 +2036,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       } else {
         gameOver(
           t("gameOver.lost.title"),
-          t("gameOver.lost.summary", { score: gameState.score }),
+          t("gameOver.lost.summary"),
         );
       }
     }
