@@ -2034,6 +2034,16 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     if (gameState.perks.happy_family) {
       resetCombo(gameState, ball.x, ball.y);
     }
+    if(gameState.perks.thomas){
+      gameState.level.bricks.forEach((brick, index)=>{
+        if(brick && !gameState.bricks[index] && Math.random() > 1/(1+gameState.perks.thomas)){
+          gameState.bricks[index]=gameState.level.bricks[index]
+          if(brick!=='black') {
+            spawnParticlesImplosion(gameState, 10, brickCenterX(gameState, index), brickCenterY(gameState, index), brick)
+          }
+        }
+      })
+    }
     // If you loose a ball while waiting to level up, setLevel is called and pauses the game
     // In that case it's ok to not have any ball, don't game over
     if (

@@ -2255,5 +2255,12 @@
     "bricks": "bbyybbbyyyybyyyyyyyyyyyybyyyybbbyybb",
     "svg": null,
     "color": ""
+  },
+  {
+    "name": "icon:thomas",
+    "size": 8,
+    "bricks": "__yyyy___yyOOyy_yyOOOOyyyyOOOOyy_yyOOyy___ybby___bbbbbb_bbbbbbbb",
+    "svg": null,
+    "color": ""
   }
 ]
