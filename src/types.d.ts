@@ -29,6 +29,7 @@ export type Upgrade = {
   name: string;
   category: number;
   max: number;
+  hardLimit: number;
   help: (lvl: number) => string;
   fullHelp: (lvl: number) => string;
   requires: PerkId | "";

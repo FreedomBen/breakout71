@@ -94,7 +94,7 @@ export async function openCreativeModePerksPicker() {
             text: u.name,
             help: levelAndMaxBadge(
               creativeModePerks[u.id] || 0,
-              u.max + (creativeModePerks.limitless || 0),
+              Math.min(u.max + (creativeModePerks.limitless || 0), u.hardLimit),
             ),
             value: u,
             className:
@@ -132,7 +132,7 @@ export async function openCreativeModePerksPicker() {
     } else if (choice) {
       creativeModePerks[choice.id] =
         ((creativeModePerks[choice.id] || 0) + 1) %
-        (choice.max + 1 + (creativeModePerks.limitless || 0));
+        (Math.min(choice.max + (creativeModePerks.limitless || 0), choice.hardLimit) + 1);
 
       setSettingValue("creativeModePerks", creativeModePerks);
     }

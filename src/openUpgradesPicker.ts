@@ -137,7 +137,7 @@ export async function openUpgradesPicker(gameState: GameState) {
       score: Math.random() + (gameState.lastOffered[u.id] || 0),
     }))
     .sort((a, b) => a.score - b.score)
-    .filter((u) => gameState.perks[u.id] < u.max + gameState.perks.limitless);
+    .filter((u) => gameState.perks[u.id] < Math.min(u.max + gameState.perks.limitless, u.hardLimit));
   let recommendation = settingsChangeRecommendations();
   while (true && !gameState.perks.chill) {
     // refresh the list if you pick extra one_more_choice
