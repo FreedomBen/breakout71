@@ -105,18 +105,20 @@ export async function openUpgradesPicker(gameState: GameState) {
       "no",
   );
 
+  const misses=Math.max(0, gameState.levelMisses-gameState.perks.forgiving);
+
   challengeResult(
-    gameState.levelMisses
+    misses
       ? t("level_up.challenges.levelMisses.name", {
-          value: gameState.levelMisses,
+          value: misses,
         })
       : t("level_up.challenges.levelMisses.none"),
     t("level_up.challenges.levelMisses.description", {
       silver: missesGood,
       gold: missesBest,
     }),
-    (gameState.levelMisses < missesBest && "gold") ||
-      (gameState.levelMisses < missesGood && "silver") ||
+    (misses < missesBest && "gold") ||
+      (misses < missesGood && "silver") ||
       "no",
   );
 

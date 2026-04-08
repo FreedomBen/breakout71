@@ -1957,26 +1957,32 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       gameState.bricks.find((i) => i) &&
       !ball.bouncedToEmptyLevel
     ) {
-      gameState.runStatistics.misses++;
-      if (gameState.perks.forgiving) {
-        const loss = Math.floor(
-          (gameState.levelMisses / 10 / gameState.perks.forgiving) *
-            (gameState.combo - baseCombo(gameState)),
+
+      if(gameState.levelMisses<gameState.perks.forgiving){
+        gameState.levelMisses++;
+        makeText(
+          gameState,
+          gameState.puckPosition,
+          gameState.gameZoneHeight - gameState.puckHeight * 2,
+          "#00b2ff",
+          t("play.forgiven"),
+          gameState.puckHeight,
+          500,
         );
-        offsetCombo(gameState, -loss, ball.x, ball.y);
-      } else {
+      }else{
+        gameState.levelMisses++;
+        gameState.runStatistics.misses++;
         resetCombo(gameState, ball.x, ball.y);
+        makeText(
+          gameState,
+          gameState.puckPosition,
+          gameState.gameZoneHeight - gameState.puckHeight * 2,
+          "#FF0000",
+          t("play.missed_ball"),
+          gameState.puckHeight,
+          500,
+        );
       }
-      gameState.levelMisses++;
-      makeText(
-        gameState,
-        gameState.puckPosition,
-        gameState.gameZoneHeight - gameState.puckHeight * 2,
-        "#FF0000",
-        t("play.missed_ball"),
-        gameState.puckHeight,
-        500,
-      );
     }
 
     gameState.runStatistics.puck_bounces++;
@@ -2137,6 +2143,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     const remainingSapper = ball.sapperUses < gameState.perks.sapper ? 1 : 0;
     const willMiss =
       ball.vy > 0 && !ball.hitSinceBounce && !ball.bouncedToEmptyLevel;
+    const willBeForgiven=willMiss && gameState.levelMisses<gameState.perks.forgiving
     const extraCombo = gameState.combo - 1;
 
     if (
@@ -2147,6 +2154,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ) {
       const color =
         (remainingSapper && (Math.random() > 0.5 ? "#ffb92a" : "#FF0000")) ||
+        (willBeForgiven && "#00b2ff") ||
         (willMiss && "#FF0000") ||
         gameState.ballsColor;
 
