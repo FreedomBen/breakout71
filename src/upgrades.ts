@@ -591,11 +591,11 @@ export const rawUpgrades = [
     gift: false,
     id: "sacrifice",
     max: 1,
-    hardLimit:Infinity,
+    hardLimit:1,
     name: t("upgrades.sacrifice.name"),
     help: (lvl: number) => t("upgrades.sacrifice.tooltip"),
     fullHelp: (lvl: number) =>
-      t("upgrades.sacrifice.verbose_description", {lvl}),
+      t("upgrades.sacrifice.verbose_description"),
   },
 
   {

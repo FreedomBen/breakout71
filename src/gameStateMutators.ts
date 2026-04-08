@@ -234,7 +234,7 @@ export function baseCombo(gameState: GameState) {
 export function resetCombo(
   gameState: GameState,
   x: number,
-  y: number | undefined,
+  y: number,
 ) {
   const prev = gameState.combo;
   gameState.combo = baseCombo(gameState);
@@ -243,7 +243,7 @@ export function resetCombo(
 
   if (gameState.perks.double_or_nothing && prev > gameState.combo) {
     if(gameState.perks.extra_life){
-      justLostALife(gameState,null, x,y)
+      justLostALife(gameState, x,y)
     }else{
       gameOver(
           t("gameOver.double_or_nothing.title"),
@@ -2010,7 +2010,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   ) {
     // bounce and loose a life
     ball.vy *= -1;
-    justLostALife(gameState, ball, ball.x, ball.y);
+    justLostALife(gameState,  ball.x, ball.y);
   } else if (outOfBounds && gameState.perks.extra_life && isLastBall) {
     // Rescue the ball using an extra life
     gameState.balls.forEach((b) => {
@@ -2020,7 +2020,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       b.vy = -gameState.baseSpeed;
       b.previousVY = b.vy;
     });
-    justLostALife(gameState, ball, ball.x, ball.y);
+    justLostALife(gameState,  ball.x, ball.y);
     putBallsAtPuck(gameState);
     gameState.ballStickToPuck = true;
     pause(false);
@@ -2177,18 +2177,13 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   }
 }
 
-function justLostALife(gameState: GameState, ball: Ball|null, x: number, y: number) {
-
-  ball||=getClosestBall(gameState, x,y)
+function justLostALife(gameState: GameState, x: number, y: number) {
   gameState.perks.extra_life -= 1;
 
   if (gameState.perks.extra_life < 0) {
     gameState.perks.extra_life = 0;
-  } else if (gameState.perks.sacrifice && ball) {
-    gameState.combo *= gameState.perks.sacrifice;
-    gameState.bricks.forEach(
-      (color, index) => color && explodeBrick(gameState, index, ball, true),
-    );
+  } else if (gameState.perks.sacrifice ) {
+    offsetCombo(gameState, gameState.combo+1, x,y)
   }
 
   schedulGameSound(gameState, "lifeLost", x, 1);
