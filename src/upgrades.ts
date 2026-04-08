@@ -1058,4 +1058,16 @@ export const rawUpgrades = [
     help: (lvl: number) => t("upgrades.chill.tooltip"),
     fullHelp: (lvl: number) => t("upgrades.chill.verbose_description"),
   },
+  {
+    category: categories.advanced,
+    requires: "",
+    threshold: 260000,
+    gift: false,
+    id: "round_bricks",
+    max: 1,
+    hardLimit:1,
+    name: t("upgrades.round_bricks.name"),
+    help: (lvl: number) => t("upgrades.round_bricks.tooltip"),
+    fullHelp: (lvl: number) => t("upgrades.round_bricks.verbose_description"),
+  },
 ] as const;

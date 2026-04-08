@@ -13,6 +13,7 @@ import {
 } from "./types";
 import { getAudioContext, playPendingSounds } from "./sounds";
 import {
+  brickCenterX, brickCenterY,
   currentLevelInfo,
   describeLevel,
   getRowColIndex,
@@ -320,11 +321,18 @@ gameCanvas.addEventListener("touchmove", (e) => {
 });
 
 export function brickIndex(x: number, y: number) {
-  return getRowColIndex(
+  const index=getRowColIndex(
     gameState,
     Math.floor(y / gameState.brickWidth),
     Math.floor((x - gameState.offsetX) / gameState.brickWidth),
-  );
+  )
+  if(gameState.perks.round_bricks && index!==-1){
+    const dx = x-brickCenterX(gameState, index)
+    const dy = y-brickCenterY(gameState, index)
+    const radius=gameState.brickWidth/2.8
+    if(dx*dx+dy*dy>radius*radius) return -1
+  }
+  return index;
 }
 
 export function hasBrick(index: number): number | undefined {

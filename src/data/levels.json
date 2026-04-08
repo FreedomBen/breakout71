@@ -2248,5 +2248,12 @@
     "size": 13,
     "bricks": "______W_________W__W__W_______W_W_W_____W___WWW___W___W___W___W_____W__W__W___WWWWWWWWWWWWW___W__W__W_____W___W___W___W___WWW___W_____W_W_W_______W__W__W_________W______",
     "credit": "https://f-droid.org/en/packages/com.rk.xededitor/ Pretty cool text editor"
+  },
+  {
+    "name": "icon:round_bricks",
+    "size": 6,
+    "bricks": "bbyybbbyyyybyyyyyyyyyyyybyyyybbbyybb",
+    "svg": null,
+    "color": ""
   }
 ]

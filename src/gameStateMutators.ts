@@ -1026,7 +1026,6 @@ export function gameStateTick(
     }
   }
 
-
   if (!remainingBricks && gameState.lastBrickBroken) {
     // Avoid a combo reset just because we're waiting for coins
     gameState.lastBrickBroken = 0;
