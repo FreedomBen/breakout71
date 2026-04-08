@@ -2262,5 +2262,12 @@
     "bricks": "__yyyy___yyOOyy_yyOOOOyyyyOOOOyy_yyOOyy___ybby___bbbbbb_bbbbbbbb",
     "svg": null,
     "color": ""
+  },
+  {
+    "color": "#000000",
+    "size": 9,
+    "bricks": "____________aaa_____papap____aaaaa___apapapa__papapap__aaaaaaa___papap_____aaa___",
+    "name": "Easter Egg",
+    "credit": "Happy Easter! - by 63CritsInARow"
   }
 ]

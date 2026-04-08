@@ -1402,5 +1402,10 @@
     "required": ["metamorphosis", "superhot", "wrap_right"],
     "forbidden": ["wrap_left", "happy_family", "chill"],
     "minScore": 26700
+  },
+  "Easter Egg": {
+    "required": ["compound_interest", "extra_life", "etherealcoins"],
+    "forbidden": ["happy_family", "three_cushion", "bigger_explosions"],
+    "minScore": 26800
   }
 }
