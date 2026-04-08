@@ -152,6 +152,7 @@ export function resetBalls(gameState: GameState) {
       piercePoints: gameState.perks.pierce * 3,
       hitSinceBounce: 0,
       brokenSinceBounce: 0,
+      brokenSinceWallOrPaddleBounce: 0,
       sidesHitsSinceBounce: 0,
       wrapsSinceBounce: 0,
       sapperUses: 0,
@@ -177,6 +178,7 @@ export function putBallsAtPuck(gameState: GameState) {
     ball.hitSinceBounce = 0;
     ball.bouncedToEmptyLevel = isBounceToEmptyLevel(gameState);
     ball.brokenSinceBounce = 0;
+    ball.brokenSinceWallOrPaddleBounce = 0;
     ball.sidesHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
     ball.piercePoints = gameState.perks.pierce * 3;
@@ -418,6 +420,8 @@ export function explosionAt(
           // Study bricks resist explosions too
           gameState.brickHP[i]--;
           if (gameState.brickHP[i] <= 0) {
+            ball.brokenSinceWallOrPaddleBounce++
+            applyNBrickPerk(gameState, ball)
             explodeBrick(gameState, i, ball, true);
           }
         }
@@ -530,6 +534,12 @@ export function explodeBrick(
       gameState.perks.asceticism * 3 +
       gameState.perks.passive_income +
       gameState.perks.addiction;
+
+
+    if(gameState.perks.nbricks && ball.brokenSinceWallOrPaddleBounce<=gameState.perks.nbricks*2){
+      comboGain+=gameState.perks.nbricks*2
+    }
+
 
     if (Math.abs(ball.y - y) < Math.abs(ball.x - x)) {
       if (gameState.perks.side_kick) {
@@ -1699,7 +1709,13 @@ export function gameStateTick(
     }
   });
 }
-
+   function applyNBrickPerk(gameState:GameState,   ball:Ball){
+      if (gameState.perks.nbricks) {
+        if (ball.brokenSinceWallOrPaddleBounce > gameState.perks.nbricks*2) {
+          resetCombo(gameState, ball.x, ball.y);
+        }
+      }
+    }
 export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   ball.previousVX = ball.vx;
   ball.previousVY = ball.vy;
@@ -1827,6 +1843,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   );
   if (borderHitCode) {
     ball.sidesHitsSinceBounce++;
+    ball.brokenSinceWallOrPaddleBounce = 0
     if (ball.sidesHitsSinceBounce <= gameState.perks.three_cushion * 3) {
       offsetCombo(gameState, 1, ball.x, ball.y);
     }
@@ -1948,13 +1965,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       ball.y,
     );
 
-    if (
-      gameState.perks.nbricks &&
-      ball.hitSinceBounce < gameState.perks.nbricks &&
-      !ball.bouncedToEmptyLevel
-    ) {
-      resetCombo(gameState, ball.x, ball.y);
-    }
+
 
     if (
       !ball.hitSinceBounce &&
@@ -1993,6 +2004,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.hitSinceBounce = 0;
     ball.bouncedToEmptyLevel = isBounceToEmptyLevel(gameState);
     ball.brokenSinceBounce = 0;
+    ball.brokenSinceWallOrPaddleBounce = 0
     ball.sidesHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
     ball.sapperUses = 0;
@@ -2082,14 +2094,6 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     if (!ball.sidesHitsSinceBounce && gameState.perks.three_cushion) {
       resetCombo(gameState, ball.x, ball.y);
     }
-    if (gameState.perks.nbricks) {
-      if (ball.hitSinceBounce > gameState.perks.nbricks) {
-        resetCombo(gameState, ball.x, ball.y);
-      } else {
-        offsetCombo(gameState, gameState.perks.nbricks, ball.x, ball.y);
-      }
-      // We need to reset at each hit, otherwise it's just an OP version of single puck hit streak
-    }
 
     let pierce = false;
     let damage =
@@ -2124,8 +2128,11 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       }
     }
 
+
     if (!gameState.brickHP[hitBrick]) {
       ball.brokenSinceBounce++;
+      ball.brokenSinceWallOrPaddleBounce++;
+      applyNBrickPerk(gameState, ball)
       applyOttawaTreatyPerk(gameState, hitBrick, ball);
       explodeBrick(gameState, hitBrick, ball, false);
       if (

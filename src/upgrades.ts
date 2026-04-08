@@ -305,11 +305,11 @@ export const rawUpgrades = [
     gift: true,
     id: "nbricks",
     max: 3,
-    hardLimit:Infinity,
+    hardLimit:6,
     name: t("upgrades.nbricks.name"),
-    help: (lvl: number) => t("upgrades.nbricks.tooltip", {lvl}),
+    help: (lvl: number) => t("upgrades.nbricks.tooltip"),
     fullHelp: (lvl: number) =>
-      t("upgrades.nbricks.verbose_description", {lvl}),
+      t("upgrades.nbricks.verbose_description", {gain:lvl*2, max:lvl*2}),
   },
   {
     category: categories.combo,

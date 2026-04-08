@@ -103,6 +103,7 @@ export type Ball = {
   hitSinceBounce: number;
   // Brick was really broken ,but could have been respawned as a bomb
   brokenSinceBounce: number;
+  brokenSinceWallOrPaddleBounce: number;
   sidesHitsSinceBounce: number;
   wrapsSinceBounce: number;
   // At the time of the last paddle bounce, there were fewer bricks on screen than there are balls.
