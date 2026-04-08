@@ -360,6 +360,12 @@
     "credit": ""
   },
   {
+    "name": "icon:round_bricks",
+    "size": 6,
+    "bricks": "bbyybbbyyyybyyyyyyyyyyyybyyyybbbyybb",
+    "credit": ""
+  },
+  {
     "name": "icon:sacrifice",
     "size": 9,
     "bricks": "__b___b___bbb_bbb_bbyyyyybbbbybybybbbbyybyybb_bbyyybb___bybyb_____bbb_______b____",
@@ -483,6 +489,12 @@
     "name": "icon:telekinesis",
     "size": 8,
     "bricks": "______WW____GGWW___G______G_______G_______G_______G_____WWWWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:thomas",
+    "size": 8,
+    "bricks": "__yyyy___yyOOyy_yyOOOOyyyyOOOOyy_yyOOyy___ybby___bbbbbb_bbbbbbbb",
     "credit": ""
   },
   {
@@ -2250,24 +2262,23 @@
     "credit": "https://f-droid.org/en/packages/com.rk.xededitor/ Pretty cool text editor"
   },
   {
-    "name": "icon:round_bricks",
-    "size": 6,
-    "bricks": "bbyybbbyyyybyyyyyyyyyyyybyyyybbbyybb",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "name": "icon:thomas",
-    "size": 8,
-    "bricks": "__yyyy___yyOOyy_yyOOOOyyyyOOOOyy_yyOOyy___ybby___bbbbbb_bbbbbbbb",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "color": "#000000",
+    "name": "Easter Egg",
     "size": 9,
     "bricks": "____________aaa_____papap____aaaaa___apapapa__papapap__aaaaaaa___papap_____aaa___",
-    "name": "Easter Egg",
     "credit": "Happy Easter! - by 63CritsInARow"
+  },
+  {
+    "name": "icon:flyswatter",
+    "size": 9,
+    "bricks": "___bbb______ybb______bbb_______y________y________y________y________y________y____",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:gravity_falls",
+    "size": 10,
+    "bricks": "____bb_______bbbb______bbbb_______bb________yy________yy________yy______yyyyyy_____yyyy_______yy____",
+    "svg": null,
+    "color": ""
   }
 ]

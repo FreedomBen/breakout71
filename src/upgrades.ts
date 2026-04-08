@@ -1083,5 +1083,25 @@ export const rawUpgrades = [
     name: t("upgrades.thomas.name"),
     help: (lvl: number) => t("upgrades.thomas.tooltip"),
     fullHelp: (lvl: number) => t("upgrades.thomas.verbose_description"),
-  },
+  },  {
+    category: categories.advanced,
+    threshold: 270000,
+    gift: false,
+    id: "flyswatter",
+    max: 1,
+    hardLimit: 1,
+    name: t("upgrades.flyswatter.name"),
+    help: (lvl: number) => t("upgrades.flyswatter.tooltip"),
+    fullHelp: (lvl: number) => t("upgrades.flyswatter.verbose_description"),
+  },  {
+    category: categories.advanced,
+    threshold: 275000,
+    gift: false,
+    id: "gravity_falls",
+    max: 1,
+    hardLimit: 1,
+    name: t("upgrades.gravity_falls.name"),
+    help: (lvl: number) => t("upgrades.gravity_falls.tooltip"),
+    fullHelp: (lvl: number) => t("upgrades.gravity_falls.verbose_description"),
+  }
 ] as const;
