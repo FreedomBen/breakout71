@@ -31,6 +31,8 @@
     "editor.title": "Level Editor",
     "gameOver.creative": "This run will not be recorded.",
     "gameOver.cumulative_total": "Your total cumulative score went from {{startTs}} to {{endTs}}.",
+    "gameOver.double_or_nothing.summary": "The combo was reset, because of the \"{{perk}}\" upgrade it ended the whole run, with a total score of {{score}} coins.",
+    "gameOver.double_or_nothing.title": "Game over",
     "gameOver.lastLevelSummary": "In level {{level}} you caught {{levelCaughtCoins}} coins out of {{levelSpawnedCoins}} ({{catchRate}}%) in {{duration}} seconds. The ball missed the bricks {{levelMisses}} time(s)",
     "gameOver.lost.summary": "You dropped the ball, ending your run with a total score of {{score}} coins.",
     "gameOver.lost.title": "Game Over",

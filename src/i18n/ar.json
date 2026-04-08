@@ -31,6 +31,8 @@
     "editor.title": "محرر المستويات",
     "gameOver.creative": "لن يتم تسجيل هذا التشغيل.",
     "gameOver.cumulative_total": "لقد ارتفع مجموع درجاتك التراكمية من {{startTs}} إلى {{endTs}}.",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "في المستوى {{level}} ، جمعتَ {{levelCaughtCoins}} عملة من أصل {{levelSpawnedCoins}} ({{catchRate}}%) في {{duration}} ثانية. أخطأت الكرة الطوب {{levelMisses}} مرة.",
     "gameOver.lost.summary": "لقد أسقطت الكرة بعد التقاط {{score}} قطعة نقدية.",
     "gameOver.lost.title": "انتهت اللعبة",

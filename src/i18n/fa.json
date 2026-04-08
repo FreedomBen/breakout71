@@ -31,6 +31,8 @@
     "editor.title": "ویرایشگر سطح",
     "gameOver.creative": "این دست ثبت نخواهد شد.",
     "gameOver.cumulative_total": "امتیاز کل شما از {{startTs}} به {{endTs}} رسید.",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "در مرحله {{level}} شما {{levelCaughtCoins}} سکه از {{levelSpawnedCoins}} ({{catchRate}}%) را در {{duration}} ثانیه گرفتید. توپ {{levelMisses}} بار به آجرها برخورد نکرد",
     "gameOver.lost.summary": "توپ را از دست دادید، بازی را با مجموع امتیاز {{score}} سکه به پایان رساندید.",
     "gameOver.lost.title": "پایان بازی",

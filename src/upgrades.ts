@@ -501,18 +501,12 @@ export const rawUpgrades = [
     threshold: 55000,
     gift: false,
     id: "double_or_nothing",
-    max: 3,
+    max: 1,
     name: t("upgrades.double_or_nothing.name"),
     help: (lvl: number) =>
-      t("upgrades.double_or_nothing.tooltip", {
-        percent: lvl * 10,
-        multiplier: 1 + lvl,
-      }),
+      t("upgrades.double_or_nothing.tooltip"),
     fullHelp: (lvl: number) =>
-      t("upgrades.double_or_nothing.verbose_description", {
-        percent: lvl * 10,
-        multiplier: 1 + lvl,
-      }),
+      t("upgrades.double_or_nothing.verbose_description"),
   },
 
   {

@@ -31,6 +31,8 @@
     "editor.title": "레벨 편집기",
     "gameOver.creative": "이 실행은 기록되지 않습니다.",
     "gameOver.cumulative_total": "총 누적 점수가 {{startTs}} 에서 {{endTs}}로 변경되었습니다.",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "레벨 {{level}} 에서 {{duration}} 초 만에 {{levelSpawnedCoins}} 개 중 {{levelCaughtCoins}} 개의 동전({{catchRate}}%)을 획득했습니다. 공은 벽돌을 {{levelMisses}} 번이나 놓쳤습니다.",
     "gameOver.lost.summary": "동전 {{score}} 개를 잡은 후 공을 떨어뜨렸습니다.",
     "gameOver.lost.title": "게임 오버",

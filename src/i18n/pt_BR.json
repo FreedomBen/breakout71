@@ -31,6 +31,8 @@
     "editor.title": "Editor de Nível",
     "gameOver.creative": "Esta partida não será salva.",
     "gameOver.cumulative_total": "Sua pontuação total subiu de {{startTs}} para {{endTs}}.",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "No nível {{level}} , você pegou {{levelCaughtCoins}} moedas de {{levelSpawnedCoins}} ({{catchRate}}%) em {{duration}} segundos. A bola errou os blocos {{levelMisses}} vez(es)",
     "gameOver.lost.summary": "Você deixou sua bola cair, terminando a partida com uma pontuação total de {{score}} moedas.",
     "gameOver.lost.title": "Fim de Jogo",

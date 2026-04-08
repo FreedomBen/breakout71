@@ -31,6 +31,8 @@
     "editor.title": "Editor levelov",
     "gameOver.creative": "Tento pokus nebude zaznamenaný.",
     "gameOver.cumulative_total": "",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "V leveli {{level}} ste chytili {{levelCaughtCoins}} mincí z celkového počtu {{levelSpawnedCoins}} ({{catchRate}} %) za {{duration}} sekúnd. Loptička netrafila žiadnu dlaždicu {{levelMisses}}-krát",
     "gameOver.lost.summary": "Nechytili ste loptičku, čo ukončilo váš pokus s celkovým skóre {{score}} mincí.",
     "gameOver.lost.title": "Koniec hry",

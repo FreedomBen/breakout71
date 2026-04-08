@@ -104,7 +104,7 @@ export async function gameOver(title: string, intro: string) {
       getCreativeModeWarning(gameState) || levelStats,
       intro,
       startTs != endTs
-        ? t("gameOver.cumulative_total", { startTs, endTs })
+        ? t('gameOver.total',{score:gameState.score})+t("gameOver.cumulative_total", { startTs, endTs })
         : "",
 
       settingsChangeRecommendations(),

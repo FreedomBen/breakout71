@@ -31,6 +31,8 @@
     "editor.title": "Редактор рівнів",
     "gameOver.creative": "Ця гра не буде записана.",
     "gameOver.cumulative_total": "Ваш загальний сумарний загальнийрахунок підвищився з {{start Ts}} до {{endTs}}.",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "Введіть номер мобільного, який Ви вказали при укладаннi договору з банком - для ідентифікації. М'яч пропустив цеглу {{levelMisses}} час(s)",
     "gameOver.lost.summary": "Ви скидали м'яч, закінчуючи курсом з загальним балом .",
     "gameOver.lost.title": "Гра над",

@@ -31,6 +31,8 @@
     "editor.title": "关卡编辑器",
     "gameOver.creative": "这把游戏不会被录制。",
     "gameOver.cumulative_total": "你的总累计分数从 {{startTs}} 升至 {{endTs}}。",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "在 {{level}} 关卡中，你在 {{duration}} 秒内接住了 {{levelCaughtCoins}} 个硬币，共 {{levelSpawnedCoins}} 个（{{catchRate}}%）。球有 {{levelMisses}} 次没有击中砖块",
     "gameOver.lost.summary": "你掉了球。以 {{score}} 硬币的总分结束本次游玩。",
     "gameOver.lost.title": "游戏结束",

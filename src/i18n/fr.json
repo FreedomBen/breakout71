@@ -31,6 +31,8 @@
     "editor.title": "Éditeur de niveau",
     "gameOver.creative": "Cette partie ne sera pas enregistrée.",
     "gameOver.cumulative_total": "Votre score total cumulé est passé de {{startTs}} à {{endTs}}.",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "Au niveau {{level}}, vous avez attrapé {{levelCaughtCoins}} pièces sur {{levelSpawnedCoins}} ({{catchRate}}%) en {{duration}} secondes. La balle a raté les briques {{levelMisses}} fois.",
     "gameOver.lost.summary": "Vous avez fait tomber la balle après avoir attrapé {{score}} pièces en tout dans cette partie.",
     "gameOver.lost.title": "Balle perdue",

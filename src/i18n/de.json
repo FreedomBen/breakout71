@@ -31,6 +31,8 @@
     "editor.title": "Level-Editor",
     "gameOver.creative": "Dieser Durchlauf wird nicht gewertet.",
     "gameOver.cumulative_total": "Ihre Gesamtpunktzahl ist von {{startTs}} auf {{endTs}}gestiegen.",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "Im Level {{level}} hast du {{levelCaughtCoins}} von {{levelSpawnedCoins}} ({{catchRate}}%) Münzen in {{duration}} Sekunden gefangen. Der Ball verfehlte die Steine {{levelMisses}} Mal.",
     "gameOver.lost.summary": "Du hast den Ball fallen lassen, nachdem du {{score}} Münzen gesammelt hast.",
     "gameOver.lost.title": "Spiel vorbei",

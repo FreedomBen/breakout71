@@ -31,6 +31,8 @@
     "editor.title": "Creatore di livelli",
     "gameOver.creative": "Questa partita non verrà registrata.",
     "gameOver.cumulative_total": "Il tuo punteggio totale cumulativo è andato da {{startTs}} a {{endTs}}.",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "Nel livello {{level}} hai raccolto {{levelCaughtCoins}} monete su {{levelSpawnedCoins}} ({{catchRate}}%) in {{duration}} secondi. La palla non ha colpito i mattoncini {{levelMisses}} volta(e)",
     "gameOver.lost.summary": "Hai lasciato cadere la palla, terminando la partita con un punteggio totale di {{score}} monete.",
     "gameOver.lost.title": "Game Over",

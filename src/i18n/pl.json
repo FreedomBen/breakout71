@@ -31,6 +31,8 @@
     "editor.title": "Strona internetowa",
     "gameOver.creative": "Nie zostanie ono nagrane.",
     "gameOver.cumulative_total": "Wszystko, które uwzględniły się od {{Powstańcy” (pol.). Ts}} do {{endTs}}.",
+    "gameOver.double_or_nothing.summary": "",
+    "gameOver.double_or_nothing.title": "",
     "gameOver.lastLevelSummary": "Na poziomie {{poziomowym}} przyłapano monety {{levelCaughtCoins}} z {{SpawnedCoins}} ({{catchRate}}%) w {{duration}} sekundy. Piłka omijała cegły (na poziomie Misses)",
     "gameOver.lost.summary": "Porzuciłem piłkę, kończąc swój bieg z łączną ilością monety.",
     "gameOver.lost.title": "Game Over Over Over Over",

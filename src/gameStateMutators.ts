@@ -242,9 +242,10 @@ export function resetCombo(
   if (!gameState.bricks.find(Boolean)) return;
 
   if (gameState.perks.double_or_nothing && prev > gameState.combo) {
-    gameState.score = Math.floor(
-      gameState.score * clamp(1 - gameState.perks.double_or_nothing / 10, 0, 1),
-    );
+    gameOver(
+        t("gameOver.double_or_nothing.title"),
+        t("gameOver.double_or_nothing.summary", { score: gameState.score, perk:t("upgrades.double_or_nothing.name") }),
+    )
     schedulGameSound(gameState, "lifeLost", x, 1);
   }
 
