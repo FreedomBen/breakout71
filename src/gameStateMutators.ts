@@ -1018,9 +1018,14 @@ export function gameStateTick(
   }
 
   gameState.balls = gameState.balls.filter((ball) => !ball.destroyed);
-  const remainingBricks = gameState.bricks.filter(
-    (b) => b && b !== "black",
-  ).length;
+
+  let remainingBricks = 0
+  for(let b of gameState.bricks) {
+    if (b && b !== "black") {
+      remainingBricks++
+    }
+  }
+
 
   if (!remainingBricks && gameState.lastBrickBroken) {
     // Avoid a combo reset just because we're waiting for coins
