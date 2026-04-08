@@ -164,7 +164,7 @@
   {
     "name": "icon:forgiving",
     "size": 8,
-    "bricks": "____y______y_y____y___y__y_____yy_____y__y___y____y_y____WWWWW__",
+    "bricks": "____y______t_y____t___y__t_____yt_____y__t___y____t_y____WWWWW__",
     "credit": ""
   },
   {
@@ -2136,10 +2136,9 @@
     "credit": "https://en.wikipedia.org/wiki/Age_verification_system - by pedr01gb"
   },
   {
-    "color": "#115988",
+    "name": "Clippy",
     "size": 14,
     "bricks": "______llll_________l____l______ggl___gg_______W____Wl______WgW__WgW_______W____W________l_l__l________l_l__l________l_l__l_l______l_l__l_l______l__ll_l_______l_____l_______l____l_________llll_____",
-    "name": "Clippy",
     "credit": "https://be-clippy.com/ - by obigre"
   },
   {
