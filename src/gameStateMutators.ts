@@ -149,7 +149,7 @@ export function resetBalls(gameState: GameState) {
       previousVX: vx,
       vy: -gameState.baseSpeed,
       previousVY: -gameState.baseSpeed,
-      piercePoints: gameState.perks.pierce * 3,
+      piercePoints: gameState.perks.pierce * 2,
       hitSinceBounce: 0,
       brokenSinceBounce: 0,
       brokenSinceWallOrPaddleBounce: 0,
@@ -181,7 +181,7 @@ export function putBallsAtPuck(gameState: GameState) {
     ball.brokenSinceWallOrPaddleBounce = 0;
     ball.sidesHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
-    ball.piercePoints = gameState.perks.pierce * 3;
+    ball.piercePoints = gameState.perks.pierce * 2;
   });
 }
 
@@ -2001,7 +2001,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.sidesHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
     ball.sapperUses = 0;
-    ball.piercePoints = gameState.perks.pierce * 3;
+    ball.piercePoints = gameState.perks.pierce * 2;
   }
 
   const outOfBounds =
