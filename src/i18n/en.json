@@ -223,7 +223,7 @@
     "upgrades.asceticism.name": "Asceticism",
     "upgrades.asceticism.tooltip": "+{{combo}} combo per brick broken, -{{combo}} combo  per coin caught.",
     "upgrades.asceticism.verbose_description": "You'll need to store the coins somewhere while your combo climbs.",
-    "upgrades.ball_attract_ball.name": "Gravity",
+    "upgrades.ball_attract_ball.name": "Group project",
     "upgrades.ball_attract_ball.tooltip": "Balls attract balls",
     "upgrades.ball_attract_ball.verbose_description": "Balls that are more than \"3/4 of the game area width\" away will start attracting each other. \n\nThe attraction force is stronger when they are furthest away from each other.\n\nRainbow particles will fly to symbolize the attraction force. This perk is only offered if you have more than one ball already.",
     "upgrades.ball_attracts_coins.name": "Balls attract coins",
