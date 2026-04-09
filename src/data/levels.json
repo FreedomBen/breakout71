@@ -162,6 +162,12 @@
     "credit": "By Noodlemire"
   },
   {
+    "name": "icon:flyswatter",
+    "size": 9,
+    "bricks": "___bbb______ybb______bbb_______y________y________y________y________y________y____",
+    "credit": ""
+  },
+  {
     "name": "icon:forgiving",
     "size": 8,
     "bricks": "____y______t_y____t___y__t_____yt_____y__t___y____t_y____WWWWW__",
@@ -189,6 +195,12 @@
     "name": "icon:golden_goose",
     "size": 8,
     "bricks": "_bbby____bbb_y___bbby_y__y_y_y_y__y_y_y____y_y_y____y_y______y_y",
+    "credit": ""
+  },
+  {
+    "name": "icon:gravity_falls",
+    "size": 11,
+    "bricks": "_____b___________________y___y_______y_y_________y________y___y_______y_y_________y________y___y_______y_y_________y_____",
     "credit": ""
   },
   {
@@ -2266,19 +2278,5 @@
     "size": 9,
     "bricks": "____________aaa_____papap____aaaaa___apapapa__papapap__aaaaaaa___papap_____aaa___",
     "credit": "Happy Easter! - by 63CritsInARow"
-  },
-  {
-    "name": "icon:flyswatter",
-    "size": 9,
-    "bricks": "___bbb______ybb______bbb_______y________y________y________y________y________y____",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "name": "icon:gravity_falls",
-    "size": 10,
-    "bricks": "____bb_______bbbb______bbbb_______bb________yy________yy________yy______yyyyyy_____yyyy_______yy____",
-    "svg": null,
-    "color": ""
   }
 ]
