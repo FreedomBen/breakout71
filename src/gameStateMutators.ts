@@ -1470,7 +1470,6 @@ export function gameStateTick(
             let x = (a.x + b.x) / 2;
             let y = (a.y + b.y) / 2;
             // space out the balls with extra speed
-            if (gameState.perks.shocks > 1) {
               const limit = (gameState.baseSpeed * gameState.perks.shocks) / 2;
               a.vx +=
                 clamp(a.x - x, -limit, limit) +
@@ -1484,7 +1483,7 @@ export function gameStateTick(
               b.vy +=
                 clamp(b.y - y, -limit, limit) +
                 ((Math.random() - 0.5) * limit) / 3;
-            }
+              
             let index = brickIndex(x, y);
             explosionAt(
               gameState,
