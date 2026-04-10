@@ -34,7 +34,7 @@
     "gameOver.double_or_nothing.summary": "连击已经重置，并且结束整个游玩，因为 \"{{perk}}\" 升级。",
     "gameOver.double_or_nothing.title": "游戏结束",
     "gameOver.lastLevelSummary": "在 {{level}} 关卡中，你在 {{duration}} 秒内接住了 {{levelCaughtCoins}} 个硬币，共 {{levelSpawnedCoins}} 个（{{catchRate}}%）。球有 {{levelMisses}} 次没有击中砖块",
-    "gameOver.lost.summary": "你掉了球",
+    "gameOver.lost.summary": "你掉了球，结束你的游玩。",
     "gameOver.lost.title": "游戏结束",
     "gameOver.stats.balls_lost": "失去的球",
     "gameOver.stats.bricks_broken": "打碎的砖",
