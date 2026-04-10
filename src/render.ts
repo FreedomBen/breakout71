@@ -336,7 +336,7 @@ export function render(gameState: GameState) {
   renderAllBricks();
 
   startWork("render:lights");
-  ctx.globalCompositeOperation = "screen";
+  ctx.globalCompositeOperation = "source-over";
   forEachLiveOne(gameState.lights, (flash) => {
     const { x, y, time, color, size, duration } = flash;
     const elapsed = gameState.levelTime - time;

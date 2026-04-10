@@ -2158,7 +2158,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
         gameState,
         brickCenterX(gameState, hitBrick),
         brickCenterY(gameState, hitBrick),
-        "#FFFFFF",
+        initialBrickColor === "#FFFFFF"?"#999999":"#FFFFFF",
         gameState.brickWidth + 2,
         50 * gameState.brickHP[hitBrick],
       );
