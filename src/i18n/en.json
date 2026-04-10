@@ -298,7 +298,7 @@
     "upgrades.golden_goose.name": "Golden goose",
     "upgrades.golden_goose.tooltip": "Coins teleport to the ball after hitting a brick",
     "upgrades.golden_goose.verbose_description": "Whenever a coin hits a brick, teleport that coin to the nearest ball. At level two, coins teleport after hitting a side too.",
-    "upgrades.gravity_falls.name": "Gravity Falls ",
+    "upgrades.gravity_falls.name": "Gravity Falls",
     "upgrades.gravity_falls.tooltip": "Balls that touch the top get gravity",
     "upgrades.gravity_falls.verbose_description": "",
     "upgrades.happy_family.name": "Happy family",

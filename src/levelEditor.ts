@@ -291,22 +291,19 @@ export async function editRawLevelList(nth: number, color = "") {
       const confirm = await asyncAlert({
         title: t("editor.editing.delete_confirm"),
 
-
-
-        content:[
-          `<div class="full-width-icon">${levelIconHTML(transformRawLevel(level).bricks, level.size,350)}</div>`,
-           {
+        content: [
+          `<div class="full-width-icon">${levelIconHTML(transformRawLevel(level).bricks, level.size, 350)}</div>`,
+          {
             text: t("editor.editing.delete_yes"),
             value: true,
           },
-           {
+          {
             text: t("editor.editing.delete_no"),
             value: false,
           },
-
-        ]
-      })
-      if(confirm) {
+        ],
+      });
+      if (confirm) {
         rawList = rawList.filter((l, li) => li !== nth);
         setSettingValue("custom_levels", rawList);
         openLevelEditorLevelsList();

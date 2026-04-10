@@ -356,12 +356,19 @@ export function render(gameState: GameState) {
   startWork("render:texts");
   ctx.globalCompositeOperation = "screen";
   forEachLiveOne(gameState.texts, (flash) => {
-    const { x, y, vx,vy, time, color, size, duration } = flash;
+    const { x, y, vx, vy, time, color, size, duration } = flash;
     const elapsed = gameState.levelTime - time;
-    const elapsedFrames=elapsed /60
+    const elapsedFrames = elapsed / 60;
     ctx.globalAlpha = Math.max(0, Math.min(1, 2 - (elapsed / duration) * 2));
     ctx.globalCompositeOperation = "source-over";
-    drawText(ctx, flash.text, color, size, x+ elapsedFrames *vx, y + elapsedFrames *vy);
+    drawText(
+      ctx,
+      flash.text,
+      color,
+      size,
+      x + elapsedFrames * vx,
+      y + elapsedFrames * vy,
+    );
   });
 
   startWork("render:particles");

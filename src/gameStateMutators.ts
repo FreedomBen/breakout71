@@ -33,14 +33,22 @@ import {
   zoneLeftBorderX,
   zoneRightBorderX,
 } from "./game_utils";
-import {t} from "./i18n/i18n";
+import { t } from "./i18n/i18n";
 
-import {getCurrentMaxCoins, getCurrentMaxParticles} from "./settings";
-import {background} from "./render";
-import {gameOver} from "./gameOver";
-import {brickIndex, fitSize, gameState, hasBrick, hitsSomething, pause, startComputerControlledGame,} from "./game";
-import {stopRecording} from "./recording";
-import {getPixelRatio, isOptionOn} from "./options";
+import { getCurrentMaxCoins, getCurrentMaxParticles } from "./settings";
+import { background } from "./render";
+import { gameOver } from "./gameOver";
+import {
+  brickIndex,
+  fitSize,
+  gameState,
+  hasBrick,
+  hitsSomething,
+  pause,
+  startComputerControlledGame,
+} from "./game";
+import { stopRecording } from "./recording";
+import { getPixelRatio, isOptionOn } from "./options";
 import {
   ballTransparency,
   base_combo_from_stronger_foundation,
@@ -48,9 +56,9 @@ import {
   coinsBoostedCombo,
   comboKeepingRate,
 } from "./pure_functions";
-import {addToTotalScore} from "./addToTotalScore";
-import {hashCode} from "./getLevelBackground";
-import {openUpgradesPicker} from "./openUpgradesPicker";
+import { addToTotalScore } from "./addToTotalScore";
+import { hashCode } from "./getLevelBackground";
+import { openUpgradesPicker } from "./openUpgradesPicker";
 
 export function setMousePos(gameState: GameState, x: number) {
   if (gameState.startParams.computer_controlled) return;
@@ -77,7 +85,7 @@ function computerControl(gameState: GameState) {
   if (!ball) return;
   const puckOffset =
     (((hashCode(gameState.runStatistics.puck_bounces + "goeirjgoriejg") % 100) -
-        50) /
+      50) /
       100) *
     gameState.puckWidth;
 
@@ -185,18 +193,18 @@ export function normalizeGameState(gameState: GameState) {
   gameState.baseSpeed = Math.max(
     3 * getPixelRatio(),
     gameState.gameZoneWidth / 12 / 10 +
-    gameState.currentLevel / 3 / (1 + gameState.perks.chill * 10) +
-    gameState.levelTime / (30 * 1000) -
-    gameState.perks.slow_down * 2,
+      gameState.currentLevel / 3 / (1 + gameState.perks.chill * 10) +
+      gameState.levelTime / (30 * 1000) -
+      gameState.perks.slow_down * 2,
   );
 
   gameState.puckWidth = Math.max(
     gameState.ballSize,
     (gameState.gameZoneWidth / 12) *
-    Math.min(
-      12,
-      3 - gameState.perks.smaller_puck + gameState.perks.bigger_puck,
-    ),
+      Math.min(
+        12,
+        3 - gameState.perks.smaller_puck + gameState.perks.bigger_puck,
+      ),
   );
 
   const corner = getCornerOffset(gameState);
@@ -211,10 +219,14 @@ export function normalizeGameState(gameState: GameState) {
 
   gameState.puckPosition = clamp(gameState.puckPosition, minX, maxX);
 
-  if (gameState.perks.flyswatter && gameState.puckPosition === minX && gameState.running) {
-    gameState.balls.forEach(ball => {
-      applyGravity(ball)
-    })
+  if (
+    gameState.perks.flyswatter &&
+    gameState.puckPosition === minX &&
+    gameState.running
+  ) {
+    gameState.balls.forEach((ball) => {
+      applyGravity(ball);
+    });
   }
 
   if (gameState.ballStickToPuck) {
@@ -233,7 +245,12 @@ export function baseCombo(gameState: GameState) {
   return base_combo_from_stronger_foundation(gameState.perks.base_combo);
 }
 
-export function resetCombo(gameState: GameState, x: number, y: number, speedReference:Ball|Coin|undefined=undefined) {
+export function resetCombo(
+  gameState: GameState,
+  x: number,
+  y: number,
+  speedReference: Ball | Coin | undefined = undefined,
+) {
   const prev = gameState.combo;
   gameState.combo = baseCombo(gameState);
   // skip combo reset when no brick on screen
@@ -274,8 +291,8 @@ export function resetCombo(gameState: GameState, x: number, y: number, speedRefe
         "-" + lost,
         20,
         500 + clamp(lost, 0, 500),
-        speedReference?.vx??0,
-        speedReference?.vy??-6,
+        speedReference?.vx ?? 0,
+        speedReference?.vy ?? -6,
       );
     }
   }
@@ -287,7 +304,7 @@ export function offsetCombo(
   by: number,
   x: number,
   y: number,
-  speedReference:Ball|Coin|undefined=undefined
+  speedReference: Ball | Coin | undefined = undefined,
 ) {
   if (!by) return;
   if (by > 0) {
@@ -301,9 +318,17 @@ export function offsetCombo(
 
     if (lost) {
       schedulGameSound(gameState, "comboDecrease", x, 1);
-      makeText(gameState, x, y, "#FF0000", "-" + lost, 20, 400 + lost,
-        speedReference?.vx??0,
-        speedReference?.vy??-6);
+      makeText(
+        gameState,
+        x,
+        y,
+        "#FF0000",
+        "-" + lost,
+        20,
+        400 + lost,
+        speedReference?.vx ?? 0,
+        speedReference?.vy ?? -6,
+      );
     }
   }
 }
@@ -504,7 +529,7 @@ export function explodeBrick(
     while (coinsToSpawn > 0) {
       const points = Math.min(pointsPerCoin, coinsToSpawn);
       if (points < 0 || isNaN(points)) {
-        console.error({points});
+        console.error({ points });
         debugger;
       }
 
@@ -608,7 +633,7 @@ export function explodeBrick(
     }
 
     if (resetComboNeeeded) {
-      resetCombo(gameState, ball.x, ball.y,ball);
+      resetCombo(gameState, ball.x, ball.y, ball);
     } else {
       offsetCombo(gameState, comboGain, ball.x, ball.y, ball);
     }
@@ -664,8 +689,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
     gameState.highScore = gameState.score;
     try {
       localStorage.setItem("breakout-3-hs-short", gameState.score.toString());
-    } catch (e) {
-    }
+    } catch (e) {}
   }
   if (!isOptionOn("basic")) {
     makeParticle(
@@ -689,7 +713,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
       -gameState.perks.asceticism * 3 * coin.points,
       coin.x,
       coin.y,
-      coin
+      coin,
     );
   }
 }
@@ -735,7 +759,7 @@ export async function setLevel(gameState: GameState, l: number) {
       Math.max(
         0,
         (finalCombo - gameState.combo) *
-        comboKeepingRate(gameState.perks.shunt),
+          comboKeepingRate(gameState.perks.shunt),
       ),
     );
   }
@@ -900,7 +924,7 @@ export function attract(gameState: GameState, a: Ball, b: Ball, power: number) {
 export function coinBrickHitCheck(gameState: GameState, coin: Coin) {
   // Make ball/coin bonce, and return bricks that were hit
   const radius = coin.size / 2;
-  const {x, y, previousX, previousY} = coin;
+  const { x, y, previousX, previousY } = coin;
 
   const vhit = hitsSomething(previousX, y, radius);
   const hhit = hitsSomething(x, previousY, radius);
@@ -957,7 +981,7 @@ export function bordersHitCheck(
   if (gameState.perks.wind) {
     coin.vx +=
       ((gameState.puckPosition -
-          (gameState.offsetX + gameState.gameZoneWidth / 2)) /
+        (gameState.offsetX + gameState.gameZoneWidth / 2)) /
         gameState.gameZoneWidth) *
       gameState.perks.wind *
       0.5;
@@ -1022,7 +1046,7 @@ export function gameStateTick(
     gameState.perks.addiction &&
     gameState.lastBrickBroken &&
     gameState.lastBrickBroken <
-    gameState.levelTime - 5000 / gameState.perks.addiction
+      gameState.levelTime - 5000 / gameState.perks.addiction
   ) {
     resetCombo(
       gameState,
@@ -1194,10 +1218,10 @@ export function gameStateTick(
       const ratio =
         1 -
         ((gameState.perks.viscosity * 0.03 +
-            0.002 +
-            (coin.y > gameState.gameZoneHeight ? 0.2 : 0)) *
+          0.002 +
+          (coin.y > gameState.gameZoneHeight ? 0.2 : 0)) *
           frames) /
-        (1 + gameState.perks.etherealcoins);
+          (1 + gameState.perks.etherealcoins);
 
       if (!gameState.perks.etherealcoins) {
         coin.vy *= ratio;
@@ -1223,7 +1247,7 @@ export function gameStateTick(
       const flip =
         gameState.perks.helium > 0 &&
         Math.abs(coin.x - gameState.puckPosition) * 2 >
-        gameState.puckWidth + coin.size;
+          gameState.puckWidth + coin.size;
       let dvy =
         frames *
         coin.weight *
@@ -1338,10 +1362,10 @@ export function gameStateTick(
         coin.y > gameState.gameZoneHeight - coinRadius - gameState.puckHeight &&
         coin.y < gameState.gameZoneHeight + gameState.puckHeight + coin.vy &&
         Math.abs(coin.x - gameState.puckPosition) <
-        coinRadius +
-        gameState.puckWidth / 2 +
-        // a bit of margin to be nice , negative in case it's a negative coin
-        gameState.puckHeight * (coin.points ? 1 : -1) &&
+          coinRadius +
+            gameState.puckWidth / 2 +
+            // a bit of margin to be nice , negative in case it's a negative coin
+            gameState.puckHeight * (coin.points ? 1 : -1) &&
         !isMovingWhilePassiveIncome(gameState)
       ) {
         addToScore(gameState, coin);
@@ -1362,7 +1386,7 @@ export function gameStateTick(
         if (
           gameState.combo < gameState.perks.fountain_toss * 30 &&
           Math.random() / coin.points <
-          (1 / gameState.combo) * gameState.perks.fountain_toss
+            (1 / gameState.combo) * gameState.perks.fountain_toss
         ) {
           offsetCombo(gameState, 1, coin.x, coin.y, coin);
         }
@@ -1476,19 +1500,19 @@ export function gameStateTick(
             let x = (a.x + b.x) / 2;
             let y = (a.y + b.y) / 2;
             // space out the balls with extra speed
-              const limit = (gameState.baseSpeed * gameState.perks.shocks) / 2;
-              a.vx +=
-                clamp(a.x - x, -limit, limit) +
-                ((Math.random() - 0.5) * limit) / 3;
-              a.vy +=
-                clamp(a.y - y, -limit, limit) +
-                ((Math.random() - 0.5) * limit) / 3;
-              b.vx +=
-                clamp(b.x - x, -limit, limit) +
-                ((Math.random() - 0.5) * limit) / 3;
-              b.vy +=
-                clamp(b.y - y, -limit, limit) +
-                ((Math.random() - 0.5) * limit) / 3;
+            const limit = (gameState.baseSpeed * gameState.perks.shocks) / 2;
+            a.vx +=
+              clamp(a.x - x, -limit, limit) +
+              ((Math.random() - 0.5) * limit) / 3;
+            a.vy +=
+              clamp(a.y - y, -limit, limit) +
+              ((Math.random() - 0.5) * limit) / 3;
+            b.vx +=
+              clamp(b.x - x, -limit, limit) +
+              ((Math.random() - 0.5) * limit) / 3;
+            b.vy +=
+              clamp(b.y - y, -limit, limit) +
+              ((Math.random() - 0.5) * limit) / 3;
 
             let index = brickIndex(x, y);
             explosionAt(
@@ -1515,7 +1539,7 @@ export function gameStateTick(
           makeParticle(
             gameState,
             gameState.offsetXRoundedDown +
-            Math.random() * gameState.gameZoneWidthRoundedUp,
+              Math.random() * gameState.gameZoneWidthRoundedUp,
             Math.random() * gameState.gameZoneHeight,
             windD * 8,
             0,
@@ -1550,7 +1574,7 @@ export function gameStateTick(
       makeParticle(
         gameState,
         gameState.offsetXRoundedDown +
-        Math.random() * gameState.gameZoneWidthRoundedUp,
+          Math.random() * gameState.gameZoneWidthRoundedUp,
         0,
         (Math.random() - 0.5) * 10,
         5,
@@ -1600,7 +1624,7 @@ export function gameStateTick(
       } while (
         Math.abs(x - gameState.puckPosition) < gameState.puckWidth / 2 &&
         attemps < 10
-        );
+      );
 
       makeParticle(
         gameState,
@@ -1676,7 +1700,7 @@ export function gameStateTick(
       setBrick(gameState, r.index, r.color);
       destroy(gameState.respawns, ri);
     } else {
-      const {index, color} = r;
+      const { index, color } = r;
       const vertical = Math.random() > 0.5;
       const dx = Math.random() > 0.5 ? 1 : -1;
       const dy = Math.random() > 0.5 ? 1 : -1;
@@ -1759,8 +1783,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     );
   }
   if (ball.hasGravity) {
-    speedLimitDampener += 3
-    ball.vy += 0.3 * frames
+    speedLimitDampener += 3;
+    ball.vy += 0.3 * frames;
   }
 
   if (
@@ -1798,8 +1822,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   if (
     gameState.perks.puck_repulse_ball &&
     Math.abs(ball.x - gameState.puckPosition) <
-    gameState.puckWidth / 2 +
-    (gameState.ballSize * (9 + gameState.perks.puck_repulse_ball)) / 10
+      gameState.puckWidth / 2 +
+        (gameState.ballSize * (9 + gameState.perks.puck_repulse_ball)) / 10
   ) {
     repulse(
       gameState,
@@ -1821,7 +1845,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
         ((((delta / gameState.gameZoneWidth) * Math.PI) / 2) *
           gameState.perks.steering *
           frames) /
-        2;
+          2;
       const d = Math.sqrt(ball.vy * ball.vy + ball.vx * ball.vx);
       ball.vy = Math.sin(angle) * d;
       ball.vx = Math.cos(angle) * d;
@@ -1931,7 +1955,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       resetCombo(gameState, ball.x, ball.y, ball);
     }
     if (gameState.perks.gravity_falls && borderHitCode >= 2) {
-      applyGravity(ball)
+      applyGravity(ball);
     }
 
     if (gameState.perks.trampoline) {
@@ -1948,16 +1972,16 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     gameState.gameZoneHeight - gameState.puckHeight - gameState.ballSize / 2;
   const ballIsUnderPuck =
     Math.abs(ball.x - gameState.puckPosition) <
-    gameState.ballSize / 2 + gameState.puckWidth / 2 &&
+      gameState.ballSize / 2 + gameState.puckWidth / 2 &&
     !isMovingWhilePassiveIncome(gameState);
   if (ball.y > ylimit && ball.vy > 0 && ballIsUnderPuck) {
     const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
     const angle = Math.atan2(
       -gameState.puckWidth / 2,
       (ball.x - gameState.puckPosition) *
-      (gameState.perks.concave_puck
-        ? -1 / (1 + gameState.perks.concave_puck)
-        : 1),
+        (gameState.perks.concave_puck
+          ? -1 / (1 + gameState.perks.concave_puck)
+          : 1),
     );
     ball.vx = speed * Math.cos(angle);
     ball.vy = speed * Math.sin(angle);
@@ -1970,7 +1994,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     offsetCombo(
       gameState,
       gameState.perks.trampoline +
-      gameState.perks.happy_family * Math.max(0, gameState.balls.length - 1),
+        gameState.perks.happy_family * Math.max(0, gameState.balls.length - 1),
       ball.x,
       ball.y,
       ball,
@@ -2096,7 +2120,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   }
   const radius = gameState.ballSize / 2;
   // Make ball/coin bonce, and return bricks that were hit
-  const {x, y, previousX, previousY} = ball;
+  const { x, y, previousX, previousY } = ball;
 
   const vhit = hitsSomething(previousX, y, radius);
   const hhit = hitsSomething(x, previousY, radius);
@@ -2169,7 +2193,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
         gameState,
         brickCenterX(gameState, hitBrick),
         brickCenterY(gameState, hitBrick),
-        initialBrickColor === "#FFFFFF"?"#999999":"#FFFFFF",
+        initialBrickColor === "#FFFFFF" ? "#999999" : "#FFFFFF",
         gameState.brickWidth + 2,
         50 * gameState.brickHP[hitBrick],
       );
@@ -2321,8 +2345,8 @@ function makeText(
   text: string,
   size = 20,
   duration = 500,
-  vx:number=0,
-  vy:number=-6,
+  vx: number = 0,
+  vy: number = -6,
 ) {
   append(gameState.texts, (p: Partial<TextFlash>) => {
     p.time = gameState.levelTime;
@@ -2332,8 +2356,8 @@ function makeText(
       40,
       gameState.gameZoneHeight - gameState.puckHeight - gameState.ballSize,
     );
-    p.vx=vx
-    p.vy=vy
+    p.vx = vx;
+    p.vy = vy;
     p.color = color;
     p.size = size * getPixelRatio();
     p.duration = clamp(duration, 400, 2000);
@@ -2367,7 +2391,7 @@ export function append<T>(
     where.list[where.indexMin] &&
     !where.list[where.indexMin].destroyed &&
     where.indexMin < where.list.length
-    ) {
+  ) {
     where.indexMin++;
   }
   if (where.indexMin < where.list.length) {
@@ -2375,7 +2399,7 @@ export function append<T>(
     makeItem(where.list[where.indexMin]);
     where.indexMin++;
   } else {
-    const p = {destroyed: false};
+    const p = { destroyed: false };
     makeItem(p);
     where.list.push(p);
   }
@@ -2391,17 +2415,16 @@ export function destroy<T>(where: ReusableArray<T>, index: number) {
 
 function applyGravity(ball: Ball) {
   if (!ball.hasGravity && !ball.destroyed) {
-    ball.hasGravity = true
+    ball.hasGravity = true;
     makeText(
       gameState,
       ball.x,
       ball.y - gameState.ballSize,
       "#FFFFFF",
-      t('play.gravity'),
+      t("play.gravity"),
       20,
-      500
+      500,
     );
-
   }
 }
 

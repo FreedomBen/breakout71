@@ -228,22 +228,26 @@ export function getHistograms(gameState: GameState) {
       if (binsCount < 3) return "";
       const bins = [] as number[];
       const binsValues = [] as number[][];
-      let useLogScale=max-min>100
+      let useLogScale = max - min > 100;
       for (let i = 0; i < binsCount; i++) {
         bins.push(0);
         binsValues.push([]);
       }
 
       const binIndexOf = (v: number) => {
-        const delta= useLogScale ? Math.log(v - min) : v - min
-        const binSize =  (useLogScale ? Math.log(max - min) : max - min ) / binsCount;
-        return Math.max(0,Math.min(bins.length - 1, Math.floor(delta / binSize)));
-      }
+        const delta = useLogScale ? Math.log(v - min) : v - min;
+        const binSize =
+          (useLogScale ? Math.log(max - min) : max - min) / binsCount;
+        return Math.max(
+          0,
+          Math.min(bins.length - 1, Math.floor(delta / binSize)),
+        );
+      };
       values.forEach((v) => {
         if (isNaN(v)) return;
         const index = binIndexOf(v);
         bins[index]++;
-        binsValues[index].push(v) ;
+        binsValues[index].push(v);
       });
       if (bins.filter((b) => b).length < 3) return "";
       const maxBin = Math.max(...bins);
@@ -253,12 +257,13 @@ export function getHistograms(gameState: GameState) {
       const bars = bins
         .map((v, vi) => {
           const style = `height: ${(v / maxBin) * 80}px`;
-          const min=Math.min(...binsValues[vi])
-          const max=Math.max(...binsValues[vi])
-          const between = min!==max?`between ${min} and ${max}`:`at ${min}`
-          const title=`${v} run${v > 1 ? "s" : ""} ${between} ${unit}`
+          const min = Math.min(...binsValues[vi]);
+          const max = Math.max(...binsValues[vi]);
+          const between =
+            min !== max ? `between ${min} and ${max}` : `at ${min}`;
+          const title = `${v} run${v > 1 ? "s" : ""} ${between} ${unit}`;
           return `<span class="${vi === activeBin ? "active" : ""}"><span style="${style}" title="${title}"
-              ><span>${(!v && " ") || (vi == activeBin && lastValue + unit) || Math.round(binsValues[vi].reduce((a,b)=>a+b,0) / v) + unit}</span></span></span>`;
+              ><span>${(!v && " ") || (vi == activeBin && lastValue + unit) || Math.round(binsValues[vi].reduce((a, b) => a + b, 0) / v) + unit}</span></span></span>`;
         })
         .join("");
 

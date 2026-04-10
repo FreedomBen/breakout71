@@ -95,7 +95,7 @@ export type Ball = {
   vy: number;
   previousVX: number;
   previousVY: number;
-  hasGravity:boolean;
+  hasGravity: boolean;
   // sx: number;
   // sy: number;
   // Ability to pierce N HP
