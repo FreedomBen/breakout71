@@ -1483,7 +1483,7 @@ export function gameStateTick(
               b.vy +=
                 clamp(b.y - y, -limit, limit) +
                 ((Math.random() - 0.5) * limit) / 3;
-              
+
             let index = brickIndex(x, y);
             explosionAt(
               gameState,
