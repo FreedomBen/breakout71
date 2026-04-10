@@ -17,9 +17,9 @@ export const noCreative: PerkId[] = [
 export const categories = {
   beginner: 1,
   combo: 2,
-  combo_boost: 2.5,
-  simple: 3,
-  advanced: 4,
+  combo_boost: 3,
+  simple: 4,
+  advanced: 5,
 };
 
 export const rawUpgrades = [
