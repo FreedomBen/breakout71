@@ -134,6 +134,8 @@ interface ParticleFlash extends BaseFlash {
 interface TextFlash extends BaseFlash {
   // type: "text";
   text: string;
+  vx: number;
+  vy: number;
 }
 
 interface LightFlash extends BaseFlash {

@@ -233,7 +233,7 @@ export function baseCombo(gameState: GameState) {
   return base_combo_from_stronger_foundation(gameState.perks.base_combo);
 }
 
-export function resetCombo(gameState: GameState, x: number, y: number) {
+export function resetCombo(gameState: GameState, x: number, y: number, speedReference:Ball|Coin|undefined=undefined) {
   const prev = gameState.combo;
   gameState.combo = baseCombo(gameState);
   // skip combo reset when no brick on screen
@@ -274,6 +274,8 @@ export function resetCombo(gameState: GameState, x: number, y: number) {
         "-" + lost,
         20,
         500 + clamp(lost, 0, 500),
+        speedReference?.vx??0,
+        speedReference?.vy??-6,
       );
     }
   }
@@ -285,6 +287,7 @@ export function offsetCombo(
   by: number,
   x: number,
   y: number,
+  speedReference:Ball|Coin|undefined=undefined
 ) {
   if (!by) return;
   if (by > 0) {
@@ -298,7 +301,9 @@ export function offsetCombo(
 
     if (lost) {
       schedulGameSound(gameState, "comboDecrease", x, 1);
-      makeText(gameState, x, y, "#FF0000", "-" + lost, 20, 400 + lost);
+      makeText(gameState, x, y, "#FF0000", "-" + lost, 20, 400 + lost,
+        speedReference?.vx??0,
+        speedReference?.vy??-6);
     }
   }
 }
@@ -448,7 +453,7 @@ export function explosionAt(
 
   if (gameState.perks.zen) {
     gameState.lastZenComboIncrease = gameState.levelTime;
-    resetCombo(gameState, x, y);
+    resetCombo(gameState, x, y, ball);
   }
 }
 
@@ -603,9 +608,9 @@ export function explodeBrick(
     }
 
     if (resetComboNeeeded) {
-      resetCombo(gameState, ball.x, ball.y);
+      resetCombo(gameState, ball.x, ball.y,ball);
     } else {
-      offsetCombo(gameState, comboGain, ball.x, ball.y);
+      offsetCombo(gameState, comboGain, ball.x, ball.y, ball);
     }
     // Particle effect
     spawnParticlesExplosion(
@@ -684,6 +689,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
       -gameState.perks.asceticism * 3 * coin.points,
       coin.x,
       coin.y,
+      coin
     );
   }
 }
@@ -1350,7 +1356,7 @@ export function gameStateTick(
         destroy(gameState.coins, coinIndex);
         if (gameState.perks.compound_interest && gameState.perks.buoy) {
           // If you have buoy, we wait a bit more before declaring a coin "lost"
-          resetCombo(gameState, coin.x, coin.y);
+          resetCombo(gameState, coin.x, coin.y, coin);
         }
 
         if (
@@ -1358,7 +1364,7 @@ export function gameStateTick(
           Math.random() / coin.points <
           (1 / gameState.combo) * gameState.perks.fountain_toss
         ) {
-          offsetCombo(gameState, 1, coin.x, coin.y);
+          offsetCombo(gameState, 1, coin.x, coin.y, coin);
         }
       } else if (
         gameState.perks.compound_interest &&
@@ -1371,7 +1377,7 @@ export function gameStateTick(
       ) {
         // Prematurely reset combo as soon as coin is missed
         // If you don't have buoy, we directly declare the coin "lost" to make it clear
-        resetCombo(gameState, coin.x, coin.y);
+        resetCombo(gameState, coin.x, coin.y, coin);
       }
 
       const positionBeforeBrickBounceX = coin.x;
@@ -1709,7 +1715,7 @@ export function gameStateTick(
 function applyNBrickPerk(gameState: GameState, ball: Ball) {
   if (gameState.perks.nbricks) {
     if (ball.brokenSinceWallOrPaddleBounce > gameState.perks.nbricks * 2) {
-      resetCombo(gameState, ball.x, ball.y);
+      resetCombo(gameState, ball.x, ball.y, ball);
     }
   }
 }
@@ -1846,7 +1852,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.sidesHitsSinceBounce++;
     ball.brokenSinceWallOrPaddleBounce = 0;
     if (ball.sidesHitsSinceBounce <= gameState.perks.three_cushion * 3) {
-      offsetCombo(gameState, 1, ball.x, ball.y);
+      offsetCombo(gameState, 1, ball.x, ball.y, ball);
     }
     if (
       gameState.perks.wrap_left &&
@@ -1909,7 +1915,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       // x might be moved by wrap, so we rely on previousX
       ball.previousX < gameState.offsetX + gameState.gameZoneWidth / 2
     ) {
-      resetCombo(gameState, ball.x, ball.y);
+      resetCombo(gameState, ball.x, ball.y, ball);
     }
 
     if (
@@ -1918,18 +1924,18 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       // x might be moved by wrap, so we rely on previousX
       ball.previousX > gameState.offsetX + gameState.gameZoneWidth / 2
     ) {
-      resetCombo(gameState, ball.x, ball.y);
+      resetCombo(gameState, ball.x, ball.y, ball);
     }
 
     if (gameState.perks.top_is_lava && borderHitCode >= 2) {
-      resetCombo(gameState, ball.x, ball.y);
+      resetCombo(gameState, ball.x, ball.y, ball);
     }
     if (gameState.perks.gravity_falls && borderHitCode >= 2) {
       applyGravity(ball)
     }
 
     if (gameState.perks.trampoline) {
-      offsetCombo(gameState, -gameState.perks.trampoline, ball.x, ball.y);
+      offsetCombo(gameState, -gameState.perks.trampoline, ball.x, ball.y, ball);
     }
 
     schedulGameSound(gameState, "wallBeep", ball.x, 1);
@@ -1958,7 +1964,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     schedulGameSound(gameState, "wallBeep", ball.x, 1);
 
     if (gameState.perks.streak_shots) {
-      resetCombo(gameState, ball.x, ball.y);
+      resetCombo(gameState, ball.x, ball.y, ball);
     }
 
     offsetCombo(
@@ -1967,6 +1973,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       gameState.perks.happy_family * Math.max(0, gameState.balls.length - 1),
       ball.x,
       ball.y,
+      ball,
     );
 
     if (
@@ -1984,11 +1991,13 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
           t("play.forgiven"),
           gameState.puckHeight,
           500,
+          ball.vx,
+          ball.vy,
         );
       } else {
         gameState.levelMisses++;
         gameState.runStatistics.misses++;
-        resetCombo(gameState, ball.x, ball.y);
+        resetCombo(gameState, ball.x, ball.y, ball);
         makeText(
           gameState,
           gameState.puckPosition,
@@ -1997,6 +2006,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
           t("play.missed_ball"),
           gameState.puckHeight,
           500,
+          ball.vx,
+          ball.vy,
         );
       }
     }
@@ -2046,7 +2057,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.destroyed = true;
     gameState.runStatistics.balls_lost++;
     if (gameState.perks.happy_family) {
-      resetCombo(gameState, ball.x, ball.y);
+      resetCombo(gameState, ball.x, ball.y, ball);
     }
     if (gameState.perks.thomas) {
       gameState.level.bricks.forEach((brick, index) => {
@@ -2102,7 +2113,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.hitSinceBounce++;
 
     if (!ball.sidesHitsSinceBounce && gameState.perks.three_cushion) {
-      resetCombo(gameState, ball.x, ball.y);
+      resetCombo(gameState, ball.x, ball.y, ball);
     }
 
     let pierce = false;
@@ -2310,6 +2321,8 @@ function makeText(
   text: string,
   size = 20,
   duration = 500,
+  vx:number=0,
+  vy:number=-6,
 ) {
   append(gameState.texts, (p: Partial<TextFlash>) => {
     p.time = gameState.levelTime;
@@ -2319,6 +2332,8 @@ function makeText(
       40,
       gameState.gameZoneHeight - gameState.puckHeight - gameState.ballSize,
     );
+    p.vx=vx
+    p.vy=vy
     p.color = color;
     p.size = size * getPixelRatio();
     p.duration = clamp(duration, 400, 2000);
