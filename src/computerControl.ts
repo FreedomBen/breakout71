@@ -1,12 +1,12 @@
-import {GameState} from "./types";
-import {getClosestBall} from "./game_utils";
-import {hashCode} from "./getLevelBackground";
-import {clamp} from "./pure_functions";
-import {startComputerControlledGame} from "./game";
-import {forEachLiveOne} from "./gameStateMutators";
+import { GameState } from "./types";
+import { getClosestBall } from "./game_utils";
+import { hashCode } from "./getLevelBackground";
+import { clamp } from "./pure_functions";
+import { startComputerControlledGame } from "./game";
+import { forEachLiveOne } from "./gameStateMutators";
 
 export function computerControl(gameState: GameState) {
-  let speed=1
+  let speed = 1;
   let targetX = gameState.puckPosition;
   const ball = getClosestBall(
     gameState,
@@ -15,31 +15,41 @@ export function computerControl(gameState: GameState) {
   );
   if (!ball) return;
 
+  const rng = Math.abs(
+    hashCode(
+      gameState.runStatistics.puck_bounces + "random_seed_string_5666548541",
+    ) % 100,
+  );
+  let puckOffset = ((rng - 50) / 100) * gameState.puckWidth;
 
-  const rng=Math.abs(hashCode(gameState.runStatistics.puck_bounces + "random_seed_string_5666548541") % 100)
-  let puckOffset =
-    ((rng - 50) / 100) *
-    gameState.puckWidth;
+  if (
+    gameState.perks.left_is_lava ||
+    gameState.perks.side_kick ||
+    gameState.perks.wrap_right
+  ) {
+    puckOffset = -gameState.puckWidth / 2.2;
+  }
+  if (
+    gameState.perks.right_is_lava ||
+    gameState.perks.side_flip ||
+    gameState.perks.wrap_left
+  ) {
+    puckOffset = gameState.puckWidth / 2.2;
+  }
+  if (gameState.perks.nbricks) {
+    puckOffset *= 0.1;
+  }
+  if (gameState.perks.three_cushion) {
+    puckOffset = (gameState.puckWidth / 2.2) * (rng > 50 ? 1 : -1);
+  }
 
-  if(gameState.perks.left_is_lava || gameState.perks.side_kick|| gameState.perks.wrap_right){
-    puckOffset=-gameState.puckWidth/2.2
-  }
-  if(gameState.perks.right_is_lava|| gameState.perks.side_flip || gameState.perks.wrap_left){
-    puckOffset=gameState.puckWidth/2.2
-  }
-  if(gameState.perks.nbricks){
-    puckOffset*=0.1
-  }
-  if(gameState.perks.three_cushion){
-      puckOffset=gameState.puckWidth/2.2 * (rng>50?1:-1)
-  }
+  const ballGettingCloser =
+    ball.y > gameState.gameZoneHeight / 2 && ball.vy > 0;
 
-  const ballGettingCloser=ball.y > gameState.gameZoneHeight / 2 && ball.vy > 0
-
-  if (gameState.perks.superhot ||ballGettingCloser) {
+  if (gameState.perks.superhot || ballGettingCloser) {
     targetX = ball.x + puckOffset;
-    if(gameState.perks.extra_life)  speed=-1
-    if(gameState.perks.yoyo) speed=0.5
+    if (gameState.perks.extra_life) speed = -1;
+    if (gameState.perks.yoyo) speed = 0.5;
   } else {
     let coinsTotalX = 0,
       coinsCount = 0;
@@ -51,19 +61,23 @@ export function computerControl(gameState: GameState) {
     });
     if (coinsCount) {
       targetX = coinsTotalX / coinsCount;
-      if(gameState.perks.asceticism || gameState.perks.fountain_toss || gameState.perks.buoy) speed=-1
+      if (
+        gameState.perks.asceticism ||
+        gameState.perks.fountain_toss ||
+        gameState.perks.buoy
+      )
+        speed = -1;
     } else {
       targetX = gameState.canvasWidth / 2;
     }
   }
 
-
-  gameState.puckPosition += clamp(
-    (targetX - gameState.puckPosition) / 5,
-    -10,
-    10,
-  ) * speed;
-  if (gameState.levelTime > 30000 && gameState.startParams.computer_controlled) {
+  gameState.puckPosition +=
+    clamp((targetX - gameState.puckPosition) / 5, -10, 10) * speed;
+  if (
+    gameState.levelTime > 30000 &&
+    gameState.startParams.computer_controlled
+  ) {
     startComputerControlledGame(gameState.startParams.stress);
   }
 }

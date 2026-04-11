@@ -118,8 +118,15 @@ export async function editRawLevelList(nth: number, color = "") {
       .join("") +
     "</div>";
 
+  const next = rawList[nth + 1];
+  const previous = rawList[nth - 1];
+
   const clicked = await asyncAlert<string | null>({
-    title: t("editor.editing.title", { name: level.name }),
+    title: `<span class="perk-title">
+    <button ${previous ? 'data-resolve-to="previous"' : "disabled"} data-tooltip="${t("unlocks.previous")}">‹ </button>
+    <span>${level.name}</span>
+    <button ${next ? 'data-resolve-to="next"' : "disabled"} data-tooltip="${t("unlocks.next")}">  ›</button></span> 
+    `,
     content: [
       t("editor.editing.color"),
       colorList,
@@ -310,6 +317,11 @@ export async function editRawLevelList(nth: number, color = "") {
         return;
       }
     }
+
+    if (action == "next" && next)
+      return editRawLevelList(rawList.indexOf(next));
+    if (action == "previous" && previous)
+      return editRawLevelList(rawList.indexOf(previous));
   }
 
   level.color = automaticBackgroundColor(bricks);

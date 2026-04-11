@@ -35,7 +35,7 @@ export function getWorstFPSAndReset() {
   return result;
 }
 
-export function startWork(what:string) {
+export function startWork(what: string) {
   if (!mainGameState.startParams.stress) return;
   const newNow = performance.now();
   if (doing) {

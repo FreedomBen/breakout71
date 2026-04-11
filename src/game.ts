@@ -16,7 +16,6 @@ import {
   brickCenterX,
   brickCenterY,
   currentLevelInfo,
-  describeLevel,
   getRowColIndex,
   highScoreText,
   hoursSpentPlaying,
@@ -61,21 +60,20 @@ import {
   closeModal,
 } from "./asyncAlert";
 import { getPixelRatio, isOptionOn, options, toggleOption } from "./options";
-import { clamp, miniMarkDown } from "./pure_functions";
+import { clamp } from "./pure_functions";
 import { helpMenuEntry } from "./help";
 import { creativeMode } from "./creative";
 import { hideAnyTooltip, setupTooltips } from "./tooltip";
 import "./migrations";
-import { getHistory } from "./gameOver";
 import { generateSaveFileContent } from "./generateSaveFileContent";
 import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
 import { openScorePanel } from "./openScorePanel";
 import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
 import { levelEditorMenuEntry } from "./levelEditor";
-import { reasonLevelIsLocked } from "./get_level_unlock_condition";
 import { frameStarted, getWorstFPSAndReset, startWork } from "./fps";
 import { openUnlockedUpgradesList } from "./openUnlockedUpgradesList";
 import { getCheckboxIcon, getIcon } from "./levelIcon";
+import { openLevelDetails } from "./openLevelDetails";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
@@ -136,7 +134,7 @@ export function pause(playerAskedForPause: boolean) {
 
 export const fitSize = (gameState: GameState) => {
   if (!gameState) throw new Error("Missign game state");
-  if(gameState.startParams.animated_perk_preview) return
+  if (gameState.startParams.animated_perk_preview) return;
   const past_off = gameState.offsetXRoundedDown,
     past_width = gameState.gameZoneWidthRoundedUp,
     past_heigh = gameState.gameZoneHeight;
@@ -233,7 +231,10 @@ setInterval(() => {
   const width = Math.floor(window.innerWidth * getPixelRatio()),
     height = Math.floor(window.innerHeight * getPixelRatio());
 
-  if (width !== mainGameState.canvasWidth || height !== mainGameState.canvasHeight)
+  if (
+    width !== mainGameState.canvasWidth ||
+    height !== mainGameState.canvasHeight
+  )
     fitSize(mainGameState);
 }, 1000);
 
@@ -320,7 +321,7 @@ gameCanvas.addEventListener("touchmove", (e) => {
   setMousePos(mainGameState, e.touches[0].pageX * getPixelRatio());
 });
 
-export function brickIndex(gameState:GameState, x: number, y: number) {
+export function brickIndex(gameState: GameState, x: number, y: number) {
   const index = getRowColIndex(
     gameState,
     Math.floor(y / gameState.brickWidth),
@@ -335,11 +336,19 @@ export function brickIndex(gameState:GameState, x: number, y: number) {
   return index;
 }
 
-export function hasBrick(gameState:GameState, index: number): number | undefined {
+export function hasBrick(
+  gameState: GameState,
+  index: number,
+): number | undefined {
   if (gameState.bricks[index]) return index;
 }
 
-export function hitsSomething(gameState: GameState, x: number, y: number, radius: number) {
+export function hitsSomething(
+  gameState: GameState,
+  x: number,
+  y: number,
+  radius: number,
+) {
   return (
     hasBrick(gameState, brickIndex(gameState, x - radius, y - radius)) ??
     hasBrick(gameState, brickIndex(gameState, x + radius, y - radius)) ??
@@ -347,9 +356,9 @@ export function hitsSomething(gameState: GameState, x: number, y: number, radius
     hasBrick(gameState, brickIndex(gameState, x - radius, y + radius))
   );
 }
-  const ctx = gameCanvas.getContext("2d", {
+const ctx = gameCanvas.getContext("2d", {
   alpha: false,
-  }) as CanvasRenderingContext2D;
+}) as CanvasRenderingContext2D;
 
 export function tick() {
   frameStarted();
@@ -395,7 +404,7 @@ export function tick() {
 
   if (mainGameState.running || mainGameState.needsRender) {
     mainGameState.needsRender = false;
-    if(gameCanvas.width && gameCanvas.height) {
+    if (gameCanvas.width && gameCanvas.height) {
       render(mainGameState, ctx);
     }
   }
@@ -798,7 +807,7 @@ async function applyFullScreenChoice() {
   return false;
 }
 
-async function openUnlockedLevelsList() {
+export async function openUnlockedLevelsList() {
   const unlockedBefore = new Set<string>(
     getSettingValue("breakout_71_unlocked_levels", []),
   );
@@ -836,67 +845,6 @@ async function openUnlockedLevelsList() {
   if (level) {
     await openLevelDetails(level);
   }
-}
-
-export async function openLevelDetails(level: Level) {
-  const unlockedBefore = new Set<string>(
-    getSettingValue("breakout_71_unlocked_levels", []),
-  );
-
-  const isLocked = !unlockedBefore.has(level.name);
-  const lockReason = isLocked
-    ? reasonLevelIsLocked(
-        allLevels.indexOf(level),
-        level.name,
-        getHistory(),
-        true,
-      )
-    : null;
-
-  const activeLevels = allLevels
-    .filter((level) => unlockedBefore.has(level.name))
-    .filter((level) => getSettingValue("offer-level-" + level.name, true));
-
-  const allowedInGame =
-    !isLocked && getSettingValue("offer-level-" + level.name, true);
-  const allowDisabling = !allowedInGame || activeLevels?.length > 15;
-
-  const action = await asyncAlert<string>({
-    title: level.name,
-    content: [
-      `<div class="full-width-icon">${getIcon(level.name, 350)}</div>`,
-      miniMarkDown(level.credit || ""),
-      describeLevel(level),
-      lockReason ? t("unlocks.unlock_condition") + lockReason.text : "",
-      {
-        value: "run",
-        icon: getIcon("icon:new_run"),
-        text: t("unlocks.try"),
-        disabled: isLocked,
-      },
-      {
-        icon: getCheckboxIcon(allowedInGame && !isLocked),
-        value: "toggle-offer-level",
-        text: t("unlocks.include_in_level_pool"),
-        help: allowDisabling
-          ? t("unlocks.include_in_level_pool_help")
-          : t("unlocks.include_in_level_pool_locked"),
-        disabled: isLocked || !allowDisabling,
-      },
-    ],
-    allowClose: true,
-  });
-  if (!action) return openUnlockedLevelsList();
-  if (action === "run") {
-    if (await confirmRestart(mainGameState)) {
-      restart({ level } as RunParams);
-      return;
-    }
-  }
-  if (action === "toggle-offer-level") {
-    setSettingValue("offer-level-" + level.name, !allowedInGame);
-  }
-  await openLevelDetails(level);
 }
 
 export async function confirmRestart(gameState) {
@@ -997,7 +945,7 @@ document.addEventListener("keyup", async (e) => {
 });
 
 export const mainGameState = newGameState({});
-window.mainGameState=mainGameState
+window.mainGameState = mainGameState;
 
 export function restart(params: RunParams) {
   getWorstFPSAndReset();

@@ -35,7 +35,6 @@ export function addToTotalPlayTime(ms: number) {
 }
 
 export async function gameOver(title: string, intro: string) {
-
   if (mainGameState.startParams.animated_perk_preview) return;
   if (!mainGameState.running) return;
   // Ignore duplicated calls, can happen when ticking is split in multiple updates because the ball goes fast
@@ -66,7 +65,9 @@ export async function gameOver(title: string, intro: string) {
   );
   const levelStats = t("gameOver.lastLevelSummary", {
     catchRate: Math.floor(
-      (mainGameState.levelCaughtCoins / (mainGameState.levelSpawnedCoins || 1)) * 100,
+      (mainGameState.levelCaughtCoins /
+        (mainGameState.levelSpawnedCoins || 1)) *
+        100,
     ),
     levelCaughtCoins: mainGameState.levelCaughtCoins,
     levelSpawnedCoins: mainGameState.levelSpawnedCoins,

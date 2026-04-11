@@ -33,14 +33,21 @@ import {
   zoneLeftBorderX,
   zoneRightBorderX,
 } from "./game_utils";
-import {t} from "./i18n/i18n";
+import { t } from "./i18n/i18n";
 
-import {getCurrentMaxCoins, getCurrentMaxParticles} from "./settings";
-import {background} from "./render";
-import {gameOver} from "./gameOver";
-import {brickIndex, fitSize, hasBrick, hitsSomething, pause, startComputerControlledGame,} from "./game";
-import {stopRecording} from "./recording";
-import {getPixelRatio, isOptionOn} from "./options";
+import { getCurrentMaxCoins, getCurrentMaxParticles } from "./settings";
+import { background } from "./render";
+import { gameOver } from "./gameOver";
+import {
+  brickIndex,
+  fitSize,
+  hasBrick,
+  hitsSomething,
+  pause,
+  startComputerControlledGame,
+} from "./game";
+import { stopRecording } from "./recording";
+import { getPixelRatio, isOptionOn } from "./options";
 import {
   ballTransparency,
   base_combo_from_stronger_foundation,
@@ -48,14 +55,16 @@ import {
   coinsBoostedCombo,
   comboKeepingRate,
 } from "./pure_functions";
-import {addToTotalScore} from "./addToTotalScore";
-import {openUpgradesPicker} from "./openUpgradesPicker";
-import {computerControl} from "./computerControl";
+import { addToTotalScore } from "./addToTotalScore";
+import { openUpgradesPicker } from "./openUpgradesPicker";
+import { computerControl } from "./computerControl";
 
 export function setMousePos(gameState: GameState, x: number) {
-  if (gameState.startParams.computer_controlled ||
-  gameState.startParams.animated_perk_preview
-  ) return;
+  if (
+    gameState.startParams.computer_controlled ||
+    gameState.startParams.animated_perk_preview
+  )
+    return;
   gameState.puckPosition = Math.round(x);
 
   // Sets the puck position, and updates the ball position if they are supposed to follow it
@@ -292,7 +301,6 @@ export function spawnParticlesExplosion(
   y: number,
   color: string,
 ) {
-
   if (liveCount(gameState.particles) > getCurrentMaxParticles()) {
     // Avoid freezing when lots of explosion happen at once
     count = 1;
@@ -318,7 +326,6 @@ export function spawnXShapedParticlesExplosion(
   y: number,
   color: string,
 ) {
-
   if (color == "black") return;
   if (liveCount(gameState.particles) > getCurrentMaxParticles()) {
     // Avoid freezing when lots of explosion happen at once
@@ -361,7 +368,6 @@ export function spawnParticlesImplosion(
   y: number,
   color: string,
 ) {
-
   if (liveCount(gameState.particles) > getCurrentMaxParticles()) {
     // Avoid freezing when lots of explosion happen at once
     count = 1;
@@ -642,18 +648,17 @@ export function addToScore(gameState: GameState, coin: Coin) {
     } catch (e) {}
   }
 
-    makeParticle(
-      gameState,
-      coin.previousX,
-      coin.previousY,
-      (gameState.canvasWidth - coin.x) / 100,
-      -coin.y / 100,
-      getCoinRenderColor(gameState, coin),
-      true,
-      8,
-      100 + Math.random() * 50,
-    );
-
+  makeParticle(
+    gameState,
+    coin.previousX,
+    coin.previousY,
+    (gameState.canvasWidth - coin.x) / 100,
+    -coin.y / 100,
+    getCoinRenderColor(gameState, coin),
+    true,
+    8,
+    100 + Math.random() * 50,
+  );
 
   schedulGameSound(gameState, "coinCatch", coin.x, 1);
   gameState.runStatistics.score += coin.points;
@@ -669,13 +674,12 @@ export function addToScore(gameState: GameState, coin: Coin) {
 }
 
 export async function setLevel(gameState: GameState, l: number) {
-
   // Ignore duplicated calls, can happen when ticking is split in multiple updates because the ball goes fast
   if (gameState.upgradesOfferedFor >= l) {
     return;
   }
   if (!gameState.running && l > 0) return;
-  if(!gameState.startParams.animated_perk_preview) {
+  if (!gameState.startParams.animated_perk_preview) {
     pause(false);
     gameState.upgradesOfferedFor = l;
   }
@@ -765,7 +769,7 @@ const rainbow = [
   "#ff3de5",
 ];
 
-export function rainbowColor(gameState:GameState): colorString {
+export function rainbowColor(gameState: GameState): colorString {
   return rainbow[Math.floor(gameState.levelTime / 50) % rainbow.length];
 }
 
@@ -898,8 +902,10 @@ export function coinBrickHitCheck(gameState: GameState, coin: Coin) {
         coin.vy *= -1;
 
         //   Roll on corners
-        const leftHit = gameState.bricks[brickIndex(gameState, x - radius, y + radius)];
-        const rightHit = gameState.bricks[brickIndex(gameState, x + radius, y + radius)];
+        const leftHit =
+          gameState.bricks[brickIndex(gameState, x - radius, y + radius)];
+        const rightHit =
+          gameState.bricks[brickIndex(gameState, x + radius, y + radius)];
 
         if (leftHit && !rightHit) {
           coin.vx += 1;
@@ -986,7 +992,11 @@ export function gameStateTick(
     return;
   }
   // Ai movement of puck
-  if (gameState.startParams.computer_controlled || gameState.startParams.animated_perk_preview) computerControl(gameState);
+  if (
+    gameState.startParams.computer_controlled ||
+    gameState.startParams.animated_perk_preview
+  )
+    computerControl(gameState);
 
   gameState.runStatistics.max_combo = Math.max(
     gameState.runStatistics.max_combo,
@@ -1083,8 +1093,8 @@ export function gameStateTick(
   ) {
     if (gameState.startParams.computer_controlled) {
       startComputerControlledGame(gameState.startParams.stress);
-    } else if(gameState.startParams.animated_perk_preview){
-      gameState.isGameOver=true
+    } else if (gameState.startParams.animated_perk_preview) {
+      gameState.isGameOver = true;
     } else if (gameState.currentLevel + 1 < max_levels(gameState)) {
       setLevel(gameState, gameState.currentLevel + 1);
     } else {
@@ -1141,7 +1151,8 @@ export function gameStateTick(
             coin.vy += dy;
 
             if (
-              Math.random() * gameState.perks.ball_attracts_coins * frames > 0.9
+              Math.random() * gameState.perks.ball_attracts_coins * frames >
+              0.9
             ) {
               makeParticle(
                 gameState,
@@ -1218,10 +1229,7 @@ export function gameStateTick(
 
       coin.vy += dvy;
 
-      if (
-        gameState.perks.helium &&
-        Math.random() < 0.1 * frames
-      ) {
+      if (gameState.perks.helium && Math.random() < 0.1 * frames) {
         makeParticle(
           gameState,
           coin.x,
@@ -1298,15 +1306,15 @@ export function gameStateTick(
           coin.x,
           (clamp(speed, 20, 100) / 100) * 0.2,
         );
-          makeParticle(
-            gameState,
-            coin.x,
-            gameState.gameZoneHeight,
-            -coin.vx / 5,
-            -coin.vy / 5,
-            getCoinRenderColor(gameState, coin),
-            false,
-          );
+        makeParticle(
+          gameState,
+          coin.x,
+          gameState.gameZoneHeight,
+          -coin.vx / 5,
+          -coin.vy / 5,
+          getCoinRenderColor(gameState, coin),
+          false,
+        );
       }
 
       if (
@@ -1607,7 +1615,7 @@ export function gameStateTick(
     }
   }
 
-  addGravityParticules(gameState, frames)
+  addGravityParticules(gameState, frames);
 
   if (
     gameState.perks.wrap_left &&
@@ -1670,7 +1678,6 @@ export function gameStateTick(
       );
     }
   });
-
 
   forEachLiveOne(gameState.particles, (p, pi) => {
     if (gameState.levelTime > p.time + p.duration) {
@@ -1802,8 +1809,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       const d = Math.sqrt(ball.vy * ball.vy + ball.vx * ball.vx);
       ball.vy = Math.sin(angle) * d;
       ball.vx = Math.cos(angle) * d;
-      if (Math.random() < frames
-      ) {
+      if (Math.random() < frames) {
         makeParticle(
           gameState,
           ball.x,
@@ -2030,8 +2036,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     justLostALife(gameState, ball.x, ball.y);
     putBallsAtPuck(gameState);
     gameState.ballStickToPuck = true;
-    if(!gameState.startParams.animated_perk_preview)
-    pause(false);
+    if (!gameState.startParams.animated_perk_preview) pause(false);
   } else if (outOfBounds) {
     ball.destroyed = true;
     gameState.runStatistics.balls_lost++;
@@ -2068,9 +2073,9 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ) {
       if (gameState.startParams.computer_controlled) {
         startComputerControlledGame(gameState.startParams.stress);
-      }else if(gameState.startParams.animated_perk_preview){
-        gameState.isGameOver=true
-      }  else {
+      } else if (gameState.startParams.animated_perk_preview) {
+        gameState.isGameOver = true;
+      } else {
         gameOver(t("gameOver.lost.title"), t("gameOver.lost.summary"));
       }
     }
@@ -2086,7 +2091,6 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       typeof hhit == "undefined" &&
       hitsSomething(gameState, x, y, radius)) ||
     undefined;
-
 
   const hitBrick = vhit ?? hhit ?? chit;
 
@@ -2158,9 +2162,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     }
   }
 
-  if (
-    ballTransparency(ball, gameState) < Math.random()
-  ) {
+  if (ballTransparency(ball, gameState) < Math.random()) {
     const remainingPierce = ball.piercePoints;
     const remainingSapper = ball.sapperUses < gameState.perks.sapper ? 1 : 0;
     const willMiss =
@@ -2211,19 +2213,18 @@ function justLostALife(gameState: GameState, x: number, y: number) {
 
   schedulGameSound(gameState, "lifeLost", x, 1);
 
-
-    for (let i = 0; i < 10; i++)
-      makeParticle(
-        gameState,
-        x,
-        y,
-        Math.random() * gameState.baseSpeed * 3,
-        gameState.baseSpeed * 3,
-        "#FF0000",
-        false,
-        8,
-        150,
-      );
+  for (let i = 0; i < 10; i++)
+    makeParticle(
+      gameState,
+      x,
+      y,
+      Math.random() * gameState.baseSpeed * 3,
+      gameState.baseSpeed * 3,
+      "#FF0000",
+      false,
+      8,
+      150,
+    );
 }
 
 function makeCoin(
@@ -2369,7 +2370,7 @@ export function destroy<T>(where: ReusableArray<T>, index: number) {
   where.total--;
 }
 
-function applyGravity(gameState:GameState, ball: Ball) {
+function applyGravity(gameState: GameState, ball: Ball) {
   if (!ball.hasGravity && !ball.destroyed) {
     ball.hasGravity = true;
     makeText(
@@ -2543,38 +2544,41 @@ function applyWrapUp(gameState: GameState, ball: Ball | Coin, radius) {
   );
 }
 
-
-function addGravityParticules(gameState:GameState, frames:number){
-  if(!gameState.balls.find(b=>!b.destroyed && !b.hasGravity)) return
-  if(
-
-    gameState.perks.gravity_falls
-     && Math.random()<frames*0.2
-     && gameState.balls.find(b=> !b.destroyed && b.vy<0 && !b.hasGravity && b.y<gameState.gameZoneHeight/3)
-  ){
-
+function addGravityParticules(gameState: GameState, frames: number) {
+  if (!gameState.balls.find((b) => !b.destroyed && !b.hasGravity)) return;
+  if (
+    gameState.perks.gravity_falls &&
+    Math.random() < frames * 0.2 &&
+    gameState.balls.find(
+      (b) =>
+        !b.destroyed &&
+        b.vy < 0 &&
+        !b.hasGravity &&
+        b.y < gameState.gameZoneHeight / 3,
+    )
+  ) {
     makeParticle(
       gameState,
-      gameState.offsetX+gameState.gameZoneWidth*Math.random(),
+      gameState.offsetX + gameState.gameZoneWidth * Math.random(),
       0,
       0,
       2,
       "#ffe02e",
-      )
+    );
   }
-  if(
-    gameState.perks.flyswatter
-    && Math.random()<frames*0.05
-    && gameState.puckPosition<gameState.offsetXRoundedDown+gameState.gameZoneWidth/2
-  ){
+  if (
+    gameState.perks.flyswatter &&
+    Math.random() < frames * 0.05 &&
+    gameState.puckPosition <
+      gameState.offsetXRoundedDown + gameState.gameZoneWidth / 2
+  ) {
     makeParticle(
       gameState,
-      gameState.offsetXRoundedDown+20*Math.random(),
-      gameState.gameZoneHeight-50,
+      gameState.offsetXRoundedDown + 20 * Math.random(),
+      gameState.gameZoneHeight - 50,
       0,
       2,
       "#ffe02e",
-      )
+    );
   }
-
 }

@@ -56,12 +56,12 @@ export function getHaloScale() {
   return 16 * (isOptionOn("precise_lighting") ? 1 : 2) * getPixelRatio();
 }
 
-
 let framesCounter = 0;
-export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
-  const isPreview= gameState.startParams.animated_perk_preview
+export function render(gameState: GameState, ctx: CanvasRenderingContext2D) {
+  const isPreview = gameState.startParams.animated_perk_preview;
 
-  const width=gameState.canvasWidth, height= gameState.canvasHeight
+  const width = gameState.canvasWidth,
+    height = gameState.canvasHeight;
 
   framesCounter++;
   startWork("render:init");
@@ -69,7 +69,7 @@ export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
 
   const hasCombo = gameState.combo > baseCombo(gameState);
 
-  if(!isPreview) {
+  if (!isPreview) {
     startWork("render:currentLevelDisplay");
     if (gameState.currentLevel || gameState.levelTime) {
       menuLabel.innerText = t("play.current_lvl", {
@@ -110,13 +110,18 @@ export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
 
     scoreDisplay.classList[
       gameState.startParams.computer_controlled ? "add" : "remove"
-      ]("computer_controlled");
+    ]("computer_controlled");
     scoreDisplay.classList[
       gameState.lastScoreIncrease > gameState.levelTime - 500 ? "add" : "remove"
-      ]("active");
+    ]("active");
   }
   // Clear
-  if (!isOptionOn("basic") && !isPreview && level.svg && level.color === "#000000") {
+  if (
+    !isOptionOn("basic") &&
+    !isPreview &&
+    level.svg &&
+    level.color === "#000000"
+  ) {
     const skipN =
       isOptionOn("probabilistic_lighting") && liveCount(gameState.coins) > 150
         ? 3
@@ -462,7 +467,6 @@ export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
     gameState.perks.streak_shots && hasCombo ? getDashOffset(gameState) : -1,
   );
 
-
   startWork("render:combotext");
 
   const spawns = coinsBoostedCombo(gameState);
@@ -734,7 +738,10 @@ function drawStraightLine(
 let cachedBricksRender = document.createElement("canvas");
 let cachedBricksRenderKey = "";
 
-export function renderAllBricks( gameState:GameState, ctx: CanvasRenderingContext2D) {
+export function renderAllBricks(
+  gameState: GameState,
+  ctx: CanvasRenderingContext2D,
+) {
   ctx.globalAlpha = 1;
 
   const hasCombo = gameState.combo > baseCombo(gameState);
@@ -779,16 +786,17 @@ export function renderAllBricks( gameState:GameState, ctx: CanvasRenderingContex
     "_" +
     round;
 
-  if (newKey !== cachedBricksRenderKey || gameState.startParams.animated_perk_preview) {
-    let canctx=ctx;
+  if (
+    newKey !== cachedBricksRenderKey ||
+    gameState.startParams.animated_perk_preview
+  ) {
+    let canctx = ctx;
 
-    if(!gameState.startParams.animated_perk_preview){
+    if (!gameState.startParams.animated_perk_preview) {
       cachedBricksRenderKey = newKey;
       cachedBricksRender.width = gameState.gameZoneWidth;
       cachedBricksRender.height = gameState.gameZoneWidth + 1;
-      canctx = cachedBricksRender.getContext(
-        "2d",
-      ) as CanvasRenderingContext2D;
+      canctx = cachedBricksRender.getContext("2d") as CanvasRenderingContext2D;
       canctx.clearRect(0, 0, gameState.gameZoneWidth, gameState.gameZoneWidth);
       canctx.resetTransform();
       canctx.translate(-gameState.offsetX, 0);
@@ -840,22 +848,20 @@ export function renderAllBricks( gameState:GameState, ctx: CanvasRenderingContex
       }
     });
   }
-  if(!gameState.startParams.animated_perk_preview)
-  ctx.drawImage(cachedBricksRender, gameState.offsetX, 0);
+  if (!gameState.startParams.animated_perk_preview)
+    ctx.drawImage(cachedBricksRender, gameState.offsetX, 0);
 }
 
 let cachedGraphics: { [k: string]: HTMLCanvasElement } = {};
 
 export function drawPuck(
   ctx: CanvasRenderingContext2D,
-  gameState:GameState,
+  gameState: GameState,
   yOffset = 0,
   concave_puck: number,
   redBorderOffset: number,
 ) {
-
-    const {puckColor,puckWidth ,puckHeight}=gameState
-
+  const { puckColor, puckWidth, puckHeight } = gameState;
 
   const key =
     "puck" +

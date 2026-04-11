@@ -750,30 +750,34 @@ h2.histogram-title strong {
   image-rendering: crisp-edges;
 }
 
-
-.perk-title{
+.perk-title {
   display: flex;
-  span{
+  span {
     flex-grow: 1;
     text-align: center;
+    @media (max-width: 700px) {
+      order: 3;
+      text-align: left;
+      margin-left: 10px;
+    }
   }
-  button{
+  button {
     min-width: 40px;
-    &:disabled{
+    &:disabled {
       opacity: 0.2;
     }
     border: 1px solid white;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
     color: white;
     cursor: pointer;
   }
 }
-.game_preview{
+.game_preview {
   margin: 0 auto;
   border: 1px solid #ffffff;
   display: block;
 }
-.with_extra{
+.with_extra {
   font-style: italic;
   opacity: 0.5;
   font-size: 80%;
