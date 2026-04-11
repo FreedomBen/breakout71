@@ -1,19 +1,30 @@
-import { RunParams, Upgrade } from "./types";
+import {PerkId, RunParams, Upgrade} from "./types";
 import { allLevelsAndIcons, upgrades } from "./loadGameData";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { asyncAlert } from "./asyncAlert";
 import { miniMarkDown } from "./pure_functions";
 import { t } from "./i18n/i18n";
-import { confirmRestart, gameState, restart } from "./game";
+import { confirmRestart, mainGameState, restart } from "./game";
 import { getCheckboxIcon, getIcon } from "./levelIcon";
+import {getGameAnimation, getPerkAnimation} from "./gameAnimation";
+
 
 export async function openUpgradeDetails(
-  id: Upgrade["id"],
+  id: PerkId,
   onClose: () => void,
 ) {
-  const { name, help, fullHelp, gift } = upgrades.find(
+
+  const { name, help, fullHelp, gift, requires } = upgrades.find(
     (u) => u.id === id,
   ) as Upgrade;
+
+  const ts = getTotalScore();
+
+  const free=upgrades.filter(({threshold})=>ts > threshold).map(u=>u.id)
+  const currentIndex=free.indexOf(id)
+  const next = free[currentIndex+1]
+  const previous= free[currentIndex-1]
+
 
   const allowedAsStart = getSettingValue("start_with_" + id, gift);
   const allowedInGame = getSettingValue("offer-upgrade-" + id, true);
@@ -25,19 +36,32 @@ export async function openUpgradeDetails(
       .filter((u) => getSettingValue("offer-upgrade-" + u.id, true))?.length >
       15;
 
+  const runParams={
+     perks: { [id]: 1 },
+     level: allLevelsAndIcons.find((l) => l.name === "icon:" + id),
+  }
+
   const action = await asyncAlert<string>({
     title: name,
     content: [
-      `<div class="full-width-icon">${getIcon("icon:" + id, 350)}</div>`,
-
-      help(1),
-      miniMarkDown(fullHelp(1)),
+      getPerkAnimation(id),
       {
         text: t("unlocks.start_new_game_with"),
         help: t("unlocks.start_new_game_with_help"),
         value: "use",
         icon: getIcon("icon:new_run"),
       },
+ {
+        text:t('unlocks.next'),
+        value:'next',
+        disabled:!next
+      },{
+        text:t('unlocks.previous'),
+        value:'previous',
+        disabled:!previous
+      },
+      help(1),
+      miniMarkDown(fullHelp(1)),
       {
         icon: getCheckboxIcon(allowedAsStart),
         value: "toggle-start-with",
@@ -53,6 +77,8 @@ export async function openUpgradeDetails(
           : t("unlocks.upgrade_choice_perk_locked"),
         disabled: !allowDisabling,
       },
+      'id:'+id
+
     ],
     allowClose: true,
   });
@@ -60,11 +86,8 @@ export async function openUpgradeDetails(
 
   switch (action) {
     case "use":
-      if (await confirmRestart(gameState)) {
-        restart({
-          perks: { [id]: 1 },
-          level: allLevelsAndIcons.find((l) => l.name === "icon:" + id),
-        } as RunParams);
+      if (await confirmRestart(mainGameState)) {
+        restart(runParams );
         return;
       }
       break;
@@ -74,6 +97,12 @@ export async function openUpgradeDetails(
     case "toggle-offer-upgrade":
       setSettingValue("offer-upgrade-" + id, !allowedInGame);
       break;
+    case "previous":
+      openUpgradeDetails(previous, onClose)
+      return
+    case "next":
+      openUpgradeDetails(next, onClose)
+      return
   }
   return openUpgradeDetails(id, onClose);
 }

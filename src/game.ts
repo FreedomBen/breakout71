@@ -79,11 +79,11 @@ import { getCheckboxIcon, getIcon } from "./levelIcon";
 
 export async function play() {
   if (await applyFullScreenChoice()) return;
-  if (gameState.running) return;
-  gameState.running = true;
-  gameState.ballStickToPuck = false;
+  if (mainGameState.running) return;
+  mainGameState.running = true;
+  mainGameState.ballStickToPuck = false;
 
-  startRecordingGame(gameState);
+  startRecordingGame(mainGameState);
   getAudioContext()?.resume();
   resumeRecording();
   hideAnyTooltip();
@@ -91,40 +91,38 @@ export async function play() {
 }
 
 export function pause(playerAskedForPause: boolean) {
-  if (!gameState.running) return;
+  if (!mainGameState.running) return;
 
-  if (gameState.pauseTimeout && playerAskedForPause) {
+  if (mainGameState.pauseTimeout && playerAskedForPause) {
     return;
   }
 
-  if (gameState.startParams.computer_controlled) {
-    if (gameState.startParams?.computer_controlled) {
-      play();
-    }
+  if (mainGameState.startParams.computer_controlled) {
+    play();
     return;
   }
   const stop = () => {
-    gameState.running = false;
+    mainGameState.running = false;
 
     setTimeout(() => {
-      if (!gameState.running) getAudioContext()?.suspend();
+      if (!mainGameState.running) getAudioContext()?.suspend();
     }, 1000);
 
     pauseRecording();
-    if (gameState.pauseTimeout) {
+    if (mainGameState.pauseTimeout) {
       // In case an instant pause was requested while a delayed pause was pending
-      clearTimeout(gameState.pauseTimeout);
-      gameState.pauseTimeout = null;
+      clearTimeout(mainGameState.pauseTimeout);
+      mainGameState.pauseTimeout = null;
     }
-    gameState.needsRender = true;
+    mainGameState.needsRender = true;
   };
 
   if (playerAskedForPause) {
     // Pausing many times in a run will make pause slower
-    gameState.pauseUsesDuringRun++;
-    gameState.pauseTimeout = setTimeout(
+    mainGameState.pauseUsesDuringRun++;
+    mainGameState.pauseTimeout = setTimeout(
       stop,
-      Math.min(Math.max(0, gameState.pauseUsesDuringRun - 5) * 50, 500),
+      Math.min(Math.max(0, mainGameState.pauseUsesDuringRun - 5) * 50, 500),
     );
   } else {
     stop();
@@ -138,6 +136,7 @@ export function pause(playerAskedForPause: boolean) {
 
 export const fitSize = (gameState: GameState) => {
   if (!gameState) throw new Error("Missign game state");
+  if(gameState.startParams.animated_perk_preview) return
   const past_off = gameState.offsetXRoundedDown,
     past_width = gameState.gameZoneWidthRoundedUp,
     past_heigh = gameState.gameZoneHeight;
@@ -225,8 +224,8 @@ export const fitSize = (gameState: GameState) => {
     `${window.innerHeight * 0.01}px`,
   );
 };
-window.addEventListener("resize", () => fitSize(gameState));
-window.addEventListener("fullscreenchange", () => fitSize(gameState));
+window.addEventListener("resize", () => fitSize(mainGameState));
+window.addEventListener("fullscreenchange", () => fitSize(mainGameState));
 
 setInterval(() => {
   // Sometimes, the page changes size without triggering the event (when switching to fullscreen, closing debug panel...)
@@ -234,13 +233,13 @@ setInterval(() => {
   const width = Math.floor(window.innerWidth * getPixelRatio()),
     height = Math.floor(window.innerHeight * getPixelRatio());
 
-  if (width !== gameState.canvasWidth || height !== gameState.canvasHeight)
-    fitSize(gameState);
+  if (width !== mainGameState.canvasWidth || height !== mainGameState.canvasHeight)
+    fitSize(mainGameState);
 }, 1000);
 
 gameCanvas.addEventListener("mouseup", (e) => {
   if (e.button !== 0) return;
-  if (gameState.running) {
+  if (mainGameState.running) {
     pause(true);
   } else {
     play();
@@ -253,11 +252,11 @@ gameCanvas.addEventListener("mouseup", (e) => {
 gameCanvas.addEventListener("mousemove", (e) => {
   if (document.pointerLockElement === gameCanvas) {
     setMousePos(
-      gameState,
-      gameState.puckPosition + e.movementX * getPixelRatio(),
+      mainGameState,
+      mainGameState.puckPosition + e.movementX * getPixelRatio(),
     );
   } else {
-    setMousePos(gameState, e.clientX * getPixelRatio());
+    setMousePos(mainGameState, e.clientX * getPixelRatio());
   }
 });
 
@@ -265,24 +264,24 @@ let timers = [];
 function startPlayCountDown() {
   stopPlayCountDown();
 
-  gameState.startCountDown = 3;
-  gameState.needsRender = true;
+  mainGameState.startCountDown = 3;
+  mainGameState.needsRender = true;
 
   timers.push(
     setTimeout(() => {
-      gameState.startCountDown = 2;
-      gameState.needsRender = true;
+      mainGameState.startCountDown = 2;
+      mainGameState.needsRender = true;
     }, 1000),
   );
   timers.push(
     setTimeout(() => {
-      gameState.startCountDown = 1;
-      gameState.needsRender = true;
+      mainGameState.startCountDown = 1;
+      mainGameState.needsRender = true;
     }, 2000),
   );
   timers.push(
     setTimeout(() => {
-      gameState.startCountDown = 0;
+      mainGameState.startCountDown = 0;
       play();
     }, 3000),
   );
@@ -290,16 +289,16 @@ function startPlayCountDown() {
 function stopPlayCountDown() {
   if (!timers.length) return;
 
-  gameState.startCountDown = 0;
+  mainGameState.startCountDown = 0;
   timers.forEach((id) => clearTimeout(id));
   timers.length = 0;
 }
 gameCanvas.addEventListener("touchstart", (e) => {
   e.preventDefault();
   if (!e.touches?.length) return;
-  setMousePos(gameState, e.touches[0].pageX * getPixelRatio());
-  normalizeGameState(gameState);
-  if (gameState.levelTime || !isOptionOn("touch_delayed_start")) {
+  setMousePos(mainGameState, e.touches[0].pageX * getPixelRatio());
+  normalizeGameState(mainGameState);
+  if (mainGameState.levelTime || !isOptionOn("touch_delayed_start")) {
     play();
   } else {
     //   start play sequence
@@ -318,10 +317,10 @@ gameCanvas.addEventListener("touchcancel", (e) => {
 });
 gameCanvas.addEventListener("touchmove", (e) => {
   if (!e.touches?.length) return;
-  setMousePos(gameState, e.touches[0].pageX * getPixelRatio());
+  setMousePos(mainGameState, e.touches[0].pageX * getPixelRatio());
 });
 
-export function brickIndex(x: number, y: number) {
+export function brickIndex(gameState:GameState, x: number, y: number) {
   const index = getRowColIndex(
     gameState,
     Math.floor(y / gameState.brickWidth),
@@ -336,72 +335,77 @@ export function brickIndex(x: number, y: number) {
   return index;
 }
 
-export function hasBrick(index: number): number | undefined {
+export function hasBrick(gameState:GameState, index: number): number | undefined {
   if (gameState.bricks[index]) return index;
 }
 
-export function hitsSomething(x: number, y: number, radius: number) {
+export function hitsSomething(gameState: GameState, x: number, y: number, radius: number) {
   return (
-    hasBrick(brickIndex(x - radius, y - radius)) ??
-    hasBrick(brickIndex(x + radius, y - radius)) ??
-    hasBrick(brickIndex(x + radius, y + radius)) ??
-    hasBrick(brickIndex(x - radius, y + radius))
+    hasBrick(gameState, brickIndex(gameState, x - radius, y - radius)) ??
+    hasBrick(gameState, brickIndex(gameState, x + radius, y - radius)) ??
+    hasBrick(gameState, brickIndex(gameState, x + radius, y + radius)) ??
+    hasBrick(gameState, brickIndex(gameState, x - radius, y + radius))
   );
 }
+  const ctx = gameCanvas.getContext("2d", {
+  alpha: false,
+  }) as CanvasRenderingContext2D;
 
 export function tick() {
   frameStarted();
   startWork("physics");
   const currentTick = performance.now();
-  const timeDeltaMs = currentTick - gameState.lastTick;
-  gameState.lastTick = currentTick;
+  const timeDeltaMs = currentTick - mainGameState.lastTick;
+  mainGameState.lastTick = currentTick;
 
   let frames = Math.min(4, timeDeltaMs / (1000 / 60));
-  if (gameState.keyboardPuckSpeed) {
+  if (mainGameState.keyboardPuckSpeed) {
     setMousePos(
-      gameState,
-      gameState.puckPosition + gameState.keyboardPuckSpeed,
+      mainGameState,
+      mainGameState.puckPosition + mainGameState.keyboardPuckSpeed,
     );
   }
-  if (gameState.perks.superhot) {
+  if (mainGameState.perks.superhot) {
     frames *= clamp(
-      Math.abs(gameState.puckPosition - gameState.lastPuckPosition) / 5,
-      0.2 / gameState.perks.superhot,
+      Math.abs(mainGameState.puckPosition - mainGameState.lastPuckPosition) / 5,
+      0.2 / mainGameState.perks.superhot,
       1,
     );
   }
 
-  normalizeGameState(gameState);
-  if (gameState.running) {
-    gameState.levelTime += timeDeltaMs * frames;
-    gameState.runStatistics.runTime += timeDeltaMs * frames;
+  normalizeGameState(mainGameState);
+  if (mainGameState.running) {
+    mainGameState.levelTime += timeDeltaMs * frames;
+    mainGameState.runStatistics.runTime += timeDeltaMs * frames;
     let maxSpeed2 = 0;
-    gameState.balls.forEach(
+    mainGameState.balls.forEach(
       ({ vx, vy }) => (maxSpeed2 = Math.max(maxSpeed2, vx * vx + vy * vy)),
     );
     forEachLiveOne(
-      gameState.coins,
+      mainGameState.coins,
       ({ vx, vy }) => (maxSpeed2 = Math.max(maxSpeed2, vx * vx + vy * vy)),
     );
     const steps = Math.ceil((Math.sqrt(maxSpeed2) * frames) / 8);
 
     for (let i = 0; i < steps; i++) {
-      gameStateTick(gameState, frames / steps);
+      gameStateTick(mainGameState, frames / steps);
     }
   }
-  gameState.lastPuckPosition = gameState.puckPosition;
+  mainGameState.lastPuckPosition = mainGameState.puckPosition;
 
-  if (gameState.running || gameState.needsRender) {
-    gameState.needsRender = false;
-    render(gameState);
+  if (mainGameState.running || mainGameState.needsRender) {
+    mainGameState.needsRender = false;
+    if(gameCanvas.width && gameCanvas.height) {
+      render(mainGameState, ctx);
+    }
   }
   startWork("record video");
-  if (gameState.running) {
-    recordOneFrame(gameState);
+  if (mainGameState.running) {
+    recordOneFrame(mainGameState);
   }
   startWork("sound");
   if (isOptionOn("sound")) {
-    playPendingSounds(gameState);
+    playPendingSounds(mainGameState);
   }
   startWork("idle");
 
@@ -409,7 +413,7 @@ export function tick() {
 }
 
 setInterval(() => {
-  monitorLevelsUnlocks(gameState);
+  monitorLevelsUnlocks(mainGameState);
 }, 500);
 
 document.addEventListener("visibilitychange", () => {
@@ -429,7 +433,7 @@ function scoreOpen(e) {
   e.preventDefault();
   if (!alertsOpen) {
     setSettingValue("score-opened", getSettingValue("score-opened", 0) + 1);
-    openScorePanel(gameState);
+    openScorePanel(mainGameState);
   }
 }
 
@@ -458,11 +462,11 @@ export async function openMainMenu() {
       help: highScoreText() || t("main_menu.normal_help"),
       value: () => {
         restart({
-          levelToAvoid: currentLevelInfo(gameState).name,
+          levelToAvoid: currentLevelInfo(mainGameState).name,
         });
       },
     },
-    creativeMode(gameState),
+    creativeMode(mainGameState),
     runHistoryViewerMenuEntry(),
     levelEditorMenuEntry(),
     {
@@ -484,7 +488,7 @@ export async function openMainMenu() {
       },
     },
 
-    ...donationNag(gameState),
+    ...donationNag(mainGameState),
     {
       text: t("main_menu.settings_title"),
       help: t("main_menu.settings_help"),
@@ -521,7 +525,7 @@ export async function openMainMenu() {
   });
   if (cb) {
     cb();
-    gameState.needsRender = true;
+    mainGameState.needsRender = true;
   }
 }
 
@@ -565,7 +569,7 @@ async function openSettingsMenu() {
       if (
         pick &&
         pick !== getCurrentLang() &&
-        (await confirmRestart(gameState))
+        (await confirmRestart(mainGameState))
       ) {
         setSettingValue("lang", pick);
         commitSettingsChangesToLocalStorage();
@@ -593,7 +597,7 @@ async function openSettingsMenu() {
           false,
         value: () => {
           toggleOption(key);
-          fitSize(gameState);
+          fitSize(mainGameState);
           applyFullScreenChoice();
           openSettingsMenu();
         },
@@ -760,7 +764,7 @@ async function openSettingsMenu() {
   });
   if (cb) {
     cb();
-    gameState.needsRender = true;
+    mainGameState.needsRender = true;
   }
 }
 
@@ -884,7 +888,7 @@ export async function openLevelDetails(level: Level) {
   });
   if (!action) return openUnlockedLevelsList();
   if (action === "run") {
-    if (await confirmRestart(gameState)) {
+    if (await confirmRestart(mainGameState)) {
       restart({ level } as RunParams);
       return;
     }
@@ -923,10 +927,10 @@ const pressed: { [k: string]: number } = {
 
 export function setKeyPressed(key: string, on: 0 | 1) {
   pressed[key] = on;
-  gameState.keyboardPuckSpeed =
+  mainGameState.keyboardPuckSpeed =
     ((pressed.ArrowRight - pressed.ArrowLeft) *
       (1 + pressed.Shift * 2) *
-      gameState.gameZoneWidth) /
+      mainGameState.gameZoneWidth) /
     50;
 }
 
@@ -938,7 +942,7 @@ document.addEventListener("keydown", async (e) => {
     setKeyPressed(e.key, 1);
   }
   if (e.key === " " && !alertsOpen) {
-    if (gameState.running) {
+    if (mainGameState.running) {
       pause(true);
     } else {
       play();
@@ -966,24 +970,24 @@ document.addEventListener("keyup", async (e) => {
     (focused?.previousElementSibling as HTMLButtonElement)?.focus();
   } else if (e.key === "Escape" && closeModal) {
     closeModal();
-  } else if (e.key === "Escape" && gameState.running) {
+  } else if (e.key === "Escape" && mainGameState.running) {
     pause(true);
   } else if (e.key.toLowerCase() === "m" && !alertsOpen) {
     openMainMenu().then();
   } else if (e.key.toLowerCase() === "s" && !alertsOpen) {
-    openScorePanel(gameState).then();
+    openScorePanel(mainGameState).then();
   } else if (
     e.key.toLowerCase() === "r" &&
     !alertsOpen &&
     pageLoad < Date.now() - 500
   ) {
-    if (gameState.startParams.computer_controlled) {
-      return startComputerControlledGame(gameState.startParams.stress);
+    if (mainGameState.startParams.computer_controlled) {
+      return startComputerControlledGame(mainGameState.startParams.stress);
     }
     // When doing ctrl + R in dev to refresh, i don't want to instantly restart a run
-    if (await confirmRestart(gameState)) {
+    if (await confirmRestart(mainGameState)) {
       restart({
-        levelToAvoid: currentLevelInfo(gameState).name,
+        levelToAvoid: currentLevelInfo(mainGameState).name,
       });
     }
   } else {
@@ -992,16 +996,16 @@ document.addEventListener("keyup", async (e) => {
   e.preventDefault();
 });
 
-export const gameState = newGameState({});
+export const mainGameState = newGameState({});
 
 export function restart(params: RunParams) {
   getWorstFPSAndReset();
-  Object.assign(gameState, newGameState(params));
+  Object.assign(mainGameState, newGameState(params));
   // Recompute brick size according to level
-  fitSize(gameState);
+  fitSize(mainGameState);
 
   pauseRecording();
-  setLevel(gameState, 0);
+  setLevel(mainGameState, 0);
   if (params?.computer_controlled) {
     play();
   }

@@ -1,4 +1,4 @@
-import { gameState } from "./game";
+import { mainGameState } from "./game";
 import { sumOfValues } from "./game_utils";
 import { liveCount } from "./gameStateMutators";
 import { getCurrentMaxCoins, getCurrentMaxParticles } from "./settings";
@@ -21,7 +21,7 @@ export function frameStarted() {
   lastFrame = Date.now();
   if (isNaN(instantFPS)) return;
   if (instantFPS < 50) {
-    coinsForLag = Math.min(coinsForLag, liveCount(gameState.coins));
+    coinsForLag = Math.min(coinsForLag, liveCount(mainGameState.coins));
   }
   worstInstantFPS = Math.min(worstInstantFPS, instantFPS);
   worstFPS = Math.min(worstFPS, lastMeasuredFPS);
@@ -35,8 +35,8 @@ export function getWorstFPSAndReset() {
   return result;
 }
 
-export function startWork(what) {
-  if (!gameState.startParams.stress) return;
+export function startWork(what:string) {
+  if (!mainGameState.startParams.stress) return;
   const newNow = performance.now();
   if (doing) {
     total[doing] = (total[doing] || 0) + (newNow - lastTick);
@@ -52,7 +52,7 @@ setInterval(() => {
   lastMeasuredFPS = FPSCounter;
   FPSCounter = 0;
 
-  if (!gameState.startParams.stress) {
+  if (!mainGameState.startParams.stress) {
     stats.style.display = "none";
     return;
   }
@@ -63,8 +63,8 @@ setInterval(() => {
     `
     <div> 
     ${lastMeasuredFPS} FPS -
-    ${liveCount(gameState.coins)} / ${getCurrentMaxCoins()} Coins - 
-     ${liveCount(gameState.particles) + liveCount(gameState.lights) + liveCount(gameState.texts)} / ${getCurrentMaxParticles() * 3} particles 
+    ${liveCount(mainGameState.coins)} / ${getCurrentMaxCoins()} Coins - 
+     ${liveCount(mainGameState.particles) + liveCount(mainGameState.lights) + liveCount(mainGameState.texts)} / ${getCurrentMaxParticles() * 3} particles 
     </div>  
     
      

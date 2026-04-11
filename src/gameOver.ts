@@ -1,7 +1,7 @@
 import { allLevels, appVersion, upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
 import { GameState, RunHistoryItem } from "./types";
-import { gameState, pause, restart } from "./game";
+import { mainGameState, pause, restart } from "./game";
 import {
   currentLevelInfo,
   describeLevel,
@@ -35,22 +35,24 @@ export function addToTotalPlayTime(ms: number) {
 }
 
 export async function gameOver(title: string, intro: string) {
-  if (!gameState.running) return;
+
+  if (mainGameState.startParams.animated_perk_preview) return;
+  if (!mainGameState.running) return;
   // Ignore duplicated calls, can happen when ticking is split in multiple updates because the ball goes fast
-  if (gameState.isGameOver) return;
-  gameState.isGameOver = true;
+  if (mainGameState.isGameOver) return;
+  mainGameState.isGameOver = true;
   pause(false);
   askForPersistentStorage();
   stopRecording();
-  addToTotalPlayTime(gameState.runStatistics.runTime);
+  addToTotalPlayTime(mainGameState.runStatistics.runTime);
 
-  if (typeof gameState.startParams.isEditorTrialRun === "number") {
-    editRawLevelList(gameState.startParams.isEditorTrialRun);
+  if (typeof mainGameState.startParams.isEditorTrialRun === "number") {
+    editRawLevelList(mainGameState.startParams.isEditorTrialRun);
     restart({});
     return;
   }
 
-  if (gameState.startParams.isCreativeRun) {
+  if (mainGameState.startParams.isCreativeRun) {
     openCreativeModePerksPicker();
     restart({});
     return;
@@ -58,19 +60,19 @@ export async function gameOver(title: string, intro: string) {
 
   // unlocks
   const endTs = getTotalScore();
-  const startTs = endTs - gameState.score;
+  const startTs = endTs - mainGameState.score;
   const unlockedPerks = upgrades.filter(
     (o) => o.threshold > startTs && o.threshold < endTs,
   );
   const levelStats = t("gameOver.lastLevelSummary", {
     catchRate: Math.floor(
-      (gameState.levelCaughtCoins / (gameState.levelSpawnedCoins || 1)) * 100,
+      (mainGameState.levelCaughtCoins / (mainGameState.levelSpawnedCoins || 1)) * 100,
     ),
-    levelCaughtCoins: gameState.levelCaughtCoins,
-    levelSpawnedCoins: gameState.levelSpawnedCoins,
-    duration: Math.ceil(gameState.levelTime / 1000),
-    levelMisses: gameState.levelMisses,
-    level: gameState.currentLevel + 1,
+    levelCaughtCoins: mainGameState.levelCaughtCoins,
+    levelSpawnedCoins: mainGameState.levelSpawnedCoins,
+    duration: Math.ceil(mainGameState.levelTime / 1000),
+    levelMisses: mainGameState.levelMisses,
+    level: mainGameState.currentLevel + 1,
   });
 
   let unlocksInfo = unlockedPerks.length
@@ -95,16 +97,16 @@ export async function gameOver(title: string, intro: string) {
     : "";
 
   // Avoid the sad sound right as we restart a new games
-  gameState.combo = 1;
+  mainGameState.combo = 1;
 
   const choice = await asyncAlert({
     allowClose: true,
     title,
     content: [
-      getCreativeModeWarning(gameState) || levelStats,
+      getCreativeModeWarning(mainGameState) || levelStats,
       intro,
       startTs != endTs
-        ? t("gameOver.total", { score: gameState.score }) +
+        ? t("gameOver.total", { score: mainGameState.score }) +
           t("gameOver.cumulative_total", { startTs, endTs })
         : "",
 
@@ -118,13 +120,13 @@ export async function gameOver(title: string, intro: string) {
       `<div id="level-recording-container"></div>`,
 
       unlocksInfo,
-      getHistograms(gameState),
-      pickedUpgradesHTMl(gameState),
+      getHistograms(mainGameState),
+      pickedUpgradesHTMl(mainGameState),
     ],
   });
   applySettingsChangeReco(choice);
   restart({
-    levelToAvoid: currentLevelInfo(gameState).name,
+    levelToAvoid: currentLevelInfo(mainGameState).name,
   });
 }
 

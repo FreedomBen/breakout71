@@ -1,0 +1,67 @@
+import {GameState} from "./types";
+import {getClosestBall} from "./game_utils";
+import {hashCode} from "./getLevelBackground";
+import {clamp} from "./pure_functions";
+import {startComputerControlledGame} from "./game";
+import {forEachLiveOne} from "./gameStateMutators";
+
+export function computerControl(gameState: GameState) {
+  let speed=1
+  let targetX = gameState.puckPosition;
+  const ball = getClosestBall(
+    gameState,
+    gameState.puckPosition,
+    gameState.gameZoneHeight,
+  );
+  if (!ball) return;
+
+
+  const rng=Math.abs(hashCode(gameState.runStatistics.puck_bounces + "random_seed_string_5666548541") % 100)
+  let puckOffset =
+    ((rng - 50) / 100) *
+    gameState.puckWidth;
+
+  if(gameState.perks.left_is_lava || gameState.perks.side_kick){
+    puckOffset=-gameState.puckWidth/2.2
+  }
+  if(gameState.perks.right_is_lava|| gameState.perks.side_flip){
+    puckOffset=gameState.puckWidth/2.2
+  }
+  if(gameState.perks.nbricks){
+    puckOffset*=0.1
+  }
+  if(gameState.perks.three_cushion){
+      puckOffset=gameState.puckWidth/2.2 * (rng>50?1:-1)
+  }
+
+  if (ball.y > gameState.gameZoneHeight / 2 && ball.vy > 0) {
+    targetX = ball.x + puckOffset;
+    if(gameState.perks.extra_life)  speed=-1
+    if(gameState.perks.yoyo) speed=0.5
+  } else {
+    let coinsTotalX = 0,
+      coinsCount = 0;
+    forEachLiveOne(gameState.coins, (c) => {
+      if (c.vy > 0 && c.y > gameState.gameZoneHeight / 2) {
+        coinsTotalX += c.x;
+        coinsCount++;
+      }
+    });
+    if (coinsCount) {
+      targetX = coinsTotalX / coinsCount;
+      if(gameState.perks.asceticism || gameState.perks.fountain_toss) speed=-1
+    } else {
+      targetX = gameState.canvasWidth / 2;
+    }
+  }
+
+
+  gameState.puckPosition += clamp(
+    (targetX - gameState.puckPosition) / 5,
+    -10,
+    10,
+  ) * speed;
+  if (gameState.levelTime > 30000 && gameState.startParams.computer_controlled) {
+    startComputerControlledGame(gameState.startParams.stress);
+  }
+}

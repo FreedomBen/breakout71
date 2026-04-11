@@ -16,7 +16,7 @@ import {
 } from "./game_utils";
 import { colorString, GameState } from "./types";
 import { t } from "./i18n/i18n";
-import { gameState } from "./game";
+import { mainGameState } from "./game";
 import { getPixelRatio, isOptionOn } from "./options";
 import {
   ballTransparency,
@@ -32,9 +32,6 @@ import {
 import { lastMeasuredFPS, startWork } from "./fps";
 
 export const gameCanvas = document.getElementById("game") as HTMLCanvasElement;
-export const ctx = gameCanvas.getContext("2d", {
-  alpha: false,
-}) as CanvasRenderingContext2D;
 
 export const bombSVG = document.createElement("img");
 bombSVG.src =
@@ -42,11 +39,11 @@ bombSVG.src =
   btoa(`<svg width="144" height="144" viewBox="0 0 38.101 38.099" xmlns="http://www.w3.org/2000/svg">
  <path d="m6.1528 26.516c-2.6992-3.4942-2.9332-8.281-.58305-11.981a10.454 10.454 0 017.3701-4.7582c1.962-.27726 4.1646.05953 5.8835.90027l.45013.22017.89782-.87417c.83748-.81464.91169-.87499 1.0992-.90271.40528-.058713.58876.03425 1.1971.6116l.55451.52679 1.0821-1.0821c1.1963-1.1963 1.383-1.3357 2.1039-1.5877.57898-.20223 1.5681-.19816 2.1691.00897 1.4613.50314 2.3673 1.7622 2.3567 3.2773-.0058.95654-.24464 1.5795-.90924 2.3746-.40936.48928-.55533.81057-.57898 1.2737-.02039.41018.1109.77714.42322 1.1792.30172.38816.3694.61323.2797.93044-.12803.45666-.56674.71598-1.0242.60507-.601-.14597-1.3031-1.3088-1.3969-2.3126-.09459-1.0161.19245-1.8682.92392-2.7432.42567-.50885.5643-.82851.5643-1.3031 0-.50151-.14026-.83177-.51211-1.2028-.50966-.50966-1.0968-.64829-1.781-.41996l-.37348.12477-2.1006 2.1006.52597.55696c.45421.48194.5325.58876.57898.78855.09622.41588.07502.45014-.88396 1.4548l-.87173.9125.26339.57979a10.193 10.193 0 01.9231 4.1001c.03996 2.046-.41996 3.8082-1.4442 5.537-.55044.928-1.0185 1.5013-1.8968 2.3241-.83503.78284-1.5526 1.2827-2.4904 1.7361-3.4266 1.657-7.4721 1.3422-10.549-.82035-.73473-.51782-1.7312-1.4621-2.2515-2.1357zm21.869-4.5584c-.0579-.19734-.05871-2.2662 0-2.4545.11906-.39142.57898-.63361 1.0038-.53005.23812.05708.54147.32455.6116.5382.06279.19163.06769 2.1805.0065 2.3811-.12558.40773-.61649.67602-1.0462.57164-.234-.05708-.51615-.30498-.57568-.50722m3.0417-2.6013c-.12313-.6222.37837-1.1049 1.0479-1.0079.18348.0261.25279.08399 1.0071.83911.75838.75838.81301.82362.84074 1.0112.10193.68499-.40365 1.1938-1.034 1.0405-.1949-.0473-.28786-.12558-1.0144-.85216-.7649-.76409-.80241-.81057-.84645-1.0316m.61323-3.0629a.85623.85623 0 01.59284-.99975c.28949-.09214 2.1814-.08318 2.3917.01141.38734.17369.6279.61078.53984.98181-.06035.25606-.35391.57327-.60181.64992-.25279.07747-2.2278.053-2.4097-.03017-.26013-.11906-.46318-.36125-.51374-.61323" fill="#fff" opacity="0.3"/>
 </svg>`);
-bombSVG.onload = () => (gameState.needsRender = true);
+bombSVG.onload = () => (mainGameState.needsRender = true);
 
 export const background = document.createElement("img");
 background.onload = () => {
-  gameState.needsRender = true;
+  mainGameState.needsRender = true;
 };
 export const backgroundCanvas = document.createElement("canvas");
 
@@ -59,16 +56,17 @@ export function getHaloScale() {
   return 16 * (isOptionOn("precise_lighting") ? 1 : 2) * getPixelRatio();
 }
 
-let framesCounter = 0;
 
-export function render(gameState: GameState) {
+let framesCounter = 0;
+export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
+
+  const width=gameState.canvasWidth, height= gameState.canvasHeight
+
   framesCounter++;
   startWork("render:init");
   const level = currentLevelInfo(gameState);
 
   const hasCombo = gameState.combo > baseCombo(gameState);
-  const { width, height } = gameCanvas;
-  if (!width || !height) return;
 
   if (gameState.currentLevel || gameState.levelTime) {
     menuLabel.innerText = t("play.current_lvl", {
@@ -81,9 +79,7 @@ export function render(gameState: GameState) {
 
   const catchRate = gameState.levelSpawnedCoins
     ? gameState.levelCaughtCoins / (gameState.levelSpawnedCoins || 1)
-    : // (gameState.levelSpawnedCoins - gameState.levelLostCoins) /
-      // gameState.levelSpawnedCoins
-      1;
+    : 1;
   startWork("render:scoreDisplay");
   scoreDisplay.innerHTML =
     (isOptionOn("show_fps") || gameState.startParams.computer_controlled
@@ -116,7 +112,7 @@ export function render(gameState: GameState) {
   ]("active");
 
   // Clear
-  if (!isOptionOn("basic") && level.svg && level.color === "#000000") {
+  if (!isOptionOn("basic") && !gameState.startParams.animated_perk_preview && level.svg && level.color === "#000000") {
     const skipN =
       isOptionOn("probabilistic_lighting") && liveCount(gameState.coins) > 150
         ? 3
@@ -333,7 +329,7 @@ export function render(gameState: GameState) {
   });
   startWork("render:bricks");
   ctx.globalCompositeOperation = "source-over";
-  renderAllBricks();
+  renderAllBricks(gameState, ctx);
 
   startWork("render:lights");
   ctx.globalCompositeOperation = "source-over";
@@ -457,13 +453,12 @@ export function render(gameState: GameState) {
   ctx.globalCompositeOperation = "source-over";
   drawPuck(
     ctx,
-    gameState.puckColor,
-    gameState.puckWidth,
-    gameState.puckHeight,
+    gameState,
     0,
     gameState.perks.concave_puck,
     gameState.perks.streak_shots && hasCombo ? getDashOffset(gameState) : -1,
   );
+
 
   startWork("render:combotext");
 
@@ -634,17 +629,6 @@ export function render(gameState: GameState) {
   startWork("render:text_under_puck");
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = 1;
-  if (isOptionOn("mobile-mode") && gameState.startParams.computer_controlled) {
-    drawText(
-      ctx,
-      "breakout.lecaro.me?autoplay",
-      gameState.puckColor,
-      gameState.puckHeight,
-      gameState.canvasWidth / 2,
-      gameState.gameZoneHeight +
-        (gameState.canvasHeight - gameState.gameZoneHeight) / 2,
-    );
-  }
   if (isOptionOn("mobile-mode") && !gameState.running) {
     drawText(
       ctx,
@@ -745,7 +729,7 @@ function drawStraightLine(
 let cachedBricksRender = document.createElement("canvas");
 let cachedBricksRenderKey = "";
 
-export function renderAllBricks() {
+export function renderAllBricks( gameState:GameState, ctx: CanvasRenderingContext2D) {
   ctx.globalAlpha = 1;
 
   const hasCombo = gameState.combo > baseCombo(gameState);
@@ -790,17 +774,21 @@ export function renderAllBricks() {
     "_" +
     round;
 
-  if (newKey !== cachedBricksRenderKey) {
-    cachedBricksRenderKey = newKey;
+  if (newKey !== cachedBricksRenderKey || gameState.startParams.animated_perk_preview) {
+    let canctx=ctx;
 
-    cachedBricksRender.width = gameState.gameZoneWidth;
-    cachedBricksRender.height = gameState.gameZoneWidth + 1;
-    const canctx = cachedBricksRender.getContext(
-      "2d",
-    ) as CanvasRenderingContext2D;
-    canctx.clearRect(0, 0, gameState.gameZoneWidth, gameState.gameZoneWidth);
-    canctx.resetTransform();
-    canctx.translate(-gameState.offsetX, 0);
+    if(!gameState.startParams.animated_perk_preview){
+      cachedBricksRenderKey = newKey;
+      cachedBricksRender.width = gameState.gameZoneWidth;
+      cachedBricksRender.height = gameState.gameZoneWidth + 1;
+      canctx = cachedBricksRender.getContext(
+        "2d",
+      ) as CanvasRenderingContext2D;
+      canctx.clearRect(0, 0, gameState.gameZoneWidth, gameState.gameZoneWidth);
+      canctx.resetTransform();
+      canctx.translate(-gameState.offsetX, 0);
+    }
+
     // Bricks
     gameState.bricks.forEach((color, index) => {
       const x = brickCenterX(gameState, index),
@@ -847,7 +835,7 @@ export function renderAllBricks() {
       }
     });
   }
-
+  if(!gameState.startParams.animated_perk_preview)
   ctx.drawImage(cachedBricksRender, gameState.offsetX, 0);
 }
 
@@ -855,16 +843,18 @@ let cachedGraphics: { [k: string]: HTMLCanvasElement } = {};
 
 export function drawPuck(
   ctx: CanvasRenderingContext2D,
-  color: colorString,
-  puckWidth: number,
-  puckHeight: number,
+  gameState:GameState,
   yOffset = 0,
   concave_puck: number,
   redBorderOffset: number,
 ) {
+
+    const {puckColor,puckWidth ,puckHeight}=gameState
+
+
   const key =
     "puck" +
-    color +
+    puckColor +
     "_" +
     puckWidth +
     "_" +
@@ -879,7 +869,7 @@ export function drawPuck(
     can.width = puckWidth;
     can.height = puckHeight * 2;
     const canctx = can.getContext("2d") as CanvasRenderingContext2D;
-    canctx.fillStyle = color;
+    canctx.fillStyle = puckColor;
 
     canctx.beginPath();
     canctx.moveTo(0, puckHeight * 2);
@@ -920,7 +910,6 @@ export function drawPuck(
 
     cachedGraphics[key] = can;
   }
-
   ctx.drawImage(
     cachedGraphics[key],
     Math.round(gameState.puckPosition - puckWidth / 2),

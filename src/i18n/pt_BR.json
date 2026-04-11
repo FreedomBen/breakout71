@@ -206,6 +206,8 @@
     "unlocks.minScoreWithPerks": "Alcance ${{minScore}} pontos em uma corrida com {{required}}, mas sem {{forbidden}} para desbloquear.",
     "unlocks.minScoreWithPerksNoForbidden": "Alcance ${{minScore}} pontos em uma corrida com {{required}} para desbloquear.",
     "unlocks.minTotalScore": "Acumule um total de ${{score}} pontos",
+    "unlocks.next": "",
+    "unlocks.previous": "",
     "unlocks.reached": "Sua melhor pontuação foi {{reached}}.",
     "unlocks.start_new_game_with": "Começar uma nova partida",
     "unlocks.start_new_game_with_help": "Use esta melhoria como uma vantagem inicial.",

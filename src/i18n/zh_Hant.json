@@ -206,6 +206,8 @@
     "unlocks.minScoreWithPerks": "在一場遊戲中達到 ${{minScore}} ，而且有 {{required}} 但是沒有 {{forbidden}} 以解鎖。",
     "unlocks.minScoreWithPerksNoForbidden": "在一次遊玩中選擇 {{required}} 而且達到 ${{minScore}} 分以解鎖。",
     "unlocks.minTotalScore": "累計 ${{score}}",
+    "unlocks.next": "",
+    "unlocks.previous": "",
     "unlocks.reached": "你的最佳分數是 {{reached}}。",
     "unlocks.start_new_game_with": "",
     "unlocks.start_new_game_with_help": "",

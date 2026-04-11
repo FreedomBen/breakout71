@@ -206,6 +206,8 @@
     "unlocks.minScoreWithPerks": "Alcanzar ${{minScore}} en un juego con {{required}} pero sin {{forbidden}}.",
     "unlocks.minScoreWithPerksNoForbidden": "Alcanzar ${{minScore}} en un juego con {{required}}.",
     "unlocks.minTotalScore": "Acumula un total de ${{score}}",
+    "unlocks.next": "",
+    "unlocks.previous": "",
     "unlocks.reached": "Tu mejor puntuación hasta ahora es {{reached}}.",
     "unlocks.start_new_game_with": "",
     "unlocks.start_new_game_with_help": "",

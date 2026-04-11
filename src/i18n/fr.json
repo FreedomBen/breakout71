@@ -206,6 +206,8 @@
     "unlocks.minScoreWithPerks": "Atteignez ${{minScore}} dans une partie avec {{required}} mais sans {{forbidden}}.",
     "unlocks.minScoreWithPerksNoForbidden": "Atteignez ${{minScore}} dans une partie avec {{required}}.",
     "unlocks.minTotalScore": "Accumuler un total de ${{score}}",
+    "unlocks.next": "",
+    "unlocks.previous": "",
     "unlocks.reached": "Votre meilleur score pour l'instant est {{reached}}.",
     "unlocks.start_new_game_with": "Commencez une nouvelle partie",
     "unlocks.start_new_game_with_help": "Utiliser cette amélioration comme avantage de départ.",

@@ -300,6 +300,7 @@ export type RunParams = {
   perkToAvoid?: PerkId;
   perks?: Partial<PerksMap>;
   computer_controlled?: boolean;
+  animated_perk_preview?: boolean;
   isEditorTrialRun?: number;
   isCreativeRun?: boolean;
   stress?: boolean;

@@ -8,6 +8,7 @@ import { categories } from "./upgrades";
 import { openUpgradeDetails } from "./openUpgradeDetails";
 import { getIcon } from "./levelIcon";
 
+setTimeout(()=>openUnlockedUpgradesList())
 export async function openUnlockedUpgradesList() {
   const ts = getTotalScore();
   const upgradeActions = upgrades

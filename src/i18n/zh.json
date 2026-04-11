@@ -206,6 +206,8 @@
     "unlocks.minScoreWithPerks": "在一场游戏中有 {{required}} 但没有 {{forbidden}} 达到 ${{minScore}} 来解锁。",
     "unlocks.minScoreWithPerksNoForbidden": "在一次游玩中选择 {{required}} 并达到 ${{minScore}} 以解锁。",
     "unlocks.minTotalScore": "累计总分 {{score}}",
+    "unlocks.next": "",
+    "unlocks.previous": "",
     "unlocks.reached": "你的最好分数是 {{reached}}。",
     "unlocks.start_new_game_with": "开始新游戏",
     "unlocks.start_new_game_with_help": "使用这个升级作为初始被动技能。",

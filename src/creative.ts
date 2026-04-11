@@ -5,7 +5,7 @@ import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import {
   confirmRestart,
   creativeModeThreshold,
-  gameState,
+  mainGameState,
   restart,
 } from "./game";
 import { asyncAlert } from "./asyncAlert";
@@ -119,7 +119,7 @@ export async function openCreativeModePerksPicker() {
       ("bricks" in choice &&
         choice.name == getSettingValue("creativeModeLevel", ""))
     ) {
-      if (await confirmRestart(gameState)) {
+      if (await confirmRestart(mainGameState)) {
         restart({
           perks: creativeModePerks,
           level: selectedLeveOption.value,

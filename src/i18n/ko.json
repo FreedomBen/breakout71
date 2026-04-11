@@ -206,6 +206,8 @@
     "unlocks.minScoreWithPerks": "잠금을 해제하려면 {{required}} 을 사용하지만 {{forbidden}} 을 사용하지 않고 실행하여{{minScore}} 달러에 도달하세요.",
     "unlocks.minScoreWithPerksNoForbidden": "잠금 해제하려면 {{minScore}}에 도달하십시오.",
     "unlocks.minTotalScore": "총{{score}}달러 적립",
+    "unlocks.next": "",
+    "unlocks.previous": "",
     "unlocks.reached": "최고 점수는 {{reached}}입니다.",
     "unlocks.start_new_game_with": "",
     "unlocks.start_new_game_with_help": "",

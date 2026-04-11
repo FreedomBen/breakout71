@@ -206,6 +206,8 @@
     "unlocks.minScoreWithPerks": "『{{required}}』を取得し、なおかつ『{{forbidden}}』は取得せずに、{{minScore}}点獲得すると解禁されます。",
     "unlocks.minScoreWithPerksNoForbidden": "『{{required}}』を取得して{{minScore}}点獲得すると解禁されます。",
     "unlocks.minTotalScore": "累計{{score}}点獲得してください",
+    "unlocks.next": "",
+    "unlocks.previous": "",
     "unlocks.reached": "あなたの最高得点は{{reached}}点です。",
     "unlocks.start_new_game_with": "",
     "unlocks.start_new_game_with_help": "",

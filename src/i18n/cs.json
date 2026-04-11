@@ -206,6 +206,8 @@
     "unlocks.minScoreWithPerks": "Odemkněte dosažením ${{minScore}} v jedné hře s {{required}}, ale bez {{forbidden}}.",
     "unlocks.minScoreWithPerksNoForbidden": "Odemkněte dosažením ${{minScore}} v jedné hře s {{required}}.",
     "unlocks.minTotalScore": "Nasbírejte celkem ${{score}}",
+    "unlocks.next": "",
+    "unlocks.previous": "",
     "unlocks.reached": "Vaše nejlepší skóre bylo {{reached}}.",
     "unlocks.start_new_game_with": "Začít novou hru",
     "unlocks.start_new_game_with_help": "Použít jako počáteční vylepšení.",
