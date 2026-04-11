@@ -86,7 +86,7 @@ export function getGameAnimation(params: RunParams) {
     previewFrame()
   })
   const morePerks=Object.keys(params.perks||{}).length>1
-  
+
   return `<canvas class="game_preview" id="${id}" width="${width}" height="${height}"></canvas>`
   + (morePerks ? `<p class="with_extra">${t('unlocks.extra_perks_for_preview')}</p>`:'')
 }

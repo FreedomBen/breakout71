@@ -1607,6 +1607,8 @@ export function gameStateTick(
     }
   }
 
+  addGravityParticules(gameState, frames)
+
   if (
     gameState.perks.wrap_left &&
     gameState.perks.left_is_lava < 2 &&
@@ -1668,6 +1670,7 @@ export function gameStateTick(
       );
     }
   });
+
 
   forEachLiveOne(gameState.particles, (p, pi) => {
     if (gameState.levelTime > p.time + p.duration) {
@@ -2538,4 +2541,40 @@ function applyWrapUp(gameState: GameState, ball: Ball | Coin, radius) {
     ball.previousY,
     "#6262EA",
   );
+}
+
+
+function addGravityParticules(gameState:GameState, frames:number){
+  if(!gameState.balls.find(b=>!b.destroyed && !b.hasGravity)) return
+  if(
+
+    gameState.perks.gravity_falls
+     && Math.random()<frames*0.2
+     && gameState.balls.find(b=> !b.destroyed && b.vy<0 && !b.hasGravity && b.y<gameState.gameZoneHeight/3)
+  ){
+
+    makeParticle(
+      gameState,
+      gameState.offsetX+gameState.gameZoneWidth*Math.random(),
+      0,
+      0,
+      2,
+      "#ffe02e",
+      )
+  }
+  if(
+    gameState.perks.flyswatter
+    && Math.random()<frames*0.05
+    && gameState.puckPosition<gameState.offsetXRoundedDown+gameState.gameZoneWidth/2
+  ){
+    makeParticle(
+      gameState,
+      gameState.offsetXRoundedDown+20*Math.random(),
+      gameState.gameZoneHeight-50,
+      0,
+      2,
+      "#ffe02e",
+      )
+  }
+
 }
