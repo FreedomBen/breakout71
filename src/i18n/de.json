@@ -191,6 +191,7 @@
     "unlocks.category.combo": "## Combo-Upgrades\n\nDiese Upgrades verbessern deine Combos schrittweise, fügen aber auch eine Combo-Reset-Bedingung hinzu. Ein Upgrade ist sinnvoll, mehr Upgrades erhöhen das Risiko und den Nutzen.",
     "unlocks.category.combo_boost": "## Combo-Booster-Upgrades\n\nDiese Upgrades erhöhen die Combo oder den Combo-Multiplikator, ohne eine Reset-Bedingung hinzuzufügen.",
     "unlocks.category.simple": "## Helfer-Upgrades\n\nDiese Upgrades sind in fast jedem Build nützlich.",
+    "unlocks.extra_perks_for_preview": "",
     "unlocks.greyed_out_help": "Die ausgegrauten Upgrades können freigeschaltet werden, indem du Ihre Gesamtpunktzahl erhöhst. Die Gesamtpunktzahl erhöht sich jedes Mal, wenn du im Spiel punktest.",
     "unlocks.include_in_level_pool": "",
     "unlocks.include_in_level_pool_help": "",

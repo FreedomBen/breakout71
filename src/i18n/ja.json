@@ -191,6 +191,7 @@
     "unlocks.category.combo": "## コンボ アップグレード\n\nコンボを段階的に増加させる一方で、コンボのリセット条件も追加するアップグレードです。一つ取るのは良い考えですが、さらに多く取ればリスクと報酬が増大します。",
     "unlocks.category.combo_boost": "## コンボブースター アップグレード\n\nリセット条件を追加せずに、コンボまたはコンボ倍率を増加させるアップグレードです。",
     "unlocks.category.simple": "## ヘルパー アップグレード\n\nほぼすべてのビルドにおいて有用なアップグレードです。",
+    "unlocks.extra_perks_for_preview": "",
     "unlocks.greyed_out_help": "灰色表示のアップグレードは、累計スコアを上げることで解禁できます。累計スコアはゲーム内でスコアを獲得するたびに増加します。",
     "unlocks.include_in_level_pool": "",
     "unlocks.include_in_level_pool_help": "",

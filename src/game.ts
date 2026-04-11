@@ -997,6 +997,7 @@ document.addEventListener("keyup", async (e) => {
 });
 
 export const mainGameState = newGameState({});
+window.mainGameState=mainGameState
 
 export function restart(params: RunParams) {
   getWorstFPSAndReset();

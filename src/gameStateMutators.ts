@@ -292,7 +292,6 @@ export function spawnParticlesExplosion(
   y: number,
   color: string,
 ) {
-  // if (!!isOptionOn("basic")) return;
 
   if (liveCount(gameState.particles) > getCurrentMaxParticles()) {
     // Avoid freezing when lots of explosion happen at once
@@ -319,7 +318,7 @@ export function spawnXShapedParticlesExplosion(
   y: number,
   color: string,
 ) {
-  // if (!!isOptionOn("basic")) return;
+
   if (color == "black") return;
   if (liveCount(gameState.particles) > getCurrentMaxParticles()) {
     // Avoid freezing when lots of explosion happen at once
@@ -362,7 +361,6 @@ export function spawnParticlesImplosion(
   y: number,
   color: string,
 ) {
-  // if (!!isOptionOn("basic")) return;
 
   if (liveCount(gameState.particles) > getCurrentMaxParticles()) {
     // Avoid freezing when lots of explosion happen at once
@@ -643,7 +641,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
       localStorage.setItem("breakout-3-hs-short", gameState.score.toString());
     } catch (e) {}
   }
-  if (!isOptionOn("basic")) {
+
     makeParticle(
       gameState,
       coin.previousX,
@@ -655,7 +653,7 @@ export function addToScore(gameState: GameState, coin: Coin) {
       8,
       100 + Math.random() * 50,
     );
-  }
+
 
   schedulGameSound(gameState, "coinCatch", coin.x, 1);
   gameState.runStatistics.score += coin.points;
@@ -1143,7 +1141,6 @@ export function gameStateTick(
             coin.vy += dy;
 
             if (
-              // !isOptionOn("basic") &&
               Math.random() * gameState.perks.ball_attracts_coins * frames > 0.9
             ) {
               makeParticle(
@@ -1223,7 +1220,6 @@ export function gameStateTick(
 
       if (
         gameState.perks.helium &&
-        // !isOptionOn("basic") &&
         Math.random() < 0.1 * frames
       ) {
         makeParticle(
@@ -1302,7 +1298,6 @@ export function gameStateTick(
           coin.x,
           (clamp(speed, 20, 100) / 100) * 0.2,
         );
-        // if (!isOptionOn("basic")) {
           makeParticle(
             gameState,
             coin.x,
@@ -1312,7 +1307,6 @@ export function gameStateTick(
             getCoinRenderColor(gameState, coin),
             false,
           );
-        // }
       }
 
       if (
@@ -1522,7 +1516,6 @@ export function gameStateTick(
 
   if (
     gameState.combo > baseCombo(gameState) &&
-    // !isOptionOn("basic") &&
     (gameState.combo - baseCombo(gameState)) * Math.random() * frames > 5
   ) {
     // The red should still be visible on a white bg
@@ -1807,7 +1800,6 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       ball.vy = Math.sin(angle) * d;
       ball.vx = Math.cos(angle) * d;
       if (Math.random() < frames
-        // && !isOptionOn("basic")
       ) {
         makeParticle(
           gameState,
@@ -2164,7 +2156,6 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   }
 
   if (
-    // !isOptionOn("basic") &&
     ballTransparency(ball, gameState) < Math.random()
   ) {
     const remainingPierce = ball.piercePoints;
@@ -2217,7 +2208,7 @@ function justLostALife(gameState: GameState, x: number, y: number) {
 
   schedulGameSound(gameState, "lifeLost", x, 1);
 
-  if (!isOptionOn("basic")) {
+
     for (let i = 0; i < 10; i++)
       makeParticle(
         gameState,
@@ -2230,7 +2221,6 @@ function justLostALife(gameState: GameState, x: number, y: number) {
         8,
         150,
       );
-  }
 }
 
 function makeCoin(

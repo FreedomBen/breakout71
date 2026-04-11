@@ -191,6 +191,7 @@
     "unlocks.category.combo": "## 連擊升級\n\n這些升級可以幫助你逐步提升連擊，但是同時也會加入連擊重置條件。選擇一項是不錯的選擇，但是選擇更多則會增加風險和回報。",
     "unlocks.category.combo_boost": "## 連擊強化升級\n\n這些升級可以提升連擊數或連擊倍數，而且沒有增加重置條件。",
     "unlocks.category.simple": "## 輔助升級\n\n這些升級幾乎適用於任何情況。",
+    "unlocks.extra_perks_for_preview": "",
     "unlocks.greyed_out_help": "灰色的升級可以透過增加總分數來解鎖。遊戲中每次得分都會增加總分數。",
     "unlocks.include_in_level_pool": "",
     "unlocks.include_in_level_pool_help": "",

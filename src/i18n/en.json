@@ -191,6 +191,7 @@
     "unlocks.category.combo": "## Combo upgrades\n\nThose upgrades help increase your combo progressively, but also add a combo reset condition. Taking one is a good idea, taking more increases the risk and reward.",
     "unlocks.category.combo_boost": "## Combo booster upgrades\n\nThose upgrades increase the combo or combo multiplier without adding a reset condition.",
     "unlocks.category.simple": "## Helper upgrades\n\nThose upgrades are useful in almost any build.",
+    "unlocks.extra_perks_for_preview": "Extra upgrades applied for illustrative purpose.",
     "unlocks.greyed_out_help": "The grayed out upgrades can be unlocked by increasing your total score. The total score increases every time you score in game.",
     "unlocks.include_in_level_pool": "Include level in the game",
     "unlocks.include_in_level_pool_help": "You can uncheck levels you don't like",

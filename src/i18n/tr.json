@@ -191,6 +191,7 @@
     "unlocks.category.combo": "## Kombo yükseltmeleri\n\nBu yükseltmeler kombonuzu kademeli olarak artırmanıza yardımcı olur, ancak aynı zamanda bir kombo sıfırlama koşulu da ekler. Bir tane almak iyi bir fikirdir, daha fazlasını almak riski ve ödülü artırır.",
     "unlocks.category.combo_boost": "## Kombo güçlendirici yükseltmeleri\n\nBu yükseltmeler, sıfırlama koşulu eklemeden komboyu veya kombo çarpanını artırır.",
     "unlocks.category.simple": "## Yardımcı yükseltmeleri\n\nBu yükseltmeler hemen hemen her yapıda faydalıdır.",
+    "unlocks.extra_perks_for_preview": "",
     "unlocks.greyed_out_help": "Grileştirilmiş yükseltmeler toplam puanınızı artırarak açılabilir. Toplam puan, oyunda her puan aldığınızda artar.",
     "unlocks.include_in_level_pool": "",
     "unlocks.include_in_level_pool_help": "",

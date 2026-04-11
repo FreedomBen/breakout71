@@ -1,5 +1,5 @@
 import { GameState, PerkId } from "./types";
-import { getSettingValue, setSettingValue } from "./settings";
+import {commitSettingsChangesToLocalStorage, getSettingValue, setSettingValue} from "./settings";
 import { allLevels } from "./loadGameData";
 
 import { t } from "./i18n/i18n";
@@ -57,4 +57,11 @@ export function monitorLevelsUnlocks(gameState: GameState) {
     );
     schedulGameSound(gameState, "colorChange", 0, 1);
   });
+}
+
+window.unlock_all=function (){
+      setSettingValue("breakout_71_total_score", 9999999999)
+      setSettingValue("breakout_71_unlocked_levels", allLevels.map(l=>l.name))
+  commitSettingsChangesToLocalStorage()
+  window.location.reload()
 }

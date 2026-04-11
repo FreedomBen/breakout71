@@ -191,6 +191,7 @@
     "unlocks.category.combo": "## Mejoras de combo\n\nEstas mejoras ayudan a aumentar tu combo progresivamente, pero también añaden una condición de reinicio. Usar una es buena idea, pero usar más aumenta el riesgo y la recompensa.",
     "unlocks.category.combo_boost": "Mejoras de combo\n\nEstas mejoras aumentan el combo o el multiplicador de combo sin necesidad de reiniciarlo.",
     "unlocks.category.simple": "## Mejoras auxiliares\n\nEstas mejoras son útiles en casi cualquier configuración.",
+    "unlocks.extra_perks_for_preview": "",
     "unlocks.greyed_out_help": "Los objetos en gris pueden desbloquearse aumentando tu puntuación total. La puntuación total aumenta cada vez que consigues puntos en el juego.",
     "unlocks.include_in_level_pool": "",
     "unlocks.include_in_level_pool_help": "",

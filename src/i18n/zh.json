@@ -191,6 +191,7 @@
     "unlocks.category.combo": "## 连击升级\n\n这些升级有助于逐步增加你的连击，但也添加了一个连击重置条件。拿一个是好主意，拿更多会增加风险和奖励。",
     "unlocks.category.combo_boost": "## 连击增效器升级\n\n这些升级增加连击或连击乘数而不添加重置条件。",
     "unlocks.category.simple": "## 助手升级\n\n这些升级在几乎任何构建中都很有用。",
+    "unlocks.extra_perks_for_preview": "",
     "unlocks.greyed_out_help": "灰色的升级可以通过增加总分来解锁。每次在游戏中得分都会增加总分。",
     "unlocks.include_in_level_pool": "在游戏中包含这个关卡",
     "unlocks.include_in_level_pool_help": "你可以取消勾选你不喜欢的关卡",

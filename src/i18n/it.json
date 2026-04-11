@@ -191,6 +191,7 @@
     "unlocks.category.combo": "## Potenziamenti Combo\n\nQuesti potenziamenti aiutano ad aumentare la combo progressivamente, ma aggiungono anche una condizione di reset combo. Prenderne uno è una buona idea, prenderne più aumenta il rischio e la ricompensa.",
     "unlocks.category.combo_boost": "## Potenziamenti Combo booster\n\nQuesti potenziamenti aumentano il moltiplicatore combo senza aggiungere una condizione di reset.",
     "unlocks.category.simple": "# Potenziamenti d'aiuto\n\nQuesti potenziamenti sono utili in quasi tutte le combinazioni.",
+    "unlocks.extra_perks_for_preview": "",
     "unlocks.greyed_out_help": "I potenziamenti in grigio possono essere sbloccati aumentando il punteggio totale. Il punteggio totale aumenta ogni volta che segni in una partita.",
     "unlocks.include_in_level_pool": "",
     "unlocks.include_in_level_pool_help": "",

@@ -750,6 +750,36 @@ h2.histogram-title strong {
   image-rendering: crisp-edges;
 }
 
+
+.perk-title{
+  display: flex;
+  span{
+    flex-grow: 1;
+    text-align: center;
+  }
+  button{
+    min-width: 40px;
+    &:disabled{
+      opacity: 0.2;
+    }
+    border: 1px solid white;
+    background: rgba(0,0,0,0.2);
+    color: white;
+    cursor: pointer;
+  }
+}
+.game_preview{
+  margin: 0 auto;
+  border: 1px solid #ffffff;
+  display: block;
+}
+.with_extra{
+  font-style: italic;
+  opacity: 0.5;
+  font-size: 80%;
+  text-align: center;
+}
+
 @palette_B: black;
 @palette_W: #ffffff;
 @palette_g: #231f20;

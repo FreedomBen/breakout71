@@ -1,4 +1,4 @@
-import {PerkId, RunParams, Upgrade} from "./types";
+import {PerkId,  Upgrade} from "./types";
 import { allLevelsAndIcons, upgrades } from "./loadGameData";
 import { getSettingValue, getTotalScore, setSettingValue } from "./settings";
 import { asyncAlert } from "./asyncAlert";
@@ -6,21 +6,20 @@ import { miniMarkDown } from "./pure_functions";
 import { t } from "./i18n/i18n";
 import { confirmRestart, mainGameState, restart } from "./game";
 import { getCheckboxIcon, getIcon } from "./levelIcon";
-import {getGameAnimation, getPerkAnimation} from "./gameAnimation";
-
+import { getPerkAnimation} from "./gameAnimation";
 
 export async function openUpgradeDetails(
   id: PerkId,
   onClose: () => void,
 ) {
 
-  const { name, help, fullHelp, gift, requires } = upgrades.find(
+  const { name, help, fullHelp, gift } = upgrades.find(
     (u) => u.id === id,
   ) as Upgrade;
 
   const ts = getTotalScore();
 
-  const free=upgrades.filter(({threshold})=>ts > threshold).map(u=>u.id)
+  const free=upgrades.filter(({threshold})=>ts >= threshold).map(u=>u.id)
   const currentIndex=free.indexOf(id)
   const next = free[currentIndex+1]
   const previous= free[currentIndex-1]
@@ -42,7 +41,12 @@ export async function openUpgradeDetails(
   }
 
   const action = await asyncAlert<string>({
-    title: name,
+    title: `<span class="perk-title">
+    <button ${previous ? 'data-resolve-to="previous"':'disabled' } data-tooltip="${t('unlocks.previous')}">‹ </button>
+    <span>${name.replace(/<|>/gi,' ')}</span>
+    <button ${next ? 'data-resolve-to="next"':'disabled' } data-tooltip="${t('unlocks.next')}">  ›</button></span> 
+    `
+    ,
     content: [
       getPerkAnimation(id),
       {
@@ -50,15 +54,6 @@ export async function openUpgradeDetails(
         help: t("unlocks.start_new_game_with_help"),
         value: "use",
         icon: getIcon("icon:new_run"),
-      },
- {
-        text:t('unlocks.next'),
-        value:'next',
-        disabled:!next
-      },{
-        text:t('unlocks.previous'),
-        value:'previous',
-        disabled:!previous
       },
       help(1),
       miniMarkDown(fullHelp(1)),
@@ -98,11 +93,17 @@ export async function openUpgradeDetails(
       setSettingValue("offer-upgrade-" + id, !allowedInGame);
       break;
     case "previous":
-      openUpgradeDetails(previous, onClose)
-      return
+      if(previous) {
+          openUpgradeDetails(previous, onClose)
+        return
+      }
+      break
     case "next":
-      openUpgradeDetails(next, onClose)
-      return
+      if(next) {
+        openUpgradeDetails(next, onClose)
+        return
+      }
+      break
   }
   return openUpgradeDetails(id, onClose);
 }

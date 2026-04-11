@@ -191,6 +191,7 @@
     "unlocks.category.combo": "## Melhorias para combos\n\nEssas melhorias ajudam a aumentar o seu combo progressivamente, mas também adicionar uma condição que reinicia-o. Escolher um é uma boa ideia, escolher vários aumenta o risco e a recompensa.",
     "unlocks.category.combo_boost": "## Impulsionadores de combos\n\nEssas melhorias aumentam o multiplicador de combo ou o combo sem adicionar uma condição que o reinicia.",
     "unlocks.category.simple": "## Melhorias de ajuda\n\nEssas melhorias são úteis em quase todas as combinações de melhorias.",
+    "unlocks.extra_perks_for_preview": "",
     "unlocks.greyed_out_help": "As atualizações acinzentadas podem ser desbloqueadas aumentando a sua pontuação total. A pontuação total aumenta cada vez que pontuar no jogo.",
     "unlocks.include_in_level_pool": "",
     "unlocks.include_in_level_pool_help": "",

@@ -191,6 +191,7 @@
     "unlocks.category.combo": "## Améliorations de combo\n\nCes améliorations permettent d'augmenter progressivement votre combo, mais ajoutent également une condition de réinitialisation. En choisir une est une bonne idée, en choisir plusieurs augmente le risque et la récompense.",
     "unlocks.category.combo_boost": "## Améliorations de combo\n\nCes améliorations augmentent le nombre de pièces produites sans ajouter de condition de remise à zéro du combo.",
     "unlocks.category.simple": "## Améliorations d'assistance\n\nCes améliorations sont utiles dans presque toutes les situations.",
+    "unlocks.extra_perks_for_preview": "",
     "unlocks.greyed_out_help": "Les améliorations grisées peuvent être débloquées en augmentant votre score total. Le score total augmente à chaque fois que vous attrapez une pièce dans le jeu.",
     "unlocks.include_in_level_pool": "Intégrez le niveau dans le jeu",
     "unlocks.include_in_level_pool_help": "Vous pouvez décocher les niveaux qui ne vous plaisent pas.",

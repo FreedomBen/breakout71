@@ -59,6 +59,7 @@ export function getHaloScale() {
 
 let framesCounter = 0;
 export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
+  const isPreview= gameState.startParams.animated_perk_preview
 
   const width=gameState.canvasWidth, height= gameState.canvasHeight
 
@@ -68,29 +69,32 @@ export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
 
   const hasCombo = gameState.combo > baseCombo(gameState);
 
-  if (gameState.currentLevel || gameState.levelTime) {
-    menuLabel.innerText = t("play.current_lvl", {
-      level: gameState.currentLevel + 1,
-      max: renderMaxLevel(gameState),
-    });
-  } else {
-    menuLabel.innerText = t("play.menu_label");
-  }
+  if(!isPreview) {
+    startWork("render:currentLevelDisplay");
+    if (gameState.currentLevel || gameState.levelTime) {
+      menuLabel.innerText = t("play.current_lvl", {
+        level: gameState.currentLevel + 1,
+        max: renderMaxLevel(gameState),
+      });
+    } else {
+      menuLabel.innerText = t("play.menu_label");
+    }
 
-  const catchRate = gameState.levelSpawnedCoins
-    ? gameState.levelCaughtCoins / (gameState.levelSpawnedCoins || 1)
-    : 1;
-  startWork("render:scoreDisplay");
-  scoreDisplay.innerHTML =
-    (isOptionOn("show_fps") || gameState.startParams.computer_controlled
-      ? ` 
+    const catchRate = gameState.levelSpawnedCoins
+      ? gameState.levelCaughtCoins / (gameState.levelSpawnedCoins || 1)
+      : 1;
+
+    startWork("render:scoreDisplay");
+    scoreDisplay.innerHTML =
+      (isOptionOn("show_fps") || gameState.startParams.computer_controlled
+        ? ` 
           <span class="${(Math.abs(lastMeasuredFPS - 60) < 2 && " ") || (Math.abs(lastMeasuredFPS - 60) < 10 && "good") || "bad"}">
             ${lastMeasuredFPS} FPS
         </span><span> / </span>
             `
-      : "") +
-    (isOptionOn("show_stats")
-      ? ` 
+        : "") +
+      (isOptionOn("show_stats")
+        ? ` 
         <span class="${(catchRate > catchRateBest / 100 && "great") || (catchRate > catchRateGood / 100 && "good") || ""}" data-tooltip="${t("play.stats.coins_catch_rate")}">
             ${Math.floor(catchRate * 100)}%
         </span><span> / </span>
@@ -101,18 +105,18 @@ export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
         ${gameState.levelMisses} M
         </span><span> / </span>
         `
-      : "") +
-    `<span class="score" data-tooltip="${t("play.score_tooltip")}">$${gameState.score}</span>`;
+        : "") +
+      `<span class="score" data-tooltip="${t("play.score_tooltip")}">$${gameState.score}</span>`;
 
-  scoreDisplay.classList[
-    gameState.startParams.computer_controlled ? "add" : "remove"
-  ]("computer_controlled");
-  scoreDisplay.classList[
-    gameState.lastScoreIncrease > gameState.levelTime - 500 ? "add" : "remove"
-  ]("active");
-
+    scoreDisplay.classList[
+      gameState.startParams.computer_controlled ? "add" : "remove"
+      ]("computer_controlled");
+    scoreDisplay.classList[
+      gameState.lastScoreIncrease > gameState.levelTime - 500 ? "add" : "remove"
+      ]("active");
+  }
   // Clear
-  if (!isOptionOn("basic") && !gameState.startParams.animated_perk_preview && level.svg && level.color === "#000000") {
+  if (!isOptionOn("basic") && !isPreview && level.svg && level.color === "#000000") {
     const skipN =
       isOptionOn("probabilistic_lighting") && liveCount(gameState.coins) > 150
         ? 3
@@ -277,7 +281,6 @@ export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
 
   const shaked =
     lastExplosionDelay < 200 &&
-    !isOptionOn("basic") &&
     // Otherwise, if you pause after an explosion, moving the mouses shakes the picture
     gameState.running;
   if (shaked) {
@@ -590,6 +593,7 @@ export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
     ctx,
     gameState,
     (bottomLineIsRed && "#FF0000") ||
+      (isPreview && "#FFFFFF") ||
       (isOptionOn("mobile-mode") && "#FFFFFF") ||
       (corner && "#FFFFFF") ||
       "",
@@ -604,6 +608,7 @@ export function render(gameState: GameState, ctx:CanvasRenderingContext2D) {
   if (
     !isOptionOn("basic") &&
     isOptionOn("contrast") &&
+    !isPreview &&
     level.svg &&
     level.color === "#000000"
   ) {

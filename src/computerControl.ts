@@ -21,10 +21,10 @@ export function computerControl(gameState: GameState) {
     ((rng - 50) / 100) *
     gameState.puckWidth;
 
-  if(gameState.perks.left_is_lava || gameState.perks.side_kick){
+  if(gameState.perks.left_is_lava || gameState.perks.side_kick|| gameState.perks.wrap_right){
     puckOffset=-gameState.puckWidth/2.2
   }
-  if(gameState.perks.right_is_lava|| gameState.perks.side_flip){
+  if(gameState.perks.right_is_lava|| gameState.perks.side_flip || gameState.perks.wrap_left){
     puckOffset=gameState.puckWidth/2.2
   }
   if(gameState.perks.nbricks){
@@ -34,7 +34,9 @@ export function computerControl(gameState: GameState) {
       puckOffset=gameState.puckWidth/2.2 * (rng>50?1:-1)
   }
 
-  if (ball.y > gameState.gameZoneHeight / 2 && ball.vy > 0) {
+  const ballGettingCloser=ball.y > gameState.gameZoneHeight / 2 && ball.vy > 0
+
+  if (gameState.perks.superhot ||ballGettingCloser) {
     targetX = ball.x + puckOffset;
     if(gameState.perks.extra_life)  speed=-1
     if(gameState.perks.yoyo) speed=0.5
@@ -49,7 +51,7 @@ export function computerControl(gameState: GameState) {
     });
     if (coinsCount) {
       targetX = coinsTotalX / coinsCount;
-      if(gameState.perks.asceticism || gameState.perks.fountain_toss) speed=-1
+      if(gameState.perks.asceticism || gameState.perks.fountain_toss || gameState.perks.buoy) speed=-1
     } else {
       targetX = gameState.canvasWidth / 2;
     }
