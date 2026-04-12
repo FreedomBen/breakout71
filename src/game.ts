@@ -476,7 +476,7 @@ export async function openMainMenu() {
       },
     },
     creativeMode(mainGameState),
-    runHistoryViewerMenuEntry(),
+    ...runHistoryViewerMenuEntry(),
     levelEditorMenuEntry(),
     {
       icon: getIcon("icon:unlocked_upgrades"),

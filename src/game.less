@@ -783,6 +783,41 @@ h2.histogram-title strong {
   font-size: 80%;
   text-align: center;
 }
+#popup.score_matrix_popup {
+  overflow: visible;
+  > div {
+    max-width: none;
+  }
+
+  table.score_matrix {
+    border-spacing: 0;
+    //border-collapse: collapse;
+    font-size: 10px;
+    thead th {
+      position: sticky;
+      top: 0;
+      background: rgba(0, 0, 0, 0.8);
+    }
+    tbody th {
+      position: sticky;
+      left: 0;
+      background: rgba(0, 0, 0, 0.8);
+    }
+    td {
+      box-shadow: 0 0 2px black;
+      text-align: center;
+      color: black;
+      &.excluded,
+      &.combined {
+      }
+      &.single {
+      }
+      &.empty {
+        opacity: 0.5;
+      }
+    }
+  }
+}
 
 @palette_B: black;
 @palette_W: #ffffff;

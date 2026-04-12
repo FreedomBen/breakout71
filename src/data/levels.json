@@ -252,6 +252,12 @@
     "credit": ""
   },
   {
+    "name": "icon:matrix",
+    "size": 6,
+    "bricks": "bgbgbggbgbgbbgbgbggbgbgbbgbgbggbgbgb",
+    "credit": ""
+  },
+  {
     "name": "icon:metamorphosis",
     "size": 8,
     "bricks": "yyyyyy__yyyy__________W___________bbyybb__bbbbbb_________WWW____",
