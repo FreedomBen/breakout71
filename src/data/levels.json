@@ -2284,5 +2284,12 @@
     "size": 9,
     "bricks": "____________aaa_____papap____aaaaa___apapapa__papapap__aaaaaaa___papap_____aaa___",
     "credit": "Happy Easter! - by 63CritsInARow"
+  },
+  {
+    "color": "#000000",
+    "size": 9,
+    "bricks": "_t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b_",
+    "name": "Rainy day",
+    "credit": ""
   }
 ]
