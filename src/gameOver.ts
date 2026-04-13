@@ -15,7 +15,7 @@ import {
 } from "./settings";
 import { stopRecording } from "./recording";
 import { asyncAlert } from "./asyncAlert";
-import { editRawLevelList } from "./levelEditor";
+import { closeEditorTrialRun, editRawLevel } from "./levelEditor";
 import { openCreativeModePerksPicker } from "./creative";
 import {
   isLevelLocked,
@@ -46,8 +46,7 @@ export async function gameOver(title: string, intro: string) {
   addToTotalPlayTime(mainGameState.runStatistics.runTime);
 
   if (typeof mainGameState.startParams.isEditorTrialRun === "number") {
-    editRawLevelList(mainGameState.startParams.isEditorTrialRun);
-    restart({});
+    closeEditorTrialRun();
     return;
   }
 

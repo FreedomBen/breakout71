@@ -29,6 +29,7 @@
     "editor.help": "Crea niveles personalizados y compártelos para incluirlos en el juego.",
     "editor.import": "Importar un nivel",
     "editor.import_instruction": "Pegue un código de nivel para importarlo en su lista de niveles",
+    "editor.leave_preview": "",
     "editor.locked": "Alcanza una puntuación total de {{min}} para desbloquear",
     "editor.new_level": "Nuevo nivel",
     "editor.title": "Editor de niveles",

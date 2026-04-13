@@ -6,7 +6,7 @@ import { Palette, RawLevel } from "./types";
 import { getIcon, levelIconHTML } from "./levelIcon";
 
 import _palette from "./data/palette.json";
-import { restart } from "./game";
+import { mainGameState, restart } from "./game";
 import { describeLevel } from "./game_utils";
 import {
   automaticBackgroundColor,
@@ -51,14 +51,14 @@ async function openLevelEditorLevelsList() {
             credit: "",
           });
           setSettingValue("custom_levels", rawList);
-          editRawLevelList(rawList.length - 1);
+          editRawLevel(rawList.length - 1);
         },
       },
       ...customLevels.map((l, li) => ({
         text: l.name,
         icon: levelIconHTML(l.bricks, l.size),
         value() {
-          editRawLevelList(li);
+          editRawLevel(li);
         },
         help: l.credit || describeLevel(l),
       })),
@@ -83,7 +83,7 @@ async function openLevelEditorLevelsList() {
   if (typeof choice == "function") choice();
 }
 
-export async function editRawLevelList(nth: number, color = "") {
+export async function editRawLevel(nth: number, color = "") {
   let rawList = getSettingValue("custom_levels", []) as RawLevel[];
   const level = rawList[nth];
   const bricks = level.bricks.split("");
@@ -318,14 +318,18 @@ export async function editRawLevelList(nth: number, color = "") {
       }
     }
 
-    if (action == "next" && next)
-      return editRawLevelList(rawList.indexOf(next));
+    if (action == "next" && next) return editRawLevel(rawList.indexOf(next));
     if (action == "previous" && previous)
-      return editRawLevelList(rawList.indexOf(previous));
+      return editRawLevel(rawList.indexOf(previous));
   }
 
   level.color = automaticBackgroundColor(bricks);
 
   setSettingValue("custom_levels", rawList);
-  editRawLevelList(nth, color);
+  editRawLevel(nth, color);
+}
+
+export function closeEditorTrialRun() {
+  editRawLevel(mainGameState.startParams.isEditorTrialRun || 0);
+  restart({});
 }

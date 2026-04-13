@@ -29,6 +29,7 @@
     "editor.help": "Créez des niveaux personnalisés et partagez-les pour les inclure dans le jeu.",
     "editor.import": "Importer un niveau",
     "editor.import_instruction": "Collez un code de niveau pour l'importer dans votre liste de niveaux",
+    "editor.leave_preview": "",
     "editor.locked": "Atteignez un score total de {{min}} pour débloquer",
     "editor.new_level": "Nouveau niveau",
     "editor.title": "Éditeur de niveau",

@@ -29,6 +29,7 @@
     "editor.help": "建立自訂關卡並分享以納入遊戲中。",
     "editor.import": "匯入一個關卡",
     "editor.import_instruction": "貼上關卡代碼以匯入至你的關卡清單",
+    "editor.leave_preview": "",
     "editor.locked": "達到總分數 {{min}} 以解鎖",
     "editor.new_level": "新關卡",
     "editor.title": "關卡編輯器",

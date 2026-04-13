@@ -85,16 +85,19 @@ export function render(gameState: GameState, ctx: CanvasRenderingContext2D) {
       : 1;
 
     startWork("render:scoreDisplay");
-    scoreDisplay.innerHTML =
-      (isOptionOn("show_fps") || gameState.startParams.computer_controlled
-        ? ` 
+    if (typeof gameState.startParams.isEditorTrialRun == "number") {
+      scoreDisplay.innerHTML = t("editor.leave_preview");
+    } else
+      scoreDisplay.innerHTML =
+        (isOptionOn("show_fps") || gameState.startParams.computer_controlled
+          ? ` 
           <span class="${(Math.abs(lastMeasuredFPS - 60) < 2 && " ") || (Math.abs(lastMeasuredFPS - 60) < 10 && "good") || "bad"}">
             ${lastMeasuredFPS} FPS
         </span><span> / </span>
             `
-        : "") +
-      (isOptionOn("show_stats")
-        ? ` 
+          : "") +
+        (isOptionOn("show_stats")
+          ? ` 
         <span class="${(catchRate > catchRateBest / 100 && "great") || (catchRate > catchRateGood / 100 && "good") || ""}" data-tooltip="${t("play.stats.coins_catch_rate")}">
             ${Math.floor(catchRate * 100)}%
         </span><span> / </span>
@@ -105,8 +108,10 @@ export function render(gameState: GameState, ctx: CanvasRenderingContext2D) {
         ${gameState.levelMisses} M
         </span><span> / </span>
         `
-        : "") +
-      `<span class="score" data-tooltip="${t("play.score_tooltip")}">$${gameState.score}</span>`;
+          : "") +
+        `<span class="score" data-tooltip="${t("play.score_tooltip")}">${
+          "$" + gameState.score
+        }</span>`;
 
     scoreDisplay.classList[
       gameState.startParams.computer_controlled ? "add" : "remove"

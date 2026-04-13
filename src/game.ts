@@ -69,7 +69,11 @@ import { generateSaveFileContent } from "./generateSaveFileContent";
 import { runHistoryViewerMenuEntry } from "./runHistoryViewer";
 import { openScorePanel } from "./openScorePanel";
 import { monitorLevelsUnlocks } from "./monitorLevelsUnlocks";
-import { levelEditorMenuEntry } from "./levelEditor";
+import {
+  closeEditorTrialRun,
+  editRawLevel,
+  levelEditorMenuEntry,
+} from "./levelEditor";
 import { frameStarted, getWorstFPSAndReset, startWork } from "./fps";
 import { openUnlockedUpgradesList } from "./openUnlockedUpgradesList";
 import { getCheckboxIcon, getIcon } from "./levelIcon";
@@ -440,7 +444,12 @@ if (getSettingValue("menu-opened", 0) < 3) {
 
 function scoreOpen(e) {
   e.preventDefault();
-  if (!alertsOpen) {
+  if (alertsOpen) return;
+  if (typeof mainGameState.startParams.isEditorTrialRun === "number") {
+    closeEditorTrialRun();
+    return;
+  }
+  if (alertsOpen) {
     setSettingValue("score-opened", getSettingValue("score-opened", 0) + 1);
     openScorePanel(mainGameState);
   }

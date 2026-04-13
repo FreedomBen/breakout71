@@ -29,6 +29,7 @@
     "editor.help": "カスタムレベルを作成し、ゲーム内に含めるためにそれらを共有します。",
     "editor.import": "レベルをインポート",
     "editor.import_instruction": "レベルコードを貼り付けて、レベルリストにインポートします",
+    "editor.leave_preview": "",
     "editor.locked": "スコアを{{min}}点獲得して解禁",
     "editor.new_level": "新規レベル",
     "editor.title": "レベルエディタ",

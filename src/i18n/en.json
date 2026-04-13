@@ -29,6 +29,7 @@
     "editor.help": "Create custom levels and share them for inclusion in the game.",
     "editor.import": "Import a level",
     "editor.import_instruction": "Paste a level code to import it in your level list",
+    "editor.leave_preview": "Back to editor",
     "editor.locked": "Reach a total score of {{min}} to unlock",
     "editor.new_level": "New level",
     "editor.title": "Level Editor",
@@ -462,7 +463,7 @@
     "upgrades.wrap_up.verbose_description": "This won't count as a paddle hit. At level 2, coins teleport too.",
     "upgrades.yoyo.name": "Yo-yo",
     "upgrades.yoyo.tooltip": "The ball falls toward the paddle",
-    "upgrades.yoyo.verbose_description": "It's the opposite of telekinesis, control the ball while it's falling back down.",
+    "upgrades.yoyo.verbose_description": "It's the opposite of telekinesis, control the ball while it's falling back down. The effect is stronger when the ball is at the top of the screen, and far away on the horizontal axis from the paddle. ",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "More coins if you don't trigger bombs",
     "upgrades.zen.verbose_description": "+{{lvl}} combo every 3s, reset when there's an explosion"

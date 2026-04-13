@@ -29,6 +29,7 @@
     "editor.help": "سطوح سفارشی بسازید و آن‌ها را برای افزودن به بازی هم‌رسانی کنید.",
     "editor.import": "وارد کردن سطح",
     "editor.import_instruction": "کد سطح را جای‌گذاری کنید تا در فهرست سطوح شما وارد شود",
+    "editor.leave_preview": "",
     "editor.locked": "برای باز کردن به امتیاز کل {{min}} برسید",
     "editor.new_level": "سطح جدید",
     "editor.title": "ویرایشگر سطح",

@@ -29,6 +29,7 @@
     "editor.help": "إنشاء مستويات مخصصة ومشاركتها لتضمينها في اللعبة.",
     "editor.import": "استيراد المستوى",
     "editor.import_instruction": "الصق رمز المستوى لاستيراده في قائمة المستويات الخاصة بك",
+    "editor.leave_preview": "",
     "editor.locked": "احصل على مجموع نقاط قدره {{min}} لفتح القفل",
     "editor.new_level": "مستوى جديد",
     "editor.title": "محرر المستويات",
