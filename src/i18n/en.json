@@ -281,7 +281,7 @@
     "upgrades.corner_shot.name": "Corner shot",
     "upgrades.corner_shot.tooltip": "Lets your paddle overlap with the borders of the screen",
     "upgrades.corner_shot.verbose_description": "Helps with aiming in the corners. Further levels let you go further out.",
-    "upgrades.disco_ball.name": "Disco ball",
+    "upgrades.disco_ball.name": "",
     "upgrades.disco_ball.tooltip": "Every wall bounce changes the balls color",
     "upgrades.disco_ball.verbose_description": "The ball will cycle through the rainbow colors.",
     "upgrades.double_or_nothing.name": "Double or nothing",
@@ -466,7 +466,7 @@
     "upgrades.wrap_up.verbose_description": "This won't count as a paddle hit. At level 2, coins teleport too.",
     "upgrades.yoyo.name": "Yo-yo",
     "upgrades.yoyo.tooltip": "The ball falls toward the paddle",
-    "upgrades.yoyo.verbose_description": "It's the opposite of telekinesis, control the ball while it's falling back down. The effect is stronger when the ball is at the top of the screen, and far away on the horizontal axis from the paddle. ",
+    "upgrades.yoyo.verbose_description": "It's the opposite of telekinesis, control the ball while it's falling back down. The effect is stronger when the ball is at the top of the screen, and far away on the horizontal axis from the paddle.",
     "upgrades.zen.name": "Zen",
     "upgrades.zen.tooltip": "More coins if you don't trigger bombs",
     "upgrades.zen.verbose_description": "+{{lvl}} combo every 3s, reset when there's an explosion"
