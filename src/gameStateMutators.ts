@@ -116,6 +116,7 @@ export function resetBalls(gameState: GameState) {
       brokenSinceBounce: 0,
       brokenSinceWallOrPaddleBounce: 0,
       sidesHitsSinceBounce: 0,
+      topHitsSinceBounce: 0,
       wrapsSinceBounce: 0,
       sapperUses: 0,
       bouncedToEmptyLevel: false,
@@ -143,6 +144,7 @@ export function putBallsAtPuck(gameState: GameState) {
     ball.brokenSinceBounce = 0;
     ball.brokenSinceWallOrPaddleBounce = 0;
     ball.sidesHitsSinceBounce = 0;
+    ball.topHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
     ball.piercePoints = gameState.perks.pierce * 2;
   });
@@ -1818,9 +1820,18 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     frames,
   );
   if (borderHitCode) {
-    ball.sidesHitsSinceBounce++;
+    console.log(borderHitCode);
+    if (borderHitCode > 1) {
+      ball.topHitsSinceBounce++;
+    }
+    if (borderHitCode % 2) {
+      ball.sidesHitsSinceBounce++;
+    }
     ball.brokenSinceWallOrPaddleBounce = 0;
-    if (ball.sidesHitsSinceBounce <= gameState.perks.three_cushion * 3) {
+    if (
+      ball.sidesHitsSinceBounce + ball.topHitsSinceBounce <=
+      gameState.perks.three_cushion * 3
+    ) {
       offsetCombo(gameState, 1, ball.x, ball.y, ball);
     }
     if (
@@ -1959,7 +1970,8 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     if (
       !ball.hitSinceBounce &&
       gameState.bricks.find((i) => i) &&
-      !ball.bouncedToEmptyLevel
+      !ball.bouncedToEmptyLevel &&
+      ball.topHitsSinceBounce
     ) {
       if (gameState.levelMisses < gameState.perks.forgiving) {
         gameState.levelMisses++;
@@ -1999,6 +2011,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.brokenSinceBounce = 0;
     ball.brokenSinceWallOrPaddleBounce = 0;
     ball.sidesHitsSinceBounce = 0;
+    ball.topHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
     ball.sapperUses = 0;
     ball.piercePoints = gameState.perks.pierce * 2;
@@ -2094,7 +2107,10 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     const initialBrickColor = gameState.bricks[hitBrick];
     ball.hitSinceBounce++;
 
-    if (!ball.sidesHitsSinceBounce && gameState.perks.three_cushion) {
+    if (
+      !(ball.sidesHitsSinceBounce + ball.topHitsSinceBounce) &&
+      gameState.perks.three_cushion
+    ) {
       resetCombo(gameState, ball.x, ball.y, ball);
     }
 
@@ -2162,7 +2178,10 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     const remainingPierce = ball.piercePoints;
     const remainingSapper = ball.sapperUses < gameState.perks.sapper ? 1 : 0;
     const willMiss =
-      ball.vy > 0 && !ball.hitSinceBounce && !ball.bouncedToEmptyLevel;
+      ball.vy > 0 &&
+      !ball.hitSinceBounce &&
+      !ball.bouncedToEmptyLevel &&
+      ball.topHitsSinceBounce;
     const willBeForgiven =
       willMiss && gameState.levelMisses < gameState.perks.forgiving;
     const extraCombo = gameState.combo - 1;

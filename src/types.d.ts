@@ -106,6 +106,7 @@ export type Ball = {
   brokenSinceBounce: number;
   brokenSinceWallOrPaddleBounce: number;
   sidesHitsSinceBounce: number;
+  topHitsSinceBounce: number;
   wrapsSinceBounce: number;
   // At the time of the last paddle bounce, there were fewer bricks on screen than there are balls.
   // In this case, we can't expect that the user will hit something every time
