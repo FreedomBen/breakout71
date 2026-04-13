@@ -1208,40 +1208,25 @@ export function gameStateTick(
         coin.vy = -7 * gameState.baseSpeed;
       coin.a += coin.sa;
 
-      // Gravity
-      const flip =
-        gameState.perks.helium > 0 &&
-        Math.abs(coin.x - gameState.puckPosition) * 2 >
-          gameState.puckWidth + coin.size;
-      let dvy =
-        frames *
-        coin.weight *
-        0.8 *
-        (flip ? 1 - gameState.perks.helium * 0.6 : 1);
+      let dvy = frames * coin.weight * 0.8;
 
       if (gameState.perks.etherealcoins) {
-        if (gameState.perks.helium) {
-          dvy *= 0.2 / gameState.perks.etherealcoins;
-        } else {
-          dvy *= 0;
-        }
+        dvy = 0;
+      }
+
+      if (gameState.perks.helium && coin.y < gameState.gameZoneHeight) {
+        const underPaddle =
+          Math.abs(coin.x - gameState.puckPosition) * 2 <
+          gameState.puckWidth + coin.size;
+        dvy -=
+          (underPaddle ? -0.05 : 1) *
+          gameState.perks.helium *
+          frames *
+          coin.weight *
+          0.7;
       }
 
       coin.vy += dvy;
-
-      if (gameState.perks.helium && Math.random() < 0.1 * frames) {
-        makeParticle(
-          gameState,
-          coin.x,
-          coin.y,
-          0,
-          dvy * 10,
-          getCoinRenderColor(gameState, coin),
-          true,
-          5,
-          250,
-        );
-      }
 
       const speed = (Math.abs(coin.vx) + Math.abs(coin.vy)) * 10;
 

@@ -461,6 +461,27 @@ export function render(gameState: GameState, ctx: CanvasRenderingContext2D) {
     }
   });
 
+  startWork("render:helium_bars");
+  if (gameState.perks.helium) {
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+    ctx.strokeStyle = gameState.ballsColor;
+    ctx.beginPath();
+    ctx.moveTo(
+      Math.round(gameState.puckPosition - gameState.puckWidth / 2),
+      gameState.gameZoneHeight,
+    );
+    ctx.lineTo(Math.round(gameState.puckPosition - gameState.puckWidth / 2), 0);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(
+      Math.round(gameState.puckPosition + gameState.puckWidth / 2),
+      gameState.gameZoneHeight,
+    );
+    ctx.lineTo(Math.round(gameState.puckPosition + gameState.puckWidth / 2), 0);
+    ctx.stroke();
+  }
+
   startWork("render:puck");
   ctx.globalAlpha = isMovingWhilePassiveIncome(gameState) ? 0.2 : 1;
   ctx.globalCompositeOperation = "source-over";
@@ -473,7 +494,6 @@ export function render(gameState: GameState, ctx: CanvasRenderingContext2D) {
   );
 
   startWork("render:combotext");
-
   const spawns = coinsBoostedCombo(gameState);
   if (spawns > 1 && !isMovingWhilePassiveIncome(gameState)) {
     ctx.globalCompositeOperation = "source-over";
