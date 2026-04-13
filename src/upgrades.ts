@@ -751,6 +751,18 @@ export const rawUpgrades = [
   {
     category: categories.advanced,
     requires: "",
+    threshold: 208000,
+    gift: false,
+    id: "disco_ball",
+    max: 1,
+    hardLimit: 1,
+    name: t("upgrades.disco_ball.name"),
+    help: () => t("upgrades.disco_ball.tooltip"),
+    fullHelp: () => t("upgrades.disco_ball.verbose_description"),
+  },
+  {
+    category: categories.advanced,
+    requires: "",
     threshold: 210000,
     gift: false,
     id: "golden_goose",

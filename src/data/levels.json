@@ -2286,10 +2286,16 @@
     "credit": "Happy Easter! - by 63CritsInARow"
   },
   {
-    "color": "#000000",
+    "name": "Rainy day",
     "size": 9,
     "bricks": "_t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b_",
-    "name": "Rainy day",
     "credit": ""
+  },
+  {
+    "name": "icon:disco_ball",
+    "size": 13,
+    "bricks": "______b________y___b_______y_y__b________y___b____________b___________byb_________bybyb________ybyby________bybyb_________byb___y___________y_y___________y______________",
+    "svg": null,
+    "color": ""
   }
 ]

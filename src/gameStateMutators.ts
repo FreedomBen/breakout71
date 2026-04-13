@@ -1907,6 +1907,17 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       offsetCombo(gameState, -gameState.perks.trampoline, ball.x, ball.y, ball);
     }
 
+    if (gameState.perks.disco_ball) {
+      const currentColorIndex = rainbow.indexOf(gameState.ballsColor);
+      if (currentColorIndex === -1) {
+        gameState.ballsColor = rainbowColor(gameState);
+      } else {
+        // cycle through predictably
+        gameState.ballsColor =
+          rainbow[(currentColorIndex + 1) % rainbow.length];
+      }
+    }
+
     schedulGameSound(gameState, "wallBeep", ball.x, 1);
     gameState.levelWallBounces++;
     gameState.runStatistics.wall_bounces++;
