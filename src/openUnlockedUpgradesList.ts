@@ -21,7 +21,6 @@ export async function openUnlockedUpgradesList() {
         ts < threshold
           ? t("unlocks.minTotalScore", { score: threshold })
           : help(1),
-      // tooltip: ts < threshold ? "" : fullHelp(1) + " [id:" + id + "]",
       threshold,
       className: "upgrade choice " + (ts > threshold ? "used" : ""),
       // actionLabel: t("unlocks.use"),

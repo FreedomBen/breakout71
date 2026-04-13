@@ -214,8 +214,10 @@ export function yoyoEffectRate(gameState: GameState, ball: Ball) {
   if (ball.vy < 0) return 0;
   if (!gameState.perks.yoyo) return 0;
   return (
-    ((Math.abs(gameState.puckPosition - ball.x) / gameState.gameZoneWidth) *
+    (((Math.abs(gameState.puckPosition - ball.x) / gameState.gameZoneWidth) *
       gameState.perks.yoyo) /
+      2) *
+    clamp(1 - ball.y / gameState.gameZoneHeight, 0, 1) *
     2
   );
 }

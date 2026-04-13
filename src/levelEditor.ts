@@ -6,7 +6,7 @@ import { Palette, RawLevel } from "./types";
 import { getIcon, levelIconHTML } from "./levelIcon";
 
 import _palette from "./data/palette.json";
-import { restart } from "./game";
+import { mainGameState, restart } from "./game";
 import { describeLevel } from "./game_utils";
 import {
   automaticBackgroundColor,
@@ -51,14 +51,14 @@ async function openLevelEditorLevelsList() {
             credit: "",
           });
           setSettingValue("custom_levels", rawList);
-          editRawLevelList(rawList.length - 1);
+          editRawLevel(rawList.length - 1);
         },
       },
       ...customLevels.map((l, li) => ({
         text: l.name,
         icon: levelIconHTML(l.bricks, l.size),
         value() {
-          editRawLevelList(li);
+          editRawLevel(li);
         },
         help: l.credit || describeLevel(l),
       })),
@@ -83,7 +83,7 @@ async function openLevelEditorLevelsList() {
   if (typeof choice == "function") choice();
 }
 
-export async function editRawLevelList(nth: number, color = "") {
+export async function editRawLevel(nth: number, color = "") {
   let rawList = getSettingValue("custom_levels", []) as RawLevel[];
   const level = rawList[nth];
   const bricks = level.bricks.split("");
@@ -118,8 +118,15 @@ export async function editRawLevelList(nth: number, color = "") {
       .join("") +
     "</div>";
 
+  const next = rawList[nth + 1];
+  const previous = rawList[nth - 1];
+
   const clicked = await asyncAlert<string | null>({
-    title: t("editor.editing.title", { name: level.name }),
+    title: `<span class="perk-title">
+    <button ${previous ? 'data-resolve-to="previous"' : "disabled"} data-tooltip="${t("unlocks.previous")}">‹ </button>
+    <span>${level.name}</span>
+    <button ${next ? 'data-resolve-to="next"' : "disabled"} data-tooltip="${t("unlocks.next")}">  ›</button></span> 
+    `,
     content: [
       t("editor.editing.color"),
       colorList,
@@ -288,15 +295,41 @@ export async function editRawLevelList(nth: number, color = "") {
       }
     }
     if (action === "delete") {
-      rawList = rawList.filter((l, li) => li !== nth);
-      setSettingValue("custom_levels", rawList);
-      openLevelEditorLevelsList();
-      return;
+      const confirm = await asyncAlert({
+        title: t("editor.editing.delete_confirm"),
+
+        content: [
+          `<div class="full-width-icon">${levelIconHTML(transformRawLevel(level).bricks, level.size, 350)}</div>`,
+          {
+            text: t("editor.editing.delete_yes"),
+            value: true,
+          },
+          {
+            text: t("editor.editing.delete_no"),
+            value: false,
+          },
+        ],
+      });
+      if (confirm) {
+        rawList = rawList.filter((l, li) => li !== nth);
+        setSettingValue("custom_levels", rawList);
+        openLevelEditorLevelsList();
+        return;
+      }
     }
+
+    if (action == "next" && next) return editRawLevel(rawList.indexOf(next));
+    if (action == "previous" && previous)
+      return editRawLevel(rawList.indexOf(previous));
   }
 
   level.color = automaticBackgroundColor(bricks);
 
   setSettingValue("custom_levels", rawList);
-  editRawLevelList(nth, color);
+  editRawLevel(nth, color);
+}
+
+export function closeEditorTrialRun() {
+  editRawLevel(mainGameState.startParams.isEditorTrialRun || 0);
+  restart({});
 }

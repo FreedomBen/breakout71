@@ -142,7 +142,8 @@ export function newGameState(params: RunParams): GameState {
     creative:
       params?.computer_controlled ||
       sumOfValues(params.perks) > 1 ||
-      (params.level && !params.level.name.startsWith("icon:")),
+      (params.level && !params.level.name.startsWith("icon:")) ||
+      false,
   };
 
   window.gameState = gameState;

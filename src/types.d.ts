@@ -95,6 +95,7 @@ export type Ball = {
   vy: number;
   previousVX: number;
   previousVY: number;
+  hasGravity: boolean;
   // sx: number;
   // sy: number;
   // Ability to pierce N HP
@@ -133,6 +134,8 @@ interface ParticleFlash extends BaseFlash {
 interface TextFlash extends BaseFlash {
   // type: "text";
   text: string;
+  vx: number;
+  vy: number;
 }
 
 interface LightFlash extends BaseFlash {
@@ -297,6 +300,7 @@ export type RunParams = {
   perkToAvoid?: PerkId;
   perks?: Partial<PerksMap>;
   computer_controlled?: boolean;
+  animated_perk_preview?: boolean;
   isEditorTrialRun?: number;
   isCreativeRun?: boolean;
   stress?: boolean;

@@ -162,6 +162,12 @@
     "credit": "By Noodlemire"
   },
   {
+    "name": "icon:flyswatter",
+    "size": 9,
+    "bricks": "___yyy______Wyy___b__yyy__b_b__y__b___b_y_b__b___y___b_b__y__b___b_y_b______y____",
+    "credit": ""
+  },
+  {
     "name": "icon:forgiving",
     "size": 8,
     "bricks": "____y______t_y____t___y__t_____yt_____y__t___y____t_y____WWWWW__",
@@ -189,6 +195,12 @@
     "name": "icon:golden_goose",
     "size": 8,
     "bricks": "_bbby____bbb_y___bbby_y__y_y_y_y__y_y_y____y_y_y____y_y______y_y",
+    "credit": ""
+  },
+  {
+    "name": "icon:gravity_falls",
+    "size": 11,
+    "bricks": "_____W___________________b___b_______b_b_________b________b___b_______b_b_________b________b___b_______b_b_________b_____",
     "credit": ""
   },
   {
@@ -237,6 +249,12 @@
     "name": "icon:limitless",
     "size": 12,
     "bricks": "_________________________bbb____yyb_bbbbb__yyybbbb_bbbyyy_bbbb__bbby__bbbb_yybbb__bbyyyyyybbbbbb_yyy___bbbb_____________________________________",
+    "credit": ""
+  },
+  {
+    "name": "icon:matrix",
+    "size": 6,
+    "bricks": "bgbgbggbgbgbbgbgbggbgbgbbgbgbggbgbgb",
     "credit": ""
   },
   {
@@ -290,7 +308,7 @@
   {
     "name": "icon:passive_income",
     "size": 8,
-    "bricks": "_ttttt___ttt_t________________W_____________________WWW_______r_",
+    "bricks": "_ttttt___ttt_t_______________W_____________________WWW______r___",
     "credit": ""
   },
   {
@@ -357,6 +375,12 @@
     "name": "icon:right_is_lava",
     "size": 8,
     "bricks": "_______r_ttttttr_ttttttr_______r_______r_____W_r_______r__WWW__r",
+    "credit": ""
+  },
+  {
+    "name": "icon:round_bricks",
+    "size": 6,
+    "bricks": "bbyybbbyyyybyyyyyyyyyyyybyyyybbbyybb",
     "credit": ""
   },
   {
@@ -483,6 +507,12 @@
     "name": "icon:telekinesis",
     "size": 8,
     "bricks": "______WW____GGWW___G______G_______G_______G_______G_____WWWWW___",
+    "credit": ""
+  },
+  {
+    "name": "icon:thomas",
+    "size": 8,
+    "bricks": "__yyyy___yyOOyy_yyOOOOyyyyOOOOyy_yyOOyy___ybby___bbbbbb_bbbbbbbb",
     "credit": ""
   },
   {
@@ -2250,24 +2280,22 @@
     "credit": "https://f-droid.org/en/packages/com.rk.xededitor/ Pretty cool text editor"
   },
   {
-    "name": "icon:round_bricks",
-    "size": 6,
-    "bricks": "bbyybbbyyyybyyyyyyyyyyyybyyyybbbyybb",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "name": "icon:thomas",
-    "size": 8,
-    "bricks": "__yyyy___yyOOyy_yyOOOOyyyyOOOOyy_yyOOyy___ybby___bbbbbb_bbbbbbbb",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "color": "#000000",
+    "name": "Easter Egg",
     "size": 9,
     "bricks": "____________aaa_____papap____aaaaa___apapapa__papapap__aaaaaaa___papap_____aaa___",
-    "name": "Easter Egg",
     "credit": "Happy Easter! - by 63CritsInARow"
+  },
+  {
+    "name": "Rainy day",
+    "size": 9,
+    "bricks": "_t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b__t_b_t_b_",
+    "credit": ""
+  },
+  {
+    "name": "icon:disco_ball",
+    "size": 13,
+    "bricks": "______b________y___b_______y_y__b________y___b____________b___________byb_________bybyb________ybyby________bybyb_________byb___y___________y_y___________y______________",
+    "svg": null,
+    "color": ""
   }
 ]

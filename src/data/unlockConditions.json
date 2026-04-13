@@ -1407,5 +1407,10 @@
     "required": ["compound_interest", "extra_life", "etherealcoins"],
     "forbidden": ["happy_family", "three_cushion", "bigger_explosions"],
     "minScore": 26800
+  },
+  "Rainy day": {
+    "required": ["addiction", "fountain_toss", "ball_attract_ball"],
+    "forbidden": ["minefield", "respawn", "flyswatter"],
+    "minScore": 26900
   }
 }
