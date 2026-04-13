@@ -38,6 +38,9 @@ export async function openCreativeModePerksPicker() {
   const customLevels = (getSettingValue("custom_levels", []) as RawLevel[]).map(
     transformRawLevel,
   );
+  const unlockedBefore = new Set<string>(
+    getSettingValue("breakout_71_unlocked_levels", []),
+  );
 
   while (true) {
     const levelOptions = [
@@ -48,7 +51,7 @@ export async function openCreativeModePerksPicker() {
           icon: getIcon(l.name),
           text: l.name,
           value: l,
-          disabled: !!problem,
+          disabled: !unlockedBefore.has(l.name),
           tooltip: problem || describeLevel(l),
           className: "",
         };
