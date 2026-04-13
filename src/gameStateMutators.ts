@@ -1820,7 +1820,6 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     frames,
   );
   if (borderHitCode) {
-    console.log(borderHitCode);
     if (borderHitCode > 1) {
       ball.topHitsSinceBounce++;
     }

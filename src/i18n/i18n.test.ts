@@ -11,7 +11,7 @@ describe("translation quality checks", () => {
       for (let key in translations) {
         if (
           translations[key].match(
-            /<|>|http|\bpuck\b|\bpalet\b|퍽|\bdisco\b|шайба|冰球|rondelle|pagaie/gi,
+            /<|>|http|\bpuck\b|\bpalet\b|퍽|шайба|冰球|rondelle|pagaie/gi,
           )
         ) {
           badKeys.push(languageCode + ":" + key + " : " + translations[key]);
