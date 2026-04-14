@@ -433,6 +433,7 @@ export function explosionAt(
   }
 
   gameState.runStatistics.bricks_broken++;
+  gameState.levelBrickBroken++;
 
   if (gameState.perks.zen) {
     gameState.lastZenComboIncrease = gameState.levelTime;
@@ -468,9 +469,65 @@ export function explodeBrick(
     const x = brickCenterX(gameState, index),
       y = brickCenterY(gameState, index);
 
+    let resetComboNeeeded = false;
+    let comboGain =
+      gameState.perks.streak_shots +
+      gameState.perks.compound_interest +
+      gameState.perks.left_is_lava +
+      gameState.perks.right_is_lava +
+      gameState.perks.top_is_lava +
+      gameState.perks.asceticism * 3 +
+      gameState.perks.passive_income +
+      gameState.perks.addiction;
+
+    // should run before the brick is removed
+    if (gameState.perks.palette) {
+      const colorsCount = countBrickColors(gameState);
+      if (colorsCount > 1) {
+        comboGain += (colorsCount - 1) * gameState.perks.palette;
+      } else if (
+        // not the first one
+        gameState.levelBrickBroken &&
+        // not the last one
+        gameState.bricks.find((b, bi) => bi !== index && b !== "black" && b)
+      ) {
+        resetComboNeeeded = true;
+      }
+    }
+
     setBrick(gameState, index, "");
 
     let coinsToSpawn = coinsBoostedCombo(gameState);
+    let multiplier = 1;
+
+    if (gameState.perks.vibrant_neighborhood) {
+      const baseX = index % gameState.gridSize;
+      const baseY = Math.floor(index / gameState.gridSize);
+
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          const neighbor =
+            gameState.bricks[getRowColIndex(gameState, baseY + dy, baseX + dx)];
+          if (neighbor && neighbor !== "black" && neighbor !== color) {
+            multiplier++;
+          }
+        }
+      }
+    }
+
+    coinsToSpawn *= multiplier;
+    if (multiplier !== 1)
+      makeText(
+        gameState,
+        x,
+        y,
+        gameState.ballsColor,
+        "x" + multiplier,
+        18,
+        500,
+        ball.vx,
+        ball.vy,
+      );
 
     gameState.levelSpawnedCoins += coinsToSpawn;
     gameState.runStatistics.coins_spawned += coinsToSpawn;
@@ -510,16 +567,6 @@ export function explodeBrick(
         points,
       );
     }
-    let resetComboNeeeded = false;
-    let comboGain =
-      gameState.perks.streak_shots +
-      gameState.perks.compound_interest +
-      gameState.perks.left_is_lava +
-      gameState.perks.right_is_lava +
-      gameState.perks.top_is_lava +
-      gameState.perks.asceticism * 3 +
-      gameState.perks.passive_income +
-      gameState.perks.addiction;
 
     if (
       gameState.perks.nbricks &&
@@ -603,6 +650,7 @@ export function explodeBrick(
       y,
       color,
     );
+    gameState.levelBrickBroken++;
   }
 
   if (
@@ -705,6 +753,7 @@ export async function setLevel(gameState: GameState, l: number) {
   gameState.levelStartScore = gameState.score;
   gameState.levelSpawnedCoins = 0;
   gameState.levelCaughtCoins = 0;
+  gameState.levelBrickBroken = 0;
   gameState.levelLostCoins = 0;
   gameState.levelMisses = 0;
   gameState.lastBrickBroken = 0;

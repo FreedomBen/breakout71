@@ -126,6 +126,12 @@
     "credit": ""
   },
   {
+    "name": "icon:disco_ball",
+    "size": 13,
+    "bricks": "______b________y___b_______y_y__b________y___b____________b___________byb_________bybyb________ybyby________bybyb_________byb___y___________y_y___________y______________",
+    "credit": ""
+  },
+  {
     "name": "icon:double_or_nothing",
     "size": 10,
     "bricks": "_______________________yyyy____yyyyyyyy__yyyyyyyb_yyyyyyybbbyyyyyybbbb______________________________",
@@ -2292,9 +2298,16 @@
     "credit": ""
   },
   {
-    "name": "icon:disco_ball",
-    "size": 13,
-    "bricks": "______b________y___b_______y_y__b________y___b____________b___________byb_________bybyb________ybyby________bybyb_________byb___y___________y_y___________y______________",
+    "name": "icon:palette",
+    "size": 8,
+    "bricks": "_WWWWW___WtWrWW__WWWWWWW__WWWWtW__WWWWWW_WWWWrWW_WW_WWW___WWWW__",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:vibrant_neighborhood",
+    "size": 7,
+    "bricks": "yy___yyty___yttt___tt_ty_yt__yy_yy___yty_____t___",
     "svg": null,
     "color": ""
   }

@@ -230,6 +230,7 @@ export type GameState = {
   // levelTime of the last time the score increase, to render the score differently
   lastScoreIncrease: number;
   levelCaughtCoins: number;
+  levelBrickBroken: number;
   // levelTime of the last explosion, for screen shake
   lastExplosion: number;
   lastBrickBroken: number;

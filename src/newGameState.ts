@@ -94,6 +94,7 @@ export function newGameState(params: RunParams): GameState {
     score: 0,
     lastScoreIncrease: -1000,
     levelCaughtCoins: 0,
+    levelBrickBroken: 0,
     lastExplosion: -1000,
     lastBrickBroken: 0,
     highScore,

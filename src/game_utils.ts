@@ -49,8 +49,12 @@ export function sample<T>(arr: T[]): T {
 }
 
 export function sumOfValues(obj: { [key: string]: number } | undefined | null) {
-  if (!obj) return 0;
-  return Object.values(obj)?.reduce((a, b) => a + b, 0) || 0;
+  let sum = 0;
+  if (obj)
+    for (let k in obj) {
+      sum += obj[k];
+    }
+  return sum;
 }
 
 export const makeEmptyPerksMap = (upgrades: { id: PerkId }[]) => {

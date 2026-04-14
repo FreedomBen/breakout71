@@ -2,6 +2,7 @@ import { baseCombo, forEachLiveOne, liveCount } from "./gameStateMutators";
 import {
   brickCenterX,
   brickCenterY,
+  countBrickColors,
   currentLevelInfo,
   getCoinRenderColor,
   getCornerOffset,
@@ -774,6 +775,9 @@ export function renderAllBricks(
   const redBorderOnBricksWithWrongColor =
     hasCombo && gameState.perks.picky_eater && isPickyEatingPossible(gameState);
 
+  const redBorderOnAllBricks =
+    hasCombo && gameState.perks.palette && countBrickColors(gameState) < 2;
+
   const redRowReach = reachRedRowIndex(gameState);
   const { clairvoyant } = gameState.perks;
   let offset = getDashOffset(gameState);
@@ -800,6 +804,8 @@ export function renderAllBricks(
     redRowReach +
     "_" +
     redBorderOnBricksWithWrongColor +
+    "_" +
+    redBorderOnAllBricks +
     "_" +
     gameState.ballsColor +
     "_" +
@@ -841,6 +847,7 @@ export function renderAllBricks(
         (gameState.ballsColor !== color &&
           color !== "black" &&
           redBorderOnBricksWithWrongColor) ||
+        redBorderOnAllBricks ||
         (hasCombo && gameState.perks.zen && color === "black") ||
         redBecauseOfReach;
 

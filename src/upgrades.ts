@@ -1118,4 +1118,27 @@ export const rawUpgrades = [
     help: (lvl: number) => t("upgrades.gravity_falls.tooltip"),
     fullHelp: (lvl: number) => t("upgrades.gravity_falls.verbose_description"),
   },
+  {
+    category: categories.combo,
+    threshold: 275000,
+    gift: false,
+    id: "palette",
+    max: 1,
+    hardLimit: 1,
+    name: t("upgrades.palette.name"),
+    help: (lvl: number) => t("upgrades.palette.tooltip"),
+    fullHelp: (lvl: number) => t("upgrades.palette.verbose_description"),
+  },
+  {
+    category: categories.combo_boost,
+    threshold: 275000,
+    gift: false,
+    id: "vibrant_neighborhood",
+    max: 1,
+    hardLimit: 1,
+    name: t("upgrades.vibrant_neighborhood.name"),
+    help: (lvl: number) => t("upgrades.vibrant_neighborhood.tooltip"),
+    fullHelp: (lvl: number) =>
+      t("upgrades.vibrant_neighborhood.verbose_description"),
+  },
 ] as const;
