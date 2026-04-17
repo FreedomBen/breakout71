@@ -6,6 +6,7 @@ import {
   currentLevelInfo,
   getCoinRenderColor,
   getCornerOffset,
+  isBrickOverPaddle,
   isMovingWhilePassiveIncome,
   isPickyEatingPossible,
   reachRedRowIndex,
@@ -463,7 +464,10 @@ export function render(gameState: GameState, ctx: CanvasRenderingContext2D) {
   });
 
   startWork("render:helium_bars");
-  if (gameState.perks.helium && isOptionOn("show_puck_rails")) {
+  if (
+    (gameState.perks.helium || gameState.perks.paddle_up_combo) &&
+    isOptionOn("show_puck_rails")
+  ) {
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     ctx.strokeStyle = gameState.ballsColor;
@@ -778,6 +782,11 @@ export function renderAllBricks(
   const redBorderOnAllBricks =
     hasCombo && gameState.perks.palette && countBrickColors(gameState) < 2;
 
+  const redBorderOutOfPuck =
+    hasCombo &&
+    gameState.perks.paddle_up_combo &&
+    "" + gameState.puckPosition + "," + gameState.puckWidth;
+
   const redRowReach = reachRedRowIndex(gameState);
   const { clairvoyant } = gameState.perks;
   let offset = getDashOffset(gameState);
@@ -815,6 +824,8 @@ export function renderAllBricks(
     "_" +
     offset +
     "_" +
+    redBorderOutOfPuck +
+    "_" +
     round;
 
   if (
@@ -849,7 +860,10 @@ export function renderAllBricks(
           redBorderOnBricksWithWrongColor) ||
         redBorderOnAllBricks ||
         (hasCombo && gameState.perks.zen && color === "black") ||
-        redBecauseOfReach;
+        redBecauseOfReach ||
+        (hasCombo &&
+          gameState.perks.paddle_up_combo &&
+          !isBrickOverPaddle(gameState, index));
 
       canctx.globalCompositeOperation = "source-over";
       drawBrick(

@@ -1131,7 +1131,7 @@ export const rawUpgrades = [
   },
   {
     category: categories.combo_boost,
-    threshold: 275000,
+    threshold: 280000,
     gift: false,
     id: "vibrant_neighborhood",
     max: 1,
@@ -1140,5 +1140,17 @@ export const rawUpgrades = [
     help: (lvl: number) => t("upgrades.vibrant_neighborhood.tooltip"),
     fullHelp: (lvl: number) =>
       t("upgrades.vibrant_neighborhood.verbose_description"),
+  },
+  {
+    category: categories.combo,
+    threshold: 290000,
+    gift: false,
+    id: "paddle_up_combo",
+    max: 1,
+    hardLimit: 1,
+    name: t("upgrades.paddle_up_combo.name"),
+    help: (lvl: number) => t("upgrades.paddle_up_combo.tooltip"),
+    fullHelp: (lvl: number) =>
+      t("upgrades.paddle_up_combo.verbose_description"),
   },
 ] as const;

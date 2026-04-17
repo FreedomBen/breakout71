@@ -312,6 +312,12 @@
     "credit": ""
   },
   {
+    "name": "icon:palette",
+    "size": 8,
+    "bricks": "_WWWWW___WtWrWW__WWWWWWW__WWWWtW__WWWWWW_WWWWrWW_WW_WWW___WWWW__",
+    "credit": ""
+  },
+  {
     "name": "icon:passive_income",
     "size": 8,
     "bricks": "_ttttt___ttt_t_______________W_____________________WWW______r___",
@@ -573,6 +579,12 @@
     "name": "icon:upload",
     "size": 8,
     "bricks": "gggbbggg__bbbb___bbbbbb____bb______bb______bb______bb______bb___",
+    "credit": ""
+  },
+  {
+    "name": "icon:vibrant_neighborhood",
+    "size": 7,
+    "bricks": "yy___yyty___yttt___tt_ty_yt__yy_yy___yty_____t___",
     "credit": ""
   },
   {
@@ -2298,16 +2310,9 @@
     "credit": ""
   },
   {
-    "name": "icon:palette",
+    "name": "icon:paddle_up_combo",
     "size": 8,
-    "bricks": "_WWWWW___WtWrWW__WWWWWWW__WWWWtW__WWWWWW_WWWWrWW_WW_WWW___WWWW__",
-    "svg": null,
-    "color": ""
-  },
-  {
-    "name": "icon:vibrant_neighborhood",
-    "size": 7,
-    "bricks": "yy___yyty___yttt___tt_ty_yt__yy_yy___yty_____t___",
+    "bricks": "________rtttrrrrrtttrrrr___________W_____________________WWW____",
     "svg": null,
     "color": ""
   }

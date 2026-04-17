@@ -46,10 +46,17 @@ export function computerControl(gameState: GameState) {
   const ballGettingCloser =
     ball.y > gameState.gameZoneHeight / 2 && ball.vy > 0;
 
-  if (gameState.perks.superhot || ballGettingCloser) {
+  if (
+    gameState.perks.superhot ||
+    ballGettingCloser ||
+    gameState.perks.paddle_up_combo
+  ) {
     targetX = ball.x + puckOffset;
     if (gameState.perks.extra_life) speed = -1;
     if (gameState.perks.yoyo) speed = 0.5;
+    if (gameState.perks.paddle_up_combo) {
+      targetX += ball.vx * 5;
+    }
   } else {
     let coinsTotalX = 0,
       coinsCount = 0;

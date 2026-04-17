@@ -23,6 +23,7 @@ import {
   getCornerOffset,
   getMajorityValue,
   getRowColIndex,
+  isBrickOverPaddle,
   isMovingWhilePassiveIncome,
   isPickyEatingPossible,
   max_levels,
@@ -478,6 +479,7 @@ export function explodeBrick(
       gameState.perks.top_is_lava +
       gameState.perks.asceticism * 3 +
       gameState.perks.passive_income +
+      gameState.perks.paddle_up_combo +
       gameState.perks.addiction;
 
     // should run before the brick is removed
@@ -635,6 +637,13 @@ export function explodeBrick(
       } else {
         schedulGameSound(gameState, "comboIncreaseMaybe", ball.x, 1);
       }
+    }
+
+    if (
+      gameState.perks.paddle_up_combo &&
+      !isBrickOverPaddle(gameState, index)
+    ) {
+      resetComboNeeeded = true;
     }
 
     if (resetComboNeeeded) {

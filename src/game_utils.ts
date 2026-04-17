@@ -379,3 +379,11 @@ export function countBrickColors(gameState: GameState) {
   });
   return sumOfValues(countsCounterSet);
 }
+
+export function isBrickOverPaddle(gameState: GameState, brickIndex: number) {
+  const x = brickCenterX(gameState, brickIndex);
+  return (
+    x > gameState.puckPosition - gameState.puckWidth / 2 &&
+    x < gameState.puckPosition + gameState.puckWidth / 2
+  );
+}
