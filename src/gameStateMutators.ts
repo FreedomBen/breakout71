@@ -1869,6 +1869,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     frames,
   );
   if (borderHitCode) {
+    ball.wrapsSinceBounce = 0;
     if (borderHitCode > 1) {
       ball.topHitsSinceBounce++;
     }
@@ -2154,7 +2155,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   if (typeof hitBrick !== "undefined") {
     const initialBrickColor = gameState.bricks[hitBrick];
     ball.hitSinceBounce++;
-
+    ball.wrapsSinceBounce = 0;
     if (
       !(ball.sidesHitsSinceBounce + ball.topHitsSinceBounce) &&
       gameState.perks.three_cushion
