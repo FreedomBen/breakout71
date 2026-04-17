@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "Ok",
     "settings.show_fps": "FPS counter",
     "settings.show_fps_help": "Monitor the app's performance",
+    "settings.show_puck_rails": "Paddle vertical bars",
+    "settings.show_puck_rails_help": "Show what's above the paddle when the corresponding upgrades are active.",
     "settings.show_stats": "Show real time stats",
     "settings.show_stats_help": "Coins, time,  misses",
     "settings.smooth_lighting": "Smooth lighting",

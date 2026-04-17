@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "Okno",
     "settings.show_fps": "FPS pult",
     "settings.show_fps_help": "Monitorovať výkon aplikácie",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "Zobraziť skutočné časové štatistiky",
     "settings.show_stats_help": "Mince, čas, Chýba",
     "settings.smooth_lighting": "Hladké osvetlenie",

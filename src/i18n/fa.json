@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "پذیرش",
     "settings.show_fps": "شمارنده فریم در ثانیه",
     "settings.show_fps_help": "به کارایی برنامه نظارت کنید",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "نمایش آمار لحظه‌ای",
     "settings.show_stats_help": "سکه‌ها، زمان، خطاها",
     "settings.smooth_lighting": "نورپردازی نرم",

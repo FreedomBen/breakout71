@@ -463,7 +463,7 @@ export function render(gameState: GameState, ctx: CanvasRenderingContext2D) {
   });
 
   startWork("render:helium_bars");
-  if (gameState.perks.helium) {
+  if (gameState.perks.helium && isOptionOn("show_puck_rails")) {
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     ctx.strokeStyle = gameState.ballsColor;

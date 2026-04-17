@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "确定",
     "settings.show_fps": "FPS 计数器",
     "settings.show_fps_help": "监视应用的性能",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "显示实时统计",
     "settings.show_stats_help": "硬币，时间，未命中",
     "settings.smooth_lighting": "平滑照明",

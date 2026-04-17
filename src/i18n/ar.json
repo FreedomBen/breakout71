@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "نعم",
     "settings.show_fps": "عداد FPS",
     "settings.show_fps_help": "مراقبة أداء التطبيق",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "عرض الإحصائيات في الوقت الحقيقي",
     "settings.show_stats_help": "العملات المعدنية والوقت والأخطاء",
     "settings.smooth_lighting": "إضاءة سلسة",

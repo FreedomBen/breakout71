@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "괜찮아요",
     "settings.show_fps": "FPS 카운터",
     "settings.show_fps_help": "앱의 성능 모니터링",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "실시간 통계보기",
     "settings.show_stats_help": "동전, 시간, 놓기",
     "settings.smooth_lighting": "연락처",

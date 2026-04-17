@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "Ok",
     "settings.show_fps": "Ukazatel FPS",
     "settings.show_fps_help": "Zkontrolujte výkon aplikace",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "Zobrazovat průběžné statistiky",
     "settings.show_stats_help": "Mince, čas, minutí",
     "settings.smooth_lighting": "Vyhlazené osvětlení",

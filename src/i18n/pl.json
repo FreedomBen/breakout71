@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "Ok",
     "settings.show_fps": "FPS",
     "settings.show_fps_help": "Monitoruje wydajność aplikacji",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "Pokazy czasu rzeczywistego",
     "settings.show_stats_help": "Coins, time, miss",
     "settings.smooth_lighting": "Oświetlenie",

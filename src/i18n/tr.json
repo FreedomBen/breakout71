@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "TAMAM",
     "settings.show_fps": "FPS Sayacı",
     "settings.show_fps_help": "Uygulamanın performansını izleyin",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "Gerçek zamanlı istatistikleri göster",
     "settings.show_stats_help": "Paralar, zaman,  ıskalar",
     "settings.smooth_lighting": "Pürüzsüz aydınlatma",

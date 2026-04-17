@@ -74,6 +74,11 @@ export const options = {
     name: t("settings.show_stats"),
     help: t("settings.show_stats_help"),
   },
+  show_puck_rails: {
+    default: true,
+    name: t("settings.show_puck_rails"),
+    help: t("settings.show_puck_rails_help"),
+  },
   pointerLock: {
     default: false,
     name: t("settings.pointer_lock"),

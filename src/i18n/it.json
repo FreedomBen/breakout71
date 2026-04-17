@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "Ok",
     "settings.show_fps": "Contatore FPS",
     "settings.show_fps_help": "Monitora le prestazioni dell'app",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "Mostra statistiche in tempo reale",
     "settings.show_stats_help": "Monete, tempo,  colpi a vuoto",
     "settings.smooth_lighting": "Illuminazione fluida",

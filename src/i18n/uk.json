@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "Навігація",
     "settings.show_fps": "FPS лічильник",
     "settings.show_fps_help": "Моніторинг продуктивності додатку",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "Показати реальні статистика часу",
     "settings.show_stats_help": "Монети, час, промивки",
     "settings.smooth_lighting": "Розумне освітлення",

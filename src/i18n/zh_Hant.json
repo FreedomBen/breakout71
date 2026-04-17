@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "好的",
     "settings.show_fps": "FPS 計數器",
     "settings.show_fps_help": "監測應用程式的效能",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "顯示即時統計",
     "settings.show_stats_help": "硬幣、時間、未擊中",
     "settings.smooth_lighting": "平滑照明",

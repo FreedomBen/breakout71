@@ -177,6 +177,8 @@
     "settings.save_file_loaded_ok": "OK",
     "settings.show_fps": "Счетчик FPS",
     "settings.show_fps_help": "Контролируйте работу приложения",
+    "settings.show_puck_rails": "",
+    "settings.show_puck_rails_help": "",
     "settings.show_stats": "Показывайте статистику в реальном времени",
     "settings.show_stats_help": "Монеты, время,  промахи",
     "settings.smooth_lighting": "Плавное освещение",
