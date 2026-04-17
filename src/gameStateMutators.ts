@@ -2089,8 +2089,12 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.y > gameState.gameZoneHeight
   ) {
     // bounce and loose a life
-    ball.vy *= -1;
+    if (ball.vy > 0) {
+      ball.vy *= -1;
+    }
     justLostALife(gameState, ball.x, ball.y);
+    // ensure a second life isn't lost for that ball
+    ball.y = gameState.gameZoneHeight;
   } else if (outOfBounds && gameState.perks.extra_life && isLastBall) {
     // Rescue the ball using an extra life
     gameState.balls.forEach((b) => {
