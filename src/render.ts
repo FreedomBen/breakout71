@@ -898,7 +898,7 @@ export function renderAllBricks(
         canctx.globalCompositeOperation = "source-over";
         drawText(
           canctx,
-          gameState.brickHP[index].toString(),
+          Math.ceil(gameState.brickHP[index]).toString(),
           clairvoyant >= 2 ? color : gameState.level.color,
           gameState.puckHeight,
           x,
