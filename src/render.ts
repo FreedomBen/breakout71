@@ -1,4 +1,9 @@
-import { baseCombo, forEachLiveOne, liveCount } from "./gameStateMutators";
+import {
+  baseCombo,
+  forEachLiveOne,
+  getPredictableBallDirection,
+  liveCount,
+} from "./gameStateMutators";
 import {
   brickCenterX,
   brickCenterY,
@@ -409,7 +414,15 @@ export function render(gameState: GameState, ctx: CanvasRenderingContext2D) {
   ctx.globalCompositeOperation = "source-over";
   gameState.balls.forEach((ball) => {
     const drawingColor = gameState.ballsColor;
-    const ballAlpha = 1 - ballTransparency(ball, gameState);
+    let ballAlpha = 1 - ballTransparency(ball, gameState);
+    if (
+      gameState.perks.soft_touch &&
+      Math.abs(ball.x - gameState.puckPosition) >
+        gameState.ballSize / 2 + gameState.puckWidth / 2
+    ) {
+      ballAlpha = Math.min(ballAlpha, 0.5);
+    }
+
     ctx.globalAlpha = ballAlpha;
     // The white border around is to distinguish colored balls from coins/bg
     drawBall(
@@ -453,7 +466,9 @@ export function render(gameState: GameState, ctx: CanvasRenderingContext2D) {
     ctx.globalAlpha = ballAlpha;
     if (
       (gameState.perks.clairvoyant && gameState.ballStickToPuck) ||
-      (gameState.perks.steering > 1 && !gameState.ballStickToPuck)
+      (gameState.perks.steering > 1 && !gameState.ballStickToPuck) ||
+      (gameState.ballStickToPuck &&
+        typeof getPredictableBallDirection(gameState) === "number")
     ) {
       ctx.strokeStyle = gameState.ballsColor;
       ctx.beginPath();
@@ -465,7 +480,10 @@ export function render(gameState: GameState, ctx: CanvasRenderingContext2D) {
 
   startWork("render:helium_bars");
   if (
-    (gameState.perks.helium || gameState.perks.paddle_up_combo) &&
+    (gameState.perks.helium ||
+      gameState.perks.paddle_up_combo ||
+      gameState.perks.pierce_above_paddle ||
+      gameState.perks.soft_touch) &&
     isOptionOn("show_puck_rails")
   ) {
     ctx.globalAlpha = 1;

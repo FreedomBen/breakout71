@@ -4,6 +4,7 @@ import {
   Coin,
   colorString,
   GameState,
+  HitDirection,
   LightFlash,
   ParticleFlash,
   ReusableArray,
@@ -59,6 +60,7 @@ import {
 import { addToTotalScore } from "./addToTotalScore";
 import { openUpgradesPicker } from "./openUpgradesPicker";
 import { computerControl } from "./computerControl";
+import { brickAt } from "./level_editor/levels_editor_util";
 
 export function setMousePos(gameState: GameState, x: number) {
   if (
@@ -72,9 +74,29 @@ export function setMousePos(gameState: GameState, x: number) {
   gameState.needsRender = true;
 }
 
+export function getPredictableBallDirection(gameState: GameState) {
+  if (gameState.perks.concave_puck) return 0;
+
+  if (
+    gameState.perks.side_flip ||
+    gameState.perks.left_is_lava ||
+    gameState.perks.pierce_right ||
+    gameState.perks.refill_right
+  )
+    return gameState.baseSpeed;
+
+  if (
+    gameState.perks.side_kick ||
+    gameState.perks.right_is_lava ||
+    gameState.perks.pierce_left ||
+    gameState.perks.refill_left
+  )
+    return -gameState.baseSpeed;
+}
+
 function getBallDefaultVx(gameState: GameState) {
   return (
-    (gameState.perks.concave_puck ? 0 : 1) *
+    getPredictableBallDirection(gameState) ??
     (Math.random() > 0.5 ? gameState.baseSpeed : -gameState.baseSpeed)
   );
 }
@@ -94,8 +116,14 @@ export function resetBalls(gameState: GameState) {
   gameState.balls = [];
   gameState.ballsColor = "#FFFFFF";
   if (gameState.perks.picky_eater || gameState.perks.pierce_color) {
-    gameState.ballsColor =
-      getMajorityValue(gameState.bricks.filter((i) => i)) || "#FFFFFF";
+    gameState.ballsColor = "#FFFFFF";
+    for (let i = gameState.bricks.length; i >= 0; i--) {
+      const brickColor: colorString = gameState.bricks[i];
+      if (brickColor && brickColor !== "black") {
+        gameState.ballsColor = brickColor;
+        break;
+      }
+    }
   }
   for (let i = 0; i < count; i++) {
     const x =
@@ -111,7 +139,7 @@ export function resetBalls(gameState: GameState) {
       previousVX: vx,
       vy: -gameState.baseSpeed,
       previousVY: -gameState.baseSpeed,
-      piercePoints: gameState.perks.pierce * 2,
+      piercePoints: 1,
       hitSinceBounce: 0,
       hasGravity: false,
       brokenSinceBounce: 0,
@@ -147,7 +175,7 @@ export function putBallsAtPuck(gameState: GameState) {
     ball.sidesHitsSinceBounce = 0;
     ball.topHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
-    ball.piercePoints = gameState.perks.pierce * 2;
+    ball.piercePoints = 1;
   });
 }
 
@@ -447,6 +475,7 @@ export function explodeBrick(
   index: number,
   ball: Ball,
   isExplosion: boolean,
+  hitFrom: HitDirection | null,
 ) {
   const color = gameState.bricks[index];
   if (!color) return;
@@ -480,6 +509,8 @@ export function explodeBrick(
       gameState.perks.asceticism * 3 +
       gameState.perks.passive_income +
       gameState.perks.paddle_up_combo +
+      gameState.perks.side_flip +
+      gameState.perks.side_kick +
       gameState.perks.addiction;
 
     // should run before the brick is removed
@@ -577,21 +608,12 @@ export function explodeBrick(
       comboGain += gameState.perks.nbricks * 2;
     }
 
-    if (Math.abs(ball.y - y) < Math.abs(ball.x - x)) {
-      if (gameState.perks.side_kick) {
-        if (ball.previousVX > 0) {
-          comboGain += gameState.perks.side_kick;
-        } else {
-          comboGain -= gameState.perks.side_kick * 2;
-        }
-      }
-      if (gameState.perks.side_flip) {
-        if (ball.previousVX < 0) {
-          comboGain += gameState.perks.side_flip;
-        } else {
-          comboGain -= gameState.perks.side_flip * 2;
-        }
-      }
+    if (gameState.perks.side_kick && hitFrom === "right") {
+      resetComboNeeeded = true;
+    }
+
+    if (gameState.perks.side_flip && hitFrom === "left") {
+      resetComboNeeeded = true;
     }
 
     if (gameState.perks.picky_eater) {
@@ -1566,99 +1588,7 @@ export function gameStateTick(
       }
     });
   }
-
-  if (
-    gameState.combo > baseCombo(gameState) &&
-    (gameState.combo - baseCombo(gameState)) * Math.random() * frames > 5
-  ) {
-    // The red should still be visible on a white bg
-
-    if (gameState.perks.top_is_lava == 1) {
-      makeParticle(
-        gameState,
-        gameState.offsetXRoundedDown +
-          Math.random() * gameState.gameZoneWidthRoundedUp,
-        0,
-        (Math.random() - 0.5) * 10,
-        5,
-        "#FF0000",
-        true,
-        8,
-        100 * (Math.random() + 1),
-      );
-    }
-
-    if (gameState.perks.left_is_lava == 1) {
-      makeParticle(
-        gameState,
-        gameState.offsetXRoundedDown,
-        Math.random() * gameState.gameZoneHeight,
-        5,
-        (Math.random() - 0.5) * 10,
-        "#FF0000",
-        true,
-        8,
-        100 * (Math.random() + 1),
-      );
-    }
-
-    if (gameState.perks.right_is_lava == 1) {
-      makeParticle(
-        gameState,
-        gameState.offsetXRoundedDown + gameState.gameZoneWidthRoundedUp,
-        Math.random() * gameState.gameZoneHeight,
-        -5,
-        (Math.random() - 0.5) * 10,
-        "#FF0000",
-        true,
-        8,
-        100 * (Math.random() + 1),
-      );
-    }
-
-    if (gameState.perks.compound_interest) {
-      let x = gameState.puckPosition,
-        attemps = 0;
-      do {
-        x =
-          gameState.offsetXRoundedDown +
-          gameState.gameZoneWidthRoundedUp * Math.random();
-        attemps++;
-      } while (
-        Math.abs(x - gameState.puckPosition) < gameState.puckWidth / 2 &&
-        attemps < 10
-      );
-
-      makeParticle(
-        gameState,
-        x,
-        gameState.gameZoneHeight,
-        (Math.random() - 0.5) * 10,
-        -5,
-        "#FF0000",
-        true,
-        8,
-        100 * (Math.random() + 1),
-      );
-    }
-    if (
-      gameState.perks.streak_shots &&
-      !isMovingWhilePassiveIncome(gameState)
-    ) {
-      const pos = 0.5 - Math.random();
-      makeParticle(
-        gameState,
-        gameState.puckPosition + gameState.puckWidth * pos,
-        gameState.gameZoneHeight - gameState.puckHeight,
-        pos * 10,
-        -5,
-        "#FF0000",
-        true,
-        8,
-        100 * (Math.random() + 1),
-      );
-    }
-  }
+  applyBrickSidesParticleEffects(gameState, frames);
 
   addGravityParticules(gameState, frames);
 
@@ -1878,6 +1808,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     frames,
   );
   if (borderHitCode) {
+    applySideHitRefill(gameState, ball, borderHitCode);
     ball.wrapsSinceBounce = 0;
     if (borderHitCode > 1) {
       ball.topHitsSinceBounce++;
@@ -1995,11 +1926,15 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   // Puck collision
   const ylimit =
     gameState.gameZoneHeight - gameState.puckHeight - gameState.ballSize / 2;
-  const ballIsUnderPuck =
+  const ballIsAbovePaddle =
     Math.abs(ball.x - gameState.puckPosition) <
-      gameState.ballSize / 2 + gameState.puckWidth / 2 &&
-    !isMovingWhilePassiveIncome(gameState);
-  if (ball.y > ylimit && ball.vy > 0 && ballIsUnderPuck) {
+    gameState.ballSize / 2 + gameState.puckWidth / 2;
+  if (
+    ball.y > ylimit &&
+    ball.vy > 0 &&
+    ballIsAbovePaddle &&
+    !isMovingWhilePassiveIncome(gameState)
+  ) {
     const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
     const angle = Math.atan2(
       -gameState.puckWidth / 2,
@@ -2072,7 +2007,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     ball.topHitsSinceBounce = 0;
     ball.wrapsSinceBounce = 0;
     ball.sapperUses = 0;
-    ball.piercePoints = gameState.perks.pierce * 2;
+    ball.piercePoints = 1;
   }
 
   const outOfBounds =
@@ -2166,6 +2101,25 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   const hitBrick = vhit ?? hhit ?? chit;
 
   if (typeof hitBrick !== "undefined") {
+    const hitFrom: HitDirection =
+      (typeof vhit == "undefined" &&
+        typeof hhit !== "undefined" &&
+        ball.previousVX > 0 &&
+        "left") ||
+      (typeof vhit == "undefined" &&
+        typeof hhit !== "undefined" &&
+        ball.previousVX < 0 &&
+        "right") ||
+      (typeof vhit !== "undefined" &&
+        typeof hhit == "undefined" &&
+        ball.previousVY > 0 &&
+        "top") ||
+      (typeof vhit !== "undefined" &&
+        typeof hhit == "undefined" &&
+        ball.previousVY < 0 &&
+        "bottom") ||
+      "corner";
+
     const initialBrickColor = gameState.bricks[hitBrick];
     ball.hitSinceBounce++;
     ball.wrapsSinceBounce = 0;
@@ -2176,45 +2130,62 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       resetCombo(gameState, ball.x, ball.y, ball);
     }
 
-    let pierce = false;
-    let damage =
-      1 +
+    let damageMultiplier =
       (shouldPierceByColor(gameState, vhit, hhit, chit)
-        ? gameState.perks.pierce_color
-        : 0);
+        ? gameState.perks.pierce_color * 2.1
+        : 0) +
+      gameState.perks.pierce * 1.1;
 
-    gameState.brickHP[hitBrick] -= damage;
-
-    const used = Math.min(
-      ball.piercePoints,
-      Math.max(1, gameState.brickHP[hitBrick] + 1),
-    );
-    gameState.brickHP[hitBrick] -= used;
-    ball.piercePoints -= used;
-
-    if (gameState.brickHP[hitBrick] < 0) {
-      gameState.brickHP[hitBrick] = 0;
-      pierce = true;
+    if (gameState.perks.pierce_left && hitFrom == "left") {
+      damageMultiplier += gameState.perks.pierce_left * 2.1;
     }
-    if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
-      if (!pierce) {
+    if (gameState.perks.pierce_top && hitFrom == "top") {
+      damageMultiplier += gameState.perks.pierce_top * 2.1;
+    }
+    if (gameState.perks.pierce_right && hitFrom == "right") {
+      damageMultiplier += gameState.perks.pierce_right * 2.1;
+    }
+    if (gameState.perks.pierce_above_paddle && ballIsAbovePaddle) {
+      damageMultiplier += gameState.perks.pierce_above_paddle * 2.1;
+    }
+
+    let dmg = Math.min(
+      gameState.brickHP[hitBrick],
+      1 + ball.piercePoints * damageMultiplier,
+    );
+    if (gameState.perks.soft_touch && !ballIsAbovePaddle) {
+      dmg = 0;
+    }
+    gameState.brickHP[hitBrick] -= dmg;
+    if (damageMultiplier) {
+      // if piercing was used, exhaust it
+      ball.piercePoints = Math.max(
+        0,
+        ball.piercePoints - dmg / damageMultiplier,
+      );
+    }
+    if (gameState.perks.soft_touch > 1 && !ballIsAbovePaddle) {
+      // Pass under the bricks
+      return;
+    }
+
+    if (!ball.piercePoints || !damageMultiplier) {
+      if (typeof vhit !== "undefined" || typeof chit !== "undefined") {
         ball.y = ball.previousY;
         ball.vy *= -1;
       }
-    }
-    if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
-      if (!pierce) {
+      if (typeof hhit !== "undefined" || typeof chit !== "undefined") {
         ball.x = ball.previousX;
         ball.vx *= -1;
       }
     }
 
-    if (!gameState.brickHP[hitBrick]) {
+    if (gameState.brickHP[hitBrick] <= 0) {
       ball.brokenSinceBounce++;
       ball.brokenSinceWallOrPaddleBounce++;
       applyNBrickPerk(gameState, ball);
       applyOttawaTreatyPerk(gameState, hitBrick, ball);
-      explodeBrick(gameState, hitBrick, ball, false);
+      explodeBrick(gameState, hitBrick, ball, false, hitFrom);
       if (
         ball.sapperUses < gameState.perks.sapper &&
         initialBrickColor !== "black" && // don't replace a brick that bounced with sturdy_bricks
@@ -2237,7 +2208,6 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
   }
 
   if (ballTransparency(ball, gameState) < Math.random()) {
-    const remainingPierce = ball.piercePoints;
     const remainingSapper = ball.sapperUses < gameState.perks.sapper ? 1 : 0;
     const willMiss =
       ball.vy > 0 &&
@@ -2264,10 +2234,10 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
         gameState,
         ball.x,
         ball.y,
-        gameState.perks.pierce_color || remainingPierce
+        ball.piercePoints
           ? -ball.vx + ((Math.random() - 0.5) * gameState.baseSpeed) / 3
           : (Math.random() - 0.5) * gameState.baseSpeed,
-        gameState.perks.pierce_color || remainingPierce
+        ball.piercePoints
           ? -ball.vy + ((Math.random() - 0.5) * gameState.baseSpeed) / 3
           : (Math.random() - 0.5) * gameState.baseSpeed,
         color,
@@ -2657,5 +2627,184 @@ function addGravityParticules(gameState: GameState, frames: number) {
       2,
       "#ffe02e",
     );
+  }
+}
+
+function applySideHitRefill(
+  gameState: GameState,
+  ball: Ball,
+  borderHitCode: number,
+) {
+  if (ball.piercePoints >= 1) {
+    return;
+  }
+  const hitTop = borderHitCode > 1;
+  const hitLeft = borderHitCode % 2 && ball.x < gameState.canvasWidth / 2;
+  const hitRight = borderHitCode % 2 && ball.x > gameState.canvasWidth / 2;
+  if (
+    (gameState.perks.refill_top && hitTop) ||
+    (gameState.perks.refill_left && hitLeft) ||
+    (gameState.perks.refill_right && hitRight)
+  ) {
+    ball.piercePoints = 1;
+    makeText(
+      gameState,
+      ball.x,
+      ball.y,
+      gameState.ballsColor,
+      t("play.refill"),
+      12,
+      500,
+      ball.vx,
+      ball.vy,
+    );
+  }
+}
+
+function applyBrickSidesParticleEffects(gameState: GameState, frames: number) {
+  if (
+    gameState.combo <= baseCombo(gameState) ||
+    (gameState.combo - baseCombo(gameState)) * Math.random() * frames < 5
+  ) {
+    return;
+  }
+
+  if (gameState.perks.top_is_lava == 1) {
+    makeParticle(
+      gameState,
+      gameState.offsetXRoundedDown +
+        Math.random() * gameState.gameZoneWidthRoundedUp,
+      0,
+      (Math.random() - 0.5) * 10,
+      5,
+      "#FF0000",
+      true,
+      8,
+      100 * (Math.random() + 1),
+    );
+  }
+
+  if (gameState.perks.left_is_lava == 1) {
+    makeParticle(
+      gameState,
+      gameState.offsetXRoundedDown,
+      Math.random() * gameState.gameZoneHeight,
+      5,
+      (Math.random() - 0.5) * 10,
+      "#FF0000",
+      true,
+      8,
+      100 * (Math.random() + 1),
+    );
+  }
+
+  if (gameState.perks.right_is_lava == 1) {
+    makeParticle(
+      gameState,
+      gameState.offsetXRoundedDown + gameState.gameZoneWidthRoundedUp,
+      Math.random() * gameState.gameZoneHeight,
+      -5,
+      (Math.random() - 0.5) * 10,
+      "#FF0000",
+      true,
+      8,
+      100 * (Math.random() + 1),
+    );
+  }
+
+  if (gameState.perks.compound_interest) {
+    let x = gameState.puckPosition,
+      attemps = 0;
+    do {
+      x =
+        gameState.offsetXRoundedDown +
+        gameState.gameZoneWidthRoundedUp * Math.random();
+      attemps++;
+    } while (
+      Math.abs(x - gameState.puckPosition) < gameState.puckWidth / 2 &&
+      attemps < 10
+    );
+
+    makeParticle(
+      gameState,
+      x,
+      gameState.gameZoneHeight,
+      (Math.random() - 0.5) * 10,
+      -5,
+      "#FF0000",
+      true,
+      8,
+      100 * (Math.random() + 1),
+    );
+  }
+  if (gameState.perks.streak_shots && !isMovingWhilePassiveIncome(gameState)) {
+    const pos = 0.5 - Math.random();
+    makeParticle(
+      gameState,
+      gameState.puckPosition + gameState.puckWidth * pos,
+      gameState.gameZoneHeight - gameState.puckHeight,
+      pos * 10,
+      -5,
+      "#FF0000",
+      true,
+      8,
+      100 * (Math.random() + 1),
+    );
+  }
+  if (gameState.perks.side_kick) {
+    // right side of bricks should glow red
+    for (let col = 0; col < gameState.gridSize; col++) {
+      for (let row = 0; row < gameState.gridSize; row++) {
+        let index = getRowColIndex(gameState, row, col);
+        let shouldBeEmpty = getRowColIndex(gameState, row, col + 1);
+        if (
+          shouldBeEmpty !== -1 &&
+          !gameState.bricks[shouldBeEmpty] &&
+          gameState.bricks[index] &&
+          gameState.bricks[index] !== "black"
+        ) {
+          makeParticle(
+            gameState,
+            brickCenterX(gameState, index) + gameState.brickWidth * 0.55,
+            brickCenterY(gameState, index) +
+              gameState.brickWidth * (Math.random() - 0.5),
+            5,
+            0,
+            "#FF0000",
+            true,
+            8,
+            50 * (Math.random() * 3 + 1),
+          );
+        }
+      }
+    }
+  }
+  if (gameState.perks.side_flip) {
+    // right side of bricks should glow red
+    for (let col = 0; col < gameState.gridSize; col++) {
+      for (let row = 0; row < gameState.gridSize; row++) {
+        let index = getRowColIndex(gameState, row, col);
+        let shouldBeEmpty = getRowColIndex(gameState, row, col - 1);
+        if (
+          shouldBeEmpty !== -1 &&
+          !gameState.bricks[shouldBeEmpty] &&
+          gameState.bricks[index] &&
+          gameState.bricks[index] !== "black"
+        ) {
+          makeParticle(
+            gameState,
+            brickCenterX(gameState, index) - gameState.brickWidth * 0.55,
+            brickCenterY(gameState, index) +
+              gameState.brickWidth * (Math.random() - 0.5),
+            -5,
+            0,
+            "#FF0000",
+            true,
+            8,
+            50 * (Math.random() * 3 + 1),
+          );
+        }
+      }
+    }
   }
 }

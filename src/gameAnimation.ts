@@ -98,10 +98,7 @@ export function getGameAnimation(params: RunParams) {
   );
 }
 
-const customSettings: Record<
-  PerkId,
-  { perks: RunParams["perks"]; noAi?: boolean }
-> = {
+const customSettings: Record<PerkId, { perks?: RunParams["perks"] }> = {
   shocks: {
     perks: {
       multiball: 3,

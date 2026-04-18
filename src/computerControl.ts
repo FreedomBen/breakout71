@@ -25,14 +25,17 @@ export function computerControl(gameState: GameState) {
   if (
     gameState.perks.left_is_lava ||
     gameState.perks.side_kick ||
-    gameState.perks.wrap_right
+    gameState.perks.wrap_right ||
+    gameState.perks.pierce_right
   ) {
     puckOffset = -gameState.puckWidth / 2.2;
   }
   if (
     gameState.perks.right_is_lava ||
     gameState.perks.side_flip ||
-    gameState.perks.wrap_left
+    gameState.perks.wrap_left ||
+    gameState.perks.pierce_left ||
+    gameState.perks.pierce_top
   ) {
     puckOffset = gameState.puckWidth / 2.2;
   }

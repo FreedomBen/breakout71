@@ -312,6 +312,12 @@
     "credit": ""
   },
   {
+    "name": "icon:paddle_up_combo",
+    "size": 8,
+    "bricks": "________rtttrrrrrtttrrrr___________W_____________________WWW____",
+    "credit": ""
+  },
+  {
     "name": "icon:palette",
     "size": 8,
     "bricks": "_WWWWW___WtWrWW__WWWWWWW__WWWWtW__WWWWWW_WWWWrWW_WW_WWW___WWWW__",
@@ -342,6 +348,24 @@
     "credit": ""
   },
   {
+    "name": "icon:pierce_left",
+    "size": 6,
+    "bricks": "_ybbbb_yybbb_yyybb_yybbb_ybbbb______",
+    "credit": ""
+  },
+  {
+    "name": "icon:pierce_right",
+    "size": 6,
+    "bricks": "bbbby_bbbyy_bbyyy_bbbyy_bbbby_______",
+    "credit": ""
+  },
+  {
+    "name": "icon:pierce_top",
+    "size": 7,
+    "bricks": "_______________yyyyy__byyyb__bbybb__bbbbb__bbbbb_",
+    "credit": ""
+  },
+  {
     "name": "icon:premium",
     "size": 11,
     "bricks": "__g____g___g____g____g_g__gbg__g______g______gg_gbg_gg_gbbgbbbgbbggbbgbbbgbbg_gbgbbbgbg___ggggggg____ggggggg_____________",
@@ -363,6 +387,24 @@
     "name": "icon:reach",
     "size": 8,
     "bricks": "tttttttttttttttttt____ttrr____rr___________W_____________WWW____",
+    "credit": ""
+  },
+  {
+    "name": "icon:refill_left",
+    "size": 7,
+    "bricks": "__bbbbb___bbbb____bbb_____bb____bbb___bbbb__bbbbb",
+    "credit": ""
+  },
+  {
+    "name": "icon:refill_right",
+    "size": 7,
+    "bricks": "bbbbbb_bbbbb__bbbb___bbb____bbbb___bbbbb__bbbbbb_",
+    "credit": ""
+  },
+  {
+    "name": "icon:refill_top",
+    "size": 9,
+    "bricks": "____________________________b_____b__bb___bb__bbb_bbb__bbbbbbb__bbbbbbb__bbbbbbb_",
     "credit": ""
   },
   {
@@ -2310,9 +2352,16 @@
     "credit": ""
   },
   {
-    "name": "icon:paddle_up_combo",
+    "name": "icon:pierce_above_paddle",
     "size": 8,
-    "bricks": "________rtttrrrrrtttrrrr___________W_____________________WWW____",
+    "bricks": "tttttttttttyttttttyyyttt____________W_____________________WWW___",
+    "svg": null,
+    "color": ""
+  },
+  {
+    "name": "icon:soft_touch",
+    "size": 8,
+    "bricks": "byyybbbbbyyybbbbbyyybbbb_____b______b_b____b___b__b______WWW____",
     "svg": null,
     "color": ""
   }

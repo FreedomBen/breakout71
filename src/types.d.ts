@@ -319,3 +319,5 @@ export type UnlockCondition = {
   forbidden: PerkId[];
   minScore: number;
 };
+
+export type HitDirection = "top" | "left" | "right" | "bottom" | "corner";
