@@ -623,6 +623,17 @@ export function explodeBrick(
       );
     }
 
+    if (gameState.perks.three_cushion) {
+      if (ball.sidesHitsSinceBounce + ball.topHitsSinceBounce) {
+        comboGain += Math.min(
+          gameState.perks.three_cushion * 3,
+          ball.sidesHitsSinceBounce + ball.topHitsSinceBounce,
+        );
+      } else {
+        resetComboNeeeded = true;
+      }
+    }
+
     if (redRowReach !== -1) {
       if (Math.floor(index / gameState.level.size) === redRowReach) {
         resetComboNeeeded = true;
@@ -1817,12 +1828,7 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
       ball.sidesHitsSinceBounce++;
     }
     ball.brokenSinceWallOrPaddleBounce = 0;
-    if (
-      ball.sidesHitsSinceBounce + ball.topHitsSinceBounce <=
-      gameState.perks.three_cushion * 3
-    ) {
-      offsetCombo(gameState, 1, ball.x, ball.y, ball);
-    }
+
     if (
       gameState.perks.wrap_left &&
       borderHitCode % 2 &&
@@ -2123,12 +2129,6 @@ export function ballTick(gameState: GameState, ball: Ball, frames: number) {
     const initialBrickColor = gameState.bricks[hitBrick];
     ball.hitSinceBounce++;
     ball.wrapsSinceBounce = 0;
-    if (
-      !(ball.sidesHitsSinceBounce + ball.topHitsSinceBounce) &&
-      gameState.perks.three_cushion
-    ) {
-      resetCombo(gameState, ball.x, ball.y, ball);
-    }
 
     let damageMultiplier =
       (shouldPierceByColor(gameState, vhit, hhit, chit)
@@ -2564,6 +2564,20 @@ function underWrapLimit(gameState: GameState, ball: Ball) {
   if (ball.wrapsSinceBounce > 10) {
     ball.wrapsSinceBounce = 0;
     return false;
+  }
+  if (gameState.perks.refill_wrap && ball.piercePoints < 1) {
+    ball.piercePoints = 1;
+    makeText(
+      gameState,
+      ball.x,
+      ball.y,
+      gameState.ballsColor,
+      t("play.refill"),
+      12,
+      500,
+      ball.vx,
+      ball.vy,
+    );
   }
   return true;
 }
