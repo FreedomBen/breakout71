@@ -45,6 +45,8 @@ export async function openUnlockedUpgradesList() {
       ...upgradeActions.filter((u) => u.category == categories.combo_boost),
       miniMarkDown(t("unlocks.category.simple")),
       ...upgradeActions.filter((u) => u.category == categories.simple),
+      miniMarkDown(t("unlocks.category.pierce")),
+      ...upgradeActions.filter((u) => u.category == categories.pierce),
       miniMarkDown(t("unlocks.category.advanced")),
       ...upgradeActions.filter((u) => u.category == categories.advanced),
     ],
