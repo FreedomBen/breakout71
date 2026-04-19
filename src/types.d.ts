@@ -194,7 +194,7 @@ export type GameState = {
   brickWidth: number;
   // Size of the current level's grid
   gridSize: number;
-  // 0 based index of the current level in the run (level X / 20)
+  // 0 based index of the current level in the run (level X / DEFAULT_RUN_LEVELS)
   currentLevel: number;
   upgradesOfferedFor: number;
 

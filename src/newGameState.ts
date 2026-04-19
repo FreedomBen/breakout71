@@ -13,6 +13,7 @@ import { getSettingValue } from "./settings";
 import { isBlackListedForStart, isStartingPerk } from "./startingPerks";
 import { isLevelLocked } from "./get_level_unlock_condition";
 import { dontOfferTooSoon } from "./openUpgradesPicker";
+import { DEFAULT_RUN_LEVELS } from "./pure_functions";
 
 export function getRunLevels(
   params: RunParams,
@@ -36,11 +37,14 @@ export function getRunLevels(
     .filter((l) => l.name !== params?.levelToAvoid)
     .sort(() => Math.random() - 0.5);
 
+  const sortedHead = DEFAULT_RUN_LEVELS + 3;
   return firstLevel
     .concat(
-      restInRandomOrder.slice(0, 20 + 3).sort((a, b) => a.sortKey - b.sortKey),
+      restInRandomOrder
+        .slice(0, sortedHead)
+        .sort((a, b) => a.sortKey - b.sortKey),
     )
-    .concat(restInRandomOrder.slice(20 + 3));
+    .concat(restInRandomOrder.slice(sortedHead));
 }
 
 export function newGameState(params: RunParams): GameState {

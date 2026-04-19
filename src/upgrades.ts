@@ -5,6 +5,7 @@ import { PerkId } from "./types";
 import {
   base_combo_from_stronger_foundation,
   comboKeepingRate,
+  DEFAULT_RUN_LEVELS,
 } from "./pure_functions";
 
 export const noCreative: PerkId[] = [
@@ -934,7 +935,7 @@ export const rawUpgrades = [
     hardLimit: Infinity,
     name: t("upgrades.extra_levels.name"),
     help: (lvl: number) =>
-      t("upgrades.extra_levels.tooltip", { count: lvl + 20 }),
+      t("upgrades.extra_levels.tooltip", { count: lvl + DEFAULT_RUN_LEVELS }),
     fullHelp: (lvl: number) => t("upgrades.extra_levels.verbose_description"),
   },
   {

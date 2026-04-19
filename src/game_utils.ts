@@ -9,7 +9,7 @@ import {
 } from "./types";
 import { upgrades } from "./loadGameData";
 import { t } from "./i18n/i18n";
-import { clamp } from "./pure_functions";
+import { clamp, DEFAULT_RUN_LEVELS } from "./pure_functions";
 import { getSettingValue, getTotalScore } from "./settings";
 import { isOptionOn } from "./options";
 import { getIcon } from "./levelIcon";
@@ -113,7 +113,7 @@ export function renderMaxLevel(gameState: GameState) {
 export function max_levels(gameState: GameState) {
   if (gameState.creative) return 1;
   if (gameState.perks.chill) return gameState.currentLevel + 2;
-  return 20 + gameState.perks.extra_levels;
+  return DEFAULT_RUN_LEVELS + gameState.perks.extra_levels;
 }
 
 export function upgradeLevelAndMaxDisplay(
