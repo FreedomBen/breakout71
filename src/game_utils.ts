@@ -113,7 +113,7 @@ export function renderMaxLevel(gameState: GameState) {
 export function max_levels(gameState: GameState) {
   if (gameState.creative) return 1;
   if (gameState.perks.chill) return gameState.currentLevel + 2;
-  return 7 + gameState.perks.extra_levels;
+  return 20 + gameState.perks.extra_levels;
 }
 
 export function upgradeLevelAndMaxDisplay(

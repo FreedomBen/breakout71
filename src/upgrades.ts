@@ -930,11 +930,11 @@ export const rawUpgrades = [
     gift: false,
     adventure: false,
     id: "extra_levels",
-    max: 3,
+    max: 13,
     hardLimit: Infinity,
     name: t("upgrades.extra_levels.name"),
     help: (lvl: number) =>
-      t("upgrades.extra_levels.tooltip", { count: lvl + 7 }),
+      t("upgrades.extra_levels.tooltip", { count: lvl + 20 }),
     fullHelp: (lvl: number) => t("upgrades.extra_levels.verbose_description"),
   },
   {

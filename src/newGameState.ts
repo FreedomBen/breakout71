@@ -38,9 +38,9 @@ export function getRunLevels(
 
   return firstLevel
     .concat(
-      restInRandomOrder.slice(0, 7 + 3).sort((a, b) => a.sortKey - b.sortKey),
+      restInRandomOrder.slice(0, 20 + 3).sort((a, b) => a.sortKey - b.sortKey),
     )
-    .concat(restInRandomOrder.slice(7 + 3));
+    .concat(restInRandomOrder.slice(20 + 3));
 }
 
 export function newGameState(params: RunParams): GameState {

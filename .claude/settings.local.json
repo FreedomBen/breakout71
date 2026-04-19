@@ -3,7 +3,8 @@
     "allow": [
       "Bash(make help *)",
       "Bash(make apk-debug *)",
-      "Read(//home/ben/android-sdk/**)"
+      "Read(//home/ben/android-sdk/**)",
+      "Bash(npx jest *)"
     ]
   }
 }
