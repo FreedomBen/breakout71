@@ -6,15 +6,15 @@ defaultVersionCode=$(($(date +%s) / 60))
 versionCode=${1:-$defaultVersionCode}
 
 
-source ~/.nvm/nvm.sh;
-
-nvm install v21
-nvm use v21
-
-if [[ $(node --version) != v21* ]]; then
-  echo "run first: nvm use v21"
-  exit 1
-fi
+#source ~/.nvm/nvm.sh;
+#
+#nvm install v21
+#nvm use v21
+#
+#if [[ $(node --version) != v21* ]]; then
+#  echo "run first: nvm use v21"
+#  exit 1
+#fi
 
 set -e
 set -x
