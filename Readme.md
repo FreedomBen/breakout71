@@ -1,3 +1,49 @@
+# Breakout 71 (FreedomBen fork)
+
+A roguelite breakout game. Upstream: <https://gitlab.com/lecarore/breakout71>
+(original author: Renan LE CARO, live at <https://breakout.lecaro.me/>).
+
+## Differences from upstream
+
+This fork tracks upstream but adds a handful of gameplay and
+developer-experience tweaks on top.
+
+### Gameplay
+
+- **Clairvoyant always granted at run start.**
+  Every new run begins with the `clairvoyant` perk active in addition to the
+  usual random starting upgrade. `clairvoyant` is excluded from the random
+  gift pool so the second perk is always something else. (`cf74033`,
+  `6719361`)
+- **Default run length raised to 20 levels** (was 7 upstream). Levels cycle
+  via `% runLevels.length`, so the unlocked pool repeats once exhausted. The
+  `extra_levels` perk still stacks on top. (`2e0cd13`)
+- **`DEFAULT_RUN_LEVELS` extracted to a constant** in `src/pure_functions.ts`
+  so run length, the `extra_levels` tooltip, and the difficulty-sort window
+  all stay in sync. (`00aec4a`)
+
+### UI
+
+- **"Starting upgrades" entry in the settings menu.** Lists every upgrade
+  currently configured to start active (via `isStartingPerk`), with
+  click-through to the upgrade detail panel to toggle. `clairvoyant` is
+  always included in the list so the forced-grant behavior is visible.
+  (`5010f65`, `6719361`)
+
+### Build / tooling
+
+- **`Makefile`** wraps the existing npm / Gradle / deploy scripts behind
+  `make` targets with a `make help` overview. Android targets (`apk`,
+  `apk-debug`, `bundle`, `android-install`) depend on `make build` so the
+  APK always ships a freshly built `index.html`. (`d05bbc2`)
+- **Debug builds no longer require `keystore.properties`.**
+  `app/build.gradle.kts` now guards keystore loading and the release signing
+  config, so `./gradlew assembleDebug` works on a clean checkout. (`d05bbc2`)
+- **`CLAUDE.md`** documents the repo layout and conventions for Claude Code
+  sessions. (`2035284`)
+
+---
+
 # Breakout 71
 
 Break colourful bricks, catch bouncing coins and select powerful upgrades !
