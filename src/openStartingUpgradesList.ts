@@ -7,7 +7,9 @@ import { isStartingPerk } from "./startingPerks";
 import { openUpgradeDetails } from "./openUpgradeDetails";
 
 export async function openStartingUpgradesList() {
-  const starting = upgrades.filter(isStartingPerk);
+  const starting = upgrades.filter(
+    (u) => u.id === "clairvoyant" || isStartingPerk(u),
+  );
 
   const id = await asyncAlert<Upgrade["id"]>({
     title: t("settings.starting_upgrades"),
