@@ -54,9 +54,13 @@ export function newGameState(params: RunParams): GameState {
 
   let randomGift: PerkId | undefined = undefined;
   if (!sumOfValues(perks)) {
-    let giftable = upgrades.filter((u) => isStartingPerk(u));
+    let giftable = upgrades.filter(
+      (u) => u.id !== "clairvoyant" && isStartingPerk(u),
+    );
     if (!giftable.length) {
-      giftable = upgrades.filter((u) => !isBlackListedForStart(u));
+      giftable = upgrades.filter(
+        (u) => u.id !== "clairvoyant" && !isBlackListedForStart(u),
+      );
     }
 
     randomGift =
@@ -64,6 +68,7 @@ export function newGameState(params: RunParams): GameState {
       giftable[Math.floor(Math.random() * giftable.length)].id;
 
     perks[randomGift] = 1;
+    perks.clairvoyant = 1;
   }
 
   const runLevels = getRunLevels(params, randomGift);
