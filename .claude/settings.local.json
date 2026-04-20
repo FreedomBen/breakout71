@@ -5,7 +5,9 @@
       "Bash(make apk-debug *)",
       "Read(//home/ben/android-sdk/**)",
       "Bash(npx jest *)",
-      "Bash(node -e \" const { rawUpgrades } = require\\('ts-node/register'\\); \")"
+      "Bash(node -e \" const { rawUpgrades } = require\\('ts-node/register'\\); \")",
+      "Bash(npx tsc *)",
+      "Bash(node checks.js)"
     ]
   }
 }
