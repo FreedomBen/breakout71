@@ -108,7 +108,7 @@ export const levelTimeBest = 25,
 
 export const MAX_LEVEL_SIZE = 21;
 export const MIN_LEVEL_SIZE = 2;
-export const DEFAULT_RUN_LEVELS = 20;
+export const DEFAULT_RUN_LEVELS = 200;
 
 export function automaticBackgroundColor(bricks: string[]) {
   return bricks.filter((b) => b === "g").length >

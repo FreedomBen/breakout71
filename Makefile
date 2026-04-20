@@ -17,7 +17,7 @@ help:
 	@echo "  make deploy          Run deploy.sh"
 	@echo "  make deploy-staging  Run staging_deploy.sh"
 	@echo ""
-	@echo "Android targets (require JDK + Android SDK):"
+	@echo "Android targets (require JDK + Android SDK; all except android-clean run 'make build' first):"
 	@echo "  make apk             Assemble signed release APK (needs keystore.properties)"
 	@echo "  make apk-debug       Assemble debug APK"
 	@echo "  make bundle          Build release AAB for Play Store"
@@ -60,16 +60,16 @@ deploy:
 deploy-staging:
 	bash staging_deploy.sh
 
-apk:
+apk: build
 	./gradlew assembleRelease
 
-apk-debug:
+apk-debug: build
 	./gradlew assembleDebug
 
-bundle:
+bundle: build
 	./gradlew bundleRelease
 
-android-install:
+android-install: build
 	./gradlew installDebug
 
 android-clean:
