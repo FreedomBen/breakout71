@@ -76,6 +76,8 @@ import {
 } from "./levelEditor";
 import { frameStarted, getWorstFPSAndReset, startWork } from "./fps";
 import { openUnlockedUpgradesList } from "./openUnlockedUpgradesList";
+import { openStartingUpgradesList } from "./openStartingUpgradesList";
+import { isStartingPerk } from "./startingPerks";
 import { getCheckboxIcon, getIcon } from "./levelIcon";
 import { openLevelDetails } from "./openLevelDetails";
 
@@ -622,6 +624,18 @@ async function openSettingsMenu() {
       });
     }
   }
+  actions.push({
+    icon: getIcon("icon:new_run"),
+    text: t("settings.starting_upgrades"),
+    help: t("settings.starting_upgrades_help", {
+      count: upgrades.filter(isStartingPerk).length,
+    }),
+    async value() {
+      await openStartingUpgradesList();
+      await openSettingsMenu();
+    },
+  });
+
   actions.push({
     icon: getIcon("icon:download"),
     text: t("settings.download_save_file"),
